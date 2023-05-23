@@ -15,18 +15,45 @@
 
 
 
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id ="realDataSource" destroy-method="close">
+	<!-- bean : 스프링 프레임워크를 통해 뒤에오는 class 객체를 생성하겠다는 의미 -->
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<!-- url 뒤에 본인 sql url 정보 넣어야 하는듯 
+			 value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC">
+		-->
+		<property name="url" value="jdbc:mysql://localhost:3306"/>
+		<property name="username" value="opeaceful"/>
+		<property name="password" value="opeaceful123"/>
+		
+		<!-- SQL이 수행된 후 자동으로 COMMIT 될지 지정 -->
+		<property name="defaultAutoCommit" value="false"/>
+		
+		<!-- 커넥션 풀 설정 -->
+		<property name="initialSize" value="10"/> <!-- 초기 커넥션수 지정 , 기본 0개 -->
+		<property name="maxActive" value="50"/> <!-- 최대 커넥션수 지정, 기본 8개 -->
+		<property name="minIdle" value="10"/> <!-- 유휴(대기)상태로 존재할 수 있는 커넥션 최소수, 기본 0개 -->
+		<property name="maxIdle" value="20"/><!-- 유휴(대기)상태로 존재할 수 있는 커넥션 최대수, 기본 8개 -->
+		<property name="maxWait" value="-1"/><!-- 예외 발생전 커넥션이 반환될때까지 대기하는 시간, -1 : 무기한(기본값임) -->
+		
+	
+	</bean>
+
+
+
 	<!-- MYSQL용 -->
-	<bean
+	<!-- <bean
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		id="mySqlDataSource">
 
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<!-- 이 뒤에 본인 sql url 정보 넣어야 하는듯 -->
+		url 뒤에 본인 sql url 정보 넣어야 하는듯 
+			 value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC">
+		
 		<property name="url" value="jdbc:mysql://localhost:3306"/>
 		<property name="username" value="opeaceful"/>
 		<property name="password" value="opeaceful123"/>
 
-	</bean>
+	</bean> -->
 
 
 
