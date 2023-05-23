@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+
+
+	<!-- MYSQL용 -->
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="mySqlDataSource">
+
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<!-- 이 뒤에 본인 sql url 정보 넣어야 하는듯 -->
+		<property name="url" value="jdbc:mysql://localhost:3306"/>
+		<property name="username" value="opeaceful"/>
+		<property name="password" value="opeaceful123"/>
+
+	</bean>
+
+
+
+	<!-- log4j를 이용한 SQL로그 출력용 bean생성 * realDataSource이용해서 SQL수행내용, 수행결과를 출력하는 
+		역할 -->
+	<bean id="dataSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="realDataSource" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="[SQL]" />
+			</bean>
+		</property>
+	</bean>
+
+
+
+
+
+
+	<!-- 2단계 MyBatis Spring에서 제공하는 sql명령어 실행을 위한 도구 등록 SqlSession : sql구문을 db에 
+		전달하고 실행하는 객체 SqlSessionFactory : SqlSession을 만드는 객체 SqlSessionFactoryBean 
+		: mybatis설정파일과 Connection pool정보를 이용하여 sqlSessionFactory를 만드는 객체 sqlSessionTemplate 
+		: SqlSession객체에 트랜잭션 처리 역할이 가능하도록 하는 객체 -->
+
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
+		id="sqlSessionFactory">
+		<!-- mybatis 설정파일 위치를 지정 (그냥 외워야함 classpath는 contextpath와 비슷한느낌임) -->
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml" />
+
+		<!-- 연결을 위한 도구 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<!-- 3단계 : SQL 구문 실행을 위한 템플릿을 제공하는 도구 등록 SqlSessionTemplate : 기본 SQL문 실행 
+		+ 트랜잭션관리 가능 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate"
+		id="sqlSession">
+		<!-- Sql 명령어 실행을 위한 도구에 대한 참조 변수 -->
+		<constructor-arg ref="sqlSessionFactory" />
+		<!-- 생성자-매개변수라는 뜻 -->
+	</bean>
+
+	<!-- 스프링에서 사용하는 proxy를 이용한 트랜잭션제어가 안먹힐 경우 트랜잭션 매니저를 추가(혹시모를 에러방지) -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<!-- 파일 등록용 -->
+	<bean
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		id="multipartResolver">
+
+		<!-- defaultEncodeing : 업로드 되는 파일에 대한 인코딩 처리 여부 -->
+		<property name="defaultEncoding" value="UTF-8" />
+
+		<!-- maxUploadSize : 한번에 전체 업로드 되는 파일의 총 용량 설정 -->
+		<property name="maxUploadSize" value="10000000" /><!-- 10mbyte -->
+
+		<!-- maxInMemorySize : 디스크에 임시파일을 생성하기 전에 메모리에 보관할 수 있는 최대바이트 크기 -->
+		<property name="maxInMemorySize" value="10000000" /> <!-- 10mbyte -->
+
+	</bean>
+
+</beans>
