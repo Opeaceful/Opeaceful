@@ -233,7 +233,7 @@ input::-webkit-search-cancel-button{
 /* 공통검색창2 <html> */
 /* <div class="search-wrap2 input-group mb-3">
         <input type="text" class="search-input2 form-control box-shadow-none" placeholder="사원번호 입력">
-        <button class="btn search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="btn btn-outline-secondary search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div> */
 /* 검색 박스 width 설정 : 아래 주석 -> 본인 css파일에서 적용! */
 /* .search-wrap2{width: 400px;} */
