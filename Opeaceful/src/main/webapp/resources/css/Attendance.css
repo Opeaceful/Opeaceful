@@ -2,3 +2,23 @@
 .table{
     white-space: nowrap;
 }
+#year1, #year2, #month1, #month2{margin-right: 9px;}
+#year1{width: 34%;}
+#year2{width: 20%;}
+#day1{width: 26%;}
+#day2{width: 15.5%;}
+.select-box1{width: 20%;}
+.wave{width: 4.5%;}
+.search-wrap{width: 33%;}
+.search-btn>i{margin-left: 12px;}
+.text{width: 6%;}
+.icon{
+    border: none;
+    border-top: hidden;
+    padding: 8px 0px;
+}
+.ad-minus{
+    margin-left: -26px;
+    font-size: 15px;
+}
+.ad-pen{padding-left: 9px;}

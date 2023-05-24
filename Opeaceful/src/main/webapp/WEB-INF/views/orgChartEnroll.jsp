@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +11,8 @@
 <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
 <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link rel="stylesheet" href="/Opeaceful/src/main/webapp/resources/css/common/common.css">
-<link rel="stylesheet" href="/Opeaceful/src/main/webapp/resources/css/OrganizationChart.css">
+<link rel="stylesheet" href="../../resources/css/common/common.css">
+<link rel="stylesheet" href="../../resources/css/orgChartEnroll.css">
 </head>
 <body>
 	<div id="sidebar"></div>
@@ -23,8 +24,8 @@
 			<div class="row">
 				<div class="col-4 left-box">
 					<div class="d-grid d-grid-common d-md-flex justify-content-md-end">
-						<button class="btn btn-primary me-md-2 department-btn" type="button" style="-bs-btn-padding-y: .25rem; - -bs-btn-padding-x: .5rem; - -bs-btn-font-size: .75rem;">부서추가</button>
-						<button class="btn btn-primary position-btn" data-bs-toggle="modal" data-bs-target="#position" type="button" style="-bs-btn-padding-y: .25rem; - -bs-btn-padding-x: .5rem; - -bs-btn-font-size: .75rem;">직급관리</button>
+						<button class="btn btn-primary me-md-2 department-btn" type="button" style="-bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">부서추가</button>
+						<button class="btn btn-primary position-btn" data-bs-toggle="modal" data-bs-target="#position" type="button" style="-bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">직급관리</button>
 					</div>
 					<div class="accordion accordion-flush" id="accordionFlushExample">
 						<div class="accordion-item accordion-item-common">
@@ -81,10 +82,10 @@
 				<div class="col right-box">
 					<div class="name-btn-box">
 						<div class="department-name-box">경영지원본부</div>
-						<button type="button" class="btn btn-primary change-btn" data-bs-toggle="modal" data-bs-target="#change" style="-bs-btn-padding-y: .25rem; - -bs-btn-padding-x: .5rem; - -bs-btn-font-size: .75rem;">인사발령</button>
+						<button type="button" class="btn btn-primary change-btn" data-bs-toggle="modal" data-bs-target="#change" style="-bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">인사발령</button>
 					</div>
 					<table class="table table-hover table-common">
-						<thead class="table-active">
+						<thead>
 							<tr>
 								<th class="pth1">
 									<input class="form-check-input all-check-btn" type="checkbox" id="checkboxNoLabel" value="" aria-label="전체선택">
@@ -139,8 +140,8 @@
 							<div class="position-plus-btn">
 								직급추가 <i class="fa-solid fa-plus team-plus"></i>
 							</div>
-							<button type="button" class="btn btn-primary ok-common ms-auto">저장</button>
-							<button type="button" class="btn btn-secondary cancel-common can" data-bs-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-primary ok-common position-ok ms-auto">저장</button>
+							<button type="button" class="btn btn-outline-primary cancel-common position-cancel can" data-bs-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</div>
@@ -206,14 +207,16 @@
 							</table>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary ok-common ms-auto">저장</button>
-							<button type="button" class="btn btn-secondary cancel-common" data-bs-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-primary ok-common change-ok ms-auto">저장</button>
+							<button type="button" class="btn btn-outline-primary cancel-common change-cancel" data-bs-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<script src="${contextPath}/resources/js/orgChartEnroll.js"></script>
 </body>
 </html>

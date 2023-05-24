@@ -95,13 +95,17 @@ input:focus{
 .position-list>input{
     width: 73%;
 }
-.ok-common, .cancel-common{
+.position-ok, .position-cancel{
     width: 22%;
+    font-size: 10px;
+}
+.change-ok, .change-cancel{
+    width: 11%;
     font-size: 10px;
 }
 .position-modal{
     width: 50%;
-    height: 57%;
+    height: 35%;
     transform: translate(50%);
 }
 .position-change{
