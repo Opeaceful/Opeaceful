@@ -11,51 +11,79 @@
     --color-gold : #ffc107;
     --navy-hover:rgba(3, 3, 62, 0.77);
     --white-hover: rgba(3, 3, 62, 0.09);
+    --color-light-gray : rgb(235, 235, 235);
+    --color-light-navy:rgba(3, 3, 97, 0.06);
 }
+
+/* 사이드바 임시 */
+.sidebar{
+    /* border: 1px solid blue; */
+    width: var(--side-bar);
+    /* width: 300px; */
+    height: 100vh;
+    position: fixed;
+    background-color: var(--color-navy);
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    transition: width 0.3s;
+    z-index: 1; /* 제일 위로 올라와야함 */
+}
+
 
 .content-wrap{
     width: calc(100vw - var(--side-bar));
     margin-left: var(--side-bar);
-    position: relative;
 }
 
+/* 네모박스 안 밑줄있는 제목 클래스 */
+.title-underline{
+    color: var(--color-navy);
+    border-bottom: 1px solid var(--color-light-gray);
+    padding-bottom: 20px;
+    margin: 45px 35px 0px 35px;
+    font-weight: 600;
+}
 /* 각자 변수 설정하기!!! */
 body{
-  background-color: white;
-  margin: 0;
-  font-family: 'Noto Sans KR', sans-serif;
+    background-color: white;
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .btn-primary{
     border-color:var(--color-navy) ;
     background-color:var(--color-navy);
+    --bs-btn-active-bg:var(--navy-hover);
+    --bs-btn-active-border-color:var(--navy-hover);
 }
 
 .btn-primary:hover{
     border-color:var(--navy-hover);
     background-color:var(--navy-hover);
 }
-:not(.btn-check)+.btn:active {
+/* :not(.btn-check)+.btn:active {
     border-color:var(--navy-hover);
     background-color:var(--navy-hover);
-}
+} */
 
-.btn:focus-visible {
+/* .btn:focus-visible {
     border-color:var(--navy-hover);
     background-color:var(--navy-hover);
     box-shadow: none;
-}
-
+} */
 .btn-outline-primary{
     border-color:var(--color-navy) ;
     color: var(--color-navy);
+    --bs-btn-active-bg:var(--white-hover);
+    --bs-btn-active-border-color:var(--color-navy);
+    --bs-btn-active-color:var(--color-navy);
 }
 
 .btn-outline-primary:hover{
     background-color: var(--white-hover);
     color: var(--color-navy);
     border-color:var(--color-navy) ;
-
 }
 
 /* 공통 테이블 설정 변경 */
@@ -246,3 +274,7 @@ input::-webkit-search-cancel-button{
     width: 17%;
     font-size: 13px;
 }
+
+
+/* width 90px btn */
+.w90-btn{width: 90px;}
