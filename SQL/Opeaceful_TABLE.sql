@@ -36,7 +36,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE `MEMBER` (
 	`USER_NO`	INT	NOT NULL	COMMENT '유저번호 PK',
-	`ENO`	NVARCHAR(6)	NOT NULL UNIQUE	COMMENT '사원번호',
+	`ENO`	INT	NOT NULL UNIQUE	COMMENT '사원번호',
 	`STATUS`	CHAR(1)	NOT NULL	DEFAULT 'Y'	COMMENT '계정상태',
 	`PROFILE_IMG`	NVARCHAR(30)	NULL	COMMENT '프로필사진 저장경로/파일명',
 	`STATUS_TYPE`	INT	NOT NULL	COMMENT '접속 종류FK',
@@ -708,138 +708,63 @@ REFERENCES `CHAT` (
 
 
 -- 계정 상태 테이블 기본 데이터
-
 INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
-
-   VALUES ( 0 , '오프라인' , 'offline.png');
-
-   INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
-
-   VALUES ( 1 , '온라인' , 'offline.png');
-
-   INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
-
-   VALUES ( 2 , '자리비움' , 'offline.png');
-
-   INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
-
-   VALUES ( 3 , '회의중' , 'offline.png');
-
-   INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
-
-   VALUES ( 4 , '식사중' , 'offline.png');
-
+   VALUES ( 0 , '오프라인' , 'offline.png'),
+			( 1 , '온라인' , 'offline.png'), 
+            ( 2 , '자리비움' , 'offline.png'),
+            ( 3 , '회의중' , 'offline.png'),
+            ( 4 , '식사중' , 'offline.png');
 
 -- 연차 테이블 기본 데이터
-
   INSERT INTO ANNUAL(YEAR, ANNUAL_UNIT)
+   VALUES ( 0, 0 ),
+			( 1, 0 ), ( 2, 0 ), ( 3, 0 ), ( 4, 0 ), ( 5, 0 ),
+			( 6, 0 ), ( 7, 0 ), ( 8, 0 ), ( 9, 0 ), ( 10, 0 ),
+            ( 11, 0 ), ( 12, 0 ), ( 13, 0 ), ( 14, 0 ), ( 15, 0 ),
+            ( 16, 0 ), ( 17, 0 ), ( 18, 0 ), ( 19, 0 ), ( 20, 0 ),
+            ( 21, 0 ), ( 22, 0 ) ;
 
-   VALUES ( 0, 0 );
 
 
 -- 권한 테이블 기본 데이터
-
   INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'Y01', '연차 관리' );
-
-	INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'D01', '조직도 관리' );
-
-	INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'A01', '근태 관리' );
-
-   	INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'B01', '공지사항 관리' );
-
-   	INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'B02', '자유게시판 관리' );
-
-
-   	INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'M01', '계정관리' );
-
-   	INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'R01', '권한관리' );
-
-    INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'S01', '급여명세서관리' );
-
-    INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'T01', '결재양식 관리' );
-
-    INSERT INTO ROLE_LIST(ROLE_CODE, ROLE_NAME)
-
-   VALUES ( 'T02', '전체 결재조회' );
-
-
+   VALUES ( 'Y01', '연차 관리' ),
+			( 'D01', '조직도 관리' ),
+            ( 'A01', '근태 관리' ),
+            ( 'B01', '공지사항 관리' ),
+            ( 'B02', '자유게시판 관리' ),
+            ( 'M01', '계정관리' ),
+            ( 'R01', '권한관리' ),
+            ( 'S01', '급여명세서관리' ),
+            ( 'T01', '결재양식 관리' ),
+            ( 'T02', '전체 결재조회' ) ;
 
 
 -- 게시판 종류 기본 데이터 
 
   INSERT INTO BOARD_TYPE(BOARD_CD, BOARD_NAME)
+   VALUES ( 'N', '공지' ),
+			( 'A', '일반' ),
+            ( 'T', '팀' );
 
-   VALUES ( 'N', '공지' );
-
-  INSERT INTO BOARD_TYPE(BOARD_CD, BOARD_NAME)
-
-   VALUES ( 'A', '일반' );
-
-  INSERT INTO BOARD_TYPE(BOARD_CD, BOARD_NAME)
-
-   VALUES ( 'T', '팀' );
 
 -- 관리자 계정 데이터
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
-
-   VALUES ( '000000' , 0,'admin', 'admin', SYSDATE(), 'admin@gmail.com');
+   VALUES ( 230501 , 0,'admin', 'admin', SYSDATE(), 'admin@gmail.com');
 
 INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
+   VALUES ( 1 , 'Y01'),
+			( 1 , 'D01'),
+            ( 1 , 'A01'),
+            ( 1 , 'B01'),
+            ( 1 , 'B02'),
+			( 1 , 'M01'),
+			( 1 , 'R01'),
+            ( 1 , 'S01'),
+            ( 1 , 'T01'),
+            ( 1 , 'T02') ;
+            
 
-   VALUES ( 1 , 'Y01');
 
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'D01');
-
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'A01');
-
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'B01');
-   
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'B02');
-   
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'M01');
-   
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'R01');
-
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'S01');
-
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'T01');
-
-   INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-
-   VALUES ( 1 , 'T02');
 
 
