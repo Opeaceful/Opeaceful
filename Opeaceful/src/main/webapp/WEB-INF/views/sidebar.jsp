@@ -4,21 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <!-- jQuery 라이브러리 추가 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-	<!-- CSS only -->
-	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
-	<!-- JavaScript Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 	
-	<!-- 부트스트랩 아이콘 -->
-	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"> -->
-	
-	<!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-	<!-- <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script> -->
-	
-	<link rel="stylesheet" href="resources/css/sidebar.css">
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/sidebar.css">
 
 <title>Insert title here</title>
 </head>
@@ -31,7 +18,7 @@
             <ul>
                 <!-- 메인 -->
                 <li id="icon-home">
-                    <a href="">
+                    <a href="<%=  request.getContextPath() %>/main">
                         <span class="sidebar-icon"><i class="fa-solid fa-house"></i></span>
                         <span class="sidebar-text">홈</span>
                     </a>
@@ -124,14 +111,14 @@
             <ul>
                 <!-- 마이페이지 -->
                 <li id="icon-info">
-                    <a href="">
+                    <a href="<%=  request.getContextPath() %>/member/mypage">
                         <span class="sidebar-icon"><i class="bi bi-person-circle"></i></span>
                         <span class="sidebar-text">마이페이지</span>
                     </a>
                 </li>
                 <!-- 로그아웃 -->
                 <li id="icon-logout">
-                    <a href="">
+                    <a href="<%=  request.getContextPath() %>/member/logout">
                         <span class="sidebar-icon"><i class="fa-solid fa-power-off"></i></span>
                         <span class="sidebar-text">로그아웃</span>
                     </a>

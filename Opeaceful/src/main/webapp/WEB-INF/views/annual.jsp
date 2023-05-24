@@ -31,128 +31,136 @@
                 <!-- 수정버튼 -->
                 <div class="modify-btn">
                     <!-- Button trigger modal -->
-                    <button type="button" class="my-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">수정</button>
+                    <button type="button" class="w90-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">수정</button>
                 </div>
                 
                 <!-- 표 -->
-                <div class="annual-table-div">
-                    <table class="annual-table table table-common">
-                        <thead>
-                            <tr>
-                                <th scope="col">근로기간</th>
-                                <th scope="col">연차 유급휴가 발생</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="annual-year" rowspan="2">1년 미만</td>
-                                <td class="annual-count" rowspan="2">0</td>
-                            </tr>
-                            <tr>
-
-                            </tr>
-                            <tr>
-                                <td class="annual-year">1년</td>
-                                <td class="annual-count">15</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">2년</td>
-                                <td class="annual-count">15</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">3년</td>
-                                <td class="annual-count">16</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">4년</td>
-                                <td class="annual-count">16</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">5년</td>
-                                <td class="annual-count">17</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">6년</td>
-                                <td class="annual-count">17</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">7년</td>
-                                <td class="annual-count">18</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">8년</td>
-                                <td class="annual-count">18</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">9년</td>
-                                <td class="annual-count">19</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year">10년</td>
-                                <td class="annual-count">19</td>
-                            </tr>
-                        </tbody>          
-
-                    </table>
-                    <table class="annual-table table table-common">
-                        <thead>
-                            <tr>
-                                <th scope="col">근로기간</th>
-                                <th scope="col">연차 유급휴가 발생</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="annual-year" scope="row">11년</td>
-                                <td class="annual-count">20</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">12년</td>
-                                <td class="annual-count">20</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">13년</td>
-                                <td class="annual-count">21</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">14년</td>
-                                <td class="annual-count">21</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">15년</td>
-                                <td class="annual-count">22</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">16년</td>
-                                <td class="annual-count">22</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">17년</td>
-                                <td class="annual-count">23</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">18년</td>
-                                <td class="annual-count">23</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">19년</td>
-                                <td class="annual-count">24</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">20년</td>
-                                <td class="annual-count">24</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">21년</td>
-                                <td class="annual-count">25</td>
-                            </tr>
-                            <tr>
-                                <td class="annual-year" scope="row">22년</td>
-                                <td class="annual-count">25</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row annual-table-div">
+                    <div class="col-md-6">
+                        <table class="annual-table table table-common">
+                            <thead>
+                                <tr>
+                                    <th scope="col">근로기간</th>
+                                    <th scope="col">연차 유급휴가 발생</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="annual-year" rowspan="2">1년 미만</td>
+                                    <td class="annual-count" rowspan="2">0</td>
+                                </tr>
+                                <tr>
+    
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">1년</td>
+                                    <td class="annual-count">15</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">2년</td>
+                                    <td class="annual-count">15</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">3년</td>
+                                    <td class="annual-count">16</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">4년</td>
+                                    <td class="annual-count">16</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">5년</td>
+                                    <td class="annual-count">17</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">6년</td>
+                                    <td class="annual-count">17</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">7년</td>
+                                    <td class="annual-count">18</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">8년</td>
+                                    <td class="annual-count">18</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">9년</td>
+                                    <td class="annual-count">19</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year">10년</td>
+                                    <td class="annual-count">19</td>
+                                </tr>
+                            </tbody>          
+    
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="annual-table table table-common">
+                            <thead>
+                                <tr>
+                                    <th scope="col">근로기간</th>
+                                    <th scope="col">연차 유급휴가 발생</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="annual-year" scope="row">11년</td>
+                                    <td class="annual-count">20</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">12년</td>
+                                    <td class="annual-count">20</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">13년</td>
+                                    <td class="annual-count">21</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">14년</td>
+                                    <td class="annual-count">21</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">15년</td>
+                                    <td class="annual-count">22</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">16년</td>
+                                    <td class="annual-count">22</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">17년</td>
+                                    <td class="annual-count">23</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">18년</td>
+                                    <td class="annual-count">23</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">19년</td>
+                                    <td class="annual-count">24</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">20년</td>
+                                    <td class="annual-count">24</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">21년</td>
+                                    <td class="annual-count">25</td>
+                                </tr>
+                                <tr>
+                                    <td class="annual-year" scope="row">22년</td>
+                                    <td class="annual-count">25</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -211,8 +219,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="my-btn btn btn-primary">확인</button>
-                    <button type="button" class="my-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+                    <button type="button" class="w90-btn btn btn-primary">확인</button>
+                    <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
                 </div>
             </div>
         </div>

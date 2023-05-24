@@ -1,0 +1,70 @@
+:root{
+    --side-bar : 60px;
+    --color-white: rgb(255, 255, 255);
+    --color-navy : rgb(3, 3, 62);
+    --font-size18 : 18px;
+    --font-size15 : 15px;
+    --font-size14 : 14px;
+    --font-size12 : 12px;
+}
+
+.sidebar a {text-decoration: none;}
+.sidebar ul, .sidebar li{list-style: none; padding: 0;}
+.sidebar i{color: var(--color-white);}
+
+
+/* 사이드바 */
+.sidebar{
+    width: var(--side-bar);
+    width: 300px;
+    height: 100vh;
+    position: fixed;
+    background-color: var(--color-navy);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    /* top: 0; */
+    /* left: 0; */
+    transition: width 0.3s;
+    z-index: 1; /* 제일 위로 올라와야함 */
+}
+
+/* 사이드바 오픈 호버 */
+.sidebar:hover {width: 300px;}
+
+/* 사이드바 상단 마진 */
+.sidebar-wrap{padding-top: 120px;}
+
+/* ========================== 상위 카테고리 ========================== */
+
+
+.sidebar-text{
+    font-weight: 700;
+    color: var(--color-white);
+}
+.sidebar-cursor{cursor: pointer;}
+/* 사이드바 화살표 */
+.sidebar-icon-arrow{
+    color: var(--color-white);
+}
+
+
+.sidebar-wrap > ul > li > a,.sidebar-wrap > ul > li > .one-line {
+    display: block;
+    white-space: nowrap; /* 줄바꿈 없앰 */
+}
+.sidebar-more {
+    white-space: nowrap; /* 줄바꿈 없앰 */
+}
+
+/* ========================== 하위 카테고리 ========================== */
+.sidebar-more-text{
+    font-size: var(--font-size15);
+    font-weight: 500;
+    color: var(--color-white);
+    display: block;
+    padding: 0 0 14px 65px;
+}
+.sidebar-more-text:hover{
+    color: var(--color-navy);
+}
+

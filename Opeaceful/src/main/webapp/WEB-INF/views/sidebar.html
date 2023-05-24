@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
+    <!-- 부트스트랩 아이콘 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
+    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href="sidebar.css">
+    
+    
+    <!-- jsp로 바꾸고 이거만 남겨두면 됨 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<!-- <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/sidebar.css"> -->
+
+    <title>샤이드바</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-icon sidebar-logo">
+            <i class="fa-solid fa-feather"></i>
+        </div>
+        <div class="sidebar-wrap">
+            <ul>
+                <!-- 메인 -->
+                <li id="sidebar-home">
+                    <a href="">
+                    <!-- <a href="<%=  request.getContextPath() %>/main"> -->
+                        <i class="sidebar-icon fa-solid fa-house"></i>
+                        <span class="sidebar-text">홈</span>
+                    </a>
+                </li>
+
+                <!-- 조직도 -->
+                <li id="sidebar-chart">
+                    <div class="one-line sidebar-cursor" id="chart-menu">
+                        <i class="sidebar-icon bi bi-diagram-3"></i>
+                        <span class="sidebar-text">조직도</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+                    </div>
+
+                    <div class="sidebar-more" id="chart-menu-item">
+                        <a class="sidebar-more-text" href="">조직도 등록</a>
+                        <a class="sidebar-more-text" href="">조직도 현황</a>
+                    </div>
+                </li>
+
+                <!-- 메일 -->
+                <li id="sidebar-mail">
+                    <a href="">
+                        <i class="sidebar-icon fa-solid fa-envelope"></i>
+                        <span class="sidebar-text">메일</span>
+                    </a>
+                </li>
+
+                <!-- 게시판 -->
+                <li id="sidebar-board">
+                    <div class="one-line sidebar-cursor" id="board-menu">
+                        <i class="sidebar-icon bi bi-file-text"></i>
+                        <span class="sidebar-text">게시판</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+                    </div>
+
+                    <div class="sidebar-more" id="board-menu-item">
+                        <a class="sidebar-more-text" href="">공지사항</a>
+                        <a class="sidebar-more-text" href="">팀게시판</a>
+                        <a class="sidebar-more-text" href="">자유게시판</a>
+                    </div>
+                </li>
+
+                <!-- 캘린더 -->
+                <li id="sidebar-calender">
+                    <a href="">
+                        <i class="sidebar-icon bi bi-calendar-date"></i>
+                        <span class="sidebar-text">캘린더</span>
+                    </a>
+                </li>
+
+                <!-- 전자결재 -->
+                <li id="sidebar-sign">
+                    <a href="">
+                        <i class="sidebar-icon bi bi-briefcase-fill"></i>
+                        <span class="sidebar-text">전자결재</span>
+                    </a>
+                </li>
+
+                <!-- 근태 -->
+                <li id="sidebar-work">
+                    <a href="">
+                        <i class="sidebar-icon fa-solid fa-clock"></i>
+                        <span class="sidebar-text">근태</span>
+                    </a>
+                </li>
+
+                <!-- 연차관리 -->
+                <li id="sidebar-annual">
+                    <div class="one-line sidebar-cursor" id="annual-menu">
+                        <i class="sidebar-icon fa-solid fa-umbrella-beach"></i>
+                        <span class="sidebar-text">연차관리</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+                    </div>
+
+                    <div class="sidebar-more" id="annual-menu-item">
+                        <a class="sidebar-more-text" href="">총연차관리</a>
+                        <a class="sidebar-more-text" href="">연차조회</a>
+                    </div>
+                </li>
+
+                <!-- 계정관리 -->
+                <li id="sidebar-account">
+                    <div class="one-line sidebar-cursor" id="account-menu">
+                        <i class="sidebar-icon fa-solid fa-user-plus"></i>
+                        <span class="sidebar-text">계정관리</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="sidebar-more" id="account-menu-item">
+                        <a class="sidebar-more-text" href="">사용자 조회</a>
+                        <a class="sidebar-more-text" href="">사용자 등록</a>
+                    </div>
+                </li>
+
+                <!-- 권한관리 -->
+                <li id="sidebar-role">
+                    <div class="one-line sidebar-cursor" id="role-menu">
+                        <i class="sidebar-icon fa-solid fa-user-gear"></i>
+                        <span class="sidebar-text">권한관리</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="sidebar-more" id="role-menu-item">
+                        <a class="sidebar-more-text" href="">권한 등록</a>
+                        <a class="sidebar-more-text" href="">사원별 권한 등록</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- fixed-bottom : 최하단 고정(부트스트랩) -->
+        <div class="sidebar-wrap fixed-bottom">
+            <ul>
+                <!-- 마이페이지 -->
+                <li id="sidebar-info">
+                    <a href="">
+                    <!-- <a href="<%=  request.getContextPath() %>/member/mypage"> -->
+                        <i class="sidebar-icon bi bi-person-circle"></i>
+                        <span class="sidebar-text">마이페이지</span>
+                    </a>
+                </li>
+                <!-- 로그아웃 -->
+                <li id="sidebar-logout">
+                    <a href="">
+                    <!-- <a href="<%=  request.getContextPath() %>/member/logout"> -->
+                        <i class="sidebar-icon fa-solid fa-power-off"></i>
+                        <span class="sidebar-text">로그아웃</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+        
+    <script>
+        $(".sidebar-more").css("display", "none");
+
+        // $(document).ready(function () {
+        $("#chart-menu").click(function () {
+            $("#chart-menu-item").slideToggle();
+        });
+        // });
+        $("#board-menu").click(function () {
+            $("#board-menu-item").slideToggle();
+        });
+        $("#annual-menu").click(function () {
+            $("#annual-menu-item").slideToggle();
+        });
+        $("#account-menu").click(function () {
+            $("#account-menu-item").slideToggle();
+        });
+        $("#role-menu").click(function () {
+            $("#role-menu-item").slideToggle();
+        });
+    </script>
+</body>
+</html>
