@@ -30,6 +30,7 @@
 	 -->
 	<mappers>
 		<!-- 예시 <mapper resource="/mappers/member-mapper.xml"/> -->
+		<mapper resource="/mappers/test.xml"/>
 
 	</mappers>
 
