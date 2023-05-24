@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="../../resources/css/attendance.css">
 </head>
 <body>
-	<div id="sidebar"></div>
+	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
+	
 	<div id="content-wrap">
 		<div class="container">
 			<div class="title-box">
@@ -46,11 +47,9 @@
                     <div class="col-1 text">
                         사원명
                     </div>
-                    <div class="col-11 search-wrap">
-                        <input type="search" name="keyword" class="search-box">
-                        <button type="button" class="search-btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                    <div class="col-11 search-wrap2 input-group mb-3">
+                        <input type="text" class="search-input2 form-control box-shadow-none" placeholder="사원명">
+                        <button class="btn btn-outline-secondary search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
              </div>

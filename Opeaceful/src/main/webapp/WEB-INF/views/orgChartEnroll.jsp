@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="../../resources/css/orgChartEnroll.css">
 </head>
 <body>
-	<div id="sidebar"></div>
+	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
+	
 	<div id="content-wrap">
 		<div class="container">
 			<div class="title-box">
