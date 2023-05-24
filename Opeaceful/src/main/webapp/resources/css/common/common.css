@@ -230,6 +230,25 @@ input::-webkit-search-cancel-button{
     display: none;
 }
 
+/* 공통검색창2 <html> */
+/* <div class="search-wrap2 input-group mb-3">
+        <input type="text" class="search-input2 form-control box-shadow-none" placeholder="사원번호 입력">
+        <button class="btn search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div> */
+/* 검색 박스 width 설정 : 아래 주석 -> 본인 css파일에서 적용! */
+/* .search-wrap2{width: 400px;} */
+.btn-outline-secondary {
+    border: 1px solid #ced4da;
+    --bs-btn-hover-color: none;
+    --bs-btn-hover-bg: none;
+    --bs-btn-hover-border-color: #ced4da;
+
+    --bs-btn-active-color: none;
+    --bs-btn-active-bg: none;
+    --bs-btn-active-border-color: #ced4da;
+}
+
+
 /* 부트스트랩 text박스 하늘색 포커스 제거 */
 /* 포커스 넣고싶은 경우 html에 class명 : box-shadow-put 추가  */
 /* 포커스 없애고 싶은 경우 class명 box-shadow-none 추가*/
@@ -241,6 +260,7 @@ input::-webkit-search-cancel-button{
     border: 1px solid lightgray;
     box-shadow: none;
 }
+
 
 /*네이비 아웃라인원하는 사람은 class*/
 .box-shadow-put:focus{
