@@ -29,11 +29,12 @@
         	<div class="row">
 	        	<div class="main-left col">
 	        		<div id="board-box"></div>
-	        		<div id="board-box"></div>
-	        		<div id="board-box"></div>
+	        		<div id="sign-box"></div>
+	        		<div id="weather-box"></div>
 	        	</div>
 	        	<div class="main-right col">
-	        	
+	        		<div id="my-box"></div>
+	        		<div id="calender-box"></div>
 	        	</div>
         	</div>
             
