@@ -13,7 +13,8 @@
 		
 		현재 jsp페이지에서 다른jsp주소로 요청을 위임(forward)할 예정
  -->
- 
+
+	
 	<jsp:forward page="login"/>
 
 </body>
