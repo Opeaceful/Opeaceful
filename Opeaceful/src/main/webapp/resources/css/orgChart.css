@@ -100,5 +100,8 @@ right connector from last child*/
 .team{
     border: 1px solid lightgray;
 }
+.team>div{
+    border-bottom: 1px solid lightgray;
+}
 .frow, .srow{    width: 107%;
     float: right;}

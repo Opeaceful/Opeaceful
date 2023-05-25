@@ -207,9 +207,9 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary ok-common change-ok ms-auto">저장</button>
-							<button type="button" class="btn btn-outline-primary cancel-common change-cancel" data-bs-dismiss="modal">취소</button>
+						<div class="modal-footer org-footer">
+							<button type="button" class="btn btn-primary w90-btn ms-auto">저장</button>
+							<button type="button" class="btn btn-outline-primary w90-btn" data-bs-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</div>

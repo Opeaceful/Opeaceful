@@ -73,10 +73,10 @@ input:focus{
     cursor: pointer;
 }
 .position-plus-btn{
-    font-size: 10px;
+    font-size: 13px;
     float: left;
     cursor: pointer;
-    padding-left: 14px;
+    padding-left: 0;
 }
 .position-plus-btn>i{
     padding-left: 4px;
@@ -88,16 +88,17 @@ input:focus{
 .position-list{
     padding-top: 0;
     margin-top: -4px;
+    padding-left: 0;
 }
 .list-group-item{
     border-bottom: none;
 }
 .position-list>input{
-    width: 73%;
+    width: 48%;
 }
 .position-ok, .position-cancel{
-    width: 22%;
-    font-size: 10px;
+    width: 25%;
+    font-size: 13px;
 }
 .change-ok, .change-cancel{
     width: 11%;
@@ -136,3 +137,4 @@ input:focus{
 .table{
     white-space: nowrap;
 }
+.org-footer{margin-right: 33.5%;}
