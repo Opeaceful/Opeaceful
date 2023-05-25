@@ -1,5 +1,7 @@
 :root{
     --side-bar : 60px;
+    --color-white: rgb(255, 255, 255);
+    --color-navy : rgb(3, 3, 62);
     --font-size18 : 18px;
     --font-size15 : 15px;
     --font-size14 : 14px;
