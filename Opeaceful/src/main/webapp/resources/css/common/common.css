@@ -25,23 +25,8 @@
     --font20 : 1.25rem;
 
 
+    --color-serch-box:#ced4da;
 }
-
-/* 사이드바 임시 */
-.sidebar{
-    /* border: 1px solid blue; */
-    width: var(--side-bar);
-    /* width: 300px; */
-    height: 100vh;
-    position: fixed;
-    background-color: var(--color-navy);
-    border-radius: 10px;
-    top: 0;
-    left: 0;
-    transition: width 0.3s;
-    z-index: 1; /* 제일 위로 올라와야함 */
-}
-
 
 .content-wrap{
     width: calc(100vw - var(--side-bar));
@@ -113,7 +98,7 @@ body{
     border-bottom: 2px solid var(--color-navy);
 }
 .table-common>tbody>tr{
-    font-size: var(--font14) /
+    font-size: var(--font14) 
 }
 .table-common>tbody>tr:hover{
     background-color:var(--white-hover);
@@ -249,14 +234,14 @@ input::-webkit-search-cancel-button{
 /* 검색 박스 width 설정 : 아래 주석 -> 본인 css파일에서 적용! */
 /* .search-wrap2{width: 400px;} */
 .btn-outline-secondary {
-    border: 1px solid #ced4da;
+    border: 1px solid var(--color-serch-box);
     --bs-btn-hover-color: none;
     --bs-btn-hover-bg: none;
-    --bs-btn-hover-border-color: #ced4da;
+    --bs-btn-hover-border-color: var(--color-serch-box);
 
     --bs-btn-active-color: none;
     --bs-btn-active-bg: none;
-    --bs-btn-active-border-color: #ced4da;
+    --bs-btn-active-border-color: var(--color-serch-box);
 }
 
 
@@ -291,21 +276,20 @@ input::-webkit-search-cancel-button{
     justify-content: center;
 }
 
+
+/* 모달창 열기위한 버튼 */
+/* 
+    <div>
+        <button type="button" class="w90-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">수정</button>
+    </div>
+*/
+
 /* 모달창 하단 확인/취소 버튼 */
-/* 버튼 클래스에 해당 클래스 부여 후 사용 */
-.ok-common{
-    width: 17%;
-    border-radius: 10px;
-    font-size: var(--font13);
-}
-.cancel-common{
-    border: 1px solid rgb(3, 3, 62);
-    border-radius: 10px;
-    color: rgb(3, 3, 62);
-    width: 17%;
-    font-size: var(--font13);
-}
-
-
-/* width 90px btn */
+/* 
+    <div class="modal-footer">
+        <button type="button" class="w90-btn btn btn-primary">확인</button>
+        <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+    </div>
+*/
+/* 기본 버튼크기 */
 .w90-btn{width: 90px;}

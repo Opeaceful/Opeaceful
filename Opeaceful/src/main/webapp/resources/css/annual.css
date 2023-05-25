@@ -1,0 +1,31 @@
+/* 그림자있는 박스 */
+.annual-wrap{
+    border: 1px solid var(--color-light-gray);
+    border-radius: 20px;;
+    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+    margin-top: 80px;
+}
+/* .annual-wrap div{border: 1px solid red;} */
+/* 중앙 content */
+.annual-content{
+    padding: 60px 80px 140px 80px;
+}
+
+
+/* 표랑 수정버튼 간격 */
+.annual-table{margin-top: 20px;}
+/* common.css에 있는 호버효과 x */
+.annual-wrap .table-common>tbody>tr{pointer-events: none;}
+/* common.css에서 폰트크기 변경 */
+.annual-table>thead {font-size: 16px;}
+.annual-table>tbody>tr {font-size: 14px;}
+
+
+/* 버튼 왼쪽배치 */
+.modify-btn{text-align: end;}
+
+
+/* 모달 */
+.modal-title{color: var(--color-navy);}
+.annual-modify-modal .form-control{width: 100%;}
+.modal-content{padding: 15px 20px;}
