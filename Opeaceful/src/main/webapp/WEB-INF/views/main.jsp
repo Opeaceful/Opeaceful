@@ -27,15 +27,15 @@
     <div class="content-wrap">
         <div class="main-wrap container">
         	<div class="row">
-	        	<div class="main-left col">
-	        		<div id="board-box"></div>
-	        		<div id="sign-box"></div>
-	        		<div id="weather-box"></div>
+	        	<div class="main-left col-7">
+	        		<div class="square-box" id="board-box"></div>
+	        		<div class="square-box" id="sign-box"></div>
+	        		<div class="square-box" id="weather-box"></div>
 	        	</div>
-	        	<div class="main-right col">
-	        		<div id="my-box"></div>
-	        		<div id="calender-box"></div>
-	        		<div id="memo-box"></div>
+	        	<div class="main-right col-5">
+	        		<div class="square-box" id="my-box"></div>
+	        		<div class="square-box" id="calender-box"></div>
+	        		<div class="square-box" id="memo-box"></div>
 	        	</div>
         	</div>
             

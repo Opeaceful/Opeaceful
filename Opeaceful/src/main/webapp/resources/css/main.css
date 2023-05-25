@@ -1,22 +1,29 @@
 .main-wrap div{
-    border: 1px solid red;
+   /*  border: 1px solid red; */
 }
+.main-wrap{height: 900px;}
+.main-wrap>.row{height: 100%;}
 /* 네모박스
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
     box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
  */
+ .square-box{ 
+    border: 1px solid var(--color-light-gray);
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+ }
 /* ====================== 왼쪽 ====================== */
 /* ---------- 공지사항 ---------- */
-#board-box{height: 200px;}
+#board-box{height: 30%;}
 /* ---------- 전자결재 ---------- */
-#sign-box{height: 200px;}
+#sign-box{height: 30%;}
 /* ---------- 날씨 ---------- */
-#weather-box{height: 200px;}
+#weather-box{height: 40%;}
 /* ====================== 오른쪽 ====================== */
 /* ---------- 내정보 ---------- */
-#my-box{height: 200px;}
+#my-box{height: 40%;}
 /* ---------- 캘린더 ---------- */
-#calender-box{height: 200px;}
+#calender-box{height: 40%;}
 /* ---------- 메모 ---------- */
-#memo-box{height: 200px;}
+#memo-box{height: 20%;}
