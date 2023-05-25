@@ -1,0 +1,40 @@
+.login-wrap {
+    width: 100vw;
+    height: 100vh;
+    /* 상하좌우 정중앙 정렬하기 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-div {
+    width: 360px;
+    height: 360px;
+}
+
+.login-logo{text-align: center;}
+
+
+.login-logo{
+    height: 20%;
+    font-size: 50px;
+    font-weight: 900;
+    color: var(--color-navy);
+}
+.login-form{
+    height: 65%;
+    position: relative;
+}
+
+/* 로그인버튼 위치 */
+.login-btn {
+    position: absolute;
+    bottom: 142px;
+    left: 360px;
+    width: 80px;
+    height: 92px;
+}
+#login-btn{
+    width: 100%;
+    height: 100%;
+}
