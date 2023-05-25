@@ -59,8 +59,8 @@ CREATE TABLE `SALARY` (
 	`TOTAL_GROSSPAY`	INT	NOT NULL	COMMENT '급여 지급총액',
 	`TOTAL_DEDUCTIONS`	INT	NOT NULL	COMMENT '급여 공제총액',
 	`NET_PAY`	INT	NOT NULL	COMMENT '급여 실지급액',
-	`PAYMENTS`	INT	NOT NULL	COMMENT '지급항목(사용자입력)',
-	`DEDUCTION`	INT	NOT NULL	COMMENT '공제항목(사용자입력)',
+	`PAYMENTS`	NVARCHAR(1000)	NOT NULL	COMMENT '지급항목(사용자입력)',
+	`DEDUCTION`	NVARCHAR(1000)	NOT NULL	COMMENT '공제항목(사용자입력)',
 	`P_NAME`	NVARCHAR(20)	NOT NULL	COMMENT '급여당시 데이터',
 	`DEPT_NAME`	NVARCHAR(20)	NOT NULL	COMMENT '급여당시 데이터'
 );
@@ -743,9 +743,9 @@ INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
 -- 게시판 종류 기본 데이터 
 
   INSERT INTO BOARD_TYPE(BOARD_CD, BOARD_NAME)
-   VALUES ( 'N', '공지' ),
-			( 'A', '일반' ),
-            ( 'T', '팀' );
+   VALUES ( 'N', '공지사항' ),
+			( 'F', '자유게시판' ),
+            ( 'T', '팀게시판' );
 
 
 -- 관리자 계정 데이터

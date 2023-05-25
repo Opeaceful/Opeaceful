@@ -1,0 +1,60 @@
+/* 그림자있는 박스 */
+.annual-wrap{
+    border: 1px solid var(--color-light-gray);
+    border-radius: 20px;;
+    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+    margin-top: 80px;
+}
+/* .annual-wrap div{border: 1px solid red;} */
+/* 중앙 content */
+.annual-content{
+    padding: 40px 35px 40px 35px;
+}
+
+/* 사원조회 박스 */
+.search-wrap2{width: 200px;}
+
+
+/* 조회한 유저정보 div 크기 설정 */
+.annual-user-info{
+    height: 140px;
+    border: 1px solid var(--color-navy);
+    border-radius: 20px;
+    margin: 25px 0;
+}
+.annual-only-text{font-size: 13px;}
+
+
+/* common.css에 있는 호버효과 x */
+.annual-wrap .table-common>tbody>tr{pointer-events: none;}
+
+/* 총연차 input박스 크기조정 */
+.annual-count {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    text-align: center;
+}
+
+/* common.css에서 폰트크기 변경 */
+.annual-table>thead {font-size: 16px;}
+.annual-table>tbody>tr {font-size: 14px;}
+.annual-table>tfoot{
+    color: var(--color-navy);
+    font-size: 16px;
+    border-top: 2px solid var(--color-navy);
+    font-weight: 600;
+    background-color: var(--color-light-navy);
+}
+
+/* 스크롤 발생 높이 지정 */
+.annual-table-div{height: 48vh;}
+/* 스크롤 none */
+.annual-table-div {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+.annual-table-div::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
