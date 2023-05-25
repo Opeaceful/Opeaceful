@@ -265,5 +265,20 @@ input::-webkit-search-cancel-button{
     justify-content: center;
 }
 
-/* width 90px btn */
+
+/* 모달창 열기위한 버튼 */
+/* 
+    <div>
+        <button type="button" class="w90-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">수정</button>
+    </div>
+*/
+
+/* 모달창 하단 확인/취소 버튼 */
+/* 
+    <div class="modal-footer">
+        <button type="button" class="w90-btn btn btn-primary">확인</button>
+        <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+    </div>
+*/
+/* 기본 버튼크기 */
 .w90-btn{width: 90px;}
