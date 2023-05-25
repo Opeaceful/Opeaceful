@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Opeaceful</title>
 </head>
 <body>
 <!-- 
@@ -14,8 +14,9 @@
 		
 		현재 jsp페이지에서 다른jsp주소로 요청을 위임(forward)할 예정
  -->
- 
-	<jsp:include page="/WEB-INF/views/orgChartEnroll.jsp" />
+
+	
+	<jsp:forward page="login"/>
 
 </body>
 </html>

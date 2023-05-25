@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
@@ -16,21 +16,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    
-    <link rel="stylesheet" href="${path}/resources/css/common/common.css">
-    <link rel="stylesheet" href="${path}/resources/css/main.css">
 
+    <link rel="stylesheet" href="../../../resources/css/common/common.css">
+	<link rel="stylesheet" href="../../../resources/css/mypage.css">
 </head>
 <body>
 
-    <jsp:include page="/WEB-INF/views/sidebar.jsp" />
-    <div class="content-wrap">
-        <div class="main-wrap container">
-
+	<div class="content-wrap">
+        <div class="container">
+			<div class="title-box">
+				<h2 class="title-common">결재 양식</h2>
+			</div>
             
         </div>
     </div>
-
 
 </body>
 </html>

@@ -1,0 +1,64 @@
+
+/* 그림자있는 박스 */
+.mypage-wrap{
+    border: 1px solid var(--color-light-gray);
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+    margin-top: 80px;
+}
+
+/* 중앙 content */
+.mypage-content{
+    padding-top: 80px;
+    padding-bottom: 90px;
+}
+
+/* 왼쪽 사진 영역 */
+.mypage-left{padding-left: 120px;}
+.mypage-profile-box{
+    width: 80px;
+    height: 80px;
+    border-radius: 70%;
+    overflow: hidden;
+    margin: auto;
+}
+.mypage-profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profile-btn{
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* 오른쪽 내용 영역 */
+.mypage-right{padding-left: 100px;}
+.mypage-right label{color: var(--color-navy);}
+.fs-16{
+    font-size: 16px;
+    color: var(--color-navy);
+    font-weight: 500;
+}
+.mypage-input{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    font-size: 18px;
+}
+/* input박스 가로길이 */
+.form-control {width: 70%;}
+
+
+/* 버튼상단 마진 */
+.text-center{margin-top: 80px;}
+.pass-re{ margin-left: 50px;}
+
+
+/* 모달 */
+.modal-title{
+    color: var(--color-navy);
+}
+.change-pwd-div .form-control{width: 100%;}
+.modal-content{padding: 15px 20px;}
