@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +17,8 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-    <link rel="stylesheet" href="<%=  request.getContextPath() %>/resources/css/common/common.css">
-    <link rel="stylesheet" href="<%=  request.getContextPath() %>/resources/css/login.css">
+    <link rel="stylesheet" href="${path}/resources/css/common/common.css">
+    <link rel="stylesheet" href="${path}/resources/css/login.css">
 </head>
 <body>
     <div class="login-wrap">
@@ -33,7 +33,7 @@
 
             <!-- 폼 -->
             <div class="login-form">
-                <form action="<%=  request.getContextPath() %>/main" method="post">
+                <form action="${path}/main" method="post">
                     <div class="login-input">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-user"style="width: 16px;"></i></span>

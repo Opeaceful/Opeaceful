@@ -1,147 +1,184 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	
-	<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/common/sidebar.css">
+	<title>Opeaceful</title>
 
-<title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+
 </head>
 <body>
+
+	<!-- 
+		a 태그에 각자 페이지 넣어주기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 -->
+	
     <div class="sidebar">
-        <div class="sidebar-logo">
+        <div class="sidebar-icon sidebar-logo">
             <i class="fa-solid fa-feather"></i>
         </div>
-        <nav class="sidebar-icon-wrap">
+        <div class="sidebar-wrap">
             <ul>
                 <!-- 메인 -->
-                <li id="icon-home">
-                    <a href="<%=  request.getContextPath() %>/main">
-                        <span class="sidebar-icon"><i class="fa-solid fa-house"></i></span>
+                <li id="sidebar-home">
+
+					<a href="${path}/main">
+                        <i class="sidebar-icon fa-solid fa-house"></i>
                         <span class="sidebar-text">홈</span>
                     </a>
                 </li>
+
                 <!-- 조직도 -->
-                <li class="sidebar-cursor" id="icon-chart">
-                    <div class="accordion-flush" id="accordionFlushExample">
-                        <button class="accordion-button-sidebar accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <span class="sidebar-icon">
-                                <i class="bi bi-diagram-3"></i>
-                            </span>
-                            <span class="sidebar-text">조직도</span>
-                            <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
-                        </button>
-                        <div id="flush-collapseOne" class="sidebar-more accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <a class="sidebar-more-text" href="">조직도 등록</a>
-                            <a class="sidebar-more-text" href="">조직도 현황</a>
-                        </div>
+                <li id="sidebar-chart">
+                    <div class="one-line sidebar-cursor" id="chart-menu">
+                        <i class="sidebar-icon bi bi-diagram-3"></i>
+                        <span class="sidebar-text">조직도</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+                    </div>
+
+                    <div class="sidebar-more" id="chart-menu-item">
+                        <a class="sidebar-more-text" href="">조직도 등록</a>
+                        <a class="sidebar-more-text" href="">조직도 현황</a>
                     </div>
                 </li>
+
                 <!-- 메일 -->
-                <li id="icon-mail">
+                <li id="sidebar-mail">
                     <a href="">
-                        <span class="sidebar-icon"><i class="fa-solid fa-envelope"></i></span>
+                        <i class="sidebar-icon fa-solid fa-envelope"></i>
                         <span class="sidebar-text">메일</span>
                     </a>
                 </li>
+
                 <!-- 게시판 -->
-                <li class="sidebar-cursor" id="icon-notice">
-                    <div class="accordion-flush" id="accordionFlushExample">
-                        <button class="accordion-button-sidebar accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <span class="sidebar-icon"><i class="bi bi-file-text"></i></span>
-                            <span class="sidebar-text">게시판</span>
-                            <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
-                        </button>
-                        <div id="flush-collapseOne" class="sidebar-more accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <a class="sidebar-more-text" href="">공지사항</a>
-                            <a class="sidebar-more-text" href="">팀게시판</a>
-                            <a class="sidebar-more-text" href="">자유게시판</a>
-                        </div>
+                <li id="sidebar-board">
+                    <div class="one-line sidebar-cursor" id="board-menu">
+                        <i class="sidebar-icon bi bi-file-text"></i>
+                        <span class="sidebar-text">게시판</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+                    </div>
+
+                    <div class="sidebar-more" id="board-menu-item">
+                        <a class="sidebar-more-text" href="">공지사항</a>
+                        <a class="sidebar-more-text" href="">팀게시판</a>
+                        <a class="sidebar-more-text" href="">자유게시판</a>
                     </div>
                 </li>
+
                 <!-- 캘린더 -->
-                <li id="icon-calender">
+                <li id="sidebar-calender">
                     <a href="">
-                        <span class="sidebar-icon"><i class="bi bi-calendar-date"></i></span>
+                        <i class="sidebar-icon bi bi-calendar-date"></i>
                         <span class="sidebar-text">캘린더</span>
                     </a>
                 </li>
+
                 <!-- 전자결재 -->
-                <li id="icon-sign">
+                <li id="sidebar-sign">
                     <a href="">
-                        <span class="sidebar-icon"><i class="bi bi-briefcase-fill"></i></span>
+                        <i class="sidebar-icon bi bi-briefcase-fill"></i>
                         <span class="sidebar-text">전자결재</span>
                     </a>
                 </li>
+
                 <!-- 근태 -->
-                <li id="icon-work">
+                <li id="sidebar-work">
                     <a href="">
-                        <span class="sidebar-icon"><i class="fa-solid fa-clock"></i></span>
+                        <i class="sidebar-icon fa-solid fa-clock"></i>
                         <span class="sidebar-text">근태</span>
                     </a>
                 </li>
+
                 <!-- 연차관리 -->
-                <li id="icon-vacation">
-                    <a href="">
-                        <span class="sidebar-icon"><i class="fa-solid fa-umbrella-beach"></i></span>
+                <li id="sidebar-annual">
+                    <div class="one-line sidebar-cursor" id="annual-menu">
+                        <i class="sidebar-icon fa-solid fa-umbrella-beach"></i>
                         <span class="sidebar-text">연차관리</span>
-                    </a>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+                    </div>
+
+                    <div class="sidebar-more" id="annual-menu-item">
+                        <a class="sidebar-more-text" href="">총연차관리</a>
+                        <a class="sidebar-more-text" href="">연차조회</a>
+                    </div>
                 </li>
+
                 <!-- 계정관리 -->
-                <li id="icon-account">
-                    <a href="">
-                        <span class="sidebar-icon"><i class="fa-solid fa-user-plus"></i></span>
+                <li id="sidebar-account">
+                    <div class="one-line sidebar-cursor" id="account-menu">
+                        <i class="sidebar-icon fa-solid fa-user-plus"></i>
                         <span class="sidebar-text">계정관리</span>
-                    </a>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="sidebar-more" id="account-menu-item">
+                        <a class="sidebar-more-text" href="">사용자 조회</a>
+                        <a class="sidebar-more-text" href="">사용자 등록</a>
+                    </div>
                 </li>
+
                 <!-- 권한관리 -->
-                <li id="icon-authority">
-                    <a href="">
-                        <span class="sidebar-icon"><i class="fa-solid fa-user-gear"></i></span>
+                <li id="sidebar-role">
+                    <div class="one-line sidebar-cursor" id="role-menu">
+                        <i class="sidebar-icon fa-solid fa-user-gear"></i>
                         <span class="sidebar-text">권한관리</span>
-                    </a>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="sidebar-more" id="role-menu-item">
+                        <a class="sidebar-more-text" href="">권한 등록</a>
+                        <a class="sidebar-more-text" href="">사원별 권한 등록</a>
+                    </div>
                 </li>
             </ul>
-        </nav>
+        </div>
 
-        <!-- fixed-bottom : 최하단 고정 -->
-        <nav class="sidebar-icon-end sidebar-icon-wrap fixed-bottom">
+        <!-- fixed-bottom : 최하단 고정(부트스트랩) -->
+        <div class="sidebar-wrap fixed-bottom">
             <ul>
                 <!-- 마이페이지 -->
-                <li id="icon-info">
-                    <a href="<%=  request.getContextPath() %>/member/mypage">
-                        <span class="sidebar-icon"><i class="bi bi-person-circle"></i></span>
+                <li id="sidebar-info">
+                    <a href="${path}/member/mypage">
+                        <i class="sidebar-icon bi bi-person-circle"></i>
                         <span class="sidebar-text">마이페이지</span>
                     </a>
                 </li>
                 <!-- 로그아웃 -->
-                <li id="icon-logout">
-                    <a href="<%=  request.getContextPath() %>/member/logout">
-                        <span class="sidebar-icon"><i class="fa-solid fa-power-off"></i></span>
+                <li id="sidebar-logout">
+                    <a href="${path}/member/logout">
+                        <i class="sidebar-icon fa-solid fa-power-off"></i>
                         <span class="sidebar-text">로그아웃</span>
                     </a>
                 </li>
             </ul>
-        </nav>
+        </div>
     </div>
 
+
+        
     <script>
+        $(".sidebar-more").css("display", "none");
 
-        // $(".sidebar").on('mouseout',function(){
-        //     console.log("###?")
-        //     // if($(".sidebar").width() < 300){
-        //         // $('.accordion-collapse').removeClass("show");
-        //     // }
+        // $(document).ready(function () {
+        $("#chart-menu").click(function () {
+            $("#chart-menu-item").slideToggle();
+        });
         // });
-
-        // $(".sidebar").hover(function(){
-        //     $(this).css("width", "300");
-        // },function(){
-        //     $(this).css("width", "60");
-        // })
-
+        $("#board-menu").click(function () {
+            $("#board-menu-item").slideToggle();
+        });
+        $("#annual-menu").click(function () {
+            $("#annual-menu-item").slideToggle();
+        });
+        $("#account-menu").click(function () {
+            $("#account-menu-item").slideToggle();
+        });
+        $("#role-menu").click(function () {
+            $("#role-menu-item").slideToggle();
+        });
     </script>
 </body>
 </html>

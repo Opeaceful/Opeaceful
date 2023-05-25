@@ -43,11 +43,11 @@ public class initFilter extends HttpFilter implements Filter {
 		ServletContext application = request.getServletContext();
 		
 		// 2. 최상위 주소 얻어오기(/spring)
-		String contextPath = ((HttpServletRequest)request).getContextPath();
+		String path = ((HttpServletRequest)request).getContextPath();
 		
 		// 3. 세팅하기 --> application 스코프에 contextPath경로 저장
-		application.setAttribute("contextPath", contextPath);
-		//System.out.println(contextPath);
+		application.setAttribute("path", path);
+
 		chain.doFilter(request, response);
 	}
 

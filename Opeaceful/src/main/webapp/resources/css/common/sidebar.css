@@ -16,7 +16,6 @@
 /* 사이드바 */
 .sidebar{
     width: var(--side-bar);
-    width: 300px;
     height: 100vh;
     position: fixed;
     background-color: var(--color-navy);
@@ -65,6 +64,6 @@
     padding: 0 0 14px 65px;
 }
 .sidebar-more-text:hover{
-    color: var(--color-navy);
+    /* color: var(--color-navy); */
 }
 
