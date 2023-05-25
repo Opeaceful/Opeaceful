@@ -743,9 +743,9 @@ INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
 -- 게시판 종류 기본 데이터 
 
   INSERT INTO BOARD_TYPE(BOARD_CD, BOARD_NAME)
-   VALUES ( 'N', '공지' ),
-			( 'A', '일반' ),
-            ( 'T', '팀' );
+   VALUES ( 'N', '공지사항' ),
+			( 'F', '자유게시판' ),
+            ( 'T', '팀게시판' );
 
 
 -- 관리자 계정 데이터
