@@ -32,7 +32,11 @@
 
 /* 사이드바 상단 마진 */
 .sidebar-wrap{padding-top: 120px;}
-
+.sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
 /* ========================== 상위 카테고리 ========================== */
 
 

@@ -135,8 +135,7 @@
             </ul>
         </div>
 
-        <!-- fixed-bottom : 최하단 고정(부트스트랩) -->
-        <div class="sidebar-wrap fixed-bottom">
+        <div class="sidebar-wrap sidebar-bottom">
             <ul>
                 <!-- 마이페이지 -->
                 <li id="sidebar-info">
