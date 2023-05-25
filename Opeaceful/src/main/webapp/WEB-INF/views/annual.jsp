@@ -15,17 +15,19 @@
 	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="resources/css/common.css">
-    <link rel="stylesheet" href="resources/css/annual.css">
+    <link rel="stylesheet" href="${path}/resources/css/common/common.css">
+    <link rel="stylesheet" href="${path}/resources/css/annual.css">
 
 </head>
 <body>
 
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
-        <div class="annual-wrap container">
+        <div class="container">
             <!-- 제목 -->
-            <h4 class="title-underline">총 연차 관리</h4>
+			<div class="title-box">
+				<h2 class="title-common">총 연차 관리</h2>
+			</div>
     
             <!-- 내용부분 -->
             <div class="annual-content container">

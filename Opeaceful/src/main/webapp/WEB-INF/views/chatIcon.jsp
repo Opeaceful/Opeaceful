@@ -9,15 +9,17 @@
 <style>
 	#chat-icon{
 		z-index: 5;
-		border: 1px solid red;
+
 		width: 50px;
 		height: 50px;
 		position: fixed;
-		top: 90%;
-		left: 90%;
+    	bottom: 60px;
+    	right: 60px;
 	}
-
-
+	#chat-icon>i{
+		font-size: 3rem;
+	    line-height: 1rem;
+	}
 </style>
 </head>
 <body>

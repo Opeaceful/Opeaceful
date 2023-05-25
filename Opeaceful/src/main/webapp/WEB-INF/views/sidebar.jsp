@@ -8,7 +8,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
-
 </head>
 <body>
 
@@ -101,8 +100,8 @@
                     </div>
 
                     <div class="sidebar-more" id="annual-menu-item">
-                        <a class="sidebar-more-text" href="">총연차관리</a>
-                        <a class="sidebar-more-text" href="">연차조회</a>
+                        <a class="sidebar-more-text" href="${path}/annual/setting">총연차관리</a>
+                        <a class="sidebar-more-text" href="${path}/annual/list">연차조회</a>
                     </div>
                 </li>
 
@@ -136,8 +135,7 @@
             </ul>
         </div>
 
-        <!-- fixed-bottom : 최하단 고정(부트스트랩) -->
-        <div class="sidebar-wrap fixed-bottom">
+        <div class="sidebar-wrap sidebar-bottom">
             <ul>
                 <!-- 마이페이지 -->
                 <li id="sidebar-info">
@@ -155,6 +153,11 @@
                 </li>
             </ul>
         </div>
+    </div>
+    
+    <!-- 채팅아이콘 -->
+    <div id="chat-icon" >
+		<i class="bi bi-chat"></i>
     </div>
 
 

@@ -1,6 +1,11 @@
-div{
-    /* border: 1px solid red; */
+.main-wrap div{
+    border: 1px solid red;
 }
-.main-wrap{
-    height: 90vh;
-}
+/* 네모박스
+
+    border: 1px solid var(--color-light-gray);
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+    margin-top: 80px;
+ */
+

@@ -22,12 +22,11 @@
 </head>
 <body>
 
-    <%-- <jsp:include page="/WEB-INF/views/chatIcon.jsp" /> --%>
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="mypage-wrap container">
             <!-- 제목 -->
-            <h4 class="title-underline">마이페이지</h4>
+            <h2 class="title-underline">마이페이지</h2>
 
             <!-- 회원정보 -->
             <div class="mypage-content container row">
@@ -45,14 +44,14 @@
 
                     <!-- 사번 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">사번</div>
-                        <div class="fs-5 ps-4 col-9" id="mypage-no">230522</div>
+                        <div class="fs-14 col-3">사번</div>
+                        <div class="fs-18 ps-4 col-9" id="mypage-no">230522</div>
                     </div>
                     
                     <!-- 이름 / 직급 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">이름 / 직급</div>
-                        <div class="fs-5 ps-4 col-9">
+                        <div class="fs-14 col-3">이름 / 직급</div>
+                        <div class="fs-18 ps-4 col-9">
                             <div class="d-inline" id="mypage-name">노지의</div>
                             <div class="d-inline ms-2 me-2"> / </div>
                             <div class="d-inline" id="mypage-position">사원</div>
@@ -61,8 +60,8 @@
                     
                     <!-- 부서 / 팀 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">부서 / 팀</div>
-                        <div class="fs-5 ps-4 col-9">
+                        <div class="fs-14 col-3">부서 / 팀</div>
+                        <div class="fs-18 ps-4 col-9">
                             <div class="d-inline" id="mypage-dept">IT</div>
                             <div class="d-inline ms-2 me-2"> / </div>
                             <div class="d-inline" id="mypage-team">개발 1팀</div>
@@ -71,40 +70,40 @@
 
                     <!-- 연락처 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">연락처</div>
-                        <div class="fs-5 col-9">
+                        <div class="fs-14 col-3">연락처</div>
+                        <div class="fs-18 col-9">
                             <input type="tel" id="mypage-phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13">
                         </div>
                     </div>
 
                     <!-- 내선번호 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">내선번호</div>
-                        <div class="fs-5 col-9">
+                        <div class="fs-14 col-3">내선번호</div>
+                        <div class="fs-18 col-9">
                             <input type="tel" id="mypage-call" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13">
                         </div>
                     </div>
 
                     <!-- 주소 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">주소</div>
-                        <div class="fs-5 col-9">
+                        <div class="fs-14 col-3">주소</div>
+                        <div class="fs-18 col-9">
                             <input type="text" id="mypage-address" class="mypage-input form-control box-shadow-put">
                         </div>
                     </div>
 
                     <!-- 이메일 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">이메일</div>
-                        <div class="fs-5 col-9">
+                        <div class="fs-14 col-3">이메일</div>
+                        <div class="fs-18 col-9">
                             <input type="email" id="mypage-email" class="mypage-input form-control box-shadow-put" pattern=".+@gmail\.com">
                         </div>
                     </div>
 
                     <!-- 입사일 -->
                     <div class="mb-4 row align-items-center">
-                        <div class="fs-16 col-3">입사일</div>
-                        <div class="fs-5 ps-4 col-9" id="mypage-date">2023-05-22</div>
+                        <div class="fs-14 col-3">입사일</div>
+                        <div class="fs-18 ps-4 col-9" id="mypage-date">2023-05-22</div>
                     </div>
 
                 </div>

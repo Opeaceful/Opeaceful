@@ -26,7 +26,16 @@
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="main-wrap container">
-
+        	<div class="row">
+	        	<div class="main-left col">
+	        		<div id="board-box"></div>
+	        		<div id="board-box"></div>
+	        		<div id="board-box"></div>
+	        	</div>
+	        	<div class="main-right col">
+	        	
+	        	</div>
+        	</div>
             
         </div>
     </div>
