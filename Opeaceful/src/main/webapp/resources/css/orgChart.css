@@ -97,11 +97,33 @@ right connector from last child*/
 	border-color:  #94a0b4;
 }
 
-.team{
-    border: 1px solid lightgray;
+.dp-name{
+    border: 1px solid var(--color-navy);
+    size: 27%;
+    width: 29%;
+    display: inline-block;
+    height: 35px;
+    line-height: 31.5px;
+    background-color: var(--color-navy);
+    color: white;
 }
-.team>div{
-    border-bottom: 1px solid lightgray;
+.row{
+    /* width: 68%; */
+    border: 1px solid #ccc;
 }
-.frow, .srow{    width: 107%;
-    float: right;}
+.col{border: 1px solid #ccc;}
+table{
+    border: 1px solid;
+    margin-right: 30px;
+}
+/* .team-row{
+    height: 60px;
+    line-height: 26px;
+}
+.chart-col1{
+    width: 100%; 
+    border-bottom: 1px solid #ccc;
+    background-color: var(--color-light-navy);
+}
+.chart-col2{border-right: 1px solid #ccc;}
+.chart-col2, .chart-col3{width: 50%;} */

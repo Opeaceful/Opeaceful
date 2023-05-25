@@ -25,8 +25,8 @@
 			<div class="row">
 				<div class="col-4 left-box">
 					<div class="d-grid d-grid-common d-md-flex justify-content-md-end">
-						<button class="btn btn-primary me-md-2 w90-btn" type="button">부서추가</button>
-						<button class="btn btn-primary w90-btn" data-bs-toggle="modal" data-bs-target="#position" type="button">직급관리</button>
+						<button class="btn btn-primary me-md-2" type="button">부서추가</button>
+						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#position" type="button">직급관리</button>
 					</div>
 					<div class="accordion accordion-flush" id="accordionFlushExample">
 						<div class="accordion-item accordion-item-common">
@@ -83,14 +83,11 @@
 				<div class="col right-box">
 					<div class="name-btn-box">
 						<div class="department-name-box">경영지원본부</div>
-						<button type="button" class="btn btn-primary w90-btn" data-bs-toggle="modal" data-bs-target="#change">인사발령</button>
+						<button class="btn btn-primary dp-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>
 					</div>
 					<table class="table table-hover table-common">
 						<thead>
 							<tr>
-								<th class="pth1">
-									<input class="form-check-input all-check-btn" type="checkbox" id="checkboxNoLabel" value="" aria-label="전체선택">
-								</th>
 								<th class="pth2">사원번호</th>
 								<th class="pth3">성명</th>
 								<th class="pth4">소속부서</th>
@@ -99,18 +96,12 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>
-									<input class="form-check-input check-btn" type="checkbox" id="checkboxNoLabel" value="" aria-label="개별선택">
-								</td>
 								<td>951003</td>
 								<td>박가영</td>
 								<td>인사팀</td>
 								<td>사원</td>
 							</tr>
 							<tr>
-								<td>
-									<input class="form-check-input check-btn" type="checkbox" id="checkboxNoLabel" value="" aria-label="개별선택">
-								</td>
 								<td>210208</td>
 								<td>윤지영</td>
 								<td>인사팀</td>

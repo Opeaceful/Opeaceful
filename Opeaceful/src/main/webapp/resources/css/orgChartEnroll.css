@@ -1,16 +1,5 @@
 body *{
     box-sizing: border-box;
-
-}
-#sidebar{
-    border: 1px solid blue;
-    width: var(--side-bar);
-    height: 100vh;
-    position: fixed;
-    left: 0;
-}
-.title-box {
-    margin-bottom: 20px;
 }
 .oc-accordion-btn{
     padding-bottom: 7px;
@@ -25,16 +14,16 @@ input:focus{
 }
 .team-plus{
     padding-left: 16px;
-    font-size: 14px;
+    font-size: var(--font14);
 }
 .team-minus, .team-change{
     padding-left: 8px;
-    font-size: 13px;
+    font-size: var(--font13);
     cursor: pointer;
 }
 .li-team-minus, .li-team-change{
     padding-left: 8px;
-    font-size: 11px;
+    font-size: var(--font11);
     cursor: pointer;
 }
 .oc-all{
@@ -47,29 +36,13 @@ input:focus{
 .name-btn-box{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 17px;
 }
 .department-name-box{
-    /* border-bottom: solid; */
-    font-size: 18px;
-    line-height: 35px;
-    margin-bottom: 6px;
-}
-.all-check-btn{
-    width: 1.25em;
-    height: 1.25em;
-    margin-top: 0.4em;
-    font-size: 11px;
-    cursor: pointer;
-}
-.check-btn{
-    width: 1.25em;
-    height: 1.25em;
-    margin-top: 0.75em;
-    font-size: 11px;
-    cursor: pointer;
+    font-size: var(--font18);
 }
 .position-plus-btn{
-    font-size: 13px;
+    font-size: var(--font13);
     float: left;
     cursor: pointer;
     padding-left: 0;
@@ -94,11 +67,7 @@ input:focus{
 }
 .position-ok, .position-cancel{
     width: 25%;
-    font-size: 13px;
-}
-.change-ok, .change-cancel{
-    width: 11%;
-    font-size: 10px;
+    font-size: var(--font13);
 }
 .position-modal{
     width: 50%;
@@ -107,7 +76,7 @@ input:focus{
 }
 .position-change{
     padding-left: 4px;
-    font-size: 13px;
+    font-size: var(--font13);
     cursor: pointer;
 }
 .dropdown-toggle{
@@ -118,16 +87,23 @@ input:focus{
 }
 .box-shadow-none{
     border: none;
-    font-size: 11px;
+    font-size: var(--font14);
 }
 .change-tr{
-    line-height: 27px;
+    line-height: 33px;
 }
 .change-modal{
-    width: 65%;
+    width: 68%;
     transform: translate(31%);
 }
 .table{
     white-space: nowrap;
 }
 .org-footer{margin-right: 33.5%;}
+.box-shadow-none:focus-visible{
+    border: 0px;
+    outline: none;
+}
+.d-grid>button{font-size: var(--font12);}
+.dp-btn{font-size: var(--font12);}
+.title-box{margin: 80px 0;}

@@ -28,4 +28,9 @@ public class OrgChartController {
 	public String insertOrgChart() {
 		return "orgChartEnroll";
 	}
+	
+	@RequestMapping("/orgChartView")
+	public String selectOrgChart() {
+		return "orgChart";
+	}
 }
