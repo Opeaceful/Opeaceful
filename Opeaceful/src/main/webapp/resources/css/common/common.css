@@ -13,23 +13,8 @@
     --white-hover: rgba(3, 3, 62, 0.09);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
+    --color-serch-box:#ced4da;
 }
-
-/* 사이드바 임시 */
-.sidebar{
-    /* border: 1px solid blue; */
-    width: var(--side-bar);
-    /* width: 300px; */
-    height: 100vh;
-    position: fixed;
-    background-color: var(--color-navy);
-    border-radius: 10px;
-    top: 0;
-    left: 0;
-    transition: width 0.3s;
-    z-index: 1; /* 제일 위로 올라와야함 */
-}
-
 
 .content-wrap{
     width: calc(100vw - var(--side-bar));
@@ -238,14 +223,14 @@ input::-webkit-search-cancel-button{
 /* 검색 박스 width 설정 : 아래 주석 -> 본인 css파일에서 적용! */
 /* .search-wrap2{width: 400px;} */
 .btn-outline-secondary {
-    border: 1px solid #ced4da;
+    border: 1px solid var(--color-serch-box);
     --bs-btn-hover-color: none;
     --bs-btn-hover-bg: none;
-    --bs-btn-hover-border-color: #ced4da;
+    --bs-btn-hover-border-color: var(--color-serch-box);
 
     --bs-btn-active-color: none;
     --bs-btn-active-bg: none;
-    --bs-btn-active-border-color: #ced4da;
+    --bs-btn-active-border-color: var(--color-serch-box);
 }
 
 
@@ -288,9 +273,9 @@ input::-webkit-search-cancel-button{
     font-size: 13px;
 }
 .cancel-common{
-    border: 1px solid rgb(3, 3, 62);
+    border: 1px solid var(--color-navy);
     border-radius: 10px;
-    color: rgb(3, 3, 62);
+    color: var(--color-navy);
     width: 17%;
     font-size: 13px;
 }
