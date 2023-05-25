@@ -23,9 +23,11 @@
 
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
-        <div class="annual-wrap container">
+        <div class="container">
             <!-- 제목 -->
-            <h4 class="title-underline">총 연차 관리</h4>
+			<div class="title-box">
+				<h2 class="title-common">총 연차 관리</h2>
+			</div>
     
             <!-- 내용부분 -->
             <div class="annual-content container">
