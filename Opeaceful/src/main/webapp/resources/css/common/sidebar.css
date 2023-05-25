@@ -2,18 +2,29 @@
     --side-bar : 60px;
     --color-white: rgb(255, 255, 255);
     --color-navy : rgb(3, 3, 62);
-    --font-size18 : 18px;
-    --font-size15 : 15px;
-    --font-size14 : 14px;
-    --font-size12 : 12px;
+    
+    --font11 : 0.69rem;
+    --font12 : 0.75rem;
+    --font13 : 0.81rem;
+    --font14 : 0.875rem;
+    --font15 : 0.937rem;
+    --font18 : 1.125rem;
+    --font20 : 1.25rem;
+    --side-icon : 1.4rem;
 }
 
 .sidebar a {text-decoration: none;}
 .sidebar ul, .sidebar li{list-style: none; padding: 0;}
-.sidebar i{color: var(--color-white);}
+.sidebar i{
+	color: var(--color-white);
+	font-size: var(--side-icon);
+}
+/* 줄바꿈 없앰 */
+.sidebar-wrap > ul > li > a,.one-line {display: block; white-space: nowrap;}
+.sidebar-more {white-space: nowrap;}
 
 
-/* 사이드바 */
+/* ========================== 사이드바 ========================== */
 .sidebar{
     width: var(--side-bar);
     height: 100vh;
@@ -24,22 +35,25 @@
     top: 0;
     left: 0;
     transition: width 0.3s;
-    z-index: 1; /* 제일 위로 올라와야함 */
+    z-index: 10; /* 제일 위로 올라와야함 */
+	overflow: hidden;
 }
 
 /* 사이드바 오픈 호버 */
-.sidebar:hover {width: 300px;}
+/* .sidebar:hover {width: 300px;} */
+.sidebar-logo{margin-top: 4rem; height: 140px;}
 
-/* 사이드바 상단 마진 */
-.sidebar-wrap{padding-top: 120px;}
-.sidebar-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+
+/* ================ 상위 카테고리 ================ */
+.sidebar-top{height: 70%;}
+.side-icon-size {
+    display: inline-block;
+    width: 1.8rem;
+    height: 1.9rem;
+    text-align: center;
+    line-height: 1.8rem;
+    margin: 1rem var(--font15);
 }
-/* ========================== 상위 카테고리 ========================== */
-
-
 .sidebar-text{
     font-weight: 700;
     color: var(--color-white);
@@ -48,18 +62,25 @@
 /* 사이드바 화살표 */
 .sidebar-icon-arrow{
     color: var(--color-white);
+    font-size: var(--font12);
+}
+/* 스크롤 none */
+.sidebar-top {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+.sidebar-top::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
 
 
-.sidebar-wrap > ul > li > a,.sidebar-wrap > ul > li > .one-line {
-    display: block;
-    white-space: nowrap; /* 줄바꿈 없앰 */
-}
-.sidebar-more {
-    white-space: nowrap; /* 줄바꿈 없앰 */
-}
+/* ================ 하위 카테고리 ================ */
+.sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    height: 140px;
 
-/* ========================== 하위 카테고리 ========================== */
+}
 .sidebar-more-text{
     font-size: var(--font-size15);
     font-weight: 500;
@@ -70,6 +91,8 @@
 .sidebar-more-text:hover{
     /* color: var(--color-navy); */
 }
+
+
 
 
 /* ========================== 채팅 아이콘 ========================== */

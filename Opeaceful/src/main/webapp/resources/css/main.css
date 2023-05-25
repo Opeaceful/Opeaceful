@@ -2,10 +2,21 @@
     border: 1px solid red;
 }
 /* 네모박스
-
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
     box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
-    margin-top: 80px;
  */
-
+/* ====================== 왼쪽 ====================== */
+/* ---------- 공지사항 ---------- */
+#board-box{height: 200px;}
+/* ---------- 전자결재 ---------- */
+#sign-box{height: 200px;}
+/* ---------- 날씨 ---------- */
+#weather-box{height: 200px;}
+/* ====================== 오른쪽 ====================== */
+/* ---------- 내정보 ---------- */
+#my-box{height: 200px;}
+/* ---------- 캘린더 ---------- */
+#calender-box{height: 200px;}
+/* ---------- 메모 ---------- */
+#memo-box{height: 200px;}
