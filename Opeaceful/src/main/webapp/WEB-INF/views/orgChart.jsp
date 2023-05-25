@@ -26,66 +26,44 @@
 						<div class="dp-name">경영지원본부</div>
 						<ul >
 							<li >
-								<div>
 								<table>
 									<thead>
 										<tr>
-										  <th scope="col">회계팀</th>
-										  <th scope="col"></th>	
+										  <td scope="col" colspan="2">회계팀</td>
+										  <td scope="col"></td>
 										</tr>
 									  </thead>
 									  <tbody>
 										<tr>
-										  <th scope="row">부장</th>
-										  <td>장팀장</td>
+										  <td scope="row">장팀장</td>
+										  <td>부장</td>
 										</tr>
 										<tr>
-											<th scope="row">부장</th>
-											<td>장팀장</td>
+											<td scope="row">장팀장</td>
+											<td>부장</td>
 										  </tr>
 										  <tr>
-											<th scope="row">부장</th>
-											<td>장팀장</td>
+											<td scope="row">장팀장</td>
+											<td>부장</td>
 										  </tr>
 										  <tr>
-											<th scope="row">부장</th>
-											<td>장팀장</td>
+											<td scope="row">장팀장</td>
+											<td>부장</td>
 										  </tr>
 										  <tr>
-											<th scope="row">부장</th>
-											<td>장팀장</td>
+											<td scope="row">장팀장</td>
+											<td>부장</td>
 										  </tr>
 										  <tr>
-											<th scope="row">부장</th>
-											<td>장팀장</td>
+											<td scope="row">장팀장</td>
+											<td>부장</td>
 										  </tr>
 										  <tr>
-											<th scope="row">부장</th>
-											<td>장팀장</td>
+											<td scope="row">장팀장</td>
+											<td>부장</td>
 										  </tr>
 									  </tbody>
 								</table>
-								</div>
-
-								<!-- <div class="row team-row">
-									<div class="col-12 chart-col1">회계팀</div>
-									<div class="col-12 chart-col2"></div>
-									<div class="col-12 chart-col2">장팀장</div>
-									<div class="col-12 chart-col2">장팀장</div>
-									<div class="col-12 chart-col2">장팀장</div>
-									<div class="col-12 chart-col2">장팀장</div>
-									<div class="col-12 chart-col2">장팀장</div>
-									<div class="col-12 chart-col2">장팀장</div>
-									 <div class="col-6 chart-col3">부장</div>
-									<div class="col-6 chart-col2">장팀장</div>
-									<div class="col-6 chart-col3">부장</div>
-									<div class="col-6 chart-col2">장팀장</div>
-									<div class="col-6 chart-col3">부장</div>
-									<div class="col-6 chart-col2">장팀장</div>
-									<div class="col-6 chart-col3">부장</div>
-									<div class="col-6 chart-col2">장팀장</div>
-									<div class="col-6 chart-col3">부장</div> 
-								</div> -->
 							</li>
 							<li>
 								<div class="row">
