@@ -13,6 +13,18 @@
     --white-hover: rgba(3, 3, 62, 0.09);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
+
+
+    /*폰트사이즈 뺴놓음*/
+    --font11 : 0.69rem;
+    --font12 : 0.75rem;
+    --font13 : 0.81rem;
+    --font14 : 0.875rem;
+    --font15 : 0.937rem;
+    --font18 : 1.125rem;
+    --font20 : 1.25rem;
+
+
 }
 
 /* 사이드바 임시 */
@@ -98,11 +110,10 @@ body{
 }
 .table-common>thead{
     color: var(--color-navy);
-    font-size: 13px;
     border-bottom: 2px solid var(--color-navy);
 }
 .table-common>tbody>tr{
-    font-size: 11px;
+    font-size: var(--font14) /
 }
 .table-common>tbody>tr:hover{
     background-color:var(--white-hover);
@@ -137,7 +148,7 @@ body{
 }
 .accordion-button-common{
     font-weight: 400;
-    font-size: 18px;
+    font-size: 1.125rem; /*18px*/
     padding-bottom: 10px;
 }
 /* ul, li */
@@ -154,7 +165,7 @@ body{
 .low-common { 
     text-align: left;
     margin-left: -3px;
-    font-size: 14px;
+    font-size: 0.875rem; /*14px*/
 }
 
 /* 상단 제목 (페이지 제목) */
@@ -181,7 +192,7 @@ body{
     margin: auto;
 }
 .pagination>li>a {
-    font-size: 12px;
+    font-size: 0.75rem; /*12px*/
     color: var(--color-navy);
     border: none;
 }
@@ -216,14 +227,14 @@ body{
     border-radius: 0.3em;
     width: 350px;
     height: 28px;
-    font-size: 13px;
+    font-size: 0.81rem; /*13px*/
 }
 .search-btn{
     border: none;
     background: none;
 }
 .search-btn>i{
-    font-size: 15px;
+    font-size: 0.937rem; /*15px;*/
     color: grey;
 }
 input::-webkit-search-cancel-button{
@@ -285,14 +296,14 @@ input::-webkit-search-cancel-button{
 .ok-common{
     width: 17%;
     border-radius: 10px;
-    font-size: 13px;
+    font-size: var(--font13);
 }
 .cancel-common{
     border: 1px solid rgb(3, 3, 62);
     border-radius: 10px;
     color: rgb(3, 3, 62);
     width: 17%;
-    font-size: 13px;
+    font-size: var(--font13);
 }
 
 
