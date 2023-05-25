@@ -54,10 +54,6 @@ input:focus{
     line-height: 35px;
     margin-bottom: 6px;
 }
-.change-btn{
-    float: right;
-    margin-bottom: 13px;
-}
 .all-check-btn{
     width: 1.25em;
     height: 1.25em;
@@ -113,9 +109,6 @@ input:focus{
     padding-left: 4px;
     font-size: 13px;
     cursor: pointer;
-}
-.oc-ok-btn, .oc-cancel-btn{
-    width: 12%;
 }
 .dropdown-toggle{
     background-color: white;

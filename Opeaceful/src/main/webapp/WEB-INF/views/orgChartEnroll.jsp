@@ -25,8 +25,8 @@
 			<div class="row">
 				<div class="col-4 left-box">
 					<div class="d-grid d-grid-common d-md-flex justify-content-md-end">
-						<button class="btn btn-primary me-md-2 department-btn" type="button" style="-bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">부서추가</button>
-						<button class="btn btn-primary position-btn" data-bs-toggle="modal" data-bs-target="#position" type="button" style="-bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">직급관리</button>
+						<button class="btn btn-primary me-md-2 w90-btn" type="button">부서추가</button>
+						<button class="btn btn-primary w90-btn" data-bs-toggle="modal" data-bs-target="#position" type="button">직급관리</button>
 					</div>
 					<div class="accordion accordion-flush" id="accordionFlushExample">
 						<div class="accordion-item accordion-item-common">
@@ -83,7 +83,7 @@
 				<div class="col right-box">
 					<div class="name-btn-box">
 						<div class="department-name-box">경영지원본부</div>
-						<button type="button" class="btn btn-primary change-btn" data-bs-toggle="modal" data-bs-target="#change" style="-bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">인사발령</button>
+						<button type="button" class="btn btn-primary w90-btn" data-bs-toggle="modal" data-bs-target="#change">인사발령</button>
 					</div>
 					<table class="table table-hover table-common">
 						<thead>
