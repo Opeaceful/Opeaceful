@@ -22,6 +22,7 @@
 </head>
 <body>
 
+    <%-- <jsp:include page="/WEB-INF/views/chatIcon.jsp" /> --%>
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="mypage-wrap container">
