@@ -97,25 +97,38 @@ right connector from last child*/
 	border-color:  #94a0b4;
 }
 
+.tree{
+	overflow: auto;
+    width: 90%;
+    padding-bottom: 50px;
+}
+
+.tree>ul:first-child{width: max-content;}
+
+.title-box{margin-bottom: 80px;}
+
 .dp-name{
     border: 1px solid var(--color-navy);
-    size: 27%;
-    width: 29%;
+    width: 34%;
     display: inline-block;
     height: 35px;
     line-height: 31.5px;
     background-color: var(--color-navy);
     color: white;
+	font-weight: 500;
+	font-size: var(--font18);
 }
-.row{
-    /* width: 68%; */
+table{
     border: 1px solid #ccc;
 }
-.col{border: 1px solid #ccc;}
-table{
-    border: 1px solid;
-    margin-right: 30px;
+thead{
+	border-bottom: 1px solid #ccc;
+	background-color: var(--color-light-navy);
 }
+tbody{font-size: var(--font14);}
+tbody>tr{border-bottom: 1px solid #ccc;}
+tbody>tr>td:first-child{border-right: 1px solid #ccc;}
+thead td:first-child{width: 199px;}
 /* .team-row{
     height: 60px;
     line-height: 26px;

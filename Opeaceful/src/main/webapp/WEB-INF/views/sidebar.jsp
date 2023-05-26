@@ -85,7 +85,7 @@
 
                 <!-- 근태 -->
                 <li id="sidebar-work">
-                    <a href="">
+                    <a href="${path}/attendance/attendanceInquiry">
                         <i class="sidebar-icon fa-solid fa-clock"></i>
                         <span class="sidebar-text">근태</span>
                     </a>
