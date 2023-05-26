@@ -28,11 +28,11 @@ public class OrgChartController {
 //		
 //	}
 	
-	@GetMapping("/insert/department")
-	public String insertDepartment(OrgChart orgChart, Model model) {
+	@GetMapping("/insert/topDname")
+	public String insertDepartment(OrgChart orgChart) {
 		
 //		int result = orgchartService.insertDepartment(orgChart);
-		
+//		System.out.println(result);
 		return "orgChartEnroll";
 	}
 	

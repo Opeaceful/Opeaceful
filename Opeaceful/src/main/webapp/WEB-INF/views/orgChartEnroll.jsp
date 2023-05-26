@@ -32,7 +32,26 @@
 						<div class="accordion-item accordion-item-common">
 							<h2 class="accordion-header" id="flush-headingOne">
 								<button class="accordion-button oc-accordion-btn accordion-button-common collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" aria-label="펼치기">
-									<input type="text" id="dept-code" name="department" aria-label="부서이름인풋">
+									<table style="height: 100px;">
+										<tbody>
+										  <tr>
+											<td class="align-baseline">
+												<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
+											</td>
+										  </tr>
+										  <tr>
+											<td class="align-baseline">
+												<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
+											</td>
+										  </tr>
+										  <tr>
+											<td class="align-baseline">
+												<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
+											</td>
+										  </tr>
+										</tbody>
+									  </table>
+									<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
 									<i class="fa-solid fa-plus team-plus"></i> 
 									<i class="fa-solid fa-minus team-minus"></i> 
 									<i class="fa-solid fa-pen team-change"></i>
@@ -209,6 +228,6 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-	<script src="${path}/resources/js/orgChart.js"></script>
+	<script type="module" src="${path}/resources/js/orgChart.js"></script>
 </body>
 </html>
