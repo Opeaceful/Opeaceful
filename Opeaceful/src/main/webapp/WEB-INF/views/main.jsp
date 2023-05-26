@@ -90,7 +90,10 @@
 	        	
 	        		<!-- 내정보 -->
 	        		<div class="square-box" id="my-box">
-	        			<div class="main-time"></div>
+	        			<div id="main-time-box">
+	        				<div id="main-day"></div>
+	        				<div id="main-time"></div>
+	        			</div>
 	        			<div class="main-info"></div>
 	        		</div>
 	        		
@@ -108,6 +111,39 @@
             
         </div>
     </div>
+
+    <script>
+    
+	    const today = document.getElementById('main-day');
+	    const time = document.getElementById('main-time');
+	    
+	    let d = new Date();   
+
+	    let year = d.getFullYear(); // 년도
+	    let month = d.getMonth() + 1;  // 월
+	    let date = d.getDate();  // 날짜
+	    
+	    let weekday = new Array(7);
+	    weekday[0] = "일요일 (Sunday)";
+	    weekday[1] = "월요일 (Monday)";
+	    weekday[2] = "화요일 (Tuesday)";
+	    weekday[3] = "수요일 (Wednesday)";
+	    weekday[4] = "목요일 (Thursday)";
+	    weekday[5] = "금요일 (Friday)";
+	    weekday[6] = "토요일 (Saturday)";
+
+	    var day = weekday[d.getDay()];
+
+
+	    today.innerHTML = year + "-" + month + "-" + date  + "(" + day  + ")";
+	    
+        // 1초마다 현재 시각 업데이트
+       setInterval(() => {
+            const date = new Date(); // 새로운 Date 객체 생성
+            time.innerHTML = date.toLocaleTimeString();
+        }, 1000);
+
+	</script>
 
 
 </body>
