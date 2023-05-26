@@ -20,6 +20,7 @@
 	
 	<typeAliases>
 		<!-- 예시 <typeAlias type="com.kh.spring.member.model.vo.Member" alias="member"/> -->
+		<typeAlias type="com.company.opeaceful.orgChart.model.vo.OrgChart" alias="orgChart"/>
 
 	</typeAliases>
 	
@@ -31,6 +32,7 @@
 	<mappers>
 		<!-- 예시 <mapper resource="/mappers/member-mapper.xml"/> -->
 		<mapper resource="/mappers/test.xml"/>
+		<mapper resource="/mappers/orgChart-mapper.xml"/>
 
 	</mappers>
 
