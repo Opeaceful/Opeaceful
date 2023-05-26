@@ -4,12 +4,14 @@
 }
 #year1, #year2, #month1, #month2{margin-right: 9px;}
 #year1{width: 34%;}
-#year2{width: 20%;}
+#year2{width: 15.5%;}
 #day1{width: 26%;}
-#day2{width: 15.5%;}
-.select-box1{width: 20%;}
-.wave{width: 4.5%;}
-.search-wrap2{width: 400px;}
+#day2{width: 12%;}
+.select-box1{
+    width: 20%;
+}
+.wave{width: 3.3%;}
+.search-wrap2{width: 549px;}
 .text{width: 6%;}
 .icon{
     border: none;
@@ -18,6 +20,6 @@
 }
 .ad-minus{
     margin-left: -26px;
-    font-size: 15px;
+    font-size: var(--font15);
 }
 .ad-pen{padding-left: 9px;}
