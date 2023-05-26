@@ -169,30 +169,36 @@
     </div>
 
 
-        
     <script>
+    	/* 하위카테고리 숨겨두기 */
         $(".sidebar-more").css("display", "none");
 
-        // $(document).ready(function () {
+		/* 조직도 */
         $("#chart-menu").click(function () {
             $("#chart-menu-item").slideToggle();
         });
-        // });
+		/* 게시판 */
         $("#board-menu").click(function () {
             $("#board-menu-item").slideToggle();
         });
+		/* 연차 */
         $("#annual-menu").click(function () {
             $("#annual-menu-item").slideToggle();
         });
+		/* 계정 */
         $("#account-menu").click(function () {
             $("#account-menu-item").slideToggle();
         });
+		/* 권한 */
         $("#role-menu").click(function () {
             $("#role-menu-item").slideToggle();
         });
+		/* 전자결재 */
         $("#sign-menu").click(function () {
             $("#sign-menu-item").slideToggle();
         });
+        
+		/* 호버이벤트 */
         $(".sidebar").hover(
    		  function() {
    			  $(".sidebar").css("width", "300px")
@@ -201,7 +207,6 @@
    			$(".sidebar").css("width", "60px");
    			$(".sidebar-more").css("display", "none");
 		  }
-
    		);
         
 

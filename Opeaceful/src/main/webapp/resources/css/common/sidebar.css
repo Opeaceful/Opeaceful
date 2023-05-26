@@ -1,3 +1,5 @@
+/* 사이드바 css : 지의 */
+
 :root{
     --side-bar : 60px;
     --color-white: rgb(255, 255, 255);
@@ -15,13 +17,18 @@
 
 .sidebar a {text-decoration: none;}
 .sidebar ul, .sidebar li{list-style: none; padding: 0;}
-.sidebar i{
+.sidebar-icon{
 	color: var(--color-white);
 	font-size: var(--side-icon);
 }
 /* 줄바꿈 없앰 */
 .sidebar-wrap > ul > li > a,.one-line {display: block; white-space: nowrap;}
 .sidebar-more {white-space: nowrap;}
+
+.sidebar-more-text:hover{
+    /* color: var(--color-navy); */
+}
+
 
 
 /* ========================== 사이드바 ========================== */
@@ -37,15 +44,13 @@
     transition: width 0.3s;
     z-index: 10; /* 제일 위로 올라와야함 */
 	overflow: hidden;
+	display: grid;
+    grid-template-rows: 160px auto 160px;
 }
 
-/* 사이드바 오픈 호버 */
-/* .sidebar:hover {width: 300px;} */
-.sidebar-logo{margin-top: 4rem; height: 140px;}
 
-
+.sidebar-logo{margin-top: 50px;}
 /* ================ 상위 카테고리 ================ */
-.sidebar-top{height: 70%;}
 .side-icon-size {
     display: inline-block;
     width: 1.8rem;
@@ -62,7 +67,8 @@
 /* 사이드바 화살표 */
 .sidebar-icon-arrow{
     color: var(--color-white);
-    font-size: var(--font12);
+    font-size: var(--font14);
+    padding-left: 0.4rem;
 }
 /* 스크롤 none */
 .sidebar-top {
@@ -78,21 +84,14 @@
 .sidebar-bottom {
     position: fixed;
     bottom: 0;
-    height: 140px;
-
 }
 .sidebar-more-text{
-    font-size: var(--font-size15);
+    font-size: var(--font14);
     font-weight: 500;
     color: var(--color-white);
     display: block;
-    padding: 0 0 14px 65px;
+    padding: 0 0 14px 62px;
 }
-.sidebar-more-text:hover{
-    /* color: var(--color-navy); */
-}
-
-
 
 
 /* ========================== 채팅 아이콘 ========================== */

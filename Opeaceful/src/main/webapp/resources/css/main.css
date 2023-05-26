@@ -1,23 +1,43 @@
+/* 메인 css : 지의 */
+
 .main-wrap div{
-   /*  border: 1px solid red; */
+    /* border: 1px solid red; */
 }
-.main-wrap{height: 900px;}
-.main-wrap>.row{height: 100%;}
+.main-wrap{height: 800px; margin-top: 30px;}
+.main-wrap>div{height: 100%;}
 /* 네모박스
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
     box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
  */
- .square-box{ 
+.square-box{ 
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
     box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
- }
+}
+.main-title {
+    color: var(--color-navy);
+    border-bottom: 1px solid var(--color-light-gray);
+    padding-bottom: 13px;
+    padding-left: 12px;
+    margin: 20px 20px 0px 20px;
+    font-weight: 600;
+}
+.main-content{
+    margin: 10px 20px;
+    font-size: var(--font14);
+    cursor: pointer;
+}
+.main-sign-count{
+    font-size: 20px;
+    color: var(--color-navy);
+}
+.square-box{margin: 24px 0;}
 /* ====================== 왼쪽 ====================== */
 /* ---------- 공지사항 ---------- */
 #board-box{height: 30%;}
 /* ---------- 전자결재 ---------- */
-#sign-box{height: 30%;}
+#sign-box{height: 20%;}
 /* ---------- 날씨 ---------- */
 #weather-box{height: 40%;}
 /* ====================== 오른쪽 ====================== */
