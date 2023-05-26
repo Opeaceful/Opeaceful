@@ -27,4 +27,12 @@ public class MemberController {
 		
 		return "mypage";
 	}
+	
+	//member-create로 이동
+	@RequestMapping("/create")
+	public String createMember() {
+		
+		return "member/member-create";
+	}
+	
 }
