@@ -228,6 +228,9 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $("#annual-menu-item").css("display", "block");
+    </script>
 
 </body>
 </html>
