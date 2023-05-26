@@ -47,20 +47,15 @@
                     <div class="team-code col-sm-9 row">
                         <label for="team-code" class="col-sm-2 col-form-label input-font">팀코드</label>
                         <div class="col-sm-4">
-                        <select class="form-select member-form-select  form-select-sm" required>
-                            <option value="" disabled selected>팀명</option>
-                            <option value="경영1팀">경영1팀</option>
-                            <option value="2">경영2팀</option>
-                            <option value="3">....</option>
+                        <select class="form-select member-form-select  form-select-sm" id="d-select" required>
+                            <option value="" disabled selected>부서명</option>
+                            
                         </select>
                         </div>
                         <label for="team-position" class="col-sm-2 col-form-label input-font">직급</label>
                         <div class="col-sm-4">
-                        <select class="form-select member-form-select form-select-sm ">
+                        <select class="form-select member-form-select form-select-sm " id="p-select" required>
                             <option value="" disabled selected>직급</option>
-                            <option value="1">경영1팀</option>
-                            <option value="2">경영2팀</option>
-                            <option value="3">....</option>
                         </select>
                         </div>
 
@@ -138,6 +133,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="${path}/resources/js/addressAPI.js"></script>
 <script src="${path}/resources/js/memberCreate.js"></script>
+<script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
 
 </body>
 </html>
