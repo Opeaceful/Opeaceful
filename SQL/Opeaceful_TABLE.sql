@@ -66,7 +66,7 @@ CREATE TABLE `SALARY` (
 );
 
 CREATE TABLE `ATTENDANCE` (
-	`DATE`	NVARCHAR(20)	NOT NULL	COMMENT '날짜PK',
+	`DATE`	DATE	NOT NULL	COMMENT '날짜PK',
 	`USER_NO`	INT	NOT NULL	COMMENT '유저번호 FPK',
 	`WORK_ON`	DATE	NULL	COMMENT '출근시간',
 	`WORK_OFF`	DATE	NULL	COMMENT '퇴근시간'
@@ -707,7 +707,7 @@ REFERENCES `CHAT` (
 
 
 
--- 계정 상태 테이블 기본 데이터
+-- 계정 상태member 테이블 기본 데이터
 INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
    VALUES ( 0 , '오프라인' , 'offline.png'),
 			( 1 , '온라인' , 'offline.png'), 

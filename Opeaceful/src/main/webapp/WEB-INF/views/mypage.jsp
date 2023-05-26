@@ -29,7 +29,7 @@
             <h2 class="title-underline">마이페이지</h2>
 
             <!-- 회원정보 -->
-            <div class="mypage-content container row">
+            <div class="mypage-content container row row-col-2">
 
                 <!-- 이미지부분 -->
                 <div class="col-3 mypage-left">
