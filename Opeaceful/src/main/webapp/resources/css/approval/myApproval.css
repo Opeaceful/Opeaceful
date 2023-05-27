@@ -1,0 +1,30 @@
+.top-menubar {
+  display: flex;
+  margin-top: 3rem;
+}
+
+.top-menubar > div {
+  width: 10%;
+  min-width: 100px;
+  text-align: center;
+  border: 1px solid black;
+  border-right: 0px;
+  border-bottom: 0px;
+  padding: 0.4rem 1rem;
+}
+div .line {
+  flex: 1;
+  border: 0px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.inner-wrap,
+.selected {
+  background-color: rgb(243, 243, 243);
+}
+
+.inner-wrap {
+  width: 100%;
+  min-height: 50vh;
+}
