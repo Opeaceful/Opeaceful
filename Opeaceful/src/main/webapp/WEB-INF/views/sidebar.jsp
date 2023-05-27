@@ -37,8 +37,8 @@
                     </div>
 
                     <div class="sidebar-more" id="chart-menu-item">
-                        <a class="sidebar-more-text" href="">조직도 등록</a>
-                        <a class="sidebar-more-text" href="">조직도 현황</a>
+                        <a class="sidebar-more-text" href="${path}/orgChart/insert/department">조직도 등록</a>
+                        <a class="sidebar-more-text" href="${path}/orgChart/orgChartView">조직도 현황</a>
                     </div>
                 </li>
 
@@ -92,8 +92,8 @@
 
                 <!-- 근태 -->
                 <li id="sidebar-work">
-                    <a href="">
-                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-clock"></i></span>
+                    <a href="${path}/attendance/attendanceInquiry">
+                        <i class="sidebar-icon fa-solid fa-clock"></i>
                         <span class="sidebar-text">근태</span>
                     </a>
                 </li>
@@ -122,7 +122,7 @@
 
                     <div class="sidebar-more" id="account-menu-item">
                         <a class="sidebar-more-text" href="">사용자 조회</a>
-                        <a class="sidebar-more-text" href="">사용자 등록</a>
+                        <a class="sidebar-more-text" href="${path}/member/create">사용자 등록</a>
                     </div>
                 </li>
 
