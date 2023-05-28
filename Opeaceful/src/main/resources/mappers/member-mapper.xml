@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+
+<insert id="insertMember" parameterType="member" >
+
+	INSERT INTO MEMBER(ENO, STATUS, STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
+   	VALUES(
+   	CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right(last_insert_id()+10,2),2,'0')) as SIGNED),
+   	DEFAULT,
+   	0,
+   	#{userPwd},
+   	#{userName},
+   	#{phone},
+   	#{extension},
+   	#{email},
+   	#{address},
+   	#{hireDate})
+  		
+</insert>
+
+
+
+</mapper>

@@ -23,6 +23,8 @@
 		<typeAlias type="com.company.opeaceful.orgChart.model.vo.OrgChart" alias="orgChart"/>
 		<typeAlias type="com.company.opeaceful.dept.model.vo.Department" alias="department"/>
 		<typeAlias type="com.company.opeaceful.dept.model.vo.Position" alias="position"/>
+		<typeAlias type="com.company.opeaceful.dept.model.vo.UserDepatment" alias="userDepatment"/>
+		<typeAlias type="com.company.opeaceful.member.model.vo.Member" alias="member"/>
 
 	</typeAliases>
 	
@@ -36,6 +38,7 @@
 		<mapper resource="/mappers/test.xml"/>
 		<mapper resource="/mappers/orgChart-mapper.xml"/>
 		<mapper resource="/mappers/dept-mapper.xml"/> 
+		<mapper resource="/mappers/member-mapper.xml"/> 
 
 	</mappers>
 
