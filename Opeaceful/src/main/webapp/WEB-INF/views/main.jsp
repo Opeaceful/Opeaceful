@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="${path}/resources/css/main.css">
 
 </head>
-<body>
+<body onload="getTime();">
 
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
@@ -90,11 +90,49 @@
 	        	
 	        		<!-- 내정보 -->
 	        		<div class="square-box" id="my-box">
-	        			<div id="main-time-box">
+	        			<!-- 시간표시 부분 -->
+	        			<div class="main-time-box text-center">
 	        				<div id="main-day"></div>
 	        				<div id="main-time"></div>
 	        			</div>
-	        			<div class="main-info"></div>
+	        			
+	        			<!-- 내정보 및 출퇴근 버튼 부분 -->
+	        			<div class="main-info">
+	        				<!-- 내정보 -->
+	        				<div class="main-info-top row">
+	        					<div class="col text-start main-d-day">입사한지 <span id="main-d-day">490</span>일</div>
+	        					<div class="col text-center main-profile-box">
+									<div class="main-profile">
+				                        <img id="main-profile-img" src="${path}/resources/image/mypage/basic_profile.png">
+				                    </div>
+				                    <div id="main-name">노지의</div>
+				                    <div>
+				                    	<span id="main-team">영업팀</span> 
+				                    	<span id="main-">대리</span>
+				                    </div>
+	        					</div>
+	        					<!-- 오프라인 온라인 자리비움 회의중 식사중 -->
+	        					<div id="state" class="col text-end">
+									<div class="select">
+										<div class="text"><img src="${path}/resources/image/main/person-workspace.svg"></div>
+										<ul class="option-list">
+											<li class="option"><img src="${path}/resources/image/main/person-workspace.svg"></li>
+											<li class="option"><img src="${path}/resources/image/main/person-slash.svg"></li>
+											<li class="option"><img src="${path}/resources/image/main/utensils-solid.svg"></li>
+											<li class="option"><img src="${path}/resources/image/main/users-solid.svg"></li>
+											<li class="option"><img src="${path}/resources/image/main/door-open-fill.svg"></li>
+										</ul>
+									</div>
+	        					</div>
+	        				</div>
+	        				
+	        				<!-- 출퇴근 -->
+	        				<div class="text-center main-info-bottom">
+								<button type="button" id="main-on" class="w90-btn btn btn-primary">출근</button>
+								<button type="button" id="main=off" class="w90-btn btn btn-outline-primary">퇴근</button>
+	        				</div>
+
+	        			</div>
 	        		</div>
 	        		
 	        		<!-- 캘린더 -->
@@ -114,35 +152,70 @@
 
     <script>
     
-	    const today = document.getElementById('main-day');
+ 	    const today = document.getElementById('main-day');
 	    const time = document.getElementById('main-time');
 	    
-	    let d = new Date();   
-
-	    let year = d.getFullYear(); // 년도
-	    let month = d.getMonth() + 1;  // 월
-	    let date = d.getDate();  // 날짜
+		let d = new Date();
+		
+	    let year = d.getFullYear(); 	// 년도
+	    let month = d.getMonth() + 1;	// 월
+	    let date = d.getDate();  		// 날짜
 	    
 	    let weekday = new Array(7);
-	    weekday[0] = "일요일 (Sunday)";
-	    weekday[1] = "월요일 (Monday)";
-	    weekday[2] = "화요일 (Tuesday)";
-	    weekday[3] = "수요일 (Wednesday)";
-	    weekday[4] = "목요일 (Thursday)";
-	    weekday[5] = "금요일 (Friday)";
-	    weekday[6] = "토요일 (Saturday)";
+	    weekday[0] = "일";
+	    weekday[1] = "월";
+	    weekday[2] = "화";
+	    weekday[3] = "수";
+	    weekday[4] = "목";
+	    weekday[5] = "금";
+	    weekday[6] = "토";
 
-	    var day = weekday[d.getDay()];
+	    let day = weekday[d.getDay()];
 
+	    if(month < 10){month = "0"+month;}
+	    if(date < 10){date = "0"+date;}
+	    today.innerHTML = year + "-" + month + "-" + date  + " (" + day  + ")";
+		
+	    function getTime() {
+			let d = new Date();
+			
+		    let hur = d.getHours();		// 시
+			let min = d.getMinutes();	//분
+			let sec = d.getSeconds();	//초
+			if(d.getHours() < 10){hur = "0"+hur;}
+			if(d.getMinutes() < 10){min = "0"+min;}
+			if(d.getSeconds() < 10){sec = "0"+sec;}
 
-	    today.innerHTML = year + "-" + month + "-" + date  + "(" + day  + ")";
+			time.innerHTML = hur + " : " + min + " : " + sec;	// 형식 지정
+			
+			setTimeout(getTime, 1000);	//1000밀리초(1초) 마다 반복
+		}
 	    
-        // 1초마다 현재 시각 업데이트
-       setInterval(() => {
-            const date = new Date(); // 새로운 Date 객체 생성
-            time.innerHTML = date.toLocaleTimeString();
-        }, 1000);
+	    
 
+	    function onClickSelect(e) {
+	      const isActive = e.currentTarget.className.indexOf("active") !== -1;
+	      if (isActive) {
+	        e.currentTarget.className = "select";
+	      } else {
+	        e.currentTarget.className = "select active";
+	      }
+	    }
+
+	    document.querySelector("#state .select").addEventListener("click", onClickSelect);
+
+	    function onClickOption(e) {
+	      const selectedValue = e.currentTarget.innerHTML;
+	      document.querySelector("#state .text").innerHTML = selectedValue;
+	    }
+
+	    var optionList = document.querySelectorAll("#state .option");
+	    for (var i = 0; i < optionList.length; i++) {
+	      var option = optionList[i];
+	      option.addEventListener("click", onClickOption);
+	    }
+
+	    
 	</script>
 
 
