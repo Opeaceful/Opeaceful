@@ -44,23 +44,89 @@ pageEncoding="UTF-8"%> -->
     />
   </head>
   <body>
-    <div class="content-wrap">
+    <div class="my-approval-wrap content-wrap">
       <div class="container">
         <div class="title-box">
           <h2 class="title-common">MY 전자결재</h2>
         </div>
 
         <div class="top-menubar">
-          <div>전체</div>
+          <div class="selected">전체</div>
           <div>진행중</div>
-          <div class="selected">반려</div>
+          <div>반려</div>
           <div>완료</div>
           <div>승인대기</div>
           <div>결재</div>
           <div class="line"></div>
         </div>
 
-        <div class="inner-wrap"></div>
+        <div class="inner-wrap">
+          <table class="table table-common">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">기안일</th>
+                <th>제목</th>
+                <th>기안자</th>
+                <th>진행상태</th>
+                <th scope="col">
+                  <select name="checkType" id="check-type">
+                    <option value="all" selected>구분</option>
+                    <option value="0">일반</option>
+                    <option value="1">연차</option>
+                    <option value="2">오전반차</option>
+                    <option value="3">오후반차</option>
+                  </select>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3</td>
+                <td>2023-05-16</td>
+                <td>지출결의서~~~</td>
+                <td>김사원</td>
+                <td>진행중</td>
+                <td>일반</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>2023-05-16</td>
+                <td>휴가요청~~~</td>
+                <td>이사원</td>
+                <td>진행중</td>
+                <td>연차</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2023-05-16</td>
+                <td>지출결의서~~~</td>
+                <td>김사원</td>
+                <td>완료</td>
+                <td>일반</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="btn-wrap">
+            <button
+              id="btn-add-form"
+              class="btn btn-outline-primary position-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#add-form"
+              type="button"
+            >
+              <i class="fa-solid fa-plus"></i> 신규
+            </button>
+            <button class="btn btn-outline-primary">My서명</button>
+          </div>
+
+          <div class="pagingArea">
+            <button><</button>
+            <button>1</button>
+            <button>></button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
