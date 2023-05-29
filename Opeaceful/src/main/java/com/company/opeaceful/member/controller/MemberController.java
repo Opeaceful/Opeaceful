@@ -24,10 +24,11 @@ public class MemberController {
 	// spring-quartz.xml 사용시 기본생성자 필요
 	public MemberController() {}
 	
+	// [지의] - 마이페이지
 	@RequestMapping("/mypage")
 	public String updateMember() {
 		
-		return "mypage";
+		return "member/mypage";
 	}
 	
 	//[지영]

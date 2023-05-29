@@ -1,12 +1,16 @@
-package com.company.opeaceful.commom;
+package com.company.opeaceful.member.controller;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.company.opeaceful.TestDB;
 import com.company.opeaceful.member.model.service.MemberService;
+import com.company.opeaceful.member.model.vo.Member;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -24,25 +28,36 @@ public class LoginController {
 //	@Autowired
 //	private TestDB tb;
 
-	@RequestMapping("/login") // login이라는 url요청이 들어오면  mainForward()함수가 실행됨
+	@RequestMapping("/login")
 	public String loginForward() {
 		
 		//DB 테스트용
 		//tb.selectTest();
 		
-		// index.jsp의 forward를 처리하는 함수가 mainForward
-		// index.jsp에서 다시한번 main페이지로 포워딩시켜줌
-		return "login";  // 단순 문자열 작성시 무조건 forward가 실행됨		(WEB-INF/views + main + .jsp) -> main 앞뒤로 자동으로 붙음
-						// servlet-context.xml <beans:bean > 태그 참고 
+		return "member/login";
 		
 	}
 	
 	
-	@RequestMapping("/main")
-//	public String loginMember(Member m, Model model) {
-	public String loginMember() { // 페이지만 넘기기위해서 임시로처리
+	@PostMapping("/main")
+	public String loginMember(Member m,
+							  Model model,
+							  HttpSession session) {
 		
-		return "main";
+		Member loginUser = memberService.loginMember(m);
+		System.out.println("로그인유저? "+loginUser);
+		if(loginUser == null) {
+			session.setAttribute("alertMsg", "사원번호 및 비밀번호 확인");
+			
+			return "redirect:/";
+		}else {
+			
+			session.setAttribute("loginUser", loginUser);
+			return "main";
+			
+		}
+
+		
 	}
 	
 }

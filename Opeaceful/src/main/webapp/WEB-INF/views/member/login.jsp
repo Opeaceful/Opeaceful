@@ -21,6 +21,12 @@
     <link rel="stylesheet" href="${path}/resources/css/login.css">
 </head>
 <body>
+	<c:if test="${not empty alertMsg} ">
+		<script>
+			alertify.alert("서비스 요청 성공", "${alertMsg}");
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
     <div class="login-wrap">
         <div class="login-div row">
             <!-- 로고 -->
@@ -36,13 +42,13 @@
                 <form action="${path}/main" method="post">
                     <div class="login-input">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fa-solid fa-user"style="width: 16px;"></i></span>
-                            <input type="text" class="form-control box-shadow-put" id="login-id" placeholder="사원번호">
+                            <span class="input-group-text"><i class="fa-solid fa-user" style="width: 16px;"></i></span>
+                            <input type="text" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호">
                         </div>
             
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                            <input type="password" class="form-control box-shadow-put" id="login-pwd" placeholder="비밀번호">
+                            <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호">
                         </div>
         
                         <div class="mb-3 form-check">
