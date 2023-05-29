@@ -14,13 +14,12 @@
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<!-- 알랏 커스텀 링크 -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-
+	<!-- css -->
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
     <link rel="stylesheet" href="${path}/resources/css/login.css">
 </head>

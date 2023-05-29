@@ -49,15 +49,23 @@ public class LoginController {
 							  HttpSession session) {
 		
 		Member loginUser = memberService.loginMember(m);
-		System.out.println("로그인유저? "+loginUser);
-		if(loginUser == null) {
-			session.setAttribute("alertMsg", "사원번호 및 비밀번호가 일치하지 않습니다.");
-			
-			return "redirect:/";
-		}else {
-			session.setAttribute("loginUser", loginUser);
+		System.out.println(m.getUserPwd());
+		System.out.println(loginUser.getUserPwd());
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+			model.addAttribute("loginUser", loginUser);
 			return "main";
+		}else {
+			session.setAttribute("alertMsg", "사원번호 및 비밀번호가 일치하지 않습니다.");
+			return "redirect:/";
 		}
+//		if(loginUser != null) {
+//			session.setAttribute("loginUser", loginUser);
+//			return "main";
+//		}else {
+//			session.setAttribute("alertMsg", "사원번호 및 비밀번호가 일치하지 않습니다.");
+//			return "redirect:/";
+//		}
 
 		
 	}
