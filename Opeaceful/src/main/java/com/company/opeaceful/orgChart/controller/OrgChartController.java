@@ -2,7 +2,6 @@ package com.company.opeaceful.orgChart.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +27,16 @@ public class OrgChartController {
 //		
 //	}
 	
-	@GetMapping("/insert/topDname")
+	@GetMapping("")
+	public String orgChart() {
+		return "orgChartEnroll";
+	}
+	
+	@PostMapping("/insert/topDname")
 	public String insertDepartment(OrgChart orgChart) {
 		
-//		int result = orgchartService.insertDepartment(orgChart);
-//		System.out.println(result);
+		int result = orgchartService.insertDepartment(orgChart);
+		System.out.println(result);
 		return "orgChartEnroll";
 	}
 	

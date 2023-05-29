@@ -29,7 +29,7 @@
 						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#position" type="button">직급관리</button>
 					</div>
 					<div class="accordion accordion-flush inputs" id="accordionFlushExample">
-						<div class="accordion-item accordion-item-common">
+						<!-- <div class="accordion-item accordion-item-common">
 							<h2 class="accordion-header" id="flush-headingOne">
 								<button class="accordion-button oc-accordion-btn accordion-button-common collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" aria-label="펼치기">
 									<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
@@ -49,8 +49,8 @@
 									</li>
 								</ul>
 							</div>
-						</div>
-						<div class="accordion-item">
+						</div> -->
+						<%-- <div class="accordion-item">
 							<h2 class="accordion-header" id="flush-headingTwo">
 								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">Accordion Item #2</button>
 							</h2>
@@ -77,7 +77,7 @@
 									more representative of how this would look in a real-world application.
 								</div>
 							</div>
-						</div>
+						</div> --%>
 					</div>
 				</div>
 				<div class="col right-box">

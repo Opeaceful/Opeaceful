@@ -8,7 +8,7 @@ body *{
     width: 58%;
     margin-right: 26px;
 }
-input{border: none;}
+input{border: none; cursor: pointer;}
 input:focus{
     outline: none;
 }
