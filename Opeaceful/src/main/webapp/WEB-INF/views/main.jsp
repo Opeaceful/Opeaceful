@@ -111,18 +111,31 @@
 				                    	<span id="main-">대리</span>
 				                    </div>
 	        					</div>
-	        					<!-- 오프라인 온라인 자리비움 회의중 식사중 -->
-	        					<div id="state" class="col text-end">
-									<div class="select">
-										<div class="text"><img src="${path}/resources/image/main/person-workspace.svg"></div>
-										<ul class="option-list">
-											<li class="option"><img src="${path}/resources/image/main/person-workspace.svg"></li>
-											<li class="option"><img src="${path}/resources/image/main/person-slash.svg"></li>
-											<li class="option"><img src="${path}/resources/image/main/utensils-solid.svg"></li>
-											<li class="option"><img src="${path}/resources/image/main/users-solid.svg"></li>
-											<li class="option"><img src="${path}/resources/image/main/door-open-fill.svg"></li>
-										</ul>
-									</div>
+	        					<div class="col text-end">
+		        					<!-- 오프라인 온라인 자리비움 회의중 식사중 -->
+		        					<div id="state">
+										<div class="select">
+											<div class="text"><img src="${path}/resources/image/main/online.svg"></div>
+											<ul class="option-list">
+												<li class="option"><img src="${path}/resources/image/main/online.svg"></li>
+												<li class="option"><img src="${path}/resources/image/main/offline.svg"></li>
+												<li class="option"><img src="${path}/resources/image/main/eat.svg"></li>
+												<li class="option"><img src="${path}/resources/image/main/meeting.svg"></li>
+												<li class="option"><img src="${path}/resources/image/main/absence.svg"></li>
+											</ul>
+										</div>
+		        					</div>
+		        					
+		        					<!-- 색상모드 -->
+		        					<div id="color-mode">
+										<div class="mode-select">
+											<div class="mode-text"><span class="color-frame" id="white"></span></div>
+											<ul class="mode-list">
+												<li class="mode"><span class="color-frame" id="white"></span></li>
+												<li class="mode"><span class="color-frame" id="black"></span></li>
+											</ul>
+										</div>
+		        					</div>
 	        					</div>
 	        				</div>
 	        				
@@ -151,7 +164,7 @@
     </div>
 
     <script>
-    
+    	/* 현재 시간 표시 */
  	    const today = document.getElementById('main-day');
 	    const time = document.getElementById('main-time');
 	    
@@ -192,8 +205,8 @@
 		}
 	    
 	    
-
-	    function onClickSelect(e) {
+		/* 접속상태 표시 */
+	    function onClickState(e) {
 	      const isActive = e.currentTarget.className.indexOf("active") !== -1;
 	      if (isActive) {
 	        e.currentTarget.className = "select";
@@ -202,19 +215,42 @@
 	      }
 	    }
 
-	    document.querySelector("#state .select").addEventListener("click", onClickSelect);
+	    document.querySelector("#state .select").addEventListener("click", onClickState);
 
-	    function onClickOption(e) {
+	    function onClickStateOption(e) {
 	      const selectedValue = e.currentTarget.innerHTML;
 	      document.querySelector("#state .text").innerHTML = selectedValue;
 	    }
 
-	    var optionList = document.querySelectorAll("#state .option");
-	    for (var i = 0; i < optionList.length; i++) {
-	      var option = optionList[i];
-	      option.addEventListener("click", onClickOption);
+	    var stateList = document.querySelectorAll("#state .option");
+	    for (var i = 0; i < stateList.length; i++) {
+	      var state = stateList[i];
+	      state.addEventListener("click", onClickStateOption);
+	    }
+	    
+	    
+	    /* 칼라모드 표시 */
+	    function onClickMode(e) {
+	      const isActive = e.currentTarget.className.indexOf("active") !== -1;
+	      if (isActive) {
+	        e.currentTarget.className = "mode-select";
+	      } else {
+	        e.currentTarget.className = "mode-select active";
+	      }
 	    }
 
+	    document.querySelector("#color-mode .mode-select").addEventListener("click", onClickMode);
+
+	    function onClickModeOption(e) {
+	      const selectedValue = e.currentTarget.innerHTML;
+	      document.querySelector("#color-mode .mode-text").innerHTML = selectedValue;
+	    }
+
+	    var ModeList = document.querySelectorAll("#color-mode .mode");
+	    for (var i = 0; i < ModeList.length; i++) {
+	      var mode = ModeList[i];
+	      mode.addEventListener("click", onClickModeOption);
+	    }
 	    
 	</script>
 

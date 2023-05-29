@@ -2,8 +2,8 @@
 
 .main-wrap{height: 800px; margin-top: 30px;}
 .main-wrap>div{height: 100%;}
-.main-wrap .col-7{width:64%;}
- 	/* 각각 컨텐츠 감싸고있는 네모박스 */
+/* .main-wrap .col-7{width:64%;} */
+/* 각각 컨텐츠 감싸고있는 네모박스 */
 .square-box{ 
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
@@ -75,6 +75,7 @@
 
 
 img{width: 16px; height: 16px;}
+#state{margin-bottom: 6px;}
 .select {position: relative;}
 .select .option-list {
   position: absolute;
@@ -88,6 +89,30 @@ img{width: 16px; height: 16px;}
 #state .select {cursor: pointer;}
 #state .select .option-list { list-style: none; padding: 0;}
 #state .select .option-list .option {padding-top: 5px;}
+
+
+
+.color-frame{
+	width: 15px;
+	height: 15px;
+    border-radius: 70%;
+    display: inline-block;
+}
+#white{background: white; border: 1px solid black;}
+#black{background: black;}
+.mode-select {position: relative;}
+.mode-select .mode-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+}
+.mode-select.active .mode-list {max-height: none;}
+#color-mode .mode-select {cursor: pointer;}
+#color-mode .mode-select .mode-list { list-style: none; padding: 0;}
+#color-mode .mode-select .mode-list .mode {padding-top: 5px;}
 
 
 /* ---------- 캘린더 ---------- */
