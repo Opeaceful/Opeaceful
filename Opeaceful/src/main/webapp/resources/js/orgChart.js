@@ -23,24 +23,30 @@ $(document).ready (function () {
 
 		$("input[name=department]").focus();
 
-		$("input[name=department]").blur(function(){
+		$("input[name=department]").blur(function(e){
 			let input = $("input[name=department]").val();
-			console.log(input);
-			$.ajax({
-				url : path+"/orgChart/insert/topDname",   
-				type : 'post', // 데이터 전달 방식 type
-				data : {deptName: input},
-				success : function(result){
-					console.log('result: ' +result);
-				}
-			});
+			
+			e.preventDefault();
+			
+			if (input != "") {
+				$.ajax({
+					url : path+"/orgChart/insert/topDname",   
+					type : 'post', // 데이터 전달 방식 type
+					data : {deptName: input},
+					success : function(result){
+						console.log('result: ' +result);
+					}
+				});
+			} else if (input == "") {
+				$(`.org-accordion${num}`).remove();
+			}
 		})
 
 		
 		$('.team-minus').on('click', function () { 
 			//$(this).unwrap(); // remove the textbox
             //$(this).next ().remove (); // remove the <br>
-            $(`.org-accordion${num}`).remove (); // remove the button
+            (this).$(`.org-accordion${num}`).remove (); // remove the button
         });
 	}); // end click 
 }); // end ready 

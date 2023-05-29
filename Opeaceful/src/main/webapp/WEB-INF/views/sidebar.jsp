@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="sidebar-more" id="chart-menu-item">
-                        <a class="sidebar-more-text" href="${path}/orgChart">조직도 등록</a>
+                        <a class="sidebar-more-text" href="${path}/orgChart/">조직도 등록</a>
                         <a class="sidebar-more-text" href="${path}/orgChart/orgChartView">조직도 현황</a>
                     </div>
                 </li>

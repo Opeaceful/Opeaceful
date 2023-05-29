@@ -27,19 +27,19 @@ public class OrgChartController {
 //		
 //	}
 	
-	@GetMapping("")
+	@GetMapping("/")
 	public String orgChart() {
 		return "orgChartEnroll";
 	}
 	
 	@PostMapping("/insert/topDname")
-	public int insertDepartment(OrgChart orgChart) {
+	public String insertDepartment(OrgChart orgChart) {
 		
 		int result = orgchartService.insertDepartment(orgChart);
 		
 		System.out.println(result);
 
-		return result;
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/orgChartView")
