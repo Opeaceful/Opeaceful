@@ -33,11 +33,13 @@ public class OrgChartController {
 	}
 	
 	@PostMapping("/insert/topDname")
-	public String insertDepartment(OrgChart orgChart) {
+	public int insertDepartment(OrgChart orgChart) {
 		
 		int result = orgchartService.insertDepartment(orgChart);
+		
 		System.out.println(result);
-		return "orgChartEnroll";
+
+		return result;
 	}
 	
 	@RequestMapping("/orgChartView")

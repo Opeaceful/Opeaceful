@@ -21,38 +21,31 @@ $(document).ready (function () {
 			</div>`
 		); // end append
 
-		
-		// input.focus();
-		
-		// window.onload = function() {
-			// let input = document.getElementById("dept-code");
-			document.querySelector('.topD-name').addEventListener("keyup", function(e) {
-				console.log('e : '+e);
-				if(e.key == 'Enter') {
-					
-					$.ajax({
-						url : path+"/insert/topDname",   
-						type : 'post', // 데이터 전달 방식 type
-						success : function(result){
-							console.log('result: ' +result);
-						},
-						
-						error : function(req, status, error){
-							console.log(req.responseText);
-						}
-					});
-					return false;
-				}
-			})
-		// }
+		$("input[name=department]").focus();
 
+		$("input[name=department]").blur(function(){
+			let input = $("input[name=department]").val();
+			console.log(input);
+			$.ajax({
+				url : path+"/orgChart/insert/topDname",   
+				type : 'post', // 데이터 전달 방식 type
+				data : {deptName: input},
+				success : function(result){
+					console.log('result: ' +result);
+				}
+			});
+		})
+
+		
 		$('.team-minus').on('click', function () { 
 			//$(this).unwrap(); // remove the textbox
             //$(this).next ().remove (); // remove the <br>
             $(`.org-accordion${num}`).remove (); // remove the button
         });
-	}); // end click                                            
+	}); // end click 
 }); // end ready 
+
+
 
 // input 커서 맨 뒤로 위치 시키기
 // const changeEditMode = (e) => {
