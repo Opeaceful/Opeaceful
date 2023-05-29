@@ -214,7 +214,11 @@ pageEncoding="UTF-8"%> -->
               </div>
               <div class="modal-body">
                 <div class="line-wrap">
-                  <div class="org-chart"></div>
+                  <div class="org-chart">
+                    <div>경영전략</div>
+                    <div>이뫄뫄 사원</div>
+                    <div>김뫄뫄 과장</div>
+                  </div>
                   <div class="my-list"></div>
                 </div>
               </div>
