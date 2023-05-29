@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="sidebar-more" id="account-menu-item">
-                        <a class="sidebar-more-text" href="">사용자 조회</a>
+                        <a class="sidebar-more-text" href="${path}/member/allview">사용자 조회</a>
                         <a class="sidebar-more-text" href="${path}/member/create">사용자 등록</a>
                     </div>
                 </li>

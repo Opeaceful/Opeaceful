@@ -85,5 +85,16 @@ public class MemberController {
 		
 	}
 	
+	//[지영]
+		//member-allview로 이동
+		@RequestMapping("/allview")
+		public String selectMember() {
+			return "member/member-allview";
+	}
+		
+	
+	
+	
+	
 	
 }

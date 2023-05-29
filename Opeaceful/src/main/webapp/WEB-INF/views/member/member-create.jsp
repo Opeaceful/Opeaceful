@@ -19,9 +19,6 @@
 	<link rel="stylesheet" href="${path}/resources/css/common/common.css">
 	<link rel="stylesheet" href="${path}/resources/css/memberCreate.css">
 	
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
-	
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
