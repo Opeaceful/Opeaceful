@@ -70,6 +70,8 @@ public class MemberController {
 				int userEno = memberService.selectENO();
 				session.setAttribute("userEno", userEno);
 				
+				return "redirect:/member/create";
+				
 			}else{
 				session.setAttribute("alertMsg", "사용자 부서 생성 오류발생. 담당자에게 문의하세요");
 			}
