@@ -18,28 +18,46 @@
 	<result column="HIRE_DATE" property="hireDate" />
 </resultMap>
 
-<insert id="insertMember" parameterType="member" useGeneratedKeys="true" >
-
-	<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
- 		SELECT CTCAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right(
-   	(SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1)+1,2)
-   	,2,'0')) as SIGNED
- 		FROM DUAL
- 	</selectKey>
-
-	INSERT INTO MEMBER(ENO,STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
-   	VALUES(
-   	#{eno},
-   	0,
-   	#{userPwd},
-   	#{userName},
-   	#{phone},
-   	#{extension},
-   	#{email},
-   	#{address},
-   	#{hireDate})
-  		
-</insert>
+<!-- [지영] member insert구문 -->
+	<!-- member insert -->
+	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
+	
+		<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
+	 		SELECT CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), (right((SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1), 2)+1)) as SIGNED)
+	 	</selectKey>
+	
+		INSERT INTO MEMBER(ENO,STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
+	   	VALUES(
+	   	#{eno},
+	   	0,
+	   	#{userPwd},
+	   	#{userName},
+	   	#{phone},
+	   	#{extension},
+	   	#{email},
+	   	#{address},
+	   	#{hireDate})
+	  		
+	</insert>
+	
+	<!-- dept insert -->
+	<insert id="insertUserDept" parameterType="userDepatment" useGeneratedKeys="true">
+		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
+	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
+	 	</selectKey>
+	 	
+	 	INSERT INTO USER_DEPARTMENT(USER_NO,P_CODE, DEPT_CODE)
+	   	VALUES(
+	   	#{userNo},
+	   	#{pCode},
+	   	#{deptCode})
+	   	
+	</insert>
+	
+	<!--사용자에게 보여줄 eno select -->
+	<select id="selectENO" resultType="_int" >
+		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
+	</select>
 
 <!-- [지의] - 로그인 -->
 <select id="loginMember" parameterType="member" resultMap="memberResultSet">
