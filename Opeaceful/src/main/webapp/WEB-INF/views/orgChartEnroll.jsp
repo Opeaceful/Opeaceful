@@ -28,29 +28,10 @@
 						<button class="btn btn-primary me-md-2 topD-plus" type="button">부서추가</button>
 						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#position" type="button">직급관리</button>
 					</div>
-					<div class="accordion accordion-flush" id="accordionFlushExample">
+					<div class="accordion accordion-flush inputs" id="accordionFlushExample">
 						<div class="accordion-item accordion-item-common">
 							<h2 class="accordion-header" id="flush-headingOne">
 								<button class="accordion-button oc-accordion-btn accordion-button-common collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" aria-label="펼치기">
-									<table style="height: 100px;">
-										<tbody>
-										  <tr>
-											<td class="align-baseline">
-												<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
-											</td>
-										  </tr>
-										  <tr>
-											<td class="align-baseline">
-												<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
-											</td>
-										  </tr>
-										  <tr>
-											<td class="align-baseline">
-												<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
-											</td>
-										  </tr>
-										</tbody>
-									  </table>
 									<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
 									<i class="fa-solid fa-plus team-plus"></i> 
 									<i class="fa-solid fa-minus team-minus"></i> 
