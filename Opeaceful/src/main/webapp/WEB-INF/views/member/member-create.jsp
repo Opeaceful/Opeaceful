@@ -23,6 +23,18 @@
 <body>
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
 	
+	<c:if test="${ not empty alertMsg }">
+		<script>
+		swal("오류 발생",'${alertMsg}' );
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+	<c:if test="${ not empty userEno }">
+		<script>
+		swal('${userEno}', "해당 아이디로 로그인 하세요" );
+		</script>
+		<c:remove var="userEno"/>
+	</c:if>
 	
 	<div class="content-wrap">
     <div class="user-wrap container">
@@ -39,7 +51,7 @@
                 <div class="mb-4 row">
                     <label for="input-name" class="col-sm-3 col-form-label">이름</label>
                     <div class="col-sm-9">
-                        <input type="text" class="mypage-input form-control box-shadow-put" id="user-name"  name="userName"value="윤지영" required>
+                        <input type="text" class="mypage-input form-control box-shadow-put" id="user-name"  name="userName" required>
                     </div>
                 </div>
 
@@ -77,7 +89,7 @@
                 <div class="row mb-4">
                     <label for="input-phone" class="col-sm-3 col-form-label">연락처</label>
                     <div class="col-sm-9">
-                        <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="010-4444-4444">
+                        <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" >
                     </div>
                 </div>
 
@@ -86,13 +98,13 @@
                     <label for="input-address" class="col-sm-3 col-form-label">주소</label>
                     <div class="col-sm-9">
                         <div class="input-group">
-                        <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put" required readonly placeholder="도로명주소" value="서울시">
+                        <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put" required readonly placeholder="도로명주소" >
                         <button class="btn btn-outline-secondary seach-btn" type="button" id="seach-address">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                         
                         </div>
-                        <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" required placeholder="상세주소" value="11">
+                        <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" required placeholder="상세주소" >
                     </div>
                 </div>
 
@@ -100,7 +112,7 @@
                 <div class="row mb-4">
                     <label for="input-email" class="col-sm-3 col-form-label">이메일</label>
                     <div class="col-sm-9">
-                        <input type="email" id="user-email" class="mypage-input form-control box-shadow-put" name="email" required value="sl@naver.com">
+                        <input type="email" id="user-email" class="mypage-input form-control box-shadow-put" name="email" required >
                     </div>
                 </div>
 

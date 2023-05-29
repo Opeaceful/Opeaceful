@@ -295,3 +295,12 @@ input::-webkit-search-cancel-button{
 */
 /* 기본 버튼크기 */
 .w90-btn{width: 90px;}
+
+/*alert 버튼색 변경*/
+.swal-button {
+    background-color: var(--color-navy);
+}
+
+.swal-button:not([disabled]):hover {
+    background-color: var(--navy-hover);
+}

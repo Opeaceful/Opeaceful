@@ -70,6 +70,8 @@ public class MemberController {
 				int userEno = memberService.selectENO();
 				session.setAttribute("userEno", userEno);
 				
+				return "redirect:/member/create";
+				
 			}else{
 				session.setAttribute("alertMsg", "사용자 부서 생성 오류발생. 담당자에게 문의하세요");
 			}
@@ -81,6 +83,17 @@ public class MemberController {
 		return "member/member-create";
 		
 	}
+	
+	//[지영]
+		//member-allview로 이동
+		@RequestMapping("/allview")
+		public String selectMember() {
+			return "member/member-allview";
+	}
+		
+	
+	
+	
 	
 	
 }
