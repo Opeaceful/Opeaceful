@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+
+<insert id="insertMember" parameterType="member" useGeneratedKeys="true" >
+
+	<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
+ 		SELECT CTCAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right(
+   	(SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1)+1,2)
+   	,2,'0')) as SIGNED
+ 		FROM DUAL
+ 	</selectKey>
+
+	INSERT INTO MEMBER(ENO,STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
+   	VALUES(
+   	#{eno},
+   	0,
+   	#{userPwd},
+   	#{userName},
+   	#{phone},
+   	#{extension},
+   	#{email},
+   	#{address},
+   	#{hireDate})
+  		
+</insert>
+
+
+
+</mapper>
