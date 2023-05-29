@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="deptMapper">
+<resultMap type="department" id="departmentesultSet">
+	<result column="DEPT_CODE" property="deptCode"/>
+	
+	<result column="DEPT_NAME" property="deptName"/>
+	<result column="TOP_DEPT_CODE" property="topDeptCode"/>
+</resultMap>
+
+<resultMap type="position" id="positionsultSet">
+	<result column="P_CODE" property="pCode"/>
+	<result column="P_NAME" property="pName"/>
+</resultMap>
+
+   <!-- [지영] 부서명 select -->
+  <select id="selectDeptList" resultMap="departmentesultSet">
+  	SELECT * FROM department;
+  </select>
+  
+  <!-- [지영] 직위명 select -->
+  <select id="selectPosition" resultMap="positionsultSet">
+  	SELECT * FROM position;
+  </select>
+  
+  
+ 
+  
+  
+</mapper>

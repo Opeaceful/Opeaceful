@@ -1,5 +1,5 @@
-//작성자 : 윤지영
-//주소 API JS 
+//작성자 : 윤지영, 노지의
+//주소 API JS + tel 셋팅
 
 //<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 위에 붙여주기 : API 스크립트!
 

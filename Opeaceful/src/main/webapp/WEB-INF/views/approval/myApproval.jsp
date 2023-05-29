@@ -55,13 +55,19 @@ pageEncoding="UTF-8"%> -->
           <div>진행중</div>
           <div>반려</div>
           <div>완료</div>
-          <div>승인대기</div>
+          <div>
+            <div class="alarm-wrap">
+              승인대기
+              <div class="alarm"></div>
+            </div>
+            <!-- <div class="alarm">22</div> -->
+          </div>
           <div>결재</div>
           <div class="line"></div>
         </div>
 
         <div class="inner-wrap">
-          <table class="table table-common">
+          <table class="my-approval-table table table-common">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -83,15 +89,15 @@ pageEncoding="UTF-8"%> -->
             <tbody>
               <tr>
                 <td>3</td>
-                <td>2023-05-16</td>
-                <td>지출결의서~~~</td>
+                <td>2023-05-16 09:56</td>
+                <td>서지출결의서지출결의서지지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서출결의서~~~</td>
                 <td>김사원</td>
                 <td>진행중</td>
                 <td>일반</td>
               </tr>
               <tr>
                 <td>2</td>
-                <td>2023-05-16</td>
+                <td>2023-05-16 09:55</td>
                 <td>휴가요청~~~</td>
                 <td>이사원</td>
                 <td>진행중</td>
@@ -99,11 +105,11 @@ pageEncoding="UTF-8"%> -->
               </tr>
               <tr>
                 <td>1</td>
-                <td>2023-05-16</td>
+                <td>2023-05-16 09:54</td>
                 <td>지출결의서~~~</td>
                 <td>김사원</td>
                 <td>완료</td>
-                <td>일반</td>
+                <td>오후반차</td>
               </tr>
             </tbody>
           </table>
@@ -111,7 +117,7 @@ pageEncoding="UTF-8"%> -->
           <div class="btn-wrap">
             <button
               id="btn-add-form"
-              class="btn btn-outline-primary position-btn"
+              class="btn btn-primary position-btn"
               data-bs-toggle="modal"
               data-bs-target="#add-form"
               type="button"
@@ -122,9 +128,9 @@ pageEncoding="UTF-8"%> -->
           </div>
 
           <div class="pagingArea">
-            <button><</button>
-            <button>1</button>
-            <button>></button>
+            <button class="btn btn-outline-primary"><</button>
+            <button class="btn btn-outline-primary">1</button>
+            <button class="btn btn-outline-primary">></button>
           </div>
         </div>
       </div>
