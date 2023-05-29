@@ -8,7 +8,7 @@
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
 	
 		<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
-	 		SELECT CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), (right((SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1), 2)+1)) as SIGNED)
+	 		SELECT CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right((SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1), 2)+1, 2, '0' ))as SIGNED)
 	 	</selectKey>
 	
 		INSERT INTO MEMBER(ENO,STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
