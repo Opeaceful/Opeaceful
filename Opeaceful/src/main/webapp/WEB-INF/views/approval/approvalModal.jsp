@@ -32,13 +32,35 @@ pageEncoding="UTF-8"%> -->
       rel="stylesheet"
       href="../../../resources/css/approval/approvalModal.css"
     />
+
+    <!-- css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+
+    <!-- js -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    cs
   </head>
   <body>
     <button
       id="test"
       class="btn btn-primary position-btn"
       data-bs-toggle="modal"
-      data-bs-target="#add-form"
+      data-bs-target="#approval"
       type="button"
     >
       양식추가
@@ -46,7 +68,7 @@ pageEncoding="UTF-8"%> -->
 
     <div
       class="modal fade"
-      id="add-form"
+      id="approval"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
@@ -61,6 +83,7 @@ pageEncoding="UTF-8"%> -->
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
               기안서 작성
             </h1>
+
             <button
               type="button"
               class="btn-close"
@@ -72,57 +95,87 @@ pageEncoding="UTF-8"%> -->
             <form method="post" action="">
               <div class="info-wrap">
                 <table class="write-approval-table table">
-                  <tr>
-                    <td>
-                      <div>일자</div>
-                    </td>
-                    <td><input type="date" name="" id="" /></td>
-                    <td>
-                      <div>종류</div>
-                    </td>
-                    <td>일반</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div>제목</div>
-                    </td>
-                    <td colspan="3"><input type="text" /></td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td width="10%">
+                        <div>일자</div>
+                      </td>
+                      <td width="40%"><i class="bi bi-calendar-week"></i><input  id="date" /></td>
+                      <td width="10%">
+                        <div>종류</div>
+                      </td>
+                      <td width="40%">일반</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div>제목</div>
+                      </td>
+                      <td colspan="3">
+                        <input type="text" name="title" id="approval-title" />
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td>
-                      <div>결재라인</div>
-                    </td>
-                    <td colspan="3">
-                      <button
-                        id="btn-add-form"
-                        class="btn btn-outline-primary position-btn"
-                        type="button"
-                      >
-                        <i class="fa-solid fa-plus"></i>선택
-                      </button>
-                      <div>
-                        <div>1. <b>결재</b> 뫄뫄뫄 부장</div>
-                        <div>2. 참조 뫄뫄뫄 팀장</div>
-                        <div>3. 결재 뫄뫄뫄 과장</div>
-                      </div>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <div>결재라인</div>
+                      </td>
+                      <td colspan="3">
+                        <div class="approval-line-wrap">
+                          <button
+                            id="btn-add-form"
+                            class="btn btn-outline-primary position-btn"
+                            type="button"
+                          >
+                            <i class="fa-solid fa-plus"></i> 선택
+                          </button>
+                          <div class="approval-lines">
+                            <ol>
+                              <li><b>결재</b> 뫄뫄뫄 부장</li>
+                              <li><b>참조</b> 뫄뫄뫄 팀장</li>
+                              <li><b>결재</b> 뫄뫄뫄 과장</li>
+                            </ol>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td>
-                      <div>첨부</div>
-                    </td>
-                    <td colspan="3">
-                      <button
-                        id="btn-add-form"
-                        class="btn btn-outline-primary position-btn"
-                        type="button"
-                      >
-                        <i class="fa-solid fa-plus"></i>첨부
-                      </button>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <div>첨부</div>
+                      </td>
+                      <td colspan="3">
+                        <div class="approval-line-wrap">
+                          <button
+                            id="btn-add-form"
+                            class="btn btn-outline-primary position-btn"
+                            type="button"
+                          >
+                            <i class="fa-solid fa-plus"></i> 첨부
+                          </button>
+                          <div class="approval-files">
+                            <div>
+                              fjkdlsjf.jpg
+                              <button class="delete-btn">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                            <div>
+                              fjkdldfsdsfdsfsjf.jpg
+                              <button class="delete-btn">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                            <div>
+                              fjkdlsjf.jpg
+                              <button class="delete-btn">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
 
@@ -369,6 +422,44 @@ pageEncoding="UTF-8"%> -->
           },
         });
       }
+
+      $("#date").daterangepicker();
+
+      $("#date").daterangepicker({
+        locale: {
+          separator: " ~ ", // 시작일시와 종료일시 구분자
+          format: "YYYY-MM-DD", // 일시 노출 포맷
+          applyLabel: "확인", // 확인 버튼 텍스트
+          cancelLabel: "취소", // 취소 버튼 텍스트
+          daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+          monthNames: [
+            "1월",
+            "2월",
+            "3월",
+            "4월",
+            "5월",
+            "6월",
+            "7월",
+            "8월",
+            "9월",
+            "10월",
+            "11월",
+            "12월",
+          ],
+        },
+        timePicker: false, // 시간 노출 여부
+        showDropdowns: true, // 년월 수동 설정 여부
+        autoApply: true, // 확인/취소 버튼 사용여부
+        timePicker24Hour: true, // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+        timePickerSeconds: true, // 초 노출 여부
+        // singleDatePicker: true, // 하나의 달력 사용 여부
+      });
+
+      $("#date").on("show.daterangepicker", function (ev, picker) {
+        $(".yearselect").css("float", "left");
+        $(".monthselect").css("float", "right");
+        $(".cancelBtn").css("float", "right");
+      });
     </script>
 
     <script

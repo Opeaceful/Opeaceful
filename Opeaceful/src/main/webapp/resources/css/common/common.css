@@ -13,6 +13,8 @@
     --white-hover: rgba(3, 3, 62, 0.09);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
+    /* 기본 배경색상 */
+    --color-background : white;
 
 
     /*폰트사이즈 뺴놓음*/
