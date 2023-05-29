@@ -1,5 +1,7 @@
 package com.company.opeaceful.member.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int selectENO() {
 		return memberDao.selectENO();
+	}
+	
+	public List<Member> selectMember(){
+		return memberDao.selectMember();
 	}
 }

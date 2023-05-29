@@ -1,5 +1,7 @@
 package com.company.opeaceful.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/member") // localhost:8081/spring/member 이하의 url요청을 처리하는 컨트롤러
@@ -85,12 +88,25 @@ public class MemberController {
 	}
 	
 	//[지영]
-		//member-allview로 이동
-		@RequestMapping("/allview")
-		public String selectMember() {
-			return "member/member-allview";
+	//member-allview로 이동
+	@RequestMapping("/allview")
+	public String memberAllview() {
+		return "member/member-allview";
 	}
+	
+	
+	//[지영]
+	//select박스를 통한 member조회
+	@ResponseBody
+	@PostMapping("/selectAll")
+	public String selectMember() {
 		
+		List<Member> m = memberService.selectMember();
+		
+
+		return new Gson().toJson(m);
+	}
+	
 	
 	
 	

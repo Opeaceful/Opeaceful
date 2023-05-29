@@ -43,7 +43,11 @@
 	<select id="selectENO" resultType="_int" >
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
-
+	
+<!-- [지영] member select 구문 -->	
+<select id="selectMember">
+	SELECT * FROM member
+</select>
 
 
 </mapper>
