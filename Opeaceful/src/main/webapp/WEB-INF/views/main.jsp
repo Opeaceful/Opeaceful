@@ -22,12 +22,7 @@
 
 </head>
 <body onload="getTime();">
-	<c:if test="${not empty alertMsg} ">
-		<script>
-			alertify.alert("서비스 요청 성공", "${alertMsg}");
-		</script>
-		<c:remove var="alertMsg"/>
-	</c:if>
+
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="main-wrap container">
