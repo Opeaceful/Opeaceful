@@ -3,12 +3,18 @@
 <mapper namespace="memberMapper">
 
 
-<insert id="insertMember" parameterType="member" >
+<insert id="insertMember" parameterType="member" useGeneratedKeys="true" >
 
-	INSERT INTO MEMBER(ENO, STATUS, STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
+	<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
+ 		SELECT CTCAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right(
+   	(SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1)+1,2)
+   	,2,'0')) as SIGNED
+ 		FROM DUAL
+ 	</selectKey>
+
+	INSERT INTO MEMBER(ENO,STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
    	VALUES(
-   	CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right(last_insert_id()+10,2),2,'0')) as SIGNED),
-   	DEFAULT,
+   	#{eno},
    	0,
    	#{userPwd},
    	#{userName},
