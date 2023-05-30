@@ -34,4 +34,9 @@ public class MemberServiceImpl implements MemberService {
 	public int selectENO() {
 		return memberDao.selectENO();
 	}
+	
+	@Override
+	public UserDepatment selectdpName(int userNo) {
+		return memberDao.selectdpName(userNo);
+	}
 }

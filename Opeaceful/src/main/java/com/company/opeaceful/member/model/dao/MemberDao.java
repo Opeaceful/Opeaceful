@@ -29,4 +29,8 @@ public class MemberDao {
 	public int selectENO() {
 		return sqlSession.selectOne("memberMapper.selectENO");
 	}
+
+	public UserDepatment selectdpName(int userNo) {
+		return sqlSession.selectOne("deptMapper.selectdpName", userNo);
+	}
 }

@@ -13,4 +13,6 @@ public interface MemberService {
 
 	int selectENO();
 
+	UserDepatment selectdpName(int userNo);
+
 }

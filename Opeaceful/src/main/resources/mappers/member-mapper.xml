@@ -59,14 +59,16 @@
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 
-<!-- [지의] - 로그인 -->
-<select id="loginMember" parameterType="member" resultMap="memberResultSet">
-	SELECT *
-	  FROM MEMBER
-	 WHERE ENO = #{eno}
-	   <!-- AND USER_PWD = #{userPwd} -->
-	   AND STATUS = 'Y'
-</select>
+	<!-- [지의] - 로그인유저 -->
+	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
+		SELECT *
+		  FROM MEMBER
+		 WHERE ENO = #{eno}
+		   AND STATUS = 'Y'
+	</select>
+	
+
+
 
 
 

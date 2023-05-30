@@ -1,6 +1,7 @@
 package com.company.opeaceful.member.model.vo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -32,29 +32,21 @@
 	        	
 	        		<!-- 공지사항 -->
 	        		<div class="square-box" id="board-box">
-						<h5 class="main-title">공지사항</h5>
+						<h5 class="main-title" id="main-notice-title">공지사항</h5>
 						
 						<div class="main-content-wrap">
-							<div class="main-content-text row">
-								<div class="col-9">2023년 하절기 사옥 냉난방기 운용 관련 공지</div>
-								<div class="col-3 text-end">2023-05-12</div>
-							</div>
-							<div class="main-content-text row">
-								<div class="col-9">2023년 06월 전사 플레이샵 조 편성 및 차량배정 관련 공지 글(필독)</div>
-								<div class="col-3 text-end">2023-04-24</div>
-							</div>
-							<div class="main-content-text row">
-								<div class="col-9">5/1(월) 근로자의 날 휴무 관련 공지</div>
-								<div class="col-3 text-end">2023-04-15</div>
-							</div>
-							<div class="main-content-text row">
-								<div class="col-9">2023년 인사발령</div>
-								<div class="col-3 text-end">2023-04-03</div>
-							</div>
-							<div class="main-content-text row">
-								<div class="col-9">2023년 07월 ~ 08월 하계 휴가기간 제주도 리조트 예약 신청 공지 건</div>
-								<div class="col-3 text-end">2023-03-12</div>
-							</div>
+							<c:if test="${empty mainNoticeList}">
+								<div class="main-content-text row">
+									<div class="col">등록된 공지사항이 없습니다.</div>
+								</div>
+							</c:if>
+							<c:forEach items="${mainNoticeList}" var="n">
+								<div class="main-content-text row">
+									<div style="display: none;">${n.boardNo }</div>
+									<div class="col-9">${n.boardTitle }</div>
+									<div class="col-3 text-end">${n.createDate }</div>
+								</div>
+							</c:forEach>
 						</div>
 	        		</div>
 	        		
@@ -96,19 +88,31 @@
 	        				<div id="main-time"></div>
 	        			</div>
 	        			
+	        			<c:set var="ymd" value="<%=new java.util.Date()%>" />
+	        			
+	        			
 	        			<!-- 내정보 및 출퇴근 버튼 부분 -->
 	        			<div class="main-info">
 	        				<!-- 내정보 -->
 	        				<div class="main-info-top row">
-	        					<div class="col text-start main-d-day">입사한지 <span id="main-d-day">490</span>일</div>
+	        					<div class="col text-start main-d-day">입사한지 <span id="main-d-day"></span>일</div>
 	        					<div class="col text-center main-profile-box">
+									<!-- 프로필 이미지 -->
 									<div class="main-profile">
-				                        <img id="main-profile-img" src="${path}/resources/image/mypage/basic_profile.png">
+		                               <c:if test="${empty loginUser.profileImg}">
+		                                   <img id="main-profile-img" src="${path}/resources/image/mypage/basic_profile.png">
+		                               </c:if>
+		
+		                               <c:if test="${!empty loginUser.profileImg}">
+		                                   <img id="main-profile-img" src="${path}/resources/image/mypage/${loginUser.profileImg}">
+		                               </c:if>
 				                    </div>
-				                    <div id="main-name">노지의</div>
+				                    
+				                    <!-- 이름, 부서, 직급 -->
+				                    <div id="main-name">${loginUser.userName}</div>
 				                    <div>
-				                    	<span id="main-team">영업팀</span> 
-				                    	<span id="main-">대리</span>
+				                    	<span id="main-deptName">${dpName.deptName }</span> 
+				                    	<span id="main-pName">${dpName.PName }</span>
 				                    </div>
 	        					</div>
 	        					<div class="col text-end">
@@ -162,97 +166,13 @@
             
         </div>
     </div>
+    
 
-    <script>
-    	/* 현재 시간 표시 */
- 	    const today = document.getElementById('main-day');
-	    const time = document.getElementById('main-time');
-	    
-		let d = new Date();
-		
-	    let year = d.getFullYear(); 	// 년도
-	    let month = d.getMonth() + 1;	// 월
-	    let date = d.getDate();  		// 날짜
-	    
-	    let weekday = new Array(7);
-	    weekday[0] = "일";
-	    weekday[1] = "월";
-	    weekday[2] = "화";
-	    weekday[3] = "수";
-	    weekday[4] = "목";
-	    weekday[5] = "금";
-	    weekday[6] = "토";
-
-	    let day = weekday[d.getDay()];
-
-	    if(month < 10){month = "0"+month;}
-	    if(date < 10){date = "0"+date;}
-	    today.innerHTML = year + "-" + month + "-" + date  + " (" + day  + ")";
-		
-	    function getTime() {
-			let d = new Date();
-			
-		    let hur = d.getHours();		// 시
-			let min = d.getMinutes();	//분
-			let sec = d.getSeconds();	//초
-			if(d.getHours() < 10){hur = "0"+hur;}
-			if(d.getMinutes() < 10){min = "0"+min;}
-			if(d.getSeconds() < 10){sec = "0"+sec;}
-
-			time.innerHTML = hur + " : " + min + " : " + sec;	// 형식 지정
-			
-			setTimeout(getTime, 1000);	//1000밀리초(1초) 마다 반복
-		}
-	    
-	    
-		/* 접속상태 표시 */
-	    function onClickState(e) {
-	      const isActive = e.currentTarget.className.indexOf("active") !== -1;
-	      if (isActive) {
-	        e.currentTarget.className = "select";
-	      } else {
-	        e.currentTarget.className = "select active";
-	      }
-	    }
-
-	    document.querySelector("#state .select").addEventListener("click", onClickState);
-
-	    function onClickStateOption(e) {
-	      const selectedValue = e.currentTarget.innerHTML;
-	      document.querySelector("#state .text").innerHTML = selectedValue;
-	    }
-
-	    var stateList = document.querySelectorAll("#state .option");
-	    for (var i = 0; i < stateList.length; i++) {
-	      var state = stateList[i];
-	      state.addEventListener("click", onClickStateOption);
-	    }
-	    
-	    
-	    /* 칼라모드 표시 */
-	    function onClickMode(e) {
-	      const isActive = e.currentTarget.className.indexOf("active") !== -1;
-	      if (isActive) {
-	        e.currentTarget.className = "mode-select";
-	      } else {
-	        e.currentTarget.className = "mode-select active";
-	      }
-	    }
-
-	    document.querySelector("#color-mode .mode-select").addEventListener("click", onClickMode);
-
-	    function onClickModeOption(e) {
-	      const selectedValue = e.currentTarget.innerHTML;
-	      document.querySelector("#color-mode .mode-text").innerHTML = selectedValue;
-	    }
-
-	    var ModeList = document.querySelectorAll("#color-mode .mode");
-	    for (var i = 0; i < ModeList.length; i++) {
-	      var mode = ModeList[i];
-	      mode.addEventListener("click", onClickModeOption);
-	    }
-	    
-	</script>
+<script src="${path}/resources/js/main.js"></script>
+<script>
+	var mainHireDate = '${loginUser.hireDate}';
+	console.log(mainHireDate);
+</script>
 
 
 </body>
