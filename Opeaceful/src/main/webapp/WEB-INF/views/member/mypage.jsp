@@ -35,9 +35,22 @@
                 <!-- 이미지부분 -->
                 <div class="col-3 mypage-left">
                     <div class="mypage-profile-box">
-                        <img class="mypage-profile" src="${path}/resources/image/mypage/basic_profile.png">
+                    	<c:if test="${empty loginUser.profileImg}">
+	                        <img class="mypage-profile" src="${path}/resources/image/mypage/basic_profile.png">
+                    	</c:if>
+                    	<c:if test="${!empty loginUser.profileImg}">
+	                        <img class="mypage-profile" src="${path}/resources/image/mypage/${loginUser.profileImg}">
+                    	</c:if>
                     </div>
-                    <div class="profile-btn"><button type="button" class="btn btn-outline-primary">변경</button></div>
+                    
+<!-- 					<form action="/member/updateImg" class="profile-btn" method="post" enctype="multipart/form-data">
+					</form> -->
+					<div class="profile-btn">
+					
+                    	<button type="button" class="btn btn-outline-primary" id="mypage-img-btn">변경</button>
+                    	<input type="file" id="mypage-upfile" name="mypageUpfile" style="display:none;">
+					</div>
+					
                 </div>
 
                 <!-- 내용부분 -->
@@ -132,8 +145,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -146,17 +157,17 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">비밀번호 변경</h1>
                 </div>
                 <div class="change-pwd-div modal-body">
-                    <form>
+                    <form action="${path}/member/updateMyPwd" method="post">
                         <div class="row mb-3">
                             <label for="origin-pwd" class="col-sm-4 col-form-label">현재 비밀번호</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control box-shadow-put" id="origin-pwd">
+                                <input type="password" class="form-control box-shadow-put" id="origin-pwd" name="originPwd">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="change-pwd" class="col-sm-4 col-form-label">새 비밀번호</label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control box-shadow-put" id="change-pwd">
+                                <input type="password" class="form-control box-shadow-put" id="change-pwd" name="changePwd">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -165,11 +176,11 @@
                                 <input type="password" class="form-control box-shadow-put" id="change-pwd-ck">
                             </div>
                         </div>
+		                <div class="modal-footer">
+		                    <button type="submit" class="w90-btn btn btn-primary">확인</button>
+		                    <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+		                </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="w90-btn btn btn-primary">확인</button>
-                    <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
                 </div>
             </div>
         </div>
@@ -177,14 +188,7 @@
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="${path}/resources/js/addressAPI.js"></script>
-    
-    <script>
-    $('#mypage-phone,#mypage-call').keyup(function (event) {
-    event = event || window.event;
-    var _val = this.value.trim();
-    this.value = autoHypenTel(_val);
-    });
+    <script src="${path}/resources/js/mypage.js"></script>
 
-    </script>
 </body>
 </html>

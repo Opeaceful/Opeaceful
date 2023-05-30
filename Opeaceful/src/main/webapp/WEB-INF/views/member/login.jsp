@@ -46,17 +46,21 @@
                     <div class="login-input">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-user" style="width: 16px;"></i></span>
-                            <input type="text" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호">
+                            <input type="text" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호" value="${cookie.saveId.value}">
                         </div>
             
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                             <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호">
                         </div>
-        
+
+						<c:if test="${!empty cookie.saveId.value}">
+							<c:set var="chk" value="checked"/>
+						</c:if>
+						
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input box-shadow-put" id="save-id">
-                            <label class="form-check-label" for="save-id">아이디 저장</label>
+                            <input type="checkbox" class="form-check-input box-shadow-put" id="saveId" name="saveId" ${chk}>
+                            <label class="form-check-label" for="saveId">아이디 저장</label>
                         </div>
                     </div>
                     

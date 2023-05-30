@@ -88,9 +88,6 @@
 	        				<div id="main-time"></div>
 	        			</div>
 	        			
-	        			<c:set var="ymd" value="<%=new java.util.Date()%>" />
-	        			
-	        			
 	        			<!-- 내정보 및 출퇴근 버튼 부분 -->
 	        			<div class="main-info">
 	        				<!-- 내정보 -->
