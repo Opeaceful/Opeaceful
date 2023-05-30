@@ -13,6 +13,6 @@ public interface MemberService {
 
 	int selectENO();
 
-	List<Member> selectMember();
+	List<Member> selectMember(int pselect, int dselect);
 
 }

@@ -32,7 +32,8 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectENO();
 	}
 	
-	public List<Member> selectMember(){
-		return memberDao.selectMember();
+	@Override
+	public List<Member> selectMember(int pselect, int dselect){
+		return memberDao.selectMember(pselect, dselect);
 	}
 }

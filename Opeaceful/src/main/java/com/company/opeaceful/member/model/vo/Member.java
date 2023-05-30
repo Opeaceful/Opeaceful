@@ -27,4 +27,7 @@ public class Member {
 	private int annualLeaveCount;
 	private Date hireDate;
 	
+	private String pName;
+	private String dName;
+	
 }

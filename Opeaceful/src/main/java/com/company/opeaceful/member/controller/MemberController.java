@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -99,9 +100,14 @@ public class MemberController {
 	//select박스를 통한 member조회
 	@ResponseBody
 	@PostMapping("/selectAll")
-	public String selectMember() {
+	public String selectMember(@RequestParam(value="Dselect", required = false) int Dselect,
+			@RequestParam(value="Pselect", required = false) int Pselect
+			) {
+		System.out.println("여기");
 		
-		List<Member> m = memberService.selectMember();
+		
+		
+		List<Member> m = memberService.selectMember(Pselect, Dselect);
 		
 
 		return new Gson().toJson(m);

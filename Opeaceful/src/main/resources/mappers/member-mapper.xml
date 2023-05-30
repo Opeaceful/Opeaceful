@@ -2,9 +2,32 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 
+ <resultMap type="member" id="memberResultSet">
+  	<id column="USER_NO" property="userNo"/>
+  	<result column="ENO" property="eno"/>
+  	<result column="STATUS" property="status"/>
+  	<result column="PROFILE_IMG" property="profileImg"/>
+  	<result column="STATUS_TYPE" property="statusType"/> 	
+  	<result column="USER_PWD" property="userPwd"/>
+  	<result column="USER_NAME" property="userName"/> 	
+  	<result column="PHONE" property="phone"/> 	
+  	<result column="EXTENSION" property="extension"/> 	
+  	<result column="EMAIL" property="email"/> 	
+  	<result column="ADDRESS" property="address"/> 	
+  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
+  	<result column="HIRE_DATE" property="hireDate"/> 
+  	
+  	<result column="P_NAME" property="pName"/> 
+  	<result column="DEPT_NAME" property="dName"/> 
+  	
+  </resultMap>
+
+
+
+
 
 <!-- [지영] member insert구문 -->
-	<!-- member insert -->
+	<!--[지영] member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
 	
 		<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
@@ -25,7 +48,7 @@
 	  		
 	</insert>
 	
-	<!-- dept insert -->
+	<!-- [지영] dept insert -->
 	<insert id="insertUserDept" parameterType="userDepatment" useGeneratedKeys="true">
 		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
 	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
@@ -39,15 +62,20 @@
 	   	
 	</insert>
 	
-	<!--사용자에게 보여줄 eno select -->
+	<!--[지영] 사용자에게 보여줄 eno select -->
 	<select id="selectENO" resultType="_int" >
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
 <!-- [지영] member select 구문 -->	
-<select id="selectMember">
-	SELECT * FROM member
-</select>
+	 <select id="selectMember" resultMap="memberResultSet">
+		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,HIRE_DATE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+	    left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE STATUS = 'Y';
+	 </select>
 
 
 </mapper>
