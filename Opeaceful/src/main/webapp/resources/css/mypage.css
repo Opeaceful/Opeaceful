@@ -51,7 +51,7 @@
 }
 /* input박스 가로길이 */
 .form-control {width: 70%;}
-
+.seach-btn{border: 0;}
 
 /* 버튼상단 마진 */
 .text-center{margin-top: 80px;}
