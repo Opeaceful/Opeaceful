@@ -14,13 +14,22 @@
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
+	<!-- css -->
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
     <link rel="stylesheet" href="${path}/resources/css/login.css">
 </head>
 <body>
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			swal('${alertMsg}');
+		</script>
+      <c:remove var="alertMsg"/>
+   </c:if>
     <div class="login-wrap">
         <div class="login-div row">
             <!-- 로고 -->
@@ -36,13 +45,13 @@
                 <form action="${path}/main" method="post">
                     <div class="login-input">
                         <div class="input-group mb-3">
-                            <span class="input-group-text"><i class="fa-solid fa-user"style="width: 16px;"></i></span>
-                            <input type="text" class="form-control box-shadow-put" id="login-id" placeholder="사원번호">
+                            <span class="input-group-text"><i class="fa-solid fa-user" style="width: 16px;"></i></span>
+                            <input type="text" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호">
                         </div>
             
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                            <input type="password" class="form-control box-shadow-put" id="login-pwd" placeholder="비밀번호">
+                            <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호">
                         </div>
         
                         <div class="mb-3 form-check">
@@ -58,5 +67,7 @@
             </div>
         </div>
     </div>
+    
+
 </body>
 </html>

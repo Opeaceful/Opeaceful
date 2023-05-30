@@ -23,6 +23,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member loginMember(Member m) {
+		return memberDao.loginMember(m);
+	}
+	
+	@Override
 	public int insertUserDept(UserDepatment ud) {
 		return memberDao.insertUserDept(ud);
 	}
@@ -35,5 +40,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Member> selectMember(int pselect, int dselect){
 		return memberDao.selectMember(pselect, dselect);
+	}
+	
+	@Override
+	public UserDepatment selectdpName(int userNo) {
+		return memberDao.selectdpName(userNo);
 	}
 }
