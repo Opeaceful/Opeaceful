@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+	
+	<resultMap type="board" id="mainNoticeResultSet">
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="CREATE_DATE" property="createDate"/>
+	</resultMap>
+
+	<!-- [지의] - 메인 공지사항 조회 -->
+	<select id="mainSelectNoticeList" resultMap="mainNoticeResultSet">
+		SELECT BOARD_NO, BOARD_TITLE, CREATE_DATE
+		  FROM BOARD
+		 WHERE BOARD_CD = 'N'
+		 ORDER BY CREATE_DATE DESC
+		 LIMIT 0,5;
+	</select>
+
+
+</mapper>
