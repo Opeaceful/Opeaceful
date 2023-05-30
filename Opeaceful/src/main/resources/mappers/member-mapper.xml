@@ -20,9 +20,7 @@
   	<result column="P_NAME" property="pName"/> 
   	<result column="DEPT_NAME" property="dName"/> 
   	
-  </resultMap>
-
-
+</resultMap>
 
 
 <resultMap type="member" id="memberResultSet">
@@ -83,13 +81,21 @@
 	</select>
 	
 <!-- [지영] member select 구문 -->	
-	 <select id="selectMember" resultMap="AllmemberResultSet">
+	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
 		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,HIRE_DATE,P_NAME,DEPT_NAME
 		FROM member
 		left JOIN user_department USING(USER_NO)
 	    left JOIN department USING(DEPT_CODE)
 	    left JOIN position USING(P_CODE)
-		WHERE STATUS = 'Y';
+		WHERE STATUS = 'Y'
+		 <where>
+		    <if test='Dselect != null'>
+		      AND DEPT_CODE = #{Dselect}
+		    </if>
+		    <if test='Pselect != null'>
+		      AND P_CODE = #{Pselect}
+		    </if>
+	  	</where>;
 	 </select>
 
 	<!-- [지의] - 로그인유저 -->

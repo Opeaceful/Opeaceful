@@ -1,6 +1,7 @@
 package com.company.opeaceful.member.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,11 +34,16 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectENO");
 	}
 
-	public List<Member> selectMember(int pselect, int dselect) {
-		RowBounds rowBounds = new RowBounds(offset, limit);
+	public List<Member> selectMember(Map<String, Object> selectPD) {
 		
-		return sqlSession.selectList("memberMapper.selectMember",pselect,dselect,rowBounds);
+//		RowBounds rowBounds = new RowBounds(0, 10); 
+		
+		return sqlSession.selectList("memberMapper.selectMember",selectPD);
+	}
+
 	public UserDepatment selectdpName(int userNo) {
 		return sqlSession.selectOne("deptMapper.selectdpName", userNo);
 	}
+
+	
 }

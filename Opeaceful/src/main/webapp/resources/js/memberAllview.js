@@ -17,16 +17,11 @@ import {path} from './common/common.js';
 $("#d-select").change(function() {
 
 let memberTableBody = document.getElementById("member-table-body");
-const Dselect= document.getElementById("d-select").value;
-const Pselect = document.getElementById("p-select").value;
+let Dselect= document.getElementById("d-select").value;
+let Pselect = document.getElementById("p-select").value;
 
 console.log(Dselect);
-console.log(Pselect);
-
-
-if(!Dselect){
-    console.log("null맞음")
-}
+console.log(Pselect)
 
 $.ajax({
     url:`${path}/member/selectAll`,

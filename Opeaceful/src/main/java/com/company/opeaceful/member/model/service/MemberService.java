@@ -1,6 +1,7 @@
 package com.company.opeaceful.member.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
@@ -15,8 +16,12 @@ public interface MemberService {
 
 	int selectENO();
 
-	List<Member> selectMember(int pselect, int dselect);
+	List<Member> selectMember(Map<String, Object> selectPD);
 	
 	UserDepatment selectdpName(int userNo);
+
+	
+
+	
 
 }

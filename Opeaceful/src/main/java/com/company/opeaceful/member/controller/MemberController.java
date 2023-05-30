@@ -1,6 +1,8 @@
 package com.company.opeaceful.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -111,18 +113,22 @@ public class MemberController {
 	//select박스를 통한 member조회
 	@ResponseBody
 	@PostMapping("/selectAll")
-	public String selectMember(@RequestParam(value="Dselect", required = false) int Dselect,
-			@RequestParam(value="Pselect", required = false) int Pselect
+	public String selectMember(
+			@RequestParam(value="Dselect", required = false) Integer Dselect,
+			@RequestParam(value="Pselect", required = false) Integer Pselect
 			) {
-		System.out.println("여기");
 		
+		Map<String, Object> selectPD = new HashMap<>();	
+		selectPD.put("Dselect", Dselect);
+		selectPD.put("Pselect", Pselect);
 		
-		
-		List<Member> m = memberService.selectMember(Pselect, Dselect);
+		List<Member> m = memberService.selectMember(selectPD);
 		
 
 		return new Gson().toJson(m);
+		
 	}
+
 	
 	
 	
