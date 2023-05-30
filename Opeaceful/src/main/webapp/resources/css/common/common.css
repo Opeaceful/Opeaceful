@@ -28,6 +28,10 @@
 
 
     --color-serch-box:#ced4da;
+
+    /* 스크롤바 컬러 그라데이션용 */
+    --color-scroll-start : rgb(42, 42, 90);
+    --color-scroll-end :  rgb(66, 66, 156);
 }
 
 .content-wrap{
@@ -303,4 +307,19 @@ input::-webkit-search-cancel-button{
 
 .swal-button:not([disabled]):hover {
     background-color: var(--navy-hover);
+}
+
+
+/* 스크롤바 디자인 */
+.scroll-bar::-webkit-scrollbar {
+    width: 10px;
+}
+.scroll-bar::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(var(--color-scroll-start) 50%, var(--color-scroll-end));
+    border-radius: 10px;
+}
+.scroll-bar::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.486);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
