@@ -32,13 +32,35 @@ pageEncoding="UTF-8"%> -->
       rel="stylesheet"
       href="../../../resources/css/approval/approvalModal.css"
     />
+
+    <!-- css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+
+    <!-- js -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    cs
   </head>
   <body>
     <button
       id="test"
       class="btn btn-primary position-btn"
       data-bs-toggle="modal"
-      data-bs-target="#add-form"
+      data-bs-target="#approval"
       type="button"
     >
       양식추가
@@ -46,7 +68,7 @@ pageEncoding="UTF-8"%> -->
 
     <div
       class="modal fade"
-      id="add-form"
+      id="approval"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
@@ -61,6 +83,7 @@ pageEncoding="UTF-8"%> -->
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
               기안서 작성
             </h1>
+
             <button
               type="button"
               class="btn-close"
@@ -72,57 +95,89 @@ pageEncoding="UTF-8"%> -->
             <form method="post" action="">
               <div class="info-wrap">
                 <table class="write-approval-table table">
-                  <tr>
-                    <td>
-                      <div>일자</div>
-                    </td>
-                    <td><input type="date" name="" id="" /></td>
-                    <td>
-                      <div>종류</div>
-                    </td>
-                    <td>일반</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div>제목</div>
-                    </td>
-                    <td colspan="3"><input type="text" /></td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td width="10%">
+                        <div>일자</div>
+                      </td>
+                      <td width="40%">
+                        <i class="bi bi-calendar-week"></i><input id="date" />
+                      </td>
+                      <td width="10%">
+                        <div>종류</div>
+                      </td>
+                      <td width="40%">일반</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div>제목</div>
+                      </td>
+                      <td colspan="3">
+                        <input type="text" name="title" id="approval-title" />
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td>
-                      <div>결재라인</div>
-                    </td>
-                    <td colspan="3">
-                      <button
-                        id="btn-add-form"
-                        class="btn btn-outline-primary position-btn"
-                        type="button"
-                      >
-                        <i class="fa-solid fa-plus"></i>선택
-                      </button>
-                      <div>
-                        <div>1. <b>결재</b> 뫄뫄뫄 부장</div>
-                        <div>2. 참조 뫄뫄뫄 팀장</div>
-                        <div>3. 결재 뫄뫄뫄 과장</div>
-                      </div>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <div>결재라인</div>
+                      </td>
+                      <td colspan="3">
+                        <div class="approval-line-wrap">
+                          <button
+                            id="btn-add-form"
+                            class="btn btn-outline-primary position-btn"
+                            type="button"
+                          >
+                            <i class="fa-solid fa-plus"></i> 선택
+                          </button>
+                          <div class="approval-lines">
+                            <ol>
+                              <li><b>결재</b> 뫄뫄뫄 부장</li>
+                              <li><b>참조</b> 뫄뫄뫄 팀장</li>
+                              <li><b>결재</b> 뫄뫄뫄 과장</li>
+                            </ol>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
 
-                  <tr>
-                    <td>
-                      <div>첨부</div>
-                    </td>
-                    <td colspan="3">
-                      <button
-                        id="btn-add-form"
-                        class="btn btn-outline-primary position-btn"
-                        type="button"
-                      >
-                        <i class="fa-solid fa-plus"></i>첨부
-                      </button>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <div>첨부</div>
+                      </td>
+                      <td colspan="3">
+                        <div class="approval-line-wrap">
+                          <button
+                            id="btn-add-form"
+                            class="btn btn-outline-primary position-btn"
+                            type="button"
+                          >
+                            <i class="fa-solid fa-plus"></i> 첨부
+                          </button>
+                          <div class="approval-files">
+                            <div>
+                              fjkdlsjf.jpg
+                              <button class="delete-btn">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                            <div>
+                              fjkdldfsdsfdsfsjf.jpg
+                              <button class="delete-btn">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                            <div>
+                              fjkdlsjf.jpg
+                              <button class="delete-btn">
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
 
@@ -149,33 +204,26 @@ pageEncoding="UTF-8"%> -->
             </button>
           </div>
 
-          <!-- <div id="copy-form">
+          <div id="approval-line-modal">
             <div class="custom-modal">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  양식 복사
+                  결재라인
                 </h1>
                 <button type="button" class="btn-close"></button>
               </div>
               <div class="modal-body">
-                <div class="copy-select-wrap">
-                  <div>복사할 양식</div>
-                  <select name="copyForm" id="copy-select">
-                    <option value="1">
-                      testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-                    </option>
-                  </select>
-                  <button
-                    type="button"
-                    id="btn-copy-save"
-                    class="btn btn-outline-primary position-ok ms-auto"
-                  >
-                    복사
-                  </button>
+                <div class="line-wrap">
+                  <div class="org-chart">
+                    <div>경영전략</div>
+                    <div>이뫄뫄 사원</div>
+                    <div>김뫄뫄 과장</div>
+                  </div>
+                  <div class="my-list"></div>
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -185,66 +233,66 @@ pageEncoding="UTF-8"%> -->
       // 만약에 수정하면 파일 삭제시키는 것도 들어가야 할듯
 
       setTimeout(() => {
-        document.getElementById("test").click();
+        document.getElementById('test').click();
       }, 100);
       test1();
       let downloadPic = function (url, name) {
         const img = new Image();
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
         img.onload = function () {
           canvas.width = this.width;
           canvas.height = this.height;
           ctx.drawImage(this, 0, 0);
 
-          const elt = document.createElement("a");
-          elt.setAttribute("href", canvas.toDataURL("image/png"));
-          elt.setAttribute("download", `${name}.png`);
-          elt.style.display = "none";
+          const elt = document.createElement('a');
+          elt.setAttribute('href', canvas.toDataURL('image/png'));
+          elt.setAttribute('download', `${name}.png`);
+          elt.style.display = 'none';
           document.body.appendChild(elt);
           elt.click();
           document.body.removeChild(elt);
         };
-        img.crossOrigin = "anonymous";
+        img.crossOrigin = 'anonymous';
         img.src = url;
       };
 
       function test1() {
         var plugins = [
-          "advlist",
+          'advlist',
           // "autolink",
           // "lists",
           // "link",
-          "image",
-          "charmap",
+          'image',
+          'charmap',
           // "print",
-          "preview",
+          'preview',
           // "anchor",
-          "searchreplace",
-          "visualblocks",
+          'searchreplace',
+          'visualblocks',
           // "code",
-          "fullscreen",
-          "insertdatetime",
+          'fullscreen',
+          'insertdatetime',
           // "media",
-          "table",
-          "paste",
+          'table',
+          'paste',
           // "code",
           // "help",
           // "wordcount",
-          "save",
+          'save',
         ];
         var edit_toolbar =
-          "formatselect fontselect fontsizeselect |" +
-          " forecolor backcolor |" +
-          " bold italic underline strikethrough |" +
-          " alignjustify alignleft aligncenter alignright |" +
-          " bullist numlist |" +
-          " table tabledelete |" +
-          " image";
+          'formatselect fontselect fontsizeselect |' +
+          ' forecolor backcolor |' +
+          ' bold italic underline strikethrough |' +
+          ' alignjustify alignleft aligncenter alignright |' +
+          ' bullist numlist |' +
+          ' table tabledelete |' +
+          ' image';
 
         tinymce.init({
-          language: "ko_KR", //한글판으로 변경
-          selector: "#editor",
+          language: 'ko_KR', //한글판으로 변경
+          selector: '#editor',
           height: 500,
           // menubar: false,
           plugins: plugins,
@@ -259,13 +307,13 @@ pageEncoding="UTF-8"%> -->
               images_upload_url: 'postAcceptor.php',
               here we add custom filepicker only to Image dialog
           */
-          file_picker_types: "image",
+          file_picker_types: 'image',
           /* and here's our custom image picker*/
           file_picker_callback: function (cb, value, meta) {
-            console.log("test1");
-            var input = document.createElement("input");
-            input.setAttribute("type", "file");
-            input.setAttribute("accept", "image/*");
+            console.log('test1');
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
 
             /*
               Note: In modern browsers input[type="file"] is functional without
@@ -275,8 +323,8 @@ pageEncoding="UTF-8"%> -->
               once you do not need it anymore.
               */
             input.onchange = function () {
-              console.log("test2");
-              console.log("test");
+              console.log('test2');
+              console.log('test');
               var file = this.files[0];
 
               var reader = new FileReader();
@@ -286,9 +334,9 @@ pageEncoding="UTF-8"%> -->
                       registry. In the next release this part hopefully won't be
                       necessary, as we are looking to handle it internally.
                       */
-                var id = "blobid" + new Date().getTime();
+                var id = 'blobid' + new Date().getTime();
                 var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                var base64 = reader.result.split(",")[1];
+                var base64 = reader.result.split(',')[1];
                 var blobInfo = blobCache.create(id, file, base64);
 
                 blobCache.add(blobInfo);
@@ -307,13 +355,13 @@ pageEncoding="UTF-8"%> -->
           /*** image upload ***/
 
           content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+            'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         });
 
-        $("#save").on("click", function () {
+        $('#save').on('click', function () {
           var content = tinymce.activeEditor.getContent();
           console.log(
-            tinymce.activeEditor.contentDocument.getElementById("tinymce")
+            tinymce.activeEditor.contentDocument.getElementById('tinymce')
               .innerHTML
           );
         });
@@ -321,26 +369,26 @@ pageEncoding="UTF-8"%> -->
 
       function test2() {
         var tinyEditor = tinymce.init({
-          selector: "#editor",
+          selector: '#editor',
           min_height: 500,
           max_height: 1000,
           menubar: false,
           paste_as_text: true,
-          fullpage_default_font_size: "14px",
+          fullpage_default_font_size: '14px',
           branding: false,
           plugins:
-            "autolink code link autoresize paste contextmenu image preview",
+            'autolink code link autoresize paste contextmenu image preview',
           toolbar:
-            "undo redo | fontsizeselect | forecolor | bold italic strikethrough underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link custom_image | code preview",
+            'undo redo | fontsizeselect | forecolor | bold italic strikethrough underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link custom_image | code preview',
           fontsize_formats:
-            "10px 12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px",
+            '10px 12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px',
           setup: function (editor) {
-            editor.ui.registry.addButton("custom_image", {
-              icon: "image",
-              tooltip: "insert Image",
+            editor.ui.registry.addButton('custom_image', {
+              icon: 'image',
+              tooltip: 'insert Image',
               onAction: function () {
                 // 이미지 버튼이 눌렸을 때 처리하는 곳
-                console.log("test");
+                console.log('test');
                 // documentUpload({
                 //   multiple: false,
                 //   accept: ".jpg, .png",
@@ -369,6 +417,44 @@ pageEncoding="UTF-8"%> -->
           },
         });
       }
+
+      $('#date').daterangepicker();
+
+      $('#date').daterangepicker({
+        locale: {
+          separator: ' ~ ', // 시작일시와 종료일시 구분자
+          format: 'YYYY-MM-DD', // 일시 노출 포맷
+          applyLabel: '확인', // 확인 버튼 텍스트
+          cancelLabel: '취소', // 취소 버튼 텍스트
+          daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+          monthNames: [
+            '1월',
+            '2월',
+            '3월',
+            '4월',
+            '5월',
+            '6월',
+            '7월',
+            '8월',
+            '9월',
+            '10월',
+            '11월',
+            '12월',
+          ],
+        },
+        timePicker: false, // 시간 노출 여부
+        showDropdowns: true, // 년월 수동 설정 여부
+        autoApply: true, // 확인/취소 버튼 사용여부
+        timePicker24Hour: true, // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+        timePickerSeconds: true, // 초 노출 여부
+        // singleDatePicker: true, // 하나의 달력 사용 여부
+      });
+
+      $('#date').on('show.daterangepicker', function (ev, picker) {
+        $('.yearselect').css('float', 'left');
+        $('.monthselect').css('float', 'right');
+        $('.cancelBtn').css('float', 'right');
+      });
     </script>
 
     <script
