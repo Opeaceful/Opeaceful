@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="deptMapper">
+
 <resultMap type="department" id="departmentesultSet">
 	<result column="DEPT_CODE" property="deptCode"/>
 	
@@ -13,6 +14,14 @@
 	<result column="P_NAME" property="pName"/>
 </resultMap>
 
+<resultMap type="userDepatment" id="userDepartResultSet">
+	<result column="USER_NO" property="userNo"/>
+	<result column="P_CODE" property="pCode"/>
+	<result column="DEPT_CODE" property="deptCode"/>
+	<result column="DEPT_NAME" property="deptName"/>
+	<result column="P_NAME" property="pName"/>
+</resultMap>
+
    <!-- [지영] 부서명 select -->
   <select id="selectDeptList" resultMap="departmentesultSet">
   	SELECT * FROM department;
@@ -22,6 +31,16 @@
   <select id="selectPosition" resultMap="positionsultSet">
   	SELECT * FROM position;
   </select>
+  
+ 	<!-- [지의] - 팀,직급 조회 -->
+	<select id="selectdpName" parameterType="_int" resultMap="userDepartResultSet">
+	SELECT USER_NO, DEPT_NAME, P_NAME
+	  FROM user_department
+	  JOIN department using (DEPT_CODE)
+	  JOIN position using (P_CODE)
+	 WHERE USER_NO = ${userNo};
+	</select>
+	
   
   
  

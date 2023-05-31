@@ -98,7 +98,7 @@ CREATE TABLE `BOARD` (
 	`BOARD_CONTENT`	NVARCHAR(5000)	NOT NULL	COMMENT '글내용',
 	`BOARD_WRITER`	NVARCHAR(20)	NOT NULL	COMMENT '작성자',
 	`CREATE_DATE`	DATE	NOT NULL	COMMENT '작성일',
-	`COUNT`	INT	NOT NULL	COMMENT '조회수',
+	`COUNT` INT	NOT NULL	DEFAULT 0	COMMENT '조회수',
 	`FIXED`	CHAR(1)	NULL	COMMENT '게시글 고정 여부',
 	`SECRET`	CHAR(1)	NULL	COMMENT 'Y, N'
 );
@@ -709,20 +709,20 @@ REFERENCES `CHAT` (
 
 -- 계정 상태member 테이블 기본 데이터
 INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
-   VALUES ( 0 , '오프라인' , 'offline.png'),
-			( 1 , '온라인' , 'offline.png'), 
-            ( 2 , '자리비움' , 'offline.png'),
-            ( 3 , '회의중' , 'offline.png'),
-            ( 4 , '식사중' , 'offline.png');
+   VALUES ( 0 , '오프라인' , 'offline.svg'),
+			( 1 , '온라인' , 'online.svg'), 
+            ( 2 , '자리비움' , 'absence.svg'),
+            ( 3 , '회의중' , 'meeting.svg'),
+            ( 4 , '식사중' , 'eat.svg');
 
 -- 연차 테이블 기본 데이터
   INSERT INTO ANNUAL(YEAR, ANNUAL_UNIT)
    VALUES ( 0, 0 ),
-			( 1, 0 ), ( 2, 0 ), ( 3, 0 ), ( 4, 0 ), ( 5, 0 ),
-			( 6, 0 ), ( 7, 0 ), ( 8, 0 ), ( 9, 0 ), ( 10, 0 ),
-            ( 11, 0 ), ( 12, 0 ), ( 13, 0 ), ( 14, 0 ), ( 15, 0 ),
-            ( 16, 0 ), ( 17, 0 ), ( 18, 0 ), ( 19, 0 ), ( 20, 0 ),
-            ( 21, 0 ), ( 22, 0 ) ;
+			( 1, 15 ), ( 2, 15 ), ( 3, 16 ), ( 4, 16 ), ( 5, 17 ),
+			( 6, 17 ), ( 7, 18 ), ( 8, 18 ), ( 9, 19 ), ( 10, 19 ),
+            ( 11, 20 ), ( 12, 20 ), ( 13, 21 ), ( 14, 21 ), ( 15, 22 ),
+            ( 16, 22 ), ( 17, 23 ), ( 18, 23 ), ( 19, 24 ), ( 20, 24 ),
+            ( 21, 25 ), ( 22, 25 ) ;
 
 
 
@@ -750,7 +750,7 @@ INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
 
 -- 관리자 계정 데이터
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
-   VALUES ( 230501 , 0,'admin', 'admin', SYSDATE(), 'admin@gmail.com');
+   VALUES ( 230501 , 0,'$2a$10$yxK11.vtoleH4hCUbWfIrezMoyK7Jf4pJQ4INP.5L1G4C3vkCO4Pm', 'admin', SYSDATE(), 'admin@gmail.com');
 
 INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
    VALUES ( 1 , 'Y01'),

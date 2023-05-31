@@ -60,9 +60,8 @@
                     </div>
 
                     <div class="sidebar-more" id="board-menu-item">
-                        <a class="sidebar-more-text" href="">공지사항</a>
-                        <a class="sidebar-more-text" href="">팀게시판</a>
-                        <a class="sidebar-more-text" href="">자유게시판</a>
+                        <a class="sidebar-more-text" href="">${boardcode.baordname }</a>
+                        
                     </div>
                 </li>
 
@@ -92,12 +91,13 @@
                 </li>
 
                 <!-- 근태 -->
-                <li id="sidebar-work">
-                    <a href="${path}/attendance/attendanceInquiry">
-                        <i class="sidebar-icon fa-solid fa-clock"></i>
-                        <span class="sidebar-text">근태</span>
-                    </a>
-                </li>
+				<li id="sidebar-work">
+				    <a href="${path}/attendance/attendanceInquiry">
+				        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-clock"></i></span>
+				        <span class="sidebar-text">근태</span>
+				    </a>
+				</li>
+				
 
                 <!-- 연차관리 -->
                 <li id="sidebar-annual">

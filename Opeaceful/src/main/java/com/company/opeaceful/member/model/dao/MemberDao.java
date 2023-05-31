@@ -1,5 +1,9 @@
 package com.company.opeaceful.member.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,11 +23,29 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
+	public Member loginMember(Member m) {
+		return sqlSession.selectOne("memberMapper.loginMember", m);
+	}
 	public int insertUserDept(UserDepatment ud) {
 		return sqlSession.insert("memberMapper.insertUserDept", ud);
 	}
 
 	public int selectENO() {
 		return sqlSession.selectOne("memberMapper.selectENO");
+	}
+
+	public List<Member> selectMember(Map<String, Object> selectPD) {
+		
+		//RowBounds rowBounds = new RowBounds(0, 10); 
+		
+		return sqlSession.selectList("memberMapper.selectMember",selectPD);
+	}
+
+	public UserDepatment selectdpName(int userNo) {
+		return sqlSession.selectOne("deptMapper.selectdpName", userNo);
+	}
+
+	public int updatePwd(Member loginUser) {
+		return sqlSession.update("memberMapper.updatePwd",loginUser);
 	}
 }

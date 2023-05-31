@@ -1,19 +1,14 @@
 /* 메인 css : 지의 */
 
-.main-wrap div{
-    /* border: 1px solid red; */
-}
 .main-wrap{height: 800px; margin-top: 30px;}
 .main-wrap>div{height: 100%;}
-/* 네모박스
-    border: 1px solid var(--color-light-gray);
-    border-radius: 20px;
-    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
- */
+/* .main-wrap .col-7{width:64%;} */
+/* 각각 컨텐츠 감싸고있는 네모박스 */
 .square-box{ 
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
     box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+	margin: 24px 0;
 }
 .main-title {
     color: var(--color-navy);
@@ -23,26 +18,104 @@
     margin: 20px 20px 0px 20px;
     font-weight: 600;
 }
-.main-content{
-    margin: 10px 20px;
+.main-content-wrap{margin: 10px 20px;}
+.main-content-text{
     font-size: var(--font14);
     cursor: pointer;
+    margin: 10px 0px;
 }
-.main-sign-count{
-    font-size: 20px;
-    color: var(--color-navy);
+.main-content-text>div{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
-.square-box{margin: 24px 0;}
 /* ====================== 왼쪽 ====================== */
 /* ---------- 공지사항 ---------- */
 #board-box{height: 30%;}
+#main-notice-title{cursor: pointer;}
 /* ---------- 전자결재 ---------- */
 #sign-box{height: 20%;}
+.main-sign-count{font-size: 20px; color: var(--color-navy);}
+#main-sign-go{padding-top:5px; padding-right: 12px; color: gray;}
 /* ---------- 날씨 ---------- */
 #weather-box{height: 40%;}
+
 /* ====================== 오른쪽 ====================== */
 /* ---------- 내정보 ---------- */
-#my-box{height: 40%;}
+#my-box{height: 40%; padding: 10px 20px;}
+/* #my-box div{border: 1px solid red;} */
+/* 상단 시간 */
+.main-time-box{
+	height: 25%;
+	border-bottom: 1px solid var(--color-light-gray);
+}
+#main-time{font-size: 30px;}
+
+/* 하단 내정보 및 출퇴근 */
+.main-info{height: 75%; padding: 20px 0;}
+.main-info-top{height: 78%; margin-left: 0; margin-right: 0;}
+.main-info-bottom{height:22%;}
+.main-d-day{
+    font-size: var(--font14);
+    color: gray;
+}
+#main-name{padding-top: 12px;}
+.main-profile{
+    width: 60px;
+    height: 60px;
+    border-radius: 70%;
+    overflow: hidden;
+    margin: auto;
+}
+#main-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#main-name{font-size: var(--font20);}
+
+
+img{width: 16px; height: 16px;}
+#state{margin-bottom: 6px;}
+.select {position: relative;}
+.select .option-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+}
+.select.active .option-list {max-height: none;}
+#state .select {cursor: pointer;}
+#state .select .option-list { list-style: none; padding: 0;}
+#state .select .option-list .option {padding-top: 5px;}
+
+
+
+.color-frame{
+	width: 15px;
+	height: 15px;
+    border-radius: 70%;
+    display: inline-block;
+}
+#white{background: white; border: 1px solid black;}
+#black{background: black;}
+.mode-select {position: relative;}
+.mode-select .mode-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+}
+.mode-select.active .mode-list {max-height: none;}
+#color-mode .mode-select {cursor: pointer;}
+#color-mode .mode-select .mode-list { list-style: none; padding: 0;}
+#color-mode .mode-select .mode-list .mode {padding-top: 5px;}
+
+
 /* ---------- 캘린더 ---------- */
 #calender-box{height: 40%;}
 /* ---------- 메모 ---------- */
