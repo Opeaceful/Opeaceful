@@ -1,11 +1,13 @@
 /**
- * 
+ *  가영 : 부서, 직급추가, 인사발령 js
  */
 import {path} from './common/common.js';
 
-$(document).ready (function () {                
+$(document).ready (function () {     
+	// 부서추가 버튼 클릭 시 부서 이름 입력할 수 있는 input 생성           
 	$('.topD-plus').click (function () {
 		
+		// 동적으로 아코디언 생성해서 사용하기 위해 클래스 이름 뒤에 숫자 추가
 		let num = document.getElementsByClassName('accordion-item').length;
 			                             
 		$('.inputs').append(
@@ -21,15 +23,17 @@ $(document).ready (function () {
 			</div>`
 		); // end append
 
+		// 생성된 input에 포커스
 		$(`input[name=department${num}]`).focus();
 
-		$('.team-minus').on('click', function () { 
-			//$(this).unwrap(); // remove the textbox
-            //$(this).next ().remove (); // remove the <br>
-            $(`.org-accordion${num}`).remove (); // remove the button
-        });
+		// $('.team-minus').on('click', function () { 
+		// 	//$(this).unwrap(); // remove the textbox
+        //     //$(this).next ().remove (); // remove the <br>
+        //     $(`.org-accordion${num}`).remove (); // remove the button
+        // });
 	}); // end click 
 
+	// input 포커스 아웃 시 db에 부서추가
 	$(".inputs").on("blur", ".topD-name", function(e) {
 
 		console.log(e.target);
@@ -37,8 +41,8 @@ $(document).ready (function () {
 		let input = $(e.target).val();
 		let id= $(e.target).attr("id");
 
-		console.log('input : '+input);
-		console.log($(e.target).attr("id"));
+		console.log('input 변경전 : '+input);
+		console.log('id 변경전 : '+$(e.target).attr("id"));
 
 		if (id == "dept-code") {
 			$.ajax({
@@ -50,24 +54,61 @@ $(document).ready (function () {
 					if (result > 0) {
 						$(e.target).attr("id", result);
 					}
+					$(".topD-name").css('pointer-events','none');
+					$(".oc-accordion-btn").css('cursor','default');
 				}
 			});
-			$(e.target).off('click');
-		} else {
+		} 
+		// else {
+		// 	$.ajax({
+		// 		url : path+"/orgChart/update/topDname",   
+		// 		type : 'post', 
+		// 		data : {deptName: input, deptCode : id},
+		// 		success : function(result){
+		// 			console.log('result: ' +result);
+
+		// 		}
+		// 	});
+		// }
+
+		// if (input != "") {
+			
+	})
+
+	$('.inputs').on('click', '.team-change', function (e) { 
+		
+		$(".topD-name").css('pointer-events','auto');
+
+		let input = $(e.target).val();
+		let id= $(e.target).attr("id");
+
+		console.log('input 변경후 : '+input);
+		console.log('id 변경후 : '+$(e.target).attr("id"));
+		
+		id.focus();
+		if (id === "dept-code") {
 			$.ajax({
 				url : path+"/orgChart/update/topDname",   
 				type : 'post', 
 				data : {deptName: input, deptCode : id},
 				success : function(result){
 					console.log('result: ' +result);
-
 				}
 			});
-		}
+		} 		
+    });
 
-		// if (input != "") {
-			
-	})
+	$(selector).on({ 
+		click: function() {
+			// .....
+		},
+		mouseenter: function() {
+			// .....
+		},
+		mouseleave: function() {
+			// .....
+		}
+	});
 		
 		// } else if (input == "") {
 		// 	$(`.org-accordion${num}`).remove();

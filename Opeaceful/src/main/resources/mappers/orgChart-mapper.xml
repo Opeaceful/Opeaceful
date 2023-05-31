@@ -9,4 +9,13 @@
 		INSERT INTO DEPARTMENT(DEPT_NAME)
 		VALUES(#{deptName})
 	</insert>
+	
+	<update id="updateDepartment" parameterType="orgChart">
+		<selectKey resultType="int" keyProperty="deptCode" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+		UPDATE DEPARTMENT
+		SET DEPT_NAME = #{deptName}
+		WHERE DEPT_CODE = #{deptcode}
+	</update>
 </mapper>

@@ -16,4 +16,9 @@ public class OrgChartServiceImpl implements OrgChartService {
 	public int insertDepartment(OrgChart orgChart) {
 		return orgChartDao.insertDepartment(orgChart);
 	}
+	
+	@Override
+	public int updateDepartment(OrgChart orgChart) {
+		return orgChartDao.updateDepartment(orgChart);
+	}
 }

@@ -5,4 +5,6 @@ import com.company.opeaceful.orgChart.model.vo.OrgChart;
 public interface OrgChartService {
 
 	int insertDepartment(OrgChart orgChart);
+	
+	int updateDepartment(OrgChart orgChart);
 }

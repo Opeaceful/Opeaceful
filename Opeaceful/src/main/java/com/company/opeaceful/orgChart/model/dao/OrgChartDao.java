@@ -18,4 +18,11 @@ public class OrgChartDao {
 		
 		return orgChart.getDeptCode();
 	}
+	
+	public int updateDepartment(OrgChart orgChart) {
+		
+		sqlSession.insert("orgChartMapper.updateDepartment", orgChart);
+		
+		return orgChart.getDeptCode();
+	}
 }
