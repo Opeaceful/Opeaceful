@@ -22,4 +22,6 @@ public interface MemberService {
 
 	int updatePwd(Member loginUser);
 
+	Member selectMemberOne(int userNo);
+
 }

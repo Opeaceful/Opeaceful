@@ -39,8 +39,8 @@
 	<result column="HIRE_DATE" property="hireDate" />
 </resultMap>
 
-<!-- [지영] member insert구문 -->
-	<!--[지영] member insert -->
+	<!-- [지영] member insert구문 -->
+	<!--[지영]1. member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
 	
 		<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
@@ -61,7 +61,7 @@
 	  		
 	</insert>
 	
-	<!-- [지영] dept insert -->
+	<!-- [지영] 2.dept insert -->
 	<insert id="insertUserDept" parameterType="userDepatment" useGeneratedKeys="true">
 		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
 	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
@@ -75,12 +75,12 @@
 	   	
 	</insert>
 	
-	<!--[지영] 사용자에게 보여줄 eno select -->
+	<!--[지영] 3.사용자에게 보여줄 eno select -->
 	<select id="selectENO" resultType="_int" >
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
-<!-- [지영] member select 구문 -->	
+	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
 		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,HIRE_DATE,P_NAME,DEPT_NAME
 		FROM member
@@ -111,6 +111,14 @@
 		      AND P_CODE = #{Pselect}
 		    </if>
 	 </select>
+	 
+	 <!-- [지영] 사용자 수정용 조회 -->
+	 <select id="selectMemberOne" parameterType="_int" resultType="member">
+	 	SELECT *
+		FROM MEMBER
+		WHERE USER_NO = #{userNo}
+	 </select>
+	
 
 	<!-- [지의] - 로그인유저 -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">

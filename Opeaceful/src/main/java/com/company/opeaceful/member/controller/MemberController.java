@@ -166,6 +166,19 @@ public class MemberController {
 		return new Gson().toJson(map);
 		
 	}
+	
+	
+	//[지영]
+	// member 수정용 개인정보 조회
+	@ResponseBody
+	@PostMapping("/selectMemberOne")
+	public String selectMemberOne(
+			@RequestParam("id") int userNo) {
+		
+		Member m = memberService.selectMemberOne(userNo);
+		
+		return new Gson().toJson(m);
+	}
 
 	
 	

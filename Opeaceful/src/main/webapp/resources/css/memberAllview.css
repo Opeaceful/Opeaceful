@@ -70,3 +70,9 @@
 }
 
 
+.pagination>li>button {
+    font-size: 0.75rem;
+    color: var(--color-navy);
+    border: none;
+}
+

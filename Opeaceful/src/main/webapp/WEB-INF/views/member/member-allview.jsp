@@ -77,6 +77,7 @@
            
         </table>
 
+        <br><br><br>
         <div class="pagingArea">
           <nav>
             <ul class="pagination" id="member-pagination">
@@ -86,6 +87,128 @@
       
     </div>
   </div>
+
+<!-- Modal -->
+<div class="modal fade" id="memberUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="memberUpdatLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">사용자 수정</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="member-update-modal">
+       
+        <form>
+          <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">이름</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">이메일</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">내선번호</label>
+            <div class="col-sm-9">
+              <input type="tel" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">연락처</label>
+            <div class="col-sm-9">
+              <input type="tel" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">비밀번호</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">부서</label>
+            <div class="col-sm-9">
+              <select class="form-select member-form-select form-select-sm">
+                <option selected>부서명</option>
+                <option value="1">경영1팀</option>
+                <option value="2">경영2팀</option>
+                <option value="3">....</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">팀</label>
+            <div class="col-sm-9">
+              <select class="form-select member-form-select  form-select-sm">
+                <option selected>팀명</option>
+                <option value="1">경영1팀</option>
+                <option value="2">경영2팀</option>
+                <option value="3">....</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">직급</label>
+            <div class="col-sm-9">
+              <select class="form-select  member-form-select form-select-sm">
+                <option selected>직급</option>
+                <option value="1">경영1팀</option>
+                <option value="2">경영2팀</option>
+                <option value="3">....</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">입사일</label>
+            <div class="col-sm-3">
+              <input type="date" id="join-date" class="form-control">
+            </div>
+            <label for="inputPassword3" id="leave-date-lable" class="col-sm-2 col-form-label">퇴사일</label>
+            <div class="col-sm-3">
+              <input type="date" id="leave-date"class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">연차</label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">주소</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">계정상태</label>
+            <div class="col-sm-9">
+              <select class="form-select  member-form-select form-select-sm">
+                <option selected>계정상태</option>
+                <option value="1">경영1팀</option>
+                <option value="2">경영2팀</option>
+                <option value="3">....</option>
+              </select>
+            </div>
+          </div>
+
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary ms-1 ok-common">확인</button>
+        <button type="button" class="btn btn-danger cancel-common">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   
 <script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
 <script type="module" src="${path}/resources/js/memberAllview.js"></script>

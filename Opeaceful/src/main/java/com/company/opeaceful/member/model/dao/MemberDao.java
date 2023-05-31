@@ -56,4 +56,8 @@ public class MemberDao {
 	public int selectMemberListCount(Map<String, Object> selectPD) {
 		return sqlSession.selectOne("memberMapper.selectMemberCount", selectPD);
 	}
+
+	public Member selectMemberOne(int userNo) {
+		return sqlSession.selectOne("memberMapper.selectMemberOne",userNo);
+	}
 }
