@@ -12,8 +12,10 @@ public class OrgChartDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public int insertDepartment(OrgChart dName) {
+	public int insertDepartment(OrgChart orgChart) {
 		
-		return sqlSession.insert("orgChartMapper.insertDepartment", dName);
+		sqlSession.insert("orgChartMapper.insertDepartment", orgChart);
+		
+		return orgChart.getDeptCode();
 	}
 }

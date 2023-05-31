@@ -12,7 +12,7 @@ $(document).ready (function () {
 			`<div class="accordion-item accordion-item-common org-accordion${num}">
 				<h2 class="accordion-header" id="flush-heading${num}">
 					<button class="accordion-button oc-accordion-btn accordion-button-common collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${num}" aria-expanded="false" aria-controls="flush-collapse${num}" aria-label="펼치기">
-						<input type="text" id="dept-code" class="topD-name" name="department" aria-label="부서이름인풋">
+						<input type="text" id="dept-code" class="topD-name" name="department${num}" aria-label="부서이름인풋">
 						<i class="fa-solid fa-plus team-plus"></i> 
 						<i class="fa-solid fa-minus team-minus"></i> 
 						<i class="fa-solid fa-pen team-change"></i>
@@ -21,34 +21,58 @@ $(document).ready (function () {
 			</div>`
 		); // end append
 
-		$("input[name=department]").focus();
+		$(`input[name=department${num}]`).focus();
 
-		$("input[name=department]").blur(function(e){
-			let input = $("input[name=department]").val();
-			
-			e.preventDefault();
-			
-			if (input != "") {
-				$.ajax({
-					url : path+"/orgChart/insert/topDname",   
-					type : 'post', // 데이터 전달 방식 type
-					data : {deptName: input},
-					success : function(result){
-						console.log('result: ' +result);
-					}
-				});
-			} else if (input == "") {
-				$(`.org-accordion${num}`).remove();
-			}
-		})
-
-		
 		$('.team-minus').on('click', function () { 
 			//$(this).unwrap(); // remove the textbox
             //$(this).next ().remove (); // remove the <br>
-            (this).$(`.org-accordion${num}`).remove (); // remove the button
+            $(`.org-accordion${num}`).remove (); // remove the button
         });
 	}); // end click 
+
+	$(".inputs").on("blur", ".topD-name", function(e) {
+
+		console.log(e.target);
+
+		let input = $(e.target).val();
+		let id= $(e.target).attr("id");
+
+		console.log('input : '+input);
+		console.log($(e.target).attr("id"));
+
+		if (id == "dept-code") {
+			$.ajax({
+				url : path+"/orgChart/insert/topDname",   
+				type : 'post', 
+				data : {deptName: input},
+				success : function(result){
+					console.log('result: ' +result);
+					if (result > 0) {
+						$(e.target).attr("id", result);
+					}
+				}
+			});
+			$(e.target).off('click');
+		} else {
+			$.ajax({
+				url : path+"/orgChart/update/topDname",   
+				type : 'post', 
+				data : {deptName: input, deptCode : id},
+				success : function(result){
+					console.log('result: ' +result);
+
+				}
+			});
+		}
+
+		// if (input != "") {
+			
+	})
+		
+		// } else if (input == "") {
+		// 	$(`.org-accordion${num}`).remove();
+		// }
+	
 }); // end ready 
 
 

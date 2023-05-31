@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
@@ -33,13 +34,25 @@ public class OrgChartController {
 	}
 	
 	@PostMapping("/insert/topDname")
-	public String insertDepartment(OrgChart orgChart) {
+	@ResponseBody
+	public int insertDepartment(OrgChart orgChart) {
 		
 		int result = orgchartService.insertDepartment(orgChart);
 		
 		System.out.println(result);
 
-		return "redirect:/";
+		return result;
+	}
+	
+	@PostMapping("/update/topDname")
+	@ResponseBody
+	public int updateDepartment(OrgChart orgChart) {
+		
+//		int result = orgchartService.insertDepartment(orgChart);
+		
+		System.out.println(orgChart);
+
+		return 0;
 	}
 	
 	@RequestMapping("/orgChartView")
