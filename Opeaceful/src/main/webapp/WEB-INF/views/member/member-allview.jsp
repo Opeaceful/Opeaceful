@@ -43,6 +43,12 @@
           <input type="search" name="keyword" class="search-box">
           <button type="button" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
+        <div>
+          <input class="form-check-input" type="checkbox" value="" id="">
+          <label class="form-check-label" for="">
+             퇴사자
+          </label>
+        </div>
         </div>
 
 	  	<!--테이블 구역-->
@@ -55,7 +61,7 @@
                   <th scope="col">이메일</th>
                   <th scope="col">내선번호</th>
                   <th scope="col">연락처</th>
-                  <th scope="col">비밀번호</th>
+                  <!-- <th scope="col">비밀번호</th> -->
                   <th scope="col">부서</th>
                   <th scope="col">직급</th>
                   <th scope="col">입사일</th>

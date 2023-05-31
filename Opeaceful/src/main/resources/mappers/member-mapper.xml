@@ -88,14 +88,12 @@
 	    left JOIN department USING(DEPT_CODE)
 	    left JOIN position USING(P_CODE)
 		WHERE STATUS = 'Y'
-		 <where>
-		    <if test='Dselect != null'>
-		      AND DEPT_CODE = #{Dselect}
-		    </if>
-		    <if test='Pselect != null'>
-		      AND P_CODE = #{Pselect}
-		    </if>
-	  	</where>;
+	    <if test='Dselect != null'>
+	      AND DEPT_CODE = #{Dselect}
+	    </if>
+	    <if test='Pselect != null'>
+	      AND P_CODE = #{Pselect}
+	    </if>
 	 </select>
 
 	<!-- [지의] - 로그인유저 -->

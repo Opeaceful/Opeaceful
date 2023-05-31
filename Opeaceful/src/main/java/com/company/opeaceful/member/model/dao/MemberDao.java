@@ -36,7 +36,7 @@ public class MemberDao {
 
 	public List<Member> selectMember(Map<String, Object> selectPD) {
 		
-//		RowBounds rowBounds = new RowBounds(0, 10); 
+		//RowBounds rowBounds = new RowBounds(0, 10); 
 		
 		return sqlSession.selectList("memberMapper.selectMember",selectPD);
 	}

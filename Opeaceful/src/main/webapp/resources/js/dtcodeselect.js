@@ -19,12 +19,12 @@ function teamRoad() {
         success: function(result){
   
             for(let dept of result){
-                if (dept.topDeptCode !== 0) {
+                // if (dept.topDeptCode !== 0) { //상위 부서 뻇으나 일단 다시넣음
                 const option = document.createElement("option");
                 option.value = dept.deptCode;
                 option.text = dept.deptName;
                 dSelect.appendChild(option);
-                }
+                // }
             };
             
         },

@@ -7,14 +7,8 @@ import {path} from './common/common.js';
 
 
 
-
-
-
-
-/*검색에 다라 member를 부여하는 불러오는 ajax */
-
-
-$("#d-select").change(function() {
+/*검색에 따라 member를 부여하는 불러오는 ajax */
+$("#d-select,#p-select ").change(function() {
 
 let memberTableBody = document.getElementById("member-table-body");
 let Dselect= document.getElementById("d-select").value;
@@ -46,7 +40,6 @@ $.ajax({
                 <td>${m.email}</td>
                 <td>${m.extension}</td>
                 <td>${m.phone}</td>
-                <td>${m.userPwd}</td>
                 <td>${m.dName}</td>
                 <td>${m.pName}</td>
                 <td>${m.hireDate}</td>
