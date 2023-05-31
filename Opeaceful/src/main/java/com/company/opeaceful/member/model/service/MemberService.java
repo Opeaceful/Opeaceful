@@ -15,4 +15,6 @@ public interface MemberService {
 
 	UserDepatment selectdpName(int userNo);
 
+	int updatePwd(Member loginUser);
+
 }
