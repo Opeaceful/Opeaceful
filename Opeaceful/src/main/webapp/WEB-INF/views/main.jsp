@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="${path}/resources/css/main.css">
 
 </head>
-<body onload="getTime();">
+<body>
 
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
@@ -87,9 +87,6 @@
 	        				<div id="main-day"></div>
 	        				<div id="main-time"></div>
 	        			</div>
-	        			
-	        			<c:set var="ymd" value="<%=new java.util.Date()%>" />
-	        			
 	        			
 	        			<!-- 내정보 및 출퇴근 버튼 부분 -->
 	        			<div class="main-info">
@@ -168,7 +165,7 @@
     </div>
     
 
-<script src="${path}/resources/js/main.js"></script>
+<script type="module" src="${path}/resources/js/main.js"></script>
 <script>
 	var mainHireDate = '${loginUser.hireDate}';
 	console.log(mainHireDate);

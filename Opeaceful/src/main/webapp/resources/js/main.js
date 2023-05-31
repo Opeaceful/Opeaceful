@@ -1,7 +1,7 @@
 /**
  * [지의] - main.js
  */
-
+import {path} from './common/common.js';
 /* 현재 시간 표시 */
 const today = document.getElementById('main-day');
 const time = document.getElementById('main-time');
@@ -41,6 +41,7 @@ function getTime() {
     
     setTimeout(getTime, 1000);	//1000밀리초(1초) 마다 반복
 }
+
 
 
 /* 접속상태 표시 */
@@ -90,8 +91,8 @@ for (var i = 0; i < ModeList.length; i++) {
     mode.addEventListener("click", onClickModeOption);
 }
 
-/* 입사날짜 구하기 */
 $(function(){
+    /* 입사날짜 구하기 */
     // mainHireDate : main.jsp에서 입사날짜 빼옴
     let hireDate = new Date(mainHireDate);
         
@@ -99,4 +100,14 @@ $(function(){
     let dDay = ms / (1000*60*60*24);
     
     document.getElementById("main-d-day").innerHTML = Math.floor(dDay);
+
+
 })
+
+/* 공지사항 제목부분 클릭시 공지사항 페이지로 */
+$("#main-notice-title").on("click", function(){
+    location.href = path+"/member/mypage"; // 일단 마이페이지로 넣어둠
+})
+
+
+getTime();

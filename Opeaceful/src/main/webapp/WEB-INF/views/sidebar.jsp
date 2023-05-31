@@ -60,9 +60,8 @@
                     </div>
 
                     <div class="sidebar-more" id="board-menu-item">
-                        <a class="sidebar-more-text" href="">공지사항</a>
-                        <a class="sidebar-more-text" href="">팀게시판</a>
-                        <a class="sidebar-more-text" href="">자유게시판</a>
+                        <a class="sidebar-more-text" href="">${boardcode.baordname }</a>
+                        
                     </div>
                 </li>
 
