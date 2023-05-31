@@ -45,5 +45,7 @@ public class MemberDao {
 		return sqlSession.selectOne("deptMapper.selectdpName", userNo);
 	}
 
-	
+	public int updatePwd(Member loginUser) {
+		return sqlSession.update("memberMapper.updatePwd",loginUser);
+	}
 }

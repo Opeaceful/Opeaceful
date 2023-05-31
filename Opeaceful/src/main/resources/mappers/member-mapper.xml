@@ -104,7 +104,12 @@
 		   AND STATUS = 'Y'
 	</select>
 	
-
+	<!-- [지의] - 비밀번호 변경 -->
+	<update id="updatePwd" parameterType="member">
+		UPDATE MEMBER
+		   SET USER_PWD = #{userPwd}
+		 WHERE ENO = #{eno}
+	</update>
 
 
 

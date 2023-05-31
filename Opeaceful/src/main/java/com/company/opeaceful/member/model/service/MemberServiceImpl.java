@@ -50,4 +50,9 @@ public class MemberServiceImpl implements MemberService {
 	public UserDepatment selectdpName(int userNo) {
 		return memberDao.selectdpName(userNo);
 	}
+	
+	@Override
+	public int updatePwd(Member loginUser) {
+		return memberDao.updatePwd(loginUser);
+	}
 }

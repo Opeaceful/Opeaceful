@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,12 +47,36 @@ public class MemberController {
 		return "member/mypage";
 	}
 	
+	// [지의] - 마이페이지 > 비밀번호변경
+	@ResponseBody
+	@PostMapping("/updatePwd")
+	public String updatePwd(@ModelAttribute("loginUser") Member loginUser,
+							  String originPwd,
+							  String updatePwd) {
+
+		int result = 0;
+		// 입력한 현재 비밀번호와 로그인유저의 암호화된 비밀번호의 일치여부 판별
+		if(bcryptPasswordEncoder.matches(originPwd, loginUser.getUserPwd())) {
+			System.out.println("일치함");
+			// 변경된 비밀번호 암호화 작업
+			String EnUpdatePwd = bcryptPasswordEncoder.encode(updatePwd);
+			loginUser.setUserPwd(EnUpdatePwd);
+			
+			result = memberService.updatePwd(loginUser);
+
+			return new Gson().toJson(result);
+		}else {
+			System.out.println("다름");
+			
+			return new Gson().toJson(result);
+		}
+		
+	}
+	
 	// [지의] - 로그아웃
 	@GetMapping("/logout")
 	public String logoutMember(HttpSession session, SessionStatus status) {
-		
 		status.setComplete();
-		
 		return "redirect:/";
 	}
 	

@@ -15,13 +15,11 @@ public interface MemberService {
 	int insertUserDept(UserDepatment ud);
 
 	int selectENO();
-
+	
 	List<Member> selectMember(Map<String, Object> selectPD);
 	
 	UserDepatment selectdpName(int userNo);
 
-	
-
-	
+	int updatePwd(Member loginUser);
 
 }
