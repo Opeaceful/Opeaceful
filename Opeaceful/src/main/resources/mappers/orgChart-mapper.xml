@@ -16,6 +16,6 @@
 		</selectKey>
 		UPDATE DEPARTMENT
 		SET DEPT_NAME = #{deptName}
-		WHERE DEPT_CODE = #{deptcode}
+		WHERE DEPT_CODE = #{deptCode}
 	</update>
 </mapper>

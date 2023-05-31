@@ -41,10 +41,15 @@ $(document).ready (function () {
 		let input = $(e.target).val();
 		let id= $(e.target).attr("id");
 
-		console.log('input 변경전 : '+input);
-		console.log('id 변경전 : '+$(e.target).attr("id"));
+		// 부서이름 입력 안했을 시 input 삭제
+		if (input == "") {
+			$(e.target).closest(".accordion-item").remove();
+		}
 
 		if (id == "dept-code") {
+			console.log('input 변경전 : '+input);
+			console.log('id 변경전 : '+$(e.target).attr("id"));
+
 			$.ajax({
 				url : path+"/orgChart/insert/topDname",   
 				type : 'post', 
@@ -58,22 +63,68 @@ $(document).ready (function () {
 					$(".oc-accordion-btn").css('cursor','default');
 				}
 			});
-		} 
-		// else {
-		// 	$.ajax({
-		// 		url : path+"/orgChart/update/topDname",   
-		// 		type : 'post', 
-		// 		data : {deptName: input, deptCode : id},
-		// 		success : function(result){
-		// 			console.log('result: ' +result);
+		} else {
+			console.log('input 변경후 : '+input);
+			console.log('id 변경후 : '+$(e.target).attr("id"));
 
-		// 		}
-		// 	});
-		// }
+			$.ajax({
+				url : path+"/orgChart/update/topDname",   
+				type : 'post', 
+				data : {deptName: input, deptCode : id},
+				success : function(result){
+					console.log('변경후 result: ' +result);
+					if (result > 0) {
+						$(e.target).attr("id", result);
+					}
+					$(".topD-name").css('pointer-events','none');
+					$(".oc-accordion-btn").css('cursor','default');
+				}
+			});
+		}
 
 		// if (input != "") {
 			
 	})
+
+	$(".inputs").on("click", ".team-change", function(e) {
+		$(".topD-name").css('pointer-events','auto');
+		$(".topd-name").focus();
+
+		let val = $(".topd-name").val();
+		$(".topd-name").val() = val;
+	})
+
+	// document.getElementsByClassName("team-change").onclick = function() {
+
+	// 	document.getElementsByClassName("topD-name").style.pointerEvents = "auto";
+	// 	// $(".topD-name").css('pointer-events','auto');
+
+	// 	let input = document.getElementsByClassName("topD-name");
+	// 	input.focus();
+	 
+	// 	let val = input.value;
+	// 	input.value = '';
+	// 	input.value = val;
+	// }
+
+	// const tempEvent = { 
+	// 	click: function() {
+	// 		$(".topD-name").css('pointer-events','auto');
+	// 	},
+	// 	focus: function() {
+	// 		$(".topD-name").focus;
+	// 	}
+	// }
+	// for(let key in tempEvent){
+	// 	$('.inputs').on(key , '.team-change',tempEvent[key]);
+
+	// }
+		
+		// } else if (input == "") {
+		// 	$(`.org-accordion${num}`).remove();
+		// }
+	
+}); // end ready 
 
 	// $('.inputs').on('click', '.team-change', function (e) { 
 		
@@ -97,58 +148,7 @@ $(document).ready (function () {
 	// 		});
 	// 	} 		
     // });
-	const tempEvent = { 
-		click: function(e) {
-			$(".topD-name").css('pointer-events','auto');
-
-			let input = $(e.target).val();
-			let id= $(e.target).attr("id");
-
-			console.log('input 변경후 : '+input);
-			console.log('id 변경후 : '+$(e.target).attr("id"));
-			
-			if (id != "dept-code") {
-				$.ajax({
-					url : path+"/orgChart/update/topDname",   
-					type : 'post', 
-					data : {deptName: input, deptCode : id},
-					success : function(result){
-						console.log('result: ' +result);
-					}
-				});
-			}
-		},
-		focus: function(e) {
-			$(".topD-name").css('pointer-events','auto');
-
-			let input = $(e.target).val();
-			let id= $(e.target).attr("id");
-
-			console.log('input 변경후 : '+input);
-			console.log('id 변경후 : '+$(e.target).attr("id"));
-			
-			if (id != "dept-code") {
-				$.ajax({
-					url : path+"/orgChart/update/topDname",   
-					type : 'post', 
-					data : {deptName: input, deptCode : id},
-					success : function(result){
-						console.log('result: ' +result);
-					}
-				});
-			}
-		}
-	}
-	for(let key in tempEvent){
-		$('.inputs').on(key , '.team-change',tempEvent[key]);
-
-	}
-		
-		// } else if (input == "") {
-		// 	$(`.org-accordion${num}`).remove();
-		// }
 	
-}); // end ready 
 
 
 
