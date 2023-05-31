@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,16 +46,16 @@
                     <!-- 사번 -->
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">사번</div>
-                        <div class="fs-18 ps-4 col-9" id="mypage-no">230522</div>
+                        <div class="fs-18 ps-4 col-9" id="mypage-no">${loginUser.eno}</div>
                     </div>
                     
                     <!-- 이름 / 직급 -->
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">이름 / 직급</div>
                         <div class="fs-18 ps-4 col-9">
-                            <div class="d-inline" id="mypage-name">노지의</div>
+                            <div class="d-inline" id="mypage-name">${loginUser.userName}</div>
                             <div class="d-inline ms-2 me-2"> / </div>
-                            <div class="d-inline" id="mypage-position">사원</div>
+                            <div class="d-inline" id="mypage-position">${dpName.PName }</div>
                         </div>
                     </div>
                     
@@ -62,9 +63,9 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">부서 / 팀</div>
                         <div class="fs-18 ps-4 col-9">
-                            <div class="d-inline" id="mypage-dept">IT</div>
+                            <div class="d-inline" id="mypage-dept">?????</div>
                             <div class="d-inline ms-2 me-2"> / </div>
-                            <div class="d-inline" id="mypage-team">개발 1팀</div>
+                            <div class="d-inline" id="mypage-team">${dpName.deptName }</div>
                         </div>
                     </div>
 
@@ -72,7 +73,7 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">연락처</div>
                         <div class="fs-18 col-9">
-                            <input type="tel" id="mypage-phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13">
+                            <input type="tel" id="mypage-phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="${loginUser.phone}">
                         </div>
                     </div>
 
@@ -80,15 +81,26 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">내선번호</div>
                         <div class="fs-18 col-9">
-                            <input type="tel" id="mypage-call" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13">
+                        	<c:if test="${empty loginUser.extension }">
+	                            <input type="tel" id="mypage-call" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="등록된 내선번호 없음">
+                        	</c:if>
+                        	<c:if test="${!empty loginUser.extension }">
+	                            <input type="tel" id="mypage-call" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="${loginUser.extension }">
+                        	</c:if>
                         </div>
                     </div>
 
                     <!-- 주소 -->
-                    <div class="mb-4 row align-items-center">
+                    <div class="mb-4 row align-items-start">
                         <div class="fs-14 col-3">주소</div>
                         <div class="fs-18 col-9">
-                            <input type="text" id="mypage-address" class="mypage-input form-control box-shadow-put">
+	                        <div class="address-first mb-3">
+		                        <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put d-inline" required value="${fn:split(loginUser.address, ',')[0]}">
+		                        <button class="btn btn-outline-secondary seach-btn" type="button" id="seach-address">
+		                            <i class="fa-solid fa-magnifying-glass"></i>
+		                        </button>
+	                        </div>
+	                        <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" required value="${fn:split(loginUser.address, ',')[1]}" >
                         </div>
                     </div>
 
@@ -96,14 +108,14 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">이메일</div>
                         <div class="fs-18 col-9">
-                            <input type="email" id="mypage-email" class="mypage-input form-control box-shadow-put" pattern=".+@gmail\.com">
+                            <input type="email" id="mypage-email" class="mypage-input form-control box-shadow-put" pattern=".+@gmail\.com" value="${loginUser.email}">
                         </div>
                     </div>
 
                     <!-- 입사일 -->
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">입사일</div>
-                        <div class="fs-18 ps-4 col-9" id="mypage-date">2023-05-22</div>
+                        <div class="fs-18 ps-4 col-9" id="mypage-date">${loginUser.hireDate}</div>
                     </div>
 
                 </div>

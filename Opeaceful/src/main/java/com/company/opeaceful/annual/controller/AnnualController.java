@@ -10,13 +10,13 @@ public class AnnualController {
 
 	@GetMapping("/setting")
 	public String settingAnnaul(){
-		return "annual";
+		return "annual/annual";
 	}
 	
 	
 	@GetMapping("/list")
 	public String listAnnaul(){
-		return "annual-user";
+		return "annual/annual-user";
 	}
 	
 	

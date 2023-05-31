@@ -5,11 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
@@ -32,10 +32,20 @@ public class MemberController {
 	// spring-quartz.xml 사용시 기본생성자 필요
 	public MemberController() {}
 	
+	// [지의] - 마이페이지
 	@RequestMapping("/mypage")
 	public String updateMember() {
 		
-		return "mypage";
+		return "member/mypage";
+	}
+	
+	// [지의] - 로그아웃
+	@GetMapping("/logout")
+	public String logoutMember(HttpSession session, SessionStatus status) {
+		
+		status.setComplete();
+		
+		return "redirect:/";
 	}
 	
 	//[지영]

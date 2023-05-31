@@ -92,12 +92,13 @@
                 </li>
 
                 <!-- 근태 -->
-                <li id="sidebar-work">
-                    <a href="${path}/attendance/attendanceInquiry">
-                        <i class="sidebar-icon fa-solid fa-clock"></i>
-                        <span class="sidebar-text">근태</span>
-                    </a>
-                </li>
+				<li id="sidebar-work">
+				    <a href="${path}/attendance/attendanceInquiry">
+				        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-clock"></i></span>
+				        <span class="sidebar-text">근태</span>
+				    </a>
+				</li>
+				
 
                 <!-- 연차관리 -->
                 <li id="sidebar-annual">

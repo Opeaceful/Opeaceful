@@ -19,11 +19,18 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
+	public Member loginMember(Member m) {
+		return sqlSession.selectOne("memberMapper.loginMember", m);
+	}
 	public int insertUserDept(UserDepatment ud) {
 		return sqlSession.insert("memberMapper.insertUserDept", ud);
 	}
 
 	public int selectENO() {
 		return sqlSession.selectOne("memberMapper.selectENO");
+	}
+
+	public UserDepatment selectdpName(int userNo) {
+		return sqlSession.selectOne("deptMapper.selectdpName", userNo);
 	}
 }

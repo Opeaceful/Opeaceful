@@ -7,8 +7,12 @@ public interface MemberService {
 
 	int insertMember(Member m);
 
+	Member loginMember(Member m);
+	
 	int insertUserDept(UserDepatment ud);
 
 	int selectENO();
+
+	UserDepatment selectdpName(int userNo);
 
 }
