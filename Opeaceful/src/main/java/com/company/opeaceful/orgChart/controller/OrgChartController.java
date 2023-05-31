@@ -37,22 +37,22 @@ public class OrgChartController {
 	@ResponseBody
 	public int insertDepartment(OrgChart orgChart) {
 		
-		return  orgchartService.insertDepartment(orgChart);
+		int result = orgchartService.insertDepartment(orgChart);
 		
-//		System.out.println(result);
+		System.out.println(result);
 
-//		return result;
+		return result;
 	}
 	
 	@PostMapping("/update/topDname")
 	@ResponseBody
 	public int updateDepartment(OrgChart orgChart) {
 		
-		return  orgchartService.updateDepartment(orgChart);
+		int result = orgchartService.updateDepartment(orgChart);
 		
-//		System.out.println(orgChart);
+		System.out.println(result);
 
-//		return result;
+		return result;
 	}
 	
 	@RequestMapping("/orgChartView")

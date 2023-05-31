@@ -75,40 +75,74 @@ $(document).ready (function () {
 			
 	})
 
-	$('.inputs').on('click', '.team-change', function (e) { 
+	// $('.inputs').on('click', '.team-change', function (e) { 
 		
-		$(".topD-name").css('pointer-events','auto');
+	// 	$(".topD-name").css('pointer-events','auto');
 
-		let input = $(e.target).val();
-		let id= $(e.target).attr("id");
+	// 	let input = $(e.target).val();
+	// 	let id= $(e.target).attr("id");
 
-		console.log('input 변경후 : '+input);
-		console.log('id 변경후 : '+$(e.target).attr("id"));
+	// 	console.log('input 변경후 : '+input);
+	// 	console.log('id 변경후 : '+$(e.target).attr("id"));
 		
-		id.focus();
-		if (id === "dept-code") {
-			$.ajax({
-				url : path+"/orgChart/update/topDname",   
-				type : 'post', 
-				data : {deptName: input, deptCode : id},
-				success : function(result){
-					console.log('result: ' +result);
-				}
-			});
-		} 		
-    });
+	// 	id.focus();
+	// 	if (id === "dept-code") {
+	// 		$.ajax({
+	// 			url : path+"/orgChart/update/topDname",   
+	// 			type : 'post', 
+	// 			data : {deptName: input, deptCode : id},
+	// 			success : function(result){
+	// 				console.log('result: ' +result);
+	// 			}
+	// 		});
+	// 	} 		
+    // });
+	const tempEvent = { 
+		click: function(e) {
+			$(".topD-name").css('pointer-events','auto');
 
-	$(selector).on({ 
-		click: function() {
-			// .....
+			let input = $(e.target).val();
+			let id= $(e.target).attr("id");
+
+			console.log('input 변경후 : '+input);
+			console.log('id 변경후 : '+$(e.target).attr("id"));
+			
+			if (id != "dept-code") {
+				$.ajax({
+					url : path+"/orgChart/update/topDname",   
+					type : 'post', 
+					data : {deptName: input, deptCode : id},
+					success : function(result){
+						console.log('result: ' +result);
+					}
+				});
+			}
 		},
-		mouseenter: function() {
-			// .....
-		},
-		mouseleave: function() {
-			// .....
+		focus: function(e) {
+			$(".topD-name").css('pointer-events','auto');
+
+			let input = $(e.target).val();
+			let id= $(e.target).attr("id");
+
+			console.log('input 변경후 : '+input);
+			console.log('id 변경후 : '+$(e.target).attr("id"));
+			
+			if (id != "dept-code") {
+				$.ajax({
+					url : path+"/orgChart/update/topDname",   
+					type : 'post', 
+					data : {deptName: input, deptCode : id},
+					success : function(result){
+						console.log('result: ' +result);
+					}
+				});
+			}
 		}
-	});
+	}
+	for(let key in tempEvent){
+		$('.inputs').on(key , '.team-change',tempEvent[key]);
+
+	}
 		
 		// } else if (input == "") {
 		// 	$(`.org-accordion${num}`).remove();
