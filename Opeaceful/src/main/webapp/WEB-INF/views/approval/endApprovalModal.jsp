@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%> -->
     <link rel="stylesheet" href="../../../resources/css/common/common.css" />
     <link
       rel="stylesheet"
-      href="../../../resources/css/approval/approvalModal.css"
+      href="../../../resources/css/approval/endApprovalModal.css"
     />
 
     <!-- css -->
@@ -53,7 +53,6 @@ pageEncoding="UTF-8"%> -->
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
     ></script>
-    cs
   </head>
   <body>
     <!-- [승은] -->
@@ -61,7 +60,7 @@ pageEncoding="UTF-8"%> -->
       id="test"
       class="btn btn-primary position-btn"
       data-bs-toggle="modal"
-      data-bs-target="#approval"
+      data-bs-target="#end-approval"
       type="button"
     >
       양식추가
@@ -69,7 +68,7 @@ pageEncoding="UTF-8"%> -->
 
     <div
       class="modal fade"
-      id="approval"
+      id="end-approval"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
@@ -81,9 +80,7 @@ pageEncoding="UTF-8"%> -->
       >
         <div class="modal-content position-modal">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              기안서 작성
-            </h1>
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">전자결재</h1>
 
             <button
               type="button"
@@ -93,94 +90,145 @@ pageEncoding="UTF-8"%> -->
             ></button>
           </div>
           <div class="modal-body scroll-bar-none">
-            <form method="post" action="">
-              <div class="info-wrap">
-                <table class="write-approval-table table">
-                  <tbody>
-                    <tr>
-                      <td width="10%">
-                        <div>일자</div>
-                      </td>
-                      <td width="40%">
-                        <i class="bi bi-calendar-week"></i><input id="date" />
-                      </td>
-                      <td width="10%">
-                        <div>종류</div>
-                      </td>
-                      <td width="40%">연차</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div>제목</div>
-                      </td>
-                      <td colspan="3">
-                        <input type="text" name="title" id="approval-title" />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div>결재라인</div>
-                      </td>
-                      <td colspan="3">
-                        <div class="approval-line-wrap">
-                          <button
-                            id="btn-add-lines"
-                            class="btn btn-outline-primary position-btn"
-                            type="button"
-                          >
-                            <i class="fa-solid fa-plus"></i> 선택
-                          </button>
-                          <div class="approval-lines">
-                            <ol class="scroll-bar">
-                              <li><b>결재</b> 뫄뫄뫄 부장</li>
-                              <li><b>참조</b> 뫄뫄뫄 팀장</li>
-                            </ol>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <div>첨부</div>
-                      </td>
-                      <td colspan="3">
-                        <div class="approval-line-wrap">
-                          <button
-                            id="btn-add-file"
-                            class="btn btn-outline-primary position-btn"
-                            type="button"
-                          >
-                            <i class="fa-solid fa-plus"></i> 첨부
-                          </button>
-                          <div class="approval-files">
-                            <div class="scroll-bar">
-                              <div>
-                                fjkdlsjf.jpg
-                                <button class="btn-file-delete">
-                                  <i class="fa-solid fa-minus"></i>
-                                </button>
-                              </div>
+            <div class="info-wrap">
+              <table class="end-approval-table table">
+                <tbody>
+                  <tr>
+                    <td width="10%">
+                      <div>기안일</div>
+                    </td>
+                    <td width="40%">
+                      <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
+                      2023-05-16
+                    </td>
+                    <td width="10%">
+                      <div>신청일자</div>
+                    </td>
+                    <td width="40%">
+                      <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
+                      2023-05-16 ~ 2023-05-17
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="10%">
+                      <div>종류</div>
+                    </td>
+                    <td width="40%">연차</td>
+                    <td width="10%">
+                      <div>상태</div>
+                    </td>
+                    <td width="40%">완결</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div>제목</div>
+                    </td>
+                    <td colspan="3">제목이르으으음</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div>첨부</div>
+                    </td>
+                    <td colspan="3">
+                      <div class="approval-line-wrap">
+                        <div class="approval-files">
+                          <div class="scroll-bar">
+                            <div>
+                              fjkdlsjf.jpg
+                              <button class="btn-file-download">
+                                <i class="bi bi-download"></i>
+                              </button>
                             </div>
                           </div>
                         </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                      </div>
+                    </td>
+                  </tr>
 
-              <textarea id="editor" readonly>
-                Welcome to TinyMCE!
-              </textarea>
-            </form>
+                  <tr>
+                    <td class="none-style-td" colspan="4">
+                      <div></div>
+                      <div class="end-approval-lines-wrap">
+                        <div class="end-approval-lines-item">
+                          <div class="approver-name">뫄뫄뫄 사원</div>
+                          <div class="approver-sign">
+                            <img
+                              src="../../../resources/image/main/absence.svg"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div class="end-approval-lines-item">
+                          <div class="approver-name">뫄뫄뫄 사원</div>
+                          <div class="approver-sign">
+                            <img
+                              src="../../../resources/image/main/absence.svg"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div class="end-approval-lines-item">
+                          <div class="approver-name">뫄뫄뫄 사원</div>
+                          <div class="approver-sign">
+                            <img
+                              src="../../../resources/image/main/absence.svg"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="end-approval-content">
+                        <p>Welcome to TinyMCE!</p>
+                        <p><br data-mce-bogus="1" /></p>
+                        <p>dddddddddddd</p>
+                        <p>d</p>
+                        <p>d</p>
+                        <p>d</p>
+                        <p>d</p>
+                        <p>d</p>
+                        <p>d</p>
+                        <p>d</p>
+                        <table
+                          style="border-collapse: collapse; width: 100%"
+                          border="1"
+                        >
+                          <tbody>
+                            <tr>
+                              <td style="width: 31.3593%"><br /></td>
+                              <td style="width: 31.3593%"><br /></td>
+                              <td style="width: 31.3593%"><br /></td>
+                            </tr>
+                            <tr>
+                              <td style="width: 31.3593%"><br /></td>
+                              <td style="width: 31.3593%"><br /></td>
+                              <td style="width: 31.3593%"><br /></td>
+                            </tr>
+                            <tr>
+                              <td style="width: 31.3593%"><br /></td>
+                              <td style="width: 31.3593%"><br /></td>
+                              <td style="width: 31.3593%">
+                                <br data-mce-bogus="1" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <p>d</p>
+                        <p><br data-mce-bogus="1" /></p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="modal-footer"> 
-            <button type="button" class="btn btn-outline-primary">임시 저장</button>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary">결재 취소</button> -->
+            <button type="button" class="btn btn-outline-primary">반려</button>
+            <button type="button" class="btn btn-outline-primary">메모</button>
+            <button type="button" class="btn btn-outline-primary">인쇄</button>
 
             <button type="button" class="btn btn-primary position-ok ms-auto">
-              저장
+              결재
             </button>
             <button
               type="button"
@@ -188,156 +236,8 @@ pageEncoding="UTF-8"%> -->
               data-bs-dismiss="modal"
               data-bs-target="#add-form"
             >
-              취소
+              닫기
             </button>
-          </div>
-
-          <div id="approval-line-modal">
-            <div class="custom-modal">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  결재라인
-                </h1>
-                <button type="button" class="btn-close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="line-wrap">
-                  <div class="org-chart">
-                    <div>
-                      <table class="org-table-head table table-common">
-                        <thead>
-                          <th width="50%">부서</th>
-                          <th width="50%">사원</th>
-                        </thead>
-                      </table>
-                    </div>
-                    <div class="org-table-content scroll-bar-none">
-                      <table class="table table-common">
-                        <tbody>
-                          <tr>
-                            <td rowspan="2">경영전략</td>
-                            <td>김뫄뫄 사원</td>
-                          </tr>
-                          <tr>
-                            <td>김뫄뫄 사원</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="my-list">
-                    <div class="my-favor">
-                      <div>
-                        <table class="favor-table table table-common">
-                          <thead>
-                            <th>My 즐겨찾기</th>
-                          </thead>
-                          <tbody class="scroll-bar">
-                            <tr>
-                              <td>
-                                ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-                                <button
-                                  class="btn-favor-delete btn btn-outline-primary"
-                                >
-                                  삭제
-                                </button>
-                              </td>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="selected-lines">
-                      <ol class="scroll-bar">
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          한우정아 부사장
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          김뫄뫄 사원
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          김뫄뫄 부서장
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          김뫄뫄 부서장
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                      </ol>
-                      <button
-                        id="btn-add-favor"
-                        class="btn btn-outline-primary"
-                      >
-                        즐겨찾기 추가
-                      </button>
-                    </div>
-
-                    <button id="btn-submit-line" class="btn btn-primary">
-                      결제라인 추가
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="favor-modal-back">
-                <div id="favor-add-modal" class="modal-content position-modal">
-                  <div class="modal-header">
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="favor-modal-body">
-                      <div>
-                        즐겨찾기 명
-                        <input
-                          type="text"
-                          id="input-favor-title"
-                          maxlength="15"
-                        />
-                      </div>
-                      <p>※현재 선택된 결재자 정보를 My즐겨찾기로 저장합니다</p>
-                      <button class="btn btn-primary">저장</button>
-                    </div>
-                  </div> 
-                </div>
-              </div>
-            </div> 
           </div>
         </div>
       </div>

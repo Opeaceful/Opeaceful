@@ -122,6 +122,9 @@
   padding-bottom: 0px;
 }
 
+
+
+
 #approval button {
   font-size: var(--font13);
 }
@@ -154,13 +157,15 @@
 }
 
 .write-approval-table td:nth-child(1),
-.write-approval-table td:nth-child(3) {
+.write-approval-table td:nth-child(3),
+.write-approval-table td:nth-child(5) {
   text-align: center;
   vertical-align: top;
 }
 
 .write-approval-table td:nth-child(1) > div,
-.write-approval-table td:nth-child(3) > div {
+.write-approval-table td:nth-child(3) > div,
+.write-approval-table td:nth-child(5) > div {
   border-left: 3px solid black;
   width: 100px;
   margin: 0.5rem 0px;
@@ -184,6 +189,12 @@
   flex: 1;
 }
 
+#btn-add-lines,
+#btn-add-file{
+  padding: 4px 12px;
+}
+
+
 #approval-title {
   width: 100%;
 }
@@ -196,7 +207,12 @@
   border: 1px solid rgba(0, 0, 0, 0.3);
   background-color: var(--color-background);
 }
-
+ 
+.approval-files > div {
+  overflow: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
 .approval-lines ol {
   overflow: auto;
   overflow-x: hidden;
@@ -209,26 +225,28 @@
   margin: 10px 0.5rem; 
 }
 
-.approval-files > div {
+.approval-files > div > div {
   font-size: var(--font14);
   margin: 0.5rem 1rem;
   display: flex;
 }
 
-.delete-btn {
+.approval-files > div > div:hover{
+  background-color: var(--color-light-gray);
+}
+
+.btn-file-delete {
   border-radius: 4px;
   color: black;
   background-color: rgba(255, 255, 255, 0);
   padding: 0px 6px;
   margin-left: 1rem;
   border: 1px solid var(--color-navy);
+  /* 마우스 오버하면 보이게 */
+  /* display: none; */
 }
 
-.delete-btn i {
-  color: black;
-  font-size: larger;
-  font-weight: 900;
-}
+
 
 #date {
   text-align: center;
@@ -298,13 +316,8 @@
 .org-table-content {
   width: 95%;
   height: calc(100% - 3rem);
-
   margin: auto;
   overflow: auto;
-}
-
-.org-table-content::-webkit-scrollbar {
-  display: none;
 }
 
 .favor-table {
@@ -353,12 +366,12 @@
   border-radius: 4px;
 }
 
-/* 라인에 마우스 오버하면 보이게 */
 .btn-favor-delete {
   padding: 4px 8px;
   position: absolute;
   top: 10%;
   right: 5%;
+  /* 마우스 오버하면 버튼 보이게 */
   display: none;
 }
 
@@ -382,7 +395,6 @@
   overflow-x: hidden;
   list-style-type: decimal;
   list-style: decimal;
-  /* margin: auto; */
 }
 
 .selected-lines li {
@@ -391,7 +403,6 @@
   max-width: 200px;
   position: relative;
   margin-bottom: 0.5rem;
-  /* border-bottom: 1px solid var(--color-blurred-black); */
 }
 
 .selected-lines li select {
@@ -399,22 +410,18 @@
   margin-right: 5%;
 }
 
-#approval-line-modal {
-  /* display: none; */
-}
-
 .btn-selected-delete {
   height: 100%;
-  display: flex;
-  padding: 0px 0.5rem;
-  align-items: center;
-  text-align: center;
+  padding: 0px 6px;
   position: absolute;
   transform-origin: 0px 0px;
   top: 0px;
   right: -34px;
-  /* display: none; */
+  /* 마우스 오버시 버튼 보이게 */
+  display: none;
 }
+
+
 
 #btn-submit-line {
   width: 95%;
@@ -444,18 +451,20 @@
 .favor-modal-body{
   display: flex;
   flex-direction: column;
-    align-items: center;
+  align-items: center;
 }
-.favor-modal-body p{
-  font-size: var(--font13);
-}
+
 .favor-modal-body > div {
   border-left: 4px solid var(--color-navy);
-  margin-top: 1rem;
+  margin-top: 1.5rem; 
   padding-left: 1rem;
   border-radius: 2px;  
 
 } 
+.favor-modal-body p{
+  margin-top: 0.5rem; 
+  font-size: var(--font13);
+}
 .favor-modal-body button{
   width: 90%;
   margin-top: 1rem;

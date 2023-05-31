@@ -1,0 +1,122 @@
+
+:root {
+    /* 흐린 검정선 */
+    --color-blurred-black: rgba(0, 0, 0, 0.2);
+    --color-light-navy: rgb(16, 16, 83);
+    --color-board-black : black;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  #end-approval .modal-header {
+    border-bottom: 0px;
+    padding-bottom: 0px;
+  }
+  
+  .modal-xl{
+    min-width: 800px;
+  }
+  
+  #end-approval button {
+    font-size: var(--font13);
+  }
+  
+  #end-approval select:focus-visible,
+  #end-approval input:focus-visible {
+    outline: none;
+  }
+  
+  .end-approval-table {
+    vertical-align: middle;
+    width: 100%;
+    margin-bottom: 1rem;
+    caption-side: bottom;
+    border-collapse: collapse;
+    background-color: rgba(0, 0, 0, 0.01);
+    border-radius: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+  }
+  
+  .end-approval-table .btn-outline-primary {
+    background-color: var(--color-background);
+  }
+  
+  .end-approval-table tr {
+    background-image: linear-gradient(
+      rgba(255, 255, 255, 0) 90%,
+      rgba(0, 0, 0, 0.02)
+    );
+  }
+  
+  .end-approval-table td:nth-child(1),
+  .end-approval-table td:nth-child(3),
+  .end-approval-table td:nth-child(5) {
+    text-align: center;
+    vertical-align: top;
+  }
+  
+  .end-approval-table td:nth-child(1) > div:first-child,
+  .end-approval-table td:nth-child(3) > div:first-child,
+  .end-approval-table td:nth-child(5) > div:first-child {
+    border-left: 3px solid black;
+    width: 100px;
+    margin: 0.5rem 0px;
+  }
+  
+  #end-approval .approval-line-wrap {
+    width: 90%;
+    display: flex;
+  }
+  
+  #end-approval #approval-title {
+    width: 100%;
+  }
+  
+  #end-approval .approval-files {
+    width: 100%; 
+    max-height: 100px; 
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: var(--color-background);
+  }
+   
+  #end-approval .approval-files > div {
+    overflow: auto;
+    overflow-x: hidden;
+    height: 100%;
+  }
+
+  #end-approval .approval-files > div > div {
+    font-size: var(--font14);
+    margin: 0.5rem 1rem;
+    display: flex;
+    cursor: pointer; 
+  }
+  
+  #end-approval .btn-file-download{
+    background-color: var(--color-background);
+    border: 1px solid var(--color-navy);
+    border-radius: 4px; 
+    margin-left: 1rem;
+  }
+  
+  .end-approval-lines-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+  }
+  
+  .end-approval-lines-wrap > div{
+    border: 1px solid var(--color-board-black);
+    width: max-content;
+  }
+
+
+  .approver-sign{
+    width: 100%;
+  }
