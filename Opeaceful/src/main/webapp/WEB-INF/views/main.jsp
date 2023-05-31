@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="${path}/resources/css/main.css">
 
 </head>
-<body onload="getTime();">
+<body>
 
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
@@ -165,7 +165,7 @@
     </div>
     
 
-<script src="${path}/resources/js/main.js"></script>
+<script type="module" src="${path}/resources/js/main.js"></script>
 <script>
 	var mainHireDate = '${loginUser.hireDate}';
 	console.log(mainHireDate);
