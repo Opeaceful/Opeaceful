@@ -32,6 +32,7 @@
 /* ====================== 왼쪽 ====================== */
 /* ---------- 공지사항 ---------- */
 #board-box{height: 30%;}
+#main-notice-title{cursor: pointer;}
 /* ---------- 전자결재 ---------- */
 #sign-box{height: 20%;}
 .main-sign-count{font-size: 20px; color: var(--color-navy);}
