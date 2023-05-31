@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -140,17 +141,29 @@ public class MemberController {
 	@PostMapping("/selectAll")
 	public String selectMember(
 			@RequestParam(value="Dselect", required = false) Integer Dselect,
-			@RequestParam(value="Pselect", required = false) Integer Pselect
+			@RequestParam(value="Pselect", required = false) Integer Pselect,
+			@RequestParam("Sselect") String Sselect	,
+			Model model,
+			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage
 			) {
 		
+		
+		//ajax로 전송할 데이터 
+		Map<String, Object> map = new HashMap<>();	
+		
+		//검색 select용 map
 		Map<String, Object> selectPD = new HashMap<>();	
 		selectPD.put("Dselect", Dselect);
 		selectPD.put("Pselect", Pselect);
+		selectPD.put("Sselect", Sselect);
 		
-		List<Member> m = memberService.selectMember(selectPD);
 		
+		List<Member> m = memberService.selectMember(currentPage,map,selectPD);
 
-		return new Gson().toJson(m);
+		map.put("m", m);
+		
+		//map 데이터 ajax로 전송
+		return new Gson().toJson(map);
 		
 	}
 

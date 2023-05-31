@@ -16,7 +16,7 @@ public interface MemberService {
 
 	int selectENO();
 	
-	List<Member> selectMember(Map<String, Object> selectPD);
+	List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD);
 	
 	UserDepatment selectdpName(int userNo);
 

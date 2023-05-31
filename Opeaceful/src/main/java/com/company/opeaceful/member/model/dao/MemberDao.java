@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
 
@@ -34,11 +35,14 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectENO");
 	}
 
-	public List<Member> selectMember(Map<String, Object> selectPD) {
+	public List<Member> selectMember(PageInfo pi,Map<String, Object> selectPD) {
 		
-		//RowBounds rowBounds = new RowBounds(0, 10); 
+		int offset = (pi.getCurrentPage() - 1) * pi.getMemberLimit();
+		int limit = pi.getMemberLimit();
 		
-		return sqlSession.selectList("memberMapper.selectMember",selectPD);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList("memberMapper.selectMember",selectPD,rowBounds);
 	}
 
 	public UserDepatment selectdpName(int userNo) {
@@ -47,5 +51,9 @@ public class MemberDao {
 
 	public int updatePwd(Member loginUser) {
 		return sqlSession.update("memberMapper.updatePwd",loginUser);
+	}
+
+	public int selectMemberListCount(Map<String, Object> selectPD) {
+		return sqlSession.selectOne("memberMapper.selectMemberCount", selectPD);
 	}
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,8 +44,8 @@
           <input type="search" name="keyword" class="search-box">
           <button type="button" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
-        <div>
-          <input class="form-check-input" type="checkbox" value="" id="">
+        <div class="ms-2">
+          <input class="form-check-input" type="checkbox" value="N" id="S-select">
           <label class="form-check-label" for="">
              퇴사자
           </label>
@@ -75,7 +76,13 @@
           	 </tbody>
            
         </table>
-      
+
+        <div class="pagingArea">
+          <nav>
+            <ul class="pagination" id="member-pagination">
+            </ul>
+          </nav>
+        </div>
       
     </div>
   </div>

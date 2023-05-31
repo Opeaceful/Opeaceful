@@ -57,3 +57,16 @@
     padding-bottom: 6px;
 }
 
+
+.form-check-input:checked {
+    background-color: var(--color-navy);
+    border-color: var(--color-navy);
+}
+
+
+.form-check-input:focus {
+    border-color: var(--color-navy);
+    box-shadow: 0 0 0 0.25rem var(--color-light-navy);
+}
+
+
