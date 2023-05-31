@@ -1,5 +1,9 @@
 package com.company.opeaceful.member.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -122,12 +127,34 @@ public class MemberController {
 	}
 	
 	//[지영]
-		//member-allview로 이동
-		@RequestMapping("/allview")
-		public String selectMember() {
-			return "member/member-allview";
+	//member-allview로 이동
+	@RequestMapping("/allview")
+	public String memberAllview() {
+		return "member/member-allview";
 	}
+	
+	
+	//[지영]
+	//select박스를 통한 member조회
+	@ResponseBody
+	@PostMapping("/selectAll")
+	public String selectMember(
+			@RequestParam(value="Dselect", required = false) Integer Dselect,
+			@RequestParam(value="Pselect", required = false) Integer Pselect
+			) {
 		
+		Map<String, Object> selectPD = new HashMap<>();	
+		selectPD.put("Dselect", Dselect);
+		selectPD.put("Pselect", Pselect);
+		
+		List<Member> m = memberService.selectMember(selectPD);
+		
+
+		return new Gson().toJson(m);
+		
+	}
+
+	
 	
 	
 	

@@ -1,0 +1,59 @@
+.table{
+    white-space: nowrap;
+}
+
+
+.form-select-sm {
+    min-width: 100px;
+    width: 10%;
+}
+
+
+/*member-allview css*/
+
+.search-box{
+    width: 180px;
+}
+
+.search-wrap{
+    height: auto;
+}
+
+.col-form-label {
+    font-size: 14px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+}
+
+
+#join-date, #leave-date{
+    font-size: 12px;
+    width: 140%;
+    
+}
+#leave-date-lable{
+    padding-left: 26px;
+}
+
+#member-update-modal{
+    width: 80%;
+    align-self: center;
+}
+
+
+.form-control:focus{
+    border-color: var(--navy-hover); 
+    box-shadow: 0 0 0 0.1rem var(--navy-hover);
+}
+
+.form-select:focus{
+    border-color: var(--navy-hover); 
+    box-shadow: 0 0 0 0.1rem var(--navy-hover);
+}
+
+.member-form-select{
+    width: 100%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+

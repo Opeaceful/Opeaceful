@@ -1,5 +1,8 @@
 package com.company.opeaceful.member.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,14 @@ public class MemberServiceImpl implements MemberService {
 	public int selectENO() {
 		return memberDao.selectENO();
 	}
+	
+	@Override
+	public List<Member> selectMember(Map<String, Object> selectPD){
+		
+		System.out.println("service까지옴");
+		return memberDao.selectMember(selectPD);
+	}
+	
 	
 	@Override
 	public UserDepatment selectdpName(int userNo) {
