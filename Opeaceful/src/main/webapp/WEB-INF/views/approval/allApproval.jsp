@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="/resources/css/mypage.css">
 </head>
 <body>
+    <!-- [승은] -->
 	<div class="content-wrap">
         <div class="container">
 			<div class="title-box">

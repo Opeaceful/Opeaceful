@@ -16,7 +16,6 @@
     /* 기본 배경색상 */
     --color-background : white;
 
-
     /*폰트사이즈 뺴놓음*/
     --font11 : 0.69rem;
     --font12 : 0.75rem;
@@ -310,7 +309,12 @@ input::-webkit-search-cancel-button{
 }
 
 
-/* 스크롤바 디자인 */
+/* (승은)스크롤바 없애는 클래스 */
+.scroll-bar-none::-webkit-scrollbar {
+    display: none;
+}
+
+/* (승은)스크롤바 디자인 */
 .scroll-bar::-webkit-scrollbar {
     width: 10px;
 }
