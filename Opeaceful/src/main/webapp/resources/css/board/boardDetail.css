@@ -1,0 +1,279 @@
+/* :root{
+    
+} */
+
+body *{
+    box-sizing: border-box;
+
+}
+/* 사이드바 추후에 삭제 => 공통적용으로 */
+#sidebar{   
+    border: 1px solid blue;
+    width: var(--side-bar);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+#content-wrap{
+    border: px solid red;
+    /*width: calc(100vw - var(--side-bar));
+    min-height: 100vh; */
+    margin-left: var(--side-bar);
+}
+/* 여기까지? 아마도? */
+
+
+div *{
+    border: px solid red;
+}
+/* 게시판 전체 넓이 고정크기지정 */
+.board-wrap{
+    width: 1000px;
+}
+
+/* 게시판 상단 카테고리 버튼 */
+.board-wrap1{
+    margin-top: 30px;
+}
+.board-title-btn-wrap{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
+}
+.board-title-btn{
+    text-decoration-line: none;
+    text-align: center;
+    color: var(--color-navy);
+    font-weight: 600;
+    width: 150px;
+    height: 40px;
+    margin: 0 5px;
+    line-height: 2.5;
+    border-bottom: 1px solid  var(--color-navy);
+}
+.board-title-btn:hover, .notice-btn{
+    color: white;
+    background-color: var(--color-navy);
+    border-bottom: 0;
+    border-radius: 0.5em;
+}
+
+/* 수정,삭제 버튼 */
+.board-wrap2{
+    display: flex;
+    justify-content: right;
+    margin-top: 40px;
+    margin-bottom: 5px;
+}
+.dlt-btn{
+    margin-left: 5px;
+}
+
+/* 글제목 라인*/
+.board-wrap3{
+    border-bottom: 2px solid var(--color-navy);
+    display: flex;
+}
+.board-wrap3>div{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.ctn-title{
+    margin-left: 10px;
+    font-size: var(--font16);
+    font-weight: 500;
+    width: 70%;
+    color: var(--color-navy);
+}
+.ctn-writer{
+    width:15%;
+    font-size: var(--font15);
+    font-weight: 600;
+    text-align: right;
+    color: var(--color-navy);
+}
+.ctn-date{
+    width:15%;
+    font-size: var(--font15);
+    text-align: right;
+    margin-right: 10px;
+    color: grey;
+}
+/* 파일첨부 라인 */
+.board-wrap4{
+    /* border-bottom: 2px solid var(--white-hover); */
+    background-color: var(--white-hover);
+    min-height: 40px;
+    display: flex;
+    /* display: none; */
+}
+.atc-icon{
+    font-size: var(--font20);
+    line-height: 1.8;
+    margin-left: 10px;
+}
+.atc-box{
+    margin-top: 5px;
+    margin-bottom:10px;
+    margin-left: 30px;
+    font-size: var(--font13);
+    text-decoration: underline;
+}
+.atc-txt{
+    padding-top: 4px;
+}
+
+/* 글내용 라인 */
+.detail-ctn{
+    min-height: 300px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size:  var(--font14);
+}
+.board-wrap6{
+    width: 100%;
+    border-top: 2px solid var(--white-hover);
+    background-color: var(--white-hover);
+}
+
+/* 댓글 라인 */
+.reply-title{
+    font-size: var(--font15);
+    font-weight: 600;
+    color: var(--color-navy);
+    margin: 10px 10px 10px;
+}
+.reply-space{
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.reply-input-area{
+    width: 100%;
+    display: flex;
+    height: 70px;
+    /* border-top: px solid var(--white-hover); */
+    /* border-bottom: px solid var(--white-hover); */
+}
+.re-reply-input-area{
+    /* display: flex; */
+    display: none;
+}
+.lock-space{
+    margin-left: 30px;
+    margin-top:5px;
+    width: 33px;
+    height:  52px;
+    display: flex;
+    align-items: center;
+}
+.reply-input-box{
+    margin: 5px 0;
+    margin-right: 30px;
+    display: flex;
+    width: 100%;
+}
+.unlock-btn, .lock-btn, .sm-unlock-btn, .sm-lock-btn{
+    border: none;
+    background: none;
+    color: var(--color-navy);
+}
+.unlock-btn:hover, .lock-btn:hover{
+    color: var(--navy-hover);
+}
+/* 자물쇠 display 설정 */
+.unlock-btn{
+    display: block;
+}
+.lock-btn{
+    display: none;
+}
+.form-control{
+    font-size: var(--font12);
+    width: 100%;
+    height: 50px;
+}
+.reply-text{
+    width: 100%;
+}
+.reply-input{
+    resize: none;
+}
+.reply-input::-webkit-scrollbar {
+    display: none;
+  }
+.reply-button{
+    margin-left: 5px;
+    height: 50px;
+    width:60px;
+    font-size: var(--font14);
+}
+.reply-one{
+    font-size: var(--font13);
+    padding: 5px 0px;
+    border-top: 1px solid var(--white-hover);
+}
+.reply-two{
+    font-size: var(--font13);
+    padding: 5px 20px 5px;
+    border-top: 1px solid var(--white-hover);
+}
+/* 댓글 요소들 설정 */
+.jcode-name{
+    color: var(--color-navy);
+    font-weight: 600;
+}
+.reply-footer>*{
+    color: grey;
+    font-size: var(--font11);
+}
+.re-reply-btn{
+    border: none;
+    background: none;
+}
+.reply-dlt-btn{
+    
+    border: none;
+    background: none;
+}
+
+/* 이전글 다음글 라인 */
+.board-wrap8, .board-wrap9{
+    display: flex;
+    padding-left: 10px;
+    padding-top:5px;
+    padding-bottom: 5px;
+    font-size: var(--font13);
+    color: var(--color-navy);
+    border-bottom: 1px solid var(--white-hover);
+}
+.bf-icon, .af-icon{
+    margin-right: 10px;
+}
+.bf-title, .af-title{
+    color: grey;
+    margin-right: 10px;
+}
+/* 목록버튼 라인 */
+.board-wrap10{
+    display: flex;
+    justify-content: center;
+
+}
+.go-list-btn{
+    border: none;
+    background: none;
+    margin-top: 10px;
+    color: var(--color-navy);
+}
+.go-list-btn:hover{
+    color: var(--navy-hover);
+}
+.footer-chat{
+    height: 60px;
+    display: flex;
+    justify-content: right;
+}

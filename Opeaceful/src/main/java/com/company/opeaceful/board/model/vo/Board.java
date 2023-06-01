@@ -21,5 +21,6 @@ public class Board {
 	private int count;
 	private String fixed;
 	private String secret;
+	private String userName;
 		
 }

@@ -1,0 +1,199 @@
+/* :root{
+    
+} */
+
+body *{
+    box-sizing: border-box;
+
+}
+
+/* 사이드바 추후에 삭제 => 공통적용으로 */
+#sidebar{   
+    border: 1px solid blue;
+    width: var(--side-bar);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+#content-wrap{
+    border: px solid red;
+    /*width: calc(100vw - var(--side-bar));
+    min-height: 100vh; */
+    margin-left: var(--side-bar);
+}
+/* 여기까지? 아마도? */
+
+
+div *{
+    border: px solid red;
+}
+/* 게시판 전체 넓이 고정크기지정 */
+.board-wrap{
+    width: 1000px;
+}
+
+/* 게시판 상단 카테고리 버튼 */
+.board-wrap1{
+    margin-top: 30px;
+}
+.board-title-btn-wrap{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
+}
+.board-title-btn{
+    text-decoration-line: none;
+    text-align: center;
+    font-weight: 600;
+    width: 150px;
+    height: 40px;
+    margin: 0 5px;
+    line-height: 2.5;
+    color: white;
+    background-color: var(--color-navy);
+    border-bottom: 0;
+    border-radius: 0.5em;
+}
+.board-title-btn:hover{
+    color: white;
+    cursor: default;
+}
+
+/* table-wrap*/
+.board-wrap2{
+    width: 100%;
+    border-top: 2px solid var(--color-navy);
+    margin-top: 30px;
+}
+
+/* 테이블 */
+table{
+    width: 100%;
+}
+tr{
+    border-bottom: 1px solid var(--white-hover);
+}
+th{
+    text-align: center;
+    background-color: var(--white-hover);
+    height: 40px;
+    width: 20%;
+}
+td{
+    width: 80%;
+}
+/* 제목입력, 파일첨부 박스*/
+.form-control{
+    font-size: var(--font14);
+    height: 30px;
+    width: 99%;
+    margin-left: 5px;
+}
+/* 작성자 select box */
+.enroll-select{
+    display: flex;
+    width: 99%;
+}
+.form-select{
+    font-size: var(--font14);
+    margin-left: 5px;
+    width: 150px;
+}
+/* 글내용 작성 칸 */
+.enroll-cnt{
+    height: 400px;
+}
+/* 여부 체크박스 */
+.form-check{
+    margin-left: 10px;
+}
+.form-check-label{
+    font-size: var(--font12);
+    font-weight: 400;
+}
+/* 글등록 취소 버튼 */
+.board-wrap3{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+.cnl-btn{
+    margin-left: 10px;
+}
+
+.board-wrap3>div>button{
+    width: 60px;
+}
+
+
+
+
+
+
+
+
+.board-wrap3>div{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.ctn-title{
+    margin-left: 10px;
+    font-size: var(--font15);
+    font-weight: 400;
+    width: 70%;
+    color: var(--color-navy);
+}
+.ctn-writer{
+    width:15%;
+    font-size: var(--font14);
+    font-weight: 600;
+    text-align: right;
+    color: var(--color-navy);
+}
+.ctn-date{
+    width:15%;
+    font-size: var(--font14);
+    text-align: right;
+    margin-right: 10px;
+    color: grey;
+}
+/* 파일첨부 라인 */
+.board-wrap4{
+    /* border-bottom: 2px solid var(--white-hover); */
+    background-color: var(--white-hover);
+    min-height: 40px;
+    display: flex;
+    /* display: none; */
+}
+.atc-icon{
+    font-size: var(--font20);
+    line-height: 1.8;
+    margin-left: 10px;
+}
+.atc-box{
+    margin-top: 5px;
+    margin-bottom:10px;
+    margin-left: 30px;
+    font-size: var(--font13);
+    text-decoration: underline;
+}
+.atc-txt{
+    padding-top: 4px;
+}
+
+/* 글내용 라인 */
+.detail-ctn{
+    min-height: 300px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: var(--font13);
+}
+.board-wrap6{
+    width: 100%;
+    border-top: 2px solid var(--white-hover);
+    background-color: var(--white-hover);
+}
