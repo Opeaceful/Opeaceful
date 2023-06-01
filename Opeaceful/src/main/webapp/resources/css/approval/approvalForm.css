@@ -1,9 +1,6 @@
-
- 
-.modal-xl{
+.modal-xl {
   min-width: 800px;
 }
-
 
 .approval-wrap {
   min-width: 800px;
@@ -14,6 +11,11 @@
   min-width: 700px;
   margin: auto;
   margin-top: 3rem;
+
+  /* 나중에 디자인 평가 필요 */
+  background-color: #00000005;
+  border-radius: 10px;
+  padding: 2rem;
 }
 
 .approval-form-table select {
@@ -81,12 +83,12 @@ th:nth-child(3) {
   margin-bottom: 2rem;
 }
 
-.type-wrap > div{
+.type-wrap > div {
   display: flex;
   align-items: center;
 }
 
-.type-title{
+.type-title {
   text-align: center;
   border-left: 3px solid var(--color-navy);
   margin-right: 1rem;
@@ -126,25 +128,22 @@ th:nth-child(3) {
   border-radius: var(--bs-modal-border-radius);
   outline: 0;
 }
- 
-
 
 .copy-select-wrap {
   display: grid;
   grid-template-columns: 0.4fr 1fr 0.2fr;
   grid-template-rows: 1fr;
   align-items: center;
-
-  padding: 1rem 0px;
+  padding-bottom: 1rem;
 }
 
 .copy-select-wrap > :nth-child(1) {
   grid-area: 1/1/2/2;
   text-align: center;
-  border-right: 2px solid var(--color-navy);
+  border-left: 3px solid var(--color-navy);
   width: max-content;
   margin: auto;
-  padding-right: 20%;
+  padding-left: 1rem;
 }
 
 .copy-select-wrap > :nth-child(2) {
@@ -163,11 +162,11 @@ th:nth-child(3) {
   margin: auto;
 }
 
-#add-form .modal-header{
+#add-form .modal-header {
   border-bottom: 0px;
 }
 
 /* 양식복사 모달 감추기 */
-#copy-form{
-  display: none;  
+#copy-form {
+  display: none;
 }
