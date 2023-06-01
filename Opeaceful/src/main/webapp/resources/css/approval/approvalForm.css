@@ -1,3 +1,10 @@
+
+ 
+.modal-xl{
+  min-width: 800px;
+}
+
+
 .approval-wrap {
   min-width: 800px;
 }
@@ -66,28 +73,24 @@ th:nth-child(3) {
 }
 
 .type-wrap {
-  display: grid;
-
-  grid-template-columns: 0.2fr 0.3fr 0.2fr 1fr 0.3fr;
-  grid-template-rows: 1fr;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 1rem;
+  margin-top: 0px;
   margin-bottom: 2rem;
 }
 
-.type-wrap > * {
-  margin: 0px 1rem;
+.type-wrap > div{
+  display: flex;
+  align-items: center;
 }
 
-.type-wrap > :nth-child(1) {
-  grid-area: 1/1/2/2;
+.type-title{
   text-align: center;
-  border-bottom: 2px solid var(--color-navy);
-}
-
-.type-wrap > :nth-child(2) {
-  grid-area: 1/2/2/3;
-  width: max-content;
+  border-left: 3px solid var(--color-navy);
+  margin-right: 1rem;
+  padding: 0px 1rem;
 }
 
 #add-form select {
@@ -101,22 +104,6 @@ th:nth-child(3) {
 #add-form input:focus-visible,
 #add-form select:focus-visible {
   outline: none;
-}
-
-.type-wrap > :nth-child(3) {
-  grid-area: 1/3/2/4;
-  text-align: center;
-  border-bottom: 2px solid var(--color-navy);
-}
-
-.type-wrap > :nth-child(4) {
-  grid-area: 1/4/2/5;
-}
-
-.type-wrap > :nth-child(5) {
-  grid-area: 1/5/2/6;
-  width: max-content;
-  margin-left: 50%;
 }
 
 #copy-form {
@@ -139,6 +126,8 @@ th:nth-child(3) {
   border-radius: var(--bs-modal-border-radius);
   outline: 0;
 }
+ 
+
 
 .copy-select-wrap {
   display: grid;
@@ -172,4 +161,13 @@ th:nth-child(3) {
   grid-area: 1/3/2/4;
   text-align: center;
   margin: auto;
+}
+
+#add-form .modal-header{
+  border-bottom: 0px;
+}
+
+/* 양식복사 모달 감추기 */
+#copy-form{
+  display: none;  
 }

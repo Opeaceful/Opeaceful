@@ -1,5 +1,5 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> -->
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -27,11 +27,6 @@ pageEncoding="UTF-8"%> -->
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../../../resources/css/common/common.css" />
-    <link
-      rel="stylesheet"
-      href="../../../resources/css/approval/endApprovalModal.css"
-    />
 
     <!-- css -->
     <link
@@ -53,10 +48,26 @@ pageEncoding="UTF-8"%> -->
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
     ></script>
+
+
+    <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
+    <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/endApprovalModal.css"
+    />
+    <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/myApproval.css"
+    />
+    <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/approvalModal.css"
+    />
+
   </head>
   <body>
     <!-- [승은] -->
-    <button
+<!--     <button
       id="test"
       class="btn btn-primary position-btn"
       data-bs-toggle="modal"
@@ -64,7 +75,7 @@ pageEncoding="UTF-8"%> -->
       type="button"
     >
       양식추가
-    </button>
+    </button> -->
 
     <div
       class="modal fade"
@@ -94,22 +105,6 @@ pageEncoding="UTF-8"%> -->
               <tbody>
                 <tr>
                   <td width="10%">
-                    <div>기안일</div>
-                  </td>
-                  <td width="40%">
-                    <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
-                    2023-05-16
-                  </td>
-                  <td width="10%">
-                    <div>신청일자</div>
-                  </td>
-                  <td width="40%">
-                    <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
-                    2023-05-16 ~ 2023-05-17
-                  </td>
-                </tr>
-                <tr>
-                  <td width="10%">
                     <div>종류</div>
                   </td>
                   <td width="40%">연차</td>
@@ -117,6 +112,30 @@ pageEncoding="UTF-8"%> -->
                     <div>상태</div>
                   </td>
                   <td width="40%">완결</td>
+                </tr>
+
+                <tr>
+                  <td width="10%">
+                    <div>기안일</div>
+                  </td>
+                  <td width="40%">
+                    <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
+                    2023-05-16
+                  </td>
+
+                  <td width="10%">
+                    <div>기안자</div>
+                  </td>
+                  <td width="30%">김뫄뫄 사원(23051601)</td>
+                </tr>
+                <tr>
+                  <td width="10%">
+                    <div>신청일자</div>
+                  </td>
+                  <td colspan="3" width="40%">
+                    <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
+                    2023-05-16 ~ 2023-05-17
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -165,37 +184,39 @@ pageEncoding="UTF-8"%> -->
                     <div></div>
                     <div class="final-approval-wrap">
                       <h2><u>2023년 상반기 A프로젝트 보고서</u></h2>
-                      <div class="end-approval-lines-wrap">
-                        <div class="end-approval-lines-title">결<br />재</div>
-                        <div class="end-approval-lines-item">
-                          <div class="approver-name">뫄뫄뫄 사원</div>
-                          <div class="approver-sign">
-                            <img
-                              src="../../../resources/image/mypage/basic_profile.png"
-                              alt=""
-                            />
+                      <div class="end-approval-lines">
+                        <div class="end-approval-lines-wrap">
+                          <div class="end-approval-lines-title">결<br />재</div>
+                          <div class="end-approval-lines-item">
+                            <div class="approver-name">뫄뫄뫄 사원</div>
+                            <div class="approver-sign">
+                              <img
+                                src="${path}/resources/image/mypage/basic_profile.png"
+                                alt=""
+                              />
+                            </div>
+                            <div class="approver-date">2023-05-26</div>
                           </div>
-                          <div class="approver-date">2023-05-26</div>
-                        </div>
-                        <div class="end-approval-lines-item">
-                          <div class="approver-name">뫄뫄뫄 부장</div>
-                          <div class="approver-sign">
-                            <img
-                              src="../../../resources/image/main/absence.svg"
-                              alt=""
-                            />
+                          <div class="end-approval-lines-item">
+                            <div class="approver-name">뫄뫄뫄 부장</div>
+                            <div class="approver-sign">
+                              <img
+                                src="${path}/resources/image/main/absence.svg"
+                                alt=""
+                              />
+                            </div>
+                            <div class="approver-date">2023-05-26</div>
                           </div>
-                          <div class="approver-date">2023-05-26</div>
-                        </div>
-                        <div class="end-approval-lines-item">
-                          <div class="approver-name">뫄뫄뫄뫄 본부장</div>
-                          <div class="approver-sign">
-                            <img
-                              src="../../../resources/image/main/absence.svg"
-                              alt=""
-                            />
+                          <div class="end-approval-lines-item">
+                            <div class="approver-name">뫄뫄뫄뫄 본부장</div>
+                            <div class="approver-sign">
+                              <img
+                                src="${path}/resources/image/main/absence.svg"
+                                alt=""
+                              />
+                            </div>
+                            <div class="approver-date">2023-05-26</div>
                           </div>
-                          <div class="approver-date">2023-05-26</div>
                         </div>
                       </div>
                       <div class="end-approval-content">
@@ -263,7 +284,8 @@ pageEncoding="UTF-8"%> -->
             </button>
           </div>
 
-          <div class="memo-modal-back">
+          <!-- 메모모달 구역 -->
+          <div id="memo-modal-back" class="modal-back">
             <div id="memo-modal" class="modal-content position-modal">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">메모</h1>
@@ -275,6 +297,7 @@ pageEncoding="UTF-8"%> -->
               </div>
               <div class="modal-body">
                 <div class="memo-modal-body">
+                  <!-- 메모 리스트 구역 -->
                   <div class="memo-list">
                     <table
                       style="margin-bottom: 0px"
@@ -382,8 +405,9 @@ pageEncoding="UTF-8"%> -->
                       </button>
                     </div>
                   </div>
+                  <!-- 메모 상세보기/추가 구역 -->
                   <div class="memo-detail">
-                    <h3><</h3>
+                    <!-- <h3><</h3> -->
                     <table class="memo-detail-table table table-common">
                       <tbody>
                         <tr>
@@ -391,7 +415,39 @@ pageEncoding="UTF-8"%> -->
                             <div>첨부</div>
                           </td>
                           <td>
-                            <div></div>
+                            <div class="memo-files-wrap">
+                              <button
+                                id="btn-memo-add-file"
+                                class="btn btn-outline-primary"
+                              >
+                                추가
+                              </button>
+                              <div class="memo-files scroll-bar">
+                                <div class="memo-file-item">
+                                  fjkdlsjfkdlsf.jpg
+                                  <!-- <input class="form-control  form-control-sm" type="file" id="formFile"> -->
+                                  <button
+                                    id="btn-memo-file-delete"
+                                    class="btn-file-delete"
+                                  >
+                                    <i class="fa-solid fa-minus"></i>
+                                  </button>
+                                </div>
+                                <div class="memo-file-item">
+                                  <input
+                                    class="form-control form-control-sm"
+                                    type="file"
+                                    id="formFile"
+                                  />
+                                  <button
+                                    id="btn-memo-file-delete"
+                                    class="btn-file-delete"
+                                  >
+                                    <i class="fa-solid fa-minus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
                           </td>
                         </tr>
                         <tr>
@@ -400,18 +456,58 @@ pageEncoding="UTF-8"%> -->
                           </td>
                           <td>
                             <textarea
-                              name=""
+                              name="content"
                               id="memo-content"
                               cols="30"
                               rows="10"
+                              maxlength="1000"
+                              class="scroll-bar"
                             ></textarea>
                           </td>
                         </tr>
                       </tbody>
                     </table>
+                    <div class="memo-btn-wrap">
+                      <button
+                        id="btn-memo-back"
+                        class="btn btn-outline-primary"
+                      >
+                        뒤로가기
+                      </button>
+                      <div>
+                        <button
+                          id="btn-memo-delete"
+                          class="btn btn-outline-primary"
+                        >
+                          삭제
+                        </button>
+                        <button id="btn-memo-save" class="btn btn-primary">
+                          저장
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                    <button>삭제</button>
-                    <button>저장</button>
+          <!-- 결재/반려 모달구역 -->
+          <div id="approval-confirm-back" class="modal-back">
+            <div id="confirm-modal" class="modal-content position-modal">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="btn-close"
+                  id="btn-confirm-modal-close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="confirm-body">
+                  <h4>결재를 진행하시겠습니까?</h4>
+                  <div class="confirm-btn-wrap">
+                    <button class="btn btn-primary">확인</button>
+                    <button class="btn btn-outline-primary">취소</button>
                   </div>
                 </div>
               </div>
@@ -425,67 +521,64 @@ pageEncoding="UTF-8"%> -->
       //todo!! 서버로 내용 저장 시킬때 이미지파일들 따로 저장시키고 img태그 안에 src 내용들도 바꿔껴야함
       // 만약에 수정하면 파일 삭제시키는 것도 들어가야 할듯
 
-      setTimeout(() => {
-        document.getElementById('test').click();
-      }, 100);
       test1();
       let downloadPic = function (url, name) {
         const img = new Image();
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
         img.onload = function () {
           canvas.width = this.width;
           canvas.height = this.height;
           ctx.drawImage(this, 0, 0);
 
-          const elt = document.createElement('a');
-          elt.setAttribute('href', canvas.toDataURL('image/png'));
-          elt.setAttribute('download', `${name}.png`);
-          elt.style.display = 'none';
+          const elt = document.createElement("a");
+          elt.setAttribute("href", canvas.toDataURL("image/png"));
+          elt.setAttribute("download", `${name}.png`);
+          elt.style.display = "none";
           document.body.appendChild(elt);
           elt.click();
           document.body.removeChild(elt);
         };
-        img.crossOrigin = 'anonymous';
+        img.crossOrigin = "anonymous";
         img.src = url;
       };
 
       function test1() {
         var plugins = [
-          'advlist',
+          "advlist",
           // "autolink",
           // "lists",
           // "link",
-          'image',
-          'charmap',
+          "image",
+          "charmap",
           // "print",
-          'preview',
+          "preview",
           // "anchor",
-          'searchreplace',
-          'visualblocks',
+          "searchreplace",
+          "visualblocks",
           // "code",
-          'fullscreen',
-          'insertdatetime',
+          "fullscreen",
+          "insertdatetime",
           // "media",
-          'table',
-          'paste',
+          "table",
+          "paste",
           // "code",
           // "help",
           // "wordcount",
-          'save',
+          "save",
         ];
         var edit_toolbar =
-          'formatselect fontselect fontsizeselect |' +
-          ' forecolor backcolor |' +
-          ' bold italic underline strikethrough |' +
-          ' alignjustify alignleft aligncenter alignright |' +
-          ' bullist numlist |' +
-          ' table tabledelete |' +
-          ' image';
+          "formatselect fontselect fontsizeselect |" +
+          " forecolor backcolor |" +
+          " bold italic underline strikethrough |" +
+          " alignjustify alignleft aligncenter alignright |" +
+          " bullist numlist |" +
+          " table tabledelete |" +
+          " image";
 
         tinymce.init({
-          language: 'ko_KR', //한글판으로 변경
-          selector: '#editor',
+          language: "ko_KR", //한글판으로 변경
+          selector: "#editor",
           height: 500,
           // menubar: false,
           plugins: plugins,
@@ -500,13 +593,13 @@ pageEncoding="UTF-8"%> -->
               images_upload_url: 'postAcceptor.php',
               here we add custom filepicker only to Image dialog
           */
-          file_picker_types: 'image',
+          file_picker_types: "image",
           /* and here's our custom image picker*/
           file_picker_callback: function (cb, value, meta) {
-            console.log('test1');
-            var input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
+            console.log("test1");
+            var input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
 
             /*
               Note: In modern browsers input[type="file"] is functional without
@@ -516,8 +609,8 @@ pageEncoding="UTF-8"%> -->
               once you do not need it anymore.
               */
             input.onchange = function () {
-              console.log('test2');
-              console.log('test');
+              console.log("test2");
+              console.log("test");
               var file = this.files[0];
 
               var reader = new FileReader();
@@ -527,9 +620,9 @@ pageEncoding="UTF-8"%> -->
                       registry. In the next release this part hopefully won't be
                       necessary, as we are looking to handle it internally.
                       */
-                var id = 'blobid' + new Date().getTime();
+                var id = "blobid" + new Date().getTime();
                 var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                var base64 = reader.result.split(',')[1];
+                var base64 = reader.result.split(",")[1];
                 var blobInfo = blobCache.create(id, file, base64);
 
                 blobCache.add(blobInfo);
@@ -548,13 +641,13 @@ pageEncoding="UTF-8"%> -->
           /*** image upload ***/
 
           content_style:
-            'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
         });
 
-        $('#save').on('click', function () {
+        $("#save").on("click", function () {
           var content = tinymce.activeEditor.getContent();
           console.log(
-            tinymce.activeEditor.contentDocument.getElementById('tinymce')
+            tinymce.activeEditor.contentDocument.getElementById("tinymce")
               .innerHTML
           );
         });
@@ -562,26 +655,26 @@ pageEncoding="UTF-8"%> -->
 
       function test2() {
         var tinyEditor = tinymce.init({
-          selector: '#editor',
+          selector: "#editor",
           min_height: 500,
           max_height: 1000,
           menubar: false,
           paste_as_text: true,
-          fullpage_default_font_size: '14px',
+          fullpage_default_font_size: "14px",
           branding: false,
           plugins:
-            'autolink code link autoresize paste contextmenu image preview',
+            "autolink code link autoresize paste contextmenu image preview",
           toolbar:
-            'undo redo | fontsizeselect | forecolor | bold italic strikethrough underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link custom_image | code preview',
+            "undo redo | fontsizeselect | forecolor | bold italic strikethrough underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link custom_image | code preview",
           fontsize_formats:
-            '10px 12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px',
+            "10px 12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px",
           setup: function (editor) {
-            editor.ui.registry.addButton('custom_image', {
-              icon: 'image',
-              tooltip: 'insert Image',
+            editor.ui.registry.addButton("custom_image", {
+              icon: "image",
+              tooltip: "insert Image",
               onAction: function () {
                 // 이미지 버튼이 눌렸을 때 처리하는 곳
-                console.log('test');
+                console.log("test");
                 // documentUpload({
                 //   multiple: false,
                 //   accept: ".jpg, .png",
@@ -611,28 +704,28 @@ pageEncoding="UTF-8"%> -->
         });
       }
 
-      $('#date').daterangepicker();
+      $("#date").daterangepicker();
 
-      $('#date').daterangepicker({
+      $("#date").daterangepicker({
         locale: {
-          separator: ' ~ ', // 시작일시와 종료일시 구분자
-          format: 'YYYY-MM-DD', // 일시 노출 포맷
-          applyLabel: '확인', // 확인 버튼 텍스트
-          cancelLabel: '취소', // 취소 버튼 텍스트
-          daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+          separator: " ~ ", // 시작일시와 종료일시 구분자
+          format: "YYYY-MM-DD", // 일시 노출 포맷
+          applyLabel: "확인", // 확인 버튼 텍스트
+          cancelLabel: "취소", // 취소 버튼 텍스트
+          daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
           monthNames: [
-            '1월',
-            '2월',
-            '3월',
-            '4월',
-            '5월',
-            '6월',
-            '7월',
-            '8월',
-            '9월',
-            '10월',
-            '11월',
-            '12월',
+            "1월",
+            "2월",
+            "3월",
+            "4월",
+            "5월",
+            "6월",
+            "7월",
+            "8월",
+            "9월",
+            "10월",
+            "11월",
+            "12월",
           ],
         },
         timePicker: false, // 시간 노출 여부
@@ -643,11 +736,14 @@ pageEncoding="UTF-8"%> -->
         // singleDatePicker: true, // 하나의 달력 사용 여부
       });
 
-      $('#date').on('show.daterangepicker', function (ev, picker) {
-        $('.yearselect').css('float', 'left');
-        $('.monthselect').css('float', 'right');
-        $('.cancelBtn').css('float', 'right');
+      $("#date").on("show.daterangepicker", function (ev, picker) {
+        $(".yearselect").css("float", "left");
+        $(".monthselect").css("float", "right");
+        $(".cancelBtn").css("float", "right");
       });
+      
+      
+      $('.modal-backdrop').last().css("display", "none");
     </script>
 
     <script

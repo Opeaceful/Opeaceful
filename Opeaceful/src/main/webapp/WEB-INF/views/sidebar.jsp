@@ -82,9 +82,9 @@
                     </div>
 
                     <div class="sidebar-more" id="sign-menu-item">
-                        <a class="sidebar-more-text" href="">결재 양식</a>
-                        <a class="sidebar-more-text" href="">전자결재 관리</a>
-                        <a class="sidebar-more-text" href="">MY 전자결재</a>
+                        <a class="sidebar-more-text" href="${path}/approval/approvalForm">결재 양식</a>
+                        <a class="sidebar-more-text" href="${path}/approval/allApproval">전자결재 관리</a>
+                        <a class="sidebar-more-text" href="${path}/approval/myApproval">MY 전자결재</a>
                     </div>
                     
                     
