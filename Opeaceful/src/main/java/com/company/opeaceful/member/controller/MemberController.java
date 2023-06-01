@@ -196,7 +196,20 @@ public class MemberController {
 		
 	}
 
-	
+	//[지영]
+	// member 데이터 변경
+	@RequestMapping("/updateAllmember")
+	public String updateAllmember(
+			Member m
+			){
+			
+		System.out.println("updateAllmember들어옴!!!============================"+m);
+		
+		
+		
+		return "member/member-allview";
+
+	}
 	
 	
 	

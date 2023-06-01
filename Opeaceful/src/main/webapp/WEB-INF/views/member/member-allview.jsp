@@ -96,29 +96,106 @@
         <h1 class="modal-title fs-5" id="staticBackdropLabel">사용자 수정</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="member-update-modal">
+      <div class="modal-body" id="member-update-modal" >
        
-        <form id="member-update-form">
-          
+        <form id="member-update-form" action="${path}/member/updateAllmember" method="post">
+	          <div class="row mb-3">
+	            <label for="inputUserName" class="col-sm-2 col-form-label">이름</label>
+	            <div class="col-sm-9">
+	            <input type="text" class="form-control" value="" name="userName" required>
+	            </div>
+	         </div>
+	        <div class="row mb-3">
+	            <label for="inputemail" class="col-sm-2 col-form-label">이메일</label>
+	            <div class="col-sm-9">
+	            <input type="email" class="form-control" value="" name="email" required>
+	            </div>
+	        </div>
+	        <div class="row mb-3">
+	            <label for="inputextension" class="col-sm-2 col-form-label">내선번호</label>
+	            <div class="col-sm-9">
+	            <input type="tel" class="form-control" value="" name="extension" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13">
+	            </div>
+	        </div>
+	        <div class="row mb-3">
+	            <label for="inputphone" class="col-sm-2 col-form-label" >연락처</label>
+	            <div class="col-sm-9">
+	            <input type="tel" class="form-control" value="" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" required>
+	            </div>
+	        </div>  
+	        <div class="row mb-3">
+	        <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
+	            <div class="col-sm-9">
+	                <select class="form-select member-form-select form-select-sm" name="deptCode" required>
+	                <option selected></option>
+	                </select>
+	            </div>
+	        </div>
+	        <div class="row mb-3">
+	        <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
+	            <div class="col-sm-9">
+	                <select class="form-select member-form-select  form-select-sm" name="pCode" required>
+	                <option selected></option>
+	                </select>
+	            </div>
+	        </div>
+	        <div class="row mb-3">
+	            <label for="inputhireDate" class="col-sm-2 col-form-label">입사일</label>
+	            <div class="col-sm-3">
+	                <input type="date" id="join-date" class="form-control" value="${result.m.ShireDate}" name="hireDate" required>
+	            </div>
+	            <label for="inputresignedDate" id="leave-date-lable" class="col-sm-2 col-form-label">퇴사일</label>
+	            <div class="col-sm-3">
+	                <input type="date" id="leave-date"class="form-control">
+	            </div>
+	        </div>
+	        <div class="row mb-3">
+	            <label for="inputannualLeaveCount" class="col-sm-2 col-form-label">연차</label>
+	            <div class="col-sm-9">
+	                <input type="number" class="form-control" value="" name="annualLeaveCount">
+	            </div>
+	        </div>
+	        <div class="row mb-3">
+	            <label for="inputAddress" class="col-sm-2 col-form-label">주소</label>
+	            <div class="col-sm-9">
+	            <div class="input-group">
+	                <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put" required readonly placeholder="도로명주소" required>
+	                <button class="btn btn-outline-secondary seach-btn" type="button" id="seach-address">
+	                    <i class="fa-solid fa-magnifying-glass"></i>
+	                </button>
+	                
+	                </div>
+	                <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" placeholder="상세주소" >
+	            </div>
+	        </div>
+	
+	       <div class="modal-footer row ">
+		      
+         	<div class="col mgpd-0">
+		        <button type="button" class="btn btn-warning ">비밀번호 초기화</button>
+		   		</div>
+		        
+
+		        <div class="col text-end">
+		        <button type="submit" class="btn btn-primary ms-1 ok-common">확인</button>
+		        <button type="button" class="btn btn-danger cancel-common">삭제</button>
+		        </div>
+		        
+		       
+	       </div>
         </form>
-
+       
 
       </div>
-      <div class="modal-footer justify-content-start row">
-        <div class="col-4">
-        <button type="button" class="btn btn-warning cancel-common">비밀번호 초기화</button>
-        </div>
-        <div class="col-5">
-        <button type="button" class="btn btn-primary ms-1 ok-common">확인</button>
-        <button type="button" class="btn btn-danger cancel-common">삭제</button>
-        </div>
-      </div>
+      
     </div>
   </div>
 </div>
 
-  
+ 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
 <script type="module" src="${path}/resources/js/memberAllview.js"></script>
+<script src="${path}/resources/js/addressAPI.js"></script>
 </body>
 </html>

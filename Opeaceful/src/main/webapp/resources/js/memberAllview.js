@@ -186,8 +186,6 @@ function tableEvent(){
 //모달창 비동기 처리
 function memberUpdaetajax(id){
     
-   let memberModalFrom = document.getElementById("member-update-form")
-
     $.ajax({
         url:`${path}/member/selectMemberOne`,
         dataType : "JSON",
@@ -198,77 +196,47 @@ function memberUpdaetajax(id){
         success: function(result){
             console.log(result);
 
-            let html = ""
-    
+           //모달에 데이터 세팅
+           document.querySelector("input[name=userName]").value  = result.m.userName;
+           document.querySelector("input[name=email]").value  = result.m.email;
+           document.querySelector("input[name=extension]").value  = result.m.extension;
+           document.querySelector("input[name=phone]").value  = result.m.phone;
+           document.getElementById("join-date").value = result.m.ShireDate;
+           document.querySelector("input[name=annualLeaveCount]").value  = result.m.annualLeaveCount;
            
-            html +=
-            
-            `
-            <div class="row mb-3">
-                <label for="inputUserName" class="col-sm-2 col-form-label">이름</label>
-                <div class="col-sm-9">
-                <input type="text" class="form-control" value="${result.m.userName}">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputemail" class="col-sm-2 col-form-label">이메일</label>
-                <div class="col-sm-9">
-                <input type="email" class="form-control" value="${result.m.email}">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputextension" class="col-sm-2 col-form-label">내선번호</label>
-                <div class="col-sm-9">
-                <input type="tel" class="form-control" value="${result.m.extension}">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputphone" class="col-sm-2 col-form-label">연락처</label>
-                <div class="col-sm-9">
-                <input type="tel" class="form-control" value="${result.m.phone}">
-                </div>
-            </div>  
-            <div class="row mb-3">
-            <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
-                <div class="col-sm-9">
-                    <select class="form-select member-form-select form-select-sm" >
-                    <option selected>${result.m.dName}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-            <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
-                <div class="col-sm-9">
-                    <select class="form-select member-form-select  form-select-sm">
-                    <option selected>${result.m.pName}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputhireDate" class="col-sm-2 col-form-label">입사일</label>
-                <div class="col-sm-3">
-                    <input type="date" id="join-date" class="form-control" value="${result.m.ShireDate}">
-                </div>
-                <label for="inputresignedDate" id="leave-date-lable" class="col-sm-2 col-form-label">퇴사일</label>
-                <div class="col-sm-3">
-                    <input type="date" id="leave-date"class="form-control">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputannualLeaveCount" class="col-sm-2 col-form-label">연차</label>
-                <div class="col-sm-9">
-                    <input type="number" class="form-control" value="${result.m.annualLeaveCount}">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputAddress" class="col-sm-2 col-form-label">주소</label>
-                <div class="col-sm-9">
-                    <input type="email" class="form-control" alue="${result.m.address}">
-                </div>
-            </div>
-            `
+           //주소지 세팅
+           let addressList = result.m.address.split( ",");
 
-        memberModalFrom.innerHTML = html;
+           document.getElementById("user-address").value = addressList[0];
+           document.getElementById("user-address-dtail").value = addressList[1];
+
+           //두개 이상으로 나뉘었다면
+           for(let i = 2; i < addressList.length; i++){
+                document.getElementById("user-address-dtail").value += ","+addressList[i];
+           }
+
+            
+       
+            // <div class="row mb-3">
+            // <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
+            //     <div class="col-sm-9">
+            //         <select class="form-select member-form-select form-select-sm" name="deptCode">
+            //         <option selected>${result.m.dName}</option>
+            //         </select>
+            //     </div>
+            // </div>
+            // <div class="row mb-3">
+            // <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
+            //     <div class="col-sm-9">
+            //         <select class="form-select member-form-select  form-select-sm" name="pCode">
+            //         <option selected>${result.m.pName}</option>
+            //         </select>
+            //     </div>
+            // </div>
+         
+
+
+       
         
             
         },

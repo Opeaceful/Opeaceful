@@ -1,4 +1,4 @@
-.table{
+.table, button{
     white-space: nowrap;
 }
 
@@ -76,3 +76,13 @@
     border: none;
 }
 
+.mgpd-0{
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.text-end{
+    text-align-last: end;
+}
