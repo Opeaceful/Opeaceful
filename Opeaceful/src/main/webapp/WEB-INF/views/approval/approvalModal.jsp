@@ -56,6 +56,7 @@ pageEncoding="UTF-8"%> -->
     cs
   </head>
   <body>
+    <!-- [승은] -->
     <button
       id="test"
       class="btn btn-primary position-btn"
@@ -91,7 +92,7 @@ pageEncoding="UTF-8"%> -->
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body scroll-bar-none">
             <form method="post" action="">
               <div class="info-wrap">
                 <table class="write-approval-table table">
@@ -106,7 +107,7 @@ pageEncoding="UTF-8"%> -->
                       <td width="10%">
                         <div>종류</div>
                       </td>
-                      <td width="40%">일반</td>
+                      <td width="40%">연차</td>
                     </tr>
                     <tr>
                       <td>
@@ -124,17 +125,16 @@ pageEncoding="UTF-8"%> -->
                       <td colspan="3">
                         <div class="approval-line-wrap">
                           <button
-                            id="btn-add-form"
+                            id="btn-add-lines"
                             class="btn btn-outline-primary position-btn"
                             type="button"
                           >
                             <i class="fa-solid fa-plus"></i> 선택
                           </button>
                           <div class="approval-lines">
-                            <ol>
+                            <ol class="scroll-bar">
                               <li><b>결재</b> 뫄뫄뫄 부장</li>
                               <li><b>참조</b> 뫄뫄뫄 팀장</li>
-                              <li><b>결재</b> 뫄뫄뫄 과장</li>
                             </ol>
                           </div>
                         </div>
@@ -148,30 +148,20 @@ pageEncoding="UTF-8"%> -->
                       <td colspan="3">
                         <div class="approval-line-wrap">
                           <button
-                            id="btn-add-form"
+                            id="btn-add-file"
                             class="btn btn-outline-primary position-btn"
                             type="button"
                           >
                             <i class="fa-solid fa-plus"></i> 첨부
                           </button>
                           <div class="approval-files">
-                            <div>
-                              fjkdlsjf.jpg
-                              <button class="delete-btn">
-                                <i class="bi bi-x"></i>
-                              </button>
-                            </div>
-                            <div>
-                              fjkdldfsdsfdsfsjf.jpg
-                              <button class="delete-btn">
-                                <i class="bi bi-x"></i>
-                              </button>
-                            </div>
-                            <div>
-                              fjkdlsjf.jpg
-                              <button class="delete-btn">
-                                <i class="bi bi-x"></i>
-                              </button>
+                            <div class="scroll-bar">
+                              <div>
+                                fjkdlsjf.jpg
+                                <button class="btn-file-delete">
+                                  <i class="fa-solid fa-minus"></i>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -187,11 +177,11 @@ pageEncoding="UTF-8"%> -->
             </form>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              id="btn-save"
-              class="btn btn-primary position-ok ms-auto"
-            >
+            <button type="button" class="btn btn-outline-primary">
+              임시 저장
+            </button>
+
+            <button type="button" class="btn btn-primary position-ok ms-auto">
               저장
             </button>
             <button
@@ -215,11 +205,139 @@ pageEncoding="UTF-8"%> -->
               <div class="modal-body">
                 <div class="line-wrap">
                   <div class="org-chart">
-                    <div>경영전략</div>
-                    <div>이뫄뫄 사원</div>
-                    <div>김뫄뫄 과장</div>
+                    <div>
+                      <table class="org-table-head table table-common">
+                        <thead>
+                          <th width="50%">부서</th>
+                          <th width="50%">사원</th>
+                        </thead>
+                      </table>
+                    </div>
+                    <div class="org-table-content scroll-bar-none">
+                      <table class="table table-common">
+                        <tbody>
+                          <tr>
+                            <td rowspan="2">경영전략</td>
+                            <td>김뫄뫄 사원</td>
+                          </tr>
+                          <tr>
+                            <td>김뫄뫄 사원</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <div class="my-list"></div>
+                  <div class="my-list">
+                    <div class="my-favor">
+                      <div>
+                        <table class="favor-table table table-common">
+                          <thead>
+                            <th>My 즐겨찾기</th>
+                          </thead>
+                          <tbody class="scroll-bar">
+                            <tr>
+                              <td>
+                                ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+                                <button
+                                  class="btn-favor-delete btn btn-outline-primary"
+                                >
+                                  삭제
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="selected-lines">
+                      <ol class="scroll-bar">
+                        <li>
+                          <select name="" id="">
+                            <option value="" selected>결재</option>
+                            <option value="">참조</option>
+                          </select>
+                          한우정아 부사장
+                          <button
+                            class="btn-selected-delete btn btn-outline-primary"
+                          >
+                            <i class="fa-solid fa-minus"></i>
+                          </button>
+                        </li>
+                        <li>
+                          <select name="" id="">
+                            <option value="" selected>결재</option>
+                            <option value="">참조</option>
+                          </select>
+                          김뫄뫄 사원
+                          <button
+                            class="btn-selected-delete btn btn-outline-primary"
+                          >
+                            <i class="fa-solid fa-minus"></i>
+                          </button>
+                        </li>
+                        <li>
+                          <select name="" id="">
+                            <option value="" selected>결재</option>
+                            <option value="">참조</option>
+                          </select>
+                          김뫄뫄 부서장
+                          <button
+                            class="btn-selected-delete btn btn-outline-primary"
+                          >
+                            <i class="fa-solid fa-minus"></i>
+                          </button>
+                        </li>
+                        <li>
+                          <select name="" id="">
+                            <option value="" selected>결재</option>
+                            <option value="">참조</option>
+                          </select>
+                          김뫄뫄 부서장
+                          <button
+                            class="btn-selected-delete btn btn-outline-primary"
+                          >
+                            <i class="fa-solid fa-minus"></i>
+                          </button>
+                        </li>
+                      </ol>
+                      <button
+                        id="btn-add-favor"
+                        class="btn btn-outline-primary"
+                      >
+                        즐겨찾기 추가
+                      </button>
+                    </div>
+
+                    <button id="btn-submit-line" class="btn btn-primary">
+                      결제라인 추가
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="favor-modal-back">
+                <div id="favor-add-modal" class="modal-content position-modal">
+                  <div class="modal-header">
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="favor-modal-body">
+                      <div>
+                        즐겨찾기 명
+                        <input
+                          type="text"
+                          id="input-favor-title"
+                          maxlength="15"
+                        />
+                      </div>
+                      <p>※현재 선택된 결재자 정보를 My즐겨찾기로 저장합니다</p>
+                      <button class="btn btn-primary">저장</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
