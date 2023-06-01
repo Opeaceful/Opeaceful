@@ -31,4 +31,6 @@ public class Member {
 	private String pName;
 	private String dName;
 	
+	private String ShireDate;
+	
 }

@@ -8,6 +8,10 @@ import {path} from './common/common.js';
 //함수에 사용할 변수 세팅
 let pagination;
 
+//퇴사자 체크 변수 세팅
+let Sselect;
+
+
 
 /*검색에 따라 member를 불러오는 이벤트 */
 $("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
@@ -21,8 +25,6 @@ let Pselect = document.getElementById("p-select").value;
 let Schecked = document.getElementById("S-select").checked;
 
 
-//퇴사자 체크 변수 세팅
-let Sselect;
 
 
 //페이지네이션 
@@ -54,6 +56,7 @@ $.ajax({
     
         //받아온 데이터 테이블 생성시켜줌
         for(let m of result.m){
+    
             html +=
             `
             <tr data-id=${m.userNo}>
@@ -64,7 +67,7 @@ $.ajax({
                 <td>${m.phone}</td>
                 <td>${m.dName}</td>
                 <td>${m.pName}</td>
-                <td>${m.hireDate}</td>
+                <td>${m.ShireDate}</td>
                 <td></td>
                 <td>${m.annualLeaveCount}</td>
                 <td>${m.address}</td>
@@ -183,7 +186,7 @@ function tableEvent(){
 //모달창 비동기 처리
 function memberUpdaetajax(id){
     
-    console.log("여기들어옴")
+   let memberModalFrom = document.getElementById("member-update-form")
 
     $.ajax({
         url:`${path}/member/selectMemberOne`,
@@ -192,8 +195,80 @@ function memberUpdaetajax(id){
         data: {
           id : id,
         },
-        success: function(m){
-            console.log(m);
+        success: function(result){
+            console.log(result);
+
+            let html = ""
+    
+           
+            html +=
+            
+            `
+            <div class="row mb-3">
+                <label for="inputUserName" class="col-sm-2 col-form-label">이름</label>
+                <div class="col-sm-9">
+                <input type="text" class="form-control" value="${result.m.userName}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputemail" class="col-sm-2 col-form-label">이메일</label>
+                <div class="col-sm-9">
+                <input type="email" class="form-control" value="${result.m.email}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputextension" class="col-sm-2 col-form-label">내선번호</label>
+                <div class="col-sm-9">
+                <input type="tel" class="form-control" value="${result.m.extension}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputphone" class="col-sm-2 col-form-label">연락처</label>
+                <div class="col-sm-9">
+                <input type="tel" class="form-control" value="${result.m.phone}">
+                </div>
+            </div>  
+            <div class="row mb-3">
+            <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
+                <div class="col-sm-9">
+                    <select class="form-select member-form-select form-select-sm" >
+                    <option selected>${result.m.dName}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+            <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
+                <div class="col-sm-9">
+                    <select class="form-select member-form-select  form-select-sm">
+                    <option selected>${result.m.pName}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputhireDate" class="col-sm-2 col-form-label">입사일</label>
+                <div class="col-sm-3">
+                    <input type="date" id="join-date" class="form-control" value="${result.m.ShireDate}">
+                </div>
+                <label for="inputresignedDate" id="leave-date-lable" class="col-sm-2 col-form-label">퇴사일</label>
+                <div class="col-sm-3">
+                    <input type="date" id="leave-date"class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputannualLeaveCount" class="col-sm-2 col-form-label">연차</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" value="${result.m.annualLeaveCount}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputAddress" class="col-sm-2 col-form-label">주소</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" alue="${result.m.address}">
+                </div>
+            </div>
+            `
+
+        memberModalFrom.innerHTML = html;
         
             
         },
@@ -201,8 +276,11 @@ function memberUpdaetajax(id){
             console.log("에러발생");
             console.log(request.status);
         }
+
+       
     })
 
 
 }
     
+

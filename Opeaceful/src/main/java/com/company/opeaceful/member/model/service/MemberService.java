@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 
 public interface MemberService {
 
@@ -23,5 +24,7 @@ public interface MemberService {
 	int updatePwd(Member loginUser);
 
 	Member selectMemberOne(int userNo);
+
+	ResignedMember resignedMembeSelect(int userNo);
 
 }

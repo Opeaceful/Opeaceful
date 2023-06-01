@@ -22,6 +22,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 import com.google.gson.Gson;
 
 @Controller
@@ -159,6 +160,7 @@ public class MemberController {
 		
 		
 		List<Member> m = memberService.selectMember(currentPage,map,selectPD);
+	
 
 		map.put("m", m);
 		
@@ -175,9 +177,23 @@ public class MemberController {
 	public String selectMemberOne(
 			@RequestParam("id") int userNo) {
 		
-		Member m = memberService.selectMemberOne(userNo);
+		//ajax로 전송할 데이터 
+		Map<String, Object> map = new HashMap<>();	
 		
-		return new Gson().toJson(m);
+		Member m = memberService.selectMemberOne(userNo);
+		//조회된 멤버
+		map.put("m", m);
+				
+		//해당 데이터가 퇴사자라면 
+		if(m.getStatus().equals("N")) {
+			ResignedMember rm = memberService.resignedMembeSelect(userNo);
+			
+			//조회된 퇴사자 정보
+			map.put("rm", rm);
+		}
+
+		return new Gson().toJson(map);
+		
 	}
 
 	

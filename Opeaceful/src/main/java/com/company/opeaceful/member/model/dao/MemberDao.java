@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 
 @Repository
 public class MemberDao {
@@ -59,5 +60,9 @@ public class MemberDao {
 
 	public Member selectMemberOne(int userNo) {
 		return sqlSession.selectOne("memberMapper.selectMemberOne",userNo);
+	}
+
+	public ResignedMember resignedMembeSelect(int userNo) {
+		return sqlSession.selectOne("memberMapper.resignedMembeSelect",userNo);
 	}
 }

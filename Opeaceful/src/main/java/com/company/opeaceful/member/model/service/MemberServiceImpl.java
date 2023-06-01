@@ -11,6 +11,7 @@ import com.company.opeaceful.commom.template.Pagination;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.dao.MemberDao;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -50,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
 		//페이지네이션 처리
 		int listCount = memberDao.selectMemberListCount(selectPD);
 		int pageLimit = 5;
-		int memberLimit = 2; //테스트용으로 2해둠 나중에 10으로바꾸기
+		int memberLimit = 10;
 		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, memberLimit);
 		
 		//ajax로 돌려보내줄 map에 pi정보 담아주기
@@ -74,4 +75,11 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectMemberOne(int userNo) {
 		return memberDao.selectMemberOne(userNo);
 	}
+	
+	@Override
+	public ResignedMember resignedMembeSelect(int userNo) {
+		return memberDao.resignedMembeSelect(userNo);
+	}
+	
+	
 }
