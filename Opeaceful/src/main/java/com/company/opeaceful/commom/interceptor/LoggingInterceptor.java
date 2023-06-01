@@ -1,4 +1,4 @@
-package com.company.opeaceful.commom;
+package com.company.opeaceful.commom.interceptor;
 
 import java.util.Map;
 
@@ -14,17 +14,17 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
 	static Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
 	
-	// »ç¿ëÀÚ°¡ »ç¿ëÁßÀÎ ÇÚµåÆù Á¾·ù
+	// ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	static String logMp[] = {"iphone", "ipod", "android", "blackberry", "opera mobi"};
 	
 	
 	/*
-	 * ¸ðµç °æ·Î·Î µé¾î¿À´Â ¿äÃ»Á¤º¸¿¡ ´ëÇÑ ·Î±×Á¤º¸¸¦ ³²±â±â À§ÇÑ ¸Þ¼Òµå
+	 * ï¿½ï¿½ï¿½ ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	 * 
 	 * */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		// Á¢¼ÓµÈ Àåºñ°¡ ¹«¾ùÀÎÁö (À¥/¸ð¹ÙÀÏ)
+		// ï¿½ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½)
 		String currentDevice = "web";
 		String logUA = request.getHeader("user-agent").toLowerCase();
 		for(String decice : logMp) {
@@ -34,7 +34,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		// Á¢¼ÓÇÑ url, ¼­¹öÁ¤º¸ Ãß°¡
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ url, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 		HttpSession session = request.getSession();
 		
 		String currentDomain = request.getServerName();
@@ -53,7 +53,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 					queryString += "&";
 				}
 				String[] values = (String[]) map.get(keys[i]);
-				// µ¿ÀÏÇÑ Å°°ªÀ¸·Î ¿©·¯ °ª ¿ÔÀ»¶§ ´ëÀÀÀ§ÇØ
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				
 				queryString += keys[i] + "=";
 				
@@ -70,19 +70,19 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		// ÆÄ¶ó¹ÌÅÍ°¡ ¾Æ¿¹ ¾ø´Ù¸é, ¾ÖÃÊ¿¡ ·Î±×Á¤º¸¿¡ Æ÷ÇÔ½ÃÅ°Áö ¾ÊÀ» ¿¹Á¤ÀÓ
+		// ï¿½Ä¶ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½, ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(queryString == null || queryString.trim().length() == 0) {
 			queryString = null;
 		}
 		
-		//ipÁ¤º¸ Ãß°¡
+		//ipï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 		String uri = request.getRequestURI();
 		String ip = getIp(request);
 		
-		// ÇÁ·ÎÅäÄÝ Á¤º¸ Ãß°¡ s == secure
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ s == secure
 		String protocol = (request.isSecure()) ? "https" : "http";
 		
-		// ¾ÆÀÌµð Á¤º¸ Ãß°¡
+		// ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 		String userId = "";
 		
 		/*

@@ -34,5 +34,11 @@
 	 	@Transactional : 클래스 혹은 메소드 수행후에 트랜잭션을 처리하라고 알려주는 어노테이션
 	 -->
 	 <tx:annotation-driven transaction-manager="transactionManager"/>
-	
+	 
+<!-- 	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+				<beans:bean class="com.company.opeaceful.member"/>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
 </beans:beans>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
@@ -40,11 +42,45 @@ public class MemberController {
 	// spring-quartz.xml 사용시 기본생성자 필요
 	public MemberController() {}
 	
-	// [지의] - 마이페이지
-	@RequestMapping("/mypage")
-	public String updateMember() {
+	// [지의] - 마이페이지 > 회원정보 재조회해서 뿌려주기
+	@GetMapping("/mypage")
+	public String mypageSelectMember(@ModelAttribute ("loginUser") Member loginUser, Model model) {
+		System.out.println("GET 방식");
+		loginUser = memberService.loginMember(loginUser);
+		Department topDept = memberService.selecTopDept(loginUser);
 		
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("topDept",topDept);
+
 		return "member/mypage";
+	}
+	
+	// [지의] - 마이페이지 > 정보수정
+	@PostMapping("/mypage")
+//	@RequestParam("profileImg") MultipartFile file,
+	public String updateMember(Member m,
+							   Model model,
+							   HttpSession session) {
+		System.out.println("POST 방식");
+		System.out.println("수정 정보 입력받은 -> "+m);
+		
+		// 이미지 저장경로 설정
+		String webPath = "/resources/image/mypage/"; // 하드코딩
+		String serverFolderPath = session.getServletContext().getRealPath(webPath); // 동적으로 만들어둠
+		System.out.println(serverFolderPath);
+		
+		String fileName = serverFolderPath+m.getProfileImg();
+		
+		System.out.println(fileName);
+		
+		int result = memberService.updateMember(m);
+		
+		// 업데이트에 성공했다면
+		if(result > 0) {
+			return "redirect:/member/mypage";
+		}else {
+			return "member/mypage";
+		}
 	}
 	
 	// [지의] - 마이페이지 > 비밀번호변경
@@ -57,7 +93,6 @@ public class MemberController {
 		int result = 0;
 		// 입력한 현재 비밀번호와 로그인유저의 암호화된 비밀번호의 일치여부 판별
 		if(bcryptPasswordEncoder.matches(originPwd, loginUser.getUserPwd())) {
-			System.out.println("일치함");
 			// 변경된 비밀번호 암호화 작업
 			String EnUpdatePwd = bcryptPasswordEncoder.encode(updatePwd);
 			loginUser.setUserPwd(EnUpdatePwd);
@@ -66,8 +101,6 @@ public class MemberController {
 
 			return new Gson().toJson(result);
 		}else {
-			System.out.println("다름");
-			
 			return new Gson().toJson(result);
 		}
 		

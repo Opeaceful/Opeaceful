@@ -22,7 +22,7 @@
 
 </head>
 <body>
-
+	
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="main-wrap container">
@@ -108,8 +108,8 @@
 				                    <!-- 이름, 부서, 직급 -->
 				                    <div id="main-name">${loginUser.userName}</div>
 				                    <div>
-				                    	<span id="main-deptName">${dpName.deptName }</span> 
-				                    	<span id="main-pName">${dpName.PName }</span>
+				                    	<span id="main-deptName">${loginUser.DName}</span> 
+				                    	<span id="main-pName">${loginUser.PName}</span>
 				                    </div>
 	        					</div>
 	        					<div class="col text-end">
@@ -168,7 +168,6 @@
 <script type="module" src="${path}/resources/js/main.js"></script>
 <script>
 	var mainHireDate = '${loginUser.hireDate}';
-	console.log(mainHireDate);
 </script>
 
 
