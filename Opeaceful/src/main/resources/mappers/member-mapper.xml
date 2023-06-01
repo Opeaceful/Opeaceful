@@ -24,6 +24,25 @@
   	
 </resultMap>
 
+<!--지영: 수정용 ResultSet -->
+ <resultMap type="member" id="UpdatememberResultSet">
+  	<id column="USER_NO" property="userNo"/>
+  	<result column="ENO" property="eno" />
+  	<result column="STATUS" property="status"/>	
+  	<result column="USER_NAME" property="userName"/> 	
+  	<result column="PHONE" property="phone"/> 	
+  	<result column="EXTENSION" property="extension"/> 	
+  	<result column="EMAIL" property="email"/> 	
+  	<result column="ADDRESS" property="address"/> 	
+  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
+  	
+  	<result column="S_HIRE_DATE" property="ShireDate"/> 
+  	
+  	<result column="P_CODE" property="pCode"/> 
+  	<result column="DEPT_CODE" property="deptCode"/> 
+  	
+</resultMap>
+
 
 <resultMap type="member" id="memberResultSet">
 	<id column="USER_NO" property="userNo" />
@@ -115,12 +134,10 @@
 	 </select>
 	 
 	 <!-- [지영] 사용자 수정용 조회 -->
-	 <select id="selectMemberOne" parameterType="_int" resultMap="AllmemberResultSet">
-	 	SELECT USER_NO, ENO, USER_PWD,STATUS,USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_NAME,DEPT_NAME
+	 <select id="selectMemberOne" parameterType="_int" resultMap="UpdatememberResultSet">
+	 	SELECT USER_NO, ENO,STATUS,USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_CODE,DEPT_CODE
 		FROM member
 		left JOIN user_department USING(USER_NO)
-	    left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
 		WHERE USER_NO = #{userNo}
 	 </select>
 	 
@@ -132,6 +149,18 @@
 		WHERE USER_NO = #{userNo} 
 	 </select>
 	 
+	 <!--[지영] 멤버 업데이트 -->
+	 <update id="updateAllmember" parameterType="member" >
+	 	UPDATE member
+	 	SET USER_NAME = #{userName},
+	 		PHONE     = #{phone},
+	 		EXTENSION = #{extension},
+	 		EMAIL = #{email},
+	 		ADDRESS = #{address},
+	 		ANNUAL_LEAVE_COUNT = #{annualLeaveCount},
+	 		HIRE_DATE = #{hireDate}
+	 	WHERE USER_NO = #{userNo} AND STATUS = 'Y'
+	 </update>
 	
 
 	<!-- [지의] - 로그인유저 -->

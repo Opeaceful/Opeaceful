@@ -27,4 +27,6 @@ public interface MemberService {
 
 	ResignedMember resignedMembeSelect(int userNo);
 
+	int updateAllmember(Member m);
+
 }

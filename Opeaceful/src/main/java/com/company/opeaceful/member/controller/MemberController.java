@@ -200,11 +200,32 @@ public class MemberController {
 	// member 데이터 변경
 	@RequestMapping("/updateAllmember")
 	public String updateAllmember(
-			Member m
+			Member m,
+			HttpSession session
 			){
-			
-		System.out.println("updateAllmember들어옴!!!============================"+m);
+					
+		int result = memberService.updateAllmember(m);
 		
+		System.out.println("updateAllmember실행됨!!!============================"+result);
+		
+		
+		if(result > 0) { //성공적으로 추가시
+			
+			//부서추가변경
+			//int result2 = memberService.UpdateUserDept(m);
+			
+//			if(result2>0) { 
+//				int userEno = memberService.selectENO();
+//				session.setAttribute("userEno", userEno);
+//				
+//				return "redirect:/member/member-allview";
+//				
+//			}else{
+//				session.setAttribute("alertMsg", "사용자 부서 변경 오류발생. 담당자에게 문의하세요");
+//			}
+		}else {
+			session.setAttribute("alertMsg", "사용자 변경 오류발생. 담당자에게 문의하세요");
+		}
 		
 		
 		return "member/member-allview";

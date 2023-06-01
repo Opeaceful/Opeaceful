@@ -81,5 +81,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.resignedMembeSelect(userNo);
 	}
 	
+	@Override
+	public int updateAllmember(Member m) {
+		return memberDao.updateAllmember(m);
+	}
+	
 	
 }

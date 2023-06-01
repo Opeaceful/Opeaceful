@@ -215,30 +215,35 @@ function memberUpdaetajax(id){
                 document.getElementById("user-address-dtail").value += ","+addressList[i];
            }
 
-            
-       
-            // <div class="row mb-3">
-            // <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
-            //     <div class="col-sm-9">
-            //         <select class="form-select member-form-select form-select-sm" name="deptCode">
-            //         <option selected>${result.m.dName}</option>
-            //         </select>
-            //     </div>
-            // </div>
-            // <div class="row mb-3">
-            // <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
-            //     <div class="col-sm-9">
-            //         <select class="form-select member-form-select  form-select-sm" name="pCode">
-            //         <option selected>${result.m.pName}</option>
-            //         </select>
-            //     </div>
-            // </div>
-         
+           //select선택 부서
+           let deptCodeSelect = document.getElementById("deptCodeSelect");
 
-
-       
-        
             
+           for (let i = 0; i < deptCodeSelect.options.length; i++) {
+             if(deptCodeSelect.options[i].value == result.m.deptCode){
+                deptCodeSelect.options[i].selected = true
+             }
+
+            }
+
+            //select 선택 직급
+            let pCodeSelect = document.getElementById("pCodeSelect");
+            for (let i = 0; i < pCodeSelect.options.length; i++) {
+                if(pCodeSelect.options[i].value == result.m.pCode){
+                    pCodeSelect.options[i].selected = true
+                }
+   
+            }
+
+            //userNo도 함께 전송하기 유저에게 보이지 않기
+            let hiddenFrom = document.createElement('input');
+            hiddenFrom.type = 'hidden';
+            hiddenFrom.name = 'userNo';
+            hiddenFrom.value = id;
+
+            let form = document.getElementById('member-update-form');
+            form.appendChild(hiddenFrom);
+   
         },
         error : function(request){
             console.log("에러발생");

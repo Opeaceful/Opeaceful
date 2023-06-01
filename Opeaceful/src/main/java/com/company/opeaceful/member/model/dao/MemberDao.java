@@ -65,4 +65,8 @@ public class MemberDao {
 	public ResignedMember resignedMembeSelect(int userNo) {
 		return sqlSession.selectOne("memberMapper.resignedMembeSelect",userNo);
 	}
+
+	public int updateAllmember(Member m) {
+		return sqlSession.update("memberMapper.updateAllmember",m);
+	}
 }

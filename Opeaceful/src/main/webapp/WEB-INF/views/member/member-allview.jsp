@@ -23,6 +23,12 @@
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/sidebar.jsp" />
+  <c:if test="${ not empty alertMsg }">
+		<script>
+		swal("오류 발생",'${alertMsg}' );
+		</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
 
 	<div class="content-wrap">
 	 	<div class="container">
@@ -126,16 +132,14 @@
 	        <div class="row mb-3">
 	        <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
 	            <div class="col-sm-9">
-	                <select class="form-select member-form-select form-select-sm" name="deptCode" required>
-	                <option selected></option>
+	                <select class="form-select member-form-select form-select-sm" name="deptCode" id="deptCodeSelect" required >
 	                </select>
 	            </div>
 	        </div>
 	        <div class="row mb-3">
 	        <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
 	            <div class="col-sm-9">
-	                <select class="form-select member-form-select  form-select-sm" name="pCode" required>
-	                <option selected></option>
+	                <select class="form-select member-form-select  form-select-sm" name="pCode" id="pCodeSelect" required>
 	                </select>
 	            </div>
 	        </div>
@@ -178,7 +182,6 @@
 
 		        <div class="col text-end">
 		        <button type="submit" class="btn btn-primary ms-1 ok-common">확인</button>
-		        <button type="button" class="btn btn-danger cancel-common">삭제</button>
 		        </div>
 		        
 		       
