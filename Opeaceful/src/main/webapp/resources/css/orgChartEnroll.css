@@ -1,11 +1,16 @@
 body *{
     box-sizing: border-box;
 }
+.org-accordion-header{display: flex;}
 .oc-accordion-btn{
     padding-bottom: 7px;
+    margin-right: 13px;
+    width: 66%;
+    padding-left: 0;
+    margin-left: 19px;
 }
 .oc-accordion-btn>input{
-    width: 58%;
+    width: 100%;
     margin-right: 26px;
 }
 input{border: none;}
@@ -15,6 +20,7 @@ input:focus{
 .team-plus{
     padding-left: 16px;
     font-size: var(--font14);
+    cursor: pointer;
 }
 .team-minus, .team-change{
     padding-left: 8px;

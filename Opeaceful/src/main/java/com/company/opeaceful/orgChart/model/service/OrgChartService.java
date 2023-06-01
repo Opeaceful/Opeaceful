@@ -4,7 +4,15 @@ import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
 public interface OrgChartService {
 
-	int insertDepartment(OrgChart orgChart);
+	// 상위부서 추가
+	int insertTopDp(OrgChart orgChart);
 	
-	int updateDepartment(OrgChart orgChart);
+	// 상위부서명 변경
+	int updateTopDp(OrgChart orgChart);
+	
+	// 하위부서 추가
+	int insertDp(OrgChart orgChart);
+	
+	// 하위부서명 변경
+	int updateDp(OrgChart orgChart);
 }

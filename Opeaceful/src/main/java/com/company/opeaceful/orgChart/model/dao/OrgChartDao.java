@@ -12,17 +12,47 @@ public class OrgChartDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public int insertDepartment(OrgChart orgChart) {
+	public int insertTopDp(OrgChart orgChart) {
 		
-		sqlSession.insert("orgChartMapper.insertDepartment", orgChart);
+		int result = sqlSession.insert("orgChartMapper.insertTopDp", orgChart);
 		
-		return orgChart.getDeptCode();
+		// 부서추가 성공 시 selectKey 태그를 이용해서 세팅한 DeptCode값을 orgChart 객체 안에 담아서 반환시켜줌
+		if (result > 0) {
+			result = orgChart.getDeptCode();
+		}
+		return result;
 	}
 	
-	public int updateDepartment(OrgChart orgChart) {
+	public int updateTopDp(OrgChart orgChart) {
 		
-		sqlSession.insert("orgChartMapper.updateDepartment", orgChart);
+		int result =  sqlSession.insert("orgChartMapper.updateTopDp", orgChart);
 		
-		return orgChart.getDeptCode();
+		if (result > 0) {
+			result = orgChart.getDeptCode();
+		}
+		
+		return result;
+	}
+	
+	public int insertDp(OrgChart orgChart) {
+		
+		int result = sqlSession.insert("orgChartMapper.insertDp", orgChart);
+		
+		// 부서추가 성공 시 selectKey 태그를 이용해서 세팅한 DeptCode값을 orgChart 객체 안에 담아서 반환시켜줌
+		if (result > 0) {
+			result = orgChart.getDeptCode();
+		}
+		return result;
+	}
+	
+	public int updateDp(OrgChart orgChart) {
+		
+		int result =  sqlSession.insert("orgChartMapper.updateDp", orgChart);
+		
+		if (result > 0) {
+			result = orgChart.getDeptCode();
+		}
+		
+		return result;
 	}
 }

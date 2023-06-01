@@ -12,13 +12,27 @@ public class OrgChartServiceImpl implements OrgChartService {
 	@Autowired
 	private OrgChartDao orgChartDao;
 	
+	// 상위부서 추가
 	@Override
-	public int insertDepartment(OrgChart orgChart) {
-		return orgChartDao.insertDepartment(orgChart);
+	public int insertTopDp(OrgChart orgChart) {
+		return orgChartDao.insertTopDp(orgChart);
 	}
 	
+	// 상위부서명 변경
 	@Override
-	public int updateDepartment(OrgChart orgChart) {
-		return orgChartDao.updateDepartment(orgChart);
+	public int updateTopDp(OrgChart orgChart) {
+		return orgChartDao.updateTopDp(orgChart);
+	}
+	
+	// 하위부서 추가
+	@Override
+	public int insertDp(OrgChart orgChart) {
+		return orgChartDao.insertDp(orgChart);
+	}
+	
+	// 하위부서명 변경
+	@Override
+	public int updateDp(OrgChart orgChart) {
+		return orgChartDao.updateDp(orgChart);
 	}
 }
