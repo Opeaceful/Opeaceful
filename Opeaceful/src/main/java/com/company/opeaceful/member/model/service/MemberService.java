@@ -6,6 +6,7 @@ import java.util.Map;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 
 public interface MemberService {
 
@@ -17,10 +18,19 @@ public interface MemberService {
 
 	int selectENO();
 	
-	List<Member> selectMember(Map<String, Object> selectPD);
+	List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD);
 	
+	//UserDepatment selectdpName(int userNo);
+
 	int updatePwd(Member loginUser);
 
+	Member selectMemberOne(int userNo);
+
+	ResignedMember resignedMembeSelect(int userNo);
+
+	int updateAllmember(Member m);
+
+	int UpdateUserDept(Member m);
 	// [지의] - 상위부서 조회
 	Department selecTopDept(Member loginUser);
 

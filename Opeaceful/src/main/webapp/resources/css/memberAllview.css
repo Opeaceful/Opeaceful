@@ -1,4 +1,4 @@
-.table{
+.table, button{
     white-space: nowrap;
 }
 
@@ -57,3 +57,32 @@
     padding-bottom: 6px;
 }
 
+
+.form-check-input:checked {
+    background-color: var(--color-navy);
+    border-color: var(--color-navy);
+}
+
+
+.form-check-input:focus {
+    border-color: var(--color-navy);
+    box-shadow: 0 0 0 0.25rem var(--color-light-navy);
+}
+
+
+.pagination>li>button {
+    font-size: 0.75rem;
+    color: var(--color-navy);
+    border: none;
+}
+
+.mgpd-0{
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.text-end{
+    text-align-last: end;
+}
