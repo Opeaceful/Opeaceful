@@ -11,6 +11,13 @@ let d = new Date();
 let year = d.getFullYear(); 	// 년도
 let month = d.getMonth() + 1;	// 월
 let date = d.getDate();  		// 날짜
+let hur = d.getHours();		// 시
+let min = d.getMinutes();	//분
+let sec = d.getSeconds();	//초
+
+if(d.getHours() < 10){hur = "0"+hur;}
+if(d.getMinutes() < 10){min = "0"+min;}
+if(d.getSeconds() < 10){sec = "0"+sec;}
 
 let weekday = new Array(7);
 weekday[0] = "일";
@@ -108,6 +115,89 @@ $(function(){
 $("#main-notice-title").on("click", function(){
     location.href = path+"/member/mypage"; // 일단 마이페이지로 넣어둠
 })
+$(function(){
+    $(".white-btn").attr("disabled", true);
+    // input button으로 작업
+})
+
+$("#main-on").click(function(){
+    swal(hur +":"+ min,"출근 처리 하시겠습니까?",{
+        buttons: {confirm: "확인", cancel: "취소"}
+    })
+    .then(function(isConfirm){
+        if(isConfirm){
+            $.ajax({
+                type : "POST",
+                //url : "",
+                url : path+"/attendance/workOn",
+                dataType : "json",
+                success : function(result) {
+                    console.log(result);
+                    $("#main-on").removeClass('navy-btn').addClass('white-btn').attr("disabled", true);
+
+                    $("#main-off").removeClass('white-btn').addClass('navy-btn').attr("disabled", false);
+                },
+                error : function(e) {
+                    swal("작업수행에 실패하였습니다.");
+                }
+            })
+        }
+    })
+});
 
 
+
+
+
+// input radio로 작업
+// $("#main-on").change(function(){
+//     swal(hur +":"+ min,"출근 처리 하시겠습니까?",{
+//         buttons: {confirm: "확인", cancel: "취소"}
+//     })
+//     .then(function(isConfirm){
+//         if(isConfirm){
+//             $.ajax({
+//                 type : "POST",
+//                 // url : "",
+//                 url : path+"/attendance/workOn",
+//                 dataType : "json",
+//                 success : function(result) {
+//                     swal("성공", "작업을 정상적으로 완료하였습니다.");
+//                     console.log(result);
+//                 },
+//                 error : function(e) {
+//                     swal("작업수행에 실패하였습니다.");
+//                 }
+//             })
+//         }
+//     })
+// });
+// $("#main-off").change(function(){
+//     swal(hur +":"+ min,"퇴근 처리 하시겠습니까?",{
+//         buttons: {confirm: "확인", cancel: "취소"}
+//     })
+//     .then(function(){
+//         $.ajax({
+//             type : "POST",
+//             url : "",
+//             data : "",
+//             dataType : "json",
+//             success : function(data) {
+//                 swal("성공", "작업을 정상적으로 완료하였습니다.");
+//                 console.log(data);
+//             },
+//             error : function(e) {
+//                 swal("작업수행에 실패하였습니다.");
+//             }
+//         })
+//     })
+// });
+
+
+
+
+
+
+
+// 시간표시 함수 실행
 getTime();

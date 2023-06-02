@@ -23,22 +23,6 @@
 </resultMap>
 
 
-<resultMap type="member" id="memberResultSet">
-	<id column="USER_NO" property="userNo" />
-	<result column="ENO" property="eno" />
-	<result column="STATUS" property="status" />
-	<result column="PROFILE_IMG" property="profileImg" />
-	<result column="STATUS_TYPE" property="statusType" />
-	<result column="USER_PWD" property="userPwd" />
-	<result column="USER_NAME" property="userName" />
-	<result column="PHONE" property="phone" />
-	<result column="EXTENSION" property="extension" />
-	<result column="EMAIL" property="email" />
-	<result column="ADDRESS" property="address" />
-	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount" />
-	<result column="HIRE_DATE" property="hireDate" />
-</resultMap>
-
 <!-- [지영] member insert구문 -->
 	<!--[지영] member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
@@ -80,7 +64,7 @@
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
-<!-- [지영] member select 구문 -->	
+	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
 		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,HIRE_DATE,P_NAME,DEPT_NAME
 		FROM member
@@ -96,19 +80,35 @@
 	    </if>
 	 </select>
 
-	<!-- [지의] - 로그인유저 -->
-	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
+	<!-- [지의] 로그인유저 -->
+	<select id="loginMember" parameterType="member" resultMap="AllmemberResultSet">
 		SELECT *
 		  FROM MEMBER
+		LEFT JOIN user_department USING(USER_NO)
+	    LEFT JOIN department USING(DEPT_CODE)
+	    LEFT JOIN position USING(P_CODE)
 		 WHERE ENO = #{eno}
 		   AND STATUS = 'Y'
 	</select>
 	
-	<!-- [지의] - 비밀번호 변경 -->
+	<!-- [지의] 비밀번호 변경 -->
 	<update id="updatePwd" parameterType="member">
 		UPDATE MEMBER
 		   SET USER_PWD = #{userPwd}
 		 WHERE ENO = #{eno}
+	</update>
+	
+	<!-- [지의] 내정보변경 -->
+	<update id="updateMember" parameterType="member">
+		UPDATE MEMBER
+		   SET PHONE = #{phone},
+			   EXTENSION = #{extension},
+			   ADDRESS = #{address},
+			   EMAIL = #{email}
+			   <if test="profileImg != null">
+			   ,PROFILE_IMG = #{profileImg}
+			   </if>
+		 WHERE USER_NO = #{userNo}
 	</update>
 
 
