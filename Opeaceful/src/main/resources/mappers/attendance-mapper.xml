@@ -4,14 +4,14 @@
 
 	<!-- =================== [select] =================== -->	
 	<!-- [지의] 출근시간 조회 -->
-	<select id="selectWorkOn">
-		SELECT WORK_DATE, USER_NO
+	<select id="selectWorkOn" resultType="attendance" parameterType="_int">
+		SELECT *
 		  FROM opeaceful.attendance
 		 WHERE USER_NO = #{userNo};
 	</select>
 	
 	<!-- [지의] 퇴근시간 조회 -->
-	<select id="selectWorkOff">
+	<select id="selectWorkOff" resultType="attendance" parameterType="_int">
 		SELECT WORK_DATE, USER_NO
 		  FROM opeaceful.attendance
 		 WHERE USER_NO = #{userNo}
