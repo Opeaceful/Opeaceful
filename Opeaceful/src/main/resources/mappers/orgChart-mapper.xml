@@ -20,9 +20,9 @@
 	
 	<!-- 하위부서 추가 -->
 	<insert id="insertDp" parameterType="orgChart" useGeneratedKeys="true" keyProperty="deptCode">
-		<selectKey resultType="int" keyProperty="deptCode" order="BEFORE">
+		<!-- <selectKey resultType="int" keyProperty="deptCode" order="BEFORE">
 			SELECT LAST_INSERT_ID()
-		</selectKey>
+		</selectKey> -->
 		INSERT INTO DEPARTMENT(DEPT_NAME, TOP_DEPT_CODE)
 		VALUES(#{deptName},#{topDeptCode})
 	</insert>
@@ -31,6 +31,6 @@
 	<update id="updateDp" parameterType="orgChart">
 		UPDATE DEPARTMENT
 		SET DEPT_NAME = #{deptName}
-		WHERE DEPT_CODE = #{deptCode} AND TOP_DEPT_CODE = #{topDeptCode}
+		WHERE DEPT_CODE = #{deptCode}
 	</update>
 </mapper>

@@ -61,10 +61,11 @@ public class OrgChartController {
 	@PostMapping("/insert/Dname")
 	@ResponseBody
 	public int insertDp(OrgChart orgChart) {
+		System.out.println("첫생성 : "+orgChart);
 		
 		int result = orgchartService.insertDp(orgChart);
 		
-		System.out.println("변경전 : "+orgChart);
+		System.out.println("실행후생성 : "+result);
 
 		return result;
 	}

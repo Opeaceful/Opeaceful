@@ -121,6 +121,7 @@ $(document).ready (function () {
 		console.log(e.target);
 
 		let input = $(e.target).val();
+		let id = $(e.target).attr("id");
 		let code= $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
 		// .parents(".accordion-item").find('.topD-name')
 		// console.log(code);
@@ -145,29 +146,38 @@ $(document).ready (function () {
 							$(e.target).attr("id", result);
 						}
 						$(".team-name").css('pointer-events','none');
-						$(".team-name").css('cursor','default');
+						$(".team").css('cursor','default');
 					}
 				});
-			} //else { topDeptCode 받기? 넘기기? 그거 처리 하기.
-				// console.log('input 변경후 : '+input);
-				// console.log('id 변경후 : '+$(e.target).attr("id"));
-				// // 부서이름 수정 ajax
-				// $.ajax({
-				// 	url : path+"/orgChart/update/Dname",   
-				// 	type : 'post', 
-				// 	data : {deptName: input, 
-				// 			deptCode : code,},
-				// 	success : function(result){
-				// 		console.log('변경후 result: ' +result);
-				// 		if (result > 0) {
-				// 			$(e.target).attr("id", result);
-				// 		}
-				// 		$(".topD-name").css('pointer-events','none');
-				// 		$(".oc-accordion-btn").css('cursor','default');
-				// 	}
-				// });
-			// }
+			} else { // topDeptCode 받기? 넘기기? 그거 처리 하기.
+				console.log('input 변경후 : '+input);
+				console.log('id 변경후 : '+$(e.target).attr("id"));
+				// 부서이름 수정 ajax
+				$.ajax({
+					url : path+"/orgChart/update/Dname",   
+					type : 'post', 
+					data : {deptName: input, 
+							deptCode : id},
+					success : function(result){
+						console.log('변경후 result: ' +result);
+						if (result > 0) {
+							$(e.target).attr("id", result);
+						}
+						$(".team-name").css('pointer-events','none');
+						$(".team").css('cursor','default');
+					}
+				});
+			}
 		}
+	})
+
+	// 수정버튼 클릭 시 하위부서 이름 수정
+	$(".inputs").on("click", ".li-team-change", function() {
+		$(".team-name").css('pointer-events','auto');
+		
+		let inputLen = $(".topD-name").val().length;
+		$(".team-name").focus();
+		$(".team-name")[0].setSelectionRange(inputLen, inputLen);
 	})
 	// document.getElementsByClassName("team-change").onclick = function() {
 
