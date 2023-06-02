@@ -6,12 +6,25 @@
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
-	<link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+   <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">  -->
+   <link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+	<style>
+	.ui-dialog-titlebar{
+	background:var(--color-navy)}	
+	.ui-dialog-titlebar-close{
+	display: none;}
+	.ui-dialog-content .ui-widget-content{
+	display: none;}
+	
+	</style>
+	
+	
+
 </head>
 <body>
-
 	<!-- 
 		a 태그에 각자 페이지 넣어주기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 -->
@@ -166,9 +179,10 @@
     
     <!-- 채팅아이콘 -->
     <div id="chat-icon" >
-		<i class="bi bi-chat"></i>
+		<i class="bi bi-chat" id="openDialogButton"></i>
     </div>
-
+    
+     <div id="dialog"></div>
 
     <script>
     	/* 하위카테고리 숨겨두기 */
@@ -210,8 +224,46 @@
 		  }
    		);
         
-
-        
     </script>
+    
+   <script>
+  $(document).ready(function() {
+    // 다이얼로그 초기화
+    $("#dialog").dialog({
+      autoOpen: false,
+      modal: false,
+      width: 600, // 다이얼로그의 너비 설정
+      height: 400, // 다이얼로그의 높이 설정
+    });
+
+    // 다이얼로그 열기
+    $("#openDialogButton").click(function() {
+      // AJAX 요청을 통해 /chat 페이지의 내용을 가져와 다이얼로그에 삽입
+      $.ajax({
+        url: "${path}/chat",
+        success: function(data) {
+          $("#dialog").html(data);
+          $("#dialog").dialog("open");
+          // 로컬 스토리지에 다이얼로그 상태를 저장
+          localStorage.setItem('dialogVisible', 'true');
+        }
+      });
+    });
+
+    // 로컬 스토리지에서 다이얼로그 상태를 가져옴
+    const dialogVisible = localStorage.getItem('dialogVisible');
+
+    if (dialogVisible === 'true') {
+      // 다이얼로그 상태가 true로 저장되어 있으면 다이얼로그를 열기
+      $("#dialog").dialog("open");
+    }
+
+    // 다이얼로그 닫기 시 로컬 스토리지에서 상태를 제거
+    $("#dialog").on("dialogclose", function(event, ui) {
+      localStorage.removeItem('dialogVisible');
+    });
+  });
+</script>
+    
 </body>
 </html>

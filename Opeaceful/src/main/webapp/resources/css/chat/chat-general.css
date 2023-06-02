@@ -1,0 +1,24 @@
+/* 모든 페이지의 공통 스타일만 작성 */
+
+/* 기본 배경화면은 white */
+body{
+    font-family: fontello, 'Nanum Gothic', sans-serif, Arial;
+    background-color: white;
+}
+*{
+    box-sizing: border-box;
+}
+a:visited, a:link{
+    color: gray;
+    text-decoration: none;
+}
+
+/* 상단 설정바 조절 */
+.setting_bar{
+    text-align: right;
+}
+.setting_bar > *{
+    margin: 0.4rem; 
+    font-size: 0.9rem; 
+    color: var(--color-navy);
+}
