@@ -1,5 +1,5 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -37,13 +37,23 @@ pageEncoding="UTF-8"%> -->
 
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-    <link rel="stylesheet" href="../../../resources/css/common/common.css" />
+    <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
     <link
       rel="stylesheet"
-      href="../../../resources/css/approval/myApproval.css"
+      href="${path}/resources/css/approval/endApprovalModal.css"
+    />
+    <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/myApproval.css"
+    />
+    <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/approvalModal.css"
     />
   </head>
   <body>
+	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
+  
     <!-- [승은] -->
     <div class="my-approval-wrap content-wrap">
       <div class="container">
@@ -91,7 +101,9 @@ pageEncoding="UTF-8"%> -->
               <tr>
                 <td>3</td>
                 <td>2023-05-16 09:56</td>
-                <td>서지출결의서지출결의서지지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서출결의서~~~</td>
+                <td>
+                  서지출결의서지출결의서지지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서출결의서~~~
+                </td>
                 <td>김사원</td>
                 <td>진행중</td>
                 <td>일반</td>
@@ -117,15 +129,20 @@ pageEncoding="UTF-8"%> -->
 
           <div class="btn-wrap">
             <button
-              id="btn-add-form"
+              id="btn-add-approval"
               class="btn btn-primary position-btn"
               data-bs-toggle="modal"
-              data-bs-target="#add-form"
+              data-bs-target="#approval"
               type="button"
             >
               <i class="fa-solid fa-plus"></i> 신규
             </button>
-            <button class="btn btn-outline-primary">My서명</button>
+            <button
+              id="test"
+              data-bs-toggle="modal"
+              data-bs-target="#end-approval" 
+              type="button"
+            class="btn btn-outline-primary">My서명</button>
           </div>
 
           <div class="pagingArea">
@@ -133,8 +150,63 @@ pageEncoding="UTF-8"%> -->
             <button class="btn btn-outline-primary">1</button>
             <button class="btn btn-outline-primary">></button>
           </div>
+
+          <div
+            class="modal fade"
+            id="sign"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div
+              class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+            >
+              <div class="modal-content position-modal">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                    서명 등록
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body scroll-bar-none">
+                  <div class="sign-img-wrap">
+
+                    <div class="sign-img-item">
+                      <img src="${path}/resources/image/main/eat.svg" alt="">
+                    </div>
+
+                    <div class="sign-img-item">
+                      <img src="${path}/resources/image/mypage/basic_profile.png" alt="">
+                    </div>
+
+                  </div>
+                  <input type="file" hidden>
+
+                  <div class="sign-btn-wrap">
+                    <button id="btn-sign-img-save" class="btn btn-primary">저장</button>
+                    <button class="btn btn-outline-primary">취소</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
         </div>
       </div>
     </div>
+
+	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
+	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
+
   </body>
 </html>

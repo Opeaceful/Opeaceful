@@ -3,11 +3,11 @@ package com.company.opeaceful.member.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
@@ -41,9 +41,7 @@ public class MemberDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getMemberLimit();
 		int limit = pi.getMemberLimit();
 		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return sqlSession.selectList("memberMapper.selectMember",selectPD,rowBounds);
+		return sqlSession.selectList("memberMapper.selectMember",selectPD);
 	}
 
 	public UserDepatment selectdpName(int userNo) {
@@ -72,5 +70,13 @@ public class MemberDao {
 
 	public int UpdateUserDept(Member m) {
 		return sqlSession.update("memberMapper.updateUserDept",m);
+	}
+
+	public Department selecTopDept(Member loginUser) {
+		return sqlSession.selectOne("deptMapper.selecTopDept", loginUser);
+	}
+
+	public int updateMember(Member m) {
+		return sqlSession.update("memberMapper.updateMember",m);
 	}
 }

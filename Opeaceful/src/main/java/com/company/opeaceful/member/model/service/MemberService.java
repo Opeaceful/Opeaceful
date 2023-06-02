@@ -3,6 +3,7 @@ package com.company.opeaceful.member.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
@@ -30,5 +31,9 @@ public interface MemberService {
 	int updateAllmember(Member m);
 
 	int UpdateUserDept(Member m);
+	// [지의] - 상위부서 조회
+	Department selecTopDept(Member loginUser);
+
+	int updateMember(Member m);
 
 }

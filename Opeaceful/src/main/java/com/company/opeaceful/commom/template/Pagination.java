@@ -10,18 +10,16 @@ public class Pagination {
 	
 	//pageinfo 
 	@Autowired
-	private PageInfo pageinfo;
-	
-	public PageInfo getPageInfo(int listCount, int currentPage, int pageLimit, int memberLimit) {
-		int maxPage = (int)Math.ceil((double)listCount/memberLimit);
-		int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+	public PageInfo getPageInfo(int listCount, int currentPage, int pageLimit, int settingLimit) {
+		int maxPage = (int)Math.ceil((double)listCount/settingLimit);
+		int startPage = (currentPage -1) / pageLimit* pageLimit +1;
 		int endPage = startPage+pageLimit -1;
 		
-		if(endPage > maxPage) {
+		if(endPage> maxPage) {
 			endPage = maxPage;
 		}
 		
-		pageinfo.setMemberLimit(memberLimit);
+		pageinfo.setSettingLimit(settingLimit);
 		pageinfo.setCurrentPage(currentPage);
 		pageinfo.setEndPage(endPage);
 		pageinfo.setListCount(listCount);
@@ -32,4 +30,10 @@ public class Pagination {
 		return pageinfo;
 	}
 
+	
+	
+	
+	
+	
+	
 }

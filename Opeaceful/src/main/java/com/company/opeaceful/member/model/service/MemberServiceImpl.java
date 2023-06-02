@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.dao.MemberDao;
 import com.company.opeaceful.member.model.vo.Member;
@@ -62,8 +63,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	@Override
-	public UserDepatment selectdpName(int userNo) {
-		return memberDao.selectdpName(userNo);
+	public Department selecTopDept(Member loginUser) {
+		return memberDao.selecTopDept(loginUser);
 	}
 	
 	@Override
@@ -93,4 +94,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
+	
+	@Override
+	public int updateMember(Member m) {
+		return memberDao.updateMember(m);
+	}
 }

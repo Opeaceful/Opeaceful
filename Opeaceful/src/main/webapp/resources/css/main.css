@@ -43,7 +43,6 @@
 /* ====================== 오른쪽 ====================== */
 /* ---------- 내정보 ---------- */
 #my-box{height: 40%; padding: 10px 20px;}
-/* #my-box div{border: 1px solid red;} */
 /* 상단 시간 */
 .main-time-box{
 	height: 25%;
@@ -54,7 +53,7 @@
 /* 하단 내정보 및 출퇴근 */
 .main-info{height: 75%; padding: 20px 0;}
 .main-info-top{height: 78%; margin-left: 0; margin-right: 0;}
-.main-info-bottom{height:22%;}
+.main-info-bottom{height:22%; justify-content: center;}
 .main-d-day{
     font-size: var(--font14);
     color: gray;
@@ -73,9 +72,53 @@
     object-fit: cover;
 }
 #main-name{font-size: var(--font20);}
+/* ---------- 출퇴근 버튼 ---------- */
+.on_off_btn {
+    height : 45px;
+    border-radius: 25px;
+    margin: 0 10px;
+}
+.on_off_btn input[type=radio] {
+    display: none;
+}
+.on_off_btn label {
+    display: block;
+    border-radius: 25px;
+    margin: 0 auto;
+    text-align: center;
+    height: -webkit-fill-available;
+    line-height: 45px;
+}
+/* Checked */
+.on_off_btn input[type=radio]:checked + label {
+    background: var(--color-white);
+    border: 1px solid;
+    color: var(--color-navy);
+    cursor: default;
+}
+/* Disabled */
+.on_off_btn input[type=radio] + label {
+    border-color:var(--color-navy);
+    background-color:var(--color-navy);
+    color: var(--color-white);
+    cursor: pointer;
+}
 
 
-img{width: 16px; height: 16px;}
+/* 출퇴근 버튼으로 test */
+.navy-btn{
+    border-color:var(--color-navy);
+    background-color:var(--color-navy);
+    color: var(--color-white);
+}
+.white-btn{
+    background: var(--color-white);
+    border: 1px solid;
+    color: var(--color-navy);
+    cursor: default;
+}
+
+#state img{width: 16px; height: 16px;}
 #state{margin-bottom: 6px;}
 .select {position: relative;}
 .select .option-list {
@@ -90,8 +133,6 @@ img{width: 16px; height: 16px;}
 #state .select {cursor: pointer;}
 #state .select .option-list { list-style: none; padding: 0;}
 #state .select .option-list .option {padding-top: 5px;}
-
-
 
 .color-frame{
 	width: 15px;

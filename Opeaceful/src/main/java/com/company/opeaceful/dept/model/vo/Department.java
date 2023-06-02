@@ -9,4 +9,5 @@ public class Department {
 	private String deptName;
 	private int topDeptCode;
 	
+	
 }
