@@ -2,6 +2,7 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 import com.google.gson.Gson;
 
 @Controller
@@ -180,7 +182,7 @@ public class MemberController {
 		}
 		
 	
-		return "member/member-create";
+		return "redirect:/member/create";
 		
 	}
 	
@@ -195,24 +197,110 @@ public class MemberController {
 	//[지영]
 	//select박스를 통한 member조회
 	@ResponseBody
-	@PostMapping("/selectAll")
+	@GetMapping("/selectAll")
 	public String selectMember(
 			@RequestParam(value="Dselect", required = false) Integer Dselect,
-			@RequestParam(value="Pselect", required = false) Integer Pselect
+			@RequestParam(value="Pselect", required = false) Integer Pselect,
+			@RequestParam(value= "Sselect", defaultValue = "Y") String Sselect	,
+			Model model,
+			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage
 			) {
 		
+		//System.out.print("============================들어옴!!!!!!!!!!!!!!!!===================================================");
+		
+		//ajax로 전송할 데이터 
+		Map<String, Object> map = new HashMap<>();	
+		
+		//검색 select용 map
 		Map<String, Object> selectPD = new HashMap<>();	
 		selectPD.put("Dselect", Dselect);
 		selectPD.put("Pselect", Pselect);
+		selectPD.put("Sselect", Sselect);
 		
-		List<Member> m = memberService.selectMember(selectPD);
 		
+		List<Member> m = memberService.selectMember(currentPage,map,selectPD);
+	
 
-		return new Gson().toJson(m);
+		map.put("m", m);
+		
+		//map 데이터 ajax로 전송
+		return new Gson().toJson(map);
+		
+	}
+	
+	
+	//[지영]
+	// member 수정용 개인정보 조회
+	@ResponseBody
+	@PostMapping("/selectMemberOne")
+	public String selectMemberOne(
+			@RequestParam("id") int userNo) {
+		
+		//ajax로 전송할 데이터 
+		Map<String, Object> map = new HashMap<>();	
+		
+		Member m = memberService.selectMemberOne(userNo);
+		//조회된 멤버
+		map.put("m", m);
+				
+		//해당 데이터가 퇴사자라면 
+		if(m.getStatus().equals("N")) {
+			ResignedMember rm = memberService.resignedMembeSelect(userNo);
+			
+			//조회된 퇴사자 정보
+			map.put("rm", rm);
+		}
+
+		return new Gson().toJson(map);
 		
 	}
 
+	//[지영]
+	// member 데이터 변경
+	@RequestMapping("/updateAllmember")
+	public String updateAllmember(
+			Member m,
+			
+			HttpSession session
+			){
+		
+		//@RequestParam(value = "resignedDate", required = false) Date resignedDate,
+					
+		//System.out.print("updateAllmember실행전!!!============================"+resignedDate);
+		
+		int result = memberService.updateAllmember(m);
+		
 	
+		System.out.println("updateAllmember실행됨!!!============================"+result);
+		
+		
+		if(result > 0) { //성공적으로 추가시
+			
+			//부서추가변경
+			int result2 = memberService.UpdateUserDept(m);
+			
+			if(result2>0) { 
+				
+				session.setAttribute("success", "정보가 수정되었습니다");
+				
+				
+				return "redirect:/member/allview";
+				
+				//ajax로 전달어떻게 할지 고민
+				//return "redirect:/member/selectAll?Dselect=5";
+				
+			}else{
+				session.setAttribute("alertMsg", "사용자 부서 변경 오류발생. 담당자에게 문의하세요");
+				return "redirect:/member/allview";
+			}
+			
+		}else {
+			session.setAttribute("alertMsg", "사용자 변경 오류발생. 담당자에게 문의하세요");
+			return "redirect:/member/allview";
+		}
+		
+		
+	}
 	
 	
 	
