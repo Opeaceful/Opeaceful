@@ -9,13 +9,8 @@
 	
 	<!-- bootstrap CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-	<!-- 부트스트랩 아이콘 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-	<!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-	<script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
-	 <!-- JavaScript Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <!--메인 공통 css-->
+
+  	<!--메인 공통 css-->
 	<link rel="stylesheet" href="${path}/resources/css/common/common.css">
 	<link rel="stylesheet" href="${path}/resources/css/memberAllview.css">
 
@@ -23,12 +18,19 @@
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/sidebar.jsp" />
-  <c:if test="${ not empty alertMsg }">
+	<c:if test="${ not empty alertMsg }">
 		<script>
 		swal("오류 발생",'${alertMsg}' );
 		</script>
 		<c:remove var="alertMsg"/>
 	</c:if>
+	 <c:if test="${ not empty success }">
+		<script>
+		swal("성공",'${success}' );
+		</script>
+		<c:remove var="success"/>
+	</c:if>
+
 
 	<div class="content-wrap">
 	 	<div class="container">
@@ -150,7 +152,7 @@
 	            </div>
 	            <label for="inputresignedDate" id="leave-date-lable" class="col-sm-2 col-form-label">퇴사일</label>
 	            <div class="col-sm-3">
-	                <input type="date" id="leave-date"class="form-control">
+	                <input type="date" id="leave-date"class="form-control" name="resignedDate">
 	            </div>
 	        </div>
 	        <div class="row mb-3">
@@ -200,5 +202,7 @@
 <script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
 <script type="module" src="${path}/resources/js/memberAllview.js"></script>
 <script src="${path}/resources/js/addressAPI.js"></script>
+
+
 </body>
 </html>

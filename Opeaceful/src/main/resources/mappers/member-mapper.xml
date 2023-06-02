@@ -60,6 +60,10 @@
 	<result column="HIRE_DATE" property="hireDate" />
 </resultMap>
 
+
+
+<!-- =============================================[insert]=========================================================== -->	
+
 	<!-- [지영] member insert구문 -->
 	<!--[지영]1. member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
@@ -96,10 +100,14 @@
 	   	
 	</insert>
 	
-	<!--[지영] 3.사용자에게 보여줄 eno select -->
+	<!--[지영] 3.사용자에게 보여줄 eno select : insert에 딸린 select라 이쪽으로 넣어둠 -->	
 	<select id="selectENO" resultType="_int" >
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
+	
+	
+<!-- =============================================[selects]=========================================================== -->	
+
 	
 	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
@@ -118,7 +126,7 @@
 	 </select>
 	 
 	 <!-- 페이징용 count 체크 -->
-	 	 <select id="selectMemberCount"  resultType="_int" parameterType="hashMap">
+	 <select id="selectMemberCount"  resultType="_int" parameterType="hashMap">
 		SELECT COUNT(*)
 		FROM member
 		left JOIN user_department USING(USER_NO)
@@ -149,7 +157,28 @@
 		WHERE USER_NO = #{userNo} 
 	 </select>
 	 
-	 <!--[지영] 멤버 업데이트 -->
+
+	<!-- [지의] - 로그인유저 -->
+	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
+		SELECT *
+		  FROM MEMBER
+		 WHERE ENO = #{eno}
+		   AND STATUS = 'Y'
+	</select>
+	
+	
+<!-- =============================================[update]=========================================================== -->	
+
+	<!-- [지의] - 비밀번호 변경 -->
+	<update id="updatePwd" parameterType="member">
+		UPDATE MEMBER
+		   SET USER_PWD = #{userPwd}
+		 WHERE ENO = #{eno}
+	</update>
+
+
+	<!-- [지영] 사용자 Update-->
+	 <!--[지영] 1. 멤버 업데이트 -->
 	 <update id="updateAllmember" parameterType="member" >
 	 	UPDATE member
 	 	SET USER_NAME = #{userName},
@@ -161,22 +190,15 @@
 	 		HIRE_DATE = #{hireDate}
 	 	WHERE USER_NO = #{userNo} AND STATUS = 'Y'
 	 </update>
-	
+	 
+	  <!--[지영] 2. 부서 업데이트 -->
+	 <update id="updateUserDept" parameterType="member" >
+	 	UPDATE user_department 
+	 	SET P_CODE = #{pCode},
+	 		DEPT_CODE  = #{deptCode}
+	 	WHERE USER_NO = #{userNo}
+	 </update>
 
-	<!-- [지의] - 로그인유저 -->
-	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
-		SELECT *
-		  FROM MEMBER
-		 WHERE ENO = #{eno}
-		   AND STATUS = 'Y'
-	</select>
-	
-	<!-- [지의] - 비밀번호 변경 -->
-	<update id="updatePwd" parameterType="member">
-		UPDATE MEMBER
-		   SET USER_PWD = #{userPwd}
-		 WHERE ENO = #{eno}
-	</update>
 
 
 

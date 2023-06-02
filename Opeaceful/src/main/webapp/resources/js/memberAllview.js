@@ -43,7 +43,7 @@ const cpage = pagination !== undefined ? pagination.currentPage : null;
 $.ajax({
     url:`${path}/member/selectAll`,
     dataType : "JSON",
-    method: 'post',
+    method: 'get',
     data: {
         Dselect : Dselect,
         Pselect : Pselect,
@@ -215,26 +215,14 @@ function memberUpdaetajax(id){
                 document.getElementById("user-address-dtail").value += ","+addressList[i];
            }
 
-           //select선택 부서
+           //selecte 선택
            let deptCodeSelect = document.getElementById("deptCodeSelect");
+           selectedDept(result.m.deptCode, deptCodeSelect);
+           selectedP(result.m.pCode);
+           
+    
 
-            
-           for (let i = 0; i < deptCodeSelect.options.length; i++) {
-             if(deptCodeSelect.options[i].value == result.m.deptCode){
-                deptCodeSelect.options[i].selected = true
-             }
-
-            }
-
-            //select 선택 직급
-            let pCodeSelect = document.getElementById("pCodeSelect");
-            for (let i = 0; i < pCodeSelect.options.length; i++) {
-                if(pCodeSelect.options[i].value == result.m.pCode){
-                    pCodeSelect.options[i].selected = true
-                }
-   
-            }
-
+    
             //userNo도 함께 전송하기 유저에게 보이지 않기
             let hiddenFrom = document.createElement('input');
             hiddenFrom.type = 'hidden';
@@ -256,4 +244,36 @@ function memberUpdaetajax(id){
 
 }
     
+
+function selectedDept(num, deptCodeSelect){
+
+   
+            
+     for (let i = 0; i < deptCodeSelect.options.length; i++) {
+       if(deptCodeSelect.options[i].value == num){
+          deptCodeSelect.options[i].selected = true
+       }
+ 
+      }
+
+
+}
+
+
+function selectedP(num){
+
+     //select 선택 직급
+     let pCodeSelect = document.getElementById("pCodeSelect");
+     for (let i = 0; i < pCodeSelect.options.length; i++) {
+         if(pCodeSelect.options[i].value == num){
+             pCodeSelect.options[i].selected = true
+         }
+
+     }
+
+}
+
+
+
+   
 

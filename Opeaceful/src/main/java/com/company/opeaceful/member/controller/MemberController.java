@@ -1,5 +1,6 @@
 package com.company.opeaceful.member.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +125,7 @@ public class MemberController {
 		}
 		
 	
-		return "member/member-create";
+		return "redirect:/member/create";
 		
 	}
 	
@@ -139,15 +140,16 @@ public class MemberController {
 	//[지영]
 	//select박스를 통한 member조회
 	@ResponseBody
-	@PostMapping("/selectAll")
+	@GetMapping("/selectAll")
 	public String selectMember(
 			@RequestParam(value="Dselect", required = false) Integer Dselect,
 			@RequestParam(value="Pselect", required = false) Integer Pselect,
-			@RequestParam("Sselect") String Sselect	,
+			@RequestParam(value= "Sselect", defaultValue = "Y") String Sselect	,
 			Model model,
 			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage
 			) {
 		
+		//System.out.print("============================들어옴!!!!!!!!!!!!!!!!===================================================");
 		
 		//ajax로 전송할 데이터 
 		Map<String, Object> map = new HashMap<>();	
@@ -201,35 +203,46 @@ public class MemberController {
 	@RequestMapping("/updateAllmember")
 	public String updateAllmember(
 			Member m,
+			@RequestParam(value = "resignedDate", required = false) Date resignedDate,
 			HttpSession session
 			){
+		
+		
 					
+		System.out.print("updateAllmember실행전!!!============================"+resignedDate);
+		
 		int result = memberService.updateAllmember(m);
 		
+	
 		System.out.println("updateAllmember실행됨!!!============================"+result);
 		
 		
 		if(result > 0) { //성공적으로 추가시
 			
 			//부서추가변경
-			//int result2 = memberService.UpdateUserDept(m);
+			int result2 = memberService.UpdateUserDept(m);
 			
-//			if(result2>0) { 
-//				int userEno = memberService.selectENO();
-//				session.setAttribute("userEno", userEno);
-//				
-//				return "redirect:/member/member-allview";
-//				
-//			}else{
-//				session.setAttribute("alertMsg", "사용자 부서 변경 오류발생. 담당자에게 문의하세요");
-//			}
+			if(result2>0) { 
+				
+				session.setAttribute("success", "정보가 수정되었습니다");
+				
+				
+				return "redirect:/member/allview";
+				
+				//ajax로 전달어떻게 할지 고민
+				//return "redirect:/member/selectAll?Dselect=5";
+				
+			}else{
+				session.setAttribute("alertMsg", "사용자 부서 변경 오류발생. 담당자에게 문의하세요");
+				return "redirect:/member/allview";
+			}
+			
 		}else {
 			session.setAttribute("alertMsg", "사용자 변경 오류발생. 담당자에게 문의하세요");
+			return "redirect:/member/allview";
 		}
 		
 		
-		return "member/member-allview";
-
 	}
 	
 	

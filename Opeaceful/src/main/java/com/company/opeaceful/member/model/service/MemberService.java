@@ -29,4 +29,6 @@ public interface MemberService {
 
 	int updateAllmember(Member m);
 
+	int UpdateUserDept(Member m);
+
 }

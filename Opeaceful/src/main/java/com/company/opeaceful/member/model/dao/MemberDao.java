@@ -69,4 +69,8 @@ public class MemberDao {
 	public int updateAllmember(Member m) {
 		return sqlSession.update("memberMapper.updateAllmember",m);
 	}
+
+	public int UpdateUserDept(Member m) {
+		return sqlSession.update("memberMapper.updateUserDept",m);
+	}
 }

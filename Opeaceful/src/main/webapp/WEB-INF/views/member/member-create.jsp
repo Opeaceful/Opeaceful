@@ -31,7 +31,7 @@
 	</c:if>
 	<c:if test="${ not empty userEno }">
 		<script>
-		swal('${userEno}', "해당 아이디로 로그인 하세요" );
+		swal('${userEno}');
 		</script>
 		<c:remove var="userEno"/>
 	</c:if>
