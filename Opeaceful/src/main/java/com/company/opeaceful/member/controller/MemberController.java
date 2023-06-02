@@ -72,7 +72,7 @@ public class MemberController {
 							   @ModelAttribute ("loginUser") Member loginUser) {
 		
 		// 이미지 저장경로 설정
-		String webPath = "/resources/image/mypage/";
+		String webPath = "/resources/file/mypage/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
 		int result = 0;
 		
