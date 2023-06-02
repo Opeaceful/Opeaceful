@@ -34,39 +34,45 @@ public class BoardController {
 	
 	
 	@GetMapping("/list/{boardCode}")
-
-		public String boardList(@ModelAttribute ("loginUser") Member loginUser,
-								
-								@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
-								@PathVariable("boardCode") String boardCode,
-								Model model,
-								@RequestParam Map<String, Object> map) {
+	public String boardList(@ModelAttribute ("loginUser") Member loginUser,
+							@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+							@PathVariable("boardCode") String boardCode,
+							Model model,
+							@RequestParam Map<String, Object> map) {
+		
+		String userNo = Integer.toString(loginUser.getUserNo());
+		
+		if(map.get("condition") == null) {
+			map.put("userNo", userNo);
+			map.put("currentPage", currentPage);
+			map.put("boardCode", boardCode);
 			
-			String userNo = Integer.toString(loginUser.getUserNo());
-			
-			if(map.get("condition") == null) {
-				map.put("userNo", userNo);
-				map.put("currentPage", currentPage);
-				map.put("boardCode", boardCode);
-				
-				boardService.selectBoardList(map);				
-			}else {
-				map.put("userNo", userNo);
-				map.put("currentPage", currentPage);
-				map.put("boardCode", boardCode);
-				boardService.selectSearchBoardList(map);		
-			}
-			
-			model.addAttribute("map", map);
-			
-			System.out.println("map에 담긴 값 컨트롤러 : " + map);
-			
+			boardService.selectBoardList(map);				
+		}else {
+			map.put("userNo", userNo);
+			map.put("currentPage", currentPage);
+			map.put("boardCode", boardCode);
+			boardService.selectSearchBoardList(map);		
+		}
+		
+		model.addAttribute("map", map);
+		
+		System.out.println("map에 담긴 값 컨트롤러 : " + map);
+		
 		return "board/boardList";
 	}
 	
+	@GetMapping("/enrollForm/{boardCode}")
+	public String boardEnroll() {
+		
+		return "board/boardEnrollForm";
+	}
 	
-	
-	
+	@GetMapping("/detail/{boardCode}")
+	public String boardDetail() {
+		
+		return "board/boardDetailView";
+	}
 	
 	
 	
