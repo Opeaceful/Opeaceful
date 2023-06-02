@@ -191,7 +191,7 @@
             </div>
         </div>
     </div>
-    		                <div id="toast"></div>
+	<div id="toast"></div>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="${path}/resources/js/addressAPI.js"></script>

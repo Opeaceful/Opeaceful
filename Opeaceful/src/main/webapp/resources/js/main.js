@@ -138,14 +138,38 @@ $("#main-on").click(function(){
                     $("#main-off").removeClass('white-btn').addClass('navy-btn').attr("disabled", false);
                 },
                 error : function(e) {
-                    swal("작업수행에 실패하였습니다.");
+                    swal("이미 출근처리 되었습니다.");
                 }
             })
         }
     })
 });
 
+$("#main-off").click(function(){
+    swal(hur +":"+ min,"퇴근 처리 하시겠습니까?",{
+        buttons: {confirm: "확인", cancel: "취소"}
+    })
+    // .then(function(isConfirm){
+    //     if(isConfirm){
+    //         $.ajax({
+    //             type : "POST",
+    //             url : "",
+    //             //url : path+"/attendance/workOn",
+    //             dataType : "json",
+    //             success : function(result) {
+    //                 // console.log(result);
+    //                 // $("#main-on").removeClass('navy-btn').addClass('white-btn').attr("disabled", true);
 
+    //                 // $("#main-off").removeClass('white-btn').addClass('navy-btn').attr("disabled", false);
+    //                 swal("일단 됨");
+    //             },
+    //             error : function(e) {
+    //                 swal("????");
+    //             }
+    //         })
+    //     }
+    // })
+});
 
 
 

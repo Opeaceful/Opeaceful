@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="attendanceMapper">
+
+	<!-- =================== [select] =================== -->	
+	<!-- [지의] 출근시간 조회 -->
+	<select id="selectWorkOn">
+		SELECT WORK_DATE, USER_NO
+		  FROM opeaceful.attendance
+		 WHERE USER_NO = #{userNo};
+	</select>
 	
-	<!-- [지의] - 출근 시간 등록 -->
+	<!-- [지의] 퇴근시간 조회 -->
+	<select id="selectWorkOff">
+		SELECT WORK_DATE, USER_NO
+		  FROM opeaceful.attendance
+		 WHERE USER_NO = #{userNo}
+		   AND WORK_ON IS NOT NULL;
+	</select>
+	
+	
+	
+	<!-- =================== [insert] =================== -->	
+	<!-- [지의] 출근 시간 등록 -->
 	<insert id="insertWorkOn">
 		insert into attendance(WORK_DATE, USER_NO, WORK_ON)
 		values (
@@ -12,6 +31,14 @@
 		);
 	</insert>
 	
-	<!-- [지의] - 퇴근 시간 등록 -->
+	<!-- =================== [update] =================== -->	
+	<!-- [지의] 퇴근 시간 등록 -->
+	<update id="updateWorkOff">
+		UPDATE attendance
+		   SET WORK_OFF = DATE_FORMAT(now(),'%H:%i')
+		 WHERE USER_NO = #{userNo}
+		   AND WORK_DATE IS NOT NULL
+		   AND WORK_ON IS NOT NULL;
+	</update>
 	
 </mapper>
