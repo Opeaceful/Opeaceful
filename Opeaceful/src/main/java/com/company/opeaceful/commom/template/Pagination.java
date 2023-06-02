@@ -8,8 +8,9 @@ import com.company.opeaceful.commom.model.vo.PageInfo;
 @Component
 public class Pagination {
 	
-	//pageinfo 
 	@Autowired
+	private PageInfo pageinfo;
+	
 	public PageInfo getPageInfo(int listCount, int currentPage, int pageLimit, int settingLimit) {
 		int maxPage = (int)Math.ceil((double)listCount/settingLimit);
 		int startPage = (currentPage -1) / pageLimit* pageLimit +1;

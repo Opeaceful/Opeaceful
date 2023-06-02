@@ -43,7 +43,7 @@
   	
 </resultMap>
 
-
+<!-- =============================================[insert]=========================================================== -->	
 <!-- [지영] member insert구문 -->
 	<!--[지영] member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
@@ -89,7 +89,6 @@
 <!-- =============================================[selects]=========================================================== -->	
 
 	
-	<!-- [지영] member select 구문 -->	
 	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
 		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_NAME,DEPT_NAME
@@ -196,29 +195,6 @@
 	 </update>
 
 
-
-
-	<!-- [지영] 사용자 Update-->
-	 <!--[지영] 1. 멤버 업데이트 -->
-	 <update id="updateAllmember" parameterType="member" >
-	 	UPDATE member
-	 	SET USER_NAME = #{userName},
-	 		PHONE     = #{phone},
-	 		EXTENSION = #{extension},
-	 		EMAIL = #{email},
-	 		ADDRESS = #{address},
-	 		ANNUAL_LEAVE_COUNT = #{annualLeaveCount},
-	 		HIRE_DATE = #{hireDate}
-	 	WHERE USER_NO = #{userNo} AND STATUS = 'Y'
-	 </update>
-	 
-	  <!--[지영] 2. 부서 업데이트 -->
-	 <update id="updateUserDept" parameterType="member" >
-	 	UPDATE user_department 
-	 	SET P_CODE = #{pCode},
-	 		DEPT_CODE  = #{deptCode}
-	 	WHERE USER_NO = #{userNo}
-	 </update>
 
 
 

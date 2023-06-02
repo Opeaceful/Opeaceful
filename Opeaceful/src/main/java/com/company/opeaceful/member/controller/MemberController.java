@@ -260,13 +260,13 @@ public class MemberController {
 	@RequestMapping("/updateAllmember")
 	public String updateAllmember(
 			Member m,
-			@RequestParam(value = "resignedDate", required = false) Date resignedDate,
+			
 			HttpSession session
 			){
 		
-		
+		//@RequestParam(value = "resignedDate", required = false) Date resignedDate,
 					
-		System.out.print("updateAllmember실행전!!!============================"+resignedDate);
+		//System.out.print("updateAllmember실행전!!!============================"+resignedDate);
 		
 		int result = memberService.updateAllmember(m);
 		

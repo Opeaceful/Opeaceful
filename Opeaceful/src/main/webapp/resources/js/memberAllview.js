@@ -52,6 +52,8 @@ $.ajax({
     },
     success: function(result){
 
+        console.log(result);
+
         let html = ""
     
         //받아온 데이터 테이블 생성시켜줌
@@ -79,6 +81,7 @@ $.ajax({
         //pagination에 결과값 넣어주기
         pagination = result.pi;
 
+        console.log(pagination);
 
         //페이지 html
         let phtml = ""

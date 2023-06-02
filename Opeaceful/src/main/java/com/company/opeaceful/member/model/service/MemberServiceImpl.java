@@ -52,8 +52,8 @@ public class MemberServiceImpl implements MemberService {
 		//페이지네이션 처리
 		int listCount = memberDao.selectMemberListCount(selectPD);
 		int pageLimit = 5;
-		int memberLimit = 10;
-		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, memberLimit);
+		int settingLimit = 10;
+		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, settingLimit);
 		
 		//ajax로 돌려보내줄 map에 pi정보 담아주기
 		map.put("pi", pi);
@@ -61,11 +61,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMember(pi,selectPD);
 	}
 	
-	
-	@Override
-	public Department selecTopDept(Member loginUser) {
-		return memberDao.selecTopDept(loginUser);
-	}
 	
 	@Override
 	public int updatePwd(Member loginUser) {
@@ -92,8 +87,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.UpdateUserDept(m);
 	}
 	
-	
-	
+	@Override
+	public Department selecTopDept(Member loginUser) {
+		return memberDao.selecTopDept(loginUser);
+	}
 	
 	@Override
 	public int updateMember(Member m) {

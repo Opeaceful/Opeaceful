@@ -20,7 +20,7 @@ public interface MemberService {
 	
 	List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD);
 	
-	UserDepatment selectdpName(int userNo);
+	//UserDepatment selectdpName(int userNo);
 
 	int updatePwd(Member loginUser);
 

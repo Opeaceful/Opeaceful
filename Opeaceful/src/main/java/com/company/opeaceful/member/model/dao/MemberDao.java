@@ -3,6 +3,7 @@ package com.company.opeaceful.member.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,10 +39,12 @@ public class MemberDao {
 
 	public List<Member> selectMember(PageInfo pi,Map<String, Object> selectPD) {
 		
-		int offset = (pi.getCurrentPage() - 1) * pi.getMemberLimit();
-		int limit = pi.getMemberLimit();
+		int offset = (pi.getCurrentPage() - 1) * pi.getSettingLimit();
+		int limit = pi.getSettingLimit();
 		
-		return sqlSession.selectList("memberMapper.selectMember",selectPD);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return sqlSession.selectList("memberMapper.selectMember",selectPD,rowBounds);
 	}
 
 	public UserDepatment selectdpName(int userNo) {
