@@ -11,6 +11,7 @@ public class Pagination {
 	@Autowired
 	private PageInfo pageinfo;
 	
+	
 	public PageInfo getPageInfo(int listCount, int currentPage, int pageLimit, int boardLimit) {
 		int maxPage = (int)Math.ceil((double)listCount/boardLimit);
 		int startPage = (currentPage -1) / pageLimit* pageLimit +1;
@@ -30,7 +31,6 @@ public class Pagination {
 		
 		return pageinfo;
 	}
-	
 	
 	
 	

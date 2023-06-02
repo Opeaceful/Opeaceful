@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="list" value="${list }"/>
-
+<c:set var="list" value="${map.list}"/>
+<c:set var="pi" value="${map.pi}"/>
+<c:if test="${!empty map.condition }">
+	<c:set var="sUrl" value="&condition=${map.condition }&keyword=${map.keyword }"/>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,17 +34,30 @@
             <div class="title-box">
                 <h2 class="title-common">게시판</h2>
             </div>
+            <!-- 게시판 상단 카테고리 버튼 -->
             <div class="board-wrap1">
                 <div class="board-title-btn-wrap">
-                	<c:forEach var="boardType" items="${boardTypeList}">
-	                    <a href="${path}/board/list/${boardType.boardCd}" class="board-title-btn">${boardType.boardName}</a>
-                	</c:forEach>
+                	<c:choose>
+						<c:when test="${ boardCode eq 'T'}">
+	                    <a href="${path}/board/list/N" class="board-title-btn">공지사항</a>
+	                    <a href="${path}/board/list/F" class="board-title-btn">자유게시판</a>
+	                    <a href="${path}/board/list/T" class="board-title-btn c-page">팀게시판</a>
+	                 	</c:when>
+	                 	<c:when test="${ boardCode eq 'N'}">
+	                    <a href="${path}/board/list/N" class="board-title-btn c-page">공지사항</a>
+	                    <a href="${path}/board/list/F" class="board-title-btn">자유게시판</a>
+	                    <a href="${path}/board/list/T" class="board-title-btn">팀게시판</a>
+	                 	</c:when>
+						<c:otherwise>
+						<a href="${path}/board/list/N" class="board-title-btn">공지사항</a>
+	                    <a href="${path}/board/list/F" class="board-title-btn c-page">자유게시판</a>
+	                    <a href="${path}/board/list/T" class="board-title-btn">팀게시판</a>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
             <div class="board-wrap2">
-            	
                 <button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
-            	
             </div>
             <div class="board-wrap3">
                 <table class="table table-hover table-common">
@@ -57,61 +73,100 @@
                      <c:if test="${empty list }">
 						<td colspan="4">게시글이 없습니다</td>
 					</c:if>
-					
 					<c:forEach items="${ list }" var="b">
-	                    <tr onClick="movePage(${b.boardNo});">
+	                    <c:choose>
+	                    <c:when test='${ b.fixed == "Y"}'>
+		                    <tr class="notice-fixed" onClick="movePage(${b.boardNo});">
+		                        <td class="list-ctn-title">${b.boardTitle}</td>
+		                        <td>${b.PName} ${b.userName}</td>
+		                        <td>${b.createDate}</td>
+		                        <td>${b.count}</td>
+		                    </tr>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<tr onClick="movePage(${b.boardNo});">
 	                        <td class="list-ctn-title">${b.boardTitle}</td>
-	                        <td>${b.userName}</td>
+	                        <td>${b.PName} ${b.userName}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.count}</td>
 	                    </tr>
+	                    </c:otherwise>
+	                    </c:choose>
                     </c:forEach> 
                     </tbody>
               </table>
             </div>
+            <!-- 페이징 영역 -->
+            <c:set var="url" value="${path}/board/list/${boardCode}?cpage=" />
+            
             <div class="board-wrap4">
                 <div class="pagingArea">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                       <!--  <c:if test="${currentPage != 1 }"> --> 
-	                          <li class="page-item">
-	                            <a class="page-link" href="#" aria-label="Previous">
-	                              <span aria-hidden="true">&laquo;</span>
-	                            </a>
-	                          </li>
-                        <!-- </c:if> --> 
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">4</a></li>
-                          <li class="page-item"><a class="page-link" href="#">5</a></li>
-                          <li class="page-item"><a class="page-link" href="#">6</a></li>
-                          <li class="page-item"><a class="page-link" href="#">7</a></li>
-                          <li class="page-item"><a class="page-link" href="#">8</a></li>
-                          <li class="page-item"><a class="page-link" href="#">9</a></li>
-                          <li class="page-item"><a class="page-link" href="#">10</a></li>
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                            </a>
-                          </li>
+                        <!-- 이전페이지 버튼 -->
+                        <c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+		                            <a class="page-link" href="#" aria-label="Previous">
+		                              <span aria-hidden="true">&laquo;</span>
+		                            </a>
+		                          </li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+		                            <a class="page-link" href="${url}${pi.currentPage -1 }${sUrl}" aria-label="Previous">
+		                              <span aria-hidden="true">&laquo;</span>
+		                            </a>
+		                          </li>
+							</c:otherwise>					
+						</c:choose>
+                        
+                        <!-- 페이지버튼 -->
+                        <c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
+                        <c:choose>
+							<c:when test="${ pi.currentPage eq item }">
+                        	<li class="page-item active"><a class="page-link" href="${url}${item }${sUrl}">${item }</a></li>
+	                        </c:when>
+								<c:otherwise>	
+							<li class="page-item"><a class="page-link" href="${url}${item }${sUrl}">${item }</a></li>
+							</c:otherwise>					
+						</c:choose>
+						</c:forEach>
+                          
+                          <!-- 다음페이지 버튼 -->
+                          <c:choose>
+							<c:when test="${ (pi.currentPage eq pi.maxPage) or pi.maxPage == 0 }">
+								<li class="page-item disabled">
+		                            <a class="page-link" href="#" aria-label="Next">
+		                              <span aria-hidden="true">&raquo;</span>
+		                            </a>
+	                            </li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+		                            <a class="page-link" href="${url}${pi.currentPage + 1 }${sUrl}" aria-label="Next">
+		                              <span aria-hidden="true">&raquo;</span>
+		                            </a>
+		                         </li>
+							</c:otherwise>					
+						</c:choose>
                         </ul>
                       </nav>
                 </div>
             </div>
+            <!-- 검색창 영역 -->
             <div class="board-wrap5">
-            
-                <form>
+                <form action="${ boardCode }" method="get">
                     <div>
-                        <select class="form-select form-select-sm select-box box-shadow-none" aria-label=".form-select-sm example">
-                            <option value="title" selected>제목</option>
-                            <option value="content">내용</option>
-                            <option value="writer">작성자</option>
+                        <select name="condition" class="form-select form-select-sm select-box box-shadow-none" aria-label=".form-select-sm example">
+                            <option value="title" ${map.condition == 'title' ? 'selected':''}>제목</option>
+                            <option value="content" ${map.condition == 'content' ? 'selected':''}>내용</option>
+                            <option value="writer" ${map.condition == 'writer' ? 'selected':''}>작성자</option>
                         </select>
                     </div>
                     <div class="search-wrap">
-                        <input type="search" name="keyword" class="search-box">
-                        <button type="button" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="search" name="keyword" class="search-box" value="${map.keyword }">
+                        <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </form>
                 

@@ -2,6 +2,7 @@ package com.company.opeaceful.board.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,23 +27,30 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardTypeList");
 	}
 	
-	public int selectBoardListCount(String boardCode) {
-		return sqlSession.selectOne("boardMapper.selectBoardListCount", boardCode);
+	public int selectBoardListCount(Map<String, Object> map) {
+		return sqlSession.selectOne("boardMapper.selectBoardListCount", map);
 	}
 	
+	public int searchBoardListCount(Map<String, Object> map) {
+		return sqlSession.selectOne("boardMapper.searchBoardListCount", map);
+	}
 	
-	public ArrayList<Board> selectBoardList(String boardCode){
+	public ArrayList<Board> selectBoardList(PageInfo pi, Map<String, Object> map){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit  = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", boardCode);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", map, rowBounds);
 	}
 	
-//	public ArrayList<Board> selectBoardList(PageInfo pi, String boardCode){
-//		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
-//		int limit  = pi.getBoardLimit();
-//		RowBounds rowBounds = new RowBounds(offset,limit);
-//		
-//		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", boardCode, rowBounds);
-//	}
+	public ArrayList<Board> selectSearchBoardList(PageInfo pi, Map<String, Object> map){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit  = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList", map, rowBounds);
+	}
+	
 	
 	
 }

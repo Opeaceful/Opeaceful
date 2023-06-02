@@ -52,7 +52,7 @@ div *{
     line-height: 2.5;
     border-bottom: 1px solid  var(--color-navy);
 }
-.board-title-btn:hover, .notice-btn{
+.board-title-btn:hover, .c-page{
     color: white;
     background-color: var(--color-navy);
     border-bottom: 0;
@@ -91,8 +91,10 @@ div *{
     padding-left: 30px !important;
     padding-right: 30px !important;
 }
-
-
+/* 공지사항 고정게시글 */
+.notice-fixed{
+    background-color: rgba(235, 235, 235, 0.575);
+}
 
 /* 페이징바 */
 .board-wrap4{

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
+import com.company.opeaceful.member.model.vo.Member;
 
 public interface BoardService {
 
@@ -13,6 +14,10 @@ public interface BoardService {
 
 	public ArrayList<BoardType> selectBoardTypeList();
 	
-	public ArrayList<Board> selectBoardList(String boardCode);
-//	public ArrayList<Board> selectBoardList(int currentPage, String boardCode);
+	public void selectBoardList(Map<String, Object> map);
+	
+	public void selectSearchBoardList(Map<String, Object> map);
+
+	
+	
 }

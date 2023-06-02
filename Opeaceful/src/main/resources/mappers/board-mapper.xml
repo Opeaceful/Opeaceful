@@ -21,6 +21,7 @@
 		<result column="BOARD_CD" property="boardCd"/>
 		<result column="BOARD_TITLE" property="boardTitle"/>
 		<result column="USER_NAME" property="userName"/>
+		<result column="P_NAME" property="pName"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COUNT" property="count"/>
 		<result column="FIXED" property="fixed"/>
@@ -44,22 +45,25 @@
 		ORDER BY BOARD_NAME; 
 	</select>
 
-	<!-- [혜린] - 게시판 목록조회 -->
+	<!-- [혜린] - 게시글 목록조회 -->
 	<select id="selectBoardList" resultMap="boardListResultSet">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT
+		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
 		  <choose>
 			  <when test='boardCode == "T"'>
 			  FROM USER_DEPARTMENT D
 	          LEFT JOIN MEMBER M ON D.USER_NO = M.USER_NO
 	          LEFT JOIN BOARD B ON B.DEPT_CODE = D.DEPT_CODE
+	          LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
 			 WHERE B.BOARD_CD = #{boardCode}
 			   AND D.DEPT_CODE = (SELECT D.DEPT_CODE
 			 						FROM USER_DEPARTMENT D
-			 					   WHERE D.USER_NO = #{loginUser.userNo})
+			 					   WHERE D.USER_NO = #{userNo})
 			 </when>
 			 <otherwise>
 			 FROM BOARD B
           	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+          	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
+          	 LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
 		 	WHERE B.BOARD_CD = #{boardCode}
 			 </otherwise>
 		 </choose>
@@ -69,15 +73,118 @@
 		 	</if>
 		 		CREATE_DATE DESC;
 	</select>
-
-	<!-- [혜린] - 게시판리스트 카운트? -->
-	<select id="selectBoardListCount" resultType="_int">
-	SELECT COUNT(*)
-	FROM BOARD 
-	WHERE BOARD_CD = #{boardCode};
+	
+	<!-- [혜린] - 검색된 게시글 목록조회 -->
+	<select id="searchBoardList" resultMap="boardListResultSet">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+		  <choose>
+			  <when test='boardCode == "T"'>
+			  FROM USER_DEPARTMENT D
+	          LEFT JOIN MEMBER M ON D.USER_NO = M.USER_NO
+	          LEFT JOIN BOARD B ON B.DEPT_CODE = D.DEPT_CODE
+	          LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+			 WHERE B.BOARD_CD = #{boardCode}
+			   AND D.DEPT_CODE = (SELECT D.DEPT_CODE
+			 						FROM USER_DEPARTMENT D
+			 					   WHERE D.USER_NO = #{userNo})
+			   <if test='keyword != null and keyword !=""'>
+				AND
+				<choose>
+					<when test='condition == "writer"'>
+						USER_NAME LIKE '%${keyword}%'
+						OR
+						P_NAME LIKE '%${keyword}%'
+					</when>
+					<when test='condition == "title"'>
+						BOARD_TITLE LIKE '%${keyword}%'
+					</when>
+					<when test='condition == "content"'>
+						BOARD_CONTENT LIKE '%${keyword}%'
+					</when>
+				</choose>
+				</if>				   
+			 </when>
+			 <otherwise>
+			 FROM BOARD B
+          	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+          	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
+          	 LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+		 	WHERE B.BOARD_CD = #{boardCode}
+		 	<if test='keyword != null and keyword !=""'>
+			AND
+			<choose>
+				<when test='condition == "writer"'>
+					USER_NAME LIKE '%${keyword}%'
+					OR
+					P_NAME LIKE '%${keyword}%'
+				</when>
+				<when test='condition == "title"'>
+					BOARD_TITLE LIKE '%${keyword}%'
+				</when>
+				<when test='condition == "content"'>
+					BOARD_CONTENT LIKE '%${keyword}%'
+				</when>
+			</choose>
+			</if>
+			 </otherwise>
+		 </choose>
+		 ORDER BY 
+		 	<if test='boardCode == "N"'>
+		 		FIXED = 'Y' DESC,
+		 	</if>
+		 		CREATE_DATE DESC;
 	</select>
 
-	
+	<!-- [혜린] - 게시글 수 카운트 -->
+	<select id="selectBoardListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM BOARD B
+	<if test='boardCode == "T"'>
+	JOIN USER_DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
+	JOIN MEMBER M ON D.USER_NO = M.USER_NO
+	</if>
+	WHERE BOARD_CD = #{boardCode}
+	 <if test='boardCode == "T"'>
+	AND  D.DEPT_CODE = (SELECT D.DEPT_CODE
+			 			FROM USER_DEPARTMENT D
+			 			WHERE D.USER_NO = #{userNo})
+	</if>
+	;
+	</select>
+
+	<!-- [혜린] - 검색된 게시글 수 카운트 -->
+	<select id="searchBoardListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM BOARD B
+	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+	<if test='boardCode == "T"'>
+	JOIN USER_DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
+	LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+	</if>
+	WHERE BOARD_CD = #{boardCode}
+	 <if test='boardCode == "T"'>
+	AND  D.DEPT_CODE = (SELECT D.DEPT_CODE
+			 			FROM USER_DEPARTMENT D
+			 			WHERE D.USER_NO = #{userNo})
+	</if>
+	<if test='keyword != null and keyword !=""'>
+	AND
+	<choose>
+		<when test='condition == "writer"'>
+			USER_NAME LIKE '%${keyword}%'
+			OR
+			P_NAME LIKE '%${keyword}%'
+		</when>
+		<when test='condition == "title"'>
+			BOARD_TITLE LIKE '%${keyword}%'
+		</when>
+		<when test='condition == "content"'>
+			BOARD_CONTENT LIKE '%${keyword}%'
+		</when>
+	</choose>
+	</if>
+	;
+	</select>
 	
 	
 	

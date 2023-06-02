@@ -12,6 +12,7 @@ import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
+import com.company.opeaceful.member.model.vo.Member;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -27,37 +28,42 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.mainSelectNoticeList();
 	}
 	
+	@Override
 	public ArrayList<BoardType> selectBoardTypeList(){
 		return boardDao.selectBoardTypeList();
 	}
-	
-//	public ArrayList<Board> selectBoardList(int currentPage, String boardCode){
-//		
-//		int listCount = boardDao.selectBoardListCount(boardCode);
-//		int pageLimit = 10;
-//		int boardLimit = 14;
-//		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-//		
-//		ArrayList<Board> list = boardDao.selectBoardList(pi, boardCode);
-////		map.put("pi", pi);
-////		map.put("list", list);
-//	
-//		return list;
-//	}
-	
-	public ArrayList<Board> selectBoardList(String boardCode){
+	// 게시글 목록 조회
+	@Override
+	public void selectBoardList( Map<String, Object> map){
 		
-		int listCount = boardDao.selectBoardListCount(boardCode);
-	
+		int listCount = boardDao.selectBoardListCount(map);
+		int pageLimit = 10;
+		int boardLimit = 14;
+		PageInfo pi = pagination.getPageInfo(listCount, (int)(map.get("currentPage")), pageLimit, boardLimit);
 		
-		ArrayList<Board> list = boardDao.selectBoardList( boardCode);
-
-	
-		return list;
+		ArrayList<Board> list = (ArrayList) boardDao.selectBoardList(pi, map);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		System.out.println("map에 담긴 값 서비스 : " + map);
 	}
-	
-	
-	
+	// 검색된 게시글 목록 조회
+	@Override
+	public void selectSearchBoardList(Map<String, Object> map){
+		int listCount = boardDao.searchBoardListCount(map);
+		int pageLimit = 10;
+		int boardLimit = 14;
+		PageInfo pi = pagination.getPageInfo(listCount, (int)(map.get("currentPage")), pageLimit, boardLimit);
+		
+		ArrayList<Board> list= boardDao.selectSearchBoardList(pi, map);
+		
+		map.put("pi", pi);
+		map.put("list", list);
+		
+		System.out.println("map에 담긴 값 서비스 : " + map);
+		
+	}
 	
 	
 	
