@@ -14,17 +14,13 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
 	static Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
 	
-	// 사용자가 사용중인 핸드폰 종류
+	
 	static String logMp[] = {"iphone", "ipod", "android", "blackberry", "opera mobi"};
 	
 	
-	/*
-	 * 모든 경로로 들어오는 요청정보에 대한 로그정보를 남기기 위한 메소드
-	 * 
-	 * */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		// 접속된 장비가 무엇인지 (웹/모바일)
+		
 		String currentDevice = "web";
 		String logUA = request.getHeader("user-agent").toLowerCase();
 		for(String decice : logMp) {
@@ -34,7 +30,6 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		// 접속한 url, 서버정보 추가
 		HttpSession session = request.getSession();
 		
 		String currentDomain = request.getServerName();
@@ -53,7 +48,6 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 					queryString += "&";
 				}
 				String[] values = (String[]) map.get(keys[i]);
-				// 동일한 키값으로 여러 값 왔을때 대응위해
 				
 				queryString += keys[i] + "=";
 				
@@ -70,25 +64,17 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		// 파라미터가 아예 없다면, 애초에 로그정보에 포함시키지 않을 예정임
 		if(queryString == null || queryString.trim().length() == 0) {
 			queryString = null;
 		}
 		
-		//ip정보 추가
 		String uri = request.getRequestURI();
 		String ip = getIp(request);
 		
-		// 프로토콜 정보 추가 s == secure
 		String protocol = (request.isSecure()) ? "https" : "http";
 		
-		// 아이디 정보 추가
 		String userId = "";
 		
-		/*
-		 * Member user = (Member) session.getAttribute("loginUser"); if(user != null) {
-		 * userId = user.getUserId(); }
-		 */
 		logger.info(ip+":"+currentDevice+":"+userId+":"+protocol+"://"+currentDomain
 				+":"+currentPort+uri+(queryString !=null ? "?"+queryString : ""));
 		
