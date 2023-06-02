@@ -31,6 +31,8 @@ INSERT INTO position (P_NAME) VALUES
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
    VALUES ( 230502 , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', 'test', SYSDATE(), 'test@gmail.com');
 
+/* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!!*/
+
 /*공지사항 고정게시글 데이터*/
 INSERT INTO BOARD(BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,BOARD_CD,COUNT,CREATE_DATE,FIXED)
 VALUES ('2023년 하절기 사옥 냉난방기 운용 관련 공지','TEST1','1','N',default,'2022-05-12','Y'),
