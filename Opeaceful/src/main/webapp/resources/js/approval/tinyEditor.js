@@ -1,4 +1,4 @@
-export function test1() {
+export function setTinymce() {
   var plugins = [
     'advlist',
     // "autolink",
@@ -33,7 +33,7 @@ export function test1() {
 
   tinymce.init({
     language: 'ko_KR', //한글판으로 변경
-    selector: '#editor',
+    selector: '#tinymce',
     height: 500,
     // menubar: false,
     plugins: plugins,
@@ -53,6 +53,7 @@ export function test1() {
     file_picker_callback: function (cb, value, meta) {
       console.log('test1');
       var input = document.createElement('input');
+      input.setAttribute('class', 'testclass');
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
 

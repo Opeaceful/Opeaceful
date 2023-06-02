@@ -5,28 +5,13 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    
+     <!-- tiny editor -->
     <script
       src="https://cdn.tiny.cloud/1/4u88c1x1vlsys5jtx9tpp86cmfiahnx5rgsxendvyyqg2464/tinymce/5/tinymce.min.js"
       referrerpolicy="origin"
     ></script>
 
-    <!-- 부트스트랩 아이콘 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
-    />
-    <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-    <script
-      src="https://kit.fontawesome.com/a2e8ca0ae3.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous"
-    />
 
     <!-- css -->
     <link
@@ -49,33 +34,14 @@ pageEncoding="UTF-8"%>
       src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
     ></script>
 
-
-    <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
     <link
       rel="stylesheet"
       href="${path}/resources/css/approval/endApprovalModal.css"
-    />
-    <link
-      rel="stylesheet"
-      href="${path}/resources/css/approval/myApproval.css"
-    />
-    <link
-      rel="stylesheet"
-      href="${path}/resources/css/approval/approvalModal.css"
     />
 
   </head>
   <body>
     <!-- [승은] -->
-<!--     <button
-      id="test"
-      class="btn btn-primary position-btn"
-      data-bs-toggle="modal"
-      data-bs-target="#end-approval"
-      type="button"
-    >
-      양식추가
-    </button> -->
 
     <div
       class="modal fade"
@@ -579,7 +545,7 @@ pageEncoding="UTF-8"%>
 
         tinymce.init({
           language: "ko_KR", //한글판으로 변경
-          selector: "#editor",
+          selector: "#tinymce",
           height: 500,
           // menubar: false,
           plugins: plugins,
@@ -656,7 +622,7 @@ pageEncoding="UTF-8"%>
 
       function test2() {
         var tinyEditor = tinymce.init({
-          selector: "#editor",
+          selector: "#tinymce",
           min_height: 500,
           max_height: 1000,
           menubar: false,

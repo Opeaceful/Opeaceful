@@ -3,11 +3,6 @@
   --color-light-blue : rgba(3, 3, 97, 0.06);
 }
 
-/* 부트스트랩 모달 뒷배경 중첩 막기용도 */
-.modal-backdrop:nth-last-child(n+2){
-  background-color: unset;
-}
-
 .modal-lg{
   min-width: 500px;
 }

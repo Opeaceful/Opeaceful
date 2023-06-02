@@ -11,11 +11,6 @@
   min-width: 700px;
   margin: auto;
   margin-top: 3rem;
-
-  /* 나중에 디자인 평가 필요 */
-  background-color: #00000005;
-  border-radius: 10px;
-  padding: 2rem;
 }
 
 .approval-form-table select {

@@ -1,5 +1,5 @@
-import { test1 } from './tinyEditor.js';
+import { setTinymce } from './tinyEditor.js';
 
 window.onload = function () {
-  test1();
+  setTinymce();
 };
