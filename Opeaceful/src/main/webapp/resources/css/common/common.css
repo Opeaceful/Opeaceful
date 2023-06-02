@@ -327,3 +327,11 @@ input::-webkit-search-cancel-button{
     border-radius: 10px;
     box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
+
+
+/* (승은) 부트스트랩 모달 뒷배경 중첩 막기용도 
+    생성된 뒷배경중 가장 마지막 뒷배경만 남기고 배경색 없앰
+*/
+.modal-backdrop:nth-last-child(n+2){
+    background-color: unset;
+}
