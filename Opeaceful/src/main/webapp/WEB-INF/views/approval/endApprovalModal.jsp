@@ -265,6 +265,7 @@ pageEncoding="UTF-8"%>
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-primary">결재 취소</button> -->
+            <button type="button" class="btn btn-outline-danger">삭제</button>
             <button type="button" class="btn btn-outline-primary">반려</button>
             <button type="button" class="btn btn-outline-primary">
               메모(0)
