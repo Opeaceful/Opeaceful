@@ -21,7 +21,7 @@ import com.company.opeaceful.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/board")
-@SessionAttributes({"loginUser", "dpName"}) 
+@SessionAttributes({"loginUser"}) 
 public class BoardController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class BoardController {
 	@GetMapping("/list/{boardCode}")
 
 		public String boardList(@ModelAttribute ("loginUser") Member loginUser,
-								@ModelAttribute ("dpName") UserDepatment dpName,
+								
 								@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
 								@PathVariable("boardCode") String boardCode,
 								Model model,

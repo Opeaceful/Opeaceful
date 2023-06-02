@@ -113,7 +113,7 @@ $(function(){
 
 /* 공지사항 제목부분 클릭시 공지사항 페이지로 */
 $("#main-notice-title").on("click", function(){
-    location.href = path+"/member/mypage"; // 일단 마이페이지로 넣어둠
+    location.href = path+"/board/list/N";
 })
 $(function(){
     $(".white-btn").attr("disabled", true);
