@@ -2,11 +2,12 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -260,18 +261,23 @@ public class MemberController {
 	@RequestMapping("/updateAllmember")
 	public String updateAllmember(
 			Member m,
-			
+			//@RequestParam(value="resignedDate", required = false) String resignedDate,
 			HttpSession session
 			){
 		
-		//@RequestParam(value = "resignedDate", required = false) Date resignedDate,
+		
 					
-		//System.out.print("updateAllmember실행전!!!============================"+resignedDate);
+		//System.out.print(resignedDate);
+		
+		
 		
 		int result = memberService.updateAllmember(m);
 		
 	
 		System.out.println("updateAllmember실행됨!!!============================"+result);
+		
+		//토
+		
 		
 		
 		if(result > 0) { //성공적으로 추가시
