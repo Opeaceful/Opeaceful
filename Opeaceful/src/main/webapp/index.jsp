@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%
 	/* 테스트용 멤버 객체 -> 필요한 값 있으면 setter로 추가/변경하여 사용 */
-	Member loginUser = new Member();
+/* 	Member loginUser = new Member();
 	loginUser.setEno(230502);
 	loginUser.setStatusType(0);
 	loginUser.setUserName("test");
 	loginUser.setUserNo(2);
 	
-	session.setAttribute("loginUser", loginUser);
+	session.setAttribute("loginUser", loginUser); */
 %>
 <!DOCTYPE html>
 <html>

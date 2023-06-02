@@ -10,4 +10,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired
 	private AttendanceDao attendanceDao;
+	
+	@Override
+	public int insertWorkOn(int userNo) {
+		return attendanceDao.insertWorkOn(userNo);
+	}
 }

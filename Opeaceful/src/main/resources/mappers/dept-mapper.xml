@@ -32,13 +32,15 @@
   	SELECT * FROM position;
   </select>
   
- 	<!-- [지의] - 팀,직급 조회 -->
-	<select id="selectdpName" parameterType="_int" resultMap="userDepartResultSet">
-	SELECT USER_NO, DEPT_NAME, P_NAME
-	  FROM user_department
-	  JOIN department using (DEPT_CODE)
-	  JOIN position using (P_CODE)
-	 WHERE USER_NO = ${userNo};
+ 	<!-- [지의] - 부서 조회 -->
+	<select id="selecTopDept" parameterType="member" resultMap="departmentesultSet">
+		SELECT DEPT_NAME
+		FROM DEPARTMENT
+		WHERE DEPT_CODE = (SELECT TOP_DEPT_CODE
+							 FROM DEPARTMENT
+						  	 JOIN USER_DEPARTMENT USING (DEPT_CODE)
+							WHERE USER_NO = #{userNo}
+						  	  AND DEPT_NAME = #{dName});
 	</select>
 	
   
