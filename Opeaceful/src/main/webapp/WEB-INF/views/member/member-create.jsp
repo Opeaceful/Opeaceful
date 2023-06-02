@@ -31,7 +31,7 @@
 	</c:if>
 	<c:if test="${ not empty userEno }">
 		<script>
-		swal('${userEno}', "해당 아이디로 로그인 하세요" );
+		swal('${userEno}');
 		</script>
 		<c:remove var="userEno"/>
 	</c:if>
@@ -89,7 +89,7 @@
                 <div class="row mb-4">
                     <label for="input-phone" class="col-sm-3 col-form-label">연락처</label>
                     <div class="col-sm-9">
-                        <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" >
+                        <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" >
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@
                 <div class="row mb-4">
                     <label for="input-call" class="col-sm-3 col-form-label">내선번호</label>
                     <div class="col-sm-9">
-                        <input type="tel" id="user-call" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" name="extension">
+                        <input type="tel" id="user-call" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" name="extension">
                     </div>
                 </div>
 
