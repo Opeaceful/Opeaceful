@@ -64,7 +64,7 @@
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
-<!-- [지영] member select 구문 -->	
+	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
 		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,HIRE_DATE,P_NAME,DEPT_NAME
 		FROM member
@@ -101,11 +101,13 @@
 	<!-- [지의] 내정보변경 -->
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER
-		   SET PROFILE_IMG = #{profileImg},
-		   	   PHONE = #{phone},
+		   SET PHONE = #{phone},
 			   EXTENSION = #{extension},
 			   ADDRESS = #{address},
 			   EMAIL = #{email}
+			   <if test="profileImg != null">
+			   ,PROFILE_IMG = #{profileImg}
+			   </if>
 		 WHERE USER_NO = #{userNo}
 	</update>
 

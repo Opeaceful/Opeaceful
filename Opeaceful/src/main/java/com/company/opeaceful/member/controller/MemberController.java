@@ -1,11 +1,15 @@
 package com.company.opeaceful.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.company.opeaceful.board.controller.BoardController;
+import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
@@ -32,6 +39,7 @@ public class MemberController {
 	
 	private MemberService memberService;
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
 	public MemberController(MemberService memberService,  BCryptPasswordEncoder bcryptPasswordEncoder) {
@@ -45,7 +53,7 @@ public class MemberController {
 	// [지의] - 마이페이지 > 회원정보 재조회해서 뿌려주기
 	@GetMapping("/mypage")
 	public String mypageSelectMember(@ModelAttribute ("loginUser") Member loginUser, Model model) {
-		System.out.println("GET 방식");
+		logger.info("GET 방식");
 		loginUser = memberService.loginMember(loginUser);
 		Department topDept = memberService.selecTopDept(loginUser);
 		
@@ -57,28 +65,45 @@ public class MemberController {
 	
 	// [지의] - 마이페이지 > 정보수정
 	@PostMapping("/mypage")
-//	@RequestParam("profileImg") MultipartFile file,
-	public String updateMember(Member m,
+	public String updateMember(@RequestParam(value="upfile", required = false) MultipartFile upfile,
+							   Member m,
 							   Model model,
-							   HttpSession session) {
-		System.out.println("POST 방식");
-		System.out.println("수정 정보 입력받은 -> "+m);
+							   HttpSession session,
+							   @ModelAttribute ("loginUser") Member loginUser) {
 		
 		// 이미지 저장경로 설정
-		String webPath = "/resources/image/mypage/"; // 하드코딩
-		String serverFolderPath = session.getServletContext().getRealPath(webPath); // 동적으로 만들어둠
-		System.out.println(serverFolderPath);
+		String webPath = "/resources/image/mypage/";
+		String serverFolderPath = session.getServletContext().getRealPath(webPath);
+		int result = 0;
 		
-		String fileName = serverFolderPath+m.getProfileImg();
-		
-		System.out.println(fileName);
-		
-		int result = memberService.updateMember(m);
-		
+		// 업로드 파일이 있을경우 -> 변환한 파일명으로 넘겨줌
+		if(upfile.getSize() > 0) {
+			try {
+				String changeName = FileRenamePolicy.saveFile(upfile, serverFolderPath);
+				m.setProfileImg(changeName);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// 업로드 성공시 저장경로에 있는 이미지 삭제
+			result = memberService.updateMember(m);
+			if(result > 0) {
+				File deleteFile = new File(serverFolderPath+loginUser.getProfileImg());
+				if(deleteFile.exists()) {	// 파일이 존재하면
+					deleteFile.delete();	// 파일 삭제	
+				}
+			}
+		}else {
+			result = memberService.updateMember(m);
+		}
+
 		// 업데이트에 성공했다면
 		if(result > 0) {
+			session.setAttribute("alertMsg", "회원정보가 변경되었습니다.");
 			return "redirect:/member/mypage";
 		}else {
+			session.setAttribute("alertMsg", "회원정보가 변경실패");
 			return "member/mypage";
 		}
 	}

@@ -24,7 +24,10 @@
 	<link rel="stylesheet" href="${path}/resources/css/mypage.css">
 </head>
 <body>
-
+	<c:if test="${ not empty alertMsg }">
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="mypage-wrap container">
@@ -32,9 +35,7 @@
             <h2 class="title-underline">마이페이지</h2>
 
             <!-- 회원정보 -->
-            <form class="mypage-content container row row-col-2" action="${path}/member/mypage" method="post">
-            <!--  enctype="multipart/form-data" -->
-
+            <form class="mypage-content container row row-col-2" action="${path}/member/mypage" enctype="multipart/form-data" method="post">
                 <!-- 이미지부분 -->
                 <div class="col-3 mypage-left">
                     <div class="mypage-profile-box">
@@ -45,10 +46,10 @@
 	                        <img class="mypage-profile" id="mypage-profile" name="profileImg" src="${path}/resources/image/mypage/${loginUser.profileImg}">
                     	</c:if>
                     </div>
-                    
+
 					<div class="profile-btn">
                     	<button type="button" class="btn btn-outline-primary" id="mypage-img-btn">변경</button>
-                    	<input type="file" id="mypage-upfile" name="profileImg" accept=".png, .jpg, .jpeg" style="display:none;">
+                    	<input type="file" id="mypage-upfile" name="upfile" accept=".png, .jpg, .jpeg" style="display:none;">
 					</div>
 					
                 </div>
@@ -90,7 +91,7 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">연락처</div>
                         <div class="fs-18 col-9">
-                            <input type="tel" id="mypage-phone" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="${loginUser.phone}">
+                            <input type="tel" id="mypage-phone" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" value="${loginUser.phone}">
                         </div>
                     </div>
 
@@ -102,7 +103,7 @@
 	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" maxlength="13" value="등록된 내선번호 없음">
                         	</c:if>
                         	<c:if test="${!empty loginUser.extension }">
-	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="${loginUser.extension}">
+	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" value="${loginUser.extension}">
                         	</c:if>
                         </div>
                     </div>
@@ -112,11 +113,14 @@
                         <div class="fs-14 col-3">주소</div>
                         <div class="fs-18 col-9">
 	                        <div class="address-first mb-3">
+	                        	<!-- 처음 , 전 위쪽 배치 -->
 		                        <input type="text" id="user-address" name="address" class="mypage-input form-control box-shadow-put d-inline" required value="${fn:split(loginUser.address, ',')[0]}">
 		                        <button class="btn btn-outline-secondary seach-btn" type="button" id="seach-address">
 		                            <i class="fa-solid fa-magnifying-glass"></i>
 		                        </button>
 	                        </div>
+	                        
+	                        <!-- 처음 , 제외 아래쪽에 모두 배치 -->
 	                        <c:set var="addEtc">
 		                        <c:forEach items="${fn:split(loginUser.address, ',')}" var="add" begin="1" varStatus="i"><c:if test="${!i.last}">${add}, </c:if><c:if test="${i.last}">${add} </c:if></c:forEach>
 	                        </c:set>

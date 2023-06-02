@@ -92,7 +92,7 @@
 	        			<div class="main-info">
 	        				<!-- 내정보 -->
 	        				<div class="main-info-top row">
-	        					<div class="col text-start main-d-day">입사한지 <span id="main-d-day"></span>일</div>
+	        					<div class="col-3 text-start main-d-day">입사한지 <span id="main-d-day"></span>일</div>
 	        					<div class="col text-center main-profile-box">
 									<!-- 프로필 이미지 -->
 									<div class="main-profile">
@@ -112,17 +112,17 @@
 				                    	<span id="main-pName">${loginUser.PName}</span>
 				                    </div>
 	        					</div>
-	        					<div class="col text-end">
+	        					<div class="col-3 text-end">
 		        					<!-- 오프라인 온라인 자리비움 회의중 식사중 -->
 		        					<div id="state">
 										<div class="select">
-											<div class="text"><img src="${path}/resources/image/main/online.svg"></div>
+											<div class="text"><img src="${path}/resources/image/status/online.svg"></div>
 											<ul class="option-list">
-												<li class="option"><img src="${path}/resources/image/main/online.svg"></li>
-												<li class="option"><img src="${path}/resources/image/main/offline.svg"></li>
-												<li class="option"><img src="${path}/resources/image/main/eat.svg"></li>
-												<li class="option"><img src="${path}/resources/image/main/meeting.svg"></li>
-												<li class="option"><img src="${path}/resources/image/main/absence.svg"></li>
+												<li class="option"><img src="${path}/resources/image/status/online.svg"></li>
+												<li class="option"><img src="${path}/resources/image/status/offline.svg"></li>
+												<li class="option"><img src="${path}/resources/image/status/eat.svg"></li>
+												<li class="option"><img src="${path}/resources/image/status/meeting.svg"></li>
+												<li class="option"><img src="${path}/resources/image/status/absence.svg"></li>
 											</ul>
 										</div>
 		        					</div>
@@ -141,10 +141,22 @@
 	        				</div>
 	        				
 	        				<!-- 출퇴근 -->
-	        				<div class="text-center main-info-bottom">
-								<button type="button" id="main-on" class="w90-btn btn btn-primary">출근</button>
-								<button type="button" id="main=off" class="w90-btn btn btn-outline-primary">퇴근</button>
-	        				</div>
+	        				<div class="d-flex main-info-bottom">
+<!-- 
+								<div class="on_off_btn w90-btn">
+									<input type="radio" name="onOff" id="main-on" value="on">
+									<label for="main-on">출근</label>
+								</div>
+																
+								<div class="on_off_btn w90-btn">
+									<input type="radio" name="onOff" id="main-off" value="off" checked>
+									<label for="main-off">퇴근</label>
+								</div> 
+								 -->
+								<input type="button" class="on_off_btn navy-btn w90-btn" name="onOff" id="main-on" value="출근">
+								 
+								<input type="button" class="on_off_btn white-btn w90-btn" name="onOff" id="main-off" value="퇴근">
+							</div>
 
 	        			</div>
 	        		</div>
