@@ -25,11 +25,15 @@
 </head>
 <body>
 	<c:if test="${ not empty alertMsg }">
-		<script>
-			swal('${alertMsg}');
-		</script>
-      <c:remove var="alertMsg"/>
-   </c:if>
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+	
+	<!-- 로그인시 세션에 정보있다면 메인페이지로 바로 보냄 -->
+   	<c:if test="${!empty loginUser}">
+		<script> location.href = "${path}/main";</script>
+	</c:if>
+    
     <div class="login-wrap">
         <div class="login-div row">
             <!-- 로고 -->
@@ -42,7 +46,7 @@
 
             <!-- 폼 -->
             <div class="login-form">
-                <form action="${path}/main" method="post">
+                <form action="${path}/login" method="post">
                     <div class="login-input">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-user" style="width: 16px;"></i></span>

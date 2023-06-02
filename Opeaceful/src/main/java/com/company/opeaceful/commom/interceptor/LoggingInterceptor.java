@@ -1,4 +1,4 @@
-package com.company.opeaceful.commom;
+package com.company.opeaceful.commom.interceptor;
 
 import java.util.Map;
 
@@ -14,13 +14,10 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
 	static Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
 	
-	
 	static String logMp[] = {"iphone", "ipod", "android", "blackberry", "opera mobi"};
-	
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		
 		String currentDevice = "web";
 		String logUA = request.getHeader("user-agent").toLowerCase();
 		for(String decice : logMp) {
@@ -75,6 +72,10 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 		
 		String userId = "";
 		
+		/*
+		 * Member user = (Member) session.getAttribute("loginUser"); if(user != null) {
+		 * userId = user.getUserId(); }
+		 */
 		logger.info(ip+":"+currentDevice+":"+userId+":"+protocol+"://"+currentDomain
 				+":"+currentPort+uri+(queryString !=null ? "?"+queryString : ""));
 		

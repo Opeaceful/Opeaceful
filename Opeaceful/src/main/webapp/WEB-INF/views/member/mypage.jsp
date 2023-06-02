@@ -7,14 +7,20 @@
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
 	
+	<!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
+	
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
 	<link rel="stylesheet" href="${path}/resources/css/mypage.css">
 </head>
 <body>
-
+	<c:if test="${ not empty alertMsg }">
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="mypage-wrap container">
@@ -22,25 +28,21 @@
             <h2 class="title-underline">마이페이지</h2>
 
             <!-- 회원정보 -->
-            <div class="mypage-content container row row-col-2">
-
+            <form class="mypage-content container row row-col-2" action="${path}/member/mypage" enctype="multipart/form-data" method="post">
                 <!-- 이미지부분 -->
                 <div class="col-3 mypage-left">
                     <div class="mypage-profile-box">
                     	<c:if test="${empty loginUser.profileImg}">
-	                        <img class="mypage-profile" src="${path}/resources/image/mypage/basic_profile.png">
+	                        <img class="mypage-profile" id="mypage-profile" name="profileImg" src="${path}/resources/file/mypage/basic_profile.png">
                     	</c:if>
                     	<c:if test="${!empty loginUser.profileImg}">
-	                        <img class="mypage-profile" src="${path}/resources/image/mypage/${loginUser.profileImg}">
+	                        <img class="mypage-profile" id="mypage-profile" name="profileImg" src="${path}/resources/file/mypage/${loginUser.profileImg}">
                     	</c:if>
                     </div>
-                    
-<!-- 					<form action="/member/updateImg" class="profile-btn" method="post" enctype="multipart/form-data">
-					</form> -->
+
 					<div class="profile-btn">
-					
                     	<button type="button" class="btn btn-outline-primary" id="mypage-img-btn">변경</button>
-                    	<input type="file" id="mypage-upfile" name="mypageUpfile" style="display:none;">
+                    	<input type="file" id="mypage-upfile" name="upfile" accept=".png, .jpg, .jpeg" style="display:none;">
 					</div>
 					
                 </div>
@@ -51,6 +53,8 @@
                     <!-- 사번 -->
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">사번</div>
+                        <input name="userNo" id="mypage-userNo" style="display: none;" value="${loginUser.userNo}">
+                        <input name="eno" style="display: none;" value="${loginUser.eno}">
                         <div class="fs-18 ps-4 col-9" id="mypage-no">${loginUser.eno}</div>
                     </div>
                     
@@ -60,7 +64,7 @@
                         <div class="fs-18 ps-4 col-9">
                             <div class="d-inline" id="mypage-name">${loginUser.userName}</div>
                             <div class="d-inline ms-2 me-2"> / </div>
-                            <div class="d-inline" id="mypage-position">${dpName.PName }</div>
+                            <div class="d-inline" id="mypage-position">${loginUser.PName }</div>
                         </div>
                     </div>
                     
@@ -68,9 +72,11 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">부서 / 팀</div>
                         <div class="fs-18 ps-4 col-9">
-                            <div class="d-inline" id="mypage-dept">?????</div>
-                            <div class="d-inline ms-2 me-2"> / </div>
-                            <div class="d-inline" id="mypage-team">${dpName.deptName }</div>
+                        	<c:if test="${!empty topDept.deptName}">
+	                            <div class="d-inline" id="mypage-dept">${topDept.deptName}</div>
+	                            <div class="d-inline ms-2 me-2"> / </div>
+                        	</c:if>
+                            <div class="d-inline" id="mypage-team">${loginUser.DName }</div>
                         </div>
                     </div>
 
@@ -78,7 +84,7 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">연락처</div>
                         <div class="fs-18 col-9">
-                            <input type="tel" id="mypage-phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="${loginUser.phone}">
+                            <input type="tel" id="mypage-phone" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" value="${loginUser.phone}">
                         </div>
                     </div>
 
@@ -87,10 +93,10 @@
                         <div class="fs-14 col-3">내선번호</div>
                         <div class="fs-18 col-9">
                         	<c:if test="${empty loginUser.extension }">
-	                            <input type="tel" id="mypage-call" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="등록된 내선번호 없음">
+	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" maxlength="13" value="등록된 내선번호 없음">
                         	</c:if>
                         	<c:if test="${!empty loginUser.extension }">
-	                            <input type="tel" id="mypage-call" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" value="${loginUser.extension }">
+	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" value="${loginUser.extension}">
                         	</c:if>
                         </div>
                     </div>
@@ -100,13 +106,16 @@
                         <div class="fs-14 col-3">주소</div>
                         <div class="fs-18 col-9">
 	                        <div class="address-first mb-3">
-		                        <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put d-inline" required value="${fn:split(loginUser.address, ',')[0]}">
+	                        	<!-- 처음 , 전 위쪽 배치 -->
+		                        <input type="text" id="user-address" name="address" class="mypage-input form-control box-shadow-put d-inline" required value="${fn:split(loginUser.address, ',')[0]}">
 		                        <button class="btn btn-outline-secondary seach-btn" type="button" id="seach-address">
 		                            <i class="fa-solid fa-magnifying-glass"></i>
 		                        </button>
 	                        </div>
+	                        
+	                        <!-- 처음 , 제외 아래쪽에 모두 배치 -->
 	                        <c:set var="addEtc">
-		                        <c:forEach items="${fn:split(loginUser.address, ',')}" var="add" begin="1">${add}, </c:forEach>
+		                        <c:forEach items="${fn:split(loginUser.address, ',')}" var="add" begin="1" varStatus="i"><c:if test="${!i.last}">${add}, </c:if><c:if test="${i.last}">${add} </c:if></c:forEach>
 	                        </c:set>
 	                        <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" required value="${addEtc }" >
                         </div>
@@ -116,7 +125,7 @@
                     <div class="mb-4 row align-items-center">
                         <div class="fs-14 col-3">이메일</div>
                         <div class="fs-18 col-9">
-                            <input type="email" id="mypage-email" class="mypage-input form-control box-shadow-put" pattern=".+@gmail\.com" value="${loginUser.email}">
+                            <input type="email" id="mypage-email" name="email" class="mypage-input form-control box-shadow-put" required pattern=".+@gmail\.com" value="${loginUser.email}">
                         </div>
                     </div>
 
@@ -132,14 +141,14 @@
                     <div class="row justify-content-start">
                         <div class="col-4" style="text-align: start;">
                             <!-- Button trigger modal -->
-                            <button type="button" class="pass-re btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">비밀번호 변경</button>
+                            <button type="button" id="mypage-pwd-btn" class="pass-re btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">비밀번호 변경</button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="w90-btn btn btn-primary">정보변경</button>
+                            <button type="submit" class="w90-btn btn btn-primary">정보변경</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
