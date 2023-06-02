@@ -1,20 +1,46 @@
 :root {
   /* 흐린 검정선 */
   --color-blurred-black: rgba(0, 0, 0, 0.2);
-  --color-light-navy: rgb(16, 16, 83);
+  --color-deep-navy: rgb(16, 16, 83);
   --color-board-black: black;
   --color-light-gray: rgb(243, 243, 243);
   --box-shadow-px: 1px;
-  --box-shadow: var(--box-shadow-px) 0 0 0 var(--color-light-navy),
-    0 var(--box-shadow-px) 0 0 var(--color-light-navy),
-    var(--box-shadow-px) var(--box-shadow-px) 0 0 var(--color-light-navy),
-    var(--box-shadow-px) 0 0 0 var(--color-light-navy) inset,
-    0 var(--box-shadow-px) 0 0 var(--color-light-navy) inset;
+  --box-shadow: var(--box-shadow-px) 0 0 0 var(--color-deep-navy),
+    0 var(--box-shadow-px) 0 0 var(--color-deep-navy),
+    var(--box-shadow-px) var(--box-shadow-px) 0 0 var(--color-deep-navy),
+    var(--box-shadow-px) 0 0 0 var(--color-deep-navy) inset,
+    0 var(--box-shadow-px) 0 0 var(--color-deep-navy) inset;
 }
 
 * {
   box-sizing: border-box;
 }
+
+/* .modal{
+  margin-left: var(--side-bar);
+} */
+
+/* 메모 모달 감추기 */
+#memo-modal-back {
+  display: none;
+}
+
+/* 메모 리스트 감추기 */
+.memo-list {
+  display: none;
+}
+/* 메모 추가/디테일 화면 감추기 */
+.memo-detail {
+  display: none;
+}
+
+
+/* 결재/반려 모달 감추기 */
+#approval-confirm-back{
+  display: none;
+}
+
+
 
 #end-approval .modal-header {
   border-bottom: 0px;
@@ -29,9 +55,20 @@
   font-size: var(--font13);
 }
 
+#end-approval input:focus-visible,
+#end-approval textarea:focus-visible,
 #end-approval select:focus-visible,
 #end-approval input:focus-visible {
   outline: none;
+}
+
+/* 부트스트랩 인풋 디자인 막기용 */
+#end-approval input:focus {
+  box-shadow: none;
+}
+.form-control-sm {
+  width: 80%;
+  display: inline-block;
 }
 
 .end-approval-table {
@@ -109,8 +146,15 @@
   border: 1px solid var(--color-board-black);
 }
 
+.end-approval-lines{
+  margin: 2rem 0px; 
+  display: flex;
+  justify-content: flex-end;
+}
+
 .end-approval-lines-wrap {
-  margin: 2rem 0px;
+
+  width: max-content;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -152,7 +196,7 @@
   box-shadow: var(--box-shadow);
 }
 
-.memo-modal-back {
+.modal-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -160,8 +204,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* 모달 감추기 */
-  /* display: none; */
 }
 
 #memo-modal {
@@ -171,14 +213,6 @@
   min-height: 25vh;
 }
 
-.memo-list {
-  /* 메모 테이블 감추기 */
-  display: none;
-}
-.memo-detail {
-  /* 메모 추가/디테일 화면 감추기 */
-  /* display: none; */
-}
 
 .memo-list-table {
   overflow: auto;
@@ -205,4 +239,65 @@
 
 .memo-detail-table td:nth-child(1) > div {
   border-left: 2px solid var(--color-navy);
+}
+
+.memo-files-wrap {
+  display: flex;
+  align-items: flex-start;
+  max-height: 100px;
+}
+
+#btn-memo-add-file {
+  padding: 3px 14px;
+}
+#btn-memo-add-file:hover,
+#end-approval .btn-file-delete:hover {
+  background-color: var(--color-background);
+}
+
+.memo-files {
+  max-height: 100px;
+  overflow: auto;
+  overflow-x: hidden;
+  width: 70%;
+  margin: auto;
+  text-align: left;
+}
+
+.memo-file-item {
+  margin-bottom: 0.5rem;
+}
+
+#memo-content {
+  width: 100%;
+  height: 20vh;
+  resize: none;
+}
+
+.memo-btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#btn-memo-delete {
+  margin-right: 0.5rem;
+}
+
+
+#confirm-modal{
+  width: max-content;
+}
+.confirm-body{
+  padding: 0px 3rem;
+}
+
+.confirm-body{
+  text-align: center;
+}
+
+.confirm-btn-wrap > button{
+  margin: 1rem;  
+  margin-bottom: 0px;
+  width: 5rem;
 }

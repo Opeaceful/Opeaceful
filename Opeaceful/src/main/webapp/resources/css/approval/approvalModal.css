@@ -110,7 +110,6 @@
 :root {
   /* 흐린 검정선 */
   --color-blurred-black: rgba(0, 0, 0, 0.2);
-  --color-light-navy: rgb(16, 16, 83);
 }
 
 * {
@@ -199,8 +198,8 @@
   width: 100%;
 }
 
-.approval-lines,
-.approval-files {
+#approval .approval-lines,
+#approval .approval-files {
   max-height: 100px; 
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -208,30 +207,30 @@
   background-color: var(--color-background);
 }
  
-.approval-files > div {
+#approval .approval-files > div {
   overflow: auto;
   overflow-x: hidden;
   height: 100%;
 }
-.approval-lines ol {
+#approval .approval-lines ol {
   overflow: auto;
   overflow-x: hidden;
   margin-bottom: 0px;
   height: 100%;  
 }
 
-.approval-lines ol b{
+#approval .approval-lines ol b{
   color: var(--color-navy);
   margin: 10px 0.5rem; 
 }
 
-.approval-files > div > div {
+#approval .approval-files > div > div {
   font-size: var(--font14);
   margin: 0.5rem 1rem;
   display: flex;
 }
 
-.approval-files > div > div:hover{
+#approval .approval-files > div > div:hover{
   background-color: var(--color-light-gray);
 }
 
