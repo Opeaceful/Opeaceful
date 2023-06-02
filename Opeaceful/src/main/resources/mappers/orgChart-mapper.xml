@@ -33,4 +33,10 @@
 		SET DEPT_NAME = #{deptName}
 		WHERE DEPT_CODE = #{deptCode}
 	</update>
+	
+	<!-- 직급 추가 -->
+	<insert id="insertPname" parameterType="orgChart" useGeneratedKeys="true" keyProperty="pCode">
+		INSERT INTO POSITION(P_CODE)
+		VALUES(#{pName})
+	</insert>
 </mapper>

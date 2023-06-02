@@ -35,4 +35,10 @@ public class OrgChartServiceImpl implements OrgChartService {
 	public int updateDp(OrgChart orgChart) {
 		return orgChartDao.updateDp(orgChart);
 	}
+	
+	// 상위부서 추가
+	@Override
+	public int insertPname(OrgChart orgChart) {
+		return orgChartDao.insertPname(orgChart);
+	}
 }

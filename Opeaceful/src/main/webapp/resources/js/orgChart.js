@@ -179,6 +179,80 @@ $(document).ready (function () {
 		$(".team-name").focus();
 		$(".team-name")[0].setSelectionRange(inputLen, inputLen);
 	})
+
+	// 직급추가 버튼 클릭 시 직급 이름 입력할 수 있는 input 생성
+	$('.position-plus-btn').click (function () {
+		
+		// 동적으로 아코디언 생성해서 사용하기 위해 클래스 이름 뒤에 숫자 추가
+		let num = document.getElementsByClassName('org-list-group').length;
+
+		$('.org-modal-body').append(
+			`<ul class="list-group list-group-flush org-list-group">
+				<li class="list-group-item position-list">
+					<input type="text" name="position-name${num}" class="pName" id="pCode"> 
+					<i class="fa-solid fa-minus position-minus"></i> 
+					<i class="fa-solid fa-pen position-change"></i>
+				</li>
+			</ul>`
+		);
+
+		// 생성된 input에 포커스
+		$(`input[name=position-name${num}]`).focus();
+	});
+
+	// input 포커스 아웃 시 하위부서 db에 부서추가
+	$(".org-position-modal").on("blur", "[name^=position-name]", function(e) {
+
+		console.log(e.target);
+
+		let input = $(e.target).val();
+		let id = $(e.target).attr("id");
+
+		// 직급이름 입력 안했을 시 input 삭제
+		if (input == "") {
+			$(e.target).closest(".position-list").remove();
+		} else {
+			console.log('input 변경전 : '+input);
+			console.log('id 변경전 : '+ $(e.target).attr("id"));
+
+			if (id == "pCode") {
+				//부서추가 ajax
+				$.ajax({
+					url : path+"/orgChart/insert/Pname",   
+					type : 'post', 
+					data : {pName: input,
+							pCode : id},
+					success : function(result){
+						console.log('변경전 result: ' +result);
+						if (result > 0) {
+							$(e.target).attr("id", result);
+						}
+						$(".team-name").css('pointer-events','none');
+						$(".team").css('cursor','default');
+					}
+				});
+			} else { // topDeptCode 받기? 넘기기? 그거 처리 하기.
+				console.log('input 변경후 : '+input);
+				console.log('id 변경후 : '+$(e.target).attr("id"));
+				// 부서이름 수정 ajax
+				$.ajax({
+					url : path+"/orgChart/update/Dname",   
+					type : 'post', 
+					data : {deptName: input, 
+							deptCode : id},
+					success : function(result){
+						console.log('변경후 result: ' +result);
+						if (result > 0) {
+							$(e.target).attr("id", result);
+						}
+						$(".team-name").css('pointer-events','none');
+						$(".team").css('cursor','default');
+					}
+				});
+			}
+		}
+	})
+
 	// document.getElementsByClassName("team-change").onclick = function() {
 
 	// 	document.getElementsByClassName("topD-name").style.pointerEvents = "auto";

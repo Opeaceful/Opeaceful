@@ -40,7 +40,7 @@ public class OrgChartController {
 		
 		int result = orgchartService.insertTopDp(orgChart);
 		
-//		System.out.println("변경전 : "+result);
+//		System.out.println("생성 : "+result);
 
 		return result;
 	}
@@ -61,23 +61,35 @@ public class OrgChartController {
 	@PostMapping("/insert/Dname")
 	@ResponseBody
 	public int insertDp(OrgChart orgChart) {
-		System.out.println("첫생성 : "+orgChart);
+//		System.out.println("첫생성 : "+orgChart);
 		
 		int result = orgchartService.insertDp(orgChart);
 		
-		System.out.println("실행후생성 : "+result);
+//		System.out.println("실행후생성 : "+result);
 
 		return result;
 	}
 	
-	// 하부서 이름 변경
+	// 하위부서 이름 변경
 	@PostMapping("/update/Dname")
 	@ResponseBody
 	public int updateDp(OrgChart orgChart) {
 			
 		int result = orgchartService.updateDp(orgChart);
 			
-		System.out.println("변경후 : "+orgChart);
+//		System.out.println("변경후 : "+orgChart);
+
+		return result;
+	}
+	
+	// 직급 추가
+	@PostMapping("/insert/Pname")
+	@ResponseBody
+	public int insertPname(OrgChart orgChart) {
+			
+		int result = orgchartService.insertPname(orgChart);
+			
+		System.out.println("생성 : "+result+", "+orgChart);
 
 		return result;
 	}

@@ -15,4 +15,7 @@ public interface OrgChartService {
 	
 	// 하위부서명 변경
 	int updateDp(OrgChart orgChart);
+	
+	// 직급추가
+	int insertPname(OrgChart orgChart);
 }

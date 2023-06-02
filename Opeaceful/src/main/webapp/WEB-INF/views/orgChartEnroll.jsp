@@ -108,21 +108,21 @@
 				</div>
 			</div>
 			<!-- 직급관리 Modal -->
-			<div class="modal fade" id="position" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal org-position-modal fade" id="position" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content position-modal">
 						<div class="modal-header">
 							<h1 class="modal-title fs-5" id="staticBackdropLabel">직급관리</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body">
-							<ul class="list-group list-group-flush">
+						<div class="modal-body org-modal-body">
+							<!-- <ul class="list-group list-group-flush org-list-group">
 								<li class="list-group-item position-list">
 									<input type="text" name="position-name"> 
 									<i class="fa-solid fa-minus team-minus"></i> 
 									<i class="fa-solid fa-pen position-change"></i>
 								</li>
-							</ul>
+							</ul> -->
 						</div>
 						<div class="modal-footer">
 							<div class="position-plus-btn">
