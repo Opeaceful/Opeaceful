@@ -77,8 +77,9 @@
                     </div>
 
                     <div class="sidebar-more" id="board-menu-item">
-                        <a class="sidebar-more-text" href="">${boardcode.baordname }</a>
-                        
+                    <c:forEach var="boardType" items="${boardTypeList}">
+                        <a class="sidebar-more-text" href="${path}/board/list/${boardType.boardCd}">${boardType.boardName}</a>
+                        </c:forEach>
                     </div>
                 </li>
 
