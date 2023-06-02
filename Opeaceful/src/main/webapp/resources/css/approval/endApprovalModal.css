@@ -1,0 +1,303 @@
+:root {
+  /* 흐린 검정선 */
+  --color-blurred-black: rgba(0, 0, 0, 0.2);
+  --color-deep-navy: rgb(16, 16, 83);
+  --color-board-black: black;
+  --color-light-gray: rgb(243, 243, 243);
+  --box-shadow-px: 1px;
+  --box-shadow: var(--box-shadow-px) 0 0 0 var(--color-deep-navy),
+    0 var(--box-shadow-px) 0 0 var(--color-deep-navy),
+    var(--box-shadow-px) var(--box-shadow-px) 0 0 var(--color-deep-navy),
+    var(--box-shadow-px) 0 0 0 var(--color-deep-navy) inset,
+    0 var(--box-shadow-px) 0 0 var(--color-deep-navy) inset;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* .modal{
+  margin-left: var(--side-bar);
+} */
+
+/* 메모 모달 감추기 */
+#memo-modal-back {
+  display: none;
+}
+
+/* 메모 리스트 감추기 */
+.memo-list {
+  display: none;
+}
+/* 메모 추가/디테일 화면 감추기 */
+.memo-detail {
+  display: none;
+}
+
+
+/* 결재/반려 모달 감추기 */
+#approval-confirm-back{
+  display: none;
+}
+
+
+
+#end-approval .modal-header {
+  border-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.modal-xl {
+  min-width: 800px;
+}
+
+#end-approval button {
+  font-size: var(--font13);
+}
+
+#end-approval input:focus-visible,
+#end-approval textarea:focus-visible,
+#end-approval select:focus-visible,
+#end-approval input:focus-visible {
+  outline: none;
+}
+
+/* 부트스트랩 인풋 디자인 막기용 */
+#end-approval input:focus {
+  box-shadow: none;
+}
+.form-control-sm {
+  width: 80%;
+  display: inline-block;
+}
+
+.end-approval-table {
+  vertical-align: middle;
+  width: 100%;
+  margin-bottom: 1rem;
+  caption-side: bottom;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.01);
+  border-radius: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.end-approval-table .btn-outline-primary {
+  background-color: var(--color-background);
+}
+
+.end-approval-table tr {
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0) 90%,
+    rgba(0, 0, 0, 0.02)
+  );
+}
+
+.end-approval-table td:nth-child(1),
+.end-approval-table td:nth-child(3),
+.end-approval-table td:nth-child(5) {
+  text-align: center;
+  vertical-align: top;
+}
+
+.end-approval-table td:nth-child(1) > div:first-child,
+.end-approval-table td:nth-child(3) > div:first-child,
+.end-approval-table td:nth-child(5) > div:first-child {
+  border-left: 3px solid black;
+  width: 100px;
+  margin: 0.5rem 0px;
+}
+
+.final-approval-wrap {
+  width: 90%;
+  margin: auto;
+  padding-top: 2rem;
+}
+
+#end-approval .approval-files {
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+
+#end-approval .approval-files > div {
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 100px;
+}
+
+#end-approval .approval-files > div > div {
+  font-size: var(--font14);
+  margin: 0.5rem 1rem;
+  display: flex;
+  cursor: pointer;
+}
+
+#end-approval .btn-file-download {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-navy);
+  border-radius: 4px;
+  margin-left: 1rem;
+}
+
+.final-approval-wrap {
+  font-size: var(--font14);
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid var(--color-board-black);
+}
+
+.end-approval-lines{
+  margin: 2rem 0px; 
+  display: flex;
+  justify-content: flex-end;
+}
+
+.end-approval-lines-wrap {
+
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
+  height: 100%;
+}
+
+.end-approval-lines-title {
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-light-gray);
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.approver-name {
+  background-color: var(--color-light-gray);
+  width: max-content;
+  padding: 0px 4px;
+  box-shadow: var(--box-shadow);
+}
+
+.approver-sign {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--box-shadow);
+}
+
+.approver-sign img {
+  min-width: 48px;
+  height: 48px;
+}
+
+.approver-date {
+  box-shadow: var(--box-shadow);
+}
+
+.modal-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#memo-modal {
+  min-width: 700px;
+  width: 80%;
+  max-height: 60vh;
+  min-height: 25vh;
+}
+
+
+.memo-list-table {
+  overflow: auto;
+  overflow-x: hidden;
+  display: block;
+  max-height: calc(60vh - 180px);
+}
+
+.memo-list-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.memo-list-table td:nth-child(2) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#btn-add-memo {
+  margin-left: 90%;
+}
+
+.memo-detail-table td:nth-child(1) > div {
+  border-left: 2px solid var(--color-navy);
+}
+
+.memo-files-wrap {
+  display: flex;
+  align-items: flex-start;
+  max-height: 100px;
+}
+
+#btn-memo-add-file {
+  padding: 3px 14px;
+}
+#btn-memo-add-file:hover,
+#end-approval .btn-file-delete:hover {
+  background-color: var(--color-background);
+}
+
+.memo-files {
+  max-height: 100px;
+  overflow: auto;
+  overflow-x: hidden;
+  width: 70%;
+  margin: auto;
+  text-align: left;
+}
+
+.memo-file-item {
+  margin-bottom: 0.5rem;
+}
+
+#memo-content {
+  width: 100%;
+  height: 20vh;
+  resize: none;
+}
+
+.memo-btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#btn-memo-delete {
+  margin-right: 0.5rem;
+}
+
+
+#confirm-modal{
+  width: max-content;
+}
+.confirm-body{
+  padding: 0px 3rem;
+}
+
+.confirm-body{
+  text-align: center;
+}
+
+.confirm-btn-wrap > button{
+  margin: 1rem;  
+  margin-bottom: 0px;
+  width: 5rem;
+}

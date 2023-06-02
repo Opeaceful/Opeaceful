@@ -1,3 +1,17 @@
+
+:root{
+  --color-light-blue : rgba(3, 3, 97, 0.06);
+}
+
+/* 부트스트랩 모달 뒷배경 중첩 막기용도 */
+.modal-backdrop:nth-last-child(n+2){
+  background-color: unset;
+}
+
+.modal-lg{
+  min-width: 500px;
+}
+
 .my-approval-wrap {
   min-width: 800px;
 }
@@ -14,9 +28,14 @@
 .top-menubar {
   display: flex;
   margin-top: 3rem;
+  
 }
 
-.top-menubar > * {
+.inner-wrap{
+  min-width: 900px
+}
+
+.top-menubar > div {
   width: 10%;
   min-width: 130px;
   text-align: center;
@@ -24,6 +43,22 @@
   border-right: 0px;
   padding: 0.4rem 1rem;
   cursor: pointer;
+}
+
+.top-menubar > div:hover{
+  background-color: var(--color-light-navy);
+}
+
+div.line:hover{
+  background-color: var(--color-background);
+}
+
+div.line {
+  flex: 1;
+  border: 0px;
+  border-left: 1px solid var(--color-navy);
+  border-bottom: 1px solid var(--color-navy);
+  cursor: auto;
 }
 
 .alarm-wrap {
@@ -48,15 +83,10 @@
   /* transform-origin: 0px 0px; */
 }
 
-.line {
-  flex: 1;
-  border: 0px;
-  border-left: 1px solid var(--color-navy);
-  border-bottom: 1px solid var(--color-navy);
-}
 
-.inner-wrap,
-.selected {
+
+.inner-wrap, 
+div.selected {
   background-color: rgb(255, 255, 255);
   border-bottom: 0px;
 }
@@ -109,4 +139,27 @@
 
 .btn-wrap > button {
   margin-right: 0.5rem;
+}
+
+.sign-img-wrap{
+  display: flex;
+}
+
+.sign-img-item{
+  width: 80px;
+  height: 80px;  
+}
+
+.sign-img-item img{
+  height: 100%;
+  width: 100%;
+}
+
+.sign-btn-wrap{
+  display: flex;
+  justify-content: flex-end;
+}
+
+#btn-sign-img-save{
+  margin-right: 1rem;
 }
