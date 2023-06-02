@@ -14,17 +14,10 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
 	static Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
 	
-	// ����ڰ� ������� �ڵ��� ����
 	static String logMp[] = {"iphone", "ipod", "android", "blackberry", "opera mobi"};
 	
-	
-	/*
-	 * ��� ��η� ������ ��û������ ���� �α������� ����� ���� �޼ҵ�
-	 * 
-	 * */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		// ���ӵ� ��� �������� (��/�����)
 		String currentDevice = "web";
 		String logUA = request.getHeader("user-agent").toLowerCase();
 		for(String decice : logMp) {
@@ -34,7 +27,6 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		// ������ url, �������� �߰�
 		HttpSession session = request.getSession();
 		
 		String currentDomain = request.getServerName();
@@ -53,7 +45,6 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 					queryString += "&";
 				}
 				String[] values = (String[]) map.get(keys[i]);
-				// ������ Ű������ ���� �� ������ ��������
 				
 				queryString += keys[i] + "=";
 				
@@ -70,19 +61,15 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		// �Ķ���Ͱ� �ƿ� ���ٸ�, ���ʿ� �α������� ���Խ�Ű�� ���� ������
 		if(queryString == null || queryString.trim().length() == 0) {
 			queryString = null;
 		}
 		
-		//ip���� �߰�
 		String uri = request.getRequestURI();
 		String ip = getIp(request);
 		
-		// �������� ���� �߰� s == secure
 		String protocol = (request.isSecure()) ? "https" : "http";
 		
-		// ���̵� ���� �߰�
 		String userId = "";
 		
 		/*
