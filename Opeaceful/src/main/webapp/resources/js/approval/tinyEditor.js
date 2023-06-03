@@ -1,3 +1,13 @@
+let InputFileList = [];
+
+export function resetInputFileList() {
+  InputFileList = [];
+}
+
+export function getInputFileList() {
+  return InputFileList;
+}
+
 export function setTinymce() {
   var plugins = [
     'advlist',
@@ -33,47 +43,59 @@ export function setTinymce() {
 
   tinymce.init({
     language: 'ko_KR', //한글판으로 변경
-    selector: '#tinymce',
+    selector: '.tinymce',
     height: 500,
     // menubar: false,
     plugins: plugins,
     toolbar: edit_toolbar,
+    maxlength: 3000,
+    setup: function (editor) {
+      // 최대 입력글자수 이상 넘어가면 더이상 글자 입력 안되게 막음
+      editor.on('keydown', function (e) {
+        var content = editor.getContent();
+        var maxLength = 3000;
+        if (content.length >= maxLength - 1) {
+          e.preventDefault();
+          swal('최대 입력가능한 글자수를 초과하였습니다.', {
+            buttons: { cancel: '확인' },
+          });
+        }
+      });
+    },
 
     /*** image upload ***/
     image_title: true,
     /* enable automatic uploads of images represented by blob or data URIs*/
     automatic_uploads: true,
     /*
-              URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
-              images_upload_url: 'postAcceptor.php',
-              here we add custom filepicker only to Image dialog
-          */
+      URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+      images_upload_url: 'postAcceptor.php',
+      here we add custom filepicker only to Image dialog
+    */
     file_picker_types: 'image',
     /* and here's our custom image picker*/
     file_picker_callback: function (cb, value, meta) {
-      console.log('test1');
       var input = document.createElement('input');
-      input.setAttribute('class', 'testclass');
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
 
       /*
-              Note: In modern browsers input[type="file"] is functional without
-              even adding it to the DOM, but that might not be the case in some older
-              or quirky browsers like IE, so you might want to add it to the DOM
-              just in case, and visually hide it. And do not forget do remove it
-              once you do not need it anymore.
-              */
+        Note: In modern browsers input[type="file"] is functional without
+        even adding it to the DOM, but that might not be the case in some older
+        or quirky browsers like IE, so you might want to add it to the DOM
+        just in case, and visually hide it. And do not forget do remove it
+        once you do not need it anymore.
+      */
       input.onchange = function () {
         var file = this.files[0];
 
         var reader = new FileReader();
         reader.onload = function () {
           /*
-                      Note: Now we need to register the blob in TinyMCEs image blob
-                      registry. In the next release this part hopefully won't be
-                      necessary, as we are looking to handle it internally.
-                      */
+            Note: Now we need to register the blob in TinyMCEs image blob
+            registry. In the next release this part hopefully won't be
+            necessary, as we are looking to handle it internally.
+          */
           var id = 'blobid' + new Date().getTime();
           var blobCache = tinymce.activeEditor.editorUpload.blobCache;
           var base64 = reader.result.split(',')[1];
@@ -83,11 +105,15 @@ export function setTinymce() {
 
           /* call the callback and populate the Title field with the file name */
           cb(blobInfo.blobUri(), { title: file.name });
-          console.log(blobInfo.blobUri());
+
+          InputFileList.push({
+            src: blobInfo.blobUri(),
+            file: file,
+          });
+
+          console.log(InputFileList);
         };
         reader.readAsDataURL(file);
-
-        // 여기에 이미지 넣으면 어디로 저장 될지 넣어야하는듯
       };
       //위에서 만든 인풋 타입 파일인 요소에 클릭 줌
       input.click();
@@ -97,17 +123,63 @@ export function setTinymce() {
     content_style:
       'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
   });
+}
 
-  $('#btn-save').on('click', function () {
-    var content = tinymce.activeEditor.getContent();
-    console.log('tiny에서 제공하는 기본 ', content);
-    console.log(
-      'innerhtml 찍어본거 ',
-      tinymce.activeEditor.contentDocument.getElementById('tinymce').innerHTML
-    );
-    console.log(
-      '요소찍어본거 ',
-      tinymce.activeEditor.contentDocument.getElementById('tinymce')
-    );
-  });
+// 본문에 등록되어있던 이미지들 실제 파일을 FormData로 + 내용부분 입력값 리턴
+export function returnFormData(tinyId) {
+  /*
+        tinymce.triggerSave() : textarea에 내용 매핑시키는 함수인듯 
+                              이거 안하면 textarea 내용 그냥 태그없이 문자열로만 찍힘
+        tinymce.activeEditor : 에디터 하나일때 사용
+        tinymce.get('아이디값') :  에디터 여러개일때 사용
+        tinymce.activeEditor.setContent(html 문자열로); : 에디터에 원하는 문자열 세팅
+      
+
+        글자 확인 
+        tinymce.activeEditor.getContent()    
+        tinymce.get('tinymce').getContent()  //위 두개는 tinymce에서 제공해주는거
+        tinymce.activeEditor.contentDocument.getElementById('tinymce').innerHTML
+        document.querySelector('.tinymce').value   
+
+      */
+
+  // input의  FileList는 내용 변경이 불가하고 통째로 갈아끼는것만 가능함
+  // 그래서 이럴때 DataTransfer를 생성해서 갈아껴주는 용도로 사용한다
+  // 서버로 넘기기 위한 input태그에 파일들 옮겨담기는 아래와 같이 하면 됨
+  // let dataTransfer = new DataTransfer를();
+  // dataTransfer.items.add(file); // 이런식으로 파일들을 담음
+  // document.getElementById('인풋요소 아이디').files = dataTransfer.files; // 인풋 파일리스트 갈아끼기
+
+  // 하지만 여기서는 파일들을 리스트화해서 바로 서버로 전송하려고 하기 때문에 FormData를 사용함
+  // form 태그를 사용해서 숨겨둔 인풋요소의 값을 전송시킬거면 DataTransfer로 사용할것
+  let formData = new FormData();
+  let fileList = [...InputFileList];
+  let imgArr = tinymce.get(tinyId).contentDocument.getElementsByTagName('img');
+
+  // 본문내용의 이미지들을 돌면서 등록된 파일들을 찾음
+  for (let img of imgArr) {
+    let imgSrc = img.src;
+    // 신규로 추가된 이미지들의 src는 blob로 시작되도록 해두었음
+    // -> 신규로 추가된게 아니라면 굳이 파일을 찾을 이유가 없으므로 패스
+    if (imgSrc.startsWith('blob')) {
+      for (let i in fileList) {
+        // 만약 파일리스트에 저장된 src와 현재 이미지 src가 같다면 파일을 서버로넘길 dataTransfer리스트에 저장
+        if (fileList[i].src == imgSrc) {
+          formData.append('images', fileList[i].file);
+          // 저장했으면 기존 배열에서는 해당 아이템 삭제
+          fileList.splice(i, 1);
+
+          // 현재 이미지 태그의 src를 서버로넘길 dataTransfer리스트 인덱스값으로 변경
+          // -> 서버에서 다시한번 확인하면서 인덱스값을 실제 src값으로 바꾸어줄 예정
+          img.src = formData.getAll('images').length;
+          break;
+        }
+      }
+    }
+  }
+
+  // 정보 뽑아내기 끝나면 다음을 위해 파일리스트 비우기
+  resetInputFileList();
+
+  return { formData: formData, content: tinymce.get(tinyId).getContent() };
 }

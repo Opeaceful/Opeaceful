@@ -20,8 +20,6 @@ pageEncoding="UTF-8"%> -->
       crossorigin="anonymous"
     />
 
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
-    
     <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
     <link
       rel="stylesheet"
@@ -47,7 +45,7 @@ pageEncoding="UTF-8"%> -->
                 </th>
                 <th scope="col">양식명</th>
                 <th scope="col">
-                  <select name="checkType" id="check-type">
+                  <select name="checkType" id="select-show-type">
                     <option value="all" selected>구분</option>
                     <option value="0">일반</option>
                     <option value="1">연차</option>
@@ -60,7 +58,7 @@ pageEncoding="UTF-8"%> -->
             <tbody>
               <tr>
                 <td>
-                  <input type="checkbox" id="save-id" />
+                  <input type="checkbox" value="1"  />
                 </td>
                 <td>
                   <div>
@@ -72,14 +70,14 @@ pageEncoding="UTF-8"%> -->
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" id="save-id" />
+                  <input type="checkbox" value="2" />
                 </td>
                 <td>양식 며어어어엉</td>
                 <td>일반</td>
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" id="save-id" />
+                  <input type="checkbox" value="3"/>
                 </td>
                 <td>양식 며어어어엉</td>
                 <td>일반</td>
@@ -87,12 +85,13 @@ pageEncoding="UTF-8"%> -->
             </tbody>
           </table>
           <div class="btn-wrap">
-            <button class="btn btn-outline-primary">선택삭제</button>
+            <button id="btn-delete-selected-form" class="btn btn-outline-primary">선택삭제</button>
+            
             <button
-              id="btn-add-form"
+              id="btn-open-add-form"
               class="btn btn-primary position-btn"
               data-bs-toggle="modal"
-              data-bs-target="#add-form"
+              data-bs-target="#add-form-modal"
               type="button"
             >
               신규추가
@@ -103,7 +102,7 @@ pageEncoding="UTF-8"%> -->
 
       <div
         class="modal fade"
-        id="add-form"
+        id="add-form-modal"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"
@@ -126,7 +125,7 @@ pageEncoding="UTF-8"%> -->
               ></button>
             </div>
             <div class="modal-body scroll-bar-none">
-              <form method="post" action="">
+              <!-- <form method="post" action=""> -->
                 <div class="type-wrap">
                   <div>
                     <div class="type-title">구분</div>
@@ -156,18 +155,18 @@ pageEncoding="UTF-8"%> -->
                     양식복사
                   </button>
                 </div>
-
-                <textarea id="tinymce" readonly>
-                Welcome to TinyMCE!
+              <textarea class="tinymce" id="form-tiny" >
+ 				내용을 입력해주세요.
               </textarea
                 >
-              </form>
+              <!-- </form> -->
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                id="btn-save"
+                id="btn-form-save"
                 class="btn btn-primary position-ok ms-auto"
+                value = "test"
               >
                 저장
               </button>
@@ -187,7 +186,7 @@ pageEncoding="UTF-8"%> -->
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">
                     양식 복사
                   </h1>
-                  <button type="button" class="btn-close"></button>
+                  <button id="btn-close-copy-form" type="button" class="btn-close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="copy-select-wrap">
@@ -199,7 +198,7 @@ pageEncoding="UTF-8"%> -->
                     </select>
                     <button
                       type="button"
-                      id="btn-copy-save"
+                      id="btn-copy-reflect"
                       class="btn btn-outline-primary position-ok ms-auto"
                     >
                       복사

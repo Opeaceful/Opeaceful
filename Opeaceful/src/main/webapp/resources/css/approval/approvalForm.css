@@ -2,8 +2,8 @@
   min-width: 800px;
 }
 
-.approval-wrap {
-  min-width: 800px;
+.approval-form-wrap {
+  min-width: 700px;
 }
 
 .approval-form-table {
@@ -60,13 +60,13 @@ th:nth-child(3) {
   min-width: 140px;
 }
 
-.approval-wrap .btn-wrap {
+.approval-form-wrap .btn-wrap {
   margin-top: 1.5rem;
 }
 
-.approval-wrap .btn-wrap button {
+.approval-form-wrap .btn-wrap button {
   font-size: var(--font13);
-  margin-right: 0.8rem;
+  margin-right: 1rem;
 }
 
 .type-wrap {
@@ -90,16 +90,16 @@ th:nth-child(3) {
   padding: 0px 1rem;
 }
 
-#add-form select {
+#add-form-modal select {
   cursor: pointer;
 }
 
-#add-form button {
+#add-form-modal button {
   font-size: var(--font14);
 }
 
-#add-form input:focus-visible,
-#add-form select:focus-visible {
+#add-form-modal input:focus-visible,
+#add-form-modal select:focus-visible {
   outline: none;
 }
 
@@ -157,7 +157,12 @@ th:nth-child(3) {
   margin: auto;
 }
 
-#add-form .modal-header {
+#form-name {
+  width: 25vw;
+  min-width: 300px;
+}
+
+#add-form-modal .modal-header {
   border-bottom: 0px;
 }
 
