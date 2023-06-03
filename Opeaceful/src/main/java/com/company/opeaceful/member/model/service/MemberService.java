@@ -36,4 +36,11 @@ public interface MemberService {
 
 	int updateMember(Member m);
 
+	int resignedmember(ResignedMember resignedMember);
+
+	int resignedmemberUpdate(ResignedMember resignedMember);
+
+	int resignedmemberDelete(int userNo);
+
+
 }

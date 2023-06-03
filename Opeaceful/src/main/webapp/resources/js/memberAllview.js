@@ -11,6 +11,11 @@ let pagination;
 //퇴사자 체크 변수 세팅
 let Sselect;
 
+//퇴사일 이벤트 변수 세팅
+let LeaveDate = document.getElementById("leave-date");
+
+//DB상 퇴사일 세팅
+let LeaveDateDay;
 
 
 /*검색에 따라 member를 불러오는 이벤트 */
@@ -35,8 +40,11 @@ const cpage = pagination !== undefined ? pagination.currentPage : null;
     //퇴사자 여부 체크
     if(Schecked){
         Sselect = 'N'
+        inputReadonly();
+
     }else{
         Sselect = 'Y'
+        inputChangeable();
     }
 
 
@@ -134,7 +142,8 @@ function pitem(){
     });
 
     const selectBtn = document.querySelector(`.page-link[data-page='${pagination.currentPage}']`);
-    if (selectBtn) {
+
+    if(selectBtn){
         selectBtn.focus();
     }
     
@@ -206,6 +215,7 @@ function memberUpdaetajax(id){
            document.querySelector("input[name=phone]").value  = result.m.phone;
            document.getElementById("join-date").value = result.m.ShireDate;
            document.querySelector("input[name=annualLeaveCount]").value  = result.m.annualLeaveCount;
+           LeaveDate.value = "";
            
            //주소지 세팅
            let addressList = result.m.address.split( ",");
@@ -223,17 +233,17 @@ function memberUpdaetajax(id){
            selectedDept(result.m.deptCode, deptCodeSelect);
            selectedP(result.m.pCode);
            
-    
+           //hidden값 넣어주기
+           hiddenFrom('userNo',id);
+           hiddenFrom('pName',result.m.pName);
+           hiddenFrom('dName',result.m.dName);
+           hiddenFrom('eno',result.m.eno);
 
-    
-            //userNo도 함께 전송하기 유저에게 보이지 않기
-            let hiddenFrom = document.createElement('input');
-            hiddenFrom.type = 'hidden';
-            hiddenFrom.name = 'userNo';
-            hiddenFrom.value = id;
+           if(result.rm != null){
+                LeaveDate.value = result.rm.resignedDate;
+                LeaveDateDay = result.rm.resignedDate;
+           }
 
-            let form = document.getElementById('member-update-form');
-            form.appendChild(hiddenFrom);
    
         },
         error : function(request){
@@ -247,11 +257,9 @@ function memberUpdaetajax(id){
 
 }
     
-
+//DB에 따라 부서를 선택해주는 함수
 function selectedDept(num, deptCodeSelect){
 
-   
-            
      for (let i = 0; i < deptCodeSelect.options.length; i++) {
        if(deptCodeSelect.options[i].value == num){
           deptCodeSelect.options[i].selected = true
@@ -262,7 +270,7 @@ function selectedDept(num, deptCodeSelect){
 
 }
 
-
+//DB에 따라 직급을 선택해주는 함수
 function selectedP(num){
 
      //select 선택 직급
@@ -276,7 +284,149 @@ function selectedP(num){
 
 }
 
+//back에 필요한 데이터 셋팅
+function hiddenFrom(date,id){
+    let hiddenFrom = document.createElement('input');
+    hiddenFrom.type = 'hidden';
+    hiddenFrom.name = date;
+    hiddenFrom.value = id;
 
+    let form = document.getElementById('member-update-form');
+    form.appendChild(hiddenFrom);
+}
 
    
+//보내기전 한번 확인
+$("#form-sumit").click(function(){
+    swal("정말 변경하시겠습니까?","",{
+        buttons: {confirm: "확인", cancel: "취소"}
+    })
+    .then(function(isConfirm){
+        if(isConfirm){
 
+            //비활성화 되어있다면 select박스 활성화로 보내줘야 함
+            let selects = document.querySelectorAll('#member-update-form select');
+            selects.forEach(function(selects) {
+                selects.removeAttribute('disabled');
+            });
+
+            document.getElementById('member-update-form').submit();
+        }
+    })
+});
+
+//퇴사일 변경 확인
+LeaveDate.addEventListener('change', function() { 
+
+    //내가 선택한 날짜
+    let inputLeaveDate = this.value;
+    
+
+    console.log(inputLeaveDate);
+
+    if(inputLeaveDate){ //없던 퇴사일을 넣어준다면
+       
+        swal(inputLeaveDate+" 퇴사일 설정","퇴사일 설정시 해당 직원은 변경할 수 없습니다.",{
+            buttons: {confirm: "확인", cancel: "취소"}
+        })
+        .then(function(isConfirm){
+            if (isConfirm){ // 확인선택시 퇴사자로 변경 : input박스 수정불가!
+                LeaveDateDay = inputLeaveDate;
+                inputReadonly();
+              
+            } else { //취소시 데이터 지워주고
+                LeaveDate.value = "";
+
+                if(LeaveDateDay){ //퇴사일이 있는 상태에서 날짜만 변경
+                    LeaveDate.value = LeaveDateDay
+                }
+            }
+        })
+        
+      } else { //있던 퇴사일을 삭제시킨다면 
+
+        swal(LeaveDateDay+" 퇴사일 삭제","해당 직원은 재직자로 변경하시겠습니까?",{
+            buttons: {confirm: "확인", cancel: "취소"}
+        })
+        .then(function(isConfirm){
+            if (isConfirm){ 
+                inputChangeable(); 
+            } else { //취소시 데이터 다시 넣어주기
+                inputReadonly();
+                LeaveDate.value = LeaveDateDay; 
+            }
+        })
+      }
+   
+
+
+  });
+
+
+//수정하지 않고 종료했을 경우 realyonly 삭제!!
+document.getElementById('member-btn-close').addEventListener('click', inputChangeable )
+
+//수정할 수 있게 만들어주기 
+function inputChangeable(){
+    let inputs = document.querySelectorAll('#member-update-form input');
+
+    inputs.forEach(function(input) {
+        input.removeAttribute('readonly')
+    });
+
+    let selects = document.querySelectorAll('#member-update-form select');
+    selects.forEach(function(selects) {
+        selects.removeAttribute('disabled');
+    });
+
+}
+
+
+
+
+//읽기전용으로 만들어주기 
+function inputReadonly(){
+    //주소지가 바뀌는건 어떻게하징... 고민 
+    let inputs = document.querySelectorAll('#member-update-form input');
+
+    inputs.forEach(function(input) {
+        input.setAttribute('readonly', 'readonly');
+    });
+
+    // 퇴사일만 수정가능
+    LeaveDate.removeAttribute('readonly');
+
+    let selects = document.querySelectorAll('#member-update-form select');
+    selects.forEach(function(selects) {
+        selects.setAttribute('disabled', 'disabled');
+    });
+
+}
+
+//보내기전 한번 확인
+$("#password-reset-button").click(function(){
+    swal("비밀번호를 초기화 하시겠습니까?","초기화 비번: 1234",{
+        buttons: {confirm: "확인", cancel: "취소"}
+    })
+    .then(function(isConfirm){
+        if(isConfirm){
+            let eno = document.querySelector('input[name="eno"]').value;
+            $.ajax({
+                url:`${path}/member/passwordReset`,
+                dataType : "JSON",
+                method: 'post',
+                data: {
+                  eno : eno,
+                },
+                dataType : "json",
+                success : function(result) {
+                    swal("비밀번호가 초기화되었습니다.");
+                   
+                },
+                error : function(e) {
+                    swal("작업수행에 실패하였습니다.");
+                }
+            })
+        }
+    })
+});

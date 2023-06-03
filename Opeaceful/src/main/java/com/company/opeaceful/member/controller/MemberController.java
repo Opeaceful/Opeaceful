@@ -2,6 +2,8 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -207,7 +209,6 @@ public class MemberController {
 			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage
 			) {
 		
-		//System.out.print("============================들어옴!!!!!!!!!!!!!!!!===================================================");
 		
 		//ajax로 전송할 데이터 
 		Map<String, Object> map = new HashMap<>();	
@@ -261,35 +262,65 @@ public class MemberController {
 	@RequestMapping("/updateAllmember")
 	public String updateAllmember(
 			Member m,
-			//@RequestParam(value="resignedDate", required = false) String resignedDate,
+			ResignedMember resignedMember,
 			HttpSession session
 			){
 		
+		//퇴사자였는지 아닌지 체크하기! 
+		ResignedMember rm = memberService.resignedMembeSelect(resignedMember.getUserNo());
 		
-					
-		//System.out.print(resignedDate);
+		//내용변경 + 퇴사자 처리
+		//1. 퇴사일이 있을 경우
+		if(resignedMember.getResignedDate() != "") {
+			
+			//상위부서 불러와서 세팅
+			Department topDept = memberService.selecTopDept(m);
+			resignedMember.setDeptName(topDept.getDeptName());
+			resignedMember.setTName(m.getDName());
+			
+			int resignedresult = 0;
 		
-		
+			if(rm != null) { //1)퇴사자가 퇴사일을 풀고 내용변경을 했을 경우
+				resignedresult = memberService.resignedmemberUpdate(resignedMember);
+			}else {//2)재직자가 처음으로 퇴사처리 됐을때 
+				resignedresult = memberService.resignedmember(resignedMember);
+			}
+			
+			
+			if(resignedresult > 0) { //퇴사자 데이터 저장시
+				//퇴사 설정 세팅
+				m.setStatus("N");
+			}else {
+				session.setAttribute("alertMsg", "퇴사자 오류발생. 담당자에게 문의하세요");
+				return "redirect:/member/allview";
+			}
+
+		}else {
+			if(rm != null) { //3) 퇴사자가 퇴사일을 삭제했을 경우 -> 재직자로 변경
+				
+				int resignedmemberDelete = memberService.resignedmemberDelete(rm.getUserNo());
+				
+				if(resignedmemberDelete > 0) { //재직자로 변경시
+					//퇴사 설정 세팅 변경
+					m.setStatus("Y");
+				}else {
+					session.setAttribute("alertMsg", "퇴사자 오류발생. 담당자에게 문의하세요");
+					return "redirect:/member/allview";
+				}
+			}
+		}
 		
 		int result = memberService.updateAllmember(m);
-		
-	
-		System.out.println("updateAllmember실행됨!!!============================"+result);
-		
-		//토
-		
-		
 		
 		if(result > 0) { //성공적으로 추가시
 			
 			//부서추가변경
 			int result2 = memberService.UpdateUserDept(m);
 			
-			if(result2>0) { 
+			if(result2>0) {
 				
 				session.setAttribute("success", "정보가 수정되었습니다");
-				
-				
+	
 				return "redirect:/member/allview";
 				
 				//ajax로 전달어떻게 할지 고민
@@ -299,14 +330,32 @@ public class MemberController {
 				session.setAttribute("alertMsg", "사용자 부서 변경 오류발생. 담당자에게 문의하세요");
 				return "redirect:/member/allview";
 			}
-			
 		}else {
 			session.setAttribute("alertMsg", "사용자 변경 오류발생. 담당자에게 문의하세요");
 			return "redirect:/member/allview";
 		}
+
+	}
+	
+	//[지영]
+	// member 비번 초기화
+	@ResponseBody
+	@PostMapping("/passwordReset")
+	public String passwordReset(
+			@RequestParam("eno") int eno) {
 		
+		//시간이 난다면 eno로 수정
+		String encPwd = bcryptPasswordEncoder.encode("1234");
+		
+		Member m = new Member();
+		m.setUserPwd(encPwd);
+		m.setEno(eno);
+		
+		int result = memberService.updatePwd(m);
+		return new Gson().toJson(result);
 		
 	}
+	
 	
 	
 	

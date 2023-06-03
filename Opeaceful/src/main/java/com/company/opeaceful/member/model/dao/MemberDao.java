@@ -82,4 +82,17 @@ public class MemberDao {
 	public int updateMember(Member m) {
 		return sqlSession.update("memberMapper.updateMember",m);
 	}
+
+	public int resignedmember(ResignedMember resignedMember) {
+		return sqlSession.insert("memberMapper.resignedmember",resignedMember);
+	}
+
+	public int resignedmemberUpdate(ResignedMember resignedMember) {
+		return sqlSession.update("memberMapper.resignedmemberUpdate",resignedMember);
+	}
+
+	public int resignedmemberDelete(int userNo) {
+		return sqlSession.delete("memberMapper.resignedmemberDelete",userNo );
+	}
+
 }

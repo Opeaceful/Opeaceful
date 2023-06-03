@@ -40,6 +40,8 @@
   	
   	<result column="P_CODE" property="pCode"/> 
   	<result column="DEPT_CODE" property="deptCode"/> 
+  	<result column="P_NAME" property="pName"/> 
+  	<result column="DEPT_NAME" property="dName"/> 
   	
 </resultMap>
 
@@ -85,6 +87,19 @@
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
+<!-- update 중 퇴사자 처리 -->
+	<insert id="resignedmember">
+		<selectKey keyProperty="DresignedDate" resultType="java.sql.Date" order="BEFORE">
+	 		SELECT STR_TO_DATE(#{resignedDate}, '%Y-%m-%d')
+	 	</selectKey>
+	 	INSERT INTO resigned_member(USER_NO,RESIGNED_DATE, DEPT_NAME,T_NAME,P_NAME)
+	   	VALUES(
+	   	#{userNo},
+	   	#{DresignedDate},
+	  	#{deptName},
+	  	#{tName},
+	  	#{pName})
+	</insert>	
 	
 <!-- =============================================[selects]=========================================================== -->	
 
@@ -123,9 +138,11 @@
 	 
 	 <!-- [지영] 사용자 수정용 조회 -->
 	 <select id="selectMemberOne" parameterType="_int" resultMap="UpdatememberResultSet">
-	 	SELECT USER_NO, ENO,STATUS,USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_CODE,DEPT_CODE
+	 	SELECT USER_NO, ENO,STATUS,USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
 		FROM member
 		left JOIN user_department USING(USER_NO)
+		left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
 		WHERE USER_NO = #{userNo}
 	 </select>
 	 
@@ -183,7 +200,10 @@
 	 		ADDRESS = #{address},
 	 		ANNUAL_LEAVE_COUNT = #{annualLeaveCount},
 	 		HIRE_DATE = #{hireDate}
-	 	WHERE USER_NO = #{userNo} AND STATUS = 'Y'
+	 		<if test="status != null">
+			   ,status = #{status}
+			</if>
+	 	WHERE USER_NO = #{userNo}
 	 </update>
 	 
 	  <!--[지영] 2. 부서 업데이트 -->
@@ -193,11 +213,26 @@
 	 		DEPT_CODE  = #{deptCode}
 	 	WHERE USER_NO = #{userNo}
 	 </update>
+	 
 
+	<!-- [지영] 퇴사자료 업데이트 -->
+	 <update id="resignedmemberUpdate" parameterType="resignedMember" >
+	 	UPDATE resigned_member 
+	 	SET RESIGNED_DATE = #{resignedDate},
+	 		DEPT_NAME = #{deptName},
+	 		T_NAME  = #{tName},
+	 		P_NAME  = #{pName}
+	 	WHERE USER_NO = #{userNo} 
+	 </update>
+	
 
-
-
-
+<!-- =============================================[delete]=========================================================== -->	
+	
+	<!-- [지영] 퇴사자 자료 삭제 -->
+	<delete id="resignedmemberDelete">
+		DELETE FROM resigned_member 
+		WHERE USER_NO = #{userNo}
+	</delete>
 
 
 </mapper>

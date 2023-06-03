@@ -96,4 +96,22 @@ public class MemberServiceImpl implements MemberService {
 	public int updateMember(Member m) {
 		return memberDao.updateMember(m);
 	}
+	
+	@Override
+	public int resignedmember(ResignedMember resignedMember) {
+		return memberDao.resignedmember(resignedMember);
+	}
+	
+	@Override
+	public int resignedmemberUpdate(ResignedMember resignedMember) {
+		return memberDao.resignedmemberUpdate(resignedMember);
+	}
+	
+	@Override
+	public int resignedmemberDelete(int userNo) {
+		return memberDao.resignedmemberDelete(userNo);
+	}
+	
+	
+	
 }
