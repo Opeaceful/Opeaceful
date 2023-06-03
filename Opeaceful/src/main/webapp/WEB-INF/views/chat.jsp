@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,10 +59,15 @@
             <div>
                 <ul>
                     <li>
-                        <img src="${path}/resources/image/chat/me.png" alt="나의프로필사진">
+                    	<c:if test="${empty loginUser.profileImg}">
+                        	<img src="${path}/resources/image/chat/default.png" alt="나의프로필사진">
+                        </c:if>
+                        <c:if test="${!empty loginUser.profileImg}">
+                        	<img src="${loginUser.profileImg}" alt="나의프로필사진">
+                         </c:if>
                         <div class="profile">
-                            <p>김진기</p>
-                            <p>상태메시지 영역</p>
+                            <p>${loginUser.userName}</p>
+                            <p>${loginUser.userNo}</p>
                         </div>
                     </li>
                 </ul>
@@ -109,8 +115,8 @@
                     <h2>프로젝트 팀원</h2>
                     <p>버스</p>
                 </div>
-                <ul>
-                    <li>
+                <ul id="memberList">
+                    <%-- <li>
                         <img src="${path}/resources/image/chat/default.png" alt="친구3프로필사진">
                         <div class="profile">
                             <p>test</p>
@@ -186,7 +192,21 @@
                             <p>박가영</p>
                             <p>줄이 잘 넘어가는지 확인하기위해서 막 쓰면 어떻게 표기가 되나 확인이 되나 잘되나</p>
                         </div>
-                    </li>
+                    </li> --%>
+                    <c:forEach var="member" items="${memberList}">
+        				<li>
+	        				<c:if test="${empty loginUser.profileImg}">
+	                        	<img src="${path}/resources/image/chat/default.png" alt="프로필사진">
+	                        </c:if>
+	                        <c:if test="${!empty loginUser.profileImg}">
+	                        	<img src="${member.profileImg}" alt="${member.userName} 프로필사진">
+	                         </c:if>
+				            <div class="profile">
+				                <p>${member.userName}</p>
+				                <p>${member.userNo}</p>
+				            </div>
+				        </li>
+				    </c:forEach>
 
                 </ul>
             </div>
@@ -196,5 +216,7 @@
             <img src="${path}/resources/image/chat/help.webp" alt="광고이미지">
         </aside>
     </div>
+    
+    <script src="${path}/resources/js/chat/chat.js"></script> 
 
 </html>
