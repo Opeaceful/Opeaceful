@@ -44,6 +44,7 @@
 		<mapper resource="/mappers/member-mapper.xml"/> 
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/attendance-mapper.xml"/> 
+		<mapper resource="/mappers/resignedmember-mapper.xml"/> 
 	</mappers>
 
 
