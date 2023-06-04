@@ -10,9 +10,19 @@ import lombok.NoArgsConstructor;
 // (승은)
 public class ApprovalFile {
 	private int fileNo;				//	FILE_NO
-	private int approvalNo;			//	APPROVAL_NO
-	private int memoNo;				//	MEMO_NO
+	private String refType;			//	REF_TYPE : form / approval / memo
+	private int refNo;				//	REF_NO
 	private String originName;		//	ORIGIN_NAME
 	private String changeName;		//	CHANGE_NAME
+	
+	
+	
+	public ApprovalFile(String changeName) {
+		super();
+		this.changeName = changeName;
+	}
 
+	
+	
+	
 }

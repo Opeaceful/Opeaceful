@@ -1,8 +1,8 @@
 package com.company.opeaceful.approval.model.vo;
 
-import java.sql.Date;
+import java.util.List;
 
-import com.company.opeaceful.attendance.model.vo.Attendance;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +17,7 @@ public class ApprovalForm {
 	private int type;			//	TYPE
 	private String title;		//	TITLE
 	private String content;		//	CONTENT
-
+	
+	private MultipartFile[] images;
 
 }

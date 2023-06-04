@@ -1,17 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="attendanceMapper">
+
+<!-- (승은) -->
+<mapper namespace="aprMapper">
+
 	
-	<!-- [지의] - 출근 시간 등록 -->
-	<insert id="insertWorkOn">
-		insert into attendance(WORK_DATE, USER_NO, WORK_ON)
-		values (
-		      DATE_FORMAT(now(),'%Y-%m-%d'),
-		      #{userNo},
-		      DATE_FORMAT(now(),'%H:%i')
-		);
+<!-- 
+	MyBatis foreach문 지원 태그
+	collection : 전달받은 인자. List or Array 형태만 가능
+	item : 전달받은 인자 값을 alias 명으로 대체
+	open : 구문이 시작될때 삽입할 문자열
+	close : 구문이 종료될때 삽입할 문자열
+	separator : 반복 되는 사이에 출력할 문자열
+	index : 반복되는 구문 번호이다. 0부터 순차적으로 증가
+	
+	insert 시 자동증가값 받아오는법
+	-> useGeneratedKeys="true"로 설정해서, 자동 생성된 키 값들을 가져올 거라는 것을 명시한 다음에, 
+		keyProperty로, 어떤 필드 값으로 받을지를 명시하면 됨
+		테이블의 어느 속성들을 받을 것인지 따로 정할 수도 있는데 keyColumn으로 설정하면 된다
+ -->
+
+<!--  select 구간  -->
+
+	<select id="selectFormListCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPROVAL_FORM
+		<choose>
+			<when test='type.equals("0")'><!-- 일반 -->
+				WHERE TYPE = 0
+			</when>
+			<when test='type.equals("1")'><!-- 휴가 -->
+				WHERE TYPE = 1
+			</when>
+			<when test='type.equals("2")'><!-- 오전반차 -->
+				WHERE TYPE = 2
+			</when>
+			<when test='type.equals("3")'><!-- 오후반차 -->
+				WHERE TYPE = 3
+			</when>
+		</choose>
+		ORDER BY FORM_NO DESC
+	</select>	
+	
+	<!-- 폼 리스트 전체 조회 -->
+	<select id="selectFormListAll" resultType="approvalForm">
+		SELECT FORM_NO, TYPE, TITLE
+		FROM APPROVAL_FORM
+		ORDER BY FORM_NO DESC
+	</select>
+
+	<!-- 폼 리스트 조회 -->
+	<select id="selectFormList" parameterType="String" resultType="approvalForm">
+		SELECT FORM_NO, TYPE, TITLE
+		FROM APPROVAL_FORM
+		<choose>
+			<when test='type.equals("0")'><!-- 일반 -->
+				WHERE TYPE = 0
+			</when>
+			<when test='type.equals("1")'><!-- 휴가 -->
+				WHERE TYPE = 1
+			</when>
+			<when test='type.equals("2")'><!-- 오전반차 -->
+				WHERE TYPE = 2
+			</when>
+			<when test='type.equals("3")'><!-- 오후반차 -->
+				WHERE TYPE = 3
+			</when>
+		</choose>
+		ORDER BY FORM_NO DESC
+	</select>
+
+	<!-- 개별 폼 조회 -->
+	<select id="selectForm" parameterType="_int" resultType="approvalForm">
+		SELECT *
+		FROM APPROVAL_FORM
+		WHERE FORM_NO = #{formNo}
+	</select>
+	
+	<!-- 저장된 파일리스트 조회(본문용, 첨부용선택) -->
+	<select id="selectFileList" resultType="approvalFile" parameterType="map">
+		SELECT * 
+		FROM APPROVAL_FILE
+		WHERE REF_TYPE = 
+			<choose>
+				<when test='refType.equals("form")'>
+					'form'
+				</when>
+				<when test='refType.equals("approval")'>
+					'approval'
+				</when>
+				<when test='refType.equals("memo")'>
+					'memo'
+				</when>
+			</choose>
+			AND REF_NO = #{refNo}
+			<choose>
+				<when test='usage.equals("content")'>
+					AND ORIGIN_NAME IS NULL
+				</when>
+				<when test='usage.equals("attachment")'>
+					AND ORIGIN_NAME IS NOT NULL
+				</when>
+			</choose>
+	</select>
+
+<!--  insert 구간   -->
+	
+	<!-- 폼 등록 / 등록하면서 formNo반환 -->
+	<insert id="insertForm" useGeneratedKeys="true"  keyProperty="formNo" parameterType="approvalForm">
+		INSERT INTO APPROVAL_FORM( TYPE, TITLE, CONTENT )
+		VALUES( #{type}, #{title}, #{content} )
 	</insert>
 	
-	<!-- [지의] - 퇴근 시간 등록 -->
+	<!-- 파일 등록 -->
+	<insert id="insertFile" parameterType="map">
+		INSERT INTO APPROVAL_FILE
+		SELECT FILE.*
+		FROM (
+			<foreach collection="fileList" item="file" separator="UNION ALL">
+				SELECT
+					#{file.fileNo} AS FILE_NO ,
+					#{refType} AS REF_TYPE ,
+					#{refNo} AS REF_NO ,
+					#{file.changeName} AS CHANGE_NAME ,
+					#{file.originName} AS ORIGIN_NAME
+				FROM DUAL
+			</foreach>
+			) FILE
+
+	</insert>
+	
+	
+<!--  update 구간  -->
+	
+	<!-- 폼 내용 수정 -->
+	<update id="updateForm" parameterType="approvalForm">
+		UPDATE APPROVAL_FORM
+		SET TYPE = #{type} ,
+			TITLE = #{title} ,
+			CONTENT = #{content}
+		WHERE FORM_NO  = #{formNo}
+	</update>
+	
+<!--  delete 구간  -->
+	
+	<!-- 폼 삭제 -->
+	<delete id="deleteForm" parameterType="_int">
+		DELETE APPROVAL_FORM
+		WHERE FORM_NO = #{formNo}
+	</delete>
+	
+	
+	<!-- 파일들 삭제 -->
+	<delete id="deleteFile" parameterType="list">
+		DELETE APPROVAL_FILE
+		WHERE FILE_NO IN ( <foreach collection="fileNoList" item="file" separator=",">
+								#{file.fileNo}
+							</foreach> )
+	</delete>
+	
 	
 </mapper>

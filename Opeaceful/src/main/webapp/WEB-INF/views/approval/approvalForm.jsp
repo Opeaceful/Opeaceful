@@ -125,16 +125,16 @@ pageEncoding="UTF-8"%> -->
               ></button>
             </div>
             <div class="modal-body scroll-bar-none">
-              <!-- <form method="post" action=""> -->
+              <form id="form-approvalForm" method="post" action="${path}/approval/approvalForm/insertForm" enctype="multipart/form-data" >
                 <div class="type-wrap">
                   <div>
                     <div class="type-title">구분</div>
                     <div>
-                      <select name="formType" id="form-type">
-                        <option value="nomal" selected>일반</option>
-                        <option value="allOff">연차</option>
-                        <option value="amOff">오전반차</option>
-                        <option value="pmOff">오후반차</option>
+                      <select name="type" id="form-type">
+                        <option value="0" selected>일반</option>
+                        <option value="1">연차</option>
+                        <option value="2">오전반차</option>
+                        <option value="3">오후반차</option>
                       </select>
                     </div>
                   </div>
@@ -143,7 +143,7 @@ pageEncoding="UTF-8"%> -->
                     <input
                       type="text"
                       id="form-name"
-                      name="formName"
+                      name="title"
                       maxlength="20"
                     />
                   </div>
@@ -155,11 +155,13 @@ pageEncoding="UTF-8"%> -->
                     양식복사
                   </button>
                 </div>
-              <textarea class="tinymce" id="form-tiny" >
+              <textarea class="tinymce" id="form-tiny" name="content">
  				내용을 입력해주세요.
               </textarea
                 >
-              <!-- </form> -->
+                
+                <input type="file" id="input-images" name="images" hidden multiple>
+              </form>
             </div>
             <div class="modal-footer">
               <button
@@ -212,6 +214,6 @@ pageEncoding="UTF-8"%> -->
       </div>
     </div>
 
-    <script type="module" src="${path}/resources/js/approval/approvalForm.js"></script>
+    <script type="module" src="${path}/resources/js/approval/approvalFormFront.js"></script>
   </body>
 </html>

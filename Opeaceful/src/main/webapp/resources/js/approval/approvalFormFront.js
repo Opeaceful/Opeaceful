@@ -1,19 +1,13 @@
 import * as Tiny from './tinyEditor.js';
-import { path } from '../common/common.js';
-
-let sendForm = function () {
-  $.ajax({
-    url: path + '/approvalForm/insertForm',
-  });
-};
+import * as AprData from './approvalFormData.js';
 
 // 양식추가 폼 내용 리셋 함수
-let clearAddForm = function (
+export function resetAddForm(
   formType = 'nomal',
   formName = '',
   content = '',
-  btnText = '저장',
-  btnValue = '0'
+  btnText,
+  btnValue
 ) {
   //기본적으로 양식 종류 일반 셀렉트
   document.querySelector('#form-type').value = formType;
@@ -25,9 +19,63 @@ let clearAddForm = function (
   tinymce.activeEditor.setContent(content);
 
   // 버튼명, 값 바꾸기
-  document.getElementById('btn-form-save').innerText = btnText;
-  document.getElementById('btn-form-save').value = btnValue;
-};
+  if (btnText != null) {
+    document.getElementById('btn-form-save').innerText = btnText;
+  }
+  if (btnValue != null) {
+    document.getElementById('btn-form-save').value = btnValue;
+  }
+}
+
+// 양식 테이블 아이템 갈아끼기
+export function setTableList(formList) {
+  let tableHtml = '';
+
+  for (let form of formList) {
+    switch (form.type) {
+      case 0:
+        form.type = '일반';
+        break;
+      case 1:
+        form.type = '연차';
+        break;
+      case 2:
+        form.type = '오전반차';
+        break;
+      case 3:
+        form.type = '오후반차';
+        break;
+    }
+
+    tableHtml += `<tr>
+                    <td>
+                      <input type="checkbox" value="${form.formNo}" />
+                    </td>
+                    <td>
+                      <div>${form.title}</div>
+                    </td>
+                    <td>${form.type}</td>
+                  </tr>`;
+
+    document.querySelector('approval-form-table tbody').innerHTML = tableHtml;
+  }
+}
+
+//복사리스트에 아이템 갈아끼기
+export function setCopyList(formList) {
+  let optionHtml = '';
+
+  for (let form of formList) {
+    optionHtml += `<option value="${form.formNo}">${form.title}</option>`;
+  }
+
+  document.getElementById('copy-select').innerHTML = optionHtml;
+
+  // 복사창 열기
+  document.getElementById('copy-form').style.display = 'flex';
+}
+
+// --------------------------------------- 이벤트 할당구역 ------------------------------
 
 // 모달 안의 이벤트들 모음
 let setFormModalInnerEvent = function () {
@@ -35,9 +83,7 @@ let setFormModalInnerEvent = function () {
   document
     .getElementById('btn-copy-form')
     .addEventListener('click', function () {
-      // todo! 열기전에 복사할 양식 리스트 서버에서 불러다가 세팅시켜야함
-
-      document.getElementById('copy-form').style.display = 'flex';
+      AprData.selectForm('copy');
     });
 
   // 양식복사창 닫기 버튼 이벤트 부여
@@ -47,31 +93,60 @@ let setFormModalInnerEvent = function () {
       document.getElementById('copy-form').style.display = 'none';
     });
 
-  // 양식선택 후 복사버튼 이벤트 부여
+  // 양식복사창 양식선택 후 복사버튼 이벤트 부여
   document
     .getElementById('btn-copy-reflect')
     .addEventListener('click', function () {
-      // todo! 양식선택하고 저장버튼 눌렀을 때 이벤트
+      // 양식선택하고 저장버튼 눌렀을 때 선택된 것
       let seleted = document.getElementById('copy-select').value;
-      console.log(seleted);
+
+      AprData.selectForm(seleted);
     });
 
   // 양식 모달 저장버튼 이벤트
   document
     .getElementById('btn-form-save')
     .addEventListener('click', function () {
+      let title = document.getElementById('form-name').value;
+
+      if (title.trim() == '') {
+        swal('양식명을 입력해주세요', {
+          buttons: { cancel: '확인' },
+        });
+
+        return;
+      }
+
+      // 혹시 모를 중복 클릭을 막기위해 버튼 비활성화 처리
+      this.disabled = true;
+
       // 이미지 태그안에 저장된 파일 리스트 돌려받는 함수
       let finalData = Tiny.returnFormData('form-tiny');
 
-      console.log(
-        '최종 이미지 파일 리스트 ',
-        finalData.formData.getAll('image')
-      );
+      console.log(this.value);
 
       // todo! 텍스트에디터 내용 포함해서 db에 저장시키기
       if (this.value == '0') {
-        console.log('신규');
+        // 신규 추가
+        // finalData.append('title', title);
+        // finalData.append('type', document.getElementById('form-type').value);
+        // console.log(finalData.getAll('title'));
+        // console.log(finalData.getAll('type'));
+        // console.log(finalData.getAll('content'));
+
+        // let formData = new FormData();
+
+        // formData.append('title', 'title123456');
+        // formData.append('type', 0);
+        // formData.append('content', 'content123');
+        // formData.append('images', finalData.files);
+
+        document.getElementById('input-images').files = finalData.files;
+
+        document.getElementById('form-approvalForm').submit();
+        AprData.insertForm(formData);
       } else {
+        // 폼 수정
         console.log('수정');
       }
     });
@@ -97,7 +172,10 @@ let setDefaultEvent = function () {
     .getElementById('select-show-type')
     .addEventListener('change', function () {
       console.log(this.value);
-      // todo! 값 변경될때마다 새로 테이블 꾸며주기
+      AprData.selectFormList(this.value, 1);
+
+      // todo! 버튼 1번 눌린걸로 처리하기
+      // + 버튼들 만들어야함....
     });
 
   // 양식 리스트 테이블의 td 눌렸을때 이벤트 부여
@@ -156,14 +234,14 @@ let setDefaultEvent = function () {
     .getElementById('btn-open-add-form')
     .addEventListener('click', function () {
       Tiny.resetInputFileList();
-      clearAddForm();
+      resetAddForm(undefined, undefined, undefined, undefined, 0);
     });
 };
 
 //-------------------- 윈도우 시작시 이벤트 부여 --------------------
 window.onload = function () {
   Tiny.setTinymce();
-  clearAddForm();
+  resetAddForm();
   setDefaultEvent();
   setFormModalInnerEvent();
 };

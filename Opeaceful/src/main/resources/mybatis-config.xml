@@ -19,7 +19,6 @@
 	</settings>
 	
 	<typeAliases>
-		<!-- 예시 <typeAlias type="com.kh.spring.member.model.vo.Member" alias="member"/> -->
 		<typeAlias type="com.company.opeaceful.orgChart.model.vo.OrgChart" alias="orgChart"/>
 		<typeAlias type="com.company.opeaceful.dept.model.vo.Department" alias="department"/>
 		<typeAlias type="com.company.opeaceful.dept.model.vo.Position" alias="position"/>
@@ -29,6 +28,9 @@
 		<typeAlias type="com.company.opeaceful.member.model.vo.ResignedMember" alias="resignedMember"/>
 		<typeAlias type="com.company.opeaceful.attendance.model.vo.Attendance" alias="attendance"/>
 		<typeAlias type="com.company.opeaceful.board.model.vo.BoardType" alias="boardType"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.Approval" alias="approval"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFile" alias="approvalFile"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalForm" alias="approvalForm"/>
 	</typeAliases>
 	
 	<!-- 
@@ -37,13 +39,12 @@
 		서버연결과 동시에 읽혀지는 root-context.xml에 기술하는것임)
 	 -->
 	<mappers>
-		<!-- 예시 <mapper resource="/mappers/member-mapper.xml"/> -->
-		<mapper resource="/mappers/test.xml"/>
 		<mapper resource="/mappers/orgChart-mapper.xml"/>
 		<mapper resource="/mappers/dept-mapper.xml"/> 
 		<mapper resource="/mappers/member-mapper.xml"/> 
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/attendance-mapper.xml"/> 
+		<mapper resource="/mappers/approval-mapper.xml"/> 
 	</mappers>
 
 

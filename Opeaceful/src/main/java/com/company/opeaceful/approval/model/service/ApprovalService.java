@@ -1,18 +1,29 @@
 package com.company.opeaceful.approval.model.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 
 //(승은)
 public interface ApprovalService {
+	
 
-	ArrayList<ApprovalForm> selectFormList();
+	List<ApprovalForm> selectFormList(int currentPage, String type);
+	
+	List<ApprovalForm> selectFormListAll();
+
 	ApprovalForm selectForm(int formNo);
 	
-	int insertForm(ApprovalForm form);
-	int insertFile(ApprovalFile file);
+	List<ApprovalFile> selectFileList(String refType, int refNo, String usage);
+
+	int insertForm(ApprovalForm form, List<ApprovalFile> fileList );
+
+	int insertFile(List<ApprovalFile> fileList, String refType, int refNo);
+
+	int updateForm(ApprovalForm form, List<ApprovalFile> fileList);
 	
-	int updateForm(ApprovalForm form);
+	int deleteForm(int formNo);
+	
+	int deleteFile(List<ApprovalFile> fileList);
 }

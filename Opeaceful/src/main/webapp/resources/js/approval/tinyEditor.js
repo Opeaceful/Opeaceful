@@ -52,13 +52,21 @@ export function setTinymce() {
     setup: function (editor) {
       // 최대 입력글자수 이상 넘어가면 더이상 글자 입력 안되게 막음
       editor.on('keydown', function (e) {
-        var content = editor.getContent();
+        var content =
+          editor.contentDocument.getElementById('tinymce').innerHTML;
+
+        // approval테이블의 경우 최대 4000글자지만 img src등을 갈아끼우는 등의처리를 하게되므로
+        // 여유분을 남기기위해 3000으로 글자 제한함
         var maxLength = 3000;
+        console.log(content.length);
         if (content.length >= maxLength - 1) {
-          e.preventDefault();
-          swal('최대 입력가능한 글자수를 초과하였습니다.', {
-            buttons: { cancel: '확인' },
-          });
+          // delete 키가 백스페이스키가 아니면 키 입력 막음
+          if (e.key != 'Delete' && e.key != 'Backspace') {
+            e.preventDefault();
+            swal('최대 입력가능한 글자수를 초과하였습니다.', {
+              buttons: { cancel: '확인' },
+            });
+          }
         }
       });
     },
@@ -137,7 +145,10 @@ export function returnFormData(tinyId) {
 
         글자 확인 
         tinymce.activeEditor.getContent()    
-        tinymce.get('tinymce').getContent()  //위 두개는 tinymce에서 제공해주는거
+        tinymce.get('tinymce').getContent() 
+        //위 두개는 tinymce에서 제공해주는거 
+          -> 이걸로 blob으로 저장된 파일 찍으면 글자 몇만개 나옴.... 비추 
+
         tinymce.activeEditor.contentDocument.getElementById('tinymce').innerHTML
         document.querySelector('.tinymce').value   
 
@@ -146,14 +157,18 @@ export function returnFormData(tinyId) {
   // input의  FileList는 내용 변경이 불가하고 통째로 갈아끼는것만 가능함
   // 그래서 이럴때 DataTransfer를 생성해서 갈아껴주는 용도로 사용한다
   // 서버로 넘기기 위한 input태그에 파일들 옮겨담기는 아래와 같이 하면 됨
-  // let dataTransfer = new DataTransfer를();
+  // let dataTransfer = new DataTransfer();
+  // dataTransfer.items.add(file); // 이런식으로 파일들을 담음
+  // document.getElementById('인풋요소 아이디').files = dataTransfer.files; // 인풋 파일리스트 갈아끼기
+
+  let dataTransfer = new DataTransfer();
   // dataTransfer.items.add(file); // 이런식으로 파일들을 담음
   // document.getElementById('인풋요소 아이디').files = dataTransfer.files; // 인풋 파일리스트 갈아끼기
 
   // 하지만 여기서는 파일들을 리스트화해서 바로 서버로 전송하려고 하기 때문에 FormData를 사용함
   // form 태그를 사용해서 숨겨둔 인풋요소의 값을 전송시킬거면 DataTransfer로 사용할것
   let formData = new FormData();
-  let fileList = [...InputFileList];
+  let fileList = [...InputFileList]; // 얕은복사
   let imgArr = tinymce.get(tinyId).contentDocument.getElementsByTagName('img');
 
   // 본문내용의 이미지들을 돌면서 등록된 파일들을 찾음
@@ -165,21 +180,25 @@ export function returnFormData(tinyId) {
       for (let i in fileList) {
         // 만약 파일리스트에 저장된 src와 현재 이미지 src가 같다면 파일을 서버로넘길 dataTransfer리스트에 저장
         if (fileList[i].src == imgSrc) {
-          formData.append('images', fileList[i].file);
+          dataTransfer.items.add(fileList[i].file);
+          // formData.append('images', fileList[i].file);
           // 저장했으면 기존 배열에서는 해당 아이템 삭제
           fileList.splice(i, 1);
 
           // 현재 이미지 태그의 src를 서버로넘길 dataTransfer리스트 인덱스값으로 변경
           // -> 서버에서 다시한번 확인하면서 인덱스값을 실제 src값으로 바꾸어줄 예정
-          img.src = formData.getAll('images').length;
+          img.src = dataTransfer.items.length - 1;
+          console.log('dataTransfer 아이템 길이 ', dataTransfer.items.length);
           break;
         }
       }
     }
   }
+  // formData에 본문내용 담아주기
+  // formData.append('content', tinymce.get(tinyId).getContent());
 
   // 정보 뽑아내기 끝나면 다음을 위해 파일리스트 비우기
   resetInputFileList();
 
-  return { formData: formData, content: tinymce.get(tinyId).getContent() };
+  return dataTransfer;
 }

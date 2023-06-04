@@ -1,6 +1,6 @@
 package com.company.opeaceful.approval.model.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,37 +8,101 @@ import org.springframework.stereotype.Service;
 import com.company.opeaceful.approval.model.dao.ApprovalDao;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
+import com.company.opeaceful.commom.model.vo.PageInfo;
+import com.company.opeaceful.commom.template.Pagination;
 
-@Service
 //(승은)
+@Service
 public class ApprovalServiceImpl implements ApprovalService {
 	
-	@Autowired
 	private ApprovalDao aprDao;
+	private Pagination pagination;
+	
+	
 
+	@Autowired
+	public ApprovalServiceImpl(ApprovalDao aprDao, Pagination pagination) {
+		super();
+		this.aprDao = aprDao;
+		this.pagination = pagination;
+	}
+
+//	-------------------------------- selelct 구간 ----------------------------------------
+	
 	@Override
-	public ArrayList<ApprovalForm> selectFormList() {
-		return aprDao.selectFormList();
+	public List<ApprovalForm> selectFormListAll() {
+		return aprDao.selectFormListAll();
+	}
+	
+	@Override
+	public List<ApprovalForm> selectFormList(int currentPage, String type) {
+		
+		int listCount = aprDao.selectFormListCount(type);
+		int pageLimit = 10;
+		int itemLimit = 20; // 최대 20개 가져오기
+		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, itemLimit);
+		
+		return aprDao.selectFormList(pi, type);
 	}
 
 	@Override
 	public ApprovalForm selectForm(int formNo) {
 		return aprDao.selectForm(formNo);
 	}
-
+	
+	
 	@Override
-	public int insertForm(ApprovalForm form) {
-		return aprDao.insertForm(form);
+	public List<ApprovalFile> selectFileList(String refType, int refNo, String usage) {
+		return aprDao.selectFileList( refType,  refNo,  usage);
+	}
+
+	
+//	-------------------------------- insert 구간 ----------------------------------------
+	@Override
+	public int insertForm(ApprovalForm form, List<ApprovalFile> fileList ) {
+		
+		int result = aprDao.insertForm(form);
+		if(result > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", result);
+		}
+		
+		return result;
 	}
 
 	@Override
-	public int insertFile(ApprovalFile file) {
-		return aprDao.insertFile(file);
+	public int insertFile(List<ApprovalFile> fileList, String refType, int refNo )  {
+		return aprDao.insertFile(fileList, refType, refNo);
+	}
+
+	
+//	-------------------------------- update 구간 ----------------------------------------
+	@Override
+	public int updateForm(ApprovalForm form, List<ApprovalFile> fileList) {
+		
+		int result = aprDao.updateForm(form);
+		if(result > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", result);
+		}
+		
+		return result;
+	}
+	
+	
+//	-------------------------------- delete 구간 ----------------------------------------
+
+	@Override
+	public int deleteForm(int formNo) {
+		return aprDao.deleteForm(formNo);
 	}
 
 	@Override
-	public int updateForm(ApprovalForm form) {
-		return aprDao.updateForm(form);
+	public int deleteFile( List<ApprovalFile> fileList) {
+		return aprDao.deleteFile(fileList);
 	}
+
+
+
+
+
 
 }
