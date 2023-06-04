@@ -6,22 +6,6 @@ body *{
     box-sizing: border-box;
 
 }
-/* 사이드바 추후에 삭제 => 공통적용으로 */
-#sidebar{   
-    border: 1px solid blue;
-    width: var(--side-bar);
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-}
-#content-wrap{
-    border: px solid red;
-    /*width: calc(100vw - var(--side-bar));
-    min-height: 100vh; */
-    margin-left: var(--side-bar);
-}
-/* 여기까지? 아마도? */
 
 
 div *{
