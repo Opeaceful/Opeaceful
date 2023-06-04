@@ -18,6 +18,7 @@
   	<result column="HIRE_DATE" property="hireDate"/>
   	
   	<result column="S_HIRE_DATE" property="ShireDate"/> 
+  	<result column="RESIGNED_DATE" property="ResignedDate"/>
   	
   	<result column="P_NAME" property="pName"/> 
   	<result column="DEPT_NAME" property="dName"/> 
@@ -43,6 +44,16 @@
   	<result column="P_NAME" property="pName"/> 
   	<result column="DEPT_NAME" property="dName"/> 
   	
+</resultMap>
+
+<!--[지영] 전체 조회용-->
+ <resultMap type="member" id="AllmemberVIewResultSet">
+  	<id column="USER_NO" property="userNo"/>
+  	<result column="USER_NAME" property="userName"/> 	
+  	<result column="P_CODE" property="pCode"/> 
+  	<result column="DEPT_CODE" property="deptCode"/> 
+  	<result column="P_NAME" property="pName"/> 
+  	<result column="DEPT_NAME" property="dName"/>   	
 </resultMap>
 
 <!-- =============================================[insert]=========================================================== -->	
@@ -87,30 +98,28 @@
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
-<!-- update 중 퇴사자 처리 -->
-	<insert id="resignedmember">
-		<selectKey keyProperty="DresignedDate" resultType="java.sql.Date" order="BEFORE">
-	 		SELECT STR_TO_DATE(#{resignedDate}, '%Y-%m-%d')
-	 	</selectKey>
-	 	INSERT INTO resigned_member(USER_NO,RESIGNED_DATE, DEPT_NAME,T_NAME,P_NAME)
-	   	VALUES(
-	   	#{userNo},
-	   	#{DresignedDate},
-	  	#{deptName},
-	  	#{tName},
-	  	#{pName})
-	</insert>	
+
 	
 <!-- =============================================[selects]=========================================================== -->	
 
 	
 	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
-		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_NAME,DEPT_NAME
+		 <if test='Sselect == "Y"'>
+	        SELECT USER_NO, ENO, USER_PWD, USER_NAME, PHONE, EXTENSION, EMAIL, ADDRESS, ANNUAL_LEAVE_COUNT, 
+	        DATE_FORMAT(HIRE_DATE, '%Y-%m-%d') S_HIRE_DATE, P_NAME, DEPT_NAME
+	    </if>
+	    <if test='Sselect == "N"'>
+	        SELECT USER_NO, ENO, USER_PWD, USER_NAME, PHONE, EXTENSION, EMAIL, ADDRESS, ANNUAL_LEAVE_COUNT, 
+	        DATE_FORMAT(HIRE_DATE, '%Y-%m-%d') S_HIRE_DATE, r.P_NAME, r.DEPT_NAME, RESIGNED_DATE 
+	    </if>
 		FROM member
 		left JOIN user_department USING(USER_NO)
 	    left JOIN department USING(DEPT_CODE)
 	    left JOIN position USING(P_CODE)
+	    <if test='Sselect == "N"'>
+			left Join resigned_member r USING(USER_NO)
+		</if>
 		WHERE STATUS = #{Sselect}
 		    <if test='Dselect != null'>
 		      AND DEPT_CODE = #{Dselect}
@@ -120,6 +129,9 @@
 		    </if>
 	 </select>
 	 
+	
+		 
+	 
 	 <!-- 페이징용 count 체크 -->
 	 <select id="selectMemberCount"  resultType="_int" parameterType="hashMap">
 		SELECT COUNT(*)
@@ -128,7 +140,7 @@
 	    left JOIN department USING(DEPT_CODE)
 	    left JOIN position USING(P_CODE)
 		WHERE STATUS = #{Sselect}
-		    <if test='Dselect != null'>
+		    <if test='Dselect != null '>
 		      AND DEPT_CODE = #{Dselect}
 		    </if>
 		    <if test='Pselect != null'>
@@ -146,14 +158,35 @@
 		WHERE USER_NO = #{userNo}
 	 </select>
 	 
-	 
-	 <!--[지영] 퇴사자 자료 조회 -->
-	 <select id="resignedMembeSelect" parameterType="_int" resultType="resignedMember">
-	 	SELECT *
-		FROM RESIGNED_MEMBER
-		WHERE USER_NO = #{userNo} 
+
+	 <!--[지영] 모달용 전체조회 -->
+	 <select id="modalAllMemberView" resultMap="AllmemberVIewResultSet" >
+	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+		left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE STATUS = 'Y' 
+		 <if test='keyword != null and keyword !=""'>
+		      AND USER_NAME LIKE '%${keyword}%'
+		 </if>
+		order by DEPT_CODE, P_CODE
 	 </select>
 	 
+	 <!--[지영] check 박스로 조회된 인원만 select-->
+	 <select id="checkMemberNoSelect"  resultMap="AllmemberResultSet" >
+	 	SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+	    left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE USER_NO IN 
+		<foreach item="userNo" collection="array"
+		       separator="," open="(" close=")">
+		       #{userNo}
+		</foreach>
+		
+	 </select> 
 
 	<!-- [지의] 로그인유저 -->
 	<select id="loginMember" parameterType="member" resultMap="AllmemberResultSet">
@@ -215,24 +248,6 @@
 	 </update>
 	 
 
-	<!-- [지영] 퇴사자료 업데이트 -->
-	 <update id="resignedmemberUpdate" parameterType="resignedMember" >
-	 	UPDATE resigned_member 
-	 	SET RESIGNED_DATE = #{resignedDate},
-	 		DEPT_NAME = #{deptName},
-	 		T_NAME  = #{tName},
-	 		P_NAME  = #{pName}
-	 	WHERE USER_NO = #{userNo} 
-	 </update>
-	
-
-<!-- =============================================[delete]=========================================================== -->	
-	
-	<!-- [지영] 퇴사자 자료 삭제 -->
-	<delete id="resignedmemberDelete">
-		DELETE FROM resigned_member 
-		WHERE USER_NO = #{userNo}
-	</delete>
 
 
 </mapper>

@@ -4,6 +4,7 @@
 */
 
 import {path} from './common/common.js';
+import {checkMemberNo} from './common/memberSelect.js';
 
 //함수에 사용할 변수 세팅
 let pagination;
@@ -17,6 +18,8 @@ let LeaveDate = document.getElementById("leave-date");
 //DB상 퇴사일 세팅
 let LeaveDateDay;
 
+//검색용 변수 세팅
+let JsoncheckMemberNo = "";
 
 /*검색에 따라 member를 불러오는 이벤트 */
 $("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
@@ -47,16 +50,16 @@ const cpage = pagination !== undefined ? pagination.currentPage : null;
         inputChangeable();
     }
 
-
 $.ajax({
     url:`${path}/member/selectAll`,
     dataType : "JSON",
-    method: 'get',
+    method: 'POST',
     data: {
         Dselect : Dselect,
         Pselect : Pselect,
         Sselect : Sselect,
         cpage : cpage,
+        checkMemberNo : JsoncheckMemberNo,
     },
     success: function(result){
 
@@ -78,7 +81,7 @@ $.ajax({
                 <td>${m.dName}</td>
                 <td>${m.pName}</td>
                 <td>${m.ShireDate}</td>
-                <td></td>
+                <td>${m.ResignedDate !== undefined ? m.ResignedDate:""}</td>
                 <td>${m.annualLeaveCount}</td>
                 <td>${m.address}</td>
             </tr>
@@ -88,8 +91,6 @@ $.ajax({
         
         //pagination에 결과값 넣어주기
         pagination = result.pi;
-
-        console.log(pagination);
 
         //페이지 html
         let phtml = ""
@@ -118,6 +119,9 @@ $.ajax({
          pitem();
          preNextbutton(); 
          tableEvent();
+
+         //선택값 비워주기
+         JsoncheckMemberNo = null;
            
     },
     error : function(request){
@@ -183,14 +187,14 @@ function tableEvent(){
 
 
     //table 버튼 이벤트 추가
-    const tableTr = document.querySelectorAll("tbody>tr"); // tr태그 이벤트 추가
+    const tableTr = document.querySelectorAll("#member-table-body>tr"); // tr태그 이벤트 추가
 
     // 각 페이지 버튼에 클릭 이벤트 리스너 추가
     tableTr.forEach(tr => {
-    tr.addEventListener("click", function() {
-        memberUpdaetajax(tr.dataset.id);
-        $('#memberUpdateModal').modal('show');
-    });
+        tr.addEventListener("click", function() {
+            memberUpdaetajax(tr.dataset.id);
+            $('#memberUpdateModal').modal('show');
+        });
     });
 
 }
@@ -430,3 +434,12 @@ $("#password-reset-button").click(function(){
         }
     })
 });
+
+
+//확인 버튼 눌렀을때 allview에서 처리할 이벤트
+$("#all-member-modal-button").click(function(){
+    JsoncheckMemberNo = JSON.stringify(checkMemberNo);
+    memberSelectAjax(); // ajax호출
+
+});
+

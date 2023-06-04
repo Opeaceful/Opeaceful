@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -200,30 +204,43 @@ public class MemberController {
 	//[지영]
 	//select박스를 통한 member조회
 	@ResponseBody
-	@GetMapping("/selectAll")
+	@PostMapping("/selectAll")
 	public String selectMember(
 			@RequestParam(value="Dselect", required = false) Integer Dselect,
 			@RequestParam(value="Pselect", required = false) Integer Pselect,
 			@RequestParam(value= "Sselect", defaultValue = "Y") String Sselect	,
 			Model model,
-			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage
+			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value="checkMemberNo", required = false) String checkMemberNo 
 			) {
 		
+		//json 다시 int배열로 변경
+		int[] intArray = new Gson().fromJson(checkMemberNo, int[].class);
 		
 		//ajax로 전송할 데이터 
 		Map<String, Object> map = new HashMap<>();	
 		
-		//검색 select용 map
-		Map<String, Object> selectPD = new HashMap<>();	
-		selectPD.put("Dselect", Dselect);
-		selectPD.put("Pselect", Pselect);
-		selectPD.put("Sselect", Sselect);
+		//checkMemberNo에 값이 있다면 
+		if(intArray != null && intArray.length > 0) {
+		     
+			List<Member> m = memberService.checkMemberNoSelect(currentPage,map,intArray);
+			map.put("m", m);
+			
+		}else {
+			//검색 select용 map
+			Map<String, Object> selectPD = new HashMap<>();	
+			selectPD.put("Dselect", Dselect);
+			selectPD.put("Pselect", Pselect);
+			selectPD.put("Sselect", Sselect);
+			
+			List<Member> m = memberService.selectMember(currentPage,map,selectPD);
+			
+			System.out.println(m);
+				
+			map.put("m", m);
+			
+		}
 		
-		
-		List<Member> m = memberService.selectMember(currentPage,map,selectPD);
-	
-
-		map.put("m", m);
 		
 		//map 데이터 ajax로 전송
 		return new Gson().toJson(map);
@@ -344,7 +361,6 @@ public class MemberController {
 	public String passwordReset(
 			@RequestParam("eno") int eno) {
 		
-		//시간이 난다면 eno로 수정
 		String encPwd = bcryptPasswordEncoder.encode("1234");
 		
 		Member m = new Member();
@@ -354,6 +370,19 @@ public class MemberController {
 		int result = memberService.updatePwd(m);
 		return new Gson().toJson(result);
 		
+	}
+	
+	//[지영]
+	//모달용 멤버 전체조회
+	@ResponseBody
+	@PostMapping("/modalAllMemberView")
+	public String modalAllMemberView(
+			@RequestParam("keyword") String keyword){
+		
+		List<Member> m = memberService.modalAllMemberView(keyword);
+	
+		return new Gson().toJson(m);
+			
 	}
 	
 	

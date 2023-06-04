@@ -42,5 +42,9 @@ public interface MemberService {
 
 	int resignedmemberDelete(int userNo);
 
+	List<Member> modalAllMemberView(String keyword);
+
+	List<Member> checkMemberNoSelect(int currentPage, Map<String, Object> map, int[] intArray);
+
 
 }
