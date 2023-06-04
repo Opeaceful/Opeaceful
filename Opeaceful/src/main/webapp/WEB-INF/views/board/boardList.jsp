@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>boardList</title>
+<title>Opeaceful</title>
 	<!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- 부트스트랩 아이콘 -->
@@ -76,7 +76,7 @@
 					<c:forEach items="${ list }" var="b">
 	                    <c:choose>
 	                    <c:when test='${ b.fixed == "Y"}'>
-		                    <tr class="notice-fixed" onClick="movePage(${b.boardNo});">
+		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}"'>
 		                        <td class="list-ctn-title">${b.boardTitle}</td>
 		                        <td>${b.PName} ${b.userName}</td>
 		                        <td>${b.createDate}</td>
@@ -84,7 +84,7 @@
 		                    </tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<tr onClick="movePage(${b.boardNo});">
+	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}"'>
 	                        <td class="list-ctn-title">${b.boardTitle}</td>
 	                        <td>${b.PName} ${b.userName}</td>
 	                        <td>${b.createDate}</td>
@@ -175,10 +175,21 @@
     </div>
 
 
-
+	<script>
+	
+	
+	// function movePage(){
+		 
+		// 	console.log("클릭됨");
+		 
+		 //	location.href = path+"/board/detail/${boardCode}";
+		 	
+		// }
+		 
+	
+	</script>
 
 	<script src="${path}/resources/js/board/boardList.js"></script>  
-
 
 </body>
 </html>

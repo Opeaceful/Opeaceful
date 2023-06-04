@@ -36,16 +36,16 @@ public class BoardDao {
 	}
 	
 	public ArrayList<Board> selectBoardList(PageInfo pi, Map<String, Object> map){
-		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
-		int limit  = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1) * pi.getSettingLimit();
+		int limit  = pi.getSettingLimit();
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", map, rowBounds);
 	}
 	
 	public ArrayList<Board> selectSearchBoardList(PageInfo pi, Map<String, Object> map){
-		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
-		int limit  = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1) * pi.getSettingLimit();
+		int limit  = pi.getSettingLimit();
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList", map, rowBounds);

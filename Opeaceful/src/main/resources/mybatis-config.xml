@@ -26,6 +26,7 @@
 		<typeAlias type="com.company.opeaceful.dept.model.vo.UserDepatment" alias="userDepatment"/>
 		<typeAlias type="com.company.opeaceful.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.company.opeaceful.board.model.vo.Board" alias="board"/>
+		<typeAlias type="com.company.opeaceful.member.model.vo.ResignedMember" alias="resignedMember"/>
 		<typeAlias type="com.company.opeaceful.attendance.model.vo.Attendance" alias="attendance"/>
 		<typeAlias type="com.company.opeaceful.board.model.vo.BoardType" alias="boardType"/>
 	</typeAliases>
