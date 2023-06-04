@@ -1,6 +1,8 @@
 package com.company.opeaceful.chat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,28 +30,34 @@ public class ChatController {
 	}
 
 	@GetMapping("/chat")
-	public String chatMain(Model model, @ModelAttribute("loginUser") Member loginUser) {
+	public Map<String, Object> chatMain(Model model, @ModelAttribute("loginUser") Member loginUser) {
 		
-		ArrayList<Member> list = chatService.adminAll();
-	
-	    model.addAttribute("memberList", list);
+		Map<String, Object> response = new HashMap<>();
 	    
-	    System.out.println(model);
-	    System.out.println(list);
-		
-		return "chat";
+	    ArrayList<Member> list = chatService.adminAll();
+
+	    response.put("loginUser", loginUser);
+	    response.put("memberList", list);
+
+	    return response;
 
 	}
-
+	
 	/*
-	 * @GetMapping("/adminAll")
+	 * @GetMapping("/chatMemberStatus") public String MemberStatus(Model model) {
 	 * 
-	 * @ResponseBody public String adminAll() {
+	 * ArrayList<MemberStatus> ms = chatService.chatStatus();
 	 * 
-	 * ArrayList<Member> list = chatService.adminAll();
+	 * model.addAttribute("chatStatus", ms);
 	 * 
-	 * return new Gson().toJson(list);
+	 * return "chat";
 	 * 
 	 * }
 	 */
+	
+	
+	
+	
+	
+
 }

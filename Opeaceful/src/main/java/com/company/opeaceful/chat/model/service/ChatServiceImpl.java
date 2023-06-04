@@ -19,5 +19,9 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.adminAll();
 	}
 	
+	@Override
+	public ArrayList<MemberStatus> chatStatus(){
+		return chatDao.chatStatus();
+	}
 	
 }

@@ -115,100 +115,25 @@
                     <h2>프로젝트 팀원</h2>
                     <p>버스</p>
                 </div>
-                <ul id="memberList">
-                    <%-- <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구3프로필사진">
-                        <div class="profile">
-                            <p>test</p>
-                            <p>test</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/friend1.png" alt="친구1프로필사진">
-                        <div class="profile">
-                            <p>한승은</p>
-                            <p></p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/friend2.png" alt="친구2프로필사진">
-                        <div class="profile">
-                            <p>윤지영</p>
-                            <p>지금 몇시니</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구3프로필사진">
-                        <div class="profile">
-                            <p>김혜린</p>
-                            <p>프로젝트</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구4프로필사진">
-                        <div class="profile">
-                            <p>노지의</p>
-                            <p>opeceful</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구5프로필사진">
-                        <div class="profile">
-                            <p>박가영</p>
-                            <p>줄이 잘 넘어가는지 확인하기위해서 막 쓰면 어떻게 표기가 되나 확인이 되나 잘되나</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/friend1.png" alt="친구1프로필사진">
-                        <div class="profile">
-                            <p>한승은</p>
-                            <p></p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/friend2.png" alt="친구2프로필사진">
-                        <div class="profile">
-                            <p>윤지영</p>
-                            <p>지금 몇시니</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구3프로필사진">
-                        <div class="profile">
-                            <p>김혜린</p>
-                            <p>프로젝트</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구4프로필사진">
-                        <div class="profile">
-                            <p>노지의</p>
-                            <p>opeceful</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="${path}/resources/image/chat/default.png" alt="친구5프로필사진">
-                        <div class="profile">
-                            <p>박가영</p>
-                            <p>줄이 잘 넘어가는지 확인하기위해서 막 쓰면 어떻게 표기가 되나 확인이 되나 잘되나</p>
-                        </div>
-                    </li> --%>
+                <ul id="adminList">
+                   
                     <c:forEach var="member" items="${memberList}">
         				<li>
-	        				<c:if test="${empty loginUser.profileImg}">
+	        				<c:if test="${empty member.profileImg}">
 	                        	<img src="${path}/resources/image/chat/default.png" alt="프로필사진">
 	                        </c:if>
-	                        <c:if test="${!empty loginUser.profileImg}">
+	                        <c:if test="${!empty member.profileImg}">
 	                        	<img src="${member.profileImg}" alt="${member.userName} 프로필사진">
 	                         </c:if>
 				            <div class="profile">
-				                <p>${member.userName}</p>
+				                <p>${member.userName}</p> <i>${member.statusType}</i>
 				                <p>${member.userNo}</p>
 				            </div>
 				        </li>
 				    </c:forEach>
+                     </ul>
 
-                </ul>
+               
             </div>
         </main>
         <!-- aside: 광고 -->

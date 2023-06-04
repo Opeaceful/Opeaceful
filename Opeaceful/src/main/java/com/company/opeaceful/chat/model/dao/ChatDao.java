@@ -17,5 +17,9 @@ public class ChatDao {
 	public ArrayList<Member> adminAll(){
 		return (ArrayList)sqlSession.selectList("chatMapper.adminAll");
 	}
+	
+	public ArrayList<MemberStatus> chatStatus(){
+		return (ArrayList)
+	}
 
 }

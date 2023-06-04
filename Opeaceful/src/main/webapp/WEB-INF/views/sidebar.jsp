@@ -26,9 +26,9 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-   <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">  -->
+   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css"> 
    <link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
-	<style>
+	<!-- <style>
 	.ui-dialog-titlebar{
 	background:var(--color-navy)}	
 	.ui-dialog-titlebar-close{
@@ -36,7 +36,7 @@
 	.ui-dialog-content .ui-widget-content{
 	display: none;}
 	
-	</style>
+	</style> -->
 	
 	
 

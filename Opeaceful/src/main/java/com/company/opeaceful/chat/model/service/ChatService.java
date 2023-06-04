@@ -7,5 +7,7 @@ import com.company.opeaceful.member.model.vo.Member;
 public interface ChatService {
 	
 	public abstract ArrayList<Member> adminAll();
+	
+	public abstract ArrayList<MemberStatus> chatStatus();
 
 }
