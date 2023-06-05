@@ -65,7 +65,7 @@ public class MemberDao {
 	}
 
 	public ResignedMember resignedMembeSelect(int userNo) {
-		return sqlSession.selectOne("memberMapper.resignedMembeSelect",userNo);
+		return sqlSession.selectOne("resignedMapper.resignedMembeSelect",userNo);
 	}
 
 	public int updateAllmember(Member m) {
@@ -86,4 +86,32 @@ public class MemberDao {
 	public List<Object> onlineStatusList() {
 		return sqlSession.selectList("attendanceMapper.onlineStatusList");
 	}
+
+	public int resignedmember(ResignedMember resignedMember) {
+		return sqlSession.insert("resignedMapper.resignedmember",resignedMember);
+	}
+
+	public int resignedmemberUpdate(ResignedMember resignedMember) {
+		return sqlSession.update("resignedMapper.resignedmemberUpdate",resignedMember);
+	}
+
+	public int resignedmemberDelete(int userNo) {
+		return sqlSession.delete("resignedMapper.resignedmemberDelete",userNo );
+	}
+
+	public List<Member> modalAllMemberView(String keyword) {
+		return sqlSession.selectList("memberMapper.modalAllMemberView",keyword);
+	}
+
+	public List<Member> checkMemberNoSelect(PageInfo pi, int[] intArray) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getSettingLimit();
+		int limit = pi.getSettingLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList("memberMapper.checkMemberNoSelect",intArray,rowBounds);
+	}
+
+
 }

@@ -38,5 +38,16 @@ public interface MemberService {
 	int updateMember(Member m);
 
 	List<Object> onlineStatusList();
+	
+	int resignedmember(ResignedMember resignedMember);
+
+	int resignedmemberUpdate(ResignedMember resignedMember);
+
+	int resignedmemberDelete(int userNo);
+
+	List<Member> modalAllMemberView(String keyword);
+
+	List<Member> checkMemberNoSelect(int currentPage, Map<String, Object> map, int[] intArray);
+
 
 }

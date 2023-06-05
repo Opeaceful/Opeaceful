@@ -102,4 +102,41 @@ public class MemberServiceImpl implements MemberService {
 	public List<Object> onlineStatusList() {
 		return memberDao.onlineStatusList();
 	}
+	
+	@Override
+	public int resignedmember(ResignedMember resignedMember) {
+		return memberDao.resignedmember(resignedMember);
+	}
+	
+	@Override
+	public int resignedmemberUpdate(ResignedMember resignedMember) {
+		return memberDao.resignedmemberUpdate(resignedMember);
+	}
+	
+	@Override
+	public int resignedmemberDelete(int userNo) {
+		return memberDao.resignedmemberDelete(userNo);
+	}
+	
+	@Override
+	public List<Member> modalAllMemberView(String keyword) {
+		return memberDao.modalAllMemberView(keyword);
+	}
+	
+	@Override
+	public List<Member> checkMemberNoSelect(int currentPage, Map<String, Object> map,int[] intArray){
+		
+		//페이지네이션 처리
+		int listCount = intArray.length;
+		int pageLimit = 5;
+		int settingLimit = 10;
+		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, settingLimit);
+		
+		//ajax로 돌려보내줄 map에 pi정보 담아주기
+		map.put("pi", pi);
+		
+		return memberDao.checkMemberNoSelect(pi,intArray);
+	}
+	
+	
 }

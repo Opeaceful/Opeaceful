@@ -1,0 +1,53 @@
+/*작성자 윤지영
+    member select 모달용 css
+*/
+
+/*테이블 css*/
+/* 테이블 : 중간정렬*/
+.t-v-middle{
+    vertical-align: middle;
+    border-right: 1px solid var(--color-light-gray);
+}
+
+
+/*check박스 css*/
+.form-check-input:checked {
+    background-color: var(--navy-hover);
+    border-color: var(--color-navy);
+}
+
+.form-check-input:focus {
+    border-color: var( --white-hover);
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem var(--color-light-gray);
+}
+
+.table-common>tbody>tr:hover {
+    background-color: initial;
+}
+
+table {
+    --bs-table-active-bg: none;
+    --bs-table-hover-bg: none;
+}
+
+.table-hover>tbody>tr:hover>* {
+    --bs-table-accent-bg: none; 
+    color: none;
+}
+
+.table-common>tbody>tr>td:hover {
+    background-color: var(--color-light-gray);
+}
+
+.table-common>tbody>tr>th:hover {
+    background-color: var(--color-light-gray);
+}
+
+.W-10{
+    width: 10%;
+}
+
+#all-user-view-content{
+   height: 40rem
+}
