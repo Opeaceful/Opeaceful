@@ -146,15 +146,15 @@
 	
 	<!-- 폼 삭제 -->
 	<delete id="deleteForm" parameterType="_int">
-		DELETE APPROVAL_FORM
+		DELETE FROM  APPROVAL_FORM
 		WHERE FORM_NO = #{formNo}
 	</delete>
 	
 	
 	<!-- 파일들 삭제 -->
-	<delete id="deleteFile" parameterType="list">
-		DELETE APPROVAL_FILE
-		WHERE FILE_NO IN ( <foreach collection="fileNoList" item="file" separator=",">
+	<delete id="deleteFileList" parameterType="list">
+		DELETE FROM  APPROVAL_FILE
+		WHERE FILE_NO IN ( <foreach collection="list" item="file" separator=",">
 								#{file.fileNo}
 							</foreach> )
 	</delete>

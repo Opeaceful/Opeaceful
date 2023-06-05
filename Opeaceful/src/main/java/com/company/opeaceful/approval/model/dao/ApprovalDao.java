@@ -1,5 +1,6 @@
 package com.company.opeaceful.approval.model.dao;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class ApprovalDao {
 	    params.put("refNo", refNo); // 참조 문서 no
 	    params.put("usage", usage); // 본문용 content, 첨부용 attachment
 		
-	    return sqlSession.selectList( "aprMapper.selectForm", params);
+	    return sqlSession.selectList( "aprMapper.selectFileList", params);
 	}
 	
 	
@@ -95,13 +96,20 @@ public class ApprovalDao {
 	
 //	-------------------------------- delete 구간 ----------------------------------------
 
-	// 폼 삭제
-	public int deleteForm(int formNo) {
+	// 폼 + 실제 저장된 파일들 삭제
+	public int deleteForm(int formNo,  String deleteFolderPath) {
 		int result = sqlSession.delete("aprMapper.deleteForm", formNo);
 		if (result > 0) {
 			List<ApprovalFile> fileList = selectFileList("form", formNo, "all");
 			if (fileList.size() > 0) {
-				result = deleteFile(fileList);
+				// 파일 리스트 실제 파일들 삭제
+				for (ApprovalFile file : fileList) {
+					File deleteFile = new File(deleteFolderPath + file.getChangeName());
+					if (deleteFile.exists()) { // 파일이 존재하면
+						deleteFile.delete();// 파일 삭제
+					}
+				}
+				result = deleteFileList(fileList);
 			}
 		}
 
@@ -109,8 +117,8 @@ public class ApprovalDao {
 	};
 
 	// 파일들 삭제
-	public int deleteFile( List<ApprovalFile> fileList) {
-		return sqlSession.delete("aprMapper.deleteFile", fileList);
+	public int deleteFileList( List<ApprovalFile> fileList) {
+		return sqlSession.delete("aprMapper.deleteFileList", fileList);
 	}
 
 

@@ -29,6 +29,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 //	-------------------------------- selelct 구간 ----------------------------------------
 	
+	
+	@Override
+	public int selectFormListCount(int type) {
+		return  aprDao.selectFormListCount(type);
+	}
+	
 	@Override
 	public List<ApprovalForm> selectFormListAll() {
 		return aprDao.selectFormListAll();
@@ -39,7 +45,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 		int listCount = aprDao.selectFormListCount(type);
 		int pageLimit = 10;
-		int itemLimit = 20; // 최대 20개 가져오기
+		int itemLimit = 10; // 최대 10개 가져오기
 		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, itemLimit);
 		
 		return aprDao.selectFormList(pi, type);
@@ -91,14 +97,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 //	-------------------------------- delete 구간 ----------------------------------------
 
 	@Override
-	public int deleteForm(int formNo) {
-		return aprDao.deleteForm(formNo);
+	public int deleteForm(int formNo,  String deleteFolderPath) {
+		return aprDao.deleteForm(formNo, deleteFolderPath);
 	}
 
 	@Override
-	public int deleteFile( List<ApprovalFile> fileList) {
-		return aprDao.deleteFile(fileList);
+	public int deleteFileList( List<ApprovalFile> fileList) {
+		return aprDao.deleteFileList(fileList);
 	}
+
+
 
 
 

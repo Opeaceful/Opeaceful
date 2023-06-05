@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
+	int count = (int) request.getAttribute("count");
+	int pageCount = (int) Math.ceil(count / 10.0);
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -90,6 +95,8 @@ pageEncoding="UTF-8"%>
 				</c:forEach>
             </tbody>
           </table>
+
+          
           <div class="btn-wrap">
             <button id="btn-delete-selected-form" class="btn btn-outline-primary">선택삭제</button>
             
@@ -103,6 +110,29 @@ pageEncoding="UTF-8"%>
               신규추가
             </button>
           </div>
+          
+          <div class="pagingArea">			
+			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+
+			<% for(int i= 1; i <= 10; i++) { %>
+				<% if( i <= pageCount) { %>
+					<% if(i == 1) { %>
+						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<% } else { %>
+						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+					<% } %>
+				<% } else {%>
+					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+				<% } %>
+			<% } %>
+			
+			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
+			<% if( 10 < pageCount ) { %>
+				<button type="button" class="able-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } else { %>
+				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } %>
+		 </div>
         </div>
       </div>
 
@@ -161,15 +191,18 @@ pageEncoding="UTF-8"%>
                     양식복사
                   </button>
                 </div>
-              <textarea class="tinymce" id="form-tiny" name="content">
- 				내용을 입력해주세요.
-              </textarea
-                >
-                
-                <input type="file" id="input-images" name="images" hidden multiple>
+              <textarea class="tinymce" id="form-tiny" name="content" maxlength="3000">
+              </textarea>
               </form>
             </div>
             <div class="modal-footer">
+              <button
+                type="button"
+                id="btn-form-delete"
+                class="btn btn-outline-danger"
+              >
+                삭제
+              </button>
               <button
                 type="button"
                 id="btn-form-save"
@@ -180,7 +213,7 @@ pageEncoding="UTF-8"%>
               </button>
               <button
                 type="button"
-                class="btn btn-outline-primary cancel-common position-cancel can"
+                class="btn btn-outline-primary cancel-common position-cancel"
                 data-bs-dismiss="modal"
                 data-bs-target="#add-form"
               >
@@ -201,7 +234,7 @@ pageEncoding="UTF-8"%>
                     <div>복사할 양식</div>
                     <select name="copyForm" id="copy-select">
                       <option value="1">
-                        testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                        test
                       </option>
                     </select>
                     <button

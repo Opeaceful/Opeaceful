@@ -9,6 +9,9 @@ import com.company.opeaceful.approval.model.vo.ApprovalForm;
 public interface ApprovalService {
 	
 
+
+	int selectFormListCount(int type);
+	
 	List<ApprovalForm> selectFormList(int currentPage, int type);
 	
 	List<ApprovalForm> selectFormListAll();
@@ -23,7 +26,7 @@ public interface ApprovalService {
 
 	int updateForm(ApprovalForm form, List<ApprovalFile> fileList);
 	
-	int deleteForm(int formNo);
+	int deleteForm(int formNo, String deleteFolderPath);
 	
-	int deleteFile(List<ApprovalFile> fileList);
+	int deleteFileList(List<ApprovalFile> fileList);
 }

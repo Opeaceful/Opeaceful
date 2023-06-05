@@ -103,6 +103,10 @@ th:nth-child(3) {
   outline: none;
 }
 
+#btn-form-delete {
+  display: none;
+}
+
 #copy-form {
   position: absolute;
   display: flex;
@@ -169,4 +173,21 @@ th:nth-child(3) {
 /* 양식복사 모달 감추기 */
 #copy-form {
   display: none;
+}
+
+/* --- 버튼 영역  --- */
+.disable-btn {
+  display: none;
+}
+
+.pagingArea button {
+  font-size: var(--font13);
+}
+
+.selected-btn {
+  color: var(--bs-btn-disabled-color);
+  pointer-events: none;
+  background-color: var(--bs-btn-disabled-bg);
+  border-color: var(--bs-btn-disabled-border-color);
+  opacity: var(--bs-btn-disabled-opacity);
 }
