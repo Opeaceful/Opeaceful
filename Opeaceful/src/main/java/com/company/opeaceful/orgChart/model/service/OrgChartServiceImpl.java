@@ -1,8 +1,11 @@
 package com.company.opeaceful.orgChart.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.orgChart.model.dao.OrgChartDao;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
@@ -36,9 +39,21 @@ public class OrgChartServiceImpl implements OrgChartService {
 		return orgChartDao.updateDp(orgChart);
 	}
 	
-	// 상위부서 추가
+	// 하위부서 사원 조회
+	@Override
+	public List<UserDepatment> selectMember() {
+		return orgChartDao.selectMember();
+	}
+	
+	// 직급 추가
 	@Override
 	public int insertPname(OrgChart orgChart) {
 		return orgChartDao.insertPname(orgChart);
+	}
+	
+	// 직급명 변경
+	@Override
+	public int updatePname(OrgChart orgChart) {
+		return orgChartDao.updatePname(orgChart);
 	}
 }

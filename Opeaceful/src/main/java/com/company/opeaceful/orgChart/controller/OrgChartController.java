@@ -1,5 +1,7 @@
 package com.company.opeaceful.orgChart.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.company.opeaceful.dept.model.service.DeptService;
+import com.company.opeaceful.dept.model.vo.Department;
+import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/orgChart")
@@ -17,10 +23,12 @@ import com.company.opeaceful.orgChart.model.vo.OrgChart;
 public class OrgChartController {
 
 	private OrgChartService orgchartService;
+	private DeptService deptService;
 	
 	@Autowired
-	public OrgChartController(OrgChartService orgchartService) {
+	public OrgChartController(OrgChartService orgchartService, DeptService deptService) {
 		this.orgchartService = orgchartService;
+		this.deptService = deptService;
 	}
 	
 //	quartz 사용할 때를 위해 작성만 함
@@ -43,6 +51,16 @@ public class OrgChartController {
 //		System.out.println("생성 : "+result);
 
 		return result;
+	}
+	
+	// 부서조회
+	@PostMapping("selectDept")
+	@ResponseBody
+	public String selectDept() {
+		List<Department> dList = deptService.selectDeptList();
+		
+		System.out.println(dList);
+		return new Gson().toJson(dList);
 	}
 	
 	// 상위부서 이름 변경
@@ -82,6 +100,17 @@ public class OrgChartController {
 		return result;
 	}
 	
+	// 하위부서 사원 조회
+	@PostMapping("/selectAll")
+	@ResponseBody
+	public String selectMember() {
+		List<UserDepatment> udList = orgchartService.selectMember();
+		
+		System.out.println(udList);
+		return new Gson().toJson(udList);
+		
+	}
+	
 	// 직급 추가
 	@PostMapping("/insert/Pname")
 	@ResponseBody
@@ -94,8 +123,21 @@ public class OrgChartController {
 		return result;
 	}
 	
-	@RequestMapping("/orgChartView")
+	// 직급명 변경
+	@PostMapping("/update/Pname")
+	@ResponseBody
+	public int updatePname(OrgChart orgChart) {
+				
+		int result = orgchartService.updatePname(orgChart);
+				
+		System.out.println("생성 : "+result+", "+orgChart);
+
+		return result;
+	}
+	
+	
+	@PostMapping("/orgChartView")
 	public String selectOrgChart() {
-		return "orgChart";
+		return "orgChartView";
 	}
 }

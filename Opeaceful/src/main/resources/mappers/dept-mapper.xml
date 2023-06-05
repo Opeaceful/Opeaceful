@@ -43,6 +43,16 @@
 						  	  AND DEPT_NAME = #{dName});
 	</select>
 	
+	<!-- [가영] - 하위부서 사원 조회 -->
+	<select id="selectMember" resultMap="userDepartResultSet">
+		SELECT ENO, USER_NAME, DEPT_NAME, P_NAME
+		FROM USER_DEPARTMENT UD
+		LEFT JOIN MEMBER M ON UD.USER_NO = M.USER_NO
+		JOIN DEPARTMENT USING (DEPT_CODE)
+		LEFT JOIN POSITION USING (P_CODE)
+		WHERE DEPT_CODE = #{deptCode};
+	</select>
+	
   
   
  

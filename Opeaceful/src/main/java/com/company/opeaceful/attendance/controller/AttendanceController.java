@@ -32,7 +32,7 @@ public class AttendanceController {
 //		
 //	}
 	
-	@RequestMapping("/attendanceInquiry")
+	@RequestMapping("/check")
 	public String selectAttendance() {
 		return "attendance";
 	}

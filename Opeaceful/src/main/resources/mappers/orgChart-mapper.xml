@@ -36,7 +36,14 @@
 	
 	<!-- 직급 추가 -->
 	<insert id="insertPname" parameterType="orgChart" useGeneratedKeys="true" keyProperty="pCode">
-		INSERT INTO POSITION(P_CODE)
+		INSERT INTO POSITION (P_NAME)
 		VALUES(#{pName})
 	</insert>
+	
+	<!-- 직급명 변경 -->
+	<update id="updatePname" parameterType="orgChart">
+		UPDATE POSITION
+		SET P_NAME = #{pName}
+		WHERE P_CODE = #{pCode}
+	</update>
 </mapper>
