@@ -18,6 +18,10 @@ public interface BoardService {
 	
 	public void selectSearchBoardList(Map<String, Object> map);
 
+	int selectNoticeRoll(String userNo);
+
+	public Board selectBoardDetail(int boardNo);
+
 	
 	
 }

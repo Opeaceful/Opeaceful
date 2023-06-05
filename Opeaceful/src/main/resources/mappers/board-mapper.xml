@@ -27,7 +27,17 @@
 		<result column="FIXED" property="fixed"/>
 	</resultMap>
 	
-	
+	<!-- [혜린] - 게시글 상세조회 resultMap -->
+	<resultMap type="board" id="boardDetailResultSet">
+		<id column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_CD" property="boardCd"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="P_NAME" property="pName"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="COUNT" property="count"/>
+	</resultMap>
 
 	<!-- [지의] - 메인 공지사항 조회 -->
 	<select id="mainSelectNoticeList" resultMap="mainNoticeResultSet">
@@ -50,12 +60,12 @@
 		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
 		  <choose>
 			  <when test='boardCode == "T"'>
-			  FROM USER_DEPARTMENT D
-	          LEFT JOIN MEMBER M ON D.USER_NO = M.USER_NO
-	          LEFT JOIN BOARD B ON B.DEPT_CODE = D.DEPT_CODE
+			  FROM BOARD B
+	          LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+	          LEFT JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
 	          LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
 			 WHERE B.BOARD_CD = #{boardCode}
-			   AND D.DEPT_CODE = (SELECT D.DEPT_CODE
+			   AND B.DEPT_CODE = (SELECT D.DEPT_CODE
 			 						FROM USER_DEPARTMENT D
 			 					   WHERE D.USER_NO = #{userNo})
 			 </when>
@@ -79,12 +89,12 @@
 		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
 		  <choose>
 			  <when test='boardCode == "T"'>
-			  FROM USER_DEPARTMENT D
-	          LEFT JOIN MEMBER M ON D.USER_NO = M.USER_NO
-	          LEFT JOIN BOARD B ON B.DEPT_CODE = D.DEPT_CODE
-	          LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+			  FROM BOARD B
+	          JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+	          JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
+	          JOIN POSITION P ON D.P_CODE = P.P_CODE
 			 WHERE B.BOARD_CD = #{boardCode}
-			   AND D.DEPT_CODE = (SELECT D.DEPT_CODE
+			   AND B.DEPT_CODE = (SELECT D.DEPT_CODE
 			 						FROM USER_DEPARTMENT D
 			 					   WHERE D.USER_NO = #{userNo})
 			   <if test='keyword != null and keyword !=""'>
@@ -140,12 +150,12 @@
 	SELECT COUNT(*)
 	FROM BOARD B
 	<if test='boardCode == "T"'>
-	JOIN USER_DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
-	JOIN MEMBER M ON D.USER_NO = M.USER_NO
+	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+	JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
 	</if>
 	WHERE BOARD_CD = #{boardCode}
 	 <if test='boardCode == "T"'>
-	AND  D.DEPT_CODE = (SELECT D.DEPT_CODE
+	AND  B.DEPT_CODE = (SELECT D.DEPT_CODE
 			 			FROM USER_DEPARTMENT D
 			 			WHERE D.USER_NO = #{userNo})
 	</if>
@@ -158,8 +168,8 @@
 	FROM BOARD B
 	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	<if test='boardCode == "T"'>
-	JOIN USER_DEPARTMENT D ON B.DEPT_CODE = D.DEPT_CODE
-	LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+	JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
 	</if>
 	WHERE BOARD_CD = #{boardCode}
 	 <if test='boardCode == "T"'>
@@ -186,9 +196,36 @@
 	;
 	</select>
 	
+	<!-- [혜린] - 공지사항관리 권한 조회 -->
+	<select id="selectNoticeRoll" resultType="_int">
+		SELECT COUNT(*)
+		FROM USER_ROLE
+		WHERE USER_NO = #{userNo}
+		 AND ROLE_CODE = 'B01';
+	</select>
 	
-	
-	
-	
+	<!-- [혜린] - 게시글 상세 조회 -->
+	<select id="selectBoardDetail" resultMap="boardDetailResultSet" >
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, M.USER_NAME, P.P_NAME, CREATE_DATE, COUNT
+		FROM BOARD B
+		LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+		LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
+		LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+		WHERE BOARD_NO = #{boardNo}
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

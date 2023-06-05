@@ -51,6 +51,13 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList", map, rowBounds);
 	}
 	
+	public int selectNoticeRoll(String userNo) {
+		return sqlSession.selectOne("boardMapper.selectNoticeRoll", userNo);
+	}
+
+	public Board selectBoardDetail(int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectBoardDetail" , boardNo);
+	}
 	
 	
 }

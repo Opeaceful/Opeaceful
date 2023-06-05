@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -32,9 +32,23 @@
             </div>
             <div class="board-wrap1">
                 <div class="board-title-btn-wrap">
-                    <a href="#" class="board-title-btn notice-btn">공지사항</a>
-                    <a href="#" class="board-title-btn team-btn">팀 게시판</a>
-                    <a href="#" class="board-title-btn free-btn">자유 게시판</a>
+                    <c:choose>
+						<c:when test="${ boardCode eq 'T'}">
+	                    <a href="${path}/board/list/N" class="board-title-btn">공지사항</a>
+	                    <a href="${path}/board/list/F" class="board-title-btn">자유게시판</a>
+	                    <a href="${path}/board/list/T" class="board-title-btn c-page">팀게시판</a>
+	                 	</c:when>
+	                 	<c:when test="${ boardCode eq 'N'}">
+	                    <a href="${path}/board/list/N" class="board-title-btn c-page">공지사항</a>
+	                    <a href="${path}/board/list/F" class="board-title-btn">자유게시판</a>
+	                    <a href="${path}/board/list/T" class="board-title-btn">팀게시판</a>
+	                 	</c:when>
+						<c:otherwise>
+						<a href="${path}/board/list/N" class="board-title-btn">공지사항</a>
+	                    <a href="${path}/board/list/F" class="board-title-btn c-page">자유게시판</a>
+	                    <a href="${path}/board/list/T" class="board-title-btn">팀게시판</a>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
             <div class="board-wrap2">
@@ -42,9 +56,9 @@
                 <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
             </div>
             <div class="board-wrap3">
-                <div class="ctn-title">2차 훈련장려금 신청 공지입니다.</div>
-                <div class="ctn-writer">사원 김혜린</div>
-                <div class="ctn-date">2023-05-19</div>
+                <div class="ctn-title">${b.boardTitle}</div>
+                <div class="ctn-writer">${b.PName} ${b.userName}</div>
+                <div class="ctn-date">${b.createDate }</div>
             </div>
             <div class="board-wrap4">
                 <div class="atc-icon">
@@ -58,15 +72,7 @@
             </div>
             <div class="board-wrap5">
                 <div class="detail-ctn">
-                    <span>와하하하하하와하하하하하와하하하하하
-                    와하하하하하와하하하하하와하하하하하
-                    와하하하하하와하하하하하와하하하하하
-                    와하하하하하와하하하하하와하하하하하
-                    컨텐츠내용와하하하하하와하하하하하와하하하하하
-                    와하하하하하와하하하하하와하하하하하
-                    와하하하하하와하하하하하와하하하하하
-                    와하하하하하와하하하하하와하하하하하
-                    컨텐츠내용</span>
+                    <span>${b.boardContent }</span>
                 </div>
             </div>
             <div class="board-wrap6">

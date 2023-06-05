@@ -62,11 +62,17 @@ public class BoardServiceImpl implements BoardService {
 		map.put("list", list);
 		
 		System.out.println("map에 담긴 값 서비스 : " + map);
-		
 	}
 	
+	@Override
+	public int selectNoticeRoll(String userNo) {
+		return boardDao.selectNoticeRoll(userNo);
+	}
 	
-	
+	@Override
+	public Board selectBoardDetail(int boardNo) {
+		return boardDao.selectBoardDetail(boardNo);
+	}
 	
 	
 	

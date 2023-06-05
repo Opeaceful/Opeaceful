@@ -57,7 +57,22 @@
                 </div>
             </div>
             <div class="board-wrap2">
-                <button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
+            <c:choose>
+					<c:when test="${ boardCode eq 'T'}">
+						<button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>						
+					</c:when>
+	                 <c:when test="${ boardCode eq 'F'}">
+		                <button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
+	                 </c:when>
+						<c:otherwise>
+							<c:if test="${notiRoll > 0}">
+            					<button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
+            				</c:if>
+            				<c:if test="${notiRoll == 0}">
+            					<div><pre> </pre></div>
+            				</c:if>	
+						</c:otherwise>
+					</c:choose>
             </div>
             <div class="board-wrap3">
                 <table class="table table-hover table-common">
@@ -76,7 +91,7 @@
 					<c:forEach items="${ list }" var="b">
 	                    <c:choose>
 	                    <c:when test='${ b.fixed == "Y"}'>
-		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}"'>
+		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
 		                        <td class="list-ctn-title">${b.boardTitle}</td>
 		                        <td>${b.PName} ${b.userName}</td>
 		                        <td>${b.createDate}</td>
@@ -84,7 +99,7 @@
 		                    </tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}"'>
+	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
 	                        <td class="list-ctn-title">${b.boardTitle}</td>
 	                        <td>${b.PName} ${b.userName}</td>
 	                        <td>${b.createDate}</td>
