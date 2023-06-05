@@ -27,4 +27,6 @@
 	 	WHERE STATUS='Y'
 	 </select>
 	 
+	 <select id="chatStatus" 
+	 
 </mapper>

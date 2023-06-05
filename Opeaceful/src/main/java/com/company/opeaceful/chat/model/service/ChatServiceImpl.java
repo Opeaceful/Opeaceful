@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.chat.model.dao.ChatDao;
+import com.company.opeaceful.chat.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.Member;
 
 @Service
@@ -20,7 +21,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public ArrayList<MemberStatus> chatStatus(){
+	public ArrayList<OnlineStatus> chatStatus(){
 		return chatDao.chatStatus();
 	}
 	

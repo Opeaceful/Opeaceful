@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.chat.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.Member;
 
 @Repository
@@ -18,8 +19,8 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.adminAll");
 	}
 	
-	public ArrayList<MemberStatus> chatStatus(){
-		return (ArrayList)
+	public ArrayList<OnlineStatus> chatStatus(){
+		return (ArrayList)sqlSession.selectList("chatMapper.chatStatus");
 	}
 
 }

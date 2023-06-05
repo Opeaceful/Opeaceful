@@ -8,18 +8,19 @@
 <title>chatMain</title>
 </head>
 <body>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" /> -->
 <!-- 부트스트랩 아이콘 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" /> -->
 <!-- fontawesome -->
-<script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
+<!-- <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script> -->
 
-<link rel="stylesheet" href="${path}/resources/css/common/common.css">
+<%-- <link rel="stylesheet" href="${path}/resources/css/common/common.css"> --%>
 <link rel="stylesheet" href="${path}/resources/css/chat/chat-main-layout.css">
 <link rel="stylesheet" href="${path}/resources/css/chat/chat-friend.css">
 <link rel="stylesheet" href="${path}/resources/css/chat/chat-general.css">
 </body>
 <!-- 코드시작 -->
+<div id=dialog>
     <div id="content">
         <!-- 설정바(최소화, 최대화, 닫기 버튼) -->
         <div class="setting_bar">
@@ -116,7 +117,8 @@
                     <p>버스</p>
                 </div>
                 <ul id="adminList">
-                   
+                  
+                     </ul>
                     <c:forEach var="member" items="${memberList}">
         				<li>
 	        				<c:if test="${empty member.profileImg}">
@@ -131,7 +133,6 @@
 				            </div>
 				        </li>
 				    </c:forEach>
-                     </ul>
 
                
             </div>
@@ -141,7 +142,8 @@
             <img src="${path}/resources/image/chat/help.webp" alt="광고이미지">
         </aside>
     </div>
+   </div>
     
-    <script src="${path}/resources/js/chat/chat.js"></script> 
+    <script type="module" src="${path}/resources/js/chat/chat.js"></script> 
 
 </html>
