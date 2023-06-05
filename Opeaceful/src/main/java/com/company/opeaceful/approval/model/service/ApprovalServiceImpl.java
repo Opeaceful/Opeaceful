@@ -35,7 +35,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
-	public List<ApprovalForm> selectFormList(int currentPage, String type) {
+	public List<ApprovalForm> selectFormList(int currentPage, int type) {
 		
 		int listCount = aprDao.selectFormListCount(type);
 		int pageLimit = 10;

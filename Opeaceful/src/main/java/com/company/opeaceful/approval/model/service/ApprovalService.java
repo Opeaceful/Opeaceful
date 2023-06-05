@@ -9,7 +9,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalForm;
 public interface ApprovalService {
 	
 
-	List<ApprovalForm> selectFormList(int currentPage, String type);
+	List<ApprovalForm> selectFormList(int currentPage, int type);
 	
 	List<ApprovalForm> selectFormListAll();
 

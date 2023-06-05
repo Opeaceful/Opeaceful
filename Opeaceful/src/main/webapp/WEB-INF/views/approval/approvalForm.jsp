@@ -1,5 +1,6 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -46,7 +47,7 @@ pageEncoding="UTF-8"%> -->
                 <th scope="col">양식명</th>
                 <th scope="col">
                   <select name="checkType" id="select-show-type">
-                    <option value="all" selected>구분</option>
+                    <option value="-1" selected>구분</option>
                     <option value="0">일반</option>
                     <option value="1">연차</option>
                     <option value="2">오전반차</option>
@@ -56,32 +57,37 @@ pageEncoding="UTF-8"%> -->
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <input type="checkbox" value="1"  />
-                </td>
-                <td>
-                  <div>
-                    양식
-                    며어어어어어어어어어어어어어어엉며어어어어어어어어어어어어어어엉
-                  </div>
-                </td>
-                <td>일반</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" value="2" />
-                </td>
-                <td>양식 며어어어엉</td>
-                <td>일반</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" value="3"/>
-                </td>
-                <td>양식 며어어어엉</td>
-                <td>일반</td>
-              </tr>
+            	<c:if test="${empty formList}">
+            		<tr>
+            			<td colspan="3">등록된 양식이 없습니다.</td>
+            		</tr>
+				</c:if>
+				<c:forEach items="${formList}" var="form">
+					 <tr>
+		                <td>
+		                  <input type="checkbox" value="${ form.formNo }"  />
+		                </td>
+		                <td>
+		                  <div>${ form.title }</div>
+		                </td>
+		                <td>
+		                	<c:choose>
+		                		<c:when test="${ form.type eq 0 }">
+		                			일반
+		                		</c:when>
+		                		<c:when test="${ form.type eq 1 }">
+		                			연차
+		                		</c:when>
+		                		<c:when test="${ form.type eq 2 }">
+		                			오전반차
+		                		</c:when>
+		                		<c:when test="${ form.type eq 3 }">
+		                			오후반차
+		                		</c:when>
+		                	</c:choose>
+		                </td>
+		             </tr>
+				</c:forEach>
             </tbody>
           </table>
           <div class="btn-wrap">

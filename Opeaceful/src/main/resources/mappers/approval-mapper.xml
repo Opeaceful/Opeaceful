@@ -22,20 +22,20 @@
 
 <!--  select 구간  -->
 
-	<select id="selectFormListCount" parameterType="String" resultType="_int">
+	<select id="selectFormListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
 		FROM APPROVAL_FORM
 		<choose>
-			<when test='type.equals("0")'><!-- 일반 -->
+			<when test='type == 0'><!-- 일반 -->
 				WHERE TYPE = 0
 			</when>
-			<when test='type.equals("1")'><!-- 휴가 -->
+			<when test='type == 1'><!-- 연차 -->
 				WHERE TYPE = 1
 			</when>
-			<when test='type.equals("2")'><!-- 오전반차 -->
+			<when test='type == 2'><!-- 오전반차 -->
 				WHERE TYPE = 2
 			</when>
-			<when test='type.equals("3")'><!-- 오후반차 -->
+			<when test='type == 3'><!-- 오후반차 -->
 				WHERE TYPE = 3
 			</when>
 		</choose>
@@ -50,20 +50,20 @@
 	</select>
 
 	<!-- 폼 리스트 조회 -->
-	<select id="selectFormList" parameterType="String" resultType="approvalForm">
+	<select id="selectFormList" parameterType="_int" resultType="approvalForm">
 		SELECT FORM_NO, TYPE, TITLE
 		FROM APPROVAL_FORM
 		<choose>
-			<when test='type.equals("0")'><!-- 일반 -->
+			<when test='type == 0'><!-- 일반 -->
 				WHERE TYPE = 0
 			</when>
-			<when test='type.equals("1")'><!-- 휴가 -->
+			<when test='type == 1'><!-- 연차 -->
 				WHERE TYPE = 1
 			</when>
-			<when test='type.equals("2")'><!-- 오전반차 -->
+			<when test='type == 2'><!-- 오전반차 -->
 				WHERE TYPE = 2
 			</when>
-			<when test='type.equals("3")'><!-- 오후반차 -->
+			<when test='type == 3'><!-- 오후반차 -->
 				WHERE TYPE = 3
 			</when>
 		</choose>
@@ -114,7 +114,7 @@
 	
 	<!-- 파일 등록 -->
 	<insert id="insertFile" parameterType="map">
-		INSERT INTO APPROVAL_FILE
+		INSERT INTO APPROVAL_FILE(FILE_NO, REF_TYPE, REF_NO, CHANGE_NAME, ORIGIN_NAME)
 		SELECT FILE.*
 		FROM (
 			<foreach collection="fileList" item="file" separator="UNION ALL">

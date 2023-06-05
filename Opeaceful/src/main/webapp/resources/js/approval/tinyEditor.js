@@ -119,14 +119,13 @@ export function setTinymce() {
             file: file,
           });
 
-          console.log(InputFileList);
         };
         reader.readAsDataURL(file);
       };
       //위에서 만든 인풋 타입 파일인 요소에 클릭 줌
       input.click();
     },
-    /*** image upload ***/
+    /*** image upload 끝 ***/
 
     content_style:
       'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
@@ -161,11 +160,8 @@ export function returnFormData(tinyId) {
   // dataTransfer.items.add(file); // 이런식으로 파일들을 담음
   // document.getElementById('인풋요소 아이디').files = dataTransfer.files; // 인풋 파일리스트 갈아끼기
 
-  let dataTransfer = new DataTransfer();
-  // dataTransfer.items.add(file); // 이런식으로 파일들을 담음
-  // document.getElementById('인풋요소 아이디').files = dataTransfer.files; // 인풋 파일리스트 갈아끼기
 
-  // 하지만 여기서는 파일들을 리스트화해서 바로 서버로 전송하려고 하기 때문에 FormData를 사용함
+  // 하지만 여기서는 파일들을 리스트화해서 ajax로 바로 서버로 전송하려고 하기 때문에 FormData를 사용함
   // form 태그를 사용해서 숨겨둔 인풋요소의 값을 전송시킬거면 DataTransfer로 사용할것
   let formData = new FormData();
   let fileList = [...InputFileList]; // 얕은복사
@@ -178,27 +174,37 @@ export function returnFormData(tinyId) {
     // -> 신규로 추가된게 아니라면 굳이 파일을 찾을 이유가 없으므로 패스
     if (imgSrc.startsWith('blob')) {
       for (let i in fileList) {
-        // 만약 파일리스트에 저장된 src와 현재 이미지 src가 같다면 파일을 서버로넘길 dataTransfer리스트에 저장
+        // 만약 파일리스트에 저장된 src와 현재 이미지 src가 같다면 파일을 서버로넘길 formData리스트에 저장
         if (fileList[i].src == imgSrc) {
-          dataTransfer.items.add(fileList[i].file);
-          // formData.append('images', fileList[i].file);
+          
+          formData.append('images', fileList[i].file);
           // 저장했으면 기존 배열에서는 해당 아이템 삭제
           fileList.splice(i, 1);
 
-          // 현재 이미지 태그의 src를 서버로넘길 dataTransfer리스트 인덱스값으로 변경
+          // 현재 이미지 태그의 src를 서버로넘길 formData images리스트 인덱스값으로 변경
           // -> 서버에서 다시한번 확인하면서 인덱스값을 실제 src값으로 바꾸어줄 예정
-          img.src = dataTransfer.items.length - 1;
-          console.log('dataTransfer 아이템 길이 ', dataTransfer.items.length);
+          img.src = formData.getAll("images").length -1;
+          
+          // 파일하나에 이미지 하나매칭시키므로 대응되는거 찾았으면 for문 빠져나가기
           break;
         }
       }
+    }else{
+      let imgName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+      // 어떤 이미지 이름들이 있는지 체크위해 별도로 formData에 저장
+      // 본문내용 수정할경우 이 이름들과 비교해서 저장된 파일 삭제할것임
+      formData.append("imgNames", imgName);
+
+      // 기존 이미지파일들이라면 본문상 다시 changName만 남도록 처리
+      img.src = imgName;
     }
   }
   // formData에 본문내용 담아주기
-  // formData.append('content', tinymce.get(tinyId).getContent());
+  formData.append('content', tinymce.get(tinyId).getContent());
 
   // 정보 뽑아내기 끝나면 다음을 위해 파일리스트 비우기
   resetInputFileList();
 
-  return dataTransfer;
+  return formData;
 }

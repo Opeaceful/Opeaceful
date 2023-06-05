@@ -17,7 +17,4 @@ public class ApprovalForm {
 	private int type;			//	TYPE
 	private String title;		//	TITLE
 	private String content;		//	CONTENT
-	
-	private MultipartFile[] images;
-
 }
