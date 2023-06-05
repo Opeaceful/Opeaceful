@@ -2,10 +2,18 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -30,6 +38,8 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.OnlineStatus;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 import com.google.gson.Gson;
 
 @Controller
@@ -180,7 +190,7 @@ public class MemberController {
 		}
 		
 	
-		return "member/member-create";
+		return "redirect:/member/create";
 		
 	}
 	
@@ -198,22 +208,185 @@ public class MemberController {
 	@PostMapping("/selectAll")
 	public String selectMember(
 			@RequestParam(value="Dselect", required = false) Integer Dselect,
-			@RequestParam(value="Pselect", required = false) Integer Pselect
+			@RequestParam(value="Pselect", required = false) Integer Pselect,
+			@RequestParam(value= "Sselect", defaultValue = "Y") String Sselect	,
+			Model model,
+			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(value="checkMemberNo", required = false) String checkMemberNo 
 			) {
 		
-		Map<String, Object> selectPD = new HashMap<>();	
-		selectPD.put("Dselect", Dselect);
-		selectPD.put("Pselect", Pselect);
+		//json 다시 int배열로 변경
+		int[] intArray = new Gson().fromJson(checkMemberNo, int[].class);
 		
-		List<Member> m = memberService.selectMember(selectPD);
+		//ajax로 전송할 데이터 
+		Map<String, Object> map = new HashMap<>();	
 		
+		//checkMemberNo에 값이 있다면 
+		if(intArray != null && intArray.length > 0) {
+		     
+			List<Member> m = memberService.checkMemberNoSelect(currentPage,map,intArray);
+			map.put("m", m);
+			
+		}else {
+			//검색 select용 map
+			Map<String, Object> selectPD = new HashMap<>();	
+			selectPD.put("Dselect", Dselect);
+			selectPD.put("Pselect", Pselect);
+			selectPD.put("Sselect", Sselect);
+			
+			List<Member> m = memberService.selectMember(currentPage,map,selectPD);
+			
+			System.out.println(m);
+				
+			map.put("m", m);
+			
+		}
+		
+		
+		//map 데이터 ajax로 전송
+		return new Gson().toJson(map);
+		
+	}
+	
+	
+	//[지영]
+	// member 수정용 개인정보 조회
+	@ResponseBody
+	@PostMapping("/selectMemberOne")
+	public String selectMemberOne(
+			@RequestParam("id") int userNo) {
+		
+		//ajax로 전송할 데이터 
+		Map<String, Object> map = new HashMap<>();	
+		
+		Member m = memberService.selectMemberOne(userNo);
+		//조회된 멤버
+		map.put("m", m);
+				
+		//해당 데이터가 퇴사자라면 
+		if(m.getStatus().equals("N")) {
+			ResignedMember rm = memberService.resignedMembeSelect(userNo);
+			
+			//조회된 퇴사자 정보
+			map.put("rm", rm);
+		}
 
-		return new Gson().toJson(m);
+		return new Gson().toJson(map);
 		
 	}
 
+	//[지영]
+	// member 데이터 변경
+	@RequestMapping("/updateAllmember")
+	public String updateAllmember(
+			Member m,
+			ResignedMember resignedMember,
+			HttpSession session
+			){
+		
+		//퇴사자였는지 아닌지 체크하기! 
+		ResignedMember rm = memberService.resignedMembeSelect(resignedMember.getUserNo());
+		
+		//내용변경 + 퇴사자 처리
+		//1. 퇴사일이 있을 경우
+		if(resignedMember.getResignedDate() != "") {
+			
+			//상위부서 불러와서 세팅
+			Department topDept = memberService.selecTopDept(m);
+			resignedMember.setDeptName(topDept.getDeptName());
+			resignedMember.setTName(m.getDName());
+			
+			int resignedresult = 0;
+		
+			if(rm != null) { //1)퇴사자가 퇴사일을 풀고 내용변경을 했을 경우
+				resignedresult = memberService.resignedmemberUpdate(resignedMember);
+			}else {//2)재직자가 처음으로 퇴사처리 됐을때 
+				resignedresult = memberService.resignedmember(resignedMember);
+			}
+			
+			
+			if(resignedresult > 0) { //퇴사자 데이터 저장시
+				//퇴사 설정 세팅
+				m.setStatus("N");
+			}else {
+				session.setAttribute("alertMsg", "퇴사자 오류발생. 담당자에게 문의하세요");
+				return "redirect:/member/allview";
+			}
+
+		}else {
+			if(rm != null) { //3) 퇴사자가 퇴사일을 삭제했을 경우 -> 재직자로 변경
+				
+				int resignedmemberDelete = memberService.resignedmemberDelete(rm.getUserNo());
+				
+				if(resignedmemberDelete > 0) { //재직자로 변경시
+					//퇴사 설정 세팅 변경
+					m.setStatus("Y");
+				}else {
+					session.setAttribute("alertMsg", "퇴사자 오류발생. 담당자에게 문의하세요");
+					return "redirect:/member/allview";
+				}
+			}
+		}
+		
+		int result = memberService.updateAllmember(m);
+		
+		if(result > 0) { //성공적으로 추가시
+			
+			//부서추가변경
+			int result2 = memberService.UpdateUserDept(m);
+			
+			if(result2>0) {
+				
+				session.setAttribute("success", "정보가 수정되었습니다");
 	
+				return "redirect:/member/allview";
+				
+				//ajax로 전달어떻게 할지 고민
+				//return "redirect:/member/selectAll?Dselect=5";
+				
+			}else{
+				session.setAttribute("alertMsg", "사용자 부서 변경 오류발생. 담당자에게 문의하세요");
+				return "redirect:/member/allview";
+			}
+		}else {
+			session.setAttribute("alertMsg", "사용자 변경 오류발생. 담당자에게 문의하세요");
+			return "redirect:/member/allview";
+		}
+
+	}
 	
+	//[지영]
+	// member 비번 초기화
+	@ResponseBody
+	@PostMapping("/passwordReset")
+	public String passwordReset(
+			@RequestParam("eno") int eno) {
+		
+		String encPwd = bcryptPasswordEncoder.encode("1234");
+		
+		Member m = new Member();
+		m.setUserPwd(encPwd);
+		m.setEno(eno);
+		
+		int result = memberService.updatePwd(m);
+		return new Gson().toJson(result);
+		
+	}
+	
+	//[지영]
+	//모달용 멤버 전체조회
+	@ResponseBody
+	@PostMapping("/modalAllMemberView")
+	public String modalAllMemberView(
+			@RequestParam("keyword") String keyword){
+		
+		List<Member> m = memberService.modalAllMemberView(keyword);
+	
+		return new Gson().toJson(m);
+			
+	}
+	
+
 	
 	
 	

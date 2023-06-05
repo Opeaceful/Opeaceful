@@ -31,4 +31,10 @@ public class Member {
 	private String pName;
 	private String dName;
 	
+	private int pCode;
+	private int deptCode;
+	
+	private String ShireDate;
+	private String ResignedDate;
+	
 }

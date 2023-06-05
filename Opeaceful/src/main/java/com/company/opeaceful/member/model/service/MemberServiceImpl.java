@@ -6,16 +6,23 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.company.opeaceful.commom.model.vo.PageInfo;
+import com.company.opeaceful.commom.template.Pagination;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.dao.MemberDao;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.OnlineStatus;
+import com.company.opeaceful.member.model.vo.ResignedMember;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private Pagination pagination;
 	
 	
 	@Override
@@ -40,17 +47,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public List<Member> selectMember(Map<String, Object> selectPD){
+	public List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD){
 		
-		System.out.println("service까지옴");
-		return memberDao.selectMember(selectPD);
+		
+		//페이지네이션 처리
+		int listCount = memberDao.selectMemberListCount(selectPD);
+		int pageLimit = 5;
+		int settingLimit = 10;
+		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, settingLimit);
+		
+		//ajax로 돌려보내줄 map에 pi정보 담아주기
+		map.put("pi", pi);
+		
+		return memberDao.selectMember(pi,selectPD);
 	}
 	
-	
-	@Override
-	public Department selecTopDept(Member loginUser) {
-		return memberDao.selecTopDept(loginUser);
-	}
 	
 	@Override
 	public int updatePwd(Member loginUser) {
@@ -58,7 +69,74 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member selectMemberOne(int userNo) {
+		return memberDao.selectMemberOne(userNo);
+	}
+	
+	@Override
+	public ResignedMember resignedMembeSelect(int userNo) {
+		return memberDao.resignedMembeSelect(userNo);
+	}
+	
+	@Override
+	public int updateAllmember(Member m) {
+		return memberDao.updateAllmember(m);
+	}
+	
+	@Override
+	public int UpdateUserDept(Member m) {
+		return memberDao.UpdateUserDept(m);
+	}
+	
+	@Override
+	public Department selecTopDept(Member loginUser) {
+		return memberDao.selecTopDept(loginUser);
+	}
+	
+	@Override
 	public int updateMember(Member m) {
 		return memberDao.updateMember(m);
 	}
+	
+	@Override
+	public List<Object> onlineStatusList() {
+		return memberDao.onlineStatusList();
+	}
+	
+	@Override
+	public int resignedmember(ResignedMember resignedMember) {
+		return memberDao.resignedmember(resignedMember);
+	}
+	
+	@Override
+	public int resignedmemberUpdate(ResignedMember resignedMember) {
+		return memberDao.resignedmemberUpdate(resignedMember);
+	}
+	
+	@Override
+	public int resignedmemberDelete(int userNo) {
+		return memberDao.resignedmemberDelete(userNo);
+	}
+	
+	@Override
+	public List<Member> modalAllMemberView(String keyword) {
+		return memberDao.modalAllMemberView(keyword);
+	}
+	
+	@Override
+	public List<Member> checkMemberNoSelect(int currentPage, Map<String, Object> map,int[] intArray){
+		
+		//페이지네이션 처리
+		int listCount = intArray.length;
+		int pageLimit = 5;
+		int settingLimit = 10;
+		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, settingLimit);
+		
+		//ajax로 돌려보내줄 map에 pi정보 담아주기
+		map.put("pi", pi);
+		
+		return memberDao.checkMemberNoSelect(pi,intArray);
+	}
+	
+	
 }

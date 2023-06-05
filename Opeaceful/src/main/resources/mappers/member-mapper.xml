@@ -15,14 +15,48 @@
   	<result column="EMAIL" property="email"/> 	
   	<result column="ADDRESS" property="address"/> 	
   	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
-  	<result column="HIRE_DATE" property="hireDate"/> 
+  	<result column="HIRE_DATE" property="hireDate"/>
+  	
+  	<result column="S_HIRE_DATE" property="ShireDate"/> 
+  	<result column="RESIGNED_DATE" property="ResignedDate"/>
   	
   	<result column="P_NAME" property="pName"/> 
   	<result column="DEPT_NAME" property="dName"/> 
   	
 </resultMap>
 
+<!--지영: 수정용 ResultSet -->
+ <resultMap type="member" id="UpdatememberResultSet">
+  	<id column="USER_NO" property="userNo"/>
+  	<result column="ENO" property="eno" />
+  	<result column="STATUS" property="status"/>	
+  	<result column="USER_NAME" property="userName"/> 	
+  	<result column="PHONE" property="phone"/> 	
+  	<result column="EXTENSION" property="extension"/> 	
+  	<result column="EMAIL" property="email"/> 	
+  	<result column="ADDRESS" property="address"/> 	
+  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
+  	
+  	<result column="S_HIRE_DATE" property="ShireDate"/> 
+  	
+  	<result column="P_CODE" property="pCode"/> 
+  	<result column="DEPT_CODE" property="deptCode"/> 
+  	<result column="P_NAME" property="pName"/> 
+  	<result column="DEPT_NAME" property="dName"/> 
+  	
+</resultMap>
 
+<!--[지영] 전체 조회용-->
+ <resultMap type="member" id="AllmemberVIewResultSet">
+  	<id column="USER_NO" property="userNo"/>
+  	<result column="USER_NAME" property="userName"/> 	
+  	<result column="P_CODE" property="pCode"/> 
+  	<result column="DEPT_CODE" property="deptCode"/> 
+  	<result column="P_NAME" property="pName"/> 
+  	<result column="DEPT_NAME" property="dName"/>   	
+</resultMap>
+
+<!-- =============================================[insert]=========================================================== -->	
 <!-- [지영] member insert구문 -->
 	<!--[지영] member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
@@ -45,7 +79,7 @@
 	  		
 	</insert>
 	
-	<!-- [지영] dept insert -->
+	<!-- [지영] 2.dept insert -->
 	<insert id="insertUserDept" parameterType="userDepatment" useGeneratedKeys="true">
 		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
 	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
@@ -59,26 +93,100 @@
 	   	
 	</insert>
 	
-	<!--[지영] 사용자에게 보여줄 eno select -->
+	<!--[지영] 3.사용자에게 보여줄 eno select : insert에 딸린 select라 이쪽으로 넣어둠 -->	
 	<select id="selectENO" resultType="_int" >
 		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
 	</select>
 	
+
+	
+<!-- =============================================[selects]=========================================================== -->	
+
+	
 	<!-- [지영] member select 구문 -->	
 	 <select id="selectMember" resultMap="AllmemberResultSet" parameterType="hashMap">
-		SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,HIRE_DATE,P_NAME,DEPT_NAME
+		 <if test='Sselect == "Y"'>
+	        SELECT USER_NO, ENO, USER_PWD, USER_NAME, PHONE, EXTENSION, EMAIL, ADDRESS, ANNUAL_LEAVE_COUNT, 
+	        DATE_FORMAT(HIRE_DATE, '%Y-%m-%d') S_HIRE_DATE, P_NAME, DEPT_NAME
+	    </if>
+	    <if test='Sselect == "N"'>
+	        SELECT USER_NO, ENO, USER_PWD, USER_NAME, PHONE, EXTENSION, EMAIL, ADDRESS, ANNUAL_LEAVE_COUNT, 
+	        DATE_FORMAT(HIRE_DATE, '%Y-%m-%d') S_HIRE_DATE, r.P_NAME, r.DEPT_NAME, RESIGNED_DATE 
+	    </if>
 		FROM member
 		left JOIN user_department USING(USER_NO)
 	    left JOIN department USING(DEPT_CODE)
 	    left JOIN position USING(P_CODE)
-		WHERE STATUS = 'Y'
-	    <if test='Dselect != null'>
-	      AND DEPT_CODE = #{Dselect}
-	    </if>
-	    <if test='Pselect != null'>
-	      AND P_CODE = #{Pselect}
-	    </if>
+	    <if test='Sselect == "N"'>
+			left Join resigned_member r USING(USER_NO)
+		</if>
+		WHERE STATUS = #{Sselect}
+		    <if test='Dselect != null'>
+		      AND DEPT_CODE = #{Dselect}
+		    </if>
+		    <if test='Pselect != null'>
+		      AND P_CODE = #{Pselect}
+		    </if>
 	 </select>
+	 
+	
+		 
+	 
+	 <!-- 페이징용 count 체크 -->
+	 <select id="selectMemberCount"  resultType="_int" parameterType="hashMap">
+		SELECT COUNT(*)
+		FROM member
+		left JOIN user_department USING(USER_NO)
+	    left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE STATUS = #{Sselect}
+		    <if test='Dselect != null '>
+		      AND DEPT_CODE = #{Dselect}
+		    </if>
+		    <if test='Pselect != null'>
+		      AND P_CODE = #{Pselect}
+		    </if>
+	 </select>
+	 
+	 <!-- [지영] 사용자 수정용 조회 -->
+	 <select id="selectMemberOne" parameterType="_int" resultMap="UpdatememberResultSet">
+	 	SELECT USER_NO, ENO,STATUS,USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+		left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE USER_NO = #{userNo}
+	 </select>
+	 
+
+	 <!--[지영] 모달용 전체조회 -->
+	 <select id="modalAllMemberView" resultMap="AllmemberVIewResultSet" >
+	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+		left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE STATUS = 'Y' 
+		 <if test='keyword != null and keyword !=""'>
+		      AND USER_NAME LIKE '%${keyword}%'
+		 </if>
+		order by DEPT_CODE, P_CODE
+	 </select>
+	 
+	 <!--[지영] check 박스로 조회된 인원만 select-->
+	 <select id="checkMemberNoSelect"  resultMap="AllmemberResultSet" >
+	 	SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+	    left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE USER_NO IN 
+		<foreach item="userNo" collection="array"
+		       separator="," open="(" close=")">
+		       #{userNo}
+		</foreach>
+		
+	 </select> 
 
 	<!-- [지의] 로그인유저 -->
 	<select id="loginMember" parameterType="member" resultMap="AllmemberResultSet">
@@ -91,6 +199,9 @@
 		   AND STATUS = 'Y'
 	</select>
 	
+	
+<!-- =============================================[update]=========================================================== -->	
+
 	<!-- [지의] 비밀번호 변경 -->
 	<update id="updatePwd" parameterType="member">
 		UPDATE MEMBER
@@ -110,6 +221,48 @@
 			   </if>
 		 WHERE USER_NO = #{userNo}
 	</update>
+
+	<!-- [지영] 사용자 Update-->
+	 <!--[지영] 1. 멤버 업데이트 -->
+	 <update id="updateAllmember" parameterType="member" >
+	 	UPDATE member
+	 	SET USER_NAME = #{userName},
+	 		PHONE     = #{phone},
+	 		EXTENSION = #{extension},
+	 		EMAIL = #{email},
+	 		ADDRESS = #{address},
+	 		ANNUAL_LEAVE_COUNT = #{annualLeaveCount},
+	 		HIRE_DATE = #{hireDate}
+	 		<if test="status != null">
+			   ,status = #{status}
+			</if>
+	 	WHERE USER_NO = #{userNo}
+	 </update>
+	 
+	  <!--[지영] 2. 부서 업데이트 -->
+	 <update id="updateUserDept" parameterType="member" >
+	 	UPDATE user_department 
+	 	SET P_CODE = #{pCode},
+	 		DEPT_CODE  = #{deptCode}
+	 	WHERE USER_NO = #{userNo}
+	 </update>
+
+	<!-- [지의] 온라인 > 접속상태 업데이트 -->
+	<update id="updateOnlineStatus">
+		UPDATE MEMBER
+		SET STATUS_TYPE = 1
+		WHERE USER_NO = #{userNo};
+	</update>
+	
+	<!-- [지의] 오프라인 > 접속상태 업데이트 -->
+	<update id="updateOfflineStatus">
+		UPDATE MEMBER
+		SET STATUS_TYPE = 0
+		WHERE USER_NO = #{userNo};
+	</update>
+
+
+
 
 
 

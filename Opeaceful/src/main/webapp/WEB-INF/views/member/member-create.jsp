@@ -9,12 +9,6 @@
 	
 	<!-- bootstrap CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-	<!-- 부트스트랩 아이콘 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-	<!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-	<script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
-	 <!-- JavaScript Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="${path}/resources/css/common/common.css">
 	<link rel="stylesheet" href="${path}/resources/css/memberCreate.css">
@@ -31,7 +25,7 @@
 	</c:if>
 	<c:if test="${ not empty userEno }">
 		<script>
-		swal('${userEno}', "해당 아이디로 로그인 하세요" );
+		swal('${userEno}');
 		</script>
 		<c:remove var="userEno"/>
 	</c:if>
@@ -89,7 +83,7 @@
                 <div class="row mb-4">
                     <label for="input-phone" class="col-sm-3 col-form-label">연락처</label>
                     <div class="col-sm-9">
-                        <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" >
+                        <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" >
                     </div>
                 </div>
 
@@ -121,7 +115,7 @@
                 <div class="row mb-4">
                     <label for="input-call" class="col-sm-3 col-form-label">내선번호</label>
                     <div class="col-sm-9">
-                        <input type="tel" id="user-call" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" name="extension">
+                        <input type="tel" id="user-call" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" name="extension">
                     </div>
                 </div>
 
