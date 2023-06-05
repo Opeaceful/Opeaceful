@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="attendanceMapper">
-	
-	<!-- [지의] - 출근 시간 등록 -->
+
+	<!-- =================== [select] =================== -->	
+	<!-- [지의] 출퇴근 테이블 조회 > main에서 출퇴근 여부 판별 -->
+	<select id="selectWorkOn" resultType="attendance" parameterType="_int">
+		SELECT *
+		  FROM opeaceful.attendance
+		 WHERE USER_NO = #{userNo}
+		   AND DATE(WORK_DATE) = DATE(NOW()); <!-- 오늘날짜인지 비교 -->
+	</select>
+		
+	<!-- [지의] 온라인 접속 상태 리스트 조회 -->
+	<select id="onlineStatusList" resultType="onlineStatus">
+		SELECT *
+		FROM online_status;
+	</select>
+
+	<!-- =================== [insert] =================== -->	
+	<!-- [지의] 출근 시간 등록 -->
 	<insert id="insertWorkOn">
 		insert into attendance(WORK_DATE, USER_NO, WORK_ON)
-		values (
-		      DATE_FORMAT(now(),'%Y-%m-%d'),
-		      #{userNo},
-		      DATE_FORMAT(now(),'%H:%i')
-		);
+		values (DATE_FORMAT(now(),'%Y-%m-%d'), #{userNo}, DATE_FORMAT(now(),'%H:%i'));
 	</insert>
 	
-	<!-- [지의] - 퇴근 시간 등록 -->
+	<!-- =================== [update] =================== -->	
+	<!-- [지의] 퇴근 시간 등록 -->
+	<update id="updateWorkOff">
+		UPDATE attendance
+		   SET WORK_OFF = DATE_FORMAT(now(),'%H:%i')
+		 WHERE USER_NO = #{userNo}
+		   AND WORK_DATE IS NOT NULL
+		   AND WORK_ON IS NOT NULL
+		   AND DATE(WORK_DATE) = DATE(NOW());
+	</update>
+
 	
 </mapper>

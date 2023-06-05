@@ -1,6 +1,7 @@
 package com.company.opeaceful.attendance.model.vo;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Attendance {
 	
-	private String date;
+	private Date workDate;
 	private int userNo;
-	private Date workOn;
-	private Date workOff;
+	private Time workOn;
+	private Time workOff;
 }

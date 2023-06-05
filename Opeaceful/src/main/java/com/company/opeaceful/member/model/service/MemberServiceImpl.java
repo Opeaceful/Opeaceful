@@ -12,6 +12,7 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.dao.MemberDao;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 
 @Service
@@ -95,6 +96,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMember(Member m) {
 		return memberDao.updateMember(m);
+	}
+	
+	@Override
+	public List<Object> onlineStatusList() {
+		return memberDao.onlineStatusList();
 	}
 	
 	@Override

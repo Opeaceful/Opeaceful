@@ -38,6 +38,7 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 import com.google.gson.Gson;
 
@@ -385,7 +386,7 @@ public class MemberController {
 			
 	}
 	
-	
+
 	
 	
 	
