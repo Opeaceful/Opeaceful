@@ -19,4 +19,16 @@ public class AttendanceDao {
 	public Attendance selectWorkOn(int userNo) {
 		return sqlSession.selectOne("attendanceMapper.selectWorkOn", userNo);
 	}
+
+	public int updateWorkOff(int userNo) {
+		return sqlSession.update("attendanceMapper.updateWorkOff", userNo);
+	}
+
+	public int updateOnlineStatus(int userNo) {
+		return sqlSession.update("memberMapper.updateOnlineStatus", userNo);
+	}
+
+	public int updateOfflineStatus(int userNo) {
+		return sqlSession.update("memberMapper.updateOfflineStatus", userNo);
+	}
 }

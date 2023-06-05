@@ -6,6 +6,7 @@ import java.util.Map;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 
 public interface MemberService {
@@ -35,5 +36,7 @@ public interface MemberService {
 	Department selecTopDept(Member loginUser);
 
 	int updateMember(Member m);
+
+	List<Object> onlineStatusList();
 
 }

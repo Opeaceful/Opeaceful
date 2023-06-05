@@ -193,6 +193,20 @@
 	 		DEPT_CODE  = #{deptCode}
 	 	WHERE USER_NO = #{userNo}
 	 </update>
+	 
+	<!-- [지의] 온라인 > 접속상태 업데이트 -->
+	<update id="updateOnlineStatus">
+		UPDATE MEMBER
+		SET STATUS_TYPE = 1
+		WHERE USER_NO = #{userNo};
+	</update>
+	
+	<!-- [지의] 오프라인 > 접속상태 업데이트 -->
+	<update id="updateOfflineStatus">
+		UPDATE MEMBER
+		SET STATUS_TYPE = 0
+		WHERE USER_NO = #{userNo};
+	</update>
 
 
 

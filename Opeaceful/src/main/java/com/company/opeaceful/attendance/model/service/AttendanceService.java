@@ -8,4 +8,10 @@ public interface AttendanceService {
 
 	Attendance selectWorkOn(int userNo);
 
+	int updateWorkOff(int userNo);
+
+	int updateOnlineStatus(int userNo);
+
+	int updateOfflineStatus(int userNo);
+
 }

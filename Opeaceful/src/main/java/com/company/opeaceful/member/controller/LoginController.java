@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,6 +31,7 @@ import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -59,7 +62,7 @@ public class LoginController {
 		return "member/login";
 	}
 	
-	
+	// [지의] 로그인처리 + 세션에 로그인유저 담기
 	@PostMapping("/login")
 	public String loginMember(Member m,
 							  Model model,
@@ -92,33 +95,33 @@ public class LoginController {
 			return "redirect:/";
 		}
 	}
+	
+	// 로그인유저 조회 + 메인에 필요한 자료 얻어옴
 	@GetMapping("/main")
 	public String MainMember(Model model, @ModelAttribute("loginUser") Member loginUser) {
 
 		if(loginUser != null) {
 			loginUser = memberService.loginMember(loginUser);
+			// 부서
 			Department topDept = memberService.selecTopDept(loginUser);
+			// 공지사항
 			List<Board> mainNoticeList = boardService.mainSelectNoticeList();
 			int userNo = loginUser.getUserNo();
-			Attendance ad = attendanceService.selectWorkOn(userNo);
-			logger.info("출근 조회 로거 "+ad.getWorkOn());
-			System.out.println("출근 조회 sys "+ad.getWorkOn());
-	        // 현재 날짜/시간 출력
-	        // 포맷팅 정의
-//	        SimpleDateFormat formatter = new SimpleDateFormat("HH : mm : ss");
-////	        // 포맷팅 적용
-//	        String formatedNow = formatter.format(ad.getWorkOn());
-////	        // 포맷팅 현재 날짜/시간 출력
-//	        System.out.println(formatedNow); // 2022년 05월 03일 14시 43분 32초
-			
+			// 출퇴근 테이블 조회 > main에서 출퇴근 여부 판별
+			Attendance attendance = attendanceService.selectWorkOn(userNo);
+			// online_status 테이블 불러오기
+			List<Object> os = memberService.onlineStatusList();
 
 			model.addAttribute("topDept",topDept);
 			model.addAttribute("mainNoticeList", mainNoticeList);
+			model.addAttribute("attendance",attendance);
+			model.addAttribute("os", os);
 			
 			return "main";
 		}else {
 			return "login";
 		}
 	}
-	
+
+
 }

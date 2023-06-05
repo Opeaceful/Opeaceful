@@ -21,4 +21,19 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public Attendance selectWorkOn(int userNo) {
 		return attendanceDao.selectWorkOn(userNo);
 	}
+	
+	@Override
+	public int updateWorkOff(int userNo) {
+		return attendanceDao.updateWorkOff(userNo);
+	}
+	
+	@Override
+	public int updateOnlineStatus(int userNo) {
+		return attendanceDao.updateOnlineStatus(userNo);
+	}
+	
+	@Override
+	public int updateOfflineStatus(int userNo) {
+		return attendanceDao.updateOfflineStatus(userNo);
+	}
 }
