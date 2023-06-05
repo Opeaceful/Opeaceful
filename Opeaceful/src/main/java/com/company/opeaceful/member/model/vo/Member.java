@@ -35,5 +35,6 @@ public class Member {
 	private int deptCode;
 	
 	private String ShireDate;
+	private String ResignedDate;
 	
 }

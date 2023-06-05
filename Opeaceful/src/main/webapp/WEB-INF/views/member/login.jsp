@@ -55,7 +55,7 @@
             
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                            <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호">
+                            <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호" value="1234">
                         </div>
 
 						<c:if test="${!empty cookie.saveId.value}">

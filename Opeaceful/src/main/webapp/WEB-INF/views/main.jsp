@@ -111,13 +111,17 @@
 		        					<!-- 오프라인 온라인 자리비움 회의중 식사중 -->
 		        					<div id="state">
 										<div class="select">
-											<div class="text"><img src="${path}/resources/image/status/online.svg"></div>
+											<div class="text">
+												<c:forEach items="${os}" var="onStatus">
+													<c:if test="${onStatus.statusType eq loginUser.statusType}">
+														<img class="img" value="${onStatus.statusType}" src="${path}/resources/image/status/${onStatus.statusImg}">
+													</c:if>
+												</c:forEach>
+											</div>
 											<ul class="option-list">
-												<li class="option"><img src="${path}/resources/image/status/online.svg"></li>
-												<li class="option"><img src="${path}/resources/image/status/offline.svg"></li>
-												<li class="option"><img src="${path}/resources/image/status/eat.svg"></li>
-												<li class="option"><img src="${path}/resources/image/status/meeting.svg"></li>
-												<li class="option"><img src="${path}/resources/image/status/absence.svg"></li>
+												<c:forEach items="${os}" var="onStatus">
+													<li class="option" id="${onStatus.statusType}"><img title="${onStatus.statusType}" src="${path}/resources/image/status/${onStatus.statusImg}"></li>
+												</c:forEach>
 											</ul>
 										</div>
 		        					</div>
@@ -137,20 +141,26 @@
 	        				
 	        				<!-- 출퇴근 -->
 	        				<div class="d-flex main-info-bottom">
+
+								<!-- 출근날짜가 비워져있으면 출근버튼 활성화(navy-btn) + 퇴근버튼 비활성화(white-btn) -->
+								<c:if test="${empty attendance.workDate}">
+									<input type="button" class="on_off_btn w90-btn navy-btn" name="onOff" id="main-on" value="출근">								 
+									<input type="button" class="on_off_btn w90-btn white-btn" name="onOff" id="main-off" value="퇴근">
+								</c:if>
+								<!-- 출근시간이 있으면 출근버튼 비활성화(white-btn) + 퇴근버튼 활성화(navy-btn) -->
+								<c:if test="${!empty attendance.workOn && empty attendance.workOff}">
+									<input type="button" class="on_off_btn w90-btn white-btn" name="onOff" id="main-on" value="출근">								 
+									<input type="button" class="on_off_btn w90-btn navy-btn" name="onOff" id="main-off" value="퇴근">
+								</c:if>
+								<!-- 퇴근시간 있으면 출/퇴근버튼 모두 비활성화(white-btn) -->
+								<c:if test="${not empty attendance.workOff}">
+									<input type="button" class="on_off_btn w90-btn white-btn" name="onOff" id="main-on" value="출근">								 
+									<input type="button" class="on_off_btn w90-btn white-btn" name="onOff" id="main-off" value="퇴근">
+								</c:if>
 <!-- 
-								<div class="on_off_btn w90-btn">
-									<input type="radio" name="onOff" id="main-on" value="on">
-									<label for="main-on">출근</label>
-								</div>
-																
-								<div class="on_off_btn w90-btn">
-									<input type="radio" name="onOff" id="main-off" value="off" checked>
-									<label for="main-off">퇴근</label>
-								</div> 
+								<input type="button" class="on_off_btn w90-btn navy-btn" name="onOff" id="main-on" value="출근">								 
+								<input type="button" class="on_off_btn w90-btn white-btn" name="onOff" id="main-off" value="퇴근">
 								 -->
-								<input type="button" class="on_off_btn navy-btn w90-btn" name="onOff" id="main-on" value="출근">
-								 
-								<input type="button" class="on_off_btn white-btn w90-btn" name="onOff" id="main-off" value="퇴근">
 							</div>
 
 	        			</div>

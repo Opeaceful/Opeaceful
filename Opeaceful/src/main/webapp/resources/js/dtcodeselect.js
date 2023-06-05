@@ -26,12 +26,12 @@ function teamRoad() {
             for(let i=0; i<deptCode.length; i++){
 
                 for(let dept of result){
-                    // if (dept.topDeptCode !== 0) { //상위 부서 뻇으나 일단 다시넣음
+                    if (dept.topDeptCode !== 0) { //상위 부서 뻇으나 일단 다시넣음
                     const option = document.createElement("option");
                     option.value = dept.deptCode;
                     option.text = dept.deptName;
                     deptCode[i].appendChild(option);
-                    // }
+                    }
                 };
 
             }

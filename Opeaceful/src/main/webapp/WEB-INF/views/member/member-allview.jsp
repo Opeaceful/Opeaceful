@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <!-- (윤지영) 멤버 전체 조회 : 사용자 조회 view  -->
 <title>Opeaceful</title>
+
+	<!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!-- bootstrap CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -18,6 +21,7 @@
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/sidebar.jsp" />
+  
 	<c:if test="${ not empty alertMsg }">
 		<script>
 		swal("오류 발생",'${alertMsg}' );
@@ -50,7 +54,7 @@
         </select>
         <div class="search-wrap">
           <input type="search" name="keyword" class="search-box">
-          <button type="button" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <button type="button" class="search-btn" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
         </div>
         <div class="ms-2">
           <input class="form-check-input" type="checkbox" value="N" id="S-select">
@@ -62,7 +66,6 @@
 
 	  	<!--테이블 구역-->
         <table class="table table-hover table-common">
-            <!--하드코딩. 실제로는 db로 불러올 예정!!-->
             <thead>
                 <tr>
                   <th scope="col">사번</th>
@@ -70,7 +73,6 @@
                   <th scope="col">이메일</th>
                   <th scope="col">내선번호</th>
                   <th scope="col">연락처</th>
-                  <!-- <th scope="col">비밀번호</th> -->
                   <th scope="col">부서</th>
                   <th scope="col">직급</th>
                   <th scope="col">입사일</th>
@@ -101,8 +103,8 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">사용자 수정</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" >사용자 수정</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="member-btn-close"></button>
       </div>
       <div class="modal-body" id="member-update-modal" >
        
@@ -148,11 +150,11 @@
 	        <div class="row mb-3">
 	            <label for="inputhireDate" class="col-sm-2 col-form-label">입사일</label>
 	            <div class="col-sm-3">
-	                <input type="date" id="join-date" class="form-control" value="${result.m.ShireDate}" name="hireDate" required>
+	                <input type="date" id="join-date" class="form-control"  name="hireDate" required>
 	            </div>
 	            <label for="inputresignedDate" id="leave-date-lable" class="col-sm-2 col-form-label">퇴사일</label>
 	            <div class="col-sm-3">
-	                <input type="date" id="leave-date"class="form-control" name="resignedDate">
+	                <input type="date" id="leave-date" class="form-control" name="resignedDate">
 	            </div>
 	        </div>
 	        <div class="row mb-3">
@@ -175,28 +177,27 @@
 	            </div>
 	        </div>
 	
-	       <div class="modal-footer row ">
-		      
-         	<div class="col mgpd-0">
-		        <button type="button" class="btn btn-warning ">비밀번호 초기화</button>
-		   		</div>
-		        
-
-		        <div class="col text-end">
-		        <button type="submit" class="btn btn-primary ms-1 ok-common">확인</button>
-		        </div>
-		        
-		       
-	       </div>
+	     
         </form>
-       
+		<div class="modal-footer row ">    
+			<div class="col mgpd-0">
+			<button type="button" class="btn btn-warning " id="password-reset-button">비밀번호 초기화</button>
+			</div>
+		   
+
+		   <div class="col text-end">
+		   <button type="submit" class="btn btn-primary ms-1 ok-common" id="form-sumit">확인</button>
+		   </div>
+	  	</div>
 
       </div>
+	 
       
     </div>
   </div>
 </div>
 
+<jsp:include page="/WEB-INF/views/member/member-select.jsp" />
  
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
