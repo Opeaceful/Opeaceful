@@ -199,6 +199,12 @@
 		   AND STATUS = 'Y'
 	</select>
 	
+	<select id="adminAll" resultMap="AllmemberResultSet">
+	 	SELECT *
+	 	FROM MEMBER
+	 	WHERE STATUS='Y'
+	 </select>
+	 
 	
 <!-- =============================================[update]=========================================================== -->	
 

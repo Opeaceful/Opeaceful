@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.company.opeaceful.chat.model.service.ChatService;
-import com.company.opeaceful.chat.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.google.gson.Gson;
 
 @Controller
@@ -32,17 +32,20 @@ public class ChatController {
 
 	@GetMapping("/chat")
 	@ResponseBody
-	public String chatMain(Model model, @ModelAttribute("loginUser") Member loginUser) {
+	public String chatMain(@ModelAttribute("loginUser") Member loginUser) {
 		
 		Map<String, Object> response = new HashMap<>();
 	    
 	    ArrayList<Member> list = chatService.adminAll();
-	    ArrayList<OnlineStatus> ms = chatService.chatStatus();
+	    ArrayList<OnlineStatus> onlineStatus = chatService.onlineStatusList();
+	    
+	    System.out.println(list);
+	    System.out.println(onlineStatus);
 	    
 
 	    response.put("loginUser", loginUser);
 	    response.put("memberList", list);
-	    response.put("chatStatus", ms);
+	    response.put("onlineStatus", onlineStatus);
 
 	    return new Gson().toJson(response);
 

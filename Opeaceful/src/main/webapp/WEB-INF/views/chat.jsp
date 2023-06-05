@@ -68,7 +68,8 @@
                          </c:if>
                         <div class="profile">
                             <p>${loginUser.userName}</p>
-                            <p>${loginUser.userNo}</p>
+                            <p>${loginUser.statusType}</p>
+							
                         </div>
                     </li>
                 </ul>

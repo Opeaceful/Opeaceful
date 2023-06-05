@@ -16,6 +16,7 @@
     $("#openDialogButton").click(function() {
           // 로컬 스토리지에 다이얼로그 상태를 저장
           localStorage.setItem('dialogVisible', 'true');
+           $("#dialog").dialog("open");
     });
 
     // 로컬 스토리지에서 다이얼로그 상태를 가져옴
@@ -44,6 +45,18 @@
             const loginUser = response.loginUser;
             console.log("로그인 사용자 데이터:", loginUser);
             const list = response.memberList;
+            const onlineStatus = response.onlineStatus;
+           // console.log(response);
+            console.log(onlineStatus);
+            console.log(onlineStatus[0].statusName);
+            console.log(loginUser.statusType);
+            
+          /*  const matchedStatus = onlineStatus.find((status) => status.statusType === loginUser.statusType);
+            if (matchedStatus) {
+			  console.log(matchedStatus.statusName); // onlineStatus.statusName 값 출력
+			} else {
+			  console.log('상태가 일치하는 항목을 찾을 수 없습니다.');
+			} */
             
             // list를 순회하면서 <li> 요소를 생성하여 멤버 정보 추가
             for (let item of list) {
@@ -72,7 +85,6 @@
                 li.appendChild(div);
                 
                 adminList.appendChild(li);
-                console.log(li);
             }
         },
         error: function(request) {
