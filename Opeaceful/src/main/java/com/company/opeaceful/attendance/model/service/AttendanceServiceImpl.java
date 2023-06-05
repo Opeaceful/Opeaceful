@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.attendance.model.dao.AttendanceDao;
+import com.company.opeaceful.attendance.model.vo.Attendance;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -14,5 +15,25 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public int insertWorkOn(int userNo) {
 		return attendanceDao.insertWorkOn(userNo);
+	}
+	
+	@Override
+	public Attendance selectWorkOn(int userNo) {
+		return attendanceDao.selectWorkOn(userNo);
+	}
+	
+	@Override
+	public int updateWorkOff(int userNo) {
+		return attendanceDao.updateWorkOff(userNo);
+	}
+	
+	@Override
+	public int updateOnlineStatus(int userNo) {
+		return attendanceDao.updateOnlineStatus(userNo);
+	}
+	
+	@Override
+	public int updateOfflineStatus(int userNo) {
+		return attendanceDao.updateOfflineStatus(userNo);
 	}
 }

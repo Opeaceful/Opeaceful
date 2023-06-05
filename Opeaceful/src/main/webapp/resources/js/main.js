@@ -2,7 +2,7 @@
  * [지의] - main.js
  */
 import {path} from './common/common.js';
-/* 현재 시간 표시 */
+/* --------------------------- 현재 시간 표시 --------------------------- */
 const today = document.getElementById('main-day');
 const time = document.getElementById('main-time');
 
@@ -49,9 +49,7 @@ function getTime() {
     setTimeout(getTime, 1000);	//1000밀리초(1초) 마다 반복
 }
 
-
-
-/* 접속상태 표시 */
+/* --------------------------- 접속상태 표시 --------------------------- */
 function onClickState(e) {
     const isActive = e.currentTarget.className.indexOf("active") !== -1;
     if (isActive) {
@@ -66,6 +64,10 @@ document.querySelector("#state .select").addEventListener("click", onClickState)
 function onClickStateOption(e) {
     const selectedValue = e.currentTarget.innerHTML;
     document.querySelector("#state .text").innerHTML = selectedValue;
+
+    console.log(e.currentTarget.id);
+    console.log(selectedValue);
+
 }
 
 var stateList = document.querySelectorAll("#state .option");
@@ -73,9 +75,10 @@ for (let i = 0; i < stateList.length; i++) {
     let state = stateList[i];
     state.addEventListener("click", onClickStateOption);
 }
+/* --------------------------- 접속 상태 변경 --------------------------- */
 
 
-/* 칼라모드 표시 */
+/* --------------------------- 칼라모드 표시 --------------------------- */
 function onClickMode(e) {
     const isActive = e.currentTarget.className.indexOf("active") !== -1;
     if (isActive) {
@@ -98,8 +101,8 @@ for (var i = 0; i < ModeList.length; i++) {
     mode.addEventListener("click", onClickModeOption);
 }
 
+/* --------------------------- 입사날짜 구하기 --------------------------- */
 $(function(){
-    /* 입사날짜 구하기 */
     // mainHireDate : main.jsp에서 입사날짜 빼옴
     let hireDate = new Date(mainHireDate);
         
@@ -111,15 +114,13 @@ $(function(){
 
 })
 
-/* 공지사항 제목부분 클릭시 공지사항 페이지로 */
+/* --------------------------- 공지사항 제목부분 클릭시 공지사항 페이지로 --------------------------- */
 $("#main-notice-title").on("click", function(){
-    location.href = path+"/member/mypage"; // 일단 마이페이지로 넣어둠
-})
-$(function(){
-    $(".white-btn").attr("disabled", true);
-    // input button으로 작업
+    location.href = path+"/board/list/N";
 })
 
+
+/* --------------------------- 출근 등록 --------------------------- */
 $("#main-on").click(function(){
     swal(hur +":"+ min,"출근 처리 하시겠습니까?",{
         buttons: {confirm: "확인", cancel: "취소"}
@@ -132,20 +133,42 @@ $("#main-on").click(function(){
                 url : path+"/attendance/workOn",
                 dataType : "json",
                 success : function(result) {
-                    console.log(result);
-                    $("#main-on").removeClass('navy-btn').addClass('white-btn').attr("disabled", true);
-
-                    $("#main-off").removeClass('white-btn').addClass('navy-btn').attr("disabled", false);
+                    if(result > 0){
+                        location.reload();
+                    }
                 },
                 error : function(e) {
-                    swal("작업수행에 실패하였습니다.");
+                    swal("error");
                 }
             })
         }
     })
 });
 
-
+/* --------------------------- 퇴근 등록 --------------------------- */
+$("#main-off").click(function(){
+    swal(hur +":"+ min,"퇴근 처리 하시겠습니까?",{
+        buttons: {confirm: "확인", cancel: "취소"}
+    })
+    .then(function(isConfirm){
+        if(isConfirm){
+            $.ajax({
+                type : "POST",
+                // url : "",
+                url : path+"/attendance/workOff",
+                dataType : "json",
+                success : function(result) {
+                    if(result > 0){
+                        location.reload();
+                    }
+                },
+                error : function(e) {
+                    swal("error");
+                }
+            })
+        }
+    })
+});
 
 
 
@@ -172,31 +195,6 @@ $("#main-on").click(function(){
 //         }
 //     })
 // });
-// $("#main-off").change(function(){
-//     swal(hur +":"+ min,"퇴근 처리 하시겠습니까?",{
-//         buttons: {confirm: "확인", cancel: "취소"}
-//     })
-//     .then(function(){
-//         $.ajax({
-//             type : "POST",
-//             url : "",
-//             data : "",
-//             dataType : "json",
-//             success : function(data) {
-//                 swal("성공", "작업을 정상적으로 완료하였습니다.");
-//                 console.log(data);
-//             },
-//             error : function(e) {
-//                 swal("작업수행에 실패하였습니다.");
-//             }
-//         })
-//     })
-// });
-
-
-
-
-
 
 
 // 시간표시 함수 실행

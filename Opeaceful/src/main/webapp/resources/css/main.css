@@ -110,12 +110,14 @@
     border-color:var(--color-navy);
     background-color:var(--color-navy);
     color: var(--color-white);
+    
 }
 .white-btn{
     background: var(--color-white);
     border: 1px solid;
     color: var(--color-navy);
     cursor: default;
+    pointer-events: none;
 }
 
 #state img{width: 16px; height: 16px;}
@@ -123,6 +125,7 @@
 .select {position: relative;}
 .select .option-list {
   position: absolute;
+  z-index: 5;
   top: 100%;
   left: 0;
   width: 100%;
