@@ -266,6 +266,15 @@
 		SET STATUS_TYPE = 0
 		WHERE USER_NO = #{userNo};
 	</update>
+	
+	<!-- [지의] 유저 접속상태 변경 -->
+	<update id="updateStatusType">
+		UPDATE MEMBER
+		SET STATUS_TYPE = #{statusType}
+		WHERE USER_NO = #{userNo};
+	</update>
+	
+	
 
 
 

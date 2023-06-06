@@ -120,7 +120,7 @@
     pointer-events: none;
 }
 
-#state img{width: 16px; height: 16px;}
+#state img{width: 16px; height: 18px; background-color: var(--color-white);}
 #state{margin-bottom: 6px;}
 .select {position: relative;}
 .select .option-list {
@@ -131,6 +131,7 @@
   width: 100%;
   overflow: hidden;
   max-height: 0;
+
 }
 .select.active .option-list {max-height: none;}
 #state .select {cursor: pointer;}

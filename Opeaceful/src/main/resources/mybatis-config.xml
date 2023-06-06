@@ -30,6 +30,7 @@
 		<typeAlias type="com.company.opeaceful.attendance.model.vo.Attendance" alias="attendance"/>
 		<typeAlias type="com.company.opeaceful.board.model.vo.BoardType" alias="boardType"/>
 		<typeAlias type="com.company.opeaceful.member.model.vo.OnlineStatus" alias="onlineStatus"/>
+		<typeAlias type="com.company.opeaceful.annual.model.vo.Annual" alias="annual"/>
 	</typeAliases>
 	
 	<!-- 
@@ -46,6 +47,7 @@
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/attendance-mapper.xml"/> 
 		<mapper resource="/mappers/resignedmember-mapper.xml"/> 
+		<mapper resource="/mappers/annual-mapper.xml"/> 
 		<mapper resource="/mappers/chat-mapper.xml"/>
 	</mappers>
 
