@@ -179,6 +179,11 @@ pageEncoding="UTF-8"%>
                 <div class="line-wrap">
                   <div class="org-chart">
                     <div>
+                       <!--검색창-->         
+		              <div class="search-wrap2 input-group mb-3 ms-1">
+		                <input type="text" class="search-input2 form-control box-shadow-none input-search-member" placeholder="사원번호/이름 입력" >
+		                <button class="btn btn-outline-secondary search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+		              </div>
                       <table class="org-table-head table table-common">
                         <thead>
                           <th width="50%">부서</th>
@@ -187,7 +192,7 @@ pageEncoding="UTF-8"%>
                       </table>
                     </div>
                     <div class="org-table-content scroll-bar-none">
-                      <table class="table table-common">
+                      <table class="table table-common" id="select-member-table">
                         <tbody>
                           <tr>
                             <td rowspan="2">경영전략</td>
@@ -318,6 +323,7 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </div>
+    
 
   </body>
 </html>

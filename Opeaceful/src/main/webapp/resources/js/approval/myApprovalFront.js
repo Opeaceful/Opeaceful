@@ -1,5 +1,55 @@
 import * as Tiny from './tinyEditor.js';
 import { path } from '../common/common.js';
+import * as MyAprData from './myApprovalData.js';
+
+// 멤버 테이블 내용 갈아껴주는 함수
+export function setSelectMemberTable(result) {
+  let html = '';
+
+  const deptMember = {};
+  //팀별로 배열 나눠주기
+  for (let i = 0; i < result.length; i++) {
+    const item = result[i];
+    const deptCode = item.deptCode;
+
+    if (!deptMember[deptCode]) {
+      //해당팀이 없다면 팀 넣고, item 넣기
+      deptMember[deptCode] = [item];
+    } else {
+      //있다면 해당 팀에 item넣기
+      deptMember[deptCode].push(item);
+    }
+  }
+
+  //만들어둔 object 반복문 돌리면서 table생성
+  for (let deptm in deptMember) {
+    html += `
+        <tr>
+            <td rowspan="${deptMember[deptm].length}" >${deptMember[deptm][0].dName}</td>
+            <td value="${deptMember[deptm][0].userNo}" >${deptMember[deptm][0].userName}</td>
+        </tr>
+        `;
+
+    for (let i = 1; i < deptMember[deptm].length; i++) {
+      html += `
+            <tr>
+                <td value="${deptMember[deptm][i].userNo}" >${deptMember[deptm][i].userName}</td>
+            </tr>
+            `;
+    }
+  }
+
+  let table = document.getElementById('select-member-table');
+  table.querySelector('tbody').innerHTML = html;
+  let tableBox = document.querySelector('.org-table-content');
+
+  if (table.clientHeight > tableBox.clientHeight) {
+    document.querySelector('.org-chart').style.background =
+      'linear-gradient( #ffff0000, 99%, #f1f1f1 )';
+  } else {
+    document.querySelector('.org-chart').style.background = 'unset';
+  }
+}
 
 let setDatePicker = function () {
   $('#date').daterangepicker();
@@ -56,6 +106,7 @@ let approvalModalEvent = function () {
   document
     .getElementById('btn-add-lines')
     .addEventListener('click', function () {
+      MyAprData.selectMemberList('');
       document.getElementById('approval-line-modal').style.display = 'flex';
     });
 
@@ -70,6 +121,16 @@ let approvalModalEvent = function () {
   document
     .getElementById('btn-add-file')
     .addEventListener('click', function () {});
+
+  // 결재라인 멤버 검색 창 이벤트
+  document
+    .querySelector('.org-chart .input-search-member')
+    .addEventListener('keyup', function () {
+      let keyword = document.querySelector(
+        '.org-chart .input-search-member'
+      ).value;
+      MyAprData.selectMemberList(keyword);
+    });
 };
 
 //-------------------- 윈도우 시작시 이벤트 부여 --------------------

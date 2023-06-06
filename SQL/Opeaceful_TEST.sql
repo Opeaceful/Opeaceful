@@ -81,8 +81,43 @@ VALUES (4,'여기는','TEST1','3','T',default,'2023-05-12'),
 (4,'입니당','TEST5','4','T',default,'2023-03-12');
 
 
+-- 테스트 데이터 입력용 프로시저 
 
+-- approval_form 더미 데이터 생성용
+DELIMITER $$ 
+CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시져
+BEGIN
+    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+    WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+			INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (0 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+        	INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (1 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+         INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (2 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+         INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (3 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+        
+        SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+    END WHILE;
+END$$
+DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
 
+CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
+-- SELECT * FROM approval_form; -- 출력
+
+-- 멤버 더미데이터 생성용 (사번 겹치면 오류발생하니까 테스트 돌릴때마다 잘 확인할것)
+-- DELIMITER $$ 
+-- CREATE PROCEDURE addMember() -- ⓐ  프로시져
+-- BEGIN
+--     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+--     WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+
+-- 		INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
+-- 	    VALUES ( 230502 + i , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', concat('test', i), SYSDATE(),concat('test', i, '@gmail.com'));
+
+--         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+--     END WHILE;
+-- END$$
+-- DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
+
+-- CALL addMember(); -- 프로시저 실행
 
 
 

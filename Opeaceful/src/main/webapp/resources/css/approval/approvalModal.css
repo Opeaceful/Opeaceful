@@ -199,9 +199,14 @@
 
 .org-table-content {
   width: 95%;
-  height: calc(100% - 3rem);
+  height: calc(100% - 5.5rem);
   margin: auto;
   overflow: auto;
+}
+
+.org-table-content td {
+  width: 50%;
+  vertical-align: middle;
 }
 
 .favor-table {

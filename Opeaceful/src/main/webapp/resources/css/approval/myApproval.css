@@ -204,3 +204,17 @@ div.selected {
   border-color: var(--bs-btn-disabled-border-color);
   opacity: var(--bs-btn-disabled-opacity);
 }
+
+/* 멤버 선택창  */
+
+/* #all-user-view input[type='checkbox'] {
+  display: none;
+}
+
+#all-user-view .input-wrap {
+  display: none;
+}
+
+#all-user-view th.W-10 {
+  display: none;
+} */

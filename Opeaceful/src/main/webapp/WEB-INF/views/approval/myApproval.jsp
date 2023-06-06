@@ -71,7 +71,9 @@ pageEncoding="UTF-8"%>
 		</div>
 
         <div class="inner-wrap">
-        
+        	<button  id="all-member-view-button" class="btn btn-primary position-btn"
+		data-bs-toggle="modal" data-bs-target="#all-user-view" type="button">
+		실험</button>
         	<select id="select-year" >
         		<option selected>2023</option>
         		<option>2022</option>
@@ -223,8 +225,11 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
 
+
+
 	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
 	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
+	<%-- <jsp:include page="/WEB-INF/views/member/member-select.jsp" /> --%>
 	
 	
 	<script type="module" src="${path}/resources/js/approval/myApprovalFront.js"></script>
