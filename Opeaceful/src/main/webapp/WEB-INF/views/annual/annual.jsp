@@ -28,7 +28,6 @@
 			<div class="title-box">
 				<h2 class="title-common">총 연차 관리</h2>
 			</div>
-    
             <!-- 내용부분 -->
             <div class="annual-content container">
                 <!-- 수정버튼 -->
@@ -48,55 +47,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="annual-year" rowspan="2">1년 미만</td>
-                                    <td class="annual-count" rowspan="2">0</td>
-                                </tr>
-                                <tr>
-    
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">1년</td>
-                                    <td class="annual-count">15</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">2년</td>
-                                    <td class="annual-count">15</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">3년</td>
-                                    <td class="annual-count">16</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">4년</td>
-                                    <td class="annual-count">16</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">5년</td>
-                                    <td class="annual-count">17</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">6년</td>
-                                    <td class="annual-count">17</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">7년</td>
-                                    <td class="annual-count">18</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">8년</td>
-                                    <td class="annual-count">18</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">9년</td>
-                                    <td class="annual-count">19</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year">10년</td>
-                                    <td class="annual-count">19</td>
-                                </tr>
+                            	<c:forEach items="${annual}" var="a">
+                            	    <c:if test="${a.year eq 0}">
+										<tr>
+		                                    <td class="annual-year">${a.year + 1}년 미만</td>
+		                                    <td class="annual-count">${a.annualUnit}</td>
+		                                </tr>
+                            		</c:if>
+                            		<c:if test="${a.year > 0 && a.year <= 10}">
+										<tr>
+		                                    <td class="annual-year">${a.year}년</td>
+		                                    <td class="annual-count">${a.annualUnit}</td>
+		                                </tr>
+                            		</c:if>
+                            	</c:forEach>
                             </tbody>          
-    
                         </table>
                     </div>
                     <div class="col-md-6">
@@ -108,129 +73,65 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="annual-year" scope="row">11년</td>
-                                    <td class="annual-count">20</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">12년</td>
-                                    <td class="annual-count">20</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">13년</td>
-                                    <td class="annual-count">21</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">14년</td>
-                                    <td class="annual-count">21</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">15년</td>
-                                    <td class="annual-count">22</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">16년</td>
-                                    <td class="annual-count">22</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">17년</td>
-                                    <td class="annual-count">23</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">18년</td>
-                                    <td class="annual-count">23</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">19년</td>
-                                    <td class="annual-count">24</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">20년</td>
-                                    <td class="annual-count">24</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">21년</td>
-                                    <td class="annual-count">25</td>
-                                </tr>
-                                <tr>
-                                    <td class="annual-year" scope="row">22년</td>
-                                    <td class="annual-count">25</td>
-                                </tr>
+								<c:forEach items="${annual}" var="a">
+                            		<c:if test="${a.year > 10}">
+										<tr>
+		                                    <td class="annual-year">${a.year}년</td>
+		                                    <td class="annual-count">${a.annualUnit}</td>
+		                                </tr>
+                            		</c:if>
+                            	</c:forEach>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
 
     <!-- 연차 수정 Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">총 연차 변경</h1>
-                </div>
-                <div class="annual-modify-modal modal-body">
-                    <form>
+				<form action="${path}/annual/setting" method="post">
+	                <div class="modal-header">
+	                    <h1 class="modal-title fs-5" id="staticBackdropLabel">총 연차 변경</h1>
+	                </div>
+	                <div class="annual-modify-modal modal-body">
                         <div class="row mb-3">
                             <label for="annual-year-select" class="col-sm-4 col-form-label">근로기간</label>
                             <div class="col-sm-8">
-                                <select class="form-select box-shadow-put" aria-label="Default select example">
+                                <select class="form-select box-shadow-put" aria-label="Default select example" name="year">
                                     <option selected>근로기간 선택</option>
-                                    <option value="1">1년 미만</option>
-                                    <option value="1">1년</option>
-                                    <option value="2">2년</option>
-                                    <option value="3">3년</option>
-                                    <option value="3">4년</option>
-                                    <option value="3">5년</option>
-                                    <option value="3">6년</option>
-                                    <option value="3">7년</option>
-                                    <option value="3">8년</option>
-                                    <option value="3">9년</option>
-                                    <option value="3">10년</option>
-                                    <option value="3">11년</option>
-                                    <option value="3">12년</option>
-                                    <option value="3">13년</option>
-                                    <option value="3">14년</option>
-                                    <option value="3">15년</option>
-                                    <option value="3">16년</option>
-                                    <option value="3">17년</option>
-                                    <option value="3">18년</option>
-                                    <option value="3">19년</option>
-                                    <option value="3">20년</option>
-                                    <option value="3">21년</option>
-                                    <option value="3">22년</option>
-
+	                        		<c:forEach items="${annual}" var="a">
+		                        		<c:if test="${a.year eq 0}">
+			                                <option value="${a.year}">${a.year + 1}년 미만</option>
+	                            		</c:if>
+	                            		<c:if test="${a.year > 0}">
+											<option value="${a.year}">${a.year}년</option>
+	                            		</c:if>
+	                            	</c:forEach>
                                 </select>
                             </div>
                         </div>
 
-
-                        
                         <div class="row mb-3">
                             <label for="annual-count-modify" class="col-sm-4 col-form-label">연차 유급휴가</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control box-shadow-put" id="annual-count-modify">
+                                <input type="number" class="form-control box-shadow-put" id="annual-count-modify" name="annualUnit">
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="w90-btn btn btn-primary">확인</button>
-                    <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
-                </div>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="submit" class="w90-btn btn btn-primary">확인</button>
+	                    <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+	                </div>
+                </form>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $("#annual-menu-item").css("display", "block");
-    </script>
+
 
 </body>
 </html>
