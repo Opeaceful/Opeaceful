@@ -52,8 +52,37 @@
                 </div>
             </div>
             <div class="board-wrap2">
+            <c:choose>
+				<c:when test="${ boardCode eq 'F'}">
+				
+				<c:if test='${(b.boardWriter == loginUser.userNo+"") or (freeRoll > 0)}'> 
+				<div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
+                <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+				</c:if>
+				
+				<c:if test='${(b.boardWriter != loginUser.userNo+"") or (freeRoll == 0)}'>
+            	<div><pre> </pre></div>
+            	</c:if>
+            	
+				</c:when>
+				
+				<c:when test="${ boardCode eq 'N'}">
+				<c:if test="${notiRoll > 0}">
                 <div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+            	</c:if>
+            	<c:if test="${notiRoll == 0}">
+            		<div><pre> </pre></div>
+            	</c:if>	
+				</c:when>
+				
+				<c:otherwise>
+				<div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
+                <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+				</c:otherwise>
+				
+			</c:choose>
+            	
             </div>
             <div class="board-wrap3">
                 <div class="ctn-title">${b.boardTitle}</div>

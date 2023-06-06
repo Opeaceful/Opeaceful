@@ -19,8 +19,12 @@ public interface BoardService {
 	public void selectSearchBoardList(Map<String, Object> map);
 
 	int selectNoticeRoll(String userNo);
+	
+	int selectFreeRoll(String userNo);
 
 	public Board selectBoardDetail(int boardNo);
+
+	public int updateAddCount(int boardNo);
 
 	
 	

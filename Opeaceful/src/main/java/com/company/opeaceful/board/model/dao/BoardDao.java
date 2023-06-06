@@ -54,9 +54,17 @@ public class BoardDao {
 	public int selectNoticeRoll(String userNo) {
 		return sqlSession.selectOne("boardMapper.selectNoticeRoll", userNo);
 	}
+	
+	public int selectFreeRoll(String userNo) {
+		return sqlSession.selectOne("boardMapper.selectFreeRoll", userNo);
+	}
 
 	public Board selectBoardDetail(int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectBoardDetail" , boardNo);
+	}
+
+	public int updateAddCount(int boardNo) {
+		return sqlSession.update("boardMapper.updateAddCount",boardNo);
 	}
 	
 	

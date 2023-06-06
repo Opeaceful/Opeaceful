@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.company.opeaceful.board.model.dao.BoardDao;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
-import com.company.opeaceful.member.model.vo.Member;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -45,8 +45,9 @@ public class BoardServiceImpl implements BoardService {
 		
 		map.put("pi", pi);
 		map.put("list", list);
-		
+		System.out.println("list 담긴 값 : " + map.get(list));
 		System.out.println("map에 담긴 값 서비스 : " + map);
+		
 	}
 	// 검색된 게시글 목록 조회
 	@Override
@@ -70,10 +71,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public int selectFreeRoll(String userNo) {
+		return boardDao.selectFreeRoll(userNo);
+	}
+	
+	@Override
 	public Board selectBoardDetail(int boardNo) {
 		return boardDao.selectBoardDetail(boardNo);
 	}
 	
+	@Override
+	public int updateAddCount(int boardNo) {
+		return boardDao.updateAddCount(boardNo);
+	}
 	
 	
 }

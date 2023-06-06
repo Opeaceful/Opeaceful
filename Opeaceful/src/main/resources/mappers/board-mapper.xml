@@ -204,18 +204,32 @@
 		 AND ROLE_CODE = 'B01';
 	</select>
 	
+	<!-- [혜린] - 자유게시판관리 권한 조회 -->
+	<select id="selectFreeRoll" resultType="_int">
+		SELECT COUNT(*)
+		FROM USER_ROLE
+		WHERE USER_NO = #{userNo}
+		 AND ROLE_CODE = 'B02';
+	</select>
+	
 	<!-- [혜린] - 게시글 상세 조회 -->
 	<select id="selectBoardDetail" resultMap="boardDetailResultSet" >
-		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, M.USER_NAME, P.P_NAME, CREATE_DATE, COUNT
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, M.USER_NAME, P.P_NAME, CREATE_DATE, COUNT
 		FROM BOARD B
 		LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 		LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
 		LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
 		WHERE BOARD_NO = #{boardNo}
-
 	</select>
-
-
+	
+	
+	
+	<!-- [혜린] - 게시글 조회수 카운트 -->
+	<update id="updateAddCount">
+		UPDATE BOARD SET
+		COUNT = COUNT +1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
 
 
 
