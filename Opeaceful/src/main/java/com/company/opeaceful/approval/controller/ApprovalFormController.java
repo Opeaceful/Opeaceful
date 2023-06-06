@@ -46,6 +46,21 @@ public class ApprovalFormController {
 
 		return "approval/approvalForm";
 	}
+	
+	
+	// ajax용 폼 총 개수 반환
+	@ResponseBody
+	@PostMapping("/selectFormListCount")
+	public int selectFormListCount( Integer checkType ) {
+		System.out.println("---------------------------- 카운트 세러 들어옴 ----------------------");
+		System.out.println(checkType);
+		int count = 0;
+		if(checkType != null) {
+			count = aprService.selectFormListCount( checkType);
+		}
+		return count;
+	}
+	
 
 	// ajax용 폼 리스트 반환
 	@ResponseBody

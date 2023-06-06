@@ -91,7 +91,6 @@ export function setTableList(formList) {
                     <td colspan="3">등록된 양식이 없습니다.</td>
                   </tr>`;
   }
-  console.log(tableHtml);
   document.querySelector('.approval-form-table tbody').innerHTML = tableHtml;
 }
 
@@ -111,6 +110,74 @@ export function setCopyList(formList) {
 
   // 복사창 열기
   document.getElementById('copy-form').style.display = 'flex';
+}
+
+// 선택되어야 하는 버튼번호화, 현재 선택된 폼타입 갯수가져와서 버튼들 정보 다시 리셋해주는 함수
+export function resetPageBtn(currentBtnNum, count) {
+  let btns = document.querySelectorAll('.page-btn');
+
+  //최대 페이지 수
+  let maxPage = Math.ceil(count / 10);
+  console.log('resetPageBtn 시작', currentBtnNum, maxPage);
+
+  // 페이지버튼들 시작 숫자 저장용
+  let startPage;
+
+  // 나중에 클릭할 btn 저장해둘 변수
+  let clickBtn;
+
+  if (currentBtnNum > maxPage) {
+    // 만약 현재 버튼수가 최대페이지수보다 크면
+    // 시작 페이지 숫자 = 최대페이지의 10의자리 수 + 1
+    startPage = Math.floor((maxPage - 1) / 10) * 10 + 1;
+
+    // 선택되어야 하는 버튼 번호 최대페이지수와 같게 다시 세팅
+    currentBtnNum = maxPage;
+  } else {
+    // 그외는 현재 버튼번호 기준으로 세팅
+    startPage = Math.floor((currentBtnNum - 1) / 10) * 10 + 1;
+  }
+
+  for (let i = 0; i < 10; i++) {
+    // 페이지번호 재생성
+    let pageNum = startPage + i;
+    btns[i].innerText = pageNum;
+
+    if (pageNum > maxPage) {
+      //만약 버튼의 숫자가 최대 페이지 수보다 크다면 버튼 비활성화
+      btns[i].className = 'disable-btn page-btn btn btn-outline-primary';
+    } else {
+      btns[i].className = 'page-btn btn btn-outline-primary';
+    }
+
+    if (pageNum == currentBtnNum) {
+      // 나중에 클릭보낼 btn저장
+      clickBtn = btns[i];
+    }
+  }
+
+  if (startPage > 10) {
+    // 페이지버튼 시작 숫자가 10보다 크면 앞으로 가기 버튼 활성화
+    document.getElementById('prev-btn').className = 'btn btn-outline-primary';
+  } else {
+    document.getElementById('prev-btn').className = 'disable-btn';
+  }
+
+  if (startPage + 9 < maxPage) {
+    // 시작 숫자 + 9(=마지막페이지버튼숫자임)이
+    // 최대페이지 수보다 작을때 뒤로가기 버튼 활성화
+    document.getElementById('next-btn').className = 'btn btn-outline-primary';
+  } else {
+    document.getElementById('next-btn').className = 'disable-btn';
+  }
+
+  // 버튼 내용 갈아끼기 다 끝나고 btn에 클릭보냄 => 알아서 테이블내용 갈아껴질것임
+  clickBtn.click();
+}
+
+// 모달 닫기 처리
+export function closeModal() {
+  document.querySelector('.modal-header .btn-close').click();
 }
 
 // --------------------------------------- 이벤트 할당구역 ------------------------------
@@ -190,7 +257,13 @@ let setFormModalInnerEvent = function () {
       }).then(function (isConfirm) {
         if (isConfirm) {
           let formNoList = [document.getElementById('btn-form-save').value];
-          AprData.deleteFormList(formNoList);
+          let currentBtnNum = Number(
+            document.querySelector('.selected-btn').innerText
+          );
+          let checkType = Number(
+            document.getElementById('select-show-type').value
+          );
+          AprData.deleteFormList(formNoList, currentBtnNum, checkType);
         }
       });
     });
@@ -239,24 +312,33 @@ let setDefaultEvent = function () {
           inputArr.push(Number(input.value));
         });
 
-      swal('선택된 양식을 삭제 하시겠습니까?', {
-        buttons: { confirm: '확인', cancel: '취소' },
-      }).then(function (isConfirm) {
-        if (isConfirm) {
-          AprData.deleteFormList(inputArr);
-        }
-      });
+      if (inputArr.length > 0) {
+        swal('선택된 문서를 삭제 하시겠습니까?', {
+          buttons: { confirm: '확인', cancel: '취소' },
+        }).then(function (isConfirm) {
+          if (isConfirm) {
+            let currentBtnNum = Number(
+              document.querySelector('.selected-btn').innerText
+            );
+            let checkType = Number(
+              document.getElementById('select-show-type').value
+            );
+            AprData.deleteFormList(inputArr, currentBtnNum, checkType);
+          }
+        });
+      } else {
+        swal('선택된 문서가 없습니다.', {
+          buttons: { cancel: '확인' },
+        });
+      }
     });
 
   // 타입 셀렉트박스 값 변경시 실행할 이벤트
   document
     .getElementById('select-show-type')
     .addEventListener('change', function () {
-      console.log(this.value);
-      AprData.selectFormList('table', this.value, 1);
-
-      // todo! 페이지 버튼 1번 눌린걸로 처리하기
-      // + 버튼들 만들어야함....
+      // 선택된 셀렉트 박스의 1번 페이지값으로 테이블 내용 변경
+      AprData.selectFormListCount(Number(this.value), 1);
     });
 
   // 양식 리스트 테이블의 td 눌렸을때 이벤트 부여
@@ -302,10 +384,57 @@ let setDefaultEvent = function () {
     });
 };
 
+// 페이징 바 버튼 이벤트 할당구역
+let pageBtnEvent = function () {
+  // 각페이지 버튼에 이벤트 할당
+  document.querySelectorAll('.page-btn').forEach(function (el) {
+    el.addEventListener('click', function () {
+      // 기존에 선택되어있던 버튼이 있었다면 선택 해제
+      if (document.querySelector('.selected-btn') != null) {
+        document.querySelector('.selected-btn').className =
+          'page-btn btn btn-outline-primary';
+      }
+
+      let checkType = document.getElementById('select-show-type').value;
+
+      AprData.selectFormList(
+        'table',
+        Number(checkType),
+        Number(this.innerText)
+      );
+
+      this.className = 'selected-btn page-btn btn btn-outline-primary';
+    });
+  });
+
+  // 페이징바의 앞페이지 버튼 클릭시 동작
+  document.getElementById('prev-btn').addEventListener('click', function () {
+    let checkType = Number(document.getElementById('select-show-type').value);
+    let pageNum = Number(document.querySelectorAll('.page-btn')[0].innerText);
+
+    if (pageNum > 10) {
+      AprData.selectFormListCount(checkType, pageNum - 1);
+    } else {
+      // 그럴일은 없겠지만 만약 앞페이지가 없는데 앞페이지 버튼을 눌렀을경우
+      // 1번 버튼 눌린걸로 다시 세팅
+      AprData.selectFormListCount(checkType, 1);
+    }
+  });
+
+  // 페이징바의 뒷페이지 버튼 클릭 시 동작
+  document.getElementById('next-btn').addEventListener('click', function () {
+    let checkType = Number(document.getElementById('select-show-type').value);
+    let pageNum = Number(document.querySelectorAll('.page-btn')[9].innerText);
+
+    AprData.selectFormListCount(checkType, pageNum + 1);
+  });
+};
+
 //-------------------- 윈도우 시작시 이벤트 부여 --------------------
 window.onload = function () {
   Tiny.setTinymce();
   resetAddForm();
   setDefaultEvent();
   setFormModalInnerEvent();
+  pageBtnEvent();
 };

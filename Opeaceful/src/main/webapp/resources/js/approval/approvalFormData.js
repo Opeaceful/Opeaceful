@@ -38,6 +38,23 @@ export function insertForm(formData) {
   });
 }
 
+// 선택한 타입의 폼 총개수 얻어와 버튼 세팅함
+export function selectFormListCount(checkType, currentBtnNum) {
+  $.ajax({
+    url: defaultPath + '/selectFormListCount',
+    data: { checkType },
+    type: 'POST',
+    success: function (count) {
+      // 총개수 얻어온 후 버튼 세팅
+      AprFront.resetPageBtn(currentBtnNum, count);
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
+  });
+}
+
 export function selectForm(formNo) {
   $.ajax({
     url: defaultPath + '/selectForm',
@@ -67,7 +84,6 @@ export function selectFormList(actKind, checkType, currentPage) {
     },
     type: 'POST',
     success: function (formList) {
-      console.log(formList);
       if (actKind == 'table') {
         AprFront.setTableList(formList);
       } else if (actKind == 'copy') {
@@ -114,7 +130,7 @@ export function updateForm(formData) {
   });
 }
 
-export function deleteFormList(formNoList) {
+export function deleteFormList(formNoList, currentBtnNum, checkType) {
   $.ajax({
     url: defaultPath + '/deleteForm',
     data: {
@@ -124,12 +140,10 @@ export function deleteFormList(formNoList) {
     traditional: true, // 배열 자료형 보낼때 쓰는 옵션
     success: function (result) {
       if (result > 0) {
+        selectFormListCount(Number(checkType), Number(currentBtnNum));
+        AprFront.closeModal();
         swal('삭제가 완료되었습니다.', {
-          buttons: { confirm: '확인' },
-        }).then(function (isConfirm) {
-          if (isConfirm) {
-            window.location.reload();
-          }
+          buttons: { cancel: '확인' },
         });
       } else {
         swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {

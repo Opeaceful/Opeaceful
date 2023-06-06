@@ -34,6 +34,20 @@
   height: 1rem;
 }
 
+.div-delete-box {
+  position: relative;
+}
+
+#btn-delete-selected-form {
+  width: max-content;
+  font-size: var(--font13);
+  margin-left: 1rem;
+  position: absolute;
+  left: 70%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
 th:nth-child(1) {
   width: 10%;
   min-width: 70px;
@@ -175,12 +189,18 @@ th:nth-child(3) {
   display: none;
 }
 
-/* --- 버튼 영역  --- */
+/* --- 페이징 버튼 영역  --- */
+.paging-bar {
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+}
+
 .disable-btn {
   display: none;
 }
 
-.pagingArea button {
+.paging-bar button {
   font-size: var(--font13);
 }
 

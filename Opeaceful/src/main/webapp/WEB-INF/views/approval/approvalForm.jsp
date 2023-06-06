@@ -47,7 +47,10 @@ pageEncoding="UTF-8"%>
             <thead>
               <tr>
                 <th scope="col">
-                  <input type="checkbox" id="check-all" />
+	                <div class="div-delete-box">
+	                  <input type="checkbox" id="check-all" />
+	                  <button id="btn-delete-selected-form" class="btn btn-outline-danger">삭제</button>
+	                </div>
                 </th>
                 <th scope="col">양식명</th>
                 <th scope="col">
@@ -98,7 +101,7 @@ pageEncoding="UTF-8"%>
 
           
           <div class="btn-wrap">
-            <button id="btn-delete-selected-form" class="btn btn-outline-primary">선택삭제</button>
+            
             
             <button
               id="btn-open-add-form"
@@ -111,7 +114,7 @@ pageEncoding="UTF-8"%>
             </button>
           </div>
           
-          <div class="pagingArea">			
+          <div class="paging-bar">			
 			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
 
 			<% for(int i= 1; i <= 10; i++) { %>
@@ -128,7 +131,7 @@ pageEncoding="UTF-8"%>
 			
 			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
 			<% if( 10 < pageCount ) { %>
-				<button type="button" class="able-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
 			<% } else { %>
 				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
 			<% } %>

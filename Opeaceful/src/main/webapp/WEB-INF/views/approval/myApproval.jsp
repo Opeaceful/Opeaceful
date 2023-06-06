@@ -1,11 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
+	int count = 200; //(int) request.getAttribute("count");
+	int pageCount = (int) Math.ceil(count / 10.0);
+%>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Opeaceful</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+    
+    <!-- tiny editor -->
+    <script
+      src="https://cdn.tiny.cloud/1/4u88c1x1vlsys5jtx9tpp86cmfiahnx5rgsxendvyyqg2464/tinymce/5/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
     
     <!--bootstrap css-->
     <link
@@ -34,22 +47,38 @@ pageEncoding="UTF-8"%>
         </div>
 
         <div class="top-menubar">
-          <div class="selected">전체</div>
-          <div>진행중</div>
-          <div>반려</div>
-          <div>완료</div>
-          <div>
-            <div class="alarm-wrap">
-              승인대기
-              <div class="alarm"></div>
-            </div>
-            <!-- <div class="alarm">22</div> -->
-          </div>
-          <div>결재</div>
-          <div class="line"></div>
-        </div>
+			<div class="selected top-menubar-item" value="100">전체</div>
+			<div class="top-menubar-item" id="approval-state-temp" value="2">임시저장</div>
+			<div class="top-menubar-item" id="approval-state-process" value="0">진행중</div>
+			<div class="top-menubar-item" id="approval-state-return" value="-1">
+				<div class="alarm-wrap">
+					반려
+					<!-- <div class="alarm"></div> -->
+					<span id="return-alarm" class="alarm-balloon" alt="알림수">3</span>
+				</div>
+			</div>
+			<div class="top-menubar-item" id="approval-state-end" value="1">완료</div>
+			<div class="top-menubar-item" id="approval-state-wait">
+				<div class="alarm-wrap">
+					승인대기
+					<!-- <div class="alarm"></div> -->
+					<span id="wait-alarm" class="alarm-balloon" alt="알림수">3</span>
+				</div>
+			</div>
+			<div id="approval-state-approval">결재</div>
+	
+			<div class="line"></div>
+		</div>
 
         <div class="inner-wrap">
+        
+        	<select id="select-year" >
+        		<option selected>2023</option>
+        		<option>2022</option>
+        		<option>2021</option>
+        		<option>2020</option>
+        	</select>
+        
           <table class="my-approval-table table table-common">
             <thead>
               <tr>
@@ -117,11 +146,28 @@ pageEncoding="UTF-8"%>
             class="btn btn-outline-primary">My서명</button>
           </div>
 
-          <div class="pagingArea">
-            <button class="btn btn-outline-primary"><</button>
-            <button class="btn btn-outline-primary">1</button>
-            <button class="btn btn-outline-primary">></button>
-          </div>
+          <div class="paging-bar">			
+			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+
+			<% for(int i= 1; i <= 10; i++) { %>
+				<% if( i <= pageCount) { %>
+					<% if(i == 1) { %>
+						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<% } else { %>
+						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+					<% } %>
+				<% } else {%>
+					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+				<% } %>
+			<% } %>
+			
+			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
+			<% if( 10 < pageCount ) { %>
+				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } else { %>
+				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } %>
+		 </div>
 
           <div
             class="modal fade"
@@ -179,6 +225,9 @@ pageEncoding="UTF-8"%>
 
 	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
 	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
+	
+	
+	<script type="module" src="${path}/resources/js/approval/myApprovalFront.js"></script>
 
   </body>
 </html>
