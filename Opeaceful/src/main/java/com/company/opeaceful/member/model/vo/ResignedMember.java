@@ -8,9 +8,11 @@ import lombok.Data;
 public class ResignedMember {
 		
 	private int userNo;
-	private Date resignedDate;
+	private String resignedDate;
 	private String deptName;
 	private String pName;
 	private String tName;
+	
+	private Date DresignedDate;
 
 }
