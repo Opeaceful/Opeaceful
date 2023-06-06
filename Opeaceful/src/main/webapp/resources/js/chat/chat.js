@@ -43,24 +43,18 @@
             adminList.innerHTML = ""; // 기존 내용 초기화
             
             const loginUser = response.loginUser;
-            console.log("로그인 사용자 데이터:", loginUser);
             const list = response.memberList;
             const onlineStatus = response.onlineStatus;
-           // console.log(response);
+
+            console.log(loginUser);
             console.log(onlineStatus);
+            console.log(list);
             console.log(onlineStatus[0].statusName);
-            console.log(loginUser.statusType);
-            
-          /*  const matchedStatus = onlineStatus.find((status) => status.statusType === loginUser.statusType);
-            if (matchedStatus) {
-			  console.log(matchedStatus.statusName); // onlineStatus.statusName 값 출력
-			} else {
-			  console.log('상태가 일치하는 항목을 찾을 수 없습니다.');
-			} */
-            
+            console.log(loginUser.statusType);         
+
             // list를 순회하면서 <li> 요소를 생성하여 멤버 정보 추가
             for (let item of list) {
-
+            
                 const li = document.createElement("li");
                 const img = document.createElement("img");
                 if(item.profileImg){
@@ -76,13 +70,24 @@
                 p1.innerText = item.userName;
                 
                 const p2 = document.createElement("p");
-                p2.innerText = item.userNo;
+			    const p3 = document.createElement("p");
+			    p3.classList.add("profile_box");
+                const matchingStatus = onlineStatus.find(status => status.statusType === item.statusType);
+			    if (matchingStatus) {
+			        p2.innerText = matchingStatus.statusName;		        
+					p3.innerHTML = `<img src="${path}/resources/image/status/${matchingStatus.statusImg}" alt="Status Image" class="profile_status_img">`;
+					console.log(matchingStatus.statusImg);					
+			    } else {
+			       console.log("에러코드")
+			    }
+			    img.classList.add("profile_img");
                 
                 div.appendChild(p1);
                 div.appendChild(p2);
                 
                 li.appendChild(img);
                 li.appendChild(div);
+                li.appendChild(p3);
                 
                 adminList.appendChild(li);
             }
@@ -93,5 +98,22 @@
         }
     });
 }
+
+
+function changeStatus(status) {
+    $.ajax({
+        url: path+"/member/updateStatusType",  // 상태값을 업데이트할 서버의 엔드포인트
+        type: 'POST',
+        data: {status: status},
+        success: function(response) {           
+            console.log('상태값이 성공적으로 업데이트되었습니다.');
+        },
+        error: function(request) {
+            console.error('상태값 업데이트 중 오류가 발생했습니다.');
+        }
+    });
+}
+
+
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
 //window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신

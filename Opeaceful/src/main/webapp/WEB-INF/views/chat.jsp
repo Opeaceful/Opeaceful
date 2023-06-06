@@ -67,9 +67,15 @@
                         	<img src="${loginUser.profileImg}" alt="나의프로필사진">
                          </c:if>
                         <div class="profile">
-                            <p>${loginUser.userName}</p>
-                            <p>${loginUser.statusType}</p>
-							
+                            <p>${loginUser.userName}</p>                         
+                            <p><select id="statusList" onchange="changeStatus(this.value)">
+						            <option value="0">오프라인</option>
+						            <option value="1">온라인</option>
+						            <option value="2">자리비움</option>
+						            <option value="3">회의중</option>
+						            <option value="4">식사중</option>
+						        </select></p>      
+						               						
                         </div>
                     </li>
                 </ul>
@@ -119,7 +125,7 @@
                 </div>
                 <ul id="adminList">
                   
-                     </ul>
+                </ul>
                     <c:forEach var="member" items="${memberList}">
         				<li>
 	        				<c:if test="${empty member.profileImg}">
@@ -129,13 +135,25 @@
 	                        	<img src="${member.profileImg}" alt="${member.userName} 프로필사진">
 	                         </c:if>
 				            <div class="profile">
-				                <p>${member.userName}</p> <i>${member.statusType}</i>
-				                <p>${member.userNo}</p>
+				                <p>${member.userName}</p>
+				                <p>
+				                  <c:forEach var="status" items="${onlineStatus}">
+					                 <c:if test="${status.statusType eq member.statusType}">
+					                     ${status.statusName}
+					                 </c:if>
+				                  </c:forEach>
+				                </p>
+				                <p>
+				                  <c:forEach var="status" items="${onlineStatus}">
+					                 <c:if test="${status.statusType eq member.statusType}">
+					                     ${status.statusImg}
+					                 </c:if>
+				                  </c:forEach>
+				                </p>
 				            </div>
 				        </li>
 				    </c:forEach>
 
-               
             </div>
         </main>
         <!-- aside: 광고 -->
