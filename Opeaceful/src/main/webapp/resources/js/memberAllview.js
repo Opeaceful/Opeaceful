@@ -21,6 +21,9 @@ let LeaveDateDay;
 //검색용 변수 세팅
 let JsoncheckMemberNo = "";
 
+// 변수세팅
+let form = document.getElementById('member-update-form') 
+
 /*검색에 따라 member를 불러오는 이벤트 */
 $("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
     
@@ -295,7 +298,6 @@ function hiddenFrom(date,id){
     hiddenFrom.name = date;
     hiddenFrom.value = id;
 
-    let form = document.getElementById('member-update-form');
     form.appendChild(hiddenFrom);
 }
 
@@ -308,13 +310,20 @@ $("#form-sumit").click(function(){
     .then(function(isConfirm){
         if(isConfirm){
 
-            //비활성화 되어있다면 select박스 활성화로 보내줘야 함
-            let selects = document.querySelectorAll('#member-update-form select');
-            selects.forEach(function(selects) {
-                selects.removeAttribute('disabled');
-            });
+            if (form.checkValidity()) {
+                 //비활성화 되어있다면 select박스 활성화로 보내줘야 함
+                let selects = document.querySelectorAll('#member-update-form select');
+                selects.forEach(function(selects) {
+                    selects.removeAttribute('disabled');
+                });
 
-            document.getElementById('member-update-form').submit();
+                form.submit();
+              } else {
+                swal("빈 값 또는 조건에 맞지않는 입력이 있습니다.");
+                
+              }
+
+           
         }
     })
 });

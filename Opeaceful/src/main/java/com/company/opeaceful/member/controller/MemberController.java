@@ -2,18 +2,11 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -379,6 +372,8 @@ public class MemberController {
 	@PostMapping("/modalAllMemberView")
 	public String modalAllMemberView(
 			@RequestParam("keyword") String keyword){
+		
+		System.out.println(keyword);
 		
 		List<Member> m = memberService.modalAllMemberView(keyword);
 	

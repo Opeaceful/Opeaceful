@@ -43,7 +43,7 @@
 
                 <!-- 이름 -->
                 <div class="mb-4 row">
-                    <label for="input-name" class="col-sm-3 col-form-label">이름</label>
+                    <label for="input-name" class="col-sm-3 col-form-label">이름 *</label>
                     <div class="col-sm-9">
                         <input type="text" class="mypage-input form-control box-shadow-put" id="user-name"  name="userName" required>
                     </div>
@@ -52,7 +52,7 @@
                 <!-- 팀코드 / 직급 -->
                 <div class="mb-4 row">
                 
-                    <label for="team-code-posiotion" class="col-sm-3 col-form-label ">팀코드 / 직급</label>
+                    <label for="team-code-posiotion" class="col-sm-3 col-form-label ">팀코드 / 직급 *</label>
                     <div class="team-code col-sm-9 row">
                         <label for="team-code" class="col-sm-2 col-form-label input-font">팀코드</label>
                         <div class="col-sm-4">
@@ -61,7 +61,7 @@
                             
                         </select>
                         </div>
-                        <label for="team-position" class="col-sm-2 col-form-label input-font">직급</label>
+                        <label for="team-position" class="col-sm-2 col-form-label input-font">직급 </label>
                         <div class="col-sm-4">
                         <select class="form-select member-form-select form-select-sm " id="p-select" name="pCode" required>
                             <option value="" disabled selected>직급</option>
@@ -73,7 +73,7 @@
 
                 <!-- 비밀번호 넣을까/말까..-->
                 <div class="mb-4 row">
-                    <label for="input-Password" class="col-sm-3 col-form-label">비밀번호</label>
+                    <label for="input-Password" class="col-sm-3 col-form-label">비밀번호 *</label>
                     <div class="col-sm-9">
                         <input type="password" name="userPwd"  class="form-control-plaintext" id="user-password" value="1234">
                     </div>
@@ -81,7 +81,7 @@
 
                 <!-- 연락처 -->
                 <div class="row mb-4">
-                    <label for="input-phone" class="col-sm-3 col-form-label">연락처</label>
+                    <label for="input-phone" class="col-sm-3 col-form-label">연락처 *</label>
                     <div class="col-sm-9">
                         <input type="tel" id="user-pnohe" name="phone" class="mypage-input form-control box-shadow-put" required pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" >
                     </div>
@@ -89,7 +89,7 @@
 
                 <!-- 주소 -->
                 <div class="row mb-4">
-                    <label for="input-address" class="col-sm-3 col-form-label">주소</label>
+                    <label for="input-address" class="col-sm-3 col-form-label">주소 *</label>
                     <div class="col-sm-9">
                         <div class="input-group">
                         <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put" required readonly placeholder="도로명주소" >
@@ -104,9 +104,9 @@
 
                 <!-- 이메일 -->
                 <div class="row mb-4">
-                    <label for="input-email" class="col-sm-3 col-form-label">이메일</label>
+                    <label for="input-email" class="col-sm-3 col-form-label">이메일 *</label>
                     <div class="col-sm-9">
-                        <input type="email" id="user-email" class="mypage-input form-control box-shadow-put" name="email" required >
+                        <input type="email" id="user-email" class="mypage-input form-control box-shadow-put" name="email" required>
                     </div>
                 </div>
 

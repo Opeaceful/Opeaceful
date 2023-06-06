@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Opeaceful</title>
 
 	<!-- (윤지영) 전체 사용자 모달 : 사용자 조회 view  -->
 

@@ -46,11 +46,11 @@
 	    <!--검색창 구역-->
 	    <div class="d-inline-flex">
         <select class="form-select form-select-sm " id="d-select" name="deptCode" >
-          <option value="" disabled selected>부서명</option>
+          <option value="" selected>부서명</option>
       
         </select>
         <select class="form-select form-select-sm ms-1" id="p-select" name="pCode">
-            <option value="" disabled selected>직급</option>
+            <option value="" selected>직급</option>
         </select>
         <div class="search-wrap">
           <input type="search" name="keyword" class="search-box">
@@ -110,45 +110,45 @@
        
         <form id="member-update-form" action="${path}/member/updateAllmember" method="post">
 	          <div class="row mb-3">
-	            <label for="inputUserName" class="col-sm-2 col-form-label">이름</label>
+	            <label for="inputUserName" class="col-sm-2 col-form-label">이름 *</label>
 	            <div class="col-sm-9">
-	            <input type="text" class="form-control" value="" name="userName" required>
+	            <input type="text" class="form-control" name="userName" required>
 	            </div>
 	         </div>
 	        <div class="row mb-3">
-	            <label for="inputemail" class="col-sm-2 col-form-label">이메일</label>
+	            <label for="inputemail" class="col-sm-2 col-form-label">이메일 *</label>
 	            <div class="col-sm-9">
-	            <input type="email" class="form-control" value="" name="email" required>
+	            <input type="email" class="form-control"  name="email" required>
 	            </div>
 	        </div>
 	        <div class="row mb-3">
 	            <label for="inputextension" class="col-sm-2 col-form-label">내선번호</label>
 	            <div class="col-sm-9">
-	            <input type="tel" class="form-control" value="" name="extension" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13">
+	            <input type="tel" class="form-control"  name="extension" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13">
 	            </div>
 	        </div>
 	        <div class="row mb-3">
-	            <label for="inputphone" class="col-sm-2 col-form-label" >연락처</label>
+	            <label for="inputphone" class="col-sm-2 col-form-label" >연락처 *</label>
 	            <div class="col-sm-9">
-	            <input type="tel" class="form-control" value="" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" required>
+	            <input type="tel" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" required>
 	            </div>
 	        </div>  
 	        <div class="row mb-3">
-	        <label for="inputdName" class="col-sm-2 col-form-label">부서</label>
+	        <label for="inputdName" class="col-sm-2 col-form-label">부서 *</label>
 	            <div class="col-sm-9">
 	                <select class="form-select member-form-select form-select-sm" name="deptCode" id="deptCodeSelect" required >
 	                </select>
 	            </div>
 	        </div>
 	        <div class="row mb-3">
-	        <label for="inputpName" class="col-sm-2 col-form-label">직급</label>
+	        <label for="inputpName" class="col-sm-2 col-form-label">직급 *</label>
 	            <div class="col-sm-9">
 	                <select class="form-select member-form-select  form-select-sm" name="pCode" id="pCodeSelect" required>
 	                </select>
 	            </div>
 	        </div>
 	        <div class="row mb-3">
-	            <label for="inputhireDate" class="col-sm-2 col-form-label">입사일</label>
+	            <label for="inputhireDate" class="col-sm-2 col-form-label">입사일 *</label>
 	            <div class="col-sm-3">
 	                <input type="date" id="join-date" class="form-control"  name="hireDate" required>
 	            </div>
@@ -164,7 +164,7 @@
 	            </div>
 	        </div>
 	        <div class="row mb-3">
-	            <label for="inputAddress" class="col-sm-2 col-form-label">주소</label>
+	            <label for="inputAddress" class="col-sm-2 col-form-label">주소 *</label>
 	            <div class="col-sm-9">
 	            <div class="input-group">
 	                <input type="text" id="user-address"  name="address" class="mypage-input form-control box-shadow-put" required readonly placeholder="도로명주소" required>
