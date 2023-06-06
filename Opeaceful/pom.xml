@@ -308,6 +308,12 @@
 		</dependency>
 		<!-- AOP관련 끝 -->
 
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20180813</version>
+		</dependency>
 
 
 	</dependencies>
