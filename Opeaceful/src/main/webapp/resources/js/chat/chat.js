@@ -8,8 +8,8 @@
     $("#dialog").dialog({
       autoOpen: false,
       modal: false,
-      width: 600, // 다이얼로그의 너비 설정
-      height: 400, // 다이얼로그의 높이 설정
+      width: 700, // 다이얼로그의 너비 설정
+      height: 900, // 다이얼로그의 높이 설정
     });
 
     // 다이얼로그 열기
@@ -56,6 +56,7 @@
             for (let item of list) {
             
                 const li = document.createElement("li");
+                li.classList.add("chat_li");
                 const img = document.createElement("img");
                 if(item.profileImg){
                 img.src = item.profileImg; // 프로필 이미지 속성에 따라 변경
@@ -65,7 +66,7 @@
                 img.alt = item.userName;
           
                 const div = document.createElement("div");
-                div.classList.add("profile");
+                div.classList.add("chat_profile");
                 const p1 = document.createElement("p");
                 p1.innerText = item.userName;
                 
@@ -100,11 +101,12 @@
 }
 
 
+
 function changeStatus(status) {
     $.ajax({
-        url: path+"/member/updateStatusType",  // 상태값을 업데이트할 서버의 엔드포인트
+        url: path+"/member/updateStatusType",
         type: 'POST',
-        data: {status: status},
+        data: {statusType: status},
         success: function(response) {           
             console.log('상태값이 성공적으로 업데이트되었습니다.');
         },
@@ -113,6 +115,13 @@ function changeStatus(status) {
         }
     });
 }
+
+const statusList = document.getElementById('statusList');
+
+statusList.addEventListener('change', function() {
+    changeStatus(this.value);
+});
+
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기

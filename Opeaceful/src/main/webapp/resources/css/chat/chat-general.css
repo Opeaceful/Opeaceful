@@ -8,17 +8,17 @@ body{
 *{
     box-sizing: border-box;
 }
-a:visited, a:link{
+/* a:visited, a:link{
     color: gray;
     text-decoration: none;
-}
+} */
 
 /* 상단 설정바 조절 */
-.setting_bar{
+.chat_setting_bar{
     text-align: right;
 }
-.setting_bar > *{
+.chat_setting_bar > *{
     margin: 0.4rem; 
-    font-size: 0.9rem; 
+    font-size: var(--font15);
     color: var(--color-navy);
 }

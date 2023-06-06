@@ -5,7 +5,7 @@
 /* 네비게이션 안의 컨텐츠 스타일 지정 = chat-main-layout.css 참고 */
 
 /* 메인 안의 컨텐츠 스타일 지정 */
-main{
+#chat_main{
     /* 친구 리스트는 flex box로 레이아웃으로 구성 */
     display: flex;
     flex-wrap: nowrap;
@@ -13,19 +13,19 @@ main{
     justify-content: flex-start;
     overflow-y: scroll;
 }
-ul{
+.chat_ul, #adminList{
     list-style: none;
     padding-left: 0;
 }
 
 /* 제목(h2와 p) 사이즈 재정의 */
-.profile-title > *{
-    font-size: 0.75rem;
+.chat_profile_title > *{
+    font-size: var(--font12);
     color: gray;
     display: inline-block;
     margin: 0;
 }
-li{
+.chat_li{
     /* 각각의 프로필을 flex box로 구성 */
     display: flex;
     flex-direction: row;
@@ -34,26 +34,26 @@ li{
     padding-bottom: 0.4375rem; 
     padding-top: 0.4375rem; 
 }
-li > img{
+.chat_li > img{
     /* 프로필사진 사이즈 조절 */
     width: 3.125rem;
 }
-.profile > *{
+.chat_profile > *{
     /* 이름과 프로필 사진의 margin 조절 */
     margin: 0.3125rem; 
     margin-left: 0.625rem;
 }
-.profile > *:first-of-type{
+.chat_profile > *:first-of-type{
     /* 이름 스타일 변경 : 굵게 처리 */
     font-weight: bold;
-    font-size: 0.875rem; 
+    font-size: var(--font14);  
 } 
-.profile > *:nth-of-type(2){
+.chat_profile > *:nth-of-type(2){
     /* 상태메시지 스타일 변경*/
     color: gray;
-    font-size: 0.75rem; 
+    font-size: var(--font12); 
 }
-.profile-title {
+.chat_profile_title {
     border-top: 0.1rem solid var(--color-navy);
     padding-top: 0.625rem;
 }
