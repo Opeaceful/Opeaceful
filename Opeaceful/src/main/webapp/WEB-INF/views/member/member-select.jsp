@@ -17,6 +17,9 @@
   <!--버튼에 id =  "id="all-member-view-button" 값 넣어주기-->
   <!--예시) <button type="button" class="search-btn" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button> -->
 
+  <!--input 창으로도 검색하고 싶다면 input창에 id="member-search-keyword" 넣어주기!!!!!!!!!!!!-->
+
+  
  <!-- 멤버 조회 모달 Modal -->
   <div class="modal fade" id="all-user-view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="modal-user-view">

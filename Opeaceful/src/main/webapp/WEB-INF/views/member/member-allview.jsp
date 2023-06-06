@@ -53,7 +53,7 @@
             <option value="" selected>직급</option>
         </select>
         <div class="search-wrap">
-          <input type="search" name="keyword" class="search-box">
+          <input type="search" name="keyword" class="search-box" id="member-search-keyword">
           <button type="button" class="search-btn" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
         </div>
         <div class="ms-2">

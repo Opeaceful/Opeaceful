@@ -23,6 +23,7 @@ let JsoncheckMemberNo = "";
 
 // 변수세팅
 let form = document.getElementById('member-update-form') 
+let searchInput = document.getElementById("member-search-keyword")
 
 /*검색에 따라 member를 불러오는 이벤트 */
 $("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
@@ -31,11 +32,16 @@ $("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
 function memberSelectAjax(){
 //변수세팅
 let memberTableBody = document.getElementById("member-table-body");
-let Dselect= document.getElementById("d-select").value;
-let Pselect = document.getElementById("p-select").value;
-let Schecked = document.getElementById("S-select").checked;
+let Dselect= document.getElementById("d-select")
+let Pselect = document.getElementById("p-select")
+let Schecked = document.getElementById("S-select")
 
 
+if(JsoncheckMemberNo != null){ //검색용으로 했을 경우
+    Dselect.options[0].selected = true;
+    Pselect.options[0].selected = true;
+    Schecked.checked = false;
+}
 
 
 //페이지네이션 
@@ -58,9 +64,9 @@ $.ajax({
     dataType : "JSON",
     method: 'POST',
     data: {
-        Dselect : Dselect,
-        Pselect : Pselect,
-        Sselect : Sselect,
+        Dselect : Dselect.value,
+        Pselect : Pselect.value,
+        Sselect : Sselect.checked,
         cpage : cpage,
         checkMemberNo : JsoncheckMemberNo,
     },
@@ -125,6 +131,9 @@ $.ajax({
 
          //선택값 비워주기
          JsoncheckMemberNo = null;
+
+         //검색창도 비워주기
+         searchInput.value = "";
            
     },
     error : function(request){
@@ -451,4 +460,15 @@ $("#all-member-modal-button").click(function(){
     memberSelectAjax(); // ajax호출
 
 });
+
+//엔터를 눌렀을때 해당 직원들이 있따면 처리할 이벤트
+searchInput.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        if(checkMemberNo.length > 0){
+            JsoncheckMemberNo = JSON.stringify(checkMemberNo);
+            memberSelectAjax(); // ajax호출
+       }
+        
+    }   
+})
 

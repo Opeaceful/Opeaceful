@@ -228,8 +228,6 @@ public class MemberController {
 			selectPD.put("Sselect", Sselect);
 			
 			List<Member> m = memberService.selectMember(currentPage,map,selectPD);
-			
-			System.out.println(m);
 				
 			map.put("m", m);
 			
