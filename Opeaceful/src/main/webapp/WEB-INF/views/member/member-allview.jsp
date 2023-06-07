@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- (윤지영) 멤버 전체 조회 : 사용자 조회 view  -->
 <title>Opeaceful</title>
 
 	<!-- 알랏 커스텀 링크 -->
@@ -124,13 +123,13 @@
 	        <div class="row mb-3">
 	            <label for="inputextension" class="col-sm-2 col-form-label">내선번호</label>
 	            <div class="col-sm-9">
-	            <input type="tel" class="form-control"  name="extension" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13">
+	            <input type="tel" class="form-control"  name="extension" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" id="user-call">
 	            </div>
 	        </div>
 	        <div class="row mb-3">
 	            <label for="inputphone" class="col-sm-2 col-form-label" >연락처 *</label>
 	            <div class="col-sm-9">
-	            <input type="tel" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" required>
+	            <input type="tel" class="form-control" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" maxlength="13" required id="user-pnohe">
 	            </div>
 	        </div>  
 	        <div class="row mb-3">
@@ -200,9 +199,9 @@
 <jsp:include page="/WEB-INF/views/member/member-select.jsp" />
  
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
+<script type="module" src="${path}/resources/js/common/dtcodeselect.js"></script>
 <script type="module" src="${path}/resources/js/memberAllview.js"></script>
-<script src="${path}/resources/js/addressAPI.js"></script>
+<script src="${path}/resources/js/common/addressAPI.js"></script>
 
 
 </body>

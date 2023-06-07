@@ -3,7 +3,7 @@
  * 부서명과 직급을 불러오는 ajax
  */
 
-import {path} from './common/common.js';
+import {path} from '../common/common.js';
 
 //사용할때 
 //부서가 들어갈 select박스에 name=deptCode  

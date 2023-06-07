@@ -3,15 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Opeaceful</title>
-
-	<!-- (윤지영) 전체 사용자 모달 : 사용자 조회 view  -->
-
-<link rel="stylesheet" href="${path}/resources/css/common/memberSelect.css">
+  <meta charset="UTF-8">
+  <title>Opeaceful</title>
+  <link rel="stylesheet" href="${path}/resources/css/common/memberSelect.css">
 </head>
 <body>
-
 
   <!--data-bs-target="#all-user-view" 조회할 구역에 data-target넣어주기-->
   <!--버튼에 id =  "id="all-member-view-button" 값 넣어주기-->
@@ -51,7 +47,6 @@
                               <th scope="col">성명</th>
                             </tr>
                           </thead>
-                       
                           <tbody class="table-group-divider" id="all-member-table-body">
                       </tbody>
                     </table>     

@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<!-- (윤지영) 멤버 생성페이지 : 사용자 생성 view  -->
 	<title>Opeaceful</title>
 	
 	<!-- bootstrap CSS only -->
@@ -58,7 +57,6 @@
                         <div class="col-sm-4">
                         <select class="form-select member-form-select  form-select-sm" id="d-select" name="deptCode" required>
                             <option value="" disabled selected>부서명</option>
-                            
                         </select>
                         </div>
                         <label for="team-position" class="col-sm-2 col-form-label input-font">직급 </label>
@@ -132,19 +130,15 @@
                     <button type="submit" class="btn btn-primary ms-1 user-btn">생성</button>
                 </div>
             </form>
-
-            
-          
-     
         </div>
 
     </div>
 
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="${path}/resources/js/addressAPI.js"></script>
+<script src="${path}/resources/js/common/addressAPI.js"></script>
 <script src="${path}/resources/js/memberCreate.js"></script>
-<script type="module" src="${path}/resources/js/dtcodeselect.js"></script>
+<script type="module" src="${path}/resources/js/common/dtcodeselect.js"></script>
 
 </body>
 </html>

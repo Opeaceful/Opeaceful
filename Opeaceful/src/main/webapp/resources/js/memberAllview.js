@@ -471,3 +471,9 @@ searchInput.addEventListener("keyup", function(event) {
     }   
 })
 
+//전화번호 패턴 체크해주는 함수
+$('#user-call,#user-pnohe').keyup(function (event) {
+    event = event || window.event;
+    var _val = this.value.trim();
+    this.value = autoHypenTel(_val);
+});
