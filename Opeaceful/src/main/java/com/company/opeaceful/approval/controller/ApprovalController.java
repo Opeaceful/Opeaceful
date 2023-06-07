@@ -6,12 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/approval")
-public class ApprovalMainController {
+public class ApprovalController {
 
-	@GetMapping("/approvalForm")
-	public String approvalForm(){
-		return "approval/approvalForm";
-	}
 	@GetMapping("/allApproval")
 	public String allApproval(){
 		return "approval/allApproval";
@@ -20,5 +16,6 @@ public class ApprovalMainController {
 	public String myApproval(){
 		return "approval/myApproval";
 	}
+	
 	
 }

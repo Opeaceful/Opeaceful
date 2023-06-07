@@ -2,8 +2,8 @@
   min-width: 800px;
 }
 
-.approval-wrap {
-  min-width: 800px;
+.approval-form-wrap {
+  min-width: 700px;
 }
 
 .approval-form-table {
@@ -11,11 +11,6 @@
   min-width: 700px;
   margin: auto;
   margin-top: 3rem;
-
-  /* 나중에 디자인 평가 필요 */
-  background-color: #00000005;
-  border-radius: 10px;
-  padding: 2rem;
 }
 
 .approval-form-table select {
@@ -37,6 +32,20 @@
 .approval-form-table input[type='checkbox'] {
   width: 1rem;
   height: 1rem;
+}
+
+.div-delete-box {
+  position: relative;
+}
+
+#btn-delete-selected-form {
+  width: max-content;
+  font-size: var(--font13);
+  margin-left: 1rem;
+  position: absolute;
+  left: 70%;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
 th:nth-child(1) {
@@ -65,13 +74,13 @@ th:nth-child(3) {
   min-width: 140px;
 }
 
-.approval-wrap .btn-wrap {
+.approval-form-wrap .btn-wrap {
   margin-top: 1.5rem;
 }
 
-.approval-wrap .btn-wrap button {
+.approval-form-wrap .btn-wrap button {
   font-size: var(--font13);
-  margin-right: 0.8rem;
+  margin-right: 1rem;
 }
 
 .type-wrap {
@@ -95,17 +104,21 @@ th:nth-child(3) {
   padding: 0px 1rem;
 }
 
-#add-form select {
+#add-form-modal select {
   cursor: pointer;
 }
 
-#add-form button {
+#add-form-modal button {
   font-size: var(--font14);
 }
 
-#add-form input:focus-visible,
-#add-form select:focus-visible {
+#add-form-modal input:focus-visible,
+#add-form-modal select:focus-visible {
   outline: none;
+}
+
+#btn-form-delete {
+  display: none;
 }
 
 #copy-form {
@@ -162,11 +175,39 @@ th:nth-child(3) {
   margin: auto;
 }
 
-#add-form .modal-header {
+#form-name {
+  width: 25vw;
+  min-width: 300px;
+}
+
+#add-form-modal .modal-header {
   border-bottom: 0px;
 }
 
 /* 양식복사 모달 감추기 */
 #copy-form {
   display: none;
+}
+
+/* --- 페이징 버튼 영역  --- */
+.paging-bar {
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.disable-btn {
+  display: none;
+}
+
+.paging-bar button {
+  font-size: var(--font13);
+}
+
+.selected-btn {
+  color: var(--bs-btn-disabled-color);
+  pointer-events: none;
+  background-color: var(--bs-btn-disabled-bg);
+  border-color: var(--bs-btn-disabled-border-color);
+  opacity: var(--bs-btn-disabled-opacity);
 }

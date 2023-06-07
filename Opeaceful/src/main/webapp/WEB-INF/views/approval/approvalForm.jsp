@@ -1,5 +1,11 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
+	int count = (int) request.getAttribute("count");
+	int pageCount = (int) Math.ceil(count / 10.0);
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,8 +26,6 @@ pageEncoding="UTF-8"%> -->
       crossorigin="anonymous"
     />
 
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
-    
     <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
     <link
       rel="stylesheet"
@@ -43,12 +47,15 @@ pageEncoding="UTF-8"%> -->
             <thead>
               <tr>
                 <th scope="col">
-                  <input type="checkbox" id="check-all" />
+	                <div class="div-delete-box">
+	                  <input type="checkbox" id="check-all" />
+	                  <button id="btn-delete-selected-form" class="btn btn-outline-danger">삭제</button>
+	                </div>
                 </th>
                 <th scope="col">양식명</th>
                 <th scope="col">
-                  <select name="checkType" id="check-type">
-                    <option value="all" selected>구분</option>
+                  <select name="checkType" id="select-show-type">
+                    <option value="-1" selected>구분</option>
                     <option value="0">일반</option>
                     <option value="1">연차</option>
                     <option value="2">오전반차</option>
@@ -58,52 +65,83 @@ pageEncoding="UTF-8"%> -->
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <input type="checkbox" id="save-id" />
-                </td>
-                <td>
-                  <div>
-                    양식
-                    며어어어어어어어어어어어어어어엉며어어어어어어어어어어어어어어엉
-                  </div>
-                </td>
-                <td>일반</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" id="save-id" />
-                </td>
-                <td>양식 며어어어엉</td>
-                <td>일반</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" id="save-id" />
-                </td>
-                <td>양식 며어어어엉</td>
-                <td>일반</td>
-              </tr>
+            	<c:if test="${empty formList}">
+            		<tr>
+            			<td colspan="3">등록된 양식이 없습니다.</td>
+            		</tr>
+				</c:if>
+				<c:forEach items="${formList}" var="form">
+					 <tr>
+		                <td>
+		                  <input type="checkbox" value="${ form.formNo }"  />
+		                </td>
+		                <td>
+		                  <div>${ form.title }</div>
+		                </td>
+		                <td>
+		                	<c:choose>
+		                		<c:when test="${ form.type eq 0 }">
+		                			일반
+		                		</c:when>
+		                		<c:when test="${ form.type eq 1 }">
+		                			연차
+		                		</c:when>
+		                		<c:when test="${ form.type eq 2 }">
+		                			오전반차
+		                		</c:when>
+		                		<c:when test="${ form.type eq 3 }">
+		                			오후반차
+		                		</c:when>
+		                	</c:choose>
+		                </td>
+		             </tr>
+				</c:forEach>
             </tbody>
           </table>
+
+          
           <div class="btn-wrap">
-            <button class="btn btn-outline-primary">선택삭제</button>
+            
+            
             <button
-              id="btn-add-form"
+              id="btn-open-add-form"
               class="btn btn-primary position-btn"
               data-bs-toggle="modal"
-              data-bs-target="#add-form"
+              data-bs-target="#add-form-modal"
               type="button"
             >
               신규추가
             </button>
           </div>
+          
+          <div class="paging-bar">			
+			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+
+			<% for(int i= 1; i <= 10; i++) { %>
+				<% if( i <= pageCount) { %>
+					<% if(i == 1) { %>
+						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<% } else { %>
+						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+					<% } %>
+				<% } else {%>
+					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+				<% } %>
+			<% } %>
+			
+			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
+			<% if( 10 < pageCount ) { %>
+				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } else { %>
+				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } %>
+		 </div>
         </div>
       </div>
 
       <div
         class="modal fade"
-        id="add-form"
+        id="add-form-modal"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"
@@ -126,16 +164,16 @@ pageEncoding="UTF-8"%> -->
               ></button>
             </div>
             <div class="modal-body scroll-bar-none">
-              <form method="post" action="">
+              <form id="form-approvalForm" method="post" action="${path}/approval/approvalForm/insertForm" enctype="multipart/form-data" >
                 <div class="type-wrap">
                   <div>
                     <div class="type-title">구분</div>
                     <div>
-                      <select name="formType" id="form-type">
-                        <option value="nomal" selected>일반</option>
-                        <option value="allOff">연차</option>
-                        <option value="amOff">오전반차</option>
-                        <option value="pmOff">오후반차</option>
+                      <select name="type" id="form-type">
+                        <option value="0" selected>일반</option>
+                        <option value="1">연차</option>
+                        <option value="2">오전반차</option>
+                        <option value="3">오후반차</option>
                       </select>
                     </div>
                   </div>
@@ -144,7 +182,7 @@ pageEncoding="UTF-8"%> -->
                     <input
                       type="text"
                       id="form-name"
-                      name="formName"
+                      name="title"
                       maxlength="20"
                     />
                   </div>
@@ -156,24 +194,29 @@ pageEncoding="UTF-8"%> -->
                     양식복사
                   </button>
                 </div>
-
-                <textarea id="editor" readonly>
-                Welcome to TinyMCE!
-              </textarea
-                >
+              <textarea class="tinymce" id="form-tiny" name="content" maxlength="3000">
+              </textarea>
               </form>
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                id="btn-save"
+                id="btn-form-delete"
+                class="btn btn-outline-danger"
+              >
+                삭제
+              </button>
+              <button
+                type="button"
+                id="btn-form-save"
                 class="btn btn-primary position-ok ms-auto"
+                value = "test"
               >
                 저장
               </button>
               <button
                 type="button"
-                class="btn btn-outline-primary cancel-common position-cancel can"
+                class="btn btn-outline-primary cancel-common position-cancel"
                 data-bs-dismiss="modal"
                 data-bs-target="#add-form"
               >
@@ -187,19 +230,19 @@ pageEncoding="UTF-8"%> -->
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">
                     양식 복사
                   </h1>
-                  <button type="button" class="btn-close"></button>
+                  <button id="btn-close-copy-form" type="button" class="btn-close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="copy-select-wrap">
                     <div>복사할 양식</div>
                     <select name="copyForm" id="copy-select">
                       <option value="1">
-                        testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                        test
                       </option>
                     </select>
                     <button
                       type="button"
-                      id="btn-copy-save"
+                      id="btn-copy-reflect"
                       class="btn btn-outline-primary position-ok ms-auto"
                     >
                       복사
@@ -213,17 +256,6 @@ pageEncoding="UTF-8"%> -->
       </div>
     </div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-
-    <script type="module" src="${path}/resources/js/approval/approvalForm.js"></script>
+    <script type="module" src="${path}/resources/js/approval/approvalFormFront.js"></script>
   </body>
 </html>
