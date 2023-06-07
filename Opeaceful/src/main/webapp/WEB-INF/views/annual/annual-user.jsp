@@ -6,14 +6,11 @@
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
 	
+	<!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- 부트스트랩 아이콘 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
-	<!-- JavaScript Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
     <link rel="stylesheet" href="${path}/resources/css/annual-user.css">
@@ -29,13 +26,9 @@
     
             <!-- 내용부분 -->
             <div class="annual-content">
-                <!-- <div>
-                    <input type="text" class="form-control box-shadow-put" id="annual-user" placeholder="사원명">
-                    <button type="button" id="user-select-btn" class="w90-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">조회</button>
-                </div> -->
                 <div class="search-wrap2 input-group mb-3">
-                    <input type="text" class="search-input2 form-control box-shadow-none" id="annual-user" placeholder="사원명">
-                    <button id="user-select-btn" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="search" name="keyword" class="search-input2 form-control box-shadow-none" id="annual-user" placeholder="사원명">
+                    <button type="button" class="search-btn btn btn-outline-secondary"  id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
                 </div>
                 <div class="annual-user-info container row align-items-center">
                         <div class="col-9">
@@ -159,6 +152,6 @@
             </div>
         </div>
     </div>
-
+<jsp:include page="/WEB-INF/views/member/member-select.jsp" />
 </body>
 </html>
