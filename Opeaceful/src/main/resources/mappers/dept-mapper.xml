@@ -22,15 +22,16 @@
 	<result column="P_NAME" property="pName"/>
 </resultMap>
 
-   <!-- [지영] 부서명 select -->
-  <select id="selectDeptList" resultMap="departmentesultSet">
-  	SELECT * FROM department;
-  </select>
-  
-  <!-- [지영] 직위명 select -->
-  <select id="selectPosition" resultMap="positionsultSet">
-  	SELECT * FROM position;
-  </select>
+	<!-- =================== [select] =================== -->
+	<!-- [지영] 부서명 select -->
+	<select id="selectDeptList" resultMap="departmentesultSet">
+		SELECT * FROM department;
+	</select>
+	
+	<!-- [지영] 직위명 select -->
+	<select id="selectPosition" resultMap="positionsultSet">
+		SELECT * FROM position;
+	</select>
   
  	<!-- [지의] - 부서 조회 -->
 	<select id="selecTopDept" parameterType="member" resultMap="departmentesultSet">

@@ -194,7 +194,7 @@
 	<div id="toast"></div>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="${path}/resources/js/addressAPI.js"></script>
+    <script src="${path}/resources/js/common/addressAPI.js"></script>
     <script type="module" src="${path}/resources/js/mypage.js"></script>
 
 </body>

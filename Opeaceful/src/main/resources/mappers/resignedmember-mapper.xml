@@ -3,7 +3,7 @@
 <mapper namespace="resignedMapper">
 
 
-<!-- ====================== insert ========================= -->	
+	<!-- =================== [insert] =================== -->
   	<!--[지영] update 중 퇴사자 처리 -->
 	<insert id="resignedmember">
 		<selectKey keyProperty="DresignedDate" resultType="java.sql.Date" order="BEFORE">
@@ -18,31 +18,30 @@
 	  	#{pName})
 	</insert>	
 	
-<!-- ====================== select ========================= -->	
-	 <!--[지영] 퇴사자 자료 조회 -->
-	 <select id="resignedMembeSelect" parameterType="_int" resultType="resignedMember">
-	 	SELECT *
+	<!-- =================== [select] =================== -->		
+	<!--[지영] 퇴사자 자료 조회 -->
+	<select id="resignedMembeSelect" parameterType="_int" resultType="resignedMember">
+		SELECT *
 		FROM RESIGNED_MEMBER
 		WHERE USER_NO = #{userNo} 
-	 </select>
+	</select>
 	 
-<!-- ====================== update ========================= -->		 
-	 <!-- [지영] 퇴사자료 업데이트 -->
-	 <update id="resignedmemberUpdate" parameterType="resignedMember" >
-	 	UPDATE resigned_member 
-	 	SET RESIGNED_DATE = #{resignedDate},
-	 		DEPT_NAME = #{deptName},
-	 		T_NAME  = #{tName},
-	 		P_NAME  = #{pName}
-	 	WHERE USER_NO = #{userNo} 
-	 </update>
+	<!-- =================== [update] =================== -->			 
+	<!-- [지영] 퇴사자료 업데이트 -->
+	<update id="resignedmemberUpdate" parameterType="resignedMember" >
+		UPDATE resigned_member 
+		SET RESIGNED_DATE = #{resignedDate},
+			DEPT_NAME = #{deptName},
+			T_NAME  = #{tName},
+			P_NAME  = #{pName}
+		WHERE USER_NO = #{userNo} 
+	</update>
 	 
-<!-- =============================================[delete]=========================================================== -->	
-	
+	<!-- =================== [delete] =================== -->	
 	<!-- [지영] 퇴사자 자료 삭제 -->
 	<delete id="resignedmemberDelete">
 		DELETE FROM resigned_member 
 		WHERE USER_NO = #{userNo}
 	</delete>
-	 
+ 
 </mapper>

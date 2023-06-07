@@ -21,19 +21,24 @@ let LeaveDateDay;
 //검색용 변수 세팅
 let JsoncheckMemberNo = "";
 
+// 변수세팅
+let form = document.getElementById('member-update-form') 
+let searchInput = document.getElementById("member-search-keyword")
+let memberTableBody = document.getElementById("member-table-body");
+let Dselect= document.getElementById("d-select")
+let Pselect = document.getElementById("p-select")
+let Schecked = document.getElementById("S-select")
+
 /*검색에 따라 member를 불러오는 이벤트 */
-$("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
+$("#d-select,#p-select,#S-select").change(function(){
+    //다른 조건은 지워주기  
+    JsoncheckMemberNo = null;  
+    memberSelectAjax();
+
+});
     
 //페이지 비동기로 불러오는 이벤트 내용+페이징처리   
 function memberSelectAjax(){
-//변수세팅
-let memberTableBody = document.getElementById("member-table-body");
-let Dselect= document.getElementById("d-select").value;
-let Pselect = document.getElementById("p-select").value;
-let Schecked = document.getElementById("S-select").checked;
-
-
-
 
 //페이지네이션 
 let memberPagination = document.getElementById("member-pagination");
@@ -41,10 +46,9 @@ let memberPagination = document.getElementById("member-pagination");
 const cpage = pagination !== undefined ? pagination.currentPage : null;
 
     //퇴사자 여부 체크
-    if(Schecked){
+    if(Schecked.checked){
         Sselect = 'N'
         inputReadonly();
-
     }else{
         Sselect = 'Y'
         inputChangeable();
@@ -55,8 +59,8 @@ $.ajax({
     dataType : "JSON",
     method: 'POST',
     data: {
-        Dselect : Dselect,
-        Pselect : Pselect,
+        Dselect : Dselect.value,
+        Pselect : Pselect.value,
         Sselect : Sselect,
         cpage : cpage,
         checkMemberNo : JsoncheckMemberNo,
@@ -120,8 +124,8 @@ $.ajax({
          preNextbutton(); 
          tableEvent();
 
-         //선택값 비워주기
-         JsoncheckMemberNo = null;
+         //검색창도 비워주기
+         searchInput.value = "";
            
     },
     error : function(request){
@@ -295,7 +299,6 @@ function hiddenFrom(date,id){
     hiddenFrom.name = date;
     hiddenFrom.value = id;
 
-    let form = document.getElementById('member-update-form');
     form.appendChild(hiddenFrom);
 }
 
@@ -308,13 +311,20 @@ $("#form-sumit").click(function(){
     .then(function(isConfirm){
         if(isConfirm){
 
-            //비활성화 되어있다면 select박스 활성화로 보내줘야 함
-            let selects = document.querySelectorAll('#member-update-form select');
-            selects.forEach(function(selects) {
-                selects.removeAttribute('disabled');
-            });
+            if (form.checkValidity()) {
+                 //비활성화 되어있다면 select박스 활성화로 보내줘야 함
+                let selects = document.querySelectorAll('#member-update-form select');
+                selects.forEach(function(selects) {
+                    selects.removeAttribute('disabled');
+                });
 
-            document.getElementById('member-update-form').submit();
+                form.submit();
+              } else {
+                swal("빈 값 또는 조건에 맞지않는 입력이 있습니다.");
+                
+              }
+
+           
         }
     })
 });
@@ -443,3 +453,27 @@ $("#all-member-modal-button").click(function(){
 
 });
 
+//엔터를 눌렀을때 해당 직원들이 있따면 처리할 이벤트
+searchInput.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        if(checkMemberNo.length > 0){
+            JsoncheckMemberNo = JSON.stringify(checkMemberNo);
+
+            if(JsoncheckMemberNo != null){ //이외의 조건 삭제
+                Dselect.options[0].selected = true;
+                Pselect.options[0].selected = true;
+                Schecked.checked = false;
+            }
+            
+            memberSelectAjax(); // ajax호출
+       }
+        
+    }   
+})
+
+//전화번호 패턴 체크해주는 함수
+$('#user-call,#user-pnohe').keyup(function (event) {
+    event = event || window.event;
+    var _val = this.value.trim();
+    this.value = autoHypenTel(_val);
+});
