@@ -24,25 +24,21 @@ let JsoncheckMemberNo = "";
 // 변수세팅
 let form = document.getElementById('member-update-form') 
 let searchInput = document.getElementById("member-search-keyword")
-
-/*검색에 따라 member를 불러오는 이벤트 */
-$("#d-select,#p-select,#S-select").change( function(){memberSelectAjax()});
-    
-//페이지 비동기로 불러오는 이벤트 내용+페이징처리   
-function memberSelectAjax(){
-//변수세팅
 let memberTableBody = document.getElementById("member-table-body");
 let Dselect= document.getElementById("d-select")
 let Pselect = document.getElementById("p-select")
 let Schecked = document.getElementById("S-select")
 
+/*검색에 따라 member를 불러오는 이벤트 */
+$("#d-select,#p-select,#S-select").change(function(){
+    //다른 조건은 지워주기  
+    JsoncheckMemberNo = null;  
+    memberSelectAjax();
 
-if(JsoncheckMemberNo != null){ //검색용으로 했을 경우
-    Dselect.options[0].selected = true;
-    Pselect.options[0].selected = true;
-    Schecked.checked = false;
-}
-
+});
+    
+//페이지 비동기로 불러오는 이벤트 내용+페이징처리   
+function memberSelectAjax(){
 
 //페이지네이션 
 let memberPagination = document.getElementById("member-pagination");
@@ -50,10 +46,9 @@ let memberPagination = document.getElementById("member-pagination");
 const cpage = pagination !== undefined ? pagination.currentPage : null;
 
     //퇴사자 여부 체크
-    if(Schecked){
+    if(Schecked.checked){
         Sselect = 'N'
         inputReadonly();
-
     }else{
         Sselect = 'Y'
         inputChangeable();
@@ -66,7 +61,7 @@ $.ajax({
     data: {
         Dselect : Dselect.value,
         Pselect : Pselect.value,
-        Sselect : Sselect.checked,
+        Sselect : Sselect,
         cpage : cpage,
         checkMemberNo : JsoncheckMemberNo,
     },
@@ -128,9 +123,6 @@ $.ajax({
          pitem();
          preNextbutton(); 
          tableEvent();
-
-         //선택값 비워주기
-         JsoncheckMemberNo = null;
 
          //검색창도 비워주기
          searchInput.value = "";
@@ -466,6 +458,13 @@ searchInput.addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
         if(checkMemberNo.length > 0){
             JsoncheckMemberNo = JSON.stringify(checkMemberNo);
+
+            if(JsoncheckMemberNo != null){ //이외의 조건 삭제
+                Dselect.options[0].selected = true;
+                Pselect.options[0].selected = true;
+                Schecked.checked = false;
+            }
+            
             memberSelectAjax(); // ajax호출
        }
         
