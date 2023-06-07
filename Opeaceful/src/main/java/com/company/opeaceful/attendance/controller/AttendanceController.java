@@ -43,7 +43,6 @@ public class AttendanceController {
 	@ResponseBody
 	@PostMapping("/workOn")
 	public String insertWorkOn(@ModelAttribute("loginUser") Member loginUser, Model model) {
-		logger.info("출근 찍고 들어옴??????????????????????");
 		
 		int userNo = loginUser.getUserNo();
 		int result = attendanceService.insertWorkOn(userNo);
@@ -66,7 +65,6 @@ public class AttendanceController {
 	@ResponseBody
 	@PostMapping("/workOff")
 	public String updateWorkOff(@ModelAttribute("loginUser") Member loginUser,Model model) {
-		logger.info("퇴근 찍고 들어옴??????????????????????");
 		
 		int userNo = loginUser.getUserNo();
 		int result = attendanceService.updateWorkOff(userNo);

@@ -83,6 +83,7 @@ public class MemberDao {
 	public int updateMember(Member m) {
 		return sqlSession.update("memberMapper.updateMember",m);
 	}
+	
 	public List<Object> onlineStatusList() {
 		return sqlSession.selectList("attendanceMapper.onlineStatusList");
 	}
@@ -112,6 +113,11 @@ public class MemberDao {
 		
 		return sqlSession.selectList("memberMapper.checkMemberNoSelect",intArray,rowBounds);
 	}
+
+	public int updateStatusType(Map<String, Object> map) {
+		return sqlSession.update("memberMapper.updateStatusType",map);
+	}
+	
 
 
 }

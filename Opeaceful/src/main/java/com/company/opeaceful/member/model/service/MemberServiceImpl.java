@@ -31,7 +31,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertMember(m);
 	}
 	
-	@Override
 	public Member loginMember(Member m) {
 		return memberDao.loginMember(m);
 	}
@@ -136,6 +135,11 @@ public class MemberServiceImpl implements MemberService {
 		map.put("pi", pi);
 		
 		return memberDao.checkMemberNoSelect(pi,intArray);
+	}
+	
+	@Override
+	public int updateStatusType(Map<String, Object> map) {
+		return memberDao.updateStatusType(map);
 	}
 	
 	

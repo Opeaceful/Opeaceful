@@ -114,7 +114,7 @@
 											<div class="text">
 												<c:forEach items="${os}" var="onStatus">
 													<c:if test="${onStatus.statusType eq loginUser.statusType}">
-														<img class="img" value="${onStatus.statusType}" src="${path}/resources/image/status/${onStatus.statusImg}">
+														<img title="${onStatus.statusType}" src="${path}/resources/image/status/${onStatus.statusImg}">
 													</c:if>
 												</c:forEach>
 											</div>
