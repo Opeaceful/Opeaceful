@@ -35,9 +35,14 @@ public class ApprovalDao {
 		return sqlSession.selectList("aprMapper.selectFormListAll");
 	};
 	
+	// 타입별 폼 리스트 조회 
+	public List<ApprovalForm> selectFormList(int type){
+		return sqlSession.selectList("aprMapper.selectFormList", type);
+	};
 	
-	// 폼 리스트 조회
-	public List<ApprovalForm> selectFormList(PageInfo pi, int type){
+	
+	// 폼 리스트 조회(페이지용)
+	public List<ApprovalForm> selectFormListPage(PageInfo pi, int type){
 		//폼은 최대개수가 별로 많이 늘어나지 않을 요소라 구현하기 편하지만 느린 RowBounds 사용해봄
 		int offset  = (pi.getCurrentPage() -1) * pi.getSettingLimit();
 		int limit = pi.getSettingLimit();

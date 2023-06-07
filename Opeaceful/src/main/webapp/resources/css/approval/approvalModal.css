@@ -7,18 +7,71 @@
   box-sizing: border-box;
 }
 
+#modal-select-approval-type .modal-header,
 #approval .modal-header {
   border-bottom: 0px;
   padding-bottom: 0px;
 }
 
+#modal-select-approval-type button,
 #approval button {
   font-size: var(--font13);
 }
 
+#modal-select-approval-type select:focus-visible,
+#modal-select-approval-type input:focus-visible,
 #approval select:focus-visible,
 #approval input:focus-visible {
   outline: none;
+}
+
+/* 드래그 막기 */
+.favor-table,
+.org-table-content,
+.selected-lines li {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.div-copy-form-type-wrap {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.div-copy-form-type-wrap > div {
+  border-left: 3px solid var(--color-navy);
+  margin-left: 5%;
+  padding-left: 1rem;
+  display: inline-block;
+}
+
+#select-copy-form-type {
+  margin-left: 5%;
+}
+
+#select-copy-form-no {
+  flex: 1;
+  max-width: 50%;
+  margin: 0px 5%;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#select-copy-form-no option {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#modal-select-approval-type .modal-footer button {
+  width: 80%;
+  max-width: 500px;
 }
 
 .write-approval-table {
@@ -94,11 +147,16 @@
   background-color: var(--color-background);
 }
 
+#approval .approval-files {
+  flex: 1;
+}
+
 #approval .approval-files > div {
   overflow: auto;
   overflow-x: hidden;
   height: 100%;
 }
+
 #approval .approval-lines ol {
   overflow: auto;
   overflow-x: hidden;
@@ -117,19 +175,25 @@
   display: flex;
 }
 
-#approval .approval-files > div > div:hover .btn-file-delete {
-  display: block;
-}
-
 .btn-file-delete {
   border-radius: 4px;
   color: black;
   background-color: rgba(255, 255, 255, 0);
-  padding: 0px 6px;
-  margin-left: 1rem;
+  padding: 0px 4px;
+  margin: 2px 0px;
+  margin-right: 1rem;
   border: 1px solid var(--color-navy);
-  /* 마우스 오버하면 보이게 */
-  display: none;
+}
+
+.btn-file-delete:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.div-minus {
+  width: 10px;
+  height: 2px;
+  border-radius: 10%;
+  background-color: var(--color-navy);
 }
 
 #date {
@@ -161,7 +225,7 @@
   margin: auto;
   width: 80%;
   min-width: 630px;
-  height: 70%;
+  height: 80%;
   min-height: max-content;
   background-color: var(--bs-modal-bg);
   background-clip: padding-box;
@@ -191,6 +255,14 @@
   padding: 1rem;
   border-radius: 4px;
   border: 1px solid var(--color-blurred-black);
+}
+
+.org-chart .input-group {
+  width: 100%;
+}
+
+.org-chart .input-group * {
+  font-size: var(--font14);
 }
 
 .org-table-head {
@@ -224,7 +296,7 @@
 }
 
 .my-favor {
-  height: 23vh;
+  height: 20vh;
 }
 
 .my-favor table {
@@ -236,7 +308,7 @@
   overflow: auto;
   overflow-x: hidden;
   display: block;
-  height: calc(23vh - 48px);
+  height: calc(20vh - 48px);
 }
 
 .my-favor tbody tr {
@@ -265,7 +337,7 @@
 }
 
 .selected-lines {
-  height: 40%;
+  height: 50%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -288,15 +360,22 @@
 
 .selected-lines li {
   font-size: var(--font14);
-  width: 80%;
-  max-width: 200px;
-  position: relative;
+  width: 100%;
   margin-bottom: 0.5rem;
+}
+
+.selected-lines li:hover .btn-selected-delete {
+  display: block;
 }
 
 .selected-lines li select {
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.selected-lines li > div {
+  display: inline-block;
+  position: relative;
 }
 
 .btn-selected-delete {
@@ -305,15 +384,15 @@
   position: absolute;
   transform-origin: 0px 0px;
   top: 0px;
-  right: -34px;
+  left: 120%;
   /* 마우스 오버시 버튼 보이게 */
   display: none;
 }
 
 #btn-submit-line {
   width: 95%;
-  margin: auto;
   margin: 0.5rem auto;
+  margin-top: 0px;
 }
 
 .favor-modal-back {

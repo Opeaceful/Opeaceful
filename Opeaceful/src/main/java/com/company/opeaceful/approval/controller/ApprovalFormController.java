@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.company.opeaceful.approval.model.service.ApprovalServiceImpl;
+import com.company.opeaceful.approval.model.service.ApprovalService;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.commom.FileRenamePolicy;
@@ -29,16 +29,16 @@ import com.google.gson.Gson;
 //(승은)
 public class ApprovalFormController {
 
-	private ApprovalServiceImpl aprService;
+	private ApprovalService aprService;
 
 	@Autowired
-	public ApprovalFormController(ApprovalServiceImpl aprService) {
+	public ApprovalFormController(ApprovalService aprService) {
 		this.aprService = aprService;
 	}
 
 	@GetMapping("")   
 	public String approvalForm(Model model) {
-		List<ApprovalForm> formList = aprService.selectFormList( 1 , -1);
+		List<ApprovalForm> formList = aprService.selectFormListPage( 1 , -1);
 		int count = aprService.selectFormListCount(-1);
 
 		model.addAttribute("formList", formList );
@@ -52,8 +52,6 @@ public class ApprovalFormController {
 	@ResponseBody
 	@PostMapping("/selectFormListCount")
 	public int selectFormListCount( Integer checkType ) {
-		System.out.println("---------------------------- 카운트 세러 들어옴 ----------------------");
-		System.out.println(checkType);
 		int count = 0;
 		if(checkType != null) {
 			count = aprService.selectFormListCount( checkType);
@@ -61,11 +59,27 @@ public class ApprovalFormController {
 		return count;
 	}
 	
-
-	// ajax용 폼 리스트 반환
+	
+	// ajax용 타입별 폼 리스트 반환
 	@ResponseBody
 	@PostMapping("/selectFormList")
-	public String selectFormList(
+	public String selectFormList( Integer checkType ) {
+		
+		List<ApprovalForm> formList  = new ArrayList<>();
+		
+		if(checkType != null ) {
+			formList = aprService.selectFormList( checkType);
+		}else {
+			formList = aprService.selectFormListAll();
+		}
+
+		return new Gson().toJson(formList);
+	}
+
+	// ajax용 폼 리스트(페이지용) 반환
+	@ResponseBody
+	@PostMapping("/selectFormListPage")
+	public String selectFormListPage(
 								Integer checkType,
 								@RequestParam(value="currentPage", required = false) Integer currentPage
 								) {
@@ -73,7 +87,7 @@ public class ApprovalFormController {
 		List<ApprovalForm> formList  = new ArrayList<>();
 		
 		if(checkType != null && currentPage != null) {
-			formList = aprService.selectFormList(currentPage, checkType);
+			formList = aprService.selectFormListPage(currentPage, checkType);
 		}else {
 			formList = aprService.selectFormListAll();
 		}

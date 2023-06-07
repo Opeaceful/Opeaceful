@@ -31,7 +31,9 @@ pageEncoding="UTF-8"%>
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
     ></script>
-
+	
+	<!-- jQuery ui / Sortable 사용용도 -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
 
     <link
       rel="stylesheet"
@@ -41,7 +43,50 @@ pageEncoding="UTF-8"%>
   <body>
     <!-- [승은] -->
 
-    <div
+	<div class="modal fade" id="modal-select-approval-type"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div
+			class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content position-modal">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">결재양식 선택</h1>
+
+					<button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#modal-select-approval-type"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body scroll-bar-none">
+					<div class="div-copy-form-type-wrap">
+					
+						<div>구분</div>
+						
+						<select  id="select-copy-form-type">
+		                    <option value="0" selected>일반</option>
+		                    <option value="1">연차</option>
+		                    <option value="2">오전반차</option>
+		                    <option value="3">오후반차</option>
+		                </select>
+	                    
+	                    <select  id="select-copy-form-no">
+	                    	<option value="none" selected>선택 안함</option>
+		                    <option value="1">양식명</option>
+		                    <option value="2">123456789123456789123456789</option>
+		                    <option value="3">양식명</option>
+	                    </select>
+					
+					</div>
+					
+				
+				</div>
+				<div class="modal-footer">
+					<button id="btn-select-copy-form-type" type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#modal-select-approval-type">
+						선택</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
       class="modal fade"
       id="approval"
       data-bs-backdrop="static"
@@ -72,16 +117,16 @@ pageEncoding="UTF-8"%>
                 <table class="write-approval-table table">
                   <tbody>
                     <tr>
-                      <td width="10%">
+                      <td class="date-td" width="10%">
                         <div>일자</div>
                       </td>
-                      <td width="40%">
+                      <td class="date-td" width="40%">
                         <i class="bi bi-calendar-week"></i><input id="date" />
                       </td>
                       <td width="10%">
                         <div>종류</div>
                       </td>
-                      <td width="40%">연차</td>
+                      <td width="40%">연차 [ 10.5 / 19 ]</td>
                     </tr>
                     <tr>
                       <td>
@@ -107,8 +152,6 @@ pageEncoding="UTF-8"%>
                           </button>
                           <div class="approval-lines">
                             <ol class="scroll-bar">
-                              <li><b>결재</b> 뫄뫄뫄 부장</li>
-                              <li><b>참조</b> 뫄뫄뫄 팀장</li>
                             </ol>
                           </div>
                         </div>
@@ -128,14 +171,9 @@ pageEncoding="UTF-8"%>
                           >
                             <i class="fa-solid fa-plus"></i> 첨부
                           </button>
+                          <input type="file" id="input-add-file" multiple hidden>
                           <div class="approval-files">
                             <div class="scroll-bar">
-                              <div>
-                                fjkdlsjf.jpg
-                                <button type="button" class="btn-file-delete">
-                                  <i class="fa-solid fa-minus"></i>
-                                </button>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -180,8 +218,8 @@ pageEncoding="UTF-8"%>
                   <div class="org-chart">
                     <div>
                        <!--검색창-->         
-		              <div class="search-wrap2 input-group mb-3 ms-1">
-		                <input type="text" class="search-input2 form-control box-shadow-none input-search-member" placeholder="사원번호/이름 입력" >
+		              <div class="input-group mb-3">
+		                <input type="text" class="form-control box-shadow-none input-search-member" placeholder="사원번호/이름 입력" >
 		                <button class="btn btn-outline-secondary search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 		              </div>
                       <table class="org-table-head table table-common">
@@ -229,54 +267,6 @@ pageEncoding="UTF-8"%>
                     </div>
                     <div class="selected-lines">
                       <ol class="scroll-bar">
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          한우정아 부사장
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          김뫄뫄 사원
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          김뫄뫄 부서장
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <select name="" id="">
-                            <option value="" selected>결재</option>
-                            <option value="">참조</option>
-                          </select>
-                          김뫄뫄 부서장
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <i class="fa-solid fa-minus"></i>
-                          </button>
-                        </li>
                       </ol>
                       <button
                         id="btn-add-favor"
@@ -287,7 +277,7 @@ pageEncoding="UTF-8"%>
                     </div>
 
                     <button id="btn-submit-line" class="btn btn-primary">
-                      결제라인 추가
+                      결제라인 저장
                     </button>
                   </div>
                 </div>
@@ -298,8 +288,6 @@ pageEncoding="UTF-8"%>
                     <button
                       type="button"
                       class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
                     ></button>
                   </div>
                   <div class="modal-body">
@@ -313,7 +301,7 @@ pageEncoding="UTF-8"%>
                         />
                       </div>
                       <p>※현재 선택된 결재자 정보를 My즐겨찾기로 저장합니다</p>
-                      <button class="btn btn-primary">저장</button>
+                      <button id="btn-save-favor-line" class="btn btn-primary">저장</button>
                     </div>
                   </div>
                 </div>
@@ -324,6 +312,7 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
     
+    <script type="module" src="${path}/resources/js/approval/approvalModal.js"></script>
 
   </body>
 </html>

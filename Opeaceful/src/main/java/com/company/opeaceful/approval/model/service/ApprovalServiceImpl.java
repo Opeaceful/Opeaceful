@@ -41,14 +41,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
-	public List<ApprovalForm> selectFormList(int currentPage, int type) {
+	public List<ApprovalForm> selectFormList(int type) {
+		return aprDao.selectFormList( type);
+	}
+	
+	@Override
+	public List<ApprovalForm> selectFormListPage(int currentPage, int type) {
 		
 		int listCount = aprDao.selectFormListCount(type);
 		int pageLimit = 10;
 		int itemLimit = 10; // 최대 10개 가져오기
 		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, itemLimit);
 		
-		return aprDao.selectFormList(pi, type);
+		return aprDao.selectFormListPage(pi, type);
 	}
 
 	@Override
@@ -105,6 +110,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteFileList( List<ApprovalFile> fileList) {
 		return aprDao.deleteFileList(fileList);
 	}
+
+
 
 
 

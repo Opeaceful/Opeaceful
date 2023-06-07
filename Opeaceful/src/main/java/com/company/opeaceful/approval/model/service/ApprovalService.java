@@ -12,7 +12,9 @@ public interface ApprovalService {
 
 	int selectFormListCount(int type);
 	
-	List<ApprovalForm> selectFormList(int currentPage, int type);
+	List<ApprovalForm> selectFormListPage(int currentPage, int type);
+	
+	List<ApprovalForm> selectFormList( int type);
 	
 	List<ApprovalForm> selectFormListAll();
 

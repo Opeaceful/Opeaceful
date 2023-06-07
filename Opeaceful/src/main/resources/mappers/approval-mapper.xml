@@ -20,7 +20,7 @@
 		테이블의 어느 속성들을 받을 것인지 따로 정할 수도 있는데 keyColumn으로 설정하면 된다
  -->
 
-<!--  select 구간  -->
+<!-- ==============================  select 구간 ================================ -->
 
 	<select id="selectFormListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
@@ -104,7 +104,7 @@
 			</choose>
 	</select>
 
-<!--  insert 구간   -->
+<!-- =============================== insert 구간  =========================================== -->
 	
 	<!-- 폼 등록 / 등록하면서 formNo반환 -->
 	<insert id="insertForm" useGeneratedKeys="true"  keyProperty="formNo" parameterType="approvalForm">
@@ -131,7 +131,7 @@
 	</insert>
 	
 	
-<!--  update 구간  -->
+<!-- ============================== update 구간 ============================== -->
 	
 	<!-- 폼 내용 수정 -->
 	<update id="updateForm" parameterType="approvalForm">
@@ -142,7 +142,7 @@
 		WHERE FORM_NO  = #{formNo}
 	</update>
 	
-<!--  delete 구간  -->
+<!-- ============================ delete 구간 ============================ -->
 	
 	<!-- 폼 삭제 -->
 	<delete id="deleteForm" parameterType="_int">
