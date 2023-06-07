@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.commom.model.vo.PageInfo;
+import com.company.opeaceful.dept.model.vo.Department;
+import com.mysql.cj.Session;
 
 @Repository
 public class BoardDao {
@@ -67,5 +69,12 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateAddCount",boardNo);
 	}
 	
+	public int boardDelete(int boardNo) {
+		return sqlSession.delete("boardMapper.boardDelete", boardNo);
+	}
+	
+	public ArrayList<Department> selectDeptList(){
+		return (ArrayList)sqlSession.selectList("deptMapper.boardEnrollDeptList");
+	}
 	
 }

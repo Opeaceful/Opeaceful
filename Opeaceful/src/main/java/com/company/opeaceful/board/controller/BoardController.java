@@ -16,12 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.board.model.vo.Board;
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.member.model.vo.Member;
 
 @Controller
@@ -37,7 +40,7 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	
+	/* 게시글 목록 조회 */
 	@GetMapping("/list/{boardCode}")
 	public String boardList(@ModelAttribute ("loginUser") Member loginUser,
 							@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
@@ -69,7 +72,7 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	
+	/* 게시글 상세조회 */
 	@GetMapping("/detail/{boardCode}/{boardNo}")
 	public String boardDetail(@PathVariable("boardCode") String boardCode,
 							  @PathVariable("boardNo") int boardNo,
@@ -77,11 +80,10 @@ public class BoardController {
 							  Model model,
 							  @ModelAttribute ("map") Map<String, Object> map,
 							  HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println("가져온 맵에 리스트" + map);
+		System.out.println("가져온 맵:" + map);
+		currentPage = (int) map.get("currentPage");
 		
 		ArrayList<Board> boardList = (ArrayList<Board>) map.get("list");
-		
-		System.out.println("객체배열 보드리스트 0번째 보드넘버 :" + boardList.get(3).getBoardNo());
 		
 		System.out.println("boardNo 값 : "+ boardNo);
 		
@@ -89,13 +91,14 @@ public class BoardController {
 		
 		System.out.println("detail담긴ㄱ값 : " + detail);
 		
-		System.out.println("노티롤 담긴 값 : "+map.get("notiRoll"));
-		
 		String userNo = (String) map.get("userNo");
 		
-		int rollCount = boardService.selectFreeRoll(userNo);
+		int notiRollCount = boardService.selectNoticeRoll(userNo);
 		
-		model.addAttribute("freeRoll", rollCount);
+		int freeRollCount = boardService.selectFreeRoll(userNo);
+		
+		model.addAttribute("notiRoll", notiRollCount);
+		model.addAttribute("freeRoll", freeRollCount);
 		
 		// 조회수 중복 증가 방지 (타인이 작성한 글만 조회수 카운트)
 		if (detail != null) { // 상세조회 성공
@@ -161,28 +164,32 @@ public class BoardController {
 
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 		model.addAttribute("b", detail);
 		
 		return "board/boardDetailView";
 	}
-
-
 	
-	
-	
-	
-	
-	
-	@GetMapping("/enrollForm/{boardCode}")
-	public String boardEnroll() {
+	/* 게시글 삭제 */
+	@ResponseBody
+	@PostMapping("/delete")
+	public int boardDelete(int boardNo) {
 		
+		int result = boardService.boardDelete(boardNo);
+		System.out.println("result 값은 :"+result);
+		return result;
+	}
+	
+	/* 게시글 작성 */
+	@ResponseBody
+	@GetMapping("/enrollForm/{boardCode}")
+	public String boardEnroll(@PathVariable("boardCode") String boardCode,
+							  Model model,
+							  @ModelAttribute ("map") Map<String, Object> map) {
+		
+		ArrayList<Department> deptList = boardService.selectDeptList();
+		System.out.println("dept : " + deptList);
+		map.put("dlist", deptList);
+		System.out.println(""+map.get("dlist"));
 		return "board/boardEnrollForm";
 	}
 	

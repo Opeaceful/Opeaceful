@@ -8,12 +8,19 @@
 		<result column="CREATE_DATE" property="createDate"/>
 	</resultMap>
 	
-	<!-- [혜린] - 게시판 타입 테이블 -->
+	<!-- [혜린] - 보드타입 테이블 -->
 	<resultMap type="boardType" id="boardTypeResultSet">
 		<id column="BOARD_CD" property="boardCd"/>
 		<result column="BOARD_NAME" property="boardName"/>
 	</resultMap>
 	
+	<!-- [혜린] - 보드파일 테이블 -->
+	<resultMap type="boardFile" id="boardFileResultSet">
+		<id column="FILE_NO" property="fileNo"/>
+		<result column="BAORD_NO" property="boardNo"/>
+		<result column="ORIGIN_FILE" property="originFile"/>
+		<result column="CHANGE_FILE" property="changeFile"/>
+	</resultMap>
 	
 	<!-- [혜린] - 게시글 목록조회 resultMap -->
 	<resultMap type="board" id="boardListResultSet">
@@ -159,7 +166,6 @@
 			 			FROM USER_DEPARTMENT D
 			 			WHERE D.USER_NO = #{userNo})
 	</if>
-	;
 	</select>
 
 	<!-- [혜린] - 검색된 게시글 수 카운트 -->
@@ -167,10 +173,8 @@
 	SELECT COUNT(*)
 	FROM BOARD B
 	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
-	<if test='boardCode == "T"'>
-	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
-	</if>
+	JOIN POSITION P ON D.P_CODE = P.P_CODE
 	WHERE BOARD_CD = #{boardCode}
 	 <if test='boardCode == "T"'>
 	AND  D.DEPT_CODE = (SELECT D.DEPT_CODE
@@ -222,8 +226,6 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
-	
-	
 	<!-- [혜린] - 게시글 조회수 카운트 -->
 	<update id="updateAddCount">
 		UPDATE BOARD SET
@@ -231,8 +233,11 @@
 		WHERE BOARD_NO = #{boardNo}
 	</update>
 
-
-
+	<!-- [혜린] - 게시글 삭제 -->
+	<delete id="boardDelete">
+		DELETE FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</delete>
 
 
 

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<c:set var="cp" value="${map.currentPage}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +30,7 @@
             <div class="title-box">
                 <h2 class="title-common">게시판</h2>
             </div>
+            <!-- 상단카테고리 버튼 영역 -->
             <div class="board-wrap1">
                 <div class="board-title-btn-wrap">
                     <c:choose>
@@ -51,19 +52,14 @@
 					</c:choose>
                 </div>
             </div>
+            <!-- 수정/삭제 버튼 영역 -->
             <div class="board-wrap2">
             <c:choose>
 				<c:when test="${ boardCode eq 'F'}">
-				
 				<c:if test='${(b.boardWriter == loginUser.userNo+"") or (freeRoll > 0)}'> 
 				<div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
 				</c:if>
-				
-				<c:if test='${(b.boardWriter != loginUser.userNo+"") or (freeRoll == 0)}'>
-            	<div><pre> </pre></div>
-            	</c:if>
-            	
 				</c:when>
 				
 				<c:when test="${ boardCode eq 'N'}">
@@ -71,24 +67,23 @@
                 <div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
             	</c:if>
-            	<c:if test="${notiRoll == 0}">
-            		<div><pre> </pre></div>
-            	</c:if>	
 				</c:when>
 				
 				<c:otherwise>
+				<c:if test='${(b.boardWriter == loginUser.userNo+"")}'> 
 				<div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
-                <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+                <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+				</c:if>
 				</c:otherwise>
-				
 			</c:choose>
-            	
             </div>
+            <!-- 글제목 영역 -->
             <div class="board-wrap3">
                 <div class="ctn-title">${b.boardTitle}</div>
                 <div class="ctn-writer">${b.PName} ${b.userName}</div>
                 <div class="ctn-date">${b.createDate }</div>
             </div>
+            <!-- 첨부파일영역 -->
             <div class="board-wrap4">
                 <div class="atc-icon">
                     <i class="fa-solid fa-paperclip"></i>
@@ -96,17 +91,20 @@
                 <div class="atc-box">
                     <div class="atc-txt"><a href="">main.css</a></div>
 
-
                 </div>
             </div>
+            <!-- 글 내용 영역 -->
             <div class="board-wrap5">
                 <div class="detail-ctn">
                     <span>${b.boardContent }</span>
                 </div>
             </div>
+            <!-- 댓글 전체 영역 -->
+            <c:if test="${boardCode == 'T' or boardCode == 'F' }">
             <div class="board-wrap6">
                 <div class="reply-title"><span>댓글</span></div>
                 <div class="reply-space">
+                	<!-- 댓글 예시 -->
                     <div class="reply-one">
                         <div class="jcode-name"><span>사원 김혜린</span></div>
                         <div class="reply-ctn"><span>확인했습니다.</span></div>
@@ -116,6 +114,8 @@
                             <button class="re-reply-btn"><span class="re-btn-text">답글달기</span></button>            
                         </div>
                     </div>
+                    
+                    <!-- 답댓글등록란 -->
                     <div class="reply-input-area re-reply-input-area">
                         <div class="lock-space">
                             <div><button class="sm-unlock-btn"><i class="fa-solid fa-lock-open"></i></button></div>
@@ -126,6 +126,7 @@
                             <div><button type="button" class="reply-button btn btn-primary">등록</button></div>
                         </div>
                     </div>
+                    <!-- 답댓글 예시 -->
                     <div class="reply-two">
                         <div class="jcode-name">사원 김혜린</div>
                         <div class="reply-ctn">확인했습니다.</div>
@@ -133,19 +134,26 @@
                             <span class="reply-date">2023-05-19 10:15:39</span>
                             <button class="reply-dlt-btn"><span>삭제</span></button>
                         </div>
-                    </div>                   
+                    </div>        
+                               
                 </div>
+                
+                
+                <!-- 댓글등록란 -->
                 <div class="reply-input-area">
                     <div class="lock-space">
                         <div><button class="unlock-btn"><i class="fa-solid fa-lock-open"></i></button></div>
                         <div><button class="lock-btn"><i class="fa-solid fa-lock"></i></button></div>
                     </div>
                     <div class="reply-input-box">
-                        <div class="reply-text"><textarea class="box-shadow-none reply-input form-control container" id="exampleFormControlTextarea1" rows="3"></textarea></div>
-                        <div><button type="button" class="reply-button btn btn-primary">등록</button></div>
+                        <div class="reply-text"><textarea class="reply-content box-shadow-none reply-input form-control container" id="exampleFormControlTextarea1" rows="3"></textarea></div>
+                        <div><button type="button" id="reply-insert-btn" class="reply-button btn btn-primary" onclick="insertReply();">등록</button></div>
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            
             <div class="board-wrap7">
                 <div></div>
             </div>
@@ -161,15 +169,244 @@
                 <div class="af-txt"><Span>3차 훈련장려금 신청 공지입니다.</Span></div>
             </div>
             <div class="board-wrap10">
-                <div><button type="button" class="go-list-btn"><i class="bi bi-list"></i><span> 목록</span></button></div>
+           <!-- 
+            <c:choose>
+            	<c:when test="${!empty map.condition }">
+				<div><button type="button" onclick="moveSp(${map.condition },${map.keyword })" class="go-list-btn"><i class="bi bi-list"></i><span> 목록</span></button></div>				
+            	</c:when>
+            	<c:otherwise> -->
+                <div><button type="button" onclick="moveCp(${cp})" class="go-list-btn"><i class="bi bi-list"></i><span> 목록</span></button></div>
+            	<!--</c:otherwise>
+            </c:choose>-->
+            
+                
+                
             </div>
         </div>
     </div>
     
+    <script type="module" src="${path}/resources/js/board/boardDetail.js"></script>
+    
+    <script>
+    let lockCheckObj = {
+    	    secretReply : 'N'
+    	 }
+    
+    $(function(){
+     	selectReplyList();
+     
+        // ==== 자물쇠 버튼 ====
+        let lock = $(".lock-btn");
+        let unlock = $(".unlock-btn");
+        let lockSm = $(".sm-lock-btn");
+        let unlockSm = $(".sm-unlock-btn");
+
+        unlock.on('click', function(){
+             console.log("Locking...");
+            unlock.css('display', 'none');
+            lock.css('display', 'block');
+            lockCheckObj.secretReply = 'Y';
+            console.log("secret유무 (Y/N)" + lockCheckObj.secretReply);
+        })
+
+        lock.on('click', function(){
+             console.log("Unlocking...");
+            unlock.css('display', 'block');
+            lock.css('display', 'none');
+            lockCheckObj.secretReply = 'N';
+            console.log("secret유무 (Y/N)" + lockCheckObj.secretReply);
+        })
+
+        unlockSm.on('click', function(){
+            // console.log("Locking...");
+            unlockSm.css('display', 'none');
+            lockSm.css('display', 'block');
+        })
+
+        lockSm.on('click', function(){
+            // console.log("Unlocking...");
+            unlockSm.css('display', 'block');
+            lockSm.css('display', 'none');
+        })
+        
+    });
+    
+    
+	function moveCp(cp){
+    	location.href = '${path}/board/list/${boardCode}?cpage='+cp;
+    }
+	
+	/*function moveSp(cd,kw){
+		location.href = '${path}/board/list/${boardCode}?condition='+cd+'&keyword='+kw;
+	}*/
+
+    
+    function addReReply(){
+        if($('#repTxt').text() == "답글달기"){
+            console.log("댓글창 열림")
+            $('#repTxt').text("답글취소");
+            $('#rep-insert').css('display', 'flex');
+        }else{
+            console.log("댓글창 닫힘")
+            $('#repTxt').text("답글달기");
+            $('#rep-insert').css('display', 'none');
+        }
+     };
+    
+     function deleteReply(replyNo){
+			$.ajax({
+				url : "${path}/reply/delete",
+				data : {replyNo},
+				success : function(result){
+					if(result == 1){
+						console.log("댓글삭제.");
+					}else{
+						console.log("댓글삭제실패");									
+					}
+					selectReplyList();
+				}
+			})
+		}
+     
+     
+    function selectReplyList(){
+		$.ajax({
+			url : '${path}/reply/selectReplyList',
+			data : {bno : '${b.boardNo}'},
+			dataType : 'json',
+			success: function(result){
+				console.log(result);
+				
+				let html ="";
+				for(let r of result){
+					
+					if(r.pName == null){
+						r.pName = "";
+					}else{
+						r.pName += " ";
+					}
+					html += "<div class='reply-one'>";
+					if(r.secret == 'Y'){
+					html += "<div class='jcode-name'><span>익명</span></div>";
+					}else{
+						html += "<div class='jcode-name'><span>"+r.pName + r.userName +"</span></div>";	
+					}
+					
+					html += "<div class='reply-ctn'><span>"+r.content+"</span></div>";
+					html += "<div class='reply-footer'>";
+					html += "<span class='reply-date'>"+r.createDate+"</span>";
+					//html += "<button class='re-reply-btn' id='repBtn"+r.replyNo+"' onclick='addReReply()'><span id='repTxt"+r.replyNo+"' class='re-btn-text'>답글달기</span></button>";
+						
+					if(r.userNo == '${loginUser.userNo}'){
+						html += "<button class='reply-dlt-btn' onclick='deleteReply("+r.replyNo+")'><span>삭제</span></button>";
+					}									   
+					/* html += "</div></div>";
+					html += "<div class='reply-input-area re-reply-input-area' id='rep-insert"+r.replyNo+"'>";
+					html += "<div class='lock-space'>";
+					html += "<div><button class='sm-unlock-btn'><i class='fa-solid fa-lock-open'></i></button></div>";
+					html += "<div><button class='sm-lock-btn'><i class='fa-solid fa-lock'></i></button></div>";
+					html += "</div>"
+					html += "<div class='reply-input-box'>";
+					html += "<div class='reply-text'><textarea class='box-shadow-none reply-input form-control container' id='exampleFormControlTextarea1' rows='3'></textarea></div>";
+					html += "<div><button type='button' class='reply-button btn btn-primary'>등록</button></div>";
+					html += "</div></div>"; */
+				
+					//$('#repTxt'+r.+  ').text("답글달기");
+			         //  $('#rep-insert').css('display', 'none');
+				
+				
+				
+				}
+				
+				$(".reply-space").html(html);
+				
+				
+				
+				
+				
+				
+				
+				
+			},error : function(req,sts,err){
+				console.log(req);
+				console.log(sts);
+				console.log(err);
+			} 
+		})
+	}
+    
+    function insertReply(){
+        
+        $.ajax({
+            url: "${path}/reply/insert",
+            data : {
+                boardNo : '${b.boardNo}',
+                userNo: '${loginUser.userNo}',
+                content : $(".reply-content").val(),
+                secret : lockCheckObj.secretReply							
+            },
+            type : 'POST',
+            success : function (result){
+                if(result == "1"){
+                    console.log("댓글 등록 성공");
+                }else{
+                    console.log("댓글 등록 실패");
+                }
+                selectReplyList();
+            },
+            complete : function(){
+                $(".reply-content").val("");
+            }
+            
+        })
+        
+    };
+    
+    /* 게시글 삭제 전 confirm */
+    $("#dltBtn").click(function(){
+        swal("정말 삭제 하시겠습니까?",{
+            buttons: {confirm: "확인", cancel: "취소"}
+        })
+        .then(function(isConfirm){
+            if(isConfirm){
+                $.ajax({
+                    url : "${path}/board/delete",
+                    data : {
+                        boardNo : '${b.boardNo}'							
+                    },
+                    type : 'POST',
+                    success : function(result) {
+                    	
+                    	console.log("result : "+result);
+                    	console.log("boardCode : "+'${boardCode}');
+                    	console.log("cp : "+'${cp}');
+                    	
+                        if(result > 0){
+                            location.href= "${path}/board/list/${boardCode}?cpage=${cp}";
+                        }
+                    },
+                    error : function(e) {
+                        swal("error");
+                    }
+                })
+            }
+        })
+    });
     
     
     
-    <script src="${path}/resources/js/board/boardDetail.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+    
+    
+    
     
 </body>
 </html>

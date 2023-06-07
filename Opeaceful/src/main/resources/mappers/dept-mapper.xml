@@ -43,7 +43,12 @@
 						  	  AND DEPT_NAME = #{dName});
 	</select>
 	
-  
+  <!-- [혜린] 부서 조회 -->
+  <select id="boardEnrollDeptList" resultMap="departmentesultSet">  	
+  	SELECT * 
+	FROM department
+	where top_dept_code is null;
+  </select>
   
  
   

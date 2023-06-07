@@ -6,11 +6,11 @@ import java.util.Map;
 
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
-import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.dept.model.vo.Department;
 
 public interface BoardService {
 
-	List<Board> mainSelectNoticeList();
+	public List<Board> mainSelectNoticeList();
 
 	public ArrayList<BoardType> selectBoardTypeList();
 	
@@ -18,14 +18,15 @@ public interface BoardService {
 	
 	public void selectSearchBoardList(Map<String, Object> map);
 
-	int selectNoticeRoll(String userNo);
+	public int selectNoticeRoll(String userNo);
 	
-	int selectFreeRoll(String userNo);
+	public int selectFreeRoll(String userNo);
 
 	public Board selectBoardDetail(int boardNo);
 
 	public int updateAddCount(int boardNo);
 
+	public int boardDelete(int board);
 	
-	
+	public ArrayList<Department> selectDeptList();
 }

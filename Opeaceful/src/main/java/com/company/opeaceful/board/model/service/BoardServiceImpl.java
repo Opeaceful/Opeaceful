@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.company.opeaceful.board.model.dao.BoardDao;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
+import com.company.opeaceful.dept.model.vo.Department;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -85,5 +85,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.updateAddCount(boardNo);
 	}
 	
+	@Override
+	public int boardDelete(int boardNo) {
+		return boardDao.boardDelete(boardNo);
+	}
+	@Override
+	public ArrayList<Department> selectDeptList(){
+		return boardDao.selectDeptList();
+	}
 	
 }

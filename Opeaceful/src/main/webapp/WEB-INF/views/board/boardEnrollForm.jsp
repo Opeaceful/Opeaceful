@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="dlist" value="${map.dlist}"/>
     
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,20 @@
             </div>
             <div class="board-wrap1">
                 <div class="board-title-btn-wrap">
-                    <a class="board-title-btn notice-btn">공지사항</a>
+                
+                	<c:choose>
+						<c:when test="${ boardCode eq 'T'}">
+	                    <a href="${path}/board/list/T" class="board-title-btn c-page">팀게시판</a>
+	                 	</c:when>
+	                 	<c:when test="${ boardCode eq 'N'}">
+	                    <a href="${path}/board/list/N" class="board-title-btn c-page">공지사항</a>
+	                 	</c:when>
+						<c:otherwise>
+	                    <a href="${path}/board/list/F" class="board-title-btn c-page">자유게시판</a>
+						</c:otherwise>
+					</c:choose>
+                
+               
                 </div>
             </div>
             <div class="board-wrap2">
@@ -43,23 +56,26 @@
                             <input class="box-shadow-none form-control" type="text" placeholder="" aria-label="default input example">
                         </td>
                     </tr>
+                    <c:if test="${ boardCode eq 'N'}">
                     <tr>
                         <th>작성자</th>
                         <td colspan="2">
                             <div class="enroll-select">
                                 <select class="box-shadow-none form-select form-select-sm" aria-label=".form-select-sm example" required>
                                     <option disabled selected>부서명</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <c:forEach items="${dlist }" var="d">
+                                    	<option value="${d.deptCode }">${d.deptName }</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </td>
                     </tr>
+                    </c:if>
+                    
                     <tr>
                         <th>내용</th>
                         <td colspan="2" class="enroll-cnt">
-                            <div>ddd</div>
+                            <div><textarea required></textarea></div>
                         </td>
                     </tr>
                     <tr>
@@ -93,7 +109,11 @@
                 
             </div>
             <div class="board-wrap3">
+            	<!-- if boardNo == null -->
                 <div><button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">등록</button></div>
+                <!-- if boardNo != null 
+                <div><button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">수정</button></div>
+                -->
                 <div class="cnl-btn"><button type="button" class="btn btn-outline-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">취소</button></div>
             </div>
         </div>

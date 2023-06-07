@@ -53,7 +53,7 @@ div *{
     line-height: 2.5;
     border-bottom: 1px solid  var(--color-navy);
 }
-.board-title-btn:hover, .notice-btn{
+.board-title-btn:hover, .c-page{
     color: white;
     background-color: var(--color-navy);
     border-bottom: 0;
@@ -223,8 +223,12 @@ div *{
 }
 /* 댓글 요소들 설정 */
 .jcode-name{
+	font-size: var(--font13);
     color: var(--color-navy);
     font-weight: 600;
+}
+.reply-ctn{
+	font-size: var(--font13);
 }
 .reply-footer>*{
     color: grey;
@@ -241,6 +245,10 @@ div *{
 }
 
 /* 이전글 다음글 라인 */
+.board-wrap8{
+    border-top: 1px solid var(--white-hover);
+}
+
 .board-wrap8, .board-wrap9{
     display: flex;
     padding-left: 10px;
