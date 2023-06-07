@@ -167,8 +167,8 @@
                     </div>
 
                     <div class="sidebar-more" id="role-menu-item">
-                        <a class="sidebar-more-text" href="">권한 등록</a>
-                        <a class="sidebar-more-text" href="">사원별 권한 등록</a>
+                        <a class="sidebar-more-text" href="${path}/role/granting">권한 등록</a>
+                        <a class="sidebar-more-text" href="${path}/role/userRole">사원별 권한 등록</a>
                     </div>
                 </li>
             </ul>

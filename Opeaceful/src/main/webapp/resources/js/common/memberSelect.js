@@ -19,8 +19,7 @@ $("#all-user-view-int").keyup(function(key){
 function modalAllMemberView(){
 
     let keyword =  document.getElementById("all-user-view-int").value;
-    console.log(keyword)
-
+  
     $.ajax({
         url:`${path}/member/modalAllMemberView`,
         dataType : "JSON",
@@ -170,4 +169,41 @@ function checkMember(){
 
     //모달 닫기
     $('#all-user-view').modal('hide');
+}
+
+//input창이 있을 경우 input창을 통한 검색
+if (document.getElementById("member-search-keyword")) {
+
+    document.getElementById("member-search-keyword").addEventListener("keydown", function(event) {
+         if (event.key === "Enter") {
+           event.preventDefault(); // 기본 엔터 동작 방지
+                $.ajax({
+                url:`${path}/member/modalAllMemberView`,
+                dataType : "JSON",
+                method: 'POST',
+                data: {
+                    keyword : event.target.value,
+                },
+                success: function(result){
+                    checkMemberNo = [];
+                    for(let m of result){
+                        checkMemberNo.push(m.userNo); 
+                    }
+
+                    //값이 하나도 없을 경우
+                   if(checkMemberNo.length < 1){
+                        modalAllMemberView();
+                        //모달 열기
+                        $('#all-user-view').modal('show');
+                   }
+                },
+                error : function(request){
+                    console.log("에러발생");
+                    console.log(request.status);
+                }
+            })
+         }
+   
+    })
+    
 }

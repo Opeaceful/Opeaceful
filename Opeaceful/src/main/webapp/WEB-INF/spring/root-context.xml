@@ -94,5 +94,7 @@
 		<property name="maxInMemorySize" value="10000000" /> <!-- 10mbyte -->
 
 	</bean>
+	
+
 
 </beans>

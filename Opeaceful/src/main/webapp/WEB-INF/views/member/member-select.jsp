@@ -3,20 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-	<!-- (윤지영) 전체 사용자 모달 : 사용자 조회 view  -->
-
-<link rel="stylesheet" href="${path}/resources/css/common/memberSelect.css">
+  <meta charset="UTF-8">
+  <title>Opeaceful</title>
+  <link rel="stylesheet" href="${path}/resources/css/common/memberSelect.css">
 </head>
 <body>
-
 
   <!--data-bs-target="#all-user-view" 조회할 구역에 data-target넣어주기-->
   <!--버튼에 id =  "id="all-member-view-button" 값 넣어주기-->
   <!--예시) <button type="button" class="search-btn" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button> -->
 
+  <!--input 창으로도 검색하고 싶다면 input창에 id="member-search-keyword" 넣어주기!!!!!!!!!!!!-->
+
+  
  <!-- 멤버 조회 모달 Modal -->
   <div class="modal fade" id="all-user-view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="modal-user-view">
@@ -48,7 +47,6 @@
                               <th scope="col">성명</th>
                             </tr>
                           </thead>
-                       
                           <tbody class="table-group-divider" id="all-member-table-body">
                       </tbody>
                     </table>     
