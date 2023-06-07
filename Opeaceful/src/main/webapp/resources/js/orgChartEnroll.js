@@ -1,5 +1,5 @@
 /**
- *  가영 : 부서, 직급추가, 인사발령 js
+ *  가영 : 부서, 직급, 인사발령 js
  */
 import {path} from './common/common.js';
 
@@ -8,57 +8,71 @@ $(document).ready (function () {
 	//////////////////////////////////////////////////////////// 부서조회
 	function selectDept() {
 		
-		let deptName = document.getElementById("accordionFlushExample");
-		
-
 		$.ajax({
 			url:path+"/orgChart/selectDept",
 			type : "POST",
 			dataType : "JSON",
 			success: function(result){
+
+				console.log(result);
 	  
 				let html = "";
 				let str = "";
 
         		for (let list of result) {
 
-					let num = document.getElementsByClassName('accordion-item').length;
+					// let num = document.getElementsByClassName('accordion-item').length;
+					// let deptName = document.getElementById("accordionFlushExample");
 
 					if(list.topDeptCode == 0){
-
-						html += `<div class="accordion-item accordion-item-common org-accordion${list.deptCode}">
-									<h2 class="accordion-header org-accordion-header" id="heading${list.deptCode}">
-										<button class="accordion-button oc-accordion-btn accordion-button-common" id="${list.deptCode}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${list.deptCode}" aria-expanded="true" aria-controls="flush-collapse${list.deptCode}" aria-label="펼치기">
-										${list.deptName}<input type="text" id="dept-code" class="topD-name" name="department${num}" aria-label="부서이름인풋">
-										</button>
-										<div class="icons">
-											<i class="fa-solid fa-plus team-plus"></i> 
-											<i class="fa-solid fa-minus team-minus"></i> 
-											<i class="fa-solid fa-pen team-change"></i>
-										</div>
-									</h2>
-									<div id="collapse${list.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${list.deptCode}" data-bs-parent="#accordionExample">
-										<ul class="accordion-body accordion-body-common oc-all" id="oc-all"></ul>
+						$("#accordionFlushExample").append(
+							`<div class="accordion-item accordion-item-common org-accordion${list.deptCode}">
+								<h2 class="accordion-header org-accordion-header" id="heading${list.deptCode}">
+									<button class="accordion-button oc-accordion-btn accordion-button-common" id="${list.deptCode}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${list.deptCode}" aria-expanded="true" aria-controls="flush-collapse${list.deptCode}" aria-label="펼치기">
+										<input type="text" id="dept-code" class="topD-name" name="department${list.deptCode}" value="${list.deptName}" aria-label="부서이름인풋">
+									</button>
+									<div class="icons">
+										<i class="fa-solid fa-plus team-plus"></i> 
+										<i class="fa-solid fa-minus team-minus"></i> 
+										<i class="fa-solid fa-pen team-change"></i>
 									</div>
-								</div>`
-					} else {
-						//////////////////////////////// 하위부서 뿌려주는 거 안됨,,
-						str += `<ul class="list-group list-group-flush org-list-group">
-									<li class="list-group-item position-list">
-										${list.deptName}<input type="text" name="position-name${num}" class="pName" id="pCode">
-										<div class="postion-icons"> 
-											<i class="fa-solid fa-minus position-minus"></i> 
-											<i class="fa-solid fa-pen position-change"></i>
-										</div>
-									</li>
-								</ul>`
+								</h2>
+								<div id="collapse${list.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${list.deptCode}" data-bs-parent="#accordionExample">
+									<ul class="accordion-body accordion-body-common oc-all" id="oc-all"></ul>
+								</div>
+							</div>`
+						)  
 					}
-					
-        		};
-				// console.log(deptCode);
+				}
 
-        		deptName.innerHTML = html;
-				deptCode.innerHTML = str;
+				for (let list of result) {
+					if (0<list.topDeptCode && (list.topDeptCode == list.deptCode)) {
+						$("#oc-all").append(
+							`<li class="team low-common">
+								<span class="input-click">
+									<input type="text" name="team${list.deptCode}" id="team-code" class="team-name" value="${list.deptName}">
+								</span>
+								<i class="fa-solid fa-minus li-team-minus"></i> 
+								<i class="fa-solid fa-pen li-team-change"></i>
+							</li>`
+						)
+					}
+
+				}
+					// deptName.innerHTML = html;
+
+					// console.log(list.topDeptCode == list.deptCode);
+					// console.log(JSON.stringify(list.topDeptCode));
+					// console.log(JSON.stringify(list.deptCode));
+					// console.log("top "+list.topDeptCode);
+					// console.log("dept "+list.deptCode);
+					// console.log(list.deptCode.length);
+        		
+
+				// let deptCode = document.getElementById("oc-all");
+				// console.log(deptCode);
+				// deptCode.innerHTML = str;
+				// console.log(str);
 
 			},
 			error : function(request){
