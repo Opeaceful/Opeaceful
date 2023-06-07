@@ -15,10 +15,12 @@ public class DeptServiceImpl implements DeptService {
 	@Autowired
 	private DeptDao dao;
 	
+	@Override
 	public List<Department> selectDeptList(){
 		return dao.selectDeptList();
 	}
 	
+	@Override
 	public List<Position> selectPosition(){
 		return dao.selectPosition();
 	}
