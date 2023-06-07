@@ -43,12 +43,12 @@
 		</mvc:interceptor>
 	</mvc:interceptors> -->
 	
-	
-<!-- 	<beans:bean id="chatHandler" class="com.kh.spring.chat.model.websocket.ChatWebsocketHandler"/> -->
+		<!-- webSocket 요청시 핸들러 클래스와 연결하기 -->
+ 	<beans:bean id="chatHandler" class="com.company.opeaceful.chat.model.websocket.ChatWebsocketHandler"/> 
 	 
 	 <websocket:handlers>
 	 	<!-- 웹 소켓에 대한 요청이 들어왔을때 요청주소를 처리할 bean객체 지정 -->
-	 	<websocket:mapping handler="chatHandler" path="/chat"/>
+	 	<websocket:mapping handler="chatHandler" path="/chatRoom"/>
 	 	
 	 	<websocket:handshake-interceptors>
 	 		<!-- 

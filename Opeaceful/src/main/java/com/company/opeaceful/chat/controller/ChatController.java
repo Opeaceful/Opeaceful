@@ -55,12 +55,12 @@ public class ChatController {
 
 	}
 	
-	@GetMapping("/chatRoom")
-	public String chatRoom() {
-		
-		return "chatRoom";
-	}
-	
+//	@GetMapping("/chatRoom")
+//	public String chatRoom() {
+//		
+//		return "chatRoom";
+//	}
+//	
 	/*
 	 * @GetMapping("/chatMemberStatus") public String MemberStatus(Model model) {
 	 * 

@@ -57,17 +57,38 @@
             <main id="chat_main">
                 <ul class="chat_ul">
                     <li class="chat_li">
+                        <c:choose>
+					        <c:when test="${empty chatRoomList}">
+					            <tr>
+					                <td colspan="4">존재하는 채팅방이 없습니다.</td>
+					            </tr>
+					        </c:when>
+					        <c:otherwise>
+                            <c:forEach var="chatRoom" items="${chatRoomList }">
                         <a href="#">
-                            <img src="./pic/k-pay.png" class="profile-img" alt="프로필사진">
-                            <div class="chat_talk">
-                                <p class="chat_admin_name">프로젝트</p>
-                                <p class="chat_msg">메시지가 도착했습니다.</p>
-                            </div>
+                             <c:if test="${chatRoom.userName eq loginUser.userName}">
+	                            <c:if test="${empty chatRoom.profileImg}">
+	                        		<img src="${path}/resources/image/chat/default.png" class="profile-img" alt="나의프로필사진">
+		                        </c:if>
+		                        <c:if test="${!empty chatRoom.profileImg}">
+		                            <img src="${chatRoom.profileImg}" class="profile-img">		                        	
+		                         </c:if>                            
+<!--                             <img src="./pic/k-pay.png" class="profile-img" alt="프로필사진"> -->
+	                            <div class="chat_talk">
+	                            	<p class="chat_admin_name">${chatRoom.roomName }</p>
+	                           		<p class="chat_msg">${chatRoom.userName }</p>		                            
+<!--                                <p class="chat_admin_name">프로젝트</p> -->
+<!--                                <p class="chat_msg">메시지가 도착했습니다.</p> -->
+                        	    </div>
                             <div class="chat_room_status">
                                 <time class="chat_time" datetime="15:40:00+09:00">오후 3:40</time>
                                 <span class="chat_balloon">1</sapn>
                             </div>
                         </a>
+									</c:if>
+                                 </c:forEach>
+                                   </c:otherwise>
+							    </c:choose>
                     </li>
                     <li class="chat_li">
                         <a href="#">
