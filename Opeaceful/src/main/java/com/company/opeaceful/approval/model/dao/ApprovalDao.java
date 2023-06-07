@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.approval.model.vo.Approval;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.commom.model.vo.PageInfo;
@@ -63,6 +64,10 @@ public class ApprovalDao {
 	    return sqlSession.selectList( "aprMapper.selectFileList", params);
 	}
 	
+	// [지의] 해당 유저 연차 조회
+	public List<Approval> selectUserApproval(int userNo) {
+		return sqlSession.selectList("aprMapper.selectUserApproval", userNo);
+	}
 	
 //	-------------------------------- insert 구간 ----------------------------------------
 	
@@ -120,6 +125,8 @@ public class ApprovalDao {
 	public int deleteFileList( List<ApprovalFile> fileList) {
 		return sqlSession.delete("aprMapper.deleteFileList", fileList);
 	}
+
+
 
 
 
