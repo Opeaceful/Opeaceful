@@ -81,6 +81,208 @@ VALUES (4,'여기는','TEST1','3','T',default,'2023-05-12'),
 (4,'입니당','TEST5','4','T',default,'2023-03-12');
 
 
+/*멤버 데이터*/
+INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME,HIRE_DATE, PHONE,EMAIL, ADDRESS,EXTENSION)
+VALUES
+  (200503, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김철수', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200504, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김지민', '2020-05-01', '010-9876-5432','testuser2@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200505, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이예진', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200506, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박준호', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200507, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최서연', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200508, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정승민', '2020-05-01','010-1234-5678', 'example1@gmail.com', '서울특별시 강남구 가로수길 1,',''),
+  (200509, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '강지우', '2020-05-01', '010-2468-1357', 'random_email3@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200510, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤서준', '2020-05-01', '010-5798-6423', 'email7_address@gmail.com','서울특별시 강남구 가로수길 1, 101',''),
+  (200511, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '장민서', '2020-05-01', '010-2468-1357', 'random_email3@gmail.com','서울특별시 강남구 가로수길 1,123',''),
+  (200512, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안하린', '2020-05-11','010-1357-2468', 'myemail5@gmail.com', '부산광역시 해운대구 해운대해변로 1,',''),
+  (200513, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황승현', '2020-05-12',  '010-9876-5432','testuser2@gmail.com','대구광역시 중구 동성로 1,',''),
+  (200514, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '장현준', '2020-05-14', '010-2468-1357', 'random_email3@gmail.com','서울특별시 종로구 청와대로 1,',''),
+  (200515, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '한민우', '2020-05-14', '010-5798-6423', 'email7_address@gmail.com','부산광역시 서구 부산타워로 1,',''),
+  (200716, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박세은', '2020-07-06', '010-1234-5678', 'example1@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (200717, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박지민', '2020-07-30', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (200818, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김태희', '2020-08-01',  '010-9876-5432','testuser2@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (200819, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정유미', '2020-08-02', '010-6423-5798', 'randomuser6@gmail.com','대구광역시 남구 대명로 1,',''),
+  (210920, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박지윤', '2021-09-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (210921, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '임예준', '2021-09-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
+  (210922, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정서은', '2021-09-14', '010-1357-2468', 'myemail5@gmail.com','서울특별시 종로구 청와대로 1,',''),
+  (210923, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김영숙', '2021-09-14', '010-1234-5678', 'example1@gmail.com','부산광역시 서구 부산타워로 1,',''),
+  (211024, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정재민', '2021-10-06',  '010-9876-5432','testuser2@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (211025, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김현서', '2021-10-30', '010-6423-5798', 'randomuser6@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (211126, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최하율', '2021-11-01',  '010-9876-5432','testuser2@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (211127, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김유나', '2021-11-02','010-1234-5678', 'example1@gmail.com', '대구광역시 남구 대명로 1,',''),
+  (211228, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '강하윤', '2021-12-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (211229, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황승현', '2021-12-12',  '010-9876-5432','testuser2@gmail.com','대구광역시 중구 동성로 1,',''),
+  (211230, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '송예은', '2021-12-14', '010-1234-5678', 'example1@gmail.com','서울특별시 종로구 청와대로 1,',''),
+  (211231, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이현우', '2021-12-14', '010-2468-1357', 'user4_email@gmail.com','부산광역시 서구 부산타워로 1,',''),
+  (220132, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이철호', '2022-01-06', '010-8642-9731', 'random_email3@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (220133, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이준혁', '2022-01-30','010-2468-1357', 'random_email3@gmail.com', '서울특별시 강동구 천호대로 1,',''),
+  (220334, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김태희', '2022-03-01', '010-1234-5678', 'example1@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (220335, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최민석', '2022-03-02','010-6423-5798', 'randomuser6@gmail.com', '대구광역시 남구 대명로 1,',''),
+  (220336, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '송예준', '2022-03-06', '010-5798-6423', 'email7_address@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (220337, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황하은', '2022-03-30', '010-9731-8642', 'user8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (220438, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '서하은', '2022-04-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (220439, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정유미', '2022-04-02', '010-9864-7531', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
+  (220540, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안하린', '2022-05-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (220541, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안우진', '2022-05-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
+  (220642, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤예준', '2022-06-06', '010-5798-6423', 'email7_address@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (221143, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정은서', '2022-11-30', '010-9731-8642', 'user8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (221244, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최하윤', '2022-12-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (230145, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박예준', '2023-01-02', '010-9864-7531', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
+  (230146, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이지우', '2023-01-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (230147, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김시윤', '2023-01-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
+  (230248, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '한민서', '2023-02-06', '010-5798-6423', 'email7_address@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (230349, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최준서', '2023-03-30', '010-9731-8642', 'user8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (230450, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '임하늘', '2023-04-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (230451, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박현서', '2023-04-02', '010-9864-7231', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
+  (230552, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김유진', '2023-05-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (230553, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이시우', '2023-05-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,','');
+
+   
+/*멤버 데이터 부서등록*/
+INSERT INTO user_department(USER_NO, DEPT_CODE,P_CODE )
+VALUES (2,4,1),
+      (3,4,3),
+      (4,4,4),
+      (5,5,4),
+      (6,6,4),
+      (7,7,4),
+      (8,8,4),
+      (9,9,4),
+      (10,10,4),
+      (11,11,4),
+      (12,4,5),
+      (13,4,6),
+      (14,4,7),
+      (15,5,5),
+      (16,5,6),
+      (17,5,7),
+      (18,6,5),
+      (19,6,6),
+      (20,6,7),
+      (21,7,5),
+      (22,7,6),
+      (23,7,7),
+      (24,8,5),
+      (25,8,6),
+      (26,8,7),
+      (27,9,5),
+      (28,9,6),
+      (29,9,7),
+      (30,10,5),
+      (31,10,6),
+      (32,10,7),
+      (33,11,5),
+      (34,11,6),
+      (35,11,7),
+      (36,4,9),
+      (37,4,9),
+      (38,5,9),
+      (39,5,9),
+      (40,6,9),
+      (41,6,9),
+      (42,7,9),
+      (43,7,9),
+      (44,8,9),
+      (45,8,9),
+      (46,9,9),
+      (47,9,9),
+      (48,10,9),
+      (49,10,9),
+      (50,11,9),
+      (51,11,9),
+      (52,4,8),
+      (53,4,8);
+
+
+/*권한 더미데이터, 부장~대리까지 임시로 넣어둠*/
+INSERT INTO department_role(DEPT_CODE,P_CODE,ROLE_CODE )
+VALUES 
+(8,4,'A01'),
+(8,5,'A01'),
+(8,6,'A01'),
+(8,7,'A01'),
+(8,4,'B01'),
+(8,5,'B01'),
+(8,6,'B01'),
+(8,7,'B01'),
+(8,4,'B02'),
+(8,5,'B02'),
+(8,6,'B02'),
+(8,7,'B02'),
+(8,4,'D01'),
+(8,5,'D01'),
+(8,6,'D01'),
+(8,7,'D01'),
+(8,4,'M01'),
+(8,5,'M01'),
+(8,6,'M01'),
+(8,7,'M01'),
+(8,4,'R01'),
+(6,4,'S01'),
+(6,5,'S01'),
+(6,6,'S01'),
+(6,7,'S01'),
+(7,4,'T01'),
+(7,5,'T01'),
+(7,6,'T01'),
+(7,7,'T01'),
+(7,4,'T02'),
+(7,5,'T02'),
+(7,6,'T02'),
+(7,7,'T02'),
+(8,5,'Y01'),
+(8,6,'Y01'),
+(8,7,'Y01'),
+(8,4,'Y01');
+
+
+
+
+-- 테스트 데이터 입력용 프로시저 
+
+-- approval_form 더미 데이터 생성용
+
+DELIMITER $$ 
+CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시져
+BEGIN
+    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+    WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+			INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (0 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+        	INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (1 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+         INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (2 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+         INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (3 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+        
+        SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+    END WHILE;
+END$$
+DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
+
+CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
+-- SELECT * FROM approval_form; -- 출력
+
+
+
+-- 멤버 더미데이터 생성용 (사번 겹치면 오류발생하니까 테스트 돌릴때마다 잘 확인할것)
+
+-- DELIMITER $$ 
+-- CREATE PROCEDURE addMember() -- ⓐ  프로시져
+-- BEGIN
+--     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+--     WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+
+-- 		INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
+-- 	    VALUES ( 230502 + i , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', concat('test', i), SYSDATE(),concat('test', i, '@gmail.com'));
+
+--         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+--     END WHILE;
+-- END$$
+-- DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
+
+-- CALL addMember(); -- 프로시저 실행
+
+
+
+
+
 
 
 
