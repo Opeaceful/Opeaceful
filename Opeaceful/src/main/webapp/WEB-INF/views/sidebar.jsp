@@ -201,7 +201,7 @@
     </div>
     
      <jsp:include page="/WEB-INF/views/chat.jsp"></jsp:include>
-
+	 
     <script>
     	/* 하위카테고리 숨겨두기 */
         $(".sidebar-more").css("display", "none");

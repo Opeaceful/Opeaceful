@@ -37,11 +37,11 @@
         <!-- 친구창, 대화창, 설정창 등 이동 가능한 네비게이터 -->
         <nav id="chat_nav">
             <div class="chat_main_menu">
-                <a href="friend.html">
-                    <i class="fa-solid fa-user"></i>
+                <a>
+                    <i class="fa-solid fa-user" id="chat_dialog"></i>
                 </a>
-                <a href="chatting.html">
-                    <i class="fa-regular fa-comment"></i>
+                <a>
+                    <i class="fa-regular fa-comment"  id="chatRoom_dialog"></i>
                     <span class="alert-balloon" alt="알림수">3</span>
                 </a>
                 <a href="more_menu.html">
@@ -59,7 +59,7 @@
             <!-- 나의 프로필 -->
             <div>
                 <ul class="chat_ul">
-                    <li class="chat_li">
+                    <li class="chat_main_li">
                     	<c:if test="${empty loginUser.profileImg}">
                         	<img src="${path}/resources/image/chat/default.png" alt="나의프로필사진">
                         </c:if>
@@ -86,7 +86,7 @@
                     <h2>공지</h2>
                 </div>
                 <ul class="chat_ul">
-                    <li class="chat_li">
+                    <li class="chat_main_li">
                         <img src="${path}/resources/image/chat/megaphone.jpg" alt="공지사진">
                         <div class="chat_profile" id="boardNotice">
                             <%-- <c:forEach var="board" items="${response.notice}">
@@ -105,14 +105,14 @@
                     <h2>즐겨찾기</h2>
                 </div>
                 <ul class="chat_ul">
-                    <li class="chat_li">
+                    <li class="chat_main_li">
                         <img src="${path}/resources/image/chat/friend1.png" alt="친구1프로필사진">
                         <div class="chat_profile">
                             <p>한승은</p>
                             <p></p>
                         </div>
                     </li>
-                    <li class="chat_li">
+                    <li class="chat_main_li">
                         <img src="${path}/resources/image/chat/friend2.png" alt="친구2프로필사진">
                         <div class="chat_profile">
                             <p>윤지영</p>
@@ -128,10 +128,10 @@
                     <p>버스</p>
                 </div>
                 <ul id="adminList">
-                  
+                 
                 </ul>
                   <%--   <c:forEach var="member" items="${memberList}">
-        				<li class="chat_li">
+        				<li class="chat_main_li">
 	        				<c:if test="${empty member.profileImg}">
 	                        	<img src="${path}/resources/image/chat/default.png" alt="프로필사진">
 	                        </c:if>

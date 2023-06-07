@@ -16,7 +16,13 @@
     $("#openDialogButton").click(function() {
           // 로컬 스토리지에 다이얼로그 상태를 저장
           localStorage.setItem('dialogVisible', 'true');
-           $("#dialog").dialog("open");
+            if ($("#dialog").dialog("isOpen")) {
+      // 다이얼로그가 이미 열려있는 경우
+      $("#dialog").dialog("close");
+    } else {
+      // 다이얼로그가 닫혀있는 경우
+      $("#dialog").dialog("open");
+    }
     });
 
     // 로컬 스토리지에서 다이얼로그 상태를 가져옴
@@ -31,8 +37,31 @@
     $("#dialog").on("dialogclose", function(event, ui) {
       localStorage.removeItem('dialogVisible');
     });
+    
+    $(document).on('click', '#chatRoom_dialog', function () {
+    const chatRoomUrl = path + '/chatRoom';
+
+    // chatRoom.jsp 페이지를 다이얼로그 내에서 열기
+    $("#dialog").load(chatRoomUrl, function () {
+      // chatRoom.jsp 페이지 로딩 완료 후 실행될 코드 작성
+      // 예: chatRoom.jsp 내의 요소에 이벤트 리스너 등록 등
+    });
   });
+  
+  
+  /* $(document).on('click', '#chat_dialog', function () {
+    const chatUrl = path + '/chat';
+  // chat.jsp 페이지를 다이얼로그 내에서 열기
+  $("#dialog").load(chatUrl, function () {  
+    adminAll();
+    });   
+  }); */
+    
+     
+ });
+  
  
+
  
  function adminAll() {
     $.ajax({
@@ -51,8 +80,8 @@
             console.log(onlineStatus);
             console.log(list);
             console.log(onlineStatus[0].statusName);
-            console.log(loginUser.statusType); */
-            console.log(notice);        
+            console.log(loginUser.statusType); 
+            console.log(notice);     */   
  
  
             
@@ -65,7 +94,7 @@
 			
 
 			for (let board of notice) {
-			  if (board.boardNo == 1) {
+			  if (board.boardNo == 6) {
 			    const p5 = document.createElement("p");
 			    const a1 = document.createElement("a");
 			    a1.href = path+"/board/list/N" // 여기에 이동할 링크를 입력하고, boardNo를 쿼리 파라미터로 추가합니다
@@ -81,7 +110,7 @@
             for (let item of list) {
             
                 const li = document.createElement("li");
-                li.classList.add("chat_li");
+                li.classList.add("chat_main_li");
                 const img = document.createElement("img");
                 if(item.profileImg){
                 img.src = item.profileImg; // 프로필 이미지 속성에 따라 변경
@@ -102,7 +131,7 @@
 			    if (matchingStatus) {
 			        p2.innerText = matchingStatus.statusName;		        
 					p3.innerHTML = `<img src="${path}/resources/image/status/${matchingStatus.statusImg}" alt="Status Image" class="profile_status_img">`;
-					console.log(matchingStatus.statusImg);					
+	//				console.log(matchingStatus.statusImg);					
 			    } else {
 			       console.log("에러코드")
 			    }
