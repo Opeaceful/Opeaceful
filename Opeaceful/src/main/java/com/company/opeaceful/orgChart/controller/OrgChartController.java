@@ -41,6 +41,11 @@ public class OrgChartController {
 		return "orgChartEnroll";
 	}
 	
+	@GetMapping("/view")
+	public String orgChartView() {
+		return "orgChartView";
+	}
+	
 	// 상위부서 추가
 	@PostMapping("/insert/topDname")
 	@ResponseBody
@@ -136,8 +141,8 @@ public class OrgChartController {
 	}
 	
 	
-	@PostMapping("/orgChartView")
-	public String selectOrgChart() {
-		return "orgChartView";
-	}
+//	@PostMapping("/orgChartView")
+//	public String selectOrgChart() {
+//		return "orgChartView";
+//	}
 }
