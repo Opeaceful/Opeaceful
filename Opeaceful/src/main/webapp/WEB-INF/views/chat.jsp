@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +69,7 @@
                         <div class="chat_profile">
                             <p>${loginUser.userName}</p>                         
                             <p><select id="statusList">
-						            <option value="0">오프라인</option>
+						            <option value="0" title="${path}/resources/image/status/offline.svg">오프라인</option>
 						            <option value="1">온라인</option>
 						            <option value="2">자리비움</option>
 						            <option value="3">회의중</option>
@@ -88,9 +88,13 @@
                 <ul class="chat_ul">
                     <li class="chat_li">
                         <img src="${path}/resources/image/chat/megaphone.jpg" alt="공지사진">
-                        <div class="chat_profile">
-                            <p>사내소식</p>
-                            <p>Opeaceful 성장률 200% 달성했다</p>
+                        <div class="chat_profile" id="boardNotice">
+                            <%-- <c:forEach var="board" items="${response.notice}">
+							  <c:if test="${board.boardNo eq 1}">
+							    <p>${board.boardTitle}</p>
+							  </c:if>
+							</c:forEach>
+                            <p>Opeaceful 성장률 200% 달성했다</p> --%>
                         </div>
                     </li>
                 </ul>
@@ -126,7 +130,7 @@
                 <ul id="adminList">
                   
                 </ul>
-                    <c:forEach var="member" items="${memberList}">
+                  <%--   <c:forEach var="member" items="${memberList}">
         				<li class="chat_li">
 	        				<c:if test="${empty member.profileImg}">
 	                        	<img src="${path}/resources/image/chat/default.png" alt="프로필사진">
@@ -152,8 +156,7 @@
 				                </p>
 				            </div>
 				        </li>
-				    </c:forEach>
-
+				    </c:forEach> --%>
             </div>
         </main>
         <!-- aside: 광고 -->

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.OnlineStatus;
 
@@ -21,6 +22,10 @@ public class ChatDao {
 	
 	public ArrayList<OnlineStatus> onlineStatusList(){
 		return (ArrayList)sqlSession.selectList("attendanceMapper.onlineStatusList");
+	}
+	
+	public ArrayList<Board> noticeList(){
+		return (ArrayList)sqlSession.selectList("boardMapper.mainSelectNoticeList");
 	}
 
 }

@@ -45,13 +45,38 @@
             const loginUser = response.loginUser;
             const list = response.memberList;
             const onlineStatus = response.onlineStatus;
+            const notice = response.notice;
 
-            console.log(loginUser);
+      /*    console.log(loginUser);
             console.log(onlineStatus);
             console.log(list);
             console.log(onlineStatus[0].statusName);
-            console.log(loginUser.statusType);         
+            console.log(loginUser.statusType); */
+            console.log(notice);        
+ 
+ 
+            
+            const parentElement = document.getElementById("boardNotice");
+            parentElement.innerHTML = "";
+				
+			const p4 = document.createElement("p");
+			p4.textContent = "사내 공지";
+			parentElement.appendChild(p4);
+			
 
+			for (let board of notice) {
+			  if (board.boardNo == 1) {
+			    const p5 = document.createElement("p");
+			    const a1 = document.createElement("a");
+			    a1.href = path+"/board/list/N" // 여기에 이동할 링크를 입력하고, boardNo를 쿼리 파라미터로 추가합니다
+			    a1.textContent = board.boardTitle;
+			    p5.appendChild(a1);
+			    parentElement.appendChild(p5);
+			  }			  	
+			}
+
+
+            
             // list를 순회하면서 <li> 요소를 생성하여 멤버 정보 추가
             for (let item of list) {
             

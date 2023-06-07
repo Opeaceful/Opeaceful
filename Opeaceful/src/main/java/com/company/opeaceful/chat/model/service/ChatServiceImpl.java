@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.chat.model.dao.ChatDao;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.OnlineStatus;
@@ -25,4 +26,8 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.onlineStatusList();
 	}
 	
+	@Override
+	public ArrayList<Board> noticeList(){
+		return chatDao.noticeList();
+	}
 }
