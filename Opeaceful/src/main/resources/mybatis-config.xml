@@ -33,6 +33,7 @@
 		<typeAlias type="com.company.opeaceful.role.model.vo.DepartmentRole" alias="departmentRole"/>
 		<typeAlias type="com.company.opeaceful.role.model.vo.RoleList" alias="roleList"/>
 		<typeAlias type="com.company.opeaceful.role.model.vo.UserRole" alias="userRole"/>
+		<typeAlias type="com.company.opeaceful.annual.model.vo.Annual" alias="annual"/>
 	</typeAliases>
 	
 	<!-- 
@@ -50,6 +51,7 @@
 		<mapper resource="/mappers/attendance-mapper.xml"/> 
 		<mapper resource="/mappers/resignedmember-mapper.xml"/>
 		<mapper resource="/mappers/role-mapper.xml"/> 
+		<mapper resource="/mappers/annual-mapper.xml"/> 
 	</mappers>
 
 

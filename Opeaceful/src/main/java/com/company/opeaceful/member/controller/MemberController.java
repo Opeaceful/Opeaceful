@@ -2,7 +2,6 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,6 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
-import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 import com.google.gson.Gson;
 
@@ -139,6 +137,26 @@ public class MemberController {
 	public String logoutMember(HttpSession session, SessionStatus status) {
 		status.setComplete();
 		return "redirect:/";
+	}
+	
+	// [지의] 유저 접속상태 변경
+	@ResponseBody
+	@PostMapping("/updateStatusType")
+	public String updateStatusType(@RequestParam("statusType") int statusType,
+									 @ModelAttribute("loginUser") Member loginUser,
+									 Model model) {
+
+		int userNo = loginUser.getUserNo();
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo",userNo);
+		map.put("statusType",statusType);
+		int result = memberService.updateStatusType(map);
+		if(result > 0) {
+			loginUser.setStatusType(statusType);
+			model.addAttribute("loginUser", loginUser);
+		}
+		
+		return new Gson().toJson(result);
 	}
 	
 	//[지영]
