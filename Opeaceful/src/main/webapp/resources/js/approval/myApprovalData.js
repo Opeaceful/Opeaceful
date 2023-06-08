@@ -33,6 +33,7 @@ export function selectForm(formNo) {
     type: 'POST',
     success: function (form) {
       console.log(form);
+      MyAprFront.setApprovalModalContent(form);
     },
     error: function (request) {
       console.log('에러발생');

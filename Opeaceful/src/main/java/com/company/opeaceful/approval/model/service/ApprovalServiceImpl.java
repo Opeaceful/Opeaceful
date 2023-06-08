@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.approval.model.dao.ApprovalDao;
+import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
+import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
 
@@ -68,6 +70,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
+	@Override
+	public List<ApprovalFavor> selectFavorList(int userNo) {
+		return aprDao.selectFavorList(userNo);
+	}
+
+	@Override
+	public List<ApprovalLine> selectLineList(String type, int no) {
+		return aprDao.selectLineList(type, no);
+	}
+	
 //	-------------------------------- insert 구간 ----------------------------------------
 	@Override
 	public int insertForm(ApprovalForm form, List<ApprovalFile> fileList ) {
@@ -83,6 +95,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int insertFile(List<ApprovalFile> fileList, String refType, int refNo )  {
 		return aprDao.insertFile(fileList, refType, refNo);
+	}
+
+
+	@Override
+	public int insertFavor(ApprovalFavor favor, List<ApprovalLine> lines) {
+		return aprDao.insertFavor(favor, lines);
 	}
 
 	
@@ -109,6 +127,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int deleteFileList( List<ApprovalFile> fileList) {
 		return aprDao.deleteFileList(fileList);
+	}
+
+	@Override
+	public int deleteFavor(int favorNo) {
+		return aprDao.deleteFavor(favorNo);
 	}
 
 

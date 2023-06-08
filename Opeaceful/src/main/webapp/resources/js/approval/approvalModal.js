@@ -19,10 +19,6 @@ function approvalModalEvent() {
       document.getElementById('approval-line-modal').style.display = 'none';
     });
 
-  // 첨부 버튼 클릭 시 이벤트
-  document
-    .getElementById('btn-add-file')
-    .addEventListener('click', function () {});
 
   // 사원 테이블에서 사원명 더블클릭시 결재자 라인에 추가
   document
@@ -49,7 +45,7 @@ function approvalModalEvent() {
                           <button
                             class="btn-selected-delete btn btn-outline-primary"
                           >
-                            <i class="fa-solid fa-minus"></i>
+                            <div class="div-minus"></div>
                           </button>
                         </div>
                       </li>`;
@@ -71,7 +67,7 @@ function approvalModalEvent() {
 
       if (
         currentNode.classList.contains('btn-selected-delete') ||
-        currentNode.classList.contains('fa-minus')
+        currentNode.classList.contains('div-minus')
       ) {
         let li;
         while (currentNode !== null) {

@@ -103,6 +103,30 @@
 				</when>
 			</choose>
 	</select>
+	
+	<!-- 즐겨찾기 조회 -->
+	<select id="selectFavorList" parameterType="_int" resultType="approvalFavor">
+		SELECT *
+		FROM APPROVAL_FAVORITE_LINE
+		WHERE USER_NO = #{ userNo }
+	</select>
+	
+	<!-- 즐겨찾기/결재문서 결재라인 조회 -->
+	<select id="selectLineList" parameterType="map" resultType="approvalLine">
+		SELECT *
+		FROM 
+		<choose>
+			<when test='type.equals("favor")'>
+				APPROVAL_ACTUAL_FAVORITE_LINE
+				WHERE LINE_NO = #{no}
+			</when>	
+			<otherwise>
+				APPROVAL_LINE
+				WHERE APPROVAL_NO = #{no}
+			</otherwise>
+		</choose>
+		ORDER BY LEVEL
+	</select>
 
 <!-- =============================== insert 구간  =========================================== -->
 	
@@ -128,6 +152,29 @@
 			</foreach>
 			) FILE
 
+	</insert>
+	
+	
+	<!-- 즐겨찾기 등록 -->
+	<insert id="insertFavor" parameterType="approvalFavor" useGeneratedKeys="true" keyProperty="lineNo">
+		INSERT INTO APPROVAL_FAVORITE_LINE(USER_NO, TITLE)
+		VALUES( #{userNo} , #{title} )
+	</insert>
+	
+	
+	<insert id="insertFavorActualLine" parameterType="map">
+		INSERT INTO APPROVAL_ACTUAL_FAVORITE_LINE(LEVEL, LINE_NO, USER_NO, TYPE)
+		SELECT LINE.*
+		FROM (
+			<foreach collection="lines" item="line" separator="UNION ALL">
+				SELECT
+					#{line.level} AS LEVEL ,
+					#{favorNo} AS LINE_NO ,
+					#{line.userNo} AS USER_NO ,
+					#{line.type} AS TYPE 
+				FROM DUAL
+			</foreach>
+			) LINE
 	</insert>
 	
 	
@@ -157,6 +204,19 @@
 		WHERE FILE_NO IN ( <foreach collection="list" item="file" separator=",">
 								#{file.fileNo}
 							</foreach> )
+	</delete>
+	
+	
+	<!-- 즐겨찾기 삭제 -->
+	<delete id="deleteFavor" parameterType="list">
+		DELETE FROM  APPROVAL_FAVORITE_LINE
+		WHERE LINE_NO = #{favorNo}
+	</delete>
+
+	<!-- 즐겨찾기 실제 라인 삭제 -->
+	<delete id="deleteActualFavor" parameterType="_int">
+		DELETE FROM  APPROVAL_ACTUAL_FAVORITE_LINE
+		WHERE LINE_NO = #{favorNo}
 	</delete>
 	
 	

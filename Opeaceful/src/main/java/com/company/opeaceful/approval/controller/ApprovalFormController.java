@@ -122,7 +122,7 @@ public class ApprovalFormController {
 		
 		if(imgList != null && imgList.length > 0) {
 			for(int i=0; i< imgList.length; i++) {
-				String src = "src=\""+i+"\"";
+				String src = "src=\""+i+"\""; 
 				String changeName;
 				
 				try {

@@ -10,8 +10,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
+import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 
 //(승은)
@@ -69,6 +71,20 @@ public class ApprovalDao {
 	}
 	
 	
+	
+	// 즐겨찾기 리스트 조회용
+	public List<ApprovalFavor> selectFavorList(int userNo) {
+		return sqlSession.selectList("aprMapper.selectFavorList",userNo);
+	}
+
+	// 결재라인 조회용 (타입별로 즐겨찾기용 == "favor"  , 실제 결재문서용 조회해오기 == "approval")
+	public List<ApprovalLine> selectLineList(String type, int no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", type);
+		map.put("no", no);
+		return sqlSession.selectList("aprMapper.selectLineList", map);
+	}
+	
 //	-------------------------------- insert 구간 ----------------------------------------
 	
 	// 폼 등록
@@ -90,6 +106,20 @@ public class ApprovalDao {
 	    return sqlSession.insert("aprMapper.insertFile", params);
 	};
 
+
+	// 즐겨찾기 추가
+	public int insertFavor(ApprovalFavor favor, List<ApprovalLine> lines) {
+	    int result = sqlSession.insert("aprMapper.insertFavor", favor);
+	    
+	    if(result > 0) {
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("favorNo", favor.getLineNo());
+		    params.put("lines", lines);
+		    
+			result =  sqlSession.insert("aprMapper.insertFavor", params);
+	    }
+	    return result;
+	}
 	
 //	-------------------------------- update 구간 ----------------------------------------
 	
@@ -127,6 +157,14 @@ public class ApprovalDao {
 	}
 
 
+	// 즐겨찾기 삭제
+	public int deleteFavor(int favorNo) {
+		int result = sqlSession.delete("aprMapper.deleteFavor", favorNo);
+		if(result > 0) {
+			result =  sqlSession.delete("aprMapper.deleteActualFavor", favorNo);
+		}
+		return result;
+	}
 
 
 

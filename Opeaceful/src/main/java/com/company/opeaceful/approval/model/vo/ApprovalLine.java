@@ -18,5 +18,7 @@ public class ApprovalLine {
 	private int status;				//	STATUS
 	private String confirmStatus;	//	CONFIRM_STATUS
 	private Timestamp date;			//	DATE
+	
+	private int lineNo;				// 즐겨찾기의 결재자 정보용 필드
 
 }

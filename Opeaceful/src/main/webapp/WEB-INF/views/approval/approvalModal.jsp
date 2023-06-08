@@ -67,7 +67,7 @@ pageEncoding="UTF-8"%>
 		                    <option value="3">오후반차</option>
 		                </select>
 	                    
-	                    <select  id="select-copy-form-no">
+	                    <select  id="select-copy-form-no" >
 	                    	<option value="none" selected>선택 안함</option>
 		                    <option value="1">양식명</option>
 		                    <option value="2">123456789123456789123456789</option>
@@ -126,7 +126,7 @@ pageEncoding="UTF-8"%>
                       <td width="10%">
                         <div>종류</div>
                       </td>
-                      <td width="40%">연차 [ 10.5 / 19 ]</td>
+                      <td id="td-approval-table-type" width="40%">연차 [ 10.5 / 19 ]</td>
                     </tr>
                     <tr>
                       <td>
@@ -253,12 +253,38 @@ pageEncoding="UTF-8"%>
                           <tbody class="scroll-bar">
                             <tr>
                               <td>
-                                ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
                                 <button
                                   class="btn-favor-delete btn btn-outline-primary"
                                 >
-                                  삭제
+                                   <div class ="div-minus"></div>
                                 </button>
+                                <div>
+	                                ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <button
+                                  class="btn-favor-delete btn btn-outline-primary"
+                                >
+                                   <div class ="div-minus"></div>
+                                </button>
+                                <div>
+	                                ㅇㅇㅇㅇㅇㅇ
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <button
+                                  class="btn-favor-delete btn btn-outline-primary"
+                                >
+                                   <div class ="div-minus"></div>
+                                </button>
+                                <div>
+	                                ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+                                </div>
                               </td>
                             </tr>
                           </tbody>

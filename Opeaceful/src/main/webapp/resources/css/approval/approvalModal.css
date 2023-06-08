@@ -35,6 +35,19 @@
   user-select: none;
 }
 
+/* 삭제버튼 호버 색상 공통으로 걸어둠 */
+.my-favor tbody td > button:hover,
+.btn-file-delete:hover,
+.btn-selected-delete:hover{
+  background-color: var(--color-navy);
+}
+
+.my-favor tbody td > button:hover .div-minus,
+.btn-file-delete:hover .div-minus,
+.btn-selected-delete:hover .div-minus{
+  background-color: white;
+}
+
 .div-copy-form-type-wrap {
   display: flex;
   margin-top: 1rem;
@@ -185,9 +198,7 @@
   border: 1px solid var(--color-navy);
 }
 
-.btn-file-delete:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
+
 
 .div-minus {
   width: 10px;
@@ -285,6 +296,8 @@
   --bs-table-border-color: white;
 }
 
+
+
 .my-list {
   margin: auto;
   width: 48%;
@@ -318,7 +331,15 @@
 }
 
 .my-favor tbody td {
-  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.my-favor tbody td > div{
+  width: 80%;
+  margin: auto;
 }
 
 .my-favor,
@@ -328,12 +349,7 @@
 }
 
 .btn-favor-delete {
-  padding: 4px 8px;
-  position: absolute;
-  top: 10%;
-  right: 5%;
-  /* 마우스 오버하면 버튼 보이게 */
-  display: none;
+  padding: 6px 8px;
 }
 
 .selected-lines {
