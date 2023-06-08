@@ -31,4 +31,6 @@ public interface BoardService {
 	public ArrayList<Department> selectDeptList();
 	
 	public int insertBoard(Board b);
+	
+	public int updateBoard(Board b);
 }

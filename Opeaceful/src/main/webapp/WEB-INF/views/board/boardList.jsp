@@ -116,8 +116,6 @@
 	                    </tr>
 	                    </c:otherwise>
 	                    </c:choose>
-	                    
-						
 						</c:when>
 						
 						<c:otherwise>
@@ -125,7 +123,16 @@
 	                    <c:when test='${ b.fixed == "Y"}'>
 		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
 		                        <td class="list-ctn-title">${b.boardTitle}</td>
+		                        
+		                        <c:choose>
+		                        <c:when test="${b.secret eq 'Y'}">
+		                        <td>익명</td>
+		                        </c:when>
+		                        <c:otherwise>
 		                        <td>${b.PName} ${b.userName}</td>
+		                        </c:otherwise>
+		                        </c:choose>
+		                        
 		                        <td>${b.createDate}</td>
 		                        <td>${b.count}</td>
 		                    </tr>
@@ -133,7 +140,16 @@
 	                    <c:otherwise>
 	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
 	                        <td class="list-ctn-title">${b.boardTitle}</td>
+	                        
+	                        <c:choose>
+	                        <c:when test="${b.secret eq 'Y'}">
+	                        <td>익명</td>
+	                        </c:when>
+	                        <c:otherwise>
 	                        <td>${b.PName} ${b.userName}</td>
+	                        </c:otherwise>
+	                        </c:choose>
+	                        
 	                        <td>${b.createDate}</td>
 	                        <td>${b.count}</td>
 	                    </tr>

@@ -190,12 +190,23 @@ public class BoardController {
 	@GetMapping("/enrollForm/{boardCode}")
 	public String boardEnroll(@PathVariable("boardCode") String boardCode,
 							  Model model,
-							  @ModelAttribute ("map") Map<String, Object> map) {
+							  @ModelAttribute ("map") Map<String, Object> map,
+							  @RequestParam(value="mode", defaultValue="insert", required = false) String mode,
+							  @RequestParam(value="bno", defaultValue="0", required = false) int bno) {
 		
 		ArrayList<Department> deptList = boardService.selectDeptList();
 		System.out.println("dept : " + deptList);
 		map.put("dlist", deptList);
 		System.out.println(""+map.get("dlist"));
+		
+		map.put("boardNo", bno);
+		
+		if(mode.equals("update")) {
+			Board b = boardService.selectBoardDetail(map);
+			model.addAttribute("b",b);
+		}
+		
+		
 		return "board/boardEnrollForm";
 	}
 	
@@ -203,7 +214,10 @@ public class BoardController {
 	@PostMapping("/insert/{boardCode}")
 	public String insertBoard(Board b, Model model, HttpSession session,
 								@PathVariable("boardCode") String boardCode,
-							  @ModelAttribute ("loginUser") Member loginUser) {
+								int boardNo,
+							  @ModelAttribute ("loginUser") Member loginUser,
+							  @ModelAttribute ("map") Map<String, Object> map,
+							  @RequestParam(value="mode" , required = false, defaultValue = "insert") String mode) {
 		
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
@@ -226,13 +240,50 @@ public class BoardController {
 			b.setBoardWriter(userNo+"");
 		}
 		
-		System.out.println("Board b 에 담긴 값 : "+ b);
+		System.out.println("등록/수정 전 Board b 에 담긴 값 : "+ b);
 		
-		boardService.insertBoard(b);
+		int result = 0;
 		
-		session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+		if(mode.equals("insert")) {
+			//게시글 등록
+				
+				result = boardService.insertBoard(b);
+				System.out.println("인서트 실행 후 리절틈 담김/??"+result);
+				System.out.println("등록 후 Board b 에 담긴 값 : "+ b);
+				
+				if(result > 0) {
+					session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+					return "redirect:/board/list/{boardCode}";
+					
+				}else {
+					System.out.println("게시글 작성 실패");
+					return "board/boardEnrollForm";
+				}
+			
+			
+		}else {
+			//게시글 수정 (b객체 안에 boardNo 존재)
+			
+				result = boardService.updateBoard(b);
+				System.out.println("업데이트 실행 후 리절틈 담김/??"+result);
+				System.out.println("수정 후 Board b 에 담긴 값 : "+ b);
+				
+				boardNo = b.getBoardNo();
+				model.addAttribute("boardNo",boardNo);
+				if(result > 0) {
+					session.setAttribute("alertMsg", "게시글이 수정되었습니다.");
+					return "redirect:/board/detail/{boardCode}/{boardNo}";
+				}else {
+					System.out.println("게시글 작성 실패");
+					return "board/boardEnrollForm";
+				}
+			
+			
+		}
 		
-		return "redirect:/board/list/{boardCode}";
+		
+		
+		
 	}
 	
 	

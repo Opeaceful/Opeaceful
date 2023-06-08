@@ -82,7 +82,7 @@
  	 WHERE B.BOARD_CD = 'N'
 	 </when>
 	 <otherwise>
-	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED
 	 FROM BOARD B
         	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
         	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -149,7 +149,7 @@
 			 </when>
 			 
 			 <otherwise>
-			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED
 			 FROM BOARD B
           	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
           	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -255,11 +255,11 @@
 	<select id="selectBoardDetail" resultMap="boardDetailResultSet" >
 		<choose>
 		<when test='boardCode == "N"'>
-		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, CREATE_DATE, COUNT
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, CREATE_DATE, COUNT ,FIXED
 		FROM BOARD B
 		</when>
 		<otherwise>
-		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, M.USER_NAME, P.P_NAME, CREATE_DATE, COUNT
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, M.USER_NAME, P.P_NAME, CREATE_DATE, COUNT, SECRET
 		FROM BOARD B
 		LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 		LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -281,7 +281,8 @@
 		DELETE FROM BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</delete>
-
+	
+	<!-- [혜린] - 게시글 등록 -->
 	<insert id="insertBoard" parameterType="board">
 		INSERT INTO BOARD(BOARD_CD,
 						  BOARD_TITLE,
@@ -299,7 +300,16 @@
 			    #{secret})
 	</insert>
 
-
+	<!-- [혜린] - 게시글 수정 -->
+	<update id="updateBoard" parameterType="board">
+		UPDATE BOARD SET
+		BOARD_TITLE = #{boardTitle},
+		BOARD_WRITER = #{boardWriter},
+		BOARD_CONTENT = #{boardContent},
+		SECRET =#{secret},
+		FIXED = #{fixed}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
 
 
 

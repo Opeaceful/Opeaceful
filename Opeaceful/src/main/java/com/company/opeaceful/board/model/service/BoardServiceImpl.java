@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.company.opeaceful.board.model.dao.BoardDao;
 import com.company.opeaceful.board.model.vo.Board;
@@ -94,8 +95,18 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectDeptList();
 	}
 	@Override
-	public int insertBoard(Board b) {
-		return boardDao.insertBoard(b);
+	@Transactional(rollbackFor = {Exception.class})
+	public int insertBoard(Board b){
+		int boardNo = boardDao.insertBoard(b);
+		
+		return boardNo;
+	}
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int updateBoard(Board b){
+		int result = boardDao.updateBoard(b);
+		
+		return result;
 	}
 	
 }

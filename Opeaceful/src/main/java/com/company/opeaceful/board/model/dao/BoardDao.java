@@ -78,7 +78,24 @@ public class BoardDao {
 	}
 	
 	public int insertBoard(Board b) {
-		return sqlSession.insert("boardMapper.insertBoard", b);
+		int result = sqlSession.insert("boardMapper.insertBoard", b);
+		
+//		if(result > 0) { // 게시글 등록 성공 시 게시글 번호 반환
+//			result = b.getBoardNo();
+//		}
+//		
+		return result;
 	}
+	
+	public int updateBoard(Board b) {
+		
+		
+		
+		return sqlSession.update("boardMapper.updateBoard", b);
+	}
+	
+	
+	
+	
 	
 }

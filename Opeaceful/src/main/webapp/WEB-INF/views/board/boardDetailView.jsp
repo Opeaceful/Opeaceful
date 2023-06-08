@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
+    <!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     
@@ -22,7 +24,12 @@
 	<link rel="stylesheet" href="${path}/resources/css/board/boardDetail.css">
 </head>
 <body>
-
+	<!-- alert -->
+	<c:if test="${ not empty alertMsg }">
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+	
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
 
 	<div id="content-wrap">
@@ -57,21 +64,21 @@
             <c:choose>
 				<c:when test="${ boardCode eq 'F'}">
 				<c:if test='${(b.boardWriter == loginUser.userNo+"") or (freeRoll > 0)}'> 
-				<div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
-                <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+				<div><button type="button" id="udtBtn" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
+                <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
 				</c:if>
 				</c:when>
 				
 				<c:when test="${ boardCode eq 'N'}">
 				<c:if test="${notiRoll > 0}">
-                <div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
-                <div class="dlt-btn"><button type="button" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+                <div><button type="button" id="udtBtn" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
+                <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
             	</c:if>
 				</c:when>
 				
 				<c:otherwise>
 				<c:if test='${(b.boardWriter == loginUser.userNo+"")}'> 
-				<div><button type="button" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
+				<div><button type="button" id="udtBtn" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
 				</c:if>
 				</c:otherwise>
@@ -85,7 +92,16 @@
                 <div class="ctn-writer">${b.boardWriter}</div>
                 </c:when>
                 <c:otherwise>
-                <div class="ctn-writer">${b.PName} ${b.userName}</div>
+                
+                <c:choose>
+                     <c:when test="${b.secret eq 'Y'}">
+                     <div class="ctn-writer">익명</div>
+                     </c:when>
+                     <c:otherwise>
+                     <div class="ctn-writer">${b.PName} ${b.userName}</div>
+                     </c:otherwise>
+	            </c:choose>
+                
                 </c:otherwise>
                 </c:choose>
                 <div class="ctn-date">${b.createDate }</div>
@@ -369,7 +385,7 @@
             }
             
         })
-        
+      
     };
     
     /* 게시글 삭제 전 confirm */
@@ -403,8 +419,10 @@
         })
     });
     
-    
-    
+    /* 수정버튼 클릭이벤트 */
+    $("#udtBtn").click(function(){
+    	location.href="${path}/board/enrollForm/${boardCode}?mode=update&bno=${b.boardNo}";
+    });
     
     
     
