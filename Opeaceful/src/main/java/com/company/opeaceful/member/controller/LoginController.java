@@ -1,6 +1,5 @@
 package com.company.opeaceful.member.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -17,9 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,7 +28,8 @@ import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
-import com.google.gson.Gson;
+import com.company.opeaceful.role.model.service.RoleService;
+import com.company.opeaceful.role.model.vo.UserRole;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -41,17 +39,20 @@ public class LoginController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	private BoardService boardService;
 	private AttendanceService attendanceService;
+	private RoleService roleService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
 	public LoginController( MemberService memberService,
 							BCryptPasswordEncoder bcryptPasswordEncoder, 
 							BoardService boardService,
-							AttendanceService attendanceService) {
+							AttendanceService attendanceService,
+							RoleService roleService) {
 		this.memberService = memberService;
 		this.bcryptPasswordEncoder = bcryptPasswordEncoder;
 		this.boardService = boardService;
 		this.attendanceService = attendanceService;
+		this.roleService = roleService;
 		
 	}
 	// spring-quartz.xml 사용시 기본생성자 필요
@@ -98,7 +99,8 @@ public class LoginController {
 	
 	// 로그인유저 조회 + 메인에 필요한 자료 얻어옴
 	@GetMapping("/main")
-	public String MainMember(Model model, @ModelAttribute("loginUser") Member loginUser) {
+	public String MainMember(Model model, @ModelAttribute("loginUser") Member loginUser,
+							 HttpSession session) {
 
 		if(loginUser != null) {
 			loginUser = memberService.loginMember(loginUser);
@@ -111,11 +113,14 @@ public class LoginController {
 			Attendance attendance = attendanceService.selectWorkOn(userNo);
 			// online_status 테이블 불러오기
 			List<Object> os = memberService.onlineStatusList();
-
+			// 사이드바 권한 조회
+			List<UserRole> loginUserRole = roleService.loginUserRoleSelect(userNo);
+			
 			model.addAttribute("topDept",topDept);
 			model.addAttribute("mainNoticeList", mainNoticeList);
 			model.addAttribute("attendance",attendance);
 			model.addAttribute("os", os);
+			session.setAttribute("loginUserRole", loginUserRole);
 			
 			return "main";
 		}else {

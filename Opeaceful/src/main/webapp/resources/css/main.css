@@ -54,8 +54,9 @@
 .main-info{height: 75%; padding: 20px 0;}
 .main-info-top{height: 78%; margin-left: 0; margin-right: 0;}
 .main-info-bottom{height:22%; justify-content: center;}
+.main-info-top .col-3{width: 30%;}
 .main-d-day{
-    font-size: var(--font14);
+    font-size: var(--font13);
     color: gray;
 }
 #main-name{padding-top: 12px;}

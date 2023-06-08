@@ -31,7 +31,7 @@ INSERT INTO position (P_NAME) VALUES
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
    VALUES ( 230502 , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', 'test', SYSDATE(), 'test@gmail.com');
 
-/* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!!*/
+/* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!! user_no = 5 는  마케팅팀!*/
 
 /*공지사항 고정게시글 데이터*/
 INSERT INTO BOARD(BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,BOARD_CD,COUNT,CREATE_DATE,FIXED)
@@ -80,6 +80,17 @@ VALUES (4,'여기는','TEST1','3','T',default,'2023-05-12'),
 (4,'~~~','TEST4','4','T',default,'2023-04-03'),
 (4,'입니당','TEST5','4','T',default,'2023-03-12');
 
+INSERT INTO BOARD(DEPT_CODE,BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,BOARD_CD,COUNT,CREATE_DATE)
+VALUES (5,'여기는','TEST1','5','T',default,'2023-05-12'),
+(5,'마케팅팀','TEST2','5','T',default,'2023-04-24'),
+(5,'게시판','TEST3','5','T',default,'2023-04-15'),
+(5,'리스트','TEST4','5','T',default,'2023-04-03'),
+(5,'입니당','TEST5','5','T',default,'2023-03-12'),
+(5,'마케팅팀은','TEST1','5','T',default,'2023-05-12'),
+(5,'코드번호','TEST2','5','T',default,'2023-04-24'),
+(5,'5번','TEST3','5','T',default,'2023-04-15'),
+(5,'~~~','TEST4','5','T',default,'2023-04-03'),
+(5,'입니당','TEST5','5','T',default,'2023-03-12');
 
 /*멤버 데이터*/
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME,HIRE_DATE, PHONE,EMAIL, ADDRESS,EXTENSION)
@@ -234,7 +245,30 @@ VALUES
 (8,7,'Y01'),
 (8,4,'Y01');
 
+/* USER_NO : 8 에 모든권한 들어있음 */
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'S01');
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T01');
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T02');
 
+/* 연차 임시데이터 */
+UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 16
+WHERE USER_NO > 20;
+UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 15
+WHERE USER_NO >= 20 AND USER_NO <= 44;
+UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 10
+WHERE USER_NO > 44;
+
+-- 휴가 등록 임시
+INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+VALUES 
+		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
+		(3, 3, "오후반차", 1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
+        (3, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
+		(3, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
+		(3, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
+        (3, 2, "오전반차", 1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
+        (3, 1, "휴가", 1, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
+        (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
 
 -- 테스트 데이터 입력용 프로시저 
