@@ -39,6 +39,8 @@
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFile" alias="approvalFile"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalForm" alias="approvalForm"/>
 		<typeAlias type="com.company.opeaceful.salary.model.vo.Salary" alias="salary"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFavor" alias="approvalFavor"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalLine" alias="approvalLine"/>
 	</typeAliases>
 	
 	<!-- 

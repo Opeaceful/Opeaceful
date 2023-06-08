@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.approval.model.dao.ApprovalDao;
 import com.company.opeaceful.approval.model.vo.Approval;
+import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
+import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
 
@@ -42,14 +44,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
-	public List<ApprovalForm> selectFormList(int currentPage, int type) {
+	public List<ApprovalForm> selectFormList(int type) {
+		return aprDao.selectFormList( type);
+	}
+	
+	@Override
+	public List<ApprovalForm> selectFormListPage(int currentPage, int type) {
 		
 		int listCount = aprDao.selectFormListCount(type);
 		int pageLimit = 10;
 		int itemLimit = 10; // 최대 10개 가져오기
 		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, itemLimit);
 		
-		return aprDao.selectFormList(pi, type);
+		return aprDao.selectFormListPage(pi, type);
 	}
 
 	@Override
@@ -70,6 +77,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
+	@Override
+	public List<ApprovalFavor> selectFavorList(int userNo) {
+		return aprDao.selectFavorList(userNo);
+	}
+
+	@Override
+	public List<ApprovalLine> selectLineList(String type, int no) {
+		return aprDao.selectLineList(type, no);
+	}
+	
 //	-------------------------------- insert 구간 ----------------------------------------
 	@Override
 	public int insertForm(ApprovalForm form, List<ApprovalFile> fileList ) {
@@ -85,6 +102,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int insertFile(List<ApprovalFile> fileList, String refType, int refNo )  {
 		return aprDao.insertFile(fileList, refType, refNo);
+	}
+
+
+	@Override
+	public int insertFavor(ApprovalFavor favor, List<ApprovalLine> lines) {
+		return aprDao.insertFavor(favor, lines);
 	}
 
 	
@@ -112,6 +135,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteFileList( List<ApprovalFile> fileList) {
 		return aprDao.deleteFileList(fileList);
 	}
+
+	@Override
+	public int deleteFavor(int favorNo) {
+		return aprDao.deleteFavor(favorNo);
+	}
+
+
 
 
 
