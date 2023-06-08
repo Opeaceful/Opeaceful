@@ -234,7 +234,30 @@ VALUES
 (8,7,'Y01'),
 (8,4,'Y01');
 
+/* USER_NO : 8 에 모든권한 들어있음 */
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'S01');
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T01');
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T02');
 
+/* 연차 임시데이터 */
+UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 16
+WHERE USER_NO > 20;
+UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 15
+WHERE USER_NO >= 20 AND USER_NO <= 44;
+UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 10
+WHERE USER_NO > 44;
+
+-- 휴가 등록 임시
+INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+VALUES 
+		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
+		(3, 3, "오후반차", 1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
+        (3, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
+		(3, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
+		(3, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
+        (3, 2, "오전반차", 1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
+        (3, 1, "휴가", 1, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
+        (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
 
 -- 테스트 데이터 입력용 프로시저 
