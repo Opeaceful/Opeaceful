@@ -25,7 +25,7 @@
         <!-- 설정바(최소화, 최대화, 닫기 버튼) -->
         <div class="chat_setting_bar">
             <i class="fa-regular fa-window-restore" id="maximizeButton"></i>
-            <i class="fa-solid fa-xmark" class="close" onclick="window.parent.closeLayer()"></i>
+            <i class="fa-solid fa-xmark" id="dialog_close"></i>
         </div>
 
         <!-- 헤더: 제목, 친구 찾기 버튼, 친구 추가 버튼 -->

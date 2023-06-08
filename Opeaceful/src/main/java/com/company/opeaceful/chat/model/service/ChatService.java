@@ -17,6 +17,8 @@ public interface ChatService {
 	
 	public abstract ArrayList<Board> noticeList();
 	
-	List<ChatParticipant> selectChatRoomList();
+	List<ChatRoom> selectChatRoomList();
+	
+	int openChatRoom(ChatRoom cr);
 
 }

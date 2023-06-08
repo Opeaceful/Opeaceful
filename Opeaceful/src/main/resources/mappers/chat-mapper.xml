@@ -2,23 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chatMapper">
 
-	<resultMap type="ChatParticipant" id="chatRoomResultSet">
+	<resultMap type="ChatRoom" id="chatRoomResultSet">
 		<id column="CHATROOM_NO" property="chatRoomNo"/>
-		<result column="ROOM_NAME" property="roomName" />
-		<result column="USER_NAME" property="userName" />
 		<result column="USER_NO" property="userNo" />
+		<result column="ROOM_TITLE" property="roomTitle" />
+		<result column="LAST_CHAT" property="lastChat" />
+		<result column="CREATED_CHAT" property="createdChat" />
+		<result column="USER_NAME" property="userName" />
 		<result column="PROFILE_IMG" property="profileImg"/>
+		<result column="ENO" property="eno"/>
 	</resultMap>
 
 	<select id="selectChatRoomList" resultMap="chatRoomResultSet">
 		SELECT
 		CHATROOM_NO,
-		ROOM_NAME,
+		USER_NO,
+		ROOM_TITLE,
+		CREATED_CHAT,
 		USER_NAME,
-		PROFILE_IMG
-		FROM CHAT_PARTICIPANT
+		PROFILE_IMG,
+		ENO
+		FROM CHAT_ROOM
 		JOIN MEMBER USING(USER_NO)
 		ORDER BY CHATROOM_NO DESC
 	</select>	
+	
+	<insert id="openChatRoom" useGeneratedKeys="true">   	
+    	<selectKey keyProperty="chatRoomNo" order="AFTER" resultType="int">
+	        SELECT LAST_INSERT_ID()
+	    </selectKey>
+		    INSERT INTO CHAT_ROOM
+		    (USER_NO, ROOM_TITLE, LAST_CHAT, CREATED_CHAT)
+		    VALUES
+		    (#{userNo}, #{roomTitle}, 0, NOW())
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	 
 </mapper>

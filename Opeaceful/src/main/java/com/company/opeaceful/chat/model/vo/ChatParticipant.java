@@ -16,7 +16,8 @@ public class ChatParticipant {
 	private String bellSetting;
 	
 	private String userName;
-	private String profileImg; 
+	private String profileImg;
+	private int eno;
 	
 	
 	

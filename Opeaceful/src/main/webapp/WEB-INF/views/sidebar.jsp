@@ -25,20 +25,9 @@
    <!-- jquery  -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css"> 
+   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
    <link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
-	<!-- <style>
-	.ui-dialog-titlebar{
-	background:var(--color-navy)}	
-	.ui-dialog-titlebar-close{
-	display: none;}
-	.ui-dialog-content .ui-widget-content{
-	display: none;}
-	
-	</style> -->
-	
-	
 
 </head>
 <body>

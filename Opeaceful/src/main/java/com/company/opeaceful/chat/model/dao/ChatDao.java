@@ -31,8 +31,33 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.mainSelectNoticeList");
 	}
 	
-	public List<ChatParticipant> selectChatRoomList(){
+	public List<ChatRoom> selectChatRoomList(){
 		return sqlSession.selectList("chatMapper.selectChatRoomList");
 	}
+	
+	public int openChatRoom(ChatRoom chatRoom) {
+		
+		int result = sqlSession.insert("chatMapper.openChatRoom", chatRoom);
+		
+		if(result > 0) {
+			return chatRoom.getChatRoomNo();
+		}else {
+			return result;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

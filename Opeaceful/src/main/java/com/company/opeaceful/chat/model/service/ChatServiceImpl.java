@@ -35,9 +35,19 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public List<ChatParticipant> selectChatRoomList(){
+	public List<ChatRoom> selectChatRoomList(){
 		return chatDao.selectChatRoomList();
 	}
+	
+	@Override
+	public int openChatRoom(ChatRoom chatRoom) {
+		return chatDao.openChatRoom(chatRoom);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

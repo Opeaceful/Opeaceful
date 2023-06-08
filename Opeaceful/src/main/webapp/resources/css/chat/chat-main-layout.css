@@ -23,6 +23,7 @@ body{
         "nav  .    main      .    "
         "ad  ad     ad      ad    ";
     background: white;
+    border:0.1rem solid var(--color-navy);
 }
 
 /* 설정바 위치 고정하기 위한 스타일 지정 */
@@ -137,6 +138,7 @@ body{
     height: 6.25rem; /* grid ad의 row 크기와 동일 */
     text-align: center;
     background-color: rgb(235, 231, 187);
+    border-top:0.1rem solid var(--color-navy);
 }
 /* 광고 안의 컨텐츠 스타일 지정 */
 /* 친구리스트/채팅리스트의 html 파일에서 동일한 스타일을 갖기 때문에 공통된 스타일로 구분했음 */
@@ -165,3 +167,16 @@ body{
     border-radius: 10px;
 }
 
+/* 다이얼로그 */
+.ui-dialog-title{
+    color: white;
+}
+.ui-dialog-titlebar{
+	background:var(--color-navy)
+}	
+.ui-dialog-titlebar-close{
+	display: none;
+}
+.ui-dialog-content .ui-widget-content{
+    display: none;
+}

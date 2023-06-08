@@ -8,8 +8,17 @@
     $("#dialog").dialog({
       autoOpen: false,
       modal: false,
-      width: 700, // 다이얼로그의 너비 설정
-      height: 900, // 다이얼로그의 높이 설정
+      focus: false,
+      resizable: true,
+      title: "Opeaceful",     
+      width: 500, // 다이얼로그의 너비 설정
+      height: 800, // 다이얼로그의 높이 설정
+    });
+    
+    $('.ui-dialog-titlebar-close').remove();
+    
+    $(document).on("click", "#dialog_close", function() {
+    $("#dialog").dialog("close");
     });
 
     // 다이얼로그 열기
