@@ -41,8 +41,8 @@ public class OrgChartServiceImpl implements OrgChartService {
 	
 	// 하위부서 사원 조회
 	@Override
-	public List<UserDepatment> selectMember() {
-		return orgChartDao.selectMember();
+	public List<UserDepatment> selectMember(int topDeptCode) {
+		return orgChartDao.selectMember(topDeptCode);
 	}
 	
 	// 직급 추가

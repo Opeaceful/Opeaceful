@@ -15,6 +15,8 @@
 </resultMap>
 
 <resultMap type="userDepatment" id="userDepartResultSet">
+	<result column="ENO" property="eno"/>
+	<result column="USER_NAME" property="userName"/>
 	<result column="USER_NO" property="userNo"/>
 	<result column="P_CODE" property="pCode"/>
 	<result column="DEPT_CODE" property="deptCode"/>
@@ -46,10 +48,10 @@
 	
 	<!-- [가영] - 하위부서 사원 조회 -->
 	<select id="selectMember" resultMap="userDepartResultSet">
-		SELECT ENO, USER_NAME, DEPT_NAME, P_NAME
-		FROM USER_DEPARTMENT UD
-		LEFT JOIN MEMBER M ON UD.USER_NO = M.USER_NO
-		JOIN DEPARTMENT USING (DEPT_CODE)
+		SELECT ENO, USER_NAME, DEPT_NAME, P_NAME, DEPT_CODE
+		FROM MEMBER M
+		LEFT JOIN USER_DEPARTMENT USING (USER_NO)
+		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
 		LEFT JOIN POSITION USING (P_CODE)
 		WHERE DEPT_CODE = #{deptCode};
 	</select>

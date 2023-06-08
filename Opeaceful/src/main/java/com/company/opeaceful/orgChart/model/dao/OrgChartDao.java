@@ -63,8 +63,8 @@ public class OrgChartDao {
 	}
 	
 	// 하위부서 사원 조회
-	public List<UserDepatment> selectMember() {
-		return sqlSession.selectList("deptMapper.selectMember");
+	public List<UserDepatment> selectMember(int topDeptCode) {
+		return sqlSession.selectList("deptMapper.selectMember", topDeptCode);
 	}
 	
 	// 직급추가

@@ -20,7 +20,7 @@ public interface OrgChartService {
 	int updateDp(OrgChart orgChart);
 	
 	// 하위부서 사원 조회
-	List<UserDepatment> selectMember();
+	List<UserDepatment> selectMember(int topDeptCode);
 	
 	// 직급추가
 	int insertPname(OrgChart orgChart);

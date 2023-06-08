@@ -15,65 +15,93 @@ $(document).ready (function () {
 			success: function(result){
 
 				console.log(result);
-	  
-				let html = "";
-				let str = "";
 
-        		for (let list of result) {
-
-					// let num = document.getElementsByClassName('accordion-item').length;
-					// let deptName = document.getElementById("accordionFlushExample");
-
-					if(list.topDeptCode == 0){
+        		for (let dept of result) {
+					if(dept.topDeptCode == 0){
 						$("#accordionFlushExample").append(
-							`<div class="accordion-item accordion-item-common org-accordion${list.deptCode}">
-								<h2 class="accordion-header org-accordion-header" id="heading${list.deptCode}">
-									<button class="accordion-button oc-accordion-btn accordion-button-common" id="${list.deptCode}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${list.deptCode}" aria-expanded="true" aria-controls="flush-collapse${list.deptCode}" aria-label="펼치기">
-										<input type="text" id="dept-code" class="topD-name" name="department${list.deptCode}" value="${list.deptName}" aria-label="부서이름인풋">
+							`<div class="accordion-item accordion-item-common org-accordion${dept.deptCode}">
+								<h2 class="accordion-header org-accordion-header" id="heading${dept.deptCode}">
+									<button class="accordion-button oc-accordion-btn accordion-button-common" id="${dept.deptCode}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="flush-collapse${dept.deptCode}" aria-label="펼치기">
+										<input type="text" id="${dept.deptCode}" class="topD-name" name="department${dept.deptCode}" value="${dept.deptName}" aria-label="부서이름인풋">
 									</button>
 									<div class="icons">
-										<i class="fa-solid fa-plus team-plus"></i> 
-										<i class="fa-solid fa-minus team-minus"></i> 
-										<i class="fa-solid fa-pen team-change"></i>
+										<i class="fa-solid fa-plus team-plus" id="team-plus${dept.deptCode}"></i> 
+										<i class="fa-solid fa-minus team-minus" id="team-minus${dept.deptCode}"></i> 
+										<i class="fa-solid fa-pen team-change" id="team-change${dept.deptCode}"></i>
 									</div>
 								</h2>
-								<div id="collapse${list.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${list.deptCode}" data-bs-parent="#accordionExample">
-									<ul class="accordion-body accordion-body-common oc-all" id="oc-all"></ul>
+								<div id="collapse${dept.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
+									<ul class="accordion-body accordion-body-common oc-all" id="oc-all${dept.deptCode}"></ul>
 								</div>
 							</div>`
-						)  
+						) 
 					}
-				}
+					$(`#${dept.deptCode}`).css('pointer-events','none');
+					$(".oc-accordion-btn").css('cursor','default'); 
+					
+					$(".inputs").on("click", `#team-change${dept.deptCode}`, function(e) {
+						// parents('.accordion-item').find('.oc-all')
+						console.log(e.target);
+						$(`#${dept.deptCode}`).css('pointer-events','auto');
+						
+						// var value = $(`#${dept.deptCode}`).val();
+        				// $(`#${dept.deptCode}`).focus().val('').val(value);
+						// let inputLen = $(`${dept.deptCode}`).val().length;
+						$(`#${dept.deptCode}`).focus();
+						// $(`${dept.deptCode}`)[0].setSelectionRange(inputLen, inputLen);
+					})
+					for (let team of result) {
+						if (team.topDeptCode == dept.deptCode) {
+							$(`#oc-all${dept.deptCode}`).append(
+								`<li class="team low-common">
+									<span class="input-click${team.deptCode}">
+										<input type="text" name="team${team.deptCode}" id="${team.deptCode}" class="team-name" value="${team.deptName}">
+									</span>
+									<i class="fa-solid fa-minus li-team-minus"></i> 
+									<i class="fa-solid fa-pen li-team-change"></i>
+								</li>`
+							)
+							$(".team-name").css('pointer-events','none');
+							$(".team").css('cursor','default');
+						}
+						
+						// 하위부서 클릭 시 해다 부서에 있는 사원 조회
+						$(".inputs").on("click", `.input-click${team.deptCode}`, function() {
+	
+							let topDeptCode = $(this).find('.team-name').attr("id");
+					
+							console.log('id : ',topDeptCode);
 
-				for (let list of result) {
-					if (0<list.topDeptCode && (list.topDeptCode == list.deptCode)) {
-						$("#oc-all").append(
-							`<li class="team low-common">
-								<span class="input-click">
-									<input type="text" name="team${list.deptCode}" id="team-code" class="team-name" value="${list.deptName}">
-								</span>
-								<i class="fa-solid fa-minus li-team-minus"></i> 
-								<i class="fa-solid fa-pen li-team-change"></i>
-							</li>`
-						)
+							$.ajax({
+								url : path+"/orgChart/selectAll",   
+								type : 'post', 
+								data : {topDeptCode : topDeptCode},
+								dataType : "JSON",
+								success : function(result){
+									console.log('result: ' +JSON.stringify(result));
+
+									let html = "";
+
+									for (let all of result) {
+										if (topDeptCode == all.deptCode) {
+											
+											html += `<tbody>
+														<tr>
+															<td>${all.eno}</td>
+															<td>${all.userName}</td>
+															<td>${all.deptName}</td>
+															<td>${all.pName}</td>
+														</tr>
+													</tbody>`
+										}
+									}
+									$('.org-table').html(html);
+								}
+							})
+						})
 					}
 
 				}
-					// deptName.innerHTML = html;
-
-					// console.log(list.topDeptCode == list.deptCode);
-					// console.log(JSON.stringify(list.topDeptCode));
-					// console.log(JSON.stringify(list.deptCode));
-					// console.log("top "+list.topDeptCode);
-					// console.log("dept "+list.deptCode);
-					// console.log(list.deptCode.length);
-        		
-
-				// let deptCode = document.getElementById("oc-all");
-				// console.log(deptCode);
-				// deptCode.innerHTML = str;
-				// console.log(str);
-
 			},
 			error : function(request){
 				console.log("에러발생");
@@ -81,10 +109,9 @@ $(document).ready (function () {
 			}
 		})
 	}
-
 	selectDept();
 
-	//////////////////////////////////////////////////////////// 부서추가
+	///////////////////////////////////////////////////////////////////////////// 상위부서 추가
 
 	// 부서추가 버튼 클릭 시 부서 이름 입력할 수 있는 input 생성           
 	$('.topD-plus').click (function () {
@@ -191,15 +218,15 @@ $(document).ready (function () {
 	})
 
 	// 수정버튼 클릭 시 부서 이름 수정
-	$(".inputs").on("click", ".team-change", function() {
-		$(".topD-name").css('pointer-events','auto');
+	// $(".inputs").on("click", ".team-change", function() {
+	// 	$(".topD-name").css('pointer-events','auto');
 		
-		let inputLen = $(".topD-name").val().length;
-		$(".topD-name").focus();
-		$(".topD-name")[0].setSelectionRange(inputLen, inputLen);
-	})
+	// 	let inputLen = $(".topD-name").val().length;
+	// 	$(".topD-name").focus();
+	// 	$(".topD-name")[0].setSelectionRange(inputLen, inputLen);
+	// })
 
-	// 하위부서 추가 
+	/////////////////////////////////////////////////////////////////////// 하위부서 추가 
 	$(".inputs").on("click", ".team-plus", function() {
 		
 		let num = document.getElementsByClassName('team').length;
@@ -218,7 +245,7 @@ $(document).ready (function () {
 		$(`input[name=team${num}]`).focus();
 	})
 
-	// input 포커스 아웃 시 하위부서 db에 부서추가
+	// input 포커스 아웃 시 db에 하위부서 추가
 	$(".inputs").on("blur", "[name^=team]", function(e) {
 		// [name^=team]
 		console.log(e.target);
@@ -227,7 +254,7 @@ $(document).ready (function () {
 		let id = $(e.target).attr("id");
 		let code= $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
 		// .parents(".accordion-item").find('.topD-name')
-		// console.log(code);
+		console.log(code);
 
 		// 부서이름 입력 안했을 시 input 삭제
 		if (input == "") {
@@ -244,7 +271,7 @@ $(document).ready (function () {
 					data : {deptName: input,
 							topDeptCode : code},
 					success : function(result){
-						console.log('변경전 result: ' +result);
+						console.log('추가된 result: ' +result);
 						if (result > 0) {
 							$(e.target).attr("id", result);
 						}
@@ -252,7 +279,7 @@ $(document).ready (function () {
 						$(".team").css('cursor','default');
 					}
 				});
-			} else { // topDeptCode 받기? 넘기기? 그거 처리 하기.
+			} else {
 				console.log('input 변경후 : '+input);
 				console.log('id 변경후 : '+$(e.target).attr("id"));
 				// 부서이름 수정 ajax
@@ -283,6 +310,44 @@ $(document).ready (function () {
 		$(".team-name")[0].setSelectionRange(inputLen, inputLen);
 	})
 
+	/////////////////////////////////////////////////////////////////////////////// 직급조회
+	function selectPosition() {
+		
+		$.ajax({
+			url:path+"/orgChart/selectPosition",
+			type : "POST",
+			dataType : "JSON",
+			success: function(result){
+
+				console.log(result);
+
+        		for (let p of result) {
+						$('.org-modal-body').append(
+							`<ul class="list-group list-group-flush org-list-group">
+								<li class="list-group-item position-list">
+									<input type="text" name="position-name${p.pCode}" class="pName" id="${p.pCode}" value="${p.pName}">
+									<div class="postion-icons"> 
+										<i class="fa-solid fa-minus position-minus"></i> 
+										<i class="fa-solid fa-pen position-change"></i>
+									</div>
+								</li>
+							</ul>`
+						); 
+						$(".pName").css('pointer-events','none');
+						$(".position-list").css('cursor','default'); 
+					
+
+				}
+			},
+			error : function(request){
+				console.log("에러발생");
+				console.log(request.status);
+			}
+		})
+	}
+	selectPosition();
+
+	/////////////////////////////////////////////////////////////////////////////// 직급추가
 	// 직급추가 버튼 클릭 시 직급 이름 입력할 수 있는 input 생성
 	$('.position-plus-btn').click (function () {
 		
@@ -355,41 +420,6 @@ $(document).ready (function () {
 				});
 			}
 		}
-	})
-
-	// 하위부서 클릭 시 해당 부서에 속한 사원 조회 화면
-	$(".inputs").on("click", ".input-click", function() {
-
-		let pCode = $(this).find('.team-name').attr("id");
-
-		console.log('id : ',pCode);
-
-		// $('.org-table').append(
-		// 	`<tbody>
-		// 		<tr>
-		// 			<td>951003</td>
-		// 			<td>박가영</td>
-		// 			<td>인사팀</td>
-		// 			<td>사원</td>
-		// 		</tr>
-		// 		<tr>
-		// 			<td>210208</td>
-		// 			<td>윤지영</td>
-		// 			<td>인사팀</td>
-		// 			<td>사원</td>
-		// 		</tr>
-		// 	</tbody>`
-		// );
-
-		$.ajax({
-			url : path+"/orgChart/selectAll",   
-			type : 'post', 
-			data : {pCode : pCode},
-			success : function(result){
-				console.log('변경후 result: ' +result);
-			}
-		})
-		
 	})
 
 	

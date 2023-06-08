@@ -16,5 +16,7 @@ public class UserDepatment {
 	private String pName;
 	private String deptName;
 	
+	private int eno;
+	private String userName;
 	
 }

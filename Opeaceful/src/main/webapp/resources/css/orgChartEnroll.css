@@ -78,8 +78,8 @@ input:focus{
     font-size: var(--font13);
 }
 .position-modal{
-    width: 50%;
-    height: 35%;
+    width: 55%;
+    height: 45%;
     transform: translate(50%);
 }
 .position-change{

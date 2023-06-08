@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.company.opeaceful.dept.model.service.DeptService;
 import com.company.opeaceful.dept.model.vo.Department;
+import com.company.opeaceful.dept.model.vo.Position;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
@@ -46,6 +47,16 @@ public class OrgChartController {
 		return "orgChartView";
 	}
 	
+	// 부서조회
+	@PostMapping("/selectDept")
+	@ResponseBody
+	public String selectDept() {
+		List<Department> dList = deptService.selectDeptList();
+			
+		System.out.println(dList);
+		return new Gson().toJson(dList);
+	}
+	
 	// 상위부서 추가
 	@PostMapping("/insert/topDname")
 	@ResponseBody
@@ -56,16 +67,6 @@ public class OrgChartController {
 //		System.out.println("생성 : "+result);
 
 		return result;
-	}
-	
-	// 부서조회
-	@PostMapping("selectDept")
-	@ResponseBody
-	public String selectDept() {
-		List<Department> dList = deptService.selectDeptList();
-		
-		System.out.println(dList);
-		return new Gson().toJson(dList);
 	}
 	
 	// 상위부서 이름 변경
@@ -108,12 +109,23 @@ public class OrgChartController {
 	// 하위부서 사원 조회
 	@PostMapping("/selectAll")
 	@ResponseBody
-	public String selectMember() {
-		List<UserDepatment> udList = orgchartService.selectMember();
+	public String selectMember(int topDeptCode) {
+		System.out.println(topDeptCode);
+		List<UserDepatment> udList = orgchartService.selectMember(topDeptCode);
 		
-		System.out.println(udList);
+		System.out.println("udList : "+udList);
 		return new Gson().toJson(udList);
 		
+	}
+	
+	// 직급 조회
+	@ResponseBody
+	@PostMapping("/selectPosition")
+	public String selectPosition() {
+			
+		List<Position> dList = deptService.selectPosition();
+			
+		return new Gson().toJson(dList);
 	}
 	
 	// 직급 추가
