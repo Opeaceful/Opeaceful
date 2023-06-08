@@ -64,38 +64,44 @@
 
 	<!-- [혜린] - 게시글 목록조회 -->
 	<select id="selectBoardList" resultMap="boardListResultSet">
+	<choose>
+	<when test='boardCode == "T"'>
 		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
-		  <choose>
-			  <when test='boardCode == "T"'>
-			  FROM BOARD B
-	          LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
-	          LEFT JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
-	          LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
-			 WHERE B.BOARD_CD = #{boardCode}
-			   AND B.DEPT_CODE = (SELECT D.DEPT_CODE
-			 						FROM USER_DEPARTMENT D
-			 					   WHERE D.USER_NO = #{userNo})
-			 </when>
-			 <otherwise>
-			 FROM BOARD B
-          	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
-          	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
-          	 LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
-		 	WHERE B.BOARD_CD = #{boardCode}
-			 </otherwise>
-		 </choose>
-		 ORDER BY 
-		 	<if test='boardCode == "N"'>
-		 		FIXED = 'Y' DESC,
-		 	</if>
-		 		CREATE_DATE DESC;
+		  FROM BOARD B
+	      LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+	      LEFT JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
+	      LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+		 WHERE B.BOARD_CD = 'T'
+		   AND B.DEPT_CODE = (SELECT D.DEPT_CODE
+		 						FROM USER_DEPARTMENT D
+		 					   WHERE D.USER_NO = #{userNo})
+	 </when>
+	 <when test='boardCode == "N"'>
+	 SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITER, B.CREATE_DATE, B.COUNT, FIXED
+	 FROM BOARD B
+ 	 WHERE B.BOARD_CD = 'N'
+	 </when>
+	 <otherwise>
+	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+	 FROM BOARD B
+        	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
+        	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
+        	 LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+ 	WHERE B.BOARD_CD = 'F'
+	 </otherwise>
+ </choose>
+ ORDER BY 
+ 	<if test='boardCode == "N"'>
+ 		FIXED = 'Y' DESC,
+ 	</if>
+ 		B.CREATE_DATE DESC, BOARD_NO DESC;
 	</select>
 	
 	<!-- [혜린] - 검색된 게시글 목록조회 -->
 	<select id="searchBoardList" resultMap="boardListResultSet">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
 		  <choose>
 			  <when test='boardCode == "T"'>
+			  SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
 			  FROM BOARD B
 	          JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	          JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
@@ -121,7 +127,29 @@
 				</choose>
 				</if>				   
 			 </when>
+			 
+			 <when test='boardCode == "N"'>
+			 SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_WRITER, B.CREATE_DATE, B.COUNT, FIXED
+			 FROM BOARD B
+		 	WHERE B.BOARD_CD = #{boardCode}
+		 	<if test='keyword != null and keyword !=""'>
+			AND
+			<choose>
+				<when test='condition == "writer"'>
+					B.BOARD_WRITER LIKE '%${keyword}%'
+				</when>
+				<when test='condition == "title"'>
+					BOARD_TITLE LIKE '%${keyword}%'
+				</when>
+				<when test='condition == "content"'>
+					BOARD_CONTENT LIKE '%${keyword}%'
+				</when>
+			</choose>
+			</if>
+			 </when>
+			 
 			 <otherwise>
+			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
 			 FROM BOARD B
           	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
           	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -149,7 +177,7 @@
 		 	<if test='boardCode == "N"'>
 		 		FIXED = 'Y' DESC,
 		 	</if>
-		 		CREATE_DATE DESC;
+		 		CREATE_DATE DESC, BOARD_NO DESC;
 	</select>
 
 	<!-- [혜린] - 게시글 수 카운트 -->
@@ -168,13 +196,15 @@
 	</if>
 	</select>
 
-	<!-- [혜린] - 검색된 게시글 수 카운트 -->
+	<!-- [혜린] - 검색된 게시글 수 카운트--> 
 	<select id="searchBoardListCount" resultType="_int">
 	SELECT COUNT(*)
 	FROM BOARD B
+	<if test='boardCode == "T" or boardCode == "F"'>
 	JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
 	JOIN POSITION P ON D.P_CODE = P.P_CODE
+	</if>
 	WHERE BOARD_CD = #{boardCode}
 	 <if test='boardCode == "T"'>
 	AND  D.DEPT_CODE = (SELECT D.DEPT_CODE
@@ -185,9 +215,14 @@
 	AND
 	<choose>
 		<when test='condition == "writer"'>
+			<if test='boardCode == "T" or boardCode == "F"'>
 			USER_NAME LIKE '%${keyword}%'
 			OR
 			P_NAME LIKE '%${keyword}%'
+			</if>
+			<if test='boardCode == "N"'>
+			BOARD_WRITER LIKE '%${keyword}%'
+			</if>
 		</when>
 		<when test='condition == "title"'>
 			BOARD_TITLE LIKE '%${keyword}%'
@@ -218,11 +253,19 @@
 	
 	<!-- [혜린] - 게시글 상세 조회 -->
 	<select id="selectBoardDetail" resultMap="boardDetailResultSet" >
+		<choose>
+		<when test='boardCode == "N"'>
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, CREATE_DATE, COUNT
+		FROM BOARD B
+		</when>
+		<otherwise>
 		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, M.USER_NAME, P.P_NAME, CREATE_DATE, COUNT
 		FROM BOARD B
 		LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 		LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
 		LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+		</otherwise>
+		</choose>
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
@@ -239,7 +282,22 @@
 		WHERE BOARD_NO = #{boardNo}
 	</delete>
 
-
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO BOARD(BOARD_CD,
+						  BOARD_TITLE,
+						  BOARD_CONTENT,
+						  BOARD_WRITER,
+						  CREATE_DATE,
+						  FIXED,
+						  SECRET)
+		VALUES (#{boardCd},
+			    #{boardTitle},
+			    #{boardContent},
+			    #{boardWriter},
+			    #{createDate},
+			    #{fixed},
+			    #{secret})
+	</insert>
 
 
 

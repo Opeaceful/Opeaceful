@@ -76,8 +76,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public Board selectBoardDetail(int boardNo) {
-		return boardDao.selectBoardDetail(boardNo);
+	public Board selectBoardDetail(Map<String, Object> map) {
+		return boardDao.selectBoardDetail(map);
 	}
 	
 	@Override
@@ -92,6 +92,10 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public ArrayList<Department> selectDeptList(){
 		return boardDao.selectDeptList();
+	}
+	@Override
+	public int insertBoard(Board b) {
+		return boardDao.insertBoard(b);
 	}
 	
 }

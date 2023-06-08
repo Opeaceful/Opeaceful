@@ -80,7 +80,14 @@
             <!-- 글제목 영역 -->
             <div class="board-wrap3">
                 <div class="ctn-title">${b.boardTitle}</div>
+                <c:choose>
+                <c:when test="${boardCode == 'N'}">
+                <div class="ctn-writer">${b.boardWriter}</div>
+                </c:when>
+                <c:otherwise>
                 <div class="ctn-writer">${b.PName} ${b.userName}</div>
+                </c:otherwise>
+                </c:choose>
                 <div class="ctn-date">${b.createDate }</div>
             </div>
             <!-- 첨부파일영역 -->
@@ -104,6 +111,9 @@
             <div class="board-wrap6">
                 <div class="reply-title"><span>댓글</span></div>
                 <div class="reply-space">
+                
+                <!-- 실제 댓글은  스크립트로 추가 -->
+                
                 	<!-- 댓글 예시 -->
                     <div class="reply-one">
                         <div class="jcode-name"><span>사원 김혜린</span></div>

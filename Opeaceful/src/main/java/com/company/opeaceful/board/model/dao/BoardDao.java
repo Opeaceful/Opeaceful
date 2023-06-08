@@ -61,8 +61,8 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.selectFreeRoll", userNo);
 	}
 
-	public Board selectBoardDetail(int boardNo) {
-		return sqlSession.selectOne("boardMapper.selectBoardDetail" , boardNo);
+	public Board selectBoardDetail(Map<String, Object> map) {
+		return sqlSession.selectOne("boardMapper.selectBoardDetail" , map);
 	}
 
 	public int updateAddCount(int boardNo) {
@@ -75,6 +75,10 @@ public class BoardDao {
 	
 	public ArrayList<Department> selectDeptList(){
 		return (ArrayList)sqlSession.selectList("deptMapper.boardEnrollDeptList");
+	}
+	
+	public int insertBoard(Board b) {
+		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
 	
 }

@@ -1,7 +1,9 @@
 package com.company.opeaceful.board.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +82,9 @@ public class BoardController {
 							  Model model,
 							  @ModelAttribute ("map") Map<String, Object> map,
 							  HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+		
+		map.put("boardCode", boardCode);
+		
 		System.out.println("가져온 맵:" + map);
 		currentPage = (int) map.get("currentPage");
 		
@@ -87,7 +92,9 @@ public class BoardController {
 		
 		System.out.println("boardNo 값 : "+ boardNo);
 		
-		Board detail = boardService.selectBoardDetail(boardNo);
+		map.put("boardNo", boardNo);
+		
+		Board detail = boardService.selectBoardDetail(map);
 		
 		System.out.println("detail담긴ㄱ값 : " + detail);
 		
@@ -111,7 +118,7 @@ public class BoardController {
 			memberNo = loginUser.getUserNo();
 
 			// 글쓴이와 현재 상세보기요청을한 클라이언트가 같지 않을 경우에만 조회수 증가서비스 호출.
-			if (Integer.parseInt(detail.getBoardWriter()) != memberNo) {
+			if (detail.getBoardWriter() != memberNo+"") {
 				Cookie cookie = null;
 
 				Cookie[] cArr = req.getCookies(); // 쿠키얻어보기
@@ -179,8 +186,7 @@ public class BoardController {
 		return result;
 	}
 	
-	/* 게시글 작성 */
-	@ResponseBody
+	/* 게시글 작성폼 */
 	@GetMapping("/enrollForm/{boardCode}")
 	public String boardEnroll(@PathVariable("boardCode") String boardCode,
 							  Model model,
@@ -191,6 +197,42 @@ public class BoardController {
 		map.put("dlist", deptList);
 		System.out.println(""+map.get("dlist"));
 		return "board/boardEnrollForm";
+	}
+	
+	/* 게시글 등록 */
+	@PostMapping("/insert/{boardCode}")
+	public String insertBoard(Board b, Model model, HttpSession session,
+								@PathVariable("boardCode") String boardCode,
+							  @ModelAttribute ("loginUser") Member loginUser) {
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();
+		
+		String date = format1.format(time);
+		
+		b.setBoardCd(boardCode);
+		
+		b.setCreateDate(date);
+		
+		int userNo = loginUser.getUserNo();
+		
+		if(b.getFixed() == null) {
+			b.setFixed("N");
+		}
+		if(b.getSecret() == null) {
+			b.setSecret("N");
+		}
+		if(!boardCode.equals("N")) {
+			b.setBoardWriter(userNo+"");
+		}
+		
+		System.out.println("Board b 에 담긴 값 : "+ b);
+		
+		boardService.insertBoard(b);
+		
+		session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+		
+		return "redirect:/board/list/{boardCode}";
 	}
 	
 	

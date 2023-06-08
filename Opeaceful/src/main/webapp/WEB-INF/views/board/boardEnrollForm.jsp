@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
+    <!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     
@@ -22,7 +24,12 @@
 	<link rel="stylesheet" href="${path}/resources/css/board/boardEnroll.css">
 </head>
 <body>
-
+	<!-- alert -->
+	<c:if test="${ not empty alertMsg }">
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+	
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
 
 	<div id="content-wrap">
@@ -48,12 +55,13 @@
                
                 </div>
             </div>
+            <form id="enrollForm" action="${path}/board/insert/${boardCode}" enctype="multipart/form-data" method="post">
             <div class="board-wrap2">
                 <table>
                     <tr>
                         <th>제목</th>
                         <td colspan="2">
-                            <input class="box-shadow-none form-control" type="text" placeholder="" aria-label="default input example">
+                            <input name="boardTitle" class="box-shadow-none form-control" type="text" required placeholder="" aria-label="default input example">
                         </td>
                     </tr>
                     <c:if test="${ boardCode eq 'N'}">
@@ -61,10 +69,10 @@
                         <th>작성자</th>
                         <td colspan="2">
                             <div class="enroll-select">
-                                <select class="box-shadow-none form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                <select name="boardWriter" class="box-shadow-none form-select form-select-sm" aria-label=".form-select-sm example" required>
                                     <option disabled selected>부서명</option>
                                     <c:forEach items="${dlist }" var="d">
-                                    	<option value="${d.deptCode }">${d.deptName }</option>
+                                    	<option value="${d.deptName }">${d.deptName }</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -75,7 +83,7 @@
                     <tr>
                         <th>내용</th>
                         <td colspan="2" class="enroll-cnt">
-                            <div><textarea required></textarea></div>
+                            <div><textarea style="resize:none;" rows ="10" class="form-control" name="boardContent" required="required"></textarea></div>
                         </td>
                     </tr>
                     <tr>
@@ -86,36 +94,43 @@
                             </div>
                         </td>
                     </tr>
+                    <!-- 익명체크 영역은 자유게시판만 -->
+                    <c:if test="${ boardCode eq 'F'}">
                     <tr>
                         <th>익명 여부</th>
                         <td colspan="2">
                             <div class="form-check form-switch">
-                                <input class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <input name="secret" class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" value="Y" checked>
                                 <label class="form-check-label" for="flexSwitchCheckChecked">* 체크 시 익명으로 등록됩니다.</label>
                               </div>
                         </td>
                     </tr>
+                    </c:if>
+                    <!-- 상단고정 영역은 공지사항만 -->
+                     <c:if test="${ boardCode eq 'N'}">
                     <tr>
                         <th>상단고정 여부</th>
                         <td colspan="2">
                             <div class="form-check form-switch">
-                                <input class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                <input name="fixed" class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" value="Y">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">* 체크 시 공지사항 목록 상단에 고정됩니다.</label>
                             </div>
                         </td>
                     </tr>
+                    </c:if>
                 </table>
                 
                 
             </div>
             <div class="board-wrap3">
             	<!-- if boardNo == null -->
-                <div><button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">등록</button></div>
+                <div><button type="submit" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">등록</button></div>
                 <!-- if boardNo != null 
-                <div><button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">수정</button></div>
+                <div><button type="submit" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">수정</button></div>
                 -->
-                <div class="cnl-btn"><button type="button" class="btn btn-outline-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">취소</button></div>
+                <div class="cnl-btn"><button type="reset" class="btn btn-outline-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: 1rem;">취소</button></div>
             </div>
+            </form>
         </div>
     </div>
 

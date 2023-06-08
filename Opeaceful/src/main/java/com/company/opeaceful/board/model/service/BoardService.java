@@ -22,11 +22,13 @@ public interface BoardService {
 	
 	public int selectFreeRoll(String userNo);
 
-	public Board selectBoardDetail(int boardNo);
+	public Board selectBoardDetail(Map<String, Object> map);
 
 	public int updateAddCount(int boardNo);
 
 	public int boardDelete(int board);
 	
 	public ArrayList<Department> selectDeptList();
+	
+	public int insertBoard(Board b);
 }
