@@ -55,6 +55,17 @@
 	  	<result column="P_NAME" property="pName"/> 
 	  	<result column="DEPT_NAME" property="dName"/>   	
 	</resultMap>
+	
+	<!--[지의] 유저 연차 조회용-->
+ 	<resultMap type="member" id="UserAnnaulResultSet">
+	  	<id column="USER_NO" property="userNo"/>
+	  	<result column="USER_NAME" property="userName"/> 	
+	  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
+	  	<result column="HIRE_DATE" property="hireDate"/>
+	  	<result column="P_NAME" property="pName"/> 
+	  	<result column="DEPT_NAME" property="dName"/>
+	  	<result column="TOP_DEPT_NAME" property="topDeptName"/>
+	</resultMap>
 
 <!-- =============================================[insert]=========================================================== -->	
 	<!-- [지영] member insert구문 -->
@@ -199,6 +210,28 @@
 		   AND STATUS = 'Y'
 	</select>
 	
+	<!-- [지의] 유저 연차 조회 -->
+	<select id="selectUserAnnaul" resultMap="UserAnnaulResultSet" parameterType="_int">
+        SELECT USER_NO,
+			   USER_NAME,
+			   DEPT_NAME,
+               P_NAME,
+               HIRE_DATE,
+               ANNUAL_LEAVE_COUNT,
+               (SELECT DEPT_NAME
+				FROM DEPARTMENT
+				WHERE DEPT_CODE = (SELECT TOP_DEPT_CODE
+									 FROM DEPARTMENT
+									 JOIN USER_DEPARTMENT USING (DEPT_CODE)
+									WHERE USER_NO = #{userNo})) AS TOP_DEPT_NAME
+		FROM MEMBER
+		LEFT JOIN user_department USING (USER_NO)
+        LEFT JOIN department USING (DEPT_CODE)
+	    LEFT JOIN position USING(P_CODE)
+        WHERE USER_NO = #{userNo}
+        AND STATUS = 'Y';
+	</select>
+	
 	
 <!-- =============================================[update]=========================================================== -->	
 
@@ -268,7 +301,12 @@
 		WHERE USER_NO = #{userNo};
 	</update>
 	
-	
+	<!-- [지의] 유저 연차 수정  -->
+	<update id="updateUserAnnual" parameterType="map">
+		UPDATE MEMBER
+		SET ANNUAL_LEAVE_COUNT = #{annualLeaveCount}
+		WHERE USER_NO = #{userNo}
+	</update>
 
 
 

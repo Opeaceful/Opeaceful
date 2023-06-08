@@ -30,6 +30,7 @@ public class Member {
 	
 	private String pName;
 	private String dName;
+	private String topDeptName;
 	
 	private int pCode;
 	private int deptCode;

@@ -58,6 +58,11 @@ public class RoleServiceImpl implements RoleService{
 		return roleDao.userRoleGrantingdelete(userRole);
 	}
 	
+	@Override
+	public List<UserRole> loginUserRoleSelect(int userNo){
+		return roleDao.loginUserRoleSelect(userNo);
+	}
+	
 	
 	
 }

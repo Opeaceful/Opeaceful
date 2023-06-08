@@ -22,5 +22,7 @@ public class Approval {
 	private Date endDate;				//	END_DATE
 	private String userName;			//	USER_NAME
 	private String approvalLineImg;		//	APPROVAL_LINE_IMG
+	
+	private double approvalCount;		// APPROVAL_COUNT : 연차갯수
 
 }
