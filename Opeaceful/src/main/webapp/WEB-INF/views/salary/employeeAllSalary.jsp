@@ -17,6 +17,9 @@
 <body>
 <jsp:include page="/WEB-INF/views/sidebar.jsp" />
 <c:set var="LSalry" value="${LSalry}"/>
+<c:set var="dpNames" value="${dpNames}"/>
+<c:set var="pi" value="${map.pi}"/>
+<c:set var="url" value="AllSalary?year=${map.year}&month=${map.month}&team=${map.team}&cpage="/>
 <div class="content-wrap">
  <!--제목-->
   <div class="container">
@@ -30,8 +33,21 @@
  
     <!--부서/년도/월/이름 검색 구역-->
     <div class="d-inline-flex">
-		<select class="form-select form-select-sm mb-3" id="d-select" name="deptCode">
-			<option value="" selected>부서명</option>
+		<select class="form-select form-select-sm mb-3" id="dpSelect">
+			<option value="">부서명</option>
+			 <c:forEach items="${dpNames}" var="dpName">
+			 	<c:choose> 
+					<c:when test="${map.team} == null">
+						<option value="">${dpName}</option>
+					</c:when>
+					<c:when test="${map.team == dpName}">
+						<option value="" selected>${dpName}</option>
+					</c:when>  
+					<c:otherwise> 
+						<option value="">${dpName}</option>
+					</c:otherwise> 
+				</c:choose> 
+			</c:forEach>      
 		</select>
 		
 		<select class="form-select form-select-sm mb-3 ms-1" id="salary-year" name="year">
@@ -78,22 +94,32 @@
     <div class="pagingArea">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
+        <c:choose>
+			         <c:when test="${ pi.currentPage eq 1 }">
+			            <li class="page-item disabled"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
+			         </c:when>
+			         <c:otherwise>
+			            <li class="page-item"><a class="page-link" href="${url}${pi.currentPage -1}"><span aria-hidden="true">&laquo;</span></a></li>
+			         </c:otherwise>               
+			      </c:choose>
+			      
+			      <c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
+			         <li class="page-item"><a class="page-link" href="${url}${item}" id="CP${item}">${item }</a></li>
+			      </c:forEach>
+			      
+			      <c:choose>
+			         <c:when test="${ pi.currentPage eq pi.maxPage }">
+			            <li class="page-item disabled"><a class="page-link" href="#"> <span aria-hidden="true">&raquo;</span></a></li>
+			         </c:when>
+			         <c:otherwise>
+			            <li class="page-item"><a class="page-link" href="${url}${pi.currentPage + 1 }"><span aria-hidden="true">&raquo;</span></a></li>
+			         </c:otherwise>               
+			      </c:choose>
         </ul>
       </nav>
     </div>
+   		      
+			 
 
     <div class="text-right">
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#salaryModal">추가</button>

@@ -54,7 +54,29 @@
 		 </where>
 		ORDER BY PAYMENT_DATE DESC, SALARY_NO DESC;
 	</select>
-  
+	
+	<!-- count 용 -->
+	<select id="employeeAllSalaryCount" resultType="_int" parameterType="hashMap">
+		SELECT COUNT(*)
+		FROM salary
+		<where>
+			<if test='year != null'>
+		      YEAR_REPORTED = #{year}
+		    </if>
+		    <if test='month != 13 and month != null'>
+		      AND MON_REPORTED = #{month}
+		    </if>
+		    <if test='team != "부서명" and team != null'>
+		      AND DEPT_NAME = #{team}
+		    </if>
+	 	</where>
+	</select> 
+	
+  	<!-- [지영] 모든유저 급여조회 -->
+ 	<select id="salaryList" resultType="String">
+		SELECT DISTINCT DEPT_NAME
+	  	FROM salary
+  	</select>
   	
   
 </mapper>

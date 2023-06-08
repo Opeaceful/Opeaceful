@@ -11,6 +11,10 @@ public interface SalaryService {
 
 	Salary salaryOne(int id);
 
-	List<Salary> employeeAllSalary(Map<String, Object> selectYMT);
+	List<Salary> employeeAllSalary(int currentPage, Map<String, Object> selectYMT);
+
+	List<String> salaryList();
+
+	
 
 }

@@ -1,5 +1,6 @@
 package com.company.opeaceful.salary.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,18 +85,21 @@ public class SalaryController {
 		//검색 select용 map
 		Map<String, Object> selectYMT = new HashMap<>();	
 		
-		System.out.println(team+"팀체크!!!!!!!!!!");
-		
 		selectYMT.put("month", month);
 		selectYMT.put("year", year);
 		selectYMT.put("team", team);
 		
-		List<Salary> LSalry = salaryService.employeeAllSalary(selectYMT);
+		System.out.println(team+"여기!!!!!!!!!!!!!");
+		
+		List<Salary> LSalry = salaryService.employeeAllSalary(currentPage,selectYMT);
+		List<String> dpNames = salaryService.salaryList();
+	
 		
 		//model.addAttribute("loginUser", loginUser);
 		model.addAttribute("LSalry",LSalry);
-		
-		System.out.println(LSalry+"급여!!!!!!!!!!");
+		model.addAttribute("dpNames",dpNames);
+		model.addAttribute("map",selectYMT);
+	
 		
 		return "salary/employeeAllSalary";
 		
