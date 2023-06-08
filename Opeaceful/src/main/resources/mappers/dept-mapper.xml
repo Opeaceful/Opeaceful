@@ -22,6 +22,7 @@
 	<result column="DEPT_CODE" property="deptCode"/>
 	<result column="DEPT_NAME" property="deptName"/>
 	<result column="P_NAME" property="pName"/>
+	<result column="TOP_DEPT_CODE" property="topDeptCode"/>
 </resultMap>
 
 	<!-- =================== [select] =================== -->
@@ -48,7 +49,7 @@
 	
 	<!-- [가영] - 하위부서 사원 조회 -->
 	<select id="selectMember" resultMap="userDepartResultSet">
-		SELECT ENO, USER_NAME, DEPT_NAME, P_NAME, DEPT_CODE
+		SELECT ENO, USER_NAME, DEPT_NAME, P_NAME, DEPT_CODE, TOP_DEPT_CODE
 		FROM MEMBER M
 		LEFT JOIN USER_DEPARTMENT USING (USER_NO)
 		LEFT JOIN DEPARTMENT USING (DEPT_CODE)

@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="orgChartMapper">
 
+	<!-- =================== [select] =================== -->
+	
+	<!-- 부서조회 -->
+	<select id="selectDept" parameterType="orgChart" resultType="_int">
+		SELECT COUNT(*) 
+		FROM USER_DEPARTMENT 
+		LEFT JOIN DEPARTMENT USING (DEPT_CODE) 
+		WHERE DEPT_CODE in (SELECT DEPT_CODE     
+							FROM department      
+							WHERE DEPT_CODE = #{deptCode} OR TOP_DEPT_CODE = #{topDeptCode});
+	</select>
+
+	<!-- =================== [insert] =================== -->
+
 	<!-- 상위부서 추가 -->
 	<insert id="insertTopDp" parameterType="orgChart" useGeneratedKeys="true" keyProperty="deptCode">
 		<selectKey resultType="int" keyProperty="deptCode" order="AFTER">
@@ -10,13 +24,6 @@
 		INSERT INTO DEPARTMENT(DEPT_NAME)
 		VALUES(#{deptName})
 	</insert>
-	
-	<!-- 상위부서명 변경 -->
-	<update id="updateTopDp" parameterType="orgChart">
-		UPDATE DEPARTMENT
-		SET DEPT_NAME = #{deptName}
-		WHERE DEPT_CODE = #{deptCode}
-	</update>
 	
 	<!-- 하위부서 추가 -->
 	<insert id="insertDp" parameterType="orgChart" useGeneratedKeys="true" keyProperty="deptCode">
@@ -27,18 +34,20 @@
 		VALUES(#{deptName},#{topDeptCode})
 	</insert>
 	
-	<!-- 하위부서명 변경 -->
-	<update id="updateDp" parameterType="orgChart">
-		UPDATE DEPARTMENT
-		SET DEPT_NAME = #{deptName}
-		WHERE DEPT_CODE = #{deptCode}
-	</update>
-	
 	<!-- 직급 추가 -->
 	<insert id="insertPname" parameterType="orgChart" useGeneratedKeys="true" keyProperty="pCode">
 		INSERT INTO POSITION (P_NAME)
 		VALUES(#{pName})
 	</insert>
+	
+	<!-- =================== [update] =================== -->
+	
+	<!-- 부서명 변경 -->
+	<update id="updateTopDp" parameterType="orgChart">
+		UPDATE DEPARTMENT
+		SET DEPT_NAME = #{deptName}
+		WHERE DEPT_CODE = #{deptCode}
+	</update>
 	
 	<!-- 직급명 변경 -->
 	<update id="updatePname" parameterType="orgChart">
@@ -46,4 +55,14 @@
 		SET P_NAME = #{pName}
 		WHERE P_CODE = #{pCode}
 	</update>
+	
+	<!-- =================== [delete] =================== -->
+	
+	<!-- 상위부서 삭제 -->
+	<delete id="deleteDeptCode" parameterType="map">
+		<!-- set sql_safe_updates=0 -->
+		DELETE
+		FROM DEPARTMENT
+		WHERE DEPT_CODE = #{deptCode} OR TOP_DEPT_CODE = #{topDeptCode}
+	</delete>
 </mapper>

@@ -1,6 +1,8 @@
 package com.company.opeaceful.orgChart.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,12 +55,12 @@ public class OrgChartController {
 	public String selectDept() {
 		List<Department> dList = deptService.selectDeptList();
 			
-		System.out.println(dList);
+//		System.out.println(dList);
 		return new Gson().toJson(dList);
 	}
 	
 	// 상위부서 추가
-	@PostMapping("/insert/topDname")
+	@PostMapping("/insertDeptCode")
 	@ResponseBody
 	public int insertTopDp(OrgChart orgChart) {
 		
@@ -69,8 +71,8 @@ public class OrgChartController {
 		return result;
 	}
 	
-	// 상위부서 이름 변경
-	@PostMapping("/update/topDname")
+	// 부서명 변경
+	@PostMapping("/updateDeptName")
 	@ResponseBody
 	public int updateTopDp(OrgChart orgChart) {
 		
@@ -81,8 +83,38 @@ public class OrgChartController {
 		return result;
 	}
 	
+	// 상위부서 삭제
+	@PostMapping("/deleteDeptCode")
+	@ResponseBody
+	public int deleteDeptCode(OrgChart orgChart, int deptCode, int topDeptCode) {
+		
+		System.out.println("========================"+deptCode + "" + topDeptCode);
+		
+		Map<String, Object> map = new HashMap<>();	
+		
+		map.put("deptCode", deptCode);
+		map.put("topDeptCode", topDeptCode);
+		
+		
+		int result = orgchartService.selectDept(orgChart);
+		
+//		List<UserDepatment> udList = orgchartService.selectMember(deptCode);
+//		
+//		if (udList == null && udList.size() > 0) {
+//			result = orgchartService.deleteDeptCode(map);			
+//		}
+		
+		if (result <= 0) {
+			orgchartService.deleteDeptCode(map);
+		}
+		
+		System.out.println(result);
+		
+		return result;
+	}
+	
 	// 하위부서 추가
-	@PostMapping("/insert/Dname")
+	@PostMapping("/insertTopDeptCode")
 	@ResponseBody
 	public int insertDp(OrgChart orgChart) {
 //		System.out.println("첫생성 : "+orgChart);
@@ -94,26 +126,14 @@ public class OrgChartController {
 		return result;
 	}
 	
-	// 하위부서 이름 변경
-	@PostMapping("/update/Dname")
-	@ResponseBody
-	public int updateDp(OrgChart orgChart) {
-			
-		int result = orgchartService.updateDp(orgChart);
-			
-//		System.out.println("변경후 : "+orgChart);
-
-		return result;
-	}
-	
 	// 하위부서 사원 조회
 	@PostMapping("/selectAll")
 	@ResponseBody
-	public String selectMember(int topDeptCode) {
-		System.out.println(topDeptCode);
-		List<UserDepatment> udList = orgchartService.selectMember(topDeptCode);
+	public String selectMember(int deptCode) {
+//		System.out.println(DeptCode);
+		List<UserDepatment> udList = orgchartService.selectMember(deptCode);
 		
-		System.out.println("udList : "+udList);
+//		System.out.println("udList : "+udList);
 		return new Gson().toJson(udList);
 		
 	}
@@ -129,19 +149,19 @@ public class OrgChartController {
 	}
 	
 	// 직급 추가
-	@PostMapping("/insert/Pname")
+	@PostMapping("/insertPosition")
 	@ResponseBody
 	public int insertPname(OrgChart orgChart) {
 			
 		int result = orgchartService.insertPname(orgChart);
 			
-		System.out.println("생성 : "+result+", "+orgChart);
+//		System.out.println("생성 : "+result+", "+orgChart);
 
 		return result;
 	}
 	
 	// 직급명 변경
-	@PostMapping("/update/Pname")
+	@PostMapping("/updatePname")
 	@ResponseBody
 	public int updatePname(OrgChart orgChart) {
 				

@@ -18,5 +18,6 @@ public class UserDepatment {
 	
 	private int eno;
 	private String userName;
+	private int topDeptCode;
 	
 }

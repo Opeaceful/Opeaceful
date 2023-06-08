@@ -1,7 +1,9 @@
 package com.company.opeaceful.orgChart.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,7 +29,7 @@ public class OrgChartDao {
 		return result;
 	}
 	
-	// 상위부서명 변경
+	// 부서명 변경
 	public int updateTopDp(OrgChart orgChart) {
 		
 		int result =  sqlSession.update("orgChartMapper.updateTopDp", orgChart);
@@ -35,6 +37,15 @@ public class OrgChartDao {
 		if (result > 0) {
 			result = orgChart.getDeptCode();
 		}
+		
+		return result;
+	}
+	
+	// 상위부서 삭제
+	public int deleteDeptCode(Map<String, Object> map) {
+		
+		
+		int result = sqlSession.delete("orgChartMapper.deleteDeptCode", map);
 		
 		return result;
 	}
@@ -50,21 +61,9 @@ public class OrgChartDao {
 		return result;
 	}
 	
-	// 하위부서명 변경
-	public int updateDp(OrgChart orgChart) {
-		
-		int result =  sqlSession.update("orgChartMapper.updateDp", orgChart);
-		
-		if (result > 0) {
-			result = orgChart.getDeptCode();
-		}
-		
-		return result;
-	}
-	
 	// 하위부서 사원 조회
-	public List<UserDepatment> selectMember(int topDeptCode) {
-		return sqlSession.selectList("deptMapper.selectMember", topDeptCode);
+	public List<UserDepatment> selectMember(int deptCode) {
+		return sqlSession.selectList("deptMapper.selectMember", deptCode);
 	}
 	
 	// 직급추가
@@ -83,6 +82,14 @@ public class OrgChartDao {
 	public int updatePname(OrgChart orgChart) {
 		
 		int result = sqlSession.update("orgChartMapper.updatePname", orgChart);
+		
+		return result;
+	}
+	
+	// 부서조회
+	public int selectDept(OrgChart orgChart) {
+		
+		int result = sqlSession.selectOne("orgChartMapper.selectDept", orgChart);
 		
 		return result;
 	}
