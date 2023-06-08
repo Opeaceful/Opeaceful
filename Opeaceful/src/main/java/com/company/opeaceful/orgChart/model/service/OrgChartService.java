@@ -31,4 +31,13 @@ public interface OrgChartService {
 	
 	// 부서조회
 	int selectDept(OrgChart orgChart);
+	
+	// 직급조회
+	int selectPosition(OrgChart orgChart);
+	
+	// 직급삭제
+	int deletePosition(int pCode);
+	
+	// 조직도 조회
+	void selectOrgChart(Map<String, Object> map);
 }

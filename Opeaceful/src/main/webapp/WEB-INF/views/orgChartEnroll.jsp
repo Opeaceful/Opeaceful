@@ -78,8 +78,8 @@
 				</div>
 				<div class="col right-box">
 					<div class="name-btn-box">
-						<!-- <div class="department-name-box">경영지원본부</div> -->
-						<button class="btn btn-primary dp-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>
+						<!-- <div class="department-name-box">경영지원본부</div>
+						<button class="btn btn-primary dp-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button> -->
 					</div>
 					<table class="table table-hover org-table table-common">
 						<thead class="org-thead">

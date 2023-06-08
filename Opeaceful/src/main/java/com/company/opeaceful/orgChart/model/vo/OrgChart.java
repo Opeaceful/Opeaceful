@@ -13,4 +13,5 @@ public class OrgChart {
 	private String pName;
 	
 	private int userNo;
+	private String userName;
 }

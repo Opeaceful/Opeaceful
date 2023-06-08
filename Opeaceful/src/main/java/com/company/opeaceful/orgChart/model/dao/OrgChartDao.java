@@ -93,4 +93,22 @@ public class OrgChartDao {
 		
 		return result;
 	}
+	
+	// 직급조회
+	public int selectPosition(OrgChart orgChart) {
+		int result = sqlSession.selectOne("orgChartMapper.selectPosition", orgChart);
+		return result;
+	}
+	
+	// 직급삭제
+	public int deletePosition(int pCode) {
+		int result = sqlSession.delete("orgChartMapper.deletePosition", pCode);
+		return result;
+	}
+	
+	// 조직도 조회
+	public List<OrgChart> selectOrgChart() {
+		 List<OrgChart> result = sqlSession.selectList("orgChartMapper.selectOrgChart");
+		return result;
+	}
 }

@@ -63,4 +63,27 @@ public class OrgChartServiceImpl implements OrgChartService {
 	public int selectDept(OrgChart orgChart) {
 		return orgChartDao.selectDept(orgChart);
 	}
+	
+	// 직급조회
+	@Override
+	public int selectPosition(OrgChart orgChart) {
+		return orgChartDao.selectPosition(orgChart);
+	}
+	
+	// 직급삭제
+	@Override
+	public int deletePosition(int pCode) {
+		return orgChartDao.deletePosition(pCode);
+	}
+	
+	// 조직도 조회
+	@Override
+	public void selectOrgChart(Map<String, Object> map) {
+		
+		List<OrgChart> list = orgChartDao.selectOrgChart();
+		
+		map.put("list", list);
+		
+		System.out.println("list 담긴 값 : "+list);
+	}
 }

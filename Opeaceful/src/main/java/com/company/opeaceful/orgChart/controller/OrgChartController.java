@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,11 +43,6 @@ public class OrgChartController {
 	@GetMapping("/")
 	public String orgChart() {
 		return "orgChartEnroll";
-	}
-	
-	@GetMapping("/view")
-	public String orgChartView() {
-		return "orgChartView";
 	}
 	
 	// 부서조회
@@ -170,6 +166,43 @@ public class OrgChartController {
 		System.out.println("생성 : "+result+", "+orgChart);
 
 		return result;
+	}
+	
+	// 직급 삭제
+	@PostMapping("/deletePosition")
+	@ResponseBody
+	public int deletePosition(OrgChart orgChart, int pCode) {
+		
+		int result = orgchartService.selectPosition(orgChart);
+		
+		if (result <= 0) {
+			orgchartService.deletePosition(pCode);
+		}
+		
+		return result;
+	}
+	
+	// 조직도 조회
+	@GetMapping("/selectOrgChart")
+	public String selectOrgChart(Model model, Department department) {
+		
+		Map<String, Object> map = new HashMap();
+		
+		orgchartService.selectOrgChart(map);
+		
+		List<Department> dept = deptService.selectDeptList();
+		
+		System.out.println(dept);
+		
+		List<UserDepatment> team = orgchartService.selectMember(department.getDeptCode());
+		
+		map.put("dept", dept);
+		map.put("team", team);
+		
+		model.addAttribute("map", map);
+			
+		return "orgChartView";
+			
 	}
 	
 	

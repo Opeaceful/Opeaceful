@@ -2,25 +2,68 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="orgChartMapper">
 
+	<resultMap type="orgChart" id="orgChartResultSet">
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="P_CODE" property="pCode"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="P_NAME" property="pName"/>
+		<result column="TOP_DEPT_CODE" property="topDeptCode"/>
+	</resultMap>
+
 	<!-- =================== [select] =================== -->
 	
-	<!-- 부서조회 -->
+	<!-- 부서 조회 -->
 	<select id="selectDept" parameterType="orgChart" resultType="_int">
 		SELECT COUNT(*) 
 		FROM USER_DEPARTMENT 
 		LEFT JOIN DEPARTMENT USING (DEPT_CODE) 
 		WHERE DEPT_CODE in (SELECT DEPT_CODE     
 							FROM department      
-							WHERE DEPT_CODE = #{deptCode} OR TOP_DEPT_CODE = #{topDeptCode});
+							WHERE 
+							 <if test='topDeptCode == 0'> 
+								 TOP_DEPT_CODE = #{deptCode})
+							 </if>
+							  <if test='topDeptCode != 0'> 
+								 DEPT_CODE = #{deptCode} AND TOP_DEPT_CODE = #{topDeptCode})
+							  </if>
+			
 	</select>
-
+	
+	<!-- 직급 조회 -->
+	<select id="selectPosition" parameterType="orgChart" resultType="_int">
+		SELECT COUNT(*) 
+		FROM USER_DEPARTMENT 
+		LEFT JOIN POSITION USING (P_CODE) 
+		WHERE P_CODE in (SELECT P_CODE     
+							FROM POSITION
+							WHERE P_CODE = #{pCode};
+			
+	</select>
+	
+	<!-- 조직도 조회 -->
+	<select id="selectOrgChart" resultMap="orgChartResultSet">
+		SELECT USER_NAME,
+				DEPT_NAME,
+				P_NAME,
+				DEPT_CODE,
+				P_CODE,
+				TOP_DEPT_CODE,
+				USER_NO
+		FROM MEMBER M
+		LEFT JOIN USER_DEPARTMENT USING (USER_NO)
+		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
+		LEFT JOIN POSITION USING (P_CODE)
+	</select>
+	
 	<!-- =================== [insert] =================== -->
 
 	<!-- 상위부서 추가 -->
 	<insert id="insertTopDp" parameterType="orgChart" useGeneratedKeys="true" keyProperty="deptCode">
-		<selectKey resultType="int" keyProperty="deptCode" order="AFTER">
+		<!-- <selectKey resultType="int" keyProperty="deptCode" order="AFTER">
 			SELECT LAST_INSERT_ID()
-		</selectKey>
+		</selectKey> -->
 		INSERT INTO DEPARTMENT(DEPT_NAME)
 		VALUES(#{deptName})
 	</insert>
@@ -63,6 +106,15 @@
 		<!-- set sql_safe_updates=0 -->
 		DELETE
 		FROM DEPARTMENT
-		WHERE DEPT_CODE = #{deptCode} OR TOP_DEPT_CODE = #{topDeptCode}
+		WHERE DEPT_CODE = #{deptCode}
 	</delete>
+	
+	<!-- 직급 삭제 -->
+	<delete id="deletePosition">
+		<!-- set sql_safe_updates=0 -->
+		DELETE
+		FROM POSITION
+		WHERE P_CODE = #{pCode}
+	</delete>
+	
 </mapper>
