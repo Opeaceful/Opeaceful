@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.approval.model.dao.ApprovalDao;
+import com.company.opeaceful.approval.model.vo.Approval;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.commom.model.vo.PageInfo;
@@ -60,6 +61,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public List<ApprovalFile> selectFileList(String refType, int refNo, String usage) {
 		return aprDao.selectFileList( refType,  refNo,  usage);
+	}
+	
+	// [지의] 해당 유저 연차 조회
+	@Override
+	public List<Approval> selectUserApproval(int userNo) {
+		return aprDao.selectUserApproval(userNo);
 	}
 
 	

@@ -19,6 +19,8 @@ $("#all-user-view-int").keyup(function(key){
 function modalAllMemberView(){
 
     let keyword =  document.getElementById("all-user-view-int").value;
+    console.log(keyword);
+
   
     $.ajax({
         url:`${path}/member/modalAllMemberView`,

@@ -39,6 +39,7 @@
 		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatMessage" alias="ChatMessage"/>
 		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatParticipant" alias="ChatParticipant"/>
 		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatRoom" alias="ChatRoom"/>
+		<typeAlias type="com.company.opeaceful.salary.model.vo.Salary" alias="salary"/>
 	</typeAliases>
 	
 	<!-- 
@@ -57,6 +58,7 @@
 		<mapper resource="/mappers/annual-mapper.xml"/> 
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/approval-mapper.xml"/> 
+		<mapper resource="/mappers/salary-mapper.xml"/> 
 	</mappers>
 
 
