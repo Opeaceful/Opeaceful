@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/sidebar.jsp" />
+<c:set var="LSalry" value="${LSalry}"/>
 <div class="content-wrap">
  <!--제목-->
   <div class="container">
@@ -26,28 +28,26 @@
     <br><br>
 
  
-    <!--년도/월 검색 구역-->
+    <!--부서/년도/월/이름 검색 구역-->
     <div class="d-inline-flex">
-      <select class="form-select form-select-sm mb-3" id="" name="">
-          <option value="" disabled selected>팀명</option>
-          <option value="경영1팀">경영1팀</option>
-          <option value="2">경영2팀</option>
-          <option value="3">....</option>
-      </select>
-      <select class="form-select form-select-sm mb-3 ms-1" id="year1" name="year1">
-      </select>
-      <select class="form-select form-select-sm mb-3 ms-1" id="month1" name="month1">
-      </select>
-      <div class="search-wrap2 input-group mb-3 ms-1">
-          <input type="text" class="search-input2 form-control box-shadow-none" placeholder="사원번호 입력">
-          <button class="btn btn-outline-secondary search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </div>
-    </div>
+		<select class="form-select form-select-sm mb-3" id="d-select" name="deptCode">
+			<option value="" selected>부서명</option>
+		</select>
+		
+		<select class="form-select form-select-sm mb-3 ms-1" id="salary-year" name="year">
+		</select>
+		<select class="form-select form-select-sm mb-3 ms-1" id="salary-month" name="month">
+			<option value="13">전체</option>
+		</select>
+		<div class="search-wrap2 input-group mb-3 ms-1">
+		    <input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원이름 입력">
+		    <button class="btn btn-outline-secondary search-btn2" type="button" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+		</div>
+ 	</div>
   
 
     <!--테이블 구역-->
     <table class="table table-hover table-common">
-      <!--하드코딩. 실제로는 db로 불러올 예정!!-->
       <thead>
         <tr>
           <th scope="col">사원번호</th>
@@ -60,33 +60,18 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr data-id=1>
-          <th scope="row">230199</th>
-          <th>김지은</th>
-          <th>2022-03</th>
-          <td>2022-04-05</td>
-          <td>3,000,000</td>
-          <td>300,000</td>
-          <td>2,700,000</td>
-        </tr>
-        <tr data-id=1>
-          <th scope="row">230199</th>
-          <th>김지은</th>
-          <th>2022-03</th>
-          <td>2022-04-05</td>
-          <td>3,000,000</td>
-          <td>300,000</td>
-          <td>2,700,000</td>
-        </tr>
-        <tr data-id=1>
-          <th scope="row">230199</th>
-          <th>김지은</th>
-          <th>2022-03</th>
-          <td>2022-04-05</td>
-          <td>3,000,000</td>
-          <td>300,000</td>
-          <td>2,700,000</td>
-        </tr>
+        <c:forEach items="${LSalry}" var="salry">
+	        <tr data-id=${salry.getSalaryNo()}>
+		        <td>${salry.getEno()}</td>
+		        <td>${salry.getUserName()}</td>
+	            <th scope="row">${salry.getYearReported()}-${salry.getMonReported()}</th>
+	            <td>${salry.getPaymentDate()}</td>
+	            <td>${salry.getTotalGrosspay()}</td>
+	            <td>${salry.getTotalDeductions()}</td>
+	            <td>${salry.getNetPay()}</td>
+	        </tr>
+		</c:forEach>      
+        
       </tbody>
     </table>
   
@@ -256,7 +241,8 @@
 
 
 <jsp:include page="/WEB-INF/views/member/member-select.jsp"/>
+<script type="module" src="${path}/resources/js/common/dtcodeselect.js"></script>
+<script type="module" src="${path}/resources/js/salary/dateBox.js"></script>	
 <script type="module" src="${path}/resources/js/salary/salaryAll.js"></script>	
-
 </body>
 </html>

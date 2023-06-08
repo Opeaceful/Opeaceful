@@ -169,7 +169,7 @@
 
                     <div class="sidebar-more" id="salary-menu-item">
                         <a class="sidebar-more-text" href="${path}/salary/employee">급여 조회</a>
-                        <a class="sidebar-more-text" href="">사원별 급여 관리</a>
+                        <a class="sidebar-more-text" href="${path}/salary/AllSalary">사원별 급여 관리</a>
                     </div>
                 </li>
             </ul>

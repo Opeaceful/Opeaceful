@@ -23,5 +23,9 @@ public class SalaryDao {
 		return sqlSession.selectOne("salaryMapper.salaryOne",id);
 	}
 
+	public List<Salary> employeeAllSalary(Map<String, Object> selectYMT) {
+		return sqlSession.selectList("salaryMapper.employeeAllSalary",selectYMT);
+	}
+
 
 }

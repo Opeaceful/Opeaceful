@@ -68,6 +68,38 @@ public class SalaryController {
 			
 	}
 	
+	
+	//[지영]
+	//employeeAllSalary로 이동 + 데이터 검색으로 세팅해주기
+	@GetMapping("/AllSalary")
+	public String employeeAllSalary(
+//	@ModelAttribute ("loginUser") Member loginUser, 
+			Model model,
+			@RequestParam(value= "month", required = false) Integer month,
+			@RequestParam(value= "year",required = false) Integer year,
+			@RequestParam(value= "team",required = false) String team,
+			@RequestParam(value="cpage", required = false, defaultValue = "1") int currentPage
+			) {
+		
+		//검색 select용 map
+		Map<String, Object> selectYMT = new HashMap<>();	
+		
+		System.out.println(team+"팀체크!!!!!!!!!!");
+		
+		selectYMT.put("month", month);
+		selectYMT.put("year", year);
+		selectYMT.put("team", team);
+		
+		List<Salary> LSalry = salaryService.employeeAllSalary(selectYMT);
+		
+		//model.addAttribute("loginUser", loginUser);
+		model.addAttribute("LSalry",LSalry);
+		
+		System.out.println(LSalry+"급여!!!!!!!!!!");
+		
+		return "salary/employeeAllSalary";
+		
+	}
 
 	
 

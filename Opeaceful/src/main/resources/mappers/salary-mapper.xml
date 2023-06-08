@@ -32,7 +32,29 @@
 		FROM salary
 		WHERE SALARY_NO = #{id}
   	</select>
+  	
+  	<!-- [지영] 모든유저 급여조회 -->
+ 	<select id="employeeAllSalary"  resultType="salary" parameterType="hashMap">
+		SELECT SALARY_NO,YEAR_REPORTED,MON_REPORTED,
+		 PAYMENT_DATE,FORMAT(TOTAL_GROSSPAY,0) AS TOTAL_GROSSPAY,
+		 FORMAT(TOTAL_DEDUCTIONS,0) AS TOTAL_DEDUCTIONS,
+		 FORMAT(NET_PAY,0) AS NET_PAY,ENO,USER_NAME
+		FROM salary
+		left JOIN member USING(USER_NO)
+		<where>
+			<if test='year != null'>
+		      YEAR_REPORTED = #{year}
+		    </if>
+		    <if test='month != 13 and month != null'>
+		      AND MON_REPORTED = #{month}
+		    </if>
+		    <if test='team != "부서명" and team != null'>
+		      AND DEPT_NAME = #{team}
+		    </if>
+		 </where>
+		ORDER BY PAYMENT_DATE DESC, SALARY_NO DESC;
+	</select>
   
-  
+  	
   
 </mapper>

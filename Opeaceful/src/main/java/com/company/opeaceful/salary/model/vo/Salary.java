@@ -24,6 +24,10 @@ public class Salary {
 	private int intTotalGrosspay;
 	private int intTotalDeductions;
 	private int intNetPay;
+	
+	//관리용
+	private int eno;
+	private String userName;
 
 }
 

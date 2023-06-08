@@ -11,4 +11,6 @@ public interface SalaryService {
 
 	Salary salaryOne(int id);
 
+	List<Salary> employeeAllSalary(Map<String, Object> selectYMT);
+
 }

@@ -25,5 +25,9 @@ public class SalaryServiceImpl implements SalaryService{
 		return salaryDao.salaryOne(id);
 	}
 	
+	@Override
+	public List<Salary> employeeAllSalary(Map<String, Object> selectYMT){
+		return salaryDao.employeeAllSalary(selectYMT); 
+	}
 
 }

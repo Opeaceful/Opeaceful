@@ -18,7 +18,6 @@
 <body>
 <jsp:include page="/WEB-INF/views/sidebar.jsp" />
 <c:set var="LSalry" value="${LSalry}"/>
-<script>let count = 0;</script>
 <div class="content-wrap">
  	<div class="container">
 	    <div class="title-box print-none">
@@ -34,7 +33,7 @@
     <select class="form-select form-select-sm ms-1 print-none" id="salary-month" name="month">
       <option value="13">전체</option>
     </select>
-  </div> <span></span>
+  </div> 
 
     <!--테이블 구역-->
     <table class="table table-hover table-common print-none">
@@ -140,7 +139,7 @@
     
     
 </div>
-
+<script type="module" src="${path}/resources/js/salary/dateBox.js"></script>	
 <script type="module" src="${path}/resources/js/salary/employeeSalary.js"></script>	
 </body>
 </html>
