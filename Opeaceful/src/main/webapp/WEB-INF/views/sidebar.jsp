@@ -158,6 +158,20 @@
                         <a class="sidebar-more-text" href="${path}/role/userRole">사원별 권한 등록</a>
                     </div>
                 </li>
+                
+                <!-- 급여관리 -->
+                <li id="sidebar-role">
+                    <div class="one-line sidebar-cursor" id="salary-menu">
+                        <span class="side-icon-size"><i class="sidebar-icon fa-solid bi-cash-coin"></i></span>
+                        <span class="sidebar-text">급여관리</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="sidebar-more" id="salary-menu-item">
+                        <a class="sidebar-more-text" href="${path}/salary/employee">급여 조회</a>
+                        <a class="sidebar-more-text" href="${path}/salary/AllSalary">사원별 급여 관리</a>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -216,6 +230,12 @@
         $("#sign-menu").click(function () {
             $("#sign-menu-item").slideToggle();
         });
+    	/* 급여 */
+        $("#salary-menu").click(function () {
+            $("#salary-menu-item").slideToggle();
+        });
+		
+        
         
 		/* 호버이벤트 */
         $(".sidebar").hover(
