@@ -228,7 +228,8 @@
 		LEFT JOIN user_department USING (USER_NO)
         LEFT JOIN department USING (DEPT_CODE)
 	    LEFT JOIN position USING(P_CODE)
-        WHERE USER_NO = #{userNo};
+        WHERE USER_NO = #{userNo}
+        AND STATUS = 'Y';
 	</select>
 	
 	

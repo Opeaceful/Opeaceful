@@ -38,6 +38,19 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+	<!-- [지의] 로그인유저 권한 조회 -->
+	<select id="loginUserRoleSelect" resultType="userRole">
+	SELECT ROLE_CODE
+	  FROM user_role
+	 WHERE USER_NO = #{userNo}
+	UNION ALL
+	SELECT ROLE_CODE
+	  FROM opeaceful.department_role
+	  WHERE P_CODE = (SELECT P_CODE
+					  FROM opeaceful.user_department
+					  WHERE USER_NO = #{userNo});
+	</select>
+	
 	
 	<!-- =================== [delete] =================== -->
 	

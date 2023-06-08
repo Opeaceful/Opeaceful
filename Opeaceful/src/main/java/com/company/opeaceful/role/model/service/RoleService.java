@@ -25,4 +25,6 @@ public interface RoleService {
 
 	int userRoleGrantingdelete(UserRole userRole);
 
+	List<UserRole> loginUserRoleSelect(int userNo);
+
 }

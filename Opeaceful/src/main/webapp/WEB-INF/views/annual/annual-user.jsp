@@ -24,11 +24,11 @@
    			<div class="title-box">
 				<h2 class="title-common">연차</h2>
 			</div>
-    
+            <!-- member-search-keyword -->
             <!-- 내용부분 -->
             <div class="annual-content">
                 <div class="search-wrap2 input-group mb-3">
-                    <input type="search" name="keyword" class="search-input2 form-control box-shadow-none" id="annual-user" placeholder="사원명">
+                    <input type="search" name="keyword" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
                     <button type="button" class="search-btn btn btn-outline-secondary"  id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
                 </div>
                 <div class="annual-user-info container row align-items-center">

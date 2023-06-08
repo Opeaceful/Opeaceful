@@ -115,9 +115,11 @@
 					WHEN TYPE = 2 THEN 0.5
 					WHEN TYPE = 3 THEN 0.5
 			   END AS APPROVAL_COUNT
-		FROM approval
+		 FROM approval
 		WHERE USER_NO = #{userNo}
-		AND STATUS = 1;
+		  AND STATUS = 1
+		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
+		ORDER BY START_DATE DESC;
 	</select>
 
 <!--  insert 구간   -->

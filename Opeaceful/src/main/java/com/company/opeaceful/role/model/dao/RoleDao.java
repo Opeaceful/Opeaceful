@@ -49,4 +49,8 @@ public class RoleDao {
 		return sqlSession.delete("roleMapper.userRoleGrantingdelete",userRole);
 	}
 
+	public List<UserRole> loginUserRoleSelect(int userNo) {
+		return sqlSession.selectList("roleMapper.loginUserRoleSelect",userNo);
+	}
+
 }
