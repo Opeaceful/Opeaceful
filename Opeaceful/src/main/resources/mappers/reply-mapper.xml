@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- [혜린] 댓글 매퍼 -->
+<mapper namespace="replyMapper">
+
+	<resultMap type="boardReply" id="boardReplyResultSet">
+		<id column="REPLY_NO" property="replyNo" />
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="CONTENT" property="content"/>
+		<result column="SECRET" property="secret"/>
+		<result column="TOP_REPLY_NO" property="topReplyNo"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="P_NAME" property="pName"/>
+	</resultMap>
+
+	<!-- 댓글 추가-->
+	<insert id="insertReply" parameterType="boardReply">
+		INSERT INTO BOARD_REPLY(
+			BOARD_NO,
+			USER_NO,
+			CONTENT,
+			SECRET
+		) VALUES (
+			#{boardNo},
+			#{userNo},
+			#{content},
+			#{secret}
+		)
+	</insert>
+	
+	<!-- 해당게시글 댓글 목록 조회 -->
+	<select id="selectReplyList" resultMap="boardReplyResultSet">
+		SELECT
+			REPLY_NO,
+			BOARD_NO,
+			R.USER_NO,
+			CONTENT,
+			SECRET,
+			TOP_REPLY_NO,
+			CREATE_DATE,
+            USER_NAME,
+            P_NAME
+		FROM BOARD_REPLY R
+		LEFT JOIN MEMBER M ON R.USER_NO = M.USER_NO
+            LEFT JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
+	        LEFT JOIN POSITION P ON D.P_CODE = P.P_CODE
+			WHERE BOARD_NO = #{bno}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply">
+		DELETE FROM BOARD_REPLY
+		WHERE REPLY_NO = #{replyNo}
+	</delete>
+
+
+</mapper>

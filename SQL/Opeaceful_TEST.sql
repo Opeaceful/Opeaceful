@@ -31,7 +31,7 @@ INSERT INTO position (P_NAME) VALUES
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
    VALUES ( 230502 , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', 'test', SYSDATE(), 'test@gmail.com');
 
-/* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!!*/
+/* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!! user_no = 5 는  마케팅팀!*/
 
 /*공지사항 고정게시글 데이터*/
 INSERT INTO BOARD(BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,BOARD_CD,COUNT,CREATE_DATE,FIXED)
@@ -80,6 +80,17 @@ VALUES (4,'여기는','TEST1','3','T',default,'2023-05-12'),
 (4,'~~~','TEST4','4','T',default,'2023-04-03'),
 (4,'입니당','TEST5','4','T',default,'2023-03-12');
 
+INSERT INTO BOARD(DEPT_CODE,BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,BOARD_CD,COUNT,CREATE_DATE)
+VALUES (5,'여기는','TEST1','5','T',default,'2023-05-12'),
+(5,'마케팅팀','TEST2','5','T',default,'2023-04-24'),
+(5,'게시판','TEST3','5','T',default,'2023-04-15'),
+(5,'리스트','TEST4','5','T',default,'2023-04-03'),
+(5,'입니당','TEST5','5','T',default,'2023-03-12'),
+(5,'마케팅팀은','TEST1','5','T',default,'2023-05-12'),
+(5,'코드번호','TEST2','5','T',default,'2023-04-24'),
+(5,'5번','TEST3','5','T',default,'2023-04-15'),
+(5,'~~~','TEST4','5','T',default,'2023-04-03'),
+(5,'입니당','TEST5','5','T',default,'2023-03-12');
 
 /*멤버 데이터*/
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME,HIRE_DATE, PHONE,EMAIL, ADDRESS,EXTENSION)
