@@ -64,7 +64,7 @@ public class ApprovalDao {
 	// 저장된 파일리스트 조회(본문용, 첨부용선택)
 	public List<ApprovalFile> selectFileList(String refType, int refNo, String usage) {
 	    Map<String, Object> params = new HashMap<>();
-	    params.put("refType", refType); // 테이블 타입 form , approval, memo
+	    params.put("refType", refType); // 테이블 타입 form , approval, memo, approval-memo
 	    params.put("refNo", refNo); // 참조 문서 no
 	    params.put("usage", usage); // 본문용 content, 첨부용 attachment
 		
@@ -101,6 +101,22 @@ public class ApprovalDao {
 		return result;
 	};
 	
+	
+	// 결재문서 등록
+	public int insertApproval(Approval approval, List<ApprovalLine> lines) {
+		int result = sqlSession.insert("aprMapper.insertApproval", approval);
+		
+		if (result > 0) {
+			Map<String, Object> params = new HashMap<>();
+			params.put("approvalNo", approval.getApprovalNo());
+			params.put("lines", lines);
+
+			result = sqlSession.insert("aprMapper.insertApprovalLine", params);
+		}
+
+	    return result;
+	}
+	
 	// 파일 등록
 	public int insertFile(List<ApprovalFile> fileList, String refType, int refNo ) {
 	    Map<String, Object> params = new HashMap<>();
@@ -121,7 +137,7 @@ public class ApprovalDao {
 		    params.put("favorNo", favor.getLineNo());
 		    params.put("lines", lines);
 		    
-			result =  sqlSession.insert("aprMapper.insertFavor", params);
+			result =  sqlSession.insert("aprMapper.insertFavorActualLine", params);
 	    }
 	    return result;
 	}
@@ -133,6 +149,20 @@ public class ApprovalDao {
 		return sqlSession.update("aprMapper.updateForm", form);
 	};
 	
+	// 결재문서 업데이트
+	public int updateApproval(Approval approval, List<ApprovalLine> lines) {
+		int result = sqlSession.update("aprMapper.updateApproval", approval);
+		int result2 = deleteApprovalLine(approval.getApprovalNo());
+		
+		if(result*result2 > 0) {
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("approvalNo", approval.getApprovalNo());
+		    params.put("lines", lines);
+		    
+			result =  sqlSession.insert("aprMapper.insertApprovalLine", params);
+	    }
+	    return result;
+	};
 	
 //	-------------------------------- delete 구간 ----------------------------------------
 
@@ -155,6 +185,30 @@ public class ApprovalDao {
 
 		return result;
 	};
+	
+	
+	// 결재문서 + 실제 저장된 파일들 삭제
+	public int deleteApproval(int approvalNo,  String deleteFolderPath) {
+		
+		// todo! 나중에 결재문서 다시 조회해 와서 만약 결재라인 이미지 값 있으면 그것도 삭제해야함
+		int result = sqlSession.delete("aprMapper.deleteApproval", approvalNo);
+		if (result > 0) {
+			List<ApprovalFile> fileList = selectFileList("approval-memo", approvalNo, "all");
+			if (fileList.size() > 0) {
+				// 파일 리스트 실제 파일들 삭제
+				for (ApprovalFile file : fileList) {
+					File deleteFile = new File(deleteFolderPath + file.getChangeName());
+					if (deleteFile.exists()) { // 파일이 존재하면
+						deleteFile.delete();// 파일 삭제
+					}
+				}
+				result = deleteFileList(fileList);
+			}
+		}
+
+		return result;
+	};
+	
 
 	// 파일들 삭제
 	public int deleteFileList( List<ApprovalFile> fileList) {
@@ -164,14 +218,15 @@ public class ApprovalDao {
 
 	// 즐겨찾기 삭제
 	public int deleteFavor(int favorNo) {
-		int result = sqlSession.delete("aprMapper.deleteFavor", favorNo);
-		if(result > 0) {
-			result =  sqlSession.delete("aprMapper.deleteActualFavor", favorNo);
-		}
-		return result;
+		// 즐겨찾기 삭제 시 ON DELETE CASCADE설정 되어있기 때문에 
+		// APPROVAL_ACTUAL_FAVORITE_LINE 쪽 데이터도 자동 삭제될것임
+		return sqlSession.delete("aprMapper.deleteFavor", favorNo);
 	}
 
-
+	// 결재라인 삭제
+	public int deleteApprovalLine(int approvalNo) {
+		return sqlSession.delete("aprMapper.deleteApprovalLine", approvalNo);
+	}
 
 
 

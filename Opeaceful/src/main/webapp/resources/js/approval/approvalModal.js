@@ -19,7 +19,6 @@ function approvalModalEvent() {
       document.getElementById('approval-line-modal').style.display = 'none';
     });
 
-
   // 사원 테이블에서 사원명 더블클릭시 결재자 라인에 추가
   document
     .getElementById('select-member-table')
@@ -35,22 +34,25 @@ function approvalModalEvent() {
         // 기존에 추가되지 않은 사용자만 추가 가능
         if (!userNoList.includes(Number(userNo))) {
           let userName = e.target.innerText;
-          let html = `<li data-user="${userNo}" >
-                        <select name="type" >
-                          <option value="A" selected>결재</option>
-                          <option value="R">참조</option>
-                        </select>
-                        <div value="${userNo}">
-                          ${userName}
-                          <button
-                            class="btn-selected-delete btn btn-outline-primary"
-                          >
-                            <div class="div-minus"></div>
-                          </button>
-                        </div>
-                      </li>`;
+          let li = document.createElement('li');
+          // 만들어둔 li 요소에 유저번호 세팅
+          li.dataset.user = userNo;
+          let html = `<select name="type" >
+                        <option value="A" selected>결재</option>
+                        <option value="R">참조</option>
+                      </select>
+                      <div value="${userNo}">
+                        ${userName}
+                        <button
+                          class="btn-selected-delete btn btn-outline-primary"
+                        >
+                          <div class="div-minus"></div>
+                        </button>
+                      </div>`;
 
-          document.querySelector('.selected-lines > ol').innerHTML += html;
+          li.innerHTML = html;
+
+          document.querySelector('.selected-lines > ol').appendChild(li);
         } else {
           swal('이미 선택된 사원입니다.', {
             buttons: { cancel: '확인' },
@@ -139,12 +141,13 @@ function approvalModalEvent() {
     for (let i = 0; i < files.length; i++) {
       fileList.items.add(files[i]);
     }
-
+    console.log(fileList.files);
     document.querySelector('#input-add-file').click();
   });
 
   // 첨부파일 저장된 인풋태그의 값이 변경되었을 경우 이벤트
   document.querySelector('#input-add-file').addEventListener('change', (e) => {
+    console.log('파일');
     const files = Array.from(e.target.files);
 
     for (let i = 0; i < files.length; i++) {

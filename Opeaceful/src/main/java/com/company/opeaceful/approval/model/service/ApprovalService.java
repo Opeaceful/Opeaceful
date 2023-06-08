@@ -38,16 +38,22 @@ public interface ApprovalService {
 
 	int insertFile(List<ApprovalFile> fileList, String refType, int refNo);
 	
+	int insertApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList);
+	
 	int insertFavor(ApprovalFavor favor, List<ApprovalLine> lines);
 	
 //----------------- update ---------------------------------------
 
 	int updateForm(ApprovalForm form, List<ApprovalFile> fileList);
 	
+	int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList);
+	
 //----------------- delete ---------------------------------------
 	
 	int deleteForm(int formNo, String deleteFolderPath);
 	
+	int deleteApproval(int approvalNo, String deleteFolderPath);
+
 	int deleteFileList(List<ApprovalFile> fileList);
 	
 	int deleteFavor(int favorNo);
