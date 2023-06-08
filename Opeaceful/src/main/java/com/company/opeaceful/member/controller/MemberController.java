@@ -2,18 +2,10 @@ package com.company.opeaceful.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -38,7 +30,6 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
-import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 import com.google.gson.Gson;
 
@@ -148,6 +139,26 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	// [지의] 유저 접속상태 변경
+	@ResponseBody
+	@PostMapping("/updateStatusType")
+	public String updateStatusType(@RequestParam("statusType") int statusType,
+									 @ModelAttribute("loginUser") Member loginUser,
+									 Model model) {
+
+		int userNo = loginUser.getUserNo();
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo",userNo);
+		map.put("statusType",statusType);
+		int result = memberService.updateStatusType(map);
+		if(result > 0) {
+			loginUser.setStatusType(statusType);
+			model.addAttribute("loginUser", loginUser);
+		}
+		
+		return new Gson().toJson(result);
+	}
+	
 	//[지영]
 	//member-create로 이동
 	@RequestMapping("/create")
@@ -235,8 +246,6 @@ public class MemberController {
 			selectPD.put("Sselect", Sselect);
 			
 			List<Member> m = memberService.selectMember(currentPage,map,selectPD);
-			
-			System.out.println(m);
 				
 			map.put("m", m);
 			
@@ -379,6 +388,8 @@ public class MemberController {
 	@PostMapping("/modalAllMemberView")
 	public String modalAllMemberView(
 			@RequestParam("keyword") String keyword){
+		
+		System.out.println(keyword);
 		
 		List<Member> m = memberService.modalAllMemberView(keyword);
 	

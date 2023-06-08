@@ -1,16 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
+	int count = 200; //(int) request.getAttribute("count");
+	int pageCount = (int) Math.ceil(count / 10.0);
+%>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Opeaceful</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+    
     <!-- tiny editor -->
     <script
       src="https://cdn.tiny.cloud/1/4u88c1x1vlsys5jtx9tpp86cmfiahnx5rgsxendvyyqg2464/tinymce/5/tinymce.min.js"
       referrerpolicy="origin"
     ></script>
+    
     <!--bootstrap css-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -18,38 +27,14 @@ pageEncoding="UTF-8"%>
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <!-- 부트스트랩 아이콘 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
-    />
-    <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-    <script
-      src="https://kit.fontawesome.com/a2e8ca0ae3.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- JavaScript Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  
 
     <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
     <link
       rel="stylesheet"
-      href="${path}/resources/css/approval/endApprovalModal.css"
-    />
-    <link
-      rel="stylesheet"
       href="${path}/resources/css/approval/myApproval.css"
     />
-    <link
-      rel="stylesheet"
-      href="${path}/resources/css/approval/approvalModal.css"
-    />
+
   </head>
   <body>
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
@@ -62,22 +47,40 @@ pageEncoding="UTF-8"%>
         </div>
 
         <div class="top-menubar">
-          <div class="selected">전체</div>
-          <div>진행중</div>
-          <div>반려</div>
-          <div>완료</div>
-          <div>
-            <div class="alarm-wrap">
-              승인대기
-              <div class="alarm"></div>
-            </div>
-            <!-- <div class="alarm">22</div> -->
-          </div>
-          <div>결재</div>
-          <div class="line"></div>
-        </div>
+			<div class="selected top-menubar-item" value="100">전체</div>
+			<div class="top-menubar-item" id="approval-state-temp" value="2">임시저장</div>
+			<div class="top-menubar-item" id="approval-state-process" value="0">진행중</div>
+			<div class="top-menubar-item" id="approval-state-return" value="-1">
+				<div class="alarm-wrap">
+					반려
+					<!-- <div class="alarm"></div> -->
+					<span id="return-alarm" class="alarm-balloon" alt="알림수">3</span>
+				</div>
+			</div>
+			<div class="top-menubar-item" id="approval-state-end" value="1">완료</div>
+			<div class="top-menubar-item" id="approval-state-wait">
+				<div class="alarm-wrap">
+					승인대기
+					<!-- <div class="alarm"></div> -->
+					<span id="wait-alarm" class="alarm-balloon" alt="알림수">3</span>
+				</div>
+			</div>
+			<div id="approval-state-approval">결재</div>
+	
+			<div class="line"></div>
+		</div>
 
         <div class="inner-wrap">
+        	<button  id="all-member-view-button" class="btn btn-primary position-btn"
+		data-bs-toggle="modal" data-bs-target="#all-user-view" type="button">
+		실험</button>
+        	<select id="select-year" >
+        		<option selected>2023</option>
+        		<option>2022</option>
+        		<option>2021</option>
+        		<option>2020</option>
+        	</select>
+        
           <table class="my-approval-table table table-common">
             <thead>
               <tr>
@@ -145,11 +148,28 @@ pageEncoding="UTF-8"%>
             class="btn btn-outline-primary">My서명</button>
           </div>
 
-          <div class="pagingArea">
-            <button class="btn btn-outline-primary"><</button>
-            <button class="btn btn-outline-primary">1</button>
-            <button class="btn btn-outline-primary">></button>
-          </div>
+          <div class="paging-bar">			
+			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+
+			<% for(int i= 1; i <= 10; i++) { %>
+				<% if( i <= pageCount) { %>
+					<% if(i == 1) { %>
+						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<% } else { %>
+						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+					<% } %>
+				<% } else {%>
+					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+				<% } %>
+			<% } %>
+			
+			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
+			<% if( 10 < pageCount ) { %>
+				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } else { %>
+				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+			<% } %>
+		 </div>
 
           <div
             class="modal fade"
@@ -205,8 +225,14 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
 
+
+
 	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
 	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
+	<%-- <jsp:include page="/WEB-INF/views/member/member-select.jsp" /> --%>
+	
+	
+	<script type="module" src="${path}/resources/js/approval/myApprovalFront.js"></script>
 
   </body>
 </html>

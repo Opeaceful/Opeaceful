@@ -2,62 +2,62 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 
- <resultMap type="member" id="AllmemberResultSet">
-  	<id column="USER_NO" property="userNo"/>
-  	<result column="ENO" property="eno"/>
-  	<result column="STATUS" property="status"/>
-  	<result column="PROFILE_IMG" property="profileImg"/>
-  	<result column="STATUS_TYPE" property="statusType"/> 	
-  	<result column="USER_PWD" property="userPwd"/>
-  	<result column="USER_NAME" property="userName"/> 	
-  	<result column="PHONE" property="phone"/> 	
-  	<result column="EXTENSION" property="extension"/> 	
-  	<result column="EMAIL" property="email"/> 	
-  	<result column="ADDRESS" property="address"/> 	
-  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
-  	<result column="HIRE_DATE" property="hireDate"/>
-  	
-  	<result column="S_HIRE_DATE" property="ShireDate"/> 
-  	<result column="RESIGNED_DATE" property="ResignedDate"/>
-  	
-  	<result column="P_NAME" property="pName"/> 
-  	<result column="DEPT_NAME" property="dName"/> 
-  	
-</resultMap>
-
-<!--지영: 수정용 ResultSet -->
- <resultMap type="member" id="UpdatememberResultSet">
-  	<id column="USER_NO" property="userNo"/>
-  	<result column="ENO" property="eno" />
-  	<result column="STATUS" property="status"/>	
-  	<result column="USER_NAME" property="userName"/> 	
-  	<result column="PHONE" property="phone"/> 	
-  	<result column="EXTENSION" property="extension"/> 	
-  	<result column="EMAIL" property="email"/> 	
-  	<result column="ADDRESS" property="address"/> 	
-  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
-  	
-  	<result column="S_HIRE_DATE" property="ShireDate"/> 
-  	
-  	<result column="P_CODE" property="pCode"/> 
-  	<result column="DEPT_CODE" property="deptCode"/> 
-  	<result column="P_NAME" property="pName"/> 
-  	<result column="DEPT_NAME" property="dName"/> 
-  	
-</resultMap>
-
-<!--[지영] 전체 조회용-->
- <resultMap type="member" id="AllmemberVIewResultSet">
-  	<id column="USER_NO" property="userNo"/>
-  	<result column="USER_NAME" property="userName"/> 	
-  	<result column="P_CODE" property="pCode"/> 
-  	<result column="DEPT_CODE" property="deptCode"/> 
-  	<result column="P_NAME" property="pName"/> 
-  	<result column="DEPT_NAME" property="dName"/>   	
-</resultMap>
+	 <resultMap type="member" id="AllmemberResultSet">
+	  	<id column="USER_NO" property="userNo"/>
+	  	<result column="ENO" property="eno"/>
+	  	<result column="STATUS" property="status"/>
+	  	<result column="PROFILE_IMG" property="profileImg"/>
+	  	<result column="STATUS_TYPE" property="statusType"/> 	
+	  	<result column="USER_PWD" property="userPwd"/>
+	  	<result column="USER_NAME" property="userName"/> 	
+	  	<result column="PHONE" property="phone"/> 	
+	  	<result column="EXTENSION" property="extension"/> 	
+	  	<result column="EMAIL" property="email"/> 	
+	  	<result column="ADDRESS" property="address"/> 	
+	  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
+	  	<result column="HIRE_DATE" property="hireDate"/>
+	  	
+	  	<result column="S_HIRE_DATE" property="ShireDate"/> 
+	  	<result column="RESIGNED_DATE" property="ResignedDate"/>
+	  	
+	  	<result column="P_NAME" property="pName"/> 
+	  	<result column="DEPT_NAME" property="dName"/> 
+	  	
+	</resultMap>
+	
+	<!--지영: 수정용 ResultSet -->
+	 <resultMap type="member" id="UpdatememberResultSet">
+	  	<id column="USER_NO" property="userNo"/>
+	  	<result column="ENO" property="eno" />
+	  	<result column="STATUS" property="status"/>	
+	  	<result column="USER_NAME" property="userName"/> 	
+	  	<result column="PHONE" property="phone"/> 	
+	  	<result column="EXTENSION" property="extension"/> 	
+	  	<result column="EMAIL" property="email"/> 	
+	  	<result column="ADDRESS" property="address"/> 	
+	  	<result column="ANNUAL_LEAVE_COUNT" property="annualLeaveCount"/> 	
+	  	
+	  	<result column="S_HIRE_DATE" property="ShireDate"/> 
+	  	
+	  	<result column="P_CODE" property="pCode"/> 
+	  	<result column="DEPT_CODE" property="deptCode"/> 
+	  	<result column="P_NAME" property="pName"/> 
+	  	<result column="DEPT_NAME" property="dName"/> 
+	  	
+	</resultMap>
+	
+	<!--[지영] 전체 조회용-->
+	 <resultMap type="member" id="AllmemberVIewResultSet">
+	  	<id column="USER_NO" property="userNo"/>
+	  	<result column="USER_NAME" property="userName"/> 	
+	  	<result column="P_CODE" property="pCode"/> 
+	  	<result column="DEPT_CODE" property="deptCode"/> 
+	  	<result column="P_NAME" property="pName"/> 
+	  	<result column="DEPT_NAME" property="dName"/>   	
+	</resultMap>
 
 <!-- =============================================[insert]=========================================================== -->	
-<!-- [지영] member insert구문 -->
+	<!-- [지영] member insert구문 -->
 	<!--[지영] member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
 	
@@ -260,6 +260,15 @@
 		SET STATUS_TYPE = 0
 		WHERE USER_NO = #{userNo};
 	</update>
+	
+	<!-- [지의] 유저 접속상태 변경 -->
+	<update id="updateStatusType">
+		UPDATE MEMBER
+		SET STATUS_TYPE = #{statusType}
+		WHERE USER_NO = #{userNo};
+	</update>
+	
+	
 
 
 

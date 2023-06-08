@@ -49,5 +49,7 @@ public interface MemberService {
 
 	List<Member> checkMemberNoSelect(int currentPage, Map<String, Object> map, int[] intArray);
 
+	int updateStatusType(Map<String, Object> map);
+
 
 }

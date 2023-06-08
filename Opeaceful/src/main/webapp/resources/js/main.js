@@ -64,9 +64,19 @@ document.querySelector("#state .select").addEventListener("click", onClickState)
 function onClickStateOption(e) {
     const selectedValue = e.currentTarget.innerHTML;
     document.querySelector("#state .text").innerHTML = selectedValue;
-
+    
     console.log(e.currentTarget.id);
-    console.log(selectedValue);
+    /* --------------------------- 접속 상태 변경 --------------------------- */
+    $.ajax({
+        type : "POST",
+        dataType : "json",
+        data : {statusType : e.currentTarget.id},
+        url : path+"/member/updateStatusType",
+        success : function(result){},
+        error : function(e){
+            console.log(e.target);
+        }
+    })
 
 }
 
@@ -75,7 +85,6 @@ for (let i = 0; i < stateList.length; i++) {
     let state = stateList[i];
     state.addEventListener("click", onClickStateOption);
 }
-/* --------------------------- 접속 상태 변경 --------------------------- */
 
 
 /* --------------------------- 칼라모드 표시 --------------------------- */
@@ -199,3 +208,30 @@ $("#main-off").click(function(){
 
 // 시간표시 함수 실행
 getTime();
+
+function weather(){
+    $.ajax({
+        url : "/api/weather",
+        type: "get",
+        timeout : 30000,
+        contentType : "application/json",
+        dataType : "json",
+        success : function(data, status, xhr){
+            let dataHeader = data.result.response.header.resultCode;
+
+            if(dataHeader == '00'){
+                console.log("success ==> ");
+                console.log(data);
+            }else{
+                console.log("fail ==> ");
+                console.log(data);
+                
+            }
+        },
+        error : function(e, status, xhr, data){
+            console.log("error ==> ");
+            console.log(e);
+        }
+    })
+}
+weather();
