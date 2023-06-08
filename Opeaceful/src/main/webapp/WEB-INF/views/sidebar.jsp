@@ -120,6 +120,23 @@
 				    </a>
 				</li>
 				
+				<!-- 급여관리 -->
+                <li id="sidebar-salary">
+                    <div class="one-line sidebar-cursor" id="salary-menu">
+                        <span class="side-icon-size"><i class="sidebar-icon fa-solid bi-cash-coin"></i></span>
+                        <span class="sidebar-text">급여관리</span>
+                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="sidebar-more" id="salary-menu-item">
+                        <a class="sidebar-more-text" href="${path}/salary/employee">급여 조회</a>
+						<c:forEach items="${loginUserRole}" var="role">
+							<c:if test="${role.roleCode eq 'S01'}">
+		                        <a class="sidebar-more-text" href="${path}/salary/AllSalary">사원별 급여 관리</a>
+							</c:if>
+						</c:forEach>
+                    </div>
+                </li>
 
                 <!-- 연차관리 -->
                 <c:forEach items="${loginUserRole}" var="role">
@@ -174,20 +191,6 @@
 		                </li>                
 	                </c:if>
                 </c:forEach>
-                
-                <!-- 급여관리 -->
-                <li id="sidebar-role">
-                    <div class="one-line sidebar-cursor" id="salary-menu">
-                        <span class="side-icon-size"><i class="sidebar-icon fa-solid bi-cash-coin"></i></span>
-                        <span class="sidebar-text">급여관리</span>
-                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
-                    </div>
-
-                    <div class="sidebar-more" id="salary-menu-item">
-                        <a class="sidebar-more-text" href="${path}/salary/employee">급여 조회</a>
-                        <a class="sidebar-more-text" href="${path}/salary/AllSalary">사원별 급여 관리</a>
-                    </div>
-                </li>
             </ul>
         </div>
 

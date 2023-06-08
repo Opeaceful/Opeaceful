@@ -234,6 +234,11 @@ VALUES
 (8,7,'Y01'),
 (8,4,'Y01');
 
+/* USER_NO : 8 에 모든권한 들어있음 */
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'S01');
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T01');
+INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T02');
+
 /* 연차 임시데이터 */
 UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 16
 WHERE USER_NO > 20;
