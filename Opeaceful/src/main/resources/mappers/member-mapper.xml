@@ -207,8 +207,16 @@
 	    LEFT JOIN department USING(DEPT_CODE)
 	    LEFT JOIN position USING(P_CODE)
 		 WHERE ENO = #{eno}
-		   AND STATUS = 'Y'
+		   AND STATUS = 'Y';
 	</select>
+	
+	<!-- [지의] 탈퇴회원 조회 -->
+	<select id="selectLoginStatus" resultType="string">
+		SELECT STATUS
+		  FROM MEMBER
+		 WHERE ENO = #{eno};
+	</select>
+
 	
 	<!-- [지의] 유저 연차 조회 -->
 	<select id="selectUserAnnaul" resultMap="UserAnnaulResultSet" parameterType="_int">

@@ -24,4 +24,4 @@ $(document).ready(function(){
         $("#salary-month").val(urlMonth)
     }
 
-}
+})
