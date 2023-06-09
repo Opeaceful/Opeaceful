@@ -188,7 +188,7 @@ let setFormModalInnerEvent = function () {
   document
     .getElementById('btn-copy-form')
     .addEventListener('click', function () {
-      AprData.selectFormList('copy');
+      AprData.selectFormListPage('copy');
     });
 
   // 양식복사창 닫기 버튼 이벤트 부여
@@ -397,7 +397,7 @@ let pageBtnEvent = function () {
 
       let checkType = document.getElementById('select-show-type').value;
 
-      AprData.selectFormList(
+      AprData.selectFormListPage(
         'table',
         Number(checkType),
         Number(this.innerText)

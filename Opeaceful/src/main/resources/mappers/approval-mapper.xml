@@ -20,7 +20,7 @@
 		테이블의 어느 속성들을 받을 것인지 따로 정할 수도 있는데 keyColumn으로 설정하면 된다
  -->
 
-<!--  select 구간  -->
+<!-- ==============================  select 구간 ================================ -->
 
 	<select id="selectFormListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
@@ -103,8 +103,50 @@
 				</when>
 			</choose>
 	</select>
+		
+	<!-- [지의] 해당 유저 연차 조회 -->
+	<select id="selectUserApproval" resultType="approval" parameterType="_int">
+		SELECT USER_NO,
+			   TYPE,
+			   START_DATE,
+			   END_DATE,
+			   CASE
+					WHEN TYPE = 1 THEN (END_DATE - START_DATE) + 1
+					WHEN TYPE = 2 THEN 0.5
+					WHEN TYPE = 3 THEN 0.5
+			   END AS APPROVAL_COUNT
+		 FROM approval
+		WHERE USER_NO = #{userNo}
+		  AND STATUS = 1
+		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
+		ORDER BY START_DATE DESC;
+	</select>
 
-<!--  insert 구간   -->
+	<!-- 즐겨찾기 조회 -->
+	<select id="selectFavorList" parameterType="_int" resultType="approvalFavor">
+		SELECT *
+		FROM APPROVAL_FAVORITE_LINE
+		WHERE USER_NO = #{ userNo }
+	</select>
+	
+	<!-- 즐겨찾기/결재문서 결재라인 조회 -->
+	<select id="selectLineList" parameterType="map" resultType="approvalLine">
+		SELECT *
+		FROM 
+		<choose>
+			<when test='type.equals("favor")'>
+				APPROVAL_ACTUAL_FAVORITE_LINE
+				WHERE LINE_NO = #{no}
+			</when>	
+			<otherwise>
+				APPROVAL_LINE
+				WHERE APPROVAL_NO = #{no}
+			</otherwise>
+		</choose>
+		ORDER BY LEVEL
+	</select>
+
+<!-- =============================== insert 구간  =========================================== -->
 	
 	<!-- 폼 등록 / 등록하면서 formNo반환 -->
 	<insert id="insertForm" useGeneratedKeys="true"  keyProperty="formNo" parameterType="approvalForm">
@@ -131,7 +173,30 @@
 	</insert>
 	
 	
-<!--  update 구간  -->
+	<!-- 즐겨찾기 등록 -->
+	<insert id="insertFavor" parameterType="approvalFavor" useGeneratedKeys="true" keyProperty="lineNo">
+		INSERT INTO APPROVAL_FAVORITE_LINE(USER_NO, TITLE)
+		VALUES( #{userNo} , #{title} )
+	</insert>
+	
+	
+	<insert id="insertFavorActualLine" parameterType="map">
+		INSERT INTO APPROVAL_ACTUAL_FAVORITE_LINE(LEVEL, LINE_NO, USER_NO, TYPE)
+		SELECT LINE.*
+		FROM (
+			<foreach collection="lines" item="line" separator="UNION ALL">
+				SELECT
+					#{line.level} AS LEVEL ,
+					#{favorNo} AS LINE_NO ,
+					#{line.userNo} AS USER_NO ,
+					#{line.type} AS TYPE 
+				FROM DUAL
+			</foreach>
+			) LINE
+	</insert>
+	
+	
+<!-- ============================== update 구간 ============================== -->
 	
 	<!-- 폼 내용 수정 -->
 	<update id="updateForm" parameterType="approvalForm">
@@ -142,7 +207,7 @@
 		WHERE FORM_NO  = #{formNo}
 	</update>
 	
-<!--  delete 구간  -->
+<!-- ============================ delete 구간 ============================ -->
 	
 	<!-- 폼 삭제 -->
 	<delete id="deleteForm" parameterType="_int">
@@ -157,6 +222,19 @@
 		WHERE FILE_NO IN ( <foreach collection="list" item="file" separator=",">
 								#{file.fileNo}
 							</foreach> )
+	</delete>
+	
+	
+	<!-- 즐겨찾기 삭제 -->
+	<delete id="deleteFavor" parameterType="list">
+		DELETE FROM  APPROVAL_FAVORITE_LINE
+		WHERE LINE_NO = #{favorNo}
+	</delete>
+
+	<!-- 즐겨찾기 실제 라인 삭제 -->
+	<delete id="deleteActualFavor" parameterType="_int">
+		DELETE FROM  APPROVAL_ACTUAL_FAVORITE_LINE
+		WHERE LINE_NO = #{favorNo}
 	</delete>
 	
 	
