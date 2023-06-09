@@ -75,7 +75,9 @@ div.line {
 } */
 
 .alarm-balloon {
+  box-shadow: 1px 1px 3px #00000040;
   /* display: none; */
+  min-width: 20px;
   padding: 0.125rem 0.3125rem 0.125rem 0.3125rem; /* 위.아래 2px, 좌.우 5px */
   border: 0px;
   background-color: tomato;
