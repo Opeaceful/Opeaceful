@@ -205,3 +205,27 @@ export function returnFormData(tinyId) {
 
   return formData;
 }
+
+
+// 서버에서 가져온 이미지 src 경로 재설정 해주는 함수
+// path경로가 변경될 경우를 대비
+export function changeImgPath(tinyId, imgPath) {
+  let imgArr = tinymce
+    .get(tinyId)
+    .contentDocument.getElementsByTagName('img');
+
+  if (imgArr) {
+    for (let img of imgArr) {
+      let imgSrc = img.src;
+      // 신규로 추가된 이미지들의 src는 blob로 시작되도록 해두었음
+      // 그외 / 로 시작하지 않는 기존 이미지들 src 갈아끼기
+      if (!imgSrc.startsWith('blob')) {
+        // 이미지 실제 이름만 가져옴
+        imgSrc = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+        // 이미지 경로 재설정
+        img.src = imgPath + imgSrc;
+      }
+    }
+  }
+};

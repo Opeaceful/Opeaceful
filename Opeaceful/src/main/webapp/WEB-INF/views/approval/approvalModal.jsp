@@ -183,17 +183,17 @@ pageEncoding="UTF-8"%>
                 </table>
               </div>
 
-              <textarea class="tinymce" id="form-tiny" name="content" maxlength="3000" >
+              <textarea class="tinymce" id="approval-tiny" name="content" maxlength="3000" >
               </textarea>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary">
+            <button type="button" id="btn-save-approval-temporary" class="btn btn-outline-primary">
               임시 저장
             </button>
 
-            <button type="button" class="btn btn-primary position-ok ms-auto">
-              저장
+            <button type="button" id="btn-save-approval" class="btn btn-primary position-ok ms-auto">
+              결재/저장
             </button>
             <button
               type="button"

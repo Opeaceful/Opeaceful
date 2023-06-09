@@ -69,7 +69,7 @@ public class ApprovalController {
 	}
 	
 	
-	// ajax용 즐겨찾기 저장
+	// ajax용 결재문서 저장
 	@ResponseBody
 	@PostMapping("/insertApproval")
 	public int insertApproval(  @ModelAttribute	 Approval approval, 
@@ -173,11 +173,10 @@ public class ApprovalController {
 		}
 		
 		
-		
 		// todo! 결재문서 저장되고 임시저장용이 아니라면 다음 상대한테 알림 날려야함!
 		int result = aprService.insertApproval(approval, lines , saveList);
 		
-		return 0;
+		return result;
 	}
 	
 	
