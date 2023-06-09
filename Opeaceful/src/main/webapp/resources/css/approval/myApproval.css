@@ -42,7 +42,8 @@
   background-color: var(--color-light-navy);
 }
 
-div.line:hover {
+div.line:hover,
+div.selected:hover {
   background-color: var(--color-background);
 }
 
@@ -196,27 +197,33 @@ div.selected {
 }
 
 .paging-bar button {
-  font-size: var(--font13);
+  background-color: var(--color-background);
+  font-size: 0.75rem;
+  color: var(--color-navy);
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0px;
 }
 
-.selected-btn {
-  color: var(--bs-btn-disabled-color);
-  pointer-events: none;
-  background-color: var(--bs-btn-disabled-bg);
-  border-color: var(--bs-btn-disabled-border-color);
-  opacity: var(--bs-btn-disabled-opacity);
+.paging-bar .selected-btn {
+  color: white !important;
+  background-color: var(--color-navy);
+  box-shadow: none;
 }
 
-/* 멤버 선택창  */
-
-/* #all-user-view input[type='checkbox'] {
-  display: none;
+.paging-bar .page-btn:hover {
+  color: var(--color-navy);
+  border-color: var(--white-hover);
+  background-color: var(--white-hover);
 }
 
-#all-user-view .input-wrap {
-  display: none;
+.paging-bar .selected-btn:hover {
+  color: white !important;
+  background-color: var(--color-navy);
+  box-shadow: none;
 }
 
-#all-user-view th.W-10 {
-  display: none;
-} */
+#prev-btn:hover,
+#next-btn:hover {
+  background-color: var(--color-light-gray);
+}

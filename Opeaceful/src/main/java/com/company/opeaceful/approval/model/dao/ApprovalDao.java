@@ -112,8 +112,12 @@ public class ApprovalDao {
 			params.put("lines", lines);
 
 			result = sqlSession.insert("aprMapper.insertApprovalLine", params);
+			
+			if(result > 0 ) {
+				result = approval.getApprovalNo();
+			}
 		}
-
+		
 	    return result;
 	}
 	

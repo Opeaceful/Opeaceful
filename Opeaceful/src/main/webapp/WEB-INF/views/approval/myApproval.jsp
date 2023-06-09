@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+pageEncoding="UTF-8" import="java.time.LocalDate"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
@@ -70,12 +70,14 @@ pageEncoding="UTF-8"%>
 			<div class="line"></div>
 		</div>
 
+
+		<c:set var="now" value="${LocalDate.now().getYear()}" />
+
         <div class="inner-wrap">
         	<select id="select-year" >
-        		<option selected>2023</option>
-        		<option>2022</option>
-        		<option>2021</option>
-        		<option>2020</option>
+        		<option selected>${ now }</option>
+        		<option>${ now - 1 }</option>
+        		<option>${ now - 2 }</option>
         	</select>
         
           <table class="my-approval-table table table-common">
@@ -144,25 +146,25 @@ pageEncoding="UTF-8"%>
           </div>
 
           <div class="paging-bar">			
-			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+			<button type="button" class="disable-btn" id="prev-btn"><span aria-hidden="true">«</span></button>
 
 			<% for(int i= 1; i <= 10; i++) { %>
 				<% if( i <= pageCount) { %>
 					<% if(i == 1) { %>
-						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+						<button type="button" class="selected-btn page-btn"><%= i %></button>
 					<% } else { %>
-						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+						<button type="button" class="page-btn"><%= i %></button>
 					<% } %>
 				<% } else {%>
-					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<button type="button" class="disable-btn page-btn"><%= i %></button>
 				<% } %>
 			<% } %>
 			
 			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
 			<% if( 10 < pageCount ) { %>
-				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="" id="next-btn"><span aria-hidden="true">»</span></button>
 			<% } else { %>
-				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="disable-btn" id="next-btn"><span aria-hidden="true">»</span></button>
 			<% } %>
 		 </div>
 

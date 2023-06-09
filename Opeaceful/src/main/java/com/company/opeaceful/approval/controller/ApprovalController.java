@@ -1,8 +1,11 @@
 package com.company.opeaceful.approval.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.company.opeaceful.approval.model.service.ApprovalService;
@@ -22,11 +26,12 @@ import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.commom.FileRenamePolicy;
+import com.company.opeaceful.member.model.vo.Member;
 import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/approval")
-
+@SessionAttributes({"loginUser"})
 public class ApprovalController {
 	
 	
@@ -69,18 +74,59 @@ public class ApprovalController {
 	}
 	
 	
+	// ajax용 로그인 유저 연차총개수 , 남은개수 조회 
+	@ResponseBody
+	@PostMapping("/selectUserAnnualInfo")
+	public String selectUserAnnualInfo( @ModelAttribute("loginUser") Member loginUser) {
+		Map<String, Double > map  = new HashMap<>();
+		
+		List<Approval> list = aprService.selectUserApproval(loginUser.getUserNo());
+		
+		double usedAnnual = 0;
+		for(Approval apr : list) {
+			usedAnnual += apr.getApprovalCount();
+		}
+		 
+		map.put("totalAnnual", (double)loginUser.getAnnualLeaveCount());
+		map.put("leftAnnual", loginUser.getAnnualLeaveCount() - usedAnnual);
+
+		return new Gson().toJson(map);
+	}
+	
+	// ajax용 종류별 결재 리스트 조회
+	@ResponseBody
+	@PostMapping("/selectApprovalList")
+	public String selectApprovalList( @ModelAttribute("loginUser") Member loginUser) {
+		Map<String, Double > map  = new HashMap<>();
+		
+		List<Approval> list = aprService.selectUserApproval(loginUser.getUserNo());
+		
+		double usedAnnual = 0;
+		for(Approval apr : list) {
+			usedAnnual += apr.getApprovalCount();
+		}
+		 
+		map.put("totalAnnual", (double)loginUser.getAnnualLeaveCount());
+		map.put("leftAnnual", loginUser.getAnnualLeaveCount() - usedAnnual);
+
+		return new Gson().toJson(map);
+	}
+	
+	
+	
+	
 	// ajax용 결재문서 저장
 	@ResponseBody
 	@PostMapping("/insertApproval")
-	public int insertApproval(  @ModelAttribute	 Approval approval, 
-								@RequestParam(value="images", required = false) MultipartFile[]  imgList,
-								@RequestParam(value="files", required = false) MultipartFile[]  fileList,
-								@RequestParam(value="userNoList") int[] userNoList,
-								@RequestParam(value="levelList") int[] levelList,
-								@RequestParam(value="typeList") String[] typeList,
-								HttpSession session
-							) {
-		
+	public int insertApproval(
+								  @ModelAttribute Approval approval,
+								  @RequestParam(value="images", required=false) MultipartFile[] imgList,
+								  @RequestParam(value="files", required=false) MultipartFile[] fileList,
+								  @RequestParam(value="userNoList", required=false) int[] userNoList,
+								  @RequestParam(value="levelList", required=false) int[] levelList,
+								  @RequestParam(value="typeList", required=false) String[] typeList,
+								  HttpSession session
+	) {
 		// 나중에 로그인한 유저 값으로 변경
 		approval.setUserNo(1);
 		
@@ -90,6 +136,7 @@ public class ApprovalController {
 		
 		// 첫번째 결재자 찾는 용도
 		int firstA = 999;
+		int reali = 0;
 		
 		for(int i= 0; i< userNoList.length; i++) {
 			ApprovalLine line = new ApprovalLine();
@@ -102,6 +149,7 @@ public class ApprovalController {
 				// 결재자면서 가장 첫번째인 사람 찾는용도
 				if( levelList[i] < firstA ) {
 					firstA = levelList[i];
+					reali = i;
 				}
 			}else {
 				// 만약 참조자라면 기본적으로 상태 승인상태
@@ -114,8 +162,7 @@ public class ApprovalController {
 		
 		if(firstA <= lines.size()) {			
 			// 가장 첫번째 결재자 상태 대기상태로 변경
-			lines.get(levelList[firstA]).setStatus(1);
-			System.out.println(lines.get(levelList[firstA]).getStatus());
+			lines.get(reali).setStatus(1);
 			
 			// 결재자가 존재하는 문서이므로 임시저장용이 아니면 문서상태 진행중으로 저장
 			if(approval.getStatus() != 2) {

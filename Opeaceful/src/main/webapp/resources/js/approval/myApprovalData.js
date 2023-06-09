@@ -175,9 +175,9 @@ export function insertApproval(formData) {
       if (result > 0) {
         swal('저장이 완료되었습니다.', {
           buttons: { confirm: '확인' },
-        }).then(function () {
-          // todo! 저장 완료시 이후 동작 추후 추가
         });
+        // todo! 저장 완료시 이후 동작 추후 추가
+        // 창 닫아주고 리셋 시켜야하나
       } else {
         swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
           buttons: { cancel: '확인' },
@@ -188,9 +188,21 @@ export function insertApproval(formData) {
       console.log('에러발생');
       console.log(request.status);
     },
-    // complete: function () {
-    //   // 에러나든 성공하든 다 끝난 후 버튼 다시 활성화 처리
-    //   document.getElementById('btn-form-save').disabled = false;
-    // },
+  });
+}
+
+// 사원 연차정보 조회하는 용도
+export function selectUserAnnualInfo() {
+  $.ajax({
+    url: defaultPath + '/selectUserAnnualInfo',
+    dataType: 'JSON',
+    type: 'POST',
+    success: function (result) {
+      MyAprFront.setAnnual(result.totalAnnual, result.leftAnnual);
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
   });
 }

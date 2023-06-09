@@ -115,25 +115,25 @@ pageEncoding="UTF-8"%>
           </div>
           
           <div class="paging-bar">			
-			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+			<button type="button" class="disable-btn" id="prev-btn"><span aria-hidden="true">«</span></button>
 
 			<% for(int i= 1; i <= 10; i++) { %>
 				<% if( i <= pageCount) { %>
 					<% if(i == 1) { %>
-						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+						<button type="button" class="selected-btn page-btn"><%= i %></button>
 					<% } else { %>
-						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+						<button type="button" class="page-btn"><%= i %></button>
 					<% } %>
 				<% } else {%>
-					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<button type="button" class="disable-btn page-btn"><%= i %></button>
 				<% } %>
 			<% } %>
 			
 			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
 			<% if( 10 < pageCount ) { %>
-				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="" id="next-btn"><span aria-hidden="true">»</span></button>
 			<% } else { %>
-				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="disable-btn" id="next-btn"><span aria-hidden="true">»</span></button>
 			<% } %>
 		 </div>
         </div>
