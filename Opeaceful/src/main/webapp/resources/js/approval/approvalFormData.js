@@ -98,7 +98,6 @@ export function selectFormListPage(actKind, checkType, currentPage) {
 }
 
 export function updateForm(formData) {
-  console.log('수정 시작');
   $.ajax({
     url: defaultPath + '/updateForm',
     data: formData,

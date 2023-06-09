@@ -90,12 +90,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 //	-------------------------------- insert 구간 ----------------------------------------
 	@Override
 	public int insertForm(ApprovalForm form, List<ApprovalFile> fileList ) {
-		
-		int result = aprDao.insertForm(form);
-		if(result > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "form", result);
+		int result = 0;
+		int formNo = aprDao.insertForm(form);
+		if(formNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", formNo);
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public int insertApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList) {
+		int result = 0;
+		int approvalNo = aprDao.insertApproval(approval, lineList);
+		if(approvalNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "approval", approvalNo);
+		}
 		return result;
 	}
 
@@ -114,12 +124,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 //	-------------------------------- update 구간 ----------------------------------------
 	@Override
 	public int updateForm(ApprovalForm form, List<ApprovalFile> fileList) {
-		
-		int result = aprDao.updateForm(form);
-		if(result > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "form", result);
+		int result = 0;
+		int formNo = aprDao.updateForm(form);
+		if(formNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", formNo);
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList) {
+		int result = 0;
+		int approvalNo = aprDao.updateApproval(approval, lineList);
+		if(approvalNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "approval", approvalNo);
+		}
 		return result;
 	}
 	
@@ -129,6 +149,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int deleteForm(int formNo,  String deleteFolderPath) {
 		return aprDao.deleteForm(formNo, deleteFolderPath);
+	}
+	
+	@Override
+	public int deleteApproval(int approvalNo, String deleteFolderPath) {
+		return aprDao.deleteApproval(approvalNo, deleteFolderPath);
 	}
 
 	@Override
@@ -140,6 +165,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteFavor(int favorNo) {
 		return aprDao.deleteFavor(favorNo);
 	}
+
+
+
+
+
+
 
 
 

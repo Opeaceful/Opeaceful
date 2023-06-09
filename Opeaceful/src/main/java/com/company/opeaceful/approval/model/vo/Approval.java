@@ -16,8 +16,8 @@ public class Approval {
 	private int approvalNo;				//	APPROVAL_NO
 	private int userNo;					//	USER_NO
 	private int type;					//	TYPE 일반0, 휴가1, 오전반차2, 오후반차3
-	private int title;					//	TITLE
-	private int content;				//	CONTENT
+	private String title;				//	TITLE
+	private String content;				//	CONTENT
 	private Timestamp draftDate;		//	DRAFT_DATE
 	private int status;					//	STATUS 결재 상태(진행중0,반려-1,완료1, 임시저장2)
 	private Date startDate;				//	START_DATE

@@ -81,16 +81,19 @@
 	<select id="selectFileList" resultType="approvalFile" parameterType="map">
 		SELECT * 
 		FROM APPROVAL_FILE
-		WHERE REF_TYPE = 
+		WHERE REF_TYPE  
 			<choose>
 				<when test='refType.equals("form")'>
-					'form'
+					= 'form'
 				</when>
 				<when test='refType.equals("approval")'>
-					'approval'
+					= 'approval'
 				</when>
 				<when test='refType.equals("memo")'>
-					'memo'
+					= 'memo'
+				</when>
+				<when test='refType.equals("approval-memo")'>
+					IN( 'approval', 'memo' )
 				</when>
 			</choose>
 			AND REF_NO = #{refNo}
@@ -131,15 +134,24 @@
 	
 	<!-- 즐겨찾기/결재문서 결재라인 조회 -->
 	<select id="selectLineList" parameterType="map" resultType="approvalLine">
-		SELECT *
+		SELECT A.*, USER_NAME, P_NAME
 		FROM 
 		<choose>
 			<when test='type.equals("favor")'>
-				APPROVAL_ACTUAL_FAVORITE_LINE
-				WHERE LINE_NO = #{no}
+				APPROVAL_ACTUAL_FAVORITE_LINE A
 			</when>	
 			<otherwise>
 				APPROVAL_LINE
+			</otherwise>
+		</choose>
+		LEFT JOIN MEMBER M USING (USER_NO)
+		LEFT JOIN USER_DEPARTMENT U USING (USER_NO)
+		LEFT JOIN POSITION P USING (P_CODE)
+		<choose>
+			<when test='type.equals("favor")'>
+				WHERE LINE_NO = #{no}
+			</when>	
+			<otherwise>
 				WHERE APPROVAL_NO = #{no}
 			</otherwise>
 		</choose>
@@ -169,7 +181,33 @@
 				FROM DUAL
 			</foreach>
 			) FILE
-
+	</insert>
+	
+	<!-- 결재문서 등록 / 등록하면서 approvalNo반환 -->
+	<insert id="insertApproval" useGeneratedKeys="true"  keyProperty="approvalNo" parameterType="approval">
+		INSERT INTO APPROVAL( USER_NO, TYPE, TITLE, CONTENT, 
+								DRAFT_DATE, STATUS, START_DATE, END_DATE )
+		VALUES( #{userNo}, #{type}, #{title}, #{content},
+					NOW(), #{status}, #{startDate}, #{endDate} )
+	</insert>
+	
+	
+	<!-- 결재문서의 결재라인 등록  -->
+	<insert id="insertApprovalLine" parameterType="map">
+		INSERT INTO APPROVAL_LINE(LEVEL, APPROVAL_NO, USER_NO, TYPE, STATUS, CONFIRM_STATUS )
+		SELECT LINE.*
+		FROM (
+			<foreach collection="lines" item="line" separator="UNION ALL">
+				SELECT
+					#{line.level} AS LEVEL ,
+					#{approvalNo} AS APPROVAL_NO ,
+					#{line.userNo} AS USER_NO ,
+					#{line.type} AS TYPE ,
+					#{line.status} AS STATUS ,
+					'N' AS CONFIRM_STATUS
+				FROM DUAL
+			</foreach>
+			) LINE
 	</insert>
 	
 	
@@ -179,7 +217,7 @@
 		VALUES( #{userNo} , #{title} )
 	</insert>
 	
-	
+	<!-- 즐겨찾기용 실제 결재라인 등록  -->
 	<insert id="insertFavorActualLine" parameterType="map">
 		INSERT INTO APPROVAL_ACTUAL_FAVORITE_LINE(LEVEL, LINE_NO, USER_NO, TYPE)
 		SELECT LINE.*
@@ -195,6 +233,8 @@
 			) LINE
 	</insert>
 	
+
+	
 	
 <!-- ============================== update 구간 ============================== -->
 	
@@ -207,6 +247,16 @@
 		WHERE FORM_NO  = #{formNo}
 	</update>
 	
+	<!-- 결재문서 내용 수정 -->
+	<update id="updateApproval" parameterType="approval">
+		UPDATE APPROVAL
+		SET 
+			TITLE = #{title} ,
+			CONTENT = #{content},
+			
+		WHERE FORM_NO  = #{formNo}
+	</update>
+	
 <!-- ============================ delete 구간 ============================ -->
 	
 	<!-- 폼 삭제 -->
@@ -215,6 +265,12 @@
 		WHERE FORM_NO = #{formNo}
 	</delete>
 	
+	
+	<!-- 결재라인 삭제 -->
+	<delete id="deleteApprovalLine" parameterType="_int">
+		DELETE FROM  APPROVAL_LINE
+		WHERE APPROVAL_NO = #{approvalNo}
+	</delete>
 	
 	<!-- 파일들 삭제 -->
 	<delete id="deleteFileList" parameterType="list">
@@ -226,16 +282,11 @@
 	
 	
 	<!-- 즐겨찾기 삭제 -->
-	<delete id="deleteFavor" parameterType="list">
+	<delete id="deleteFavor" parameterType="_int">
 		DELETE FROM  APPROVAL_FAVORITE_LINE
 		WHERE LINE_NO = #{favorNo}
 	</delete>
 
-	<!-- 즐겨찾기 실제 라인 삭제 -->
-	<delete id="deleteActualFavor" parameterType="_int">
-		DELETE FROM  APPROVAL_ACTUAL_FAVORITE_LINE
-		WHERE LINE_NO = #{favorNo}
-	</delete>
 	
 	
 </mapper>
