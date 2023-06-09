@@ -144,7 +144,7 @@ public class MemberController {
 	@PostMapping("/updateStatusType")
 	public String updateStatusType(@RequestParam("statusType") int statusType,
 									 @ModelAttribute("loginUser") Member loginUser,
-									 Model model) {
+									 HttpSession session,Model model) {
 
 		int userNo = loginUser.getUserNo();
 		Map<String, Object> map = new HashMap<>();
@@ -153,7 +153,7 @@ public class MemberController {
 		int result = memberService.updateStatusType(map);
 		if(result > 0) {
 			loginUser.setStatusType(statusType);
-			model.addAttribute("loginUser", loginUser);
+			session.setAttribute("loginUser", loginUser);
 		}
 		
 		return new Gson().toJson(result);

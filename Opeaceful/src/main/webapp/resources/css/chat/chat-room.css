@@ -6,7 +6,7 @@
 /* 네비게이션 안의 컨텐츠 스타일 지정 = chat-main-layout.css 참고 */
 
 /* 메인 안의 컨텐츠 스타일 지정 */
-.chat_ul{
+.chat__room_ul{
     /* flex box 생성 */
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
     list-style: none;
     padding-left: 0;
 }
-.chat_li{
+.chat_room_li{
     flex-basis:5rem; /*16 브라우저 기준 80px */
     flex-shrink: 0;
     margin: 0px;
@@ -23,7 +23,7 @@
     flex-direction: column;
     justify-content: center;
 }
-.chat_li > a{
+.chat_room_li > a{
     /* 안에 또 다른 flex box 생성 */
     display: flex;
     flex-direction: row;
@@ -35,7 +35,7 @@
 .profile-img{
     width: 3.125rem;
 }
-.chat_li .chat_talk{
+.chat_room_li .chat_talk{
     /* 프로필 사진과 메시지(채팅) 내용 사이 간격 조절 */
     margin-left: 0.9375rem; /* 16 브라우저 기준 15px */
     flex-grow: 1; /* 메시지 내용과 시간 사이에 빈 공간 채우기 위한 flex-grow 설정 */

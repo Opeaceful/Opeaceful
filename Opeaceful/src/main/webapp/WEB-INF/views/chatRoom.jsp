@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ fontawesome
             <header id="chat_header">
                 <h1 id="chat_header_title">채팅</h1>
                 <i class="icon-down-dir"></i>
-                <span id="open-dialog-button"><i class="fa-solid fa-user-plus" ></i></span> 
+                <span id="open-dialog-button"><i class="fa-solid fa-comment-medical"></i></span> 
    			    <span><i class="fa-solid fa-magnifying-glass" ></i></span>
             </header>
             
@@ -221,4 +221,4 @@ fontawesome
 
 <script type="module" src="${path}/resources/js/chat/chat.js"></script>
 </body>
-</html>
+</html> --%>

@@ -6,7 +6,7 @@ body{
 }
 
 /* grid container 적용 */
-#chat_content{
+#chat_content, #chat_room_content{
     position: relative;
     height: 50rem;
     top: 0;

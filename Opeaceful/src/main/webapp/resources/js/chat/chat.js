@@ -20,6 +20,7 @@
     $(document).on("click", "#dialog_close", function() {
     $("#dialog").dialog("close");
     });
+  
 
     // 다이얼로그 열기
     $("#openDialogButton").click(function() {
@@ -47,7 +48,9 @@
       localStorage.removeItem('dialogVisible');
     });
     
-    $(document).on('click', '#chatRoom_dialog', function () {
+    
+    
+ /*   $(document).on('click', '#chatRoom_dialog', function () {
     const chatRoomUrl = path + '/chatRoom';
 
     // chatRoom.jsp 페이지를 다이얼로그 내에서 열기
@@ -55,7 +58,7 @@
       // chatRoom.jsp 페이지 로딩 완료 후 실행될 코드 작성
       // 예: chatRoom.jsp 내의 요소에 이벤트 리스너 등록 등
     });
-  });
+  });  */
   
   
   /* $(document).on('click', '#chat_dialog', function () {
@@ -68,7 +71,6 @@
     
      
  });
-  
  
 
  
@@ -90,9 +92,8 @@
             console.log(list);
             console.log(onlineStatus[0].statusName);
             console.log(loginUser.statusType); 
-            console.log(notice);     */   
- 
- 
+            console.log(notice);     */             
+                      
             
             const parentElement = document.getElementById("boardNotice");
             parentElement.innerHTML = "";
@@ -184,7 +185,6 @@ const statusList = document.getElementById('statusList');
 statusList.addEventListener('change', function() {
     changeStatus(this.value);
 });
-
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
