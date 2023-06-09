@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.approval.model.dao.ApprovalDao;
 import com.company.opeaceful.approval.model.vo.Approval;
+import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
+import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
 
@@ -42,14 +44,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
-	public List<ApprovalForm> selectFormList(int currentPage, int type) {
+	public List<ApprovalForm> selectFormList(int type) {
+		return aprDao.selectFormList( type);
+	}
+	
+	@Override
+	public List<ApprovalForm> selectFormListPage(int currentPage, int type) {
 		
 		int listCount = aprDao.selectFormListCount(type);
 		int pageLimit = 10;
 		int itemLimit = 10; // 최대 10개 가져오기
 		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, itemLimit);
 		
-		return aprDao.selectFormList(pi, type);
+		return aprDao.selectFormListPage(pi, type);
 	}
 
 	@Override
@@ -70,15 +77,35 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
+	@Override
+	public List<ApprovalFavor> selectFavorList(int userNo) {
+		return aprDao.selectFavorList(userNo);
+	}
+
+	@Override
+	public List<ApprovalLine> selectLineList(String type, int no) {
+		return aprDao.selectLineList(type, no);
+	}
+	
 //	-------------------------------- insert 구간 ----------------------------------------
 	@Override
 	public int insertForm(ApprovalForm form, List<ApprovalFile> fileList ) {
-		
-		int result = aprDao.insertForm(form);
-		if(result > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "form", result);
+		int result = 0;
+		int formNo = aprDao.insertForm(form);
+		if(formNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", formNo);
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public int insertApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList) {
+		int result = 0;
+		int approvalNo = aprDao.insertApproval(approval, lineList);
+		if(approvalNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "approval", approvalNo);
+		}
 		return result;
 	}
 
@@ -87,16 +114,32 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return aprDao.insertFile(fileList, refType, refNo);
 	}
 
+
+	@Override
+	public int insertFavor(ApprovalFavor favor, List<ApprovalLine> lines) {
+		return aprDao.insertFavor(favor, lines);
+	}
+
 	
 //	-------------------------------- update 구간 ----------------------------------------
 	@Override
 	public int updateForm(ApprovalForm form, List<ApprovalFile> fileList) {
-		
-		int result = aprDao.updateForm(form);
-		if(result > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "form", result);
+		int result = 0;
+		int formNo = aprDao.updateForm(form);
+		if(formNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", formNo);
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList) {
+		int result = 0;
+		int approvalNo = aprDao.updateApproval(approval, lineList);
+		if(approvalNo > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "approval", approvalNo);
+		}
 		return result;
 	}
 	
@@ -107,11 +150,29 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteForm(int formNo,  String deleteFolderPath) {
 		return aprDao.deleteForm(formNo, deleteFolderPath);
 	}
+	
+	@Override
+	public int deleteApproval(int approvalNo, String deleteFolderPath) {
+		return aprDao.deleteApproval(approvalNo, deleteFolderPath);
+	}
 
 	@Override
 	public int deleteFileList( List<ApprovalFile> fileList) {
 		return aprDao.deleteFileList(fileList);
 	}
+
+	@Override
+	public int deleteFavor(int favorNo) {
+		return aprDao.deleteFavor(favorNo);
+	}
+
+
+
+
+
+
+
+
 
 
 

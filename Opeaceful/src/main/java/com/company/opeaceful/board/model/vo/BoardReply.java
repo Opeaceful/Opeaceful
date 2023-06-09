@@ -1,6 +1,7 @@
 package com.company.opeaceful.board.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,18 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Board {
+public class BoardReply {
+	private int replyNo;
 	private int boardNo;
-	private String boardCd;
-	private String boardTitle;
-	private String boardContent;
-	private String boardWriter;
-	private String createDate;
-	private int count;
-	private String fixed;
+	private int userNo;
+	private String content;
 	private String secret;
+	private int topReplyNo;
+	private String createDate;
 	
 	private String pName;
 	private String userName;
-	private int userNo;
 }

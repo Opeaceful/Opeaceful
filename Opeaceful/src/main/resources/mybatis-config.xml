@@ -29,6 +29,8 @@
 		<typeAlias type="com.company.opeaceful.attendance.model.vo.Attendance" alias="attendance"/>
 		<typeAlias type="com.company.opeaceful.board.model.vo.BoardType" alias="boardType"/>
 		<typeAlias type="com.company.opeaceful.member.model.vo.OnlineStatus" alias="onlineStatus"/>
+		<typeAlias type="com.company.opeaceful.board.model.vo.BoardFile" alias="boardFile"/>
+		<typeAlias type="com.company.opeaceful.board.model.vo.BoardReply" alias="boardReply"/>
 		<typeAlias type="com.company.opeaceful.role.model.vo.DepartmentRole" alias="departmentRole"/>
 		<typeAlias type="com.company.opeaceful.role.model.vo.RoleList" alias="roleList"/>
 		<typeAlias type="com.company.opeaceful.role.model.vo.UserRole" alias="userRole"/>
@@ -40,6 +42,8 @@
 		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatParticipant" alias="ChatParticipant"/>
 		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.company.opeaceful.salary.model.vo.Salary" alias="salary"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFavor" alias="approvalFavor"/>
+		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalLine" alias="approvalLine"/>
 	</typeAliases>
 	
 	<!-- 
@@ -54,6 +58,7 @@
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/attendance-mapper.xml"/> 
 		<mapper resource="/mappers/resignedmember-mapper.xml"/>
+		<mapper resource="/mappers/reply-mapper.xml"/>  
 		<mapper resource="/mappers/role-mapper.xml"/> 
 		<mapper resource="/mappers/annual-mapper.xml"/> 
 		<mapper resource="/mappers/chat-mapper.xml"/>
