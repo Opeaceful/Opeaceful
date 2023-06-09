@@ -275,24 +275,24 @@ VALUES
 
 -- approval_form 더미 데이터 생성용
 
-DELIMITER $$ 
-CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시져
+DELIMITER $$
+CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시저
 BEGIN
     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
     WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
-			INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (0 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
-        	INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (1 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
-         INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (2 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
-         INSERT INTO `approval_form`( TYPE, TITLE, CONTENT) VALUE (3 ,	concat('title' , i) ,	'<p>fdsfdsfdsf</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
         
         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
     END WHILE;
 END$$
-DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
+DELIMITER ;
+
 
 CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
--- SELECT * FROM approval_form; -- 출력
-
+DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때리 이미 있는프로시저라고 오류남 
 
 
 -- 멤버 더미데이터 생성용 (사번 겹치면 오류발생하니까 테스트 돌릴때마다 잘 확인할것)
@@ -312,9 +312,6 @@ CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫�
 -- DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
 
 -- CALL addMember(); -- 프로시저 실행
-
-
-
 
 
 
