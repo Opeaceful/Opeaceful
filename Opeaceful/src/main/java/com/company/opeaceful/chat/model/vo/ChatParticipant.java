@@ -9,17 +9,11 @@ public class ChatParticipant {
 	
 	private int chatRoomNo;
 	private int userNo;
-	private String roomName;
+	private String roomTitle;
 	private int notReadChat;
 	private int lastReadChatNo;
 	private Date createDate;
 	private String bellSetting;
-	
-	private String userName;
-	private String profileImg;
-	private int eno;
-	
-	
 	
 
 }

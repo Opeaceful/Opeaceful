@@ -51,7 +51,7 @@
         <nav id="chat_nav">
             <div class="chat_main_menu">
                 <a>
-                    <i class="fa-solid fa-user" id="chat_dialog"></i>
+                    <i class="fa-solid fa-user" id="chat_dialog" onclick="toggleChat()"></i>
                 </a>
                 <a>
                     <i class="fa-regular fa-comment"  id="chatRoom_dialog" onclick="toggleChatRoom()"></i>
@@ -195,11 +195,6 @@
     
     
     
-    
-    
-    
-    
-    
 	<!-- 코드시작 -->
 <!-- 	<div id="dialog">  -->
         <div id="chat_room_content">
@@ -221,10 +216,10 @@
              <nav id="chat_nav">
 	            <div class="chat_main_menu">
 	                <a>
-	                    <i class="fa-solid fa-user" id="chatdialog"></i>
+	                    <i class="fa-solid fa-user" id="chat_dialog_return" onclick="toggleChat()"></i>
 	                </a>
 	                <a>
-	                    <i class="fa-regular fa-comment" id="chatRoom_dialog"></i>
+	                    <i class="fa-regular fa-comment"  id="chatRoom_dialog_return" onclick="toggleChatRoom()"></i>
 	                    <span class="alert-balloon" alt="알림수">3</span>
 	                </a>
 	                <a href="more_menu.html">
@@ -240,7 +235,7 @@
             <!-- 메인: 채팅 리스트 화면 -->
             <main id="chat_main">
                 <ul class="chat__room_ul">
-						<c:choose>
+						<%-- <c:choose>
 							<c:when test="${empty chatRoomList}">
 								<tr>
 									<td colspan="4">존재하는 채팅방이 없습니다.</td>
@@ -255,12 +250,10 @@
 														class="profile-img" alt="나의프로필사진">
 												</c:if> <c:if test="${!empty chatRoom.profileImg}">
 													<img src="${chatRoom.profileImg}" class="profile-img">
-												</c:if> <!--                             <img src="./pic/k-pay.png" class="profile-img" alt="프로필사진"> -->
+												</c:if>
 												<div class="chat_talk">
 													<p class="chat_admin_name">${chatRoom.roomTitle }</p>
 													<p class="chat_msg">${chatRoom.userName }</p>
-													<!--                                <p class="chat_admin_name">프로젝트</p> -->
-													<!--                                <p class="chat_msg">메시지가 도착했습니다.</p> -->
 												</div>
 												<div class="chat_room_status">
 													<time class="chat_time" datetime="15:40:00+09:00">${chatRoom.createdChat}</time>
@@ -270,7 +263,7 @@
 									</c:if>
 								</c:forEach>
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 						<!-- <li class="chat_li">
                         <a href="#">
                             <img src="./pic/default.png" class="profile-img" alt="프로필사진">
@@ -305,75 +298,9 @@
         	</aside>       
       </div>     
     </div>
-    
-<!--    </div> -->
-
-	<script>
- $(document).ready(function() {
-  // 다이얼로그(Dialog) 생성하기
-
-  // 버튼 클릭 시 새로운 다이얼로그 열기
-  $("#open-dialog-button").on("click", function() {
-    // 동적으로 id 생성
-    var dialogId = "new-dialog" + Date.now();
-
-    // 새로운 다이얼로그 요소 생성
-    var newDialog = $("<div>").attr("id", dialogId).attr("title", "채팅방 만들기");
-    newDialog.append(
-    	      '<div>' +
-    	      '<h5>채팅방 만들기</h5>' +
-    	      '</div>' +
-    	      '<form action="${path}/chatRoom/openChatRoom" method="post">' +
-    	      '<div>' +
-    	      '<label for="title">제목</label>' +
-    	      '<input type="text" placeholder="채팅방 제목" id="roomTitle" name="roomTitle">' +
-    	      '</div>' +
-    	      '<div>' +
-    	      '<button type="submit" id="open-form" class="btn btn-primary">만들기</button>' +
-    	      '<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>' +
-    	      '</div>' +
-    	      '</form>'
-    	    );
-
-    // 다이얼로그(Dialog)를 body 요소에 추가
-    newDialog.appendTo("body");
-
-    // 다이얼로그(Dialog) 초기화 및 움직일 수 있도록 설정
-    newDialog.dialog({
-      close: function() {
-        // 다이얼로그 닫힐 때 요소 제거
-        newDialog.dialog("destroy").remove();
-      }
-    });
-
-    // 다이얼로그(Dialog)를 드래그 가능하도록 설정
-    newDialog.dialog("option", "draggable", true);
-  });
-});
-</script>
-
-<script>
-  function toggleChatRoom() {
-    var chatRoomDialog = document.getElementById("chatRoom_dialog");
-   
-    
-    var chatRoomContent = document.getElementById("chat_room_content");
-    var chatContent = document.getElementById("chat_content");
-    
-    if (chatRoomContent.style.display === "none") {
-      chatRoomContent.style.display = "gird";
-      chatContent.style.display = "none";
-    } else {
-      chatRoomContent.style.display = "none";
-      chatContent.style.display = "grid";
-    }
-  }
-</script>
-
-
    
    <script type="module" src="${path}/resources/js/chat/chat.js"></script> 
-    
+   <script src="${path}/resources/js/chat/chatJs.js"></script> 
 
 </body>   
     

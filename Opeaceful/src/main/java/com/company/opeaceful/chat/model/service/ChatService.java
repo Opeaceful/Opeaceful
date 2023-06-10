@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.company.opeaceful.board.model.vo.Board;
+import com.company.opeaceful.chat.model.vo.ChatMessage;
 import com.company.opeaceful.chat.model.vo.ChatParticipant;
 import com.company.opeaceful.chat.model.vo.ChatRoom;
 import com.company.opeaceful.member.model.vo.Member;
@@ -20,5 +21,7 @@ public interface ChatService {
 	List<ChatRoom> selectChatRoomList();
 	
 	int openChatRoom(ChatRoom cr);
+	
+	List<ChatMessage> joinChatRoom(ChatParticipant cp);
 
 }

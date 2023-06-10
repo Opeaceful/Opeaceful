@@ -73,7 +73,6 @@
  });
  
 
- 
  function adminAll() {
     $.ajax({
         url: path +"/chat",
@@ -85,15 +84,7 @@
             const loginUser = response.loginUser;
             const list = response.memberList;
             const onlineStatus = response.onlineStatus;
-            const notice = response.notice;
-
-      /*    console.log(loginUser);
-            console.log(onlineStatus);
-            console.log(list);
-            console.log(onlineStatus[0].statusName);
-            console.log(loginUser.statusType); 
-            console.log(notice);     */             
-                      
+            const notice = response.notice;                               
             
             const parentElement = document.getElementById("boardNotice");
             parentElement.innerHTML = "";
@@ -113,9 +104,8 @@
 			    parentElement.appendChild(p5);
 			  }			  	
 			}
-
-
-            
+			
+			         
             // list를 순회하면서 <li> 요소를 생성하여 멤버 정보 추가
             for (let item of list) {
             
@@ -165,7 +155,7 @@
 }
 
 
-
+/* 접속 상태 제어 */
 function changeStatus(status) {
     $.ajax({
         url: path+"/member/updateStatusType",
@@ -185,6 +175,131 @@ const statusList = document.getElementById('statusList');
 statusList.addEventListener('change', function() {
     changeStatus(this.value);
 });
+
+
+
+/* 채팅방 목록 */
+$.ajax({
+  url: path+"/chat/chatRoom",
+  method: "GET",
+  dataType: "json",
+  success: function(response) {
+
+    const loginUser = response.loginUser;
+    const chatRoomList = response.crList;
+    
+    console.log(chatRoomList);
+    
+   var chatRoomHtml = '';
+    var hasChatRoom = false;
+   
+      chatRoomList.forEach(function(chatRoom) {
+        if (chatRoom.eno === loginUser.eno) {
+        hasChatRoom = true;
+          chatRoomHtml += '<li class="chat_room_li"><a href="#">';
+          
+          if (chatRoom.profileImg) {
+            chatRoomHtml += '<img src="' + chatRoom.profileImg + '" class="profile-img">';
+          } else {
+            chatRoomHtml += '<img src="' + path + '/resources/image/chat/default.png" class="profile-img" alt="나의프로필사진">';
+          }
+          
+          chatRoomHtml += '<div class="chat_talk">';
+          chatRoomHtml += '<p class="chat_admin_name">' + chatRoom.roomTitle + '</p>';
+          chatRoomHtml += '<p class="chat_msg">' + chatRoom.userName + '</p>';
+          chatRoomHtml += '</div>';
+          
+          chatRoomHtml += '<div class="chat_room_status">';
+          chatRoomHtml += '<time class="chat_time" datetime="15:40:00+09:00">' + chatRoom.createdChat + '</time>';
+          chatRoomHtml += '<span class="chat_balloon">' + chatRoom.eno + '</span>';
+          chatRoomHtml += '</div>';
+          
+          chatRoomHtml += '</a></li>';
+        }
+      });     
+     if (!hasChatRoom) {
+      chatRoomHtml = '<li class="chat_room_li">';
+      chatRoomHtml += '<div>존재하는 채팅방이 없습니다.</div>';
+      chatRoomHtml += '</li>';
+    } else {
+    }
+    
+    $("ul.chat__room_ul").append(chatRoomHtml);
+  }
+});
+
+
+
+/* 채팅방 생성 다이얼로그 */
+ $(document).ready(function() {
+  // 다이얼로그(Dialog) 생성하기
+
+  // 버튼 클릭 시 새로운 다이얼로그 열기
+  $("#open-dialog-button").on("click", function() {
+    // 동적으로 id 생성
+    var dialogId = "new-dialog" + Date.now();
+
+    // 새로운 다이얼로그 요소 생성
+    var newDialog = $("<div>").attr("id", dialogId).attr("title", "채팅방 만들기");
+    newDialog.append(
+    	      '<div>' +
+    	      '<h5>채팅방 만들기</h5>' +
+    	      '</div>' +
+    	      '<form action="' + path + '/chat/openChatRoom" method="post">' +
+    	      '<div>' +
+    	      '<label for="title">제목</label>' +
+    	      '<input type="text" placeholder="채팅방 제목" id="roomTitle" name="roomTitle">' +
+    	      '</div>' +
+    	      '<div>' +
+    	      '<button type="submit" id="open-form" class="btn btn-primary">만들기</button>' +
+    	      '<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>' +
+    	      '</div>' +
+    	      '</form>'
+    	    );
+
+    // 다이얼로그(Dialog)를 body 요소에 추가
+    newDialog.appendTo("body");
+
+    // 다이얼로그(Dialog) 초기화 및 움직일 수 있도록 설정
+    newDialog.dialog({
+      close: function() {
+        // 다이얼로그 닫힐 때 요소 제거
+        newDialog.dialog("destroy").remove();
+      }
+    });
+
+    // 다이얼로그(Dialog)를 드래그 가능하도록 설정
+    newDialog.dialog("option", "draggable", true);
+  });
+});
+
+
+
+
+ /* nav 메뉴 이동 */
+   function toggleChatRoom() {
+
+    var chatRoomContent = document.getElementById("chat_room_content");
+    var chatContent = document.getElementById("chat_content");
+    
+    chatRoomContent.style.display = "grid";
+    chatContent.style.display = "none";     
+  }
+  
+  function toggleChat() {
+
+	 var chatRoomContent = document.getElementById("chat_room_content");
+	 var chatContent = document.getElementById("chat_content");    
+	    
+	 chatContent.style.display = "grid";
+	 chatRoomContent.style.display = "none";	    
+  }
+ 
+
+
+
+
+
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기

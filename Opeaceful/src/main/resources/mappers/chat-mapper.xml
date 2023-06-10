@@ -37,12 +37,21 @@
 		    (#{userNo}, #{roomTitle}, 0, NOW())
 	</insert>
 	
+	<!-- 채팅방 참여여부 확인 -->
+	<select id="joinCheck" resultType="_int" parameterType="ChatParticipant">
+		SELECT COUNT(*)
+		FROM CHAT_PARTICIPANT
+		WHERE CHATROOM_NO = #{chatRoomNo}
+			AND USER_NO = #{userNo}
+	</select>
 	
+	<!-- 채팅방 참여하기 -->
+	<insert id="joinChatRoom" parameterType="ChatParticipant">
+		INSERT INTO CHAT_PARTICIPANT
+			VALUES(#{userNo},#{chatRoomNo},#{roomTitle},0,0,NOW(),Y)
+	</insert>
 	
-	
-	
-	
-	
+
 	
 	
 	
