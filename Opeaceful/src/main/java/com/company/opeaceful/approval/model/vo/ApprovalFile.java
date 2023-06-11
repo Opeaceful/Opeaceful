@@ -18,9 +18,16 @@ public class ApprovalFile {
 	
 	
 	public ApprovalFile(String changeName) {
-		super();
 		this.changeName = changeName;
 	}
+
+	public ApprovalFile(String refType, String originName, String changeName) {
+		this.refType = refType;
+		this.originName = originName;
+		this.changeName = changeName;
+	}
+
+
 
 	
 	
