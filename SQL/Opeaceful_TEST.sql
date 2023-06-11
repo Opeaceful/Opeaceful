@@ -319,8 +319,6 @@ DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭
 UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '3000' WHERE (`USER_NO` = '8');
 
 
-
-
 DELIMITER $$ 
 CREATE PROCEDURE addannual() -- ⓐ  프로시져
 BEGIN
