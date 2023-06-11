@@ -266,9 +266,7 @@
    			$(".sidebar-more").css("display", "none");
 		  }
    		);
-        
 
-        
     </script>
 </body>
 </html>

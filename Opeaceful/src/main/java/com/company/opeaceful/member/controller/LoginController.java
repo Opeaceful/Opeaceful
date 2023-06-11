@@ -1,7 +1,7 @@
 package com.company.opeaceful.member.controller;
 
-import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,10 +27,12 @@ import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.dept.model.vo.Department;
+import com.company.opeaceful.member.MailUtil;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.role.model.service.RoleService;
 import com.company.opeaceful.role.model.vo.UserRole;
+import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -80,42 +82,75 @@ public class LoginController {
 		// status 값 -> 탈퇴회원 조회
 		String status = memberService.selectLoginStatus(eno);
 		
+		// 비밀번호 틀린 횟수 -> count라는 쿠키가 있는지 검사
+		Cookie[] cookies = req.getCookies();
+		int count = 0; // count값이 저장될 변수 선언 // 없을때는 대비하여 생성
+		
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				String name = cookie.getName();	//쿠키의 key값 구하기
+				if(String.valueOf(eno).equals(name)) {
+					String value = cookie.getValue();	// 쿠키의 value값(현재의 count값) 구하기
+					count = Integer.parseInt(value);
+					break;
+				}
+			}
+		}
+		
 		try {
 			if(loginUser == null) {
 				session.setAttribute("alertMsg", "등록된 사원이 아닙니다.");
 			} else if(status.equals("N")) {
 				session.setAttribute("alertMsg", "탈퇴된 사원입니다.");
 			} else if (!bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-				session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
-				
-				// count라는 쿠키가 있는지 검사
-				Cookie[] cookies = req.getCookies();
-				
-				int count = 0; // count값이 저장될 변수 선언 // 없을때는 대비하여 생성
-				
-				if(cookies != null) {
-					for(Cookie cookie : cookies) {
-						String name = cookie.getName();	//쿠키의 key값 구하기
-						if("count".equals(name)) {
-							String value = cookie.getValue();	// 쿠키의 value값(현재의 count값) 구하기
-							count = Integer.parseInt(value);	// 문자열을 정수화~ // 기존에 있는게 있으면 저장값에서 나중에 증가하지
-							break;
-						}
-					}
-				}
+
 				count++; // count값 증가하기
+				session.setAttribute("alertMsg", "["+count+"/5] 비밀번호가 일치하지 않습니다.");
 				
-				// 증가된 count값 저장해야지  쿠키객체하나 만들자
 				// 증가된 count가 저장될 Cookie객체 생성
-				Cookie countCookie = new Cookie("count", String.valueOf(count)); // 기존에 있으면 덮어쓰고 아니면 새로 생성함!
+				Cookie countCookie = new Cookie(String.valueOf(eno), String.valueOf(count)); // 기존에 있으면 덮어쓰고 아니면 새로 생성함
 				
 				resp.addCookie(countCookie); // 쿠키 추가
+				
+				if(count == 5) {
+					countCookie.setMaxAge(0);		// 쿠키 삭제
+					resp.addCookie(countCookie);	// 쿠키 다시 뿌려주기
+					
+					//가입된 이메일이 존재한다면 이메일 전송
+					if(loginUser != null) {
+						//임시 비밀번호 생성(UUID이용)
+						String tempPw = UUID.randomUUID().toString().replace("-", "");//-를 제거
+						tempPw = tempPw.substring(0,10);//tempPw를 앞에서부터 10자리 잘라줌
+						
+						loginUser.setUserPwd(tempPw);//임시 비밀번호 담기
+						String EnUpdatePwd = bcryptPasswordEncoder.encode(tempPw); // 암호화작업
+
+						MailUtil mail = new MailUtil(); //메일 전송하기
+						mail.sendEmail(loginUser);
+
+						// 임시메일, 암호화된 비밀번호 일치여부 판별
+						if(bcryptPasswordEncoder.matches(tempPw, EnUpdatePwd)) {
+
+							loginUser.setUserPwd(EnUpdatePwd); // 암호화된 pwd 담아주기
+							memberService.updatePwd(loginUser); // 비밀번호 업데이트
+						}
+					}
+					session.setAttribute("alertMsg", "비밀번호 오류 횟수 초과입니다. "+loginUser.getEmail()+"로 임시비밀번호가 발송되었습니다.");
+					return "redirect:/";
+				}
 
 			} else {
 				model.addAttribute("loginUser", loginUser);
 				
+				// 로그인 성공시 비밀번호 틀린 count 저장된 쿠키 삭제
+				Cookie countCookie = new Cookie(String.valueOf(eno), String.valueOf(count)); // 기존에 있으면 덮어쓰고 아니면 새로 생성함
+				resp.addCookie(countCookie);
+				countCookie.setMaxAge(0);
+				resp.addCookie(countCookie);
+				
 				// 로그인 성공시 아이디값을 저장하고 있는 쿠키 생성(유효시간 1년)
 				Cookie cookie = new Cookie("saveId",String.valueOf(loginUser.getEno()));
+				
 				if(saveId != null) { // 아이디 저장이 체크되었을 때
 					cookie.setMaxAge(60 * 60 * 24 * 365);
 				}else { // 아이디저장 체크하지 않을때
@@ -125,6 +160,7 @@ public class LoginController {
 				cookie.setPath(req.getContextPath());
 				// 쿠키를 응답시 클라이언트에 전달
 				resp.addCookie(cookie);
+
 				
 				return "redirect:/main";
 			}

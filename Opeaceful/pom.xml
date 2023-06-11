@@ -308,6 +308,13 @@
 		</dependency>
 		<!-- AOP관련 끝 -->
 
+		<!-- 임시비밀번호 이메일 발송 -->
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.5</version>
+		</dependency>
+		
 
 
 
