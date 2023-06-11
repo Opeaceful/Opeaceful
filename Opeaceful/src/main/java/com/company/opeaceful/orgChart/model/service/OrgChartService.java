@@ -1,8 +1,10 @@
 package com.company.opeaceful.orgChart.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
@@ -39,5 +41,9 @@ public interface OrgChartService {
 	int deletePosition(int pCode);
 	
 	// 조직도 조회
-	void selectOrgChart(Map<String, Object> map);
+	List<OrgChart> selectTopDeptList(int deptCode); // 상위부서 조회
+	List<OrgChart> selectTopDeptUser(int deptCode); // 하위부서 조회
+	
+	// 인사발령 사원 조회
+	List<OrgChart> selectPersonnel(int deptCode);
 }

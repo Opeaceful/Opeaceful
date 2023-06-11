@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="topDept" value="${map['topDeptList']}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,8 +80,8 @@
 				</div>
 				<div class="col right-box">
 					<div class="name-btn-box">
-						<!-- <div class="department-name-box">경영지원본부</div>
-						<button class="btn btn-primary dp-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button> -->
+						<!-- <div class="department-name-box"></div> -->
+						<!-- <button class="btn btn-primary personnel-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button> -->
 					</div>
 					<table class="table table-hover org-table table-common">
 						<thead class="org-thead">
@@ -90,20 +92,8 @@
 								<th class="pth5">직급</th>
 							</tr>
 						</thead>
-						<!-- <tbody>
-							<tr>
-								<td>951003</td>
-								<td>박가영</td>
-								<td>인사팀</td>
-								<td>사원</td>
-							</tr>
-							<tr>
-								<td>210208</td>
-								<td>윤지영</td>
-								<td>인사팀</td>
-								<td>사원</td>
-							</tr>
-						</tbody> -->
+						<tbody id="org-tbody">
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -156,42 +146,42 @@
 										<th class="cth7">발령직급</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr class="change-tr">
-										<td>2023/05/22</td>
-										<td>박가영</td>
-										<td>경영지원본부</td>
-										<td>
-											<select class="form-select box-shadow-none" aria-label="Default select example">
-												<option selected>경영지원본부</option>
-												<option value="1">부장</option>
-												<option value="2">팀장</option>
-												<option value="3">대리</option>
-												<option value="4">사원</option>
-												<option value="5">인턴</option>
-											</select>
-										</td>
-										<td>인사팀</td>
-										<td>
-											<select class="form-select box-shadow-none" aria-label="Default select example">
-												<option selected>인사팀</option>
-												<option value="1">회계팀</option>
-												<option value="2">서비스팀</option>
-											</select>
-										</td>
-										<td>사원</td>
-										<td>
-											<select class="form-select box-shadow-none" aria-label="Default select example">
-												<option selected>사원</option>
-												<option value="1">부장</option>
-												<option value="2">팀장</option>
-												<option value="3">대리</option>
-												<option value="4">사원</option>
-												<option value="5">인턴</option>
-											</select>
-										</td>
-									</tr>
-								</tbody>
+									<tbody id="org-modal-tbody">
+										<!-- <tr class="change-tr">
+											<td>2023-04-56</td>
+											<td>박가영</td>
+											<td>경영지원본부</td>
+											<td>
+												<select class="form-select box-shadow-none" aria-label="Default select example">
+													<option selected>경영지원본부</option>
+													<option value="1">부장</option>
+													<option value="2">팀장</option>
+													<option value="3">대리</option>
+													<option value="4">사원</option>
+													<option value="5">인턴</option>
+												</select>
+											</td>
+											<td>인사팀</td>
+											<td>
+												<select class="form-select box-shadow-none" aria-label="Default select example">
+													<option selected>인사팀</option>
+													<option value="1">회계팀</option>
+													<option value="2">서비스팀</option>
+												</select>
+											</td>
+											<td>사원</td>
+											<td>
+												<select class="form-select box-shadow-none" aria-label="Default select example">
+													<option selected>사원</option>
+													<option value="1">부장</option>
+													<option value="2">팀장</option>
+													<option value="3">대리</option>
+													<option value="4">사원</option>
+													<option value="5">인턴</option>
+												</select>
+											</td>
+										</tr> -->
+									</tbody>
 							</table>
 						</div>
 						<div class="modal-footer org-footer">
@@ -205,4 +195,5 @@
 	</div>
 </body>
 <script type="module" src="${path}/resources/js/orgChartEnroll.js"></script>
+<script type="module" src="${path}/resources/js/common/dtcodeselect.js"></script>
 </html>

@@ -76,3 +76,5 @@ function positionRoad() {
 
 teamRoad();
 positionRoad();
+
+export {teamRoad, positionRoad};

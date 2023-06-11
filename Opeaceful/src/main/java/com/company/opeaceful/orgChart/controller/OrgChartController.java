@@ -1,5 +1,6 @@
 package com.company.opeaceful.orgChart.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.dept.model.service.DeptService;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.Position;
@@ -28,11 +30,15 @@ public class OrgChartController {
 
 	private OrgChartService orgchartService;
 	private DeptService deptService;
+	private BoardService boardService;
 	
 	@Autowired
-	public OrgChartController(OrgChartService orgchartService, DeptService deptService) {
+	public OrgChartController(OrgChartService orgchartService, 
+								DeptService deptService,
+								BoardService boardService) {
 		this.orgchartService = orgchartService;
 		this.deptService = deptService;
+		this.boardService = boardService;
 	}
 	
 //	quartz 사용할 때를 위해 작성만 함
@@ -51,7 +57,7 @@ public class OrgChartController {
 	public String selectDept() {
 		List<Department> dList = deptService.selectDeptList();
 			
-//		System.out.println(dList);
+		System.out.println("dList에 담긴 값 : "+dList);
 		return new Gson().toJson(dList);
 	}
 	
@@ -129,7 +135,7 @@ public class OrgChartController {
 //		System.out.println(DeptCode);
 		List<UserDepatment> udList = orgchartService.selectMember(deptCode);
 		
-//		System.out.println("udList : "+udList);
+		System.out.println("udList에 담긴 값 : "+udList);
 		return new Gson().toJson(udList);
 		
 	}
@@ -184,20 +190,27 @@ public class OrgChartController {
 	
 	// 조직도 조회
 	@GetMapping("/selectOrgChart")
-	public String selectOrgChart(Model model, Department department) {
+	public String selectOrgChart(Model model) {
 		
-		Map<String, Object> map = new HashMap();
+		Map<String, Object> map = new HashMap<>();
 		
-		orgchartService.selectOrgChart(map);
+		// 상위부서 리스트 map
+		List<Department> topDeptList = boardService.selectDeptList();
+		map.put("topDeptList", topDeptList);
 		
-		List<Department> dept = deptService.selectDeptList();
+		for (Department topDepartment : topDeptList) {
+			// 하위부서 리스트 map
+			List<OrgChart> deptList = orgchartService.selectTopDeptList(topDepartment.getDeptCode());
+			map.put(topDepartment.getDeptCode()+"Dept", deptList);
+			
+			for (OrgChart department : deptList) {
+				// 하위부서에 속한 사원들 map
+				List<OrgChart> topDeptUser = orgchartService.selectTopDeptUser(department.getDeptCode());
+				map.put(department.getDeptCode()+"topDept", topDeptUser);
+			}
+		}
 		
-		System.out.println(dept);
-		
-		List<UserDepatment> team = orgchartService.selectMember(department.getDeptCode());
-		
-		map.put("dept", dept);
-		map.put("team", team);
+//		System.out.println("map에 담긴 값 : " + map);
 		
 		model.addAttribute("map", map);
 			
@@ -205,9 +218,15 @@ public class OrgChartController {
 			
 	}
 	
-	
-//	@PostMapping("/orgChartView")
-//	public String selectOrgChart() {
-//		return "orgChartView";
-//	}
+	// 인사발령용 사원 조회
+	@PostMapping("/personnel")
+	@ResponseBody
+	public String selectPersonnel(int deptCode) {
+		
+		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
+		
+		System.out.println("personnelList에 담긴 값 : "+personnelList);
+		return new Gson().toJson(personnelList);
+				
+	}
 }

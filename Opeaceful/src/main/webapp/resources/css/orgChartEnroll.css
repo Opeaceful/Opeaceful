@@ -8,10 +8,15 @@ body *{
     width: 66%;
     padding-left: 0;
     margin-left: 19px;
+    cursor: default;
 }
 .oc-accordion-btn>input{
     width: 100%;
     margin-right: 26px;
+    pointer-events: none;
+}
+.input-click>input{
+    pointer-events: none;
 }
 input{border: none;}
 input:focus{
@@ -87,6 +92,9 @@ input:focus{
     font-size: var(--font13);
     cursor: pointer;
 }
+.position-minus{
+    cursor: pointer;
+}
 .dropdown-toggle{
     background-color: white;
     color: black;
@@ -112,6 +120,6 @@ input:focus{
     border: 0px;
     outline: none;
 }
-.d-grid>button{font-size: var(--font12);}
+.d-grid>button, .personnel-btn{font-size: var(--font12);}
 .dp-btn{font-size: var(--font12);}
 .title-box{margin: 80px 0;}

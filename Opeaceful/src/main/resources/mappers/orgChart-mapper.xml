@@ -11,6 +11,15 @@
 		<result column="P_NAME" property="pName"/>
 		<result column="TOP_DEPT_CODE" property="topDeptCode"/>
 	</resultMap>
+	
+	<!-- 인사발령 사원 조회 -->
+ 	<resultMap type="orgChart" id="personnelResultSet">
+	  	<result column="USER_NO" property="userNo"/>
+	  	<result column="USER_NAME" property="userName"/>
+	  	<result column="P_NAME" property="pName"/> 
+	  	<result column="DEPT_NAME" property="deptName"/>
+	  	<result column="TOP_DEPT_NAME" property="topDeptName"/>
+	</resultMap>
 
 	<!-- =================== [select] =================== -->
 	
@@ -38,23 +47,48 @@
 		LEFT JOIN POSITION USING (P_CODE) 
 		WHERE P_CODE in (SELECT P_CODE     
 							FROM POSITION
-							WHERE P_CODE = #{pCode};
+							WHERE P_CODE = #{pCode});
 			
 	</select>
 	
-	<!-- 조직도 조회 -->
-	<select id="selectOrgChart" resultMap="orgChartResultSet">
+	<!-- 하위부서 조회 - 조직도 현황용 -->
+	<select id="selectTopDeptList" resultType="orgChart">
+		SELECT *
+		FROM DEPARTMENT
+		WHERE TOP_DEPT_CODE = #{deptCode}
+	</select>
+	
+	<!-- 하위부서에 속한 사원 조회 - 조직도 현황용 -->
+	<select id="selectTopDeptUser" resultType="orgChart">
 		SELECT USER_NAME,
 				DEPT_NAME,
 				P_NAME,
-				DEPT_CODE,
-				P_CODE,
-				TOP_DEPT_CODE,
-				USER_NO
-		FROM MEMBER M
-		LEFT JOIN USER_DEPARTMENT USING (USER_NO)
+				DEPT_CODE
+				TOP_DEPT_CODE
+		FROM USER_DEPARTMENT
+        LEFT JOIN MEMBER USING (USER_NO)
 		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
-		LEFT JOIN POSITION USING (P_CODE)
+        LEFT JOIN POSITION USING (P_CODE)
+		WHERE DEPT_CODE = #{deptCode}
+	</select>
+	
+	<select id="selectPersonnel" parameterType="orgChart" resultMap="personnelResultSet">
+		SELECT  USER_NAME,
+				DEPT_NAME,
+				P_NAME,
+				DEPT_CODE,
+				TOP_DEPT_CODE,
+                (SELECT DEPT_NAME
+				FROM DEPARTMENT
+				WHERE DEPT_CODE = (SELECT TOP_DEPT_CODE
+									 FROM DEPARTMENT
+									 JOIN USER_DEPARTMENT USING (DEPT_CODE)
+									WHERE USER_NO = #{userNo})) AS TOP_DEPT_NAME
+		FROM USER_DEPARTMENT
+        LEFT JOIN MEMBER USING (USER_NO)
+		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
+        LEFT JOIN POSITION USING (P_CODE)
+		WHERE DEPT_CODE = #{deptCode} AND STATUS = 'Y';
 	</select>
 	
 	<!-- =================== [insert] =================== -->

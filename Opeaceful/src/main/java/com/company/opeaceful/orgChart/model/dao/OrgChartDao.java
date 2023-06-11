@@ -1,5 +1,6 @@
 package com.company.opeaceful.orgChart.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
@@ -107,8 +109,16 @@ public class OrgChartDao {
 	}
 	
 	// 조직도 조회
-	public List<OrgChart> selectOrgChart() {
-		 List<OrgChart> result = sqlSession.selectList("orgChartMapper.selectOrgChart");
-		return result;
+	public List<OrgChart> selectTopDeptList(int deptCode){
+		return sqlSession.selectList("orgChartMapper.selectTopDeptList", deptCode);
+	}
+	
+	public List<OrgChart> selectTopDeptUser(int deptCode){
+		return sqlSession.selectList("orgChartMapper.selectTopDeptUser", deptCode);
+	}
+	
+	// 인사발령 사원 조회
+	public List<OrgChart> selectPersonnel(int deptCode) {
+		return sqlSession.selectList("orgChartMapper.selectPersonnel", deptCode);
 	}
 }

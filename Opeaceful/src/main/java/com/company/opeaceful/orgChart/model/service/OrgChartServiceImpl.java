@@ -1,11 +1,13 @@
 package com.company.opeaceful.orgChart.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.orgChart.model.dao.OrgChartDao;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
@@ -78,12 +80,18 @@ public class OrgChartServiceImpl implements OrgChartService {
 	
 	// 조직도 조회
 	@Override
-	public void selectOrgChart(Map<String, Object> map) {
-		
-		List<OrgChart> list = orgChartDao.selectOrgChart();
-		
-		map.put("list", list);
-		
-		System.out.println("list 담긴 값 : "+list);
+	public List<OrgChart> selectTopDeptList(int deptCode){
+		return orgChartDao.selectTopDeptList(deptCode);
+	} 
+	
+	@Override
+	public List<OrgChart> selectTopDeptUser(int deptCode){
+		return orgChartDao.selectTopDeptUser(deptCode);
+	}
+	
+	// 인사발령 사원 조회
+	@Override
+	public List<OrgChart> selectPersonnel(int deptCode) {
+		return orgChartDao.selectPersonnel(deptCode);
 	}
 }

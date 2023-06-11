@@ -14,4 +14,8 @@ public class OrgChart {
 	
 	private int userNo;
 	private String userName;
+	
+	private String presonnel;
+	private String status;
+	private String topDeptName;
 }

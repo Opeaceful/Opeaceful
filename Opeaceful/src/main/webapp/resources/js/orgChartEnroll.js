@@ -2,28 +2,30 @@
  *  가영 : 부서, 직급, 인사발령 js
  */
 import {path} from './common/common.js';
+import {teamRoad, positionRoad} from './common/dtcodeselect.js';
 
-$(document).ready (function () {     
+selectDept();
 
-	//////////////////////////////////////////////////////////// 부서조회
-	function selectDept() {
+// 부서+팀명 조회
+function selectDept() {
 
-		$.ajax({
-			url:path+"/orgChart/selectDept",
-			type : "POST",
-			dataType : "JSON",
-			success: function(result){
+	let html = "";
 
-				console.log(result);
+	$.ajax({
+		url:path+"/orgChart/selectDept",
+		type : "POST",
+		dataType : "JSON",
+		success: function(result){
 
-        		for (let dept of result) {
-					if(dept.topDeptCode == 0){
-						
-						$("#accordionFlushExample").append(
-							`<div class="accordion-item accordion-item-common org-accordion${dept.deptCode}" id="org-accordion">
+			console.log(result);
+
+			for (let dept of result) {
+				if(dept.topDeptCode == 0){
+
+					html += `<div class="accordion-item accordion-item-common org-accordion${dept.deptCode}" id="org-accordion">
 								<h2 class="accordion-header org-accordion-header" id="heading${dept.deptCode}">
 									<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="flush-collapse${dept.deptCode}" aria-label="펼치기">
-										<input type="text" id="${dept.deptCode}" class="topD-name" name="department" value="${dept.deptName}" aria-label="부서이름인풋">
+										<input type="text" data-id="${dept.deptCode},${dept.topDeptCode},${dept.deptName}" class="topD-name" name="department" value="${dept.deptName}" aria-label="부서이름인풋">
 									</button>
 									<div class="icons">
 										<i class="fa-solid fa-plus team-plus" id="team-plus${dept.deptCode}"></i> 
@@ -32,86 +34,166 @@ $(document).ready (function () {
 									</div>
 								</h2>
 								<div id="collapse${dept.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
-									<ul class="accordion-body accordion-body-common oc-all" id="oc-all${dept.deptCode}"></ul>
-								</div>
-							</div>`
-						) 
-					}
-					$(".topD-name").css('pointer-events','none');
-					$(".oc-accordion-btn").css('cursor','default'); 
-					
+									<ul class="accordion-body accordion-body-common oc-all" id="oc-all${dept.deptCode}">`
+									
 					for (let team of result) {
 						if (team.topDeptCode == dept.deptCode) {
-							$(`#oc-all${dept.deptCode}`).append(
-								`<li class="team low-common">
-									<span class="input-click" id="${team.topDeptCode}">
-										<input type="text" name="team" id="${team.deptCode}" class="team-name" value="${team.deptName}">
-									</span>
-									<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
-									<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
-								</li>`
-							)
-							$(".team-name").css('pointer-events','none');
-							$(".team").css('cursor','default');
+				
+							html += `<li class="team low-common">
+										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName}">
+											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
+										</span>
+										<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
+										<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
+									</li>`
 						}
-						
+										
 					}
+							html += `</ul>
+									</div>
+									</div>`
 				}
-			},
-			error : function(request){
-				console.log("에러발생");
-				console.log(request.status);
+				
 			}
-		})
-	}
-	selectDept();
 
+			let orcAccordion = document.getElementById("accordionFlushExample");
+			orcAccordion.innerHTML = html;
+			// orcAccordion.insertAdjacentHTML('afterend', html);
 
-	// 하위부서 클릭 시 해당 부서에 있는 사원 조회
-	$(".inputs").on("click", `.input-click`, function(e) {
-							
-		let deptName = $(e.target).parents(".accordion-item").find('.topD-name').val();
-		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
-
-		let teamDeptCode = $(e.target).find('.team-name').attr("id");
-		let topDeptCode = $(e.target).attr("id");
-
-		console.log('id : ',teamDeptCode);
-
-		$.ajax({
-			url : path+"/orgChart/selectAll",   
-			type : 'post', 
-			data : {deptCode : teamDeptCode ? teamDeptCode : 0},
-			dataType : "JSON",
-			success : function(result){
-				console.log('result: ' +JSON.stringify(result));
-
-				let html = "";
-				let str = ""
-
-				if (topDeptCode == deptCode) {
-					str += `<div class="department-name-box">${deptName}</div>
-								<button class="btn btn-primary dp-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
-					$('.name-btn-box').html(str);
-				}
-
-				for (let all of result) {
-					if (teamDeptCode == all.deptCode) {
-						
-						html += `<tbody>
-									<tr>
-										<td>${all.eno}</td>
-										<td>${all.userName}</td>
-										<td>${all.deptName}</td>
-										<td>${all.pName}</td>
-									</tr>
-								</tbody>`
-					}
-				}
-				$('.org-table').html(html);
-			}
-		})
+			deptListClick();
+			
+		},
+		error : function(request){
+			console.log("에러발생");
+			console.log(request.status);
+		}
 	})
+}
+
+// 해당 부서에 있는 사원 조회
+function selectDeptList(deptCode, topDeptCode, deptName) {
+	
+	let str = ""
+    let html = "";
+
+    $.ajax({
+		url : path+"/orgChart/selectAll",   
+		type : 'post', 
+		data : {deptCode : deptCode},
+		dataType : "JSON",
+		success : function(result){
+			console.log('result: ' ,result);
+			
+			for (let team of result) {
+				if (topDeptCode == team.topDeptCode) {
+
+					str = `<div class="department-name-box">${deptName}</div>
+							<button class="btn btn-primary personnel-btn" data-id="${deptCode}, ${topDeptCode}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
+
+					html += `<tr>
+								<td>${team.eno}</td>
+								<td>${team.userName}</td>
+								<td>${team.deptName}</td>
+								<td>${team.pName}</td>
+							</tr>`
+				}
+			}
+			let TopDeptName = document.querySelector(".name-btn-box");
+			TopDeptName.innerHTML = str;
+
+			let deptUserList = document.getElementById("org-tbody");
+			deptUserList.innerHTML = html;
+			
+			personnelClick();
+
+		}
+	})
+
+}
+	
+// 하위부서 input을 감싸고 있는 sapn태그에 사원 조회 이벤트 부여
+function deptListClick() {
+
+
+    let deptInput = document.querySelectorAll(".input-click"); 
+
+    // 각 버튼에 클릭 이벤트 리스너 추가
+    deptInput.forEach(sapn => {
+        sapn.addEventListener("click", function(e) {
+            let code = e.target.dataset.id.split(",");
+			let deptCode = code[0];
+            let topDeptCode = code[1];
+            let deptName = code[2];
+			console.log(deptCode);
+			console.log(topDeptCode);
+            selectDeptList(deptCode, topDeptCode, deptName);
+        });
+    });
+}
+
+function selectPersonnel(deptCode, topDeptCode) {
+	console.log("실행돼??????????????????");
+
+	let html = "";
+
+	$.ajax({
+		url : path+"/orgChart/personnel",   
+		type : 'post', 
+		data : {deptCode : deptCode},
+		dataType : "JSON",
+		success : function(result){
+			console.log('인사발령 result: ' ,result);
+
+			let TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+
+			for (let team of result) {
+				if (topDeptCode == team.topDeptCode) {
+
+					html += `<tr class="change-tr">
+								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
+								<td>${team.userName}</td>
+								<td>${team.topDeptName}</td>
+								<td>
+									<select class="form-select box-shadow-none" name="deptCode" aria-label="Default select example">
+										<option value="" selected>${team.topDeptName}</option>
+									</select>
+								</td>
+								<td>${team.deptName}</td>
+								<td>
+									<select class="form-select box-shadow-none"  aria-label="Default select example">
+										<option selected>${team.deptName}</option>
+									</select>
+								</td>
+								<td>${team.pName}</td>
+								<td>
+									<select class="form-select box-shadow-none" name="pCode" aria-label="Default select example">
+										<option value="" selected>${team.pName}</option>
+									</select>
+								</td>
+							</tr>`
+				}
+			}
+			let personnelUserList = document.getElementById("org-modal-tbody");
+			personnelUserList.innerHTML = html;
+		}
+	})
+}
+
+function personnelClick() {
+
+    let personnel = document.querySelectorAll(".personnel-btn"); 
+	console.log(personnel);
+
+    // 각 버튼에 클릭 이벤트 리스너 추가
+	personnel.forEach(btn => {
+		btn.addEventListener("click", function(e) {
+			let id = e.target.dataset.id.split(",");
+			selectPersonnel(id[0], id[1]);
+		});
+	});
+}
+
+
 
 	///////////////////////////////////////////////////////////////////////////// 상위부서 추가
 
@@ -330,7 +412,7 @@ $(document).ready (function () {
 
 							$(parent).find('.oc-all').append(
 								`<li class="team low-common">
-									<span class="input-click${result}">
+									<span class="input-click${result}" onclick="selectDeptList(${code})">
 										<input type="text" value="${input}" name="team${result}" id="${result}" class="team-name">
 									</span>
 									<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${result}"></i> 
@@ -520,7 +602,7 @@ $(document).ready (function () {
 	/////////////////////////////////////////////////////////////////////// 직급 삭제
 	$(".org-position-modal").on("click", ".position-minus", function(e) { 
 			
-		let pCode =  e.target.id.replace("position-change", '');
+		let pCode =  e.target.id.replace("position-minus", '');
 	
 		console.log(pCode);
 	
@@ -538,6 +620,29 @@ $(document).ready (function () {
 			}
 		})
 	});
+
+	///////////////////////////////////////////////////////////////////////// 인사발령
+
+	// let deptInput = document.querySelector('.input-click');
+
+			// data-id 속성 값 가져오기
+			// let dataId = deptInput.getAttribute('data-id');
+
+			// data-id 값을 쉼표(,)로 분리하여 사용
+			// let dataIdArray = dataId.split(',');
+
+			// let deptCode = dataIdArray[0];
+			// let teamDeptCode = dataIdArray[1];
+
+
+			// let deptCode = $(".input-click").data('id').split(',')[2]
+			// let topDeptCode = $(".topD-name").data('id').split(',')[0]
+			// let deptName = $(".topD-name").data('id').split(',')[2]
+			// let teamDeptCode = $(".input-click").data('id').split(',')[1]
+			// console.log(deptCode);
+			// console.log(topDeptCode);
+			// console.log(deptName);
+			// console.log(teamDeptCode);
 	
 
 	// document.getElementsByClassName("team-change").onclick = function() {
@@ -570,4 +675,3 @@ $(document).ready (function () {
 		// 	$(`.org-accordion${num}`).remove();
 		// }
 	
-});
