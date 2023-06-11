@@ -62,6 +62,30 @@ public class ChatDao {
 	public List<ChatMessage> selectChatMessage(int chatRoomNo){
 		return sqlSession.selectList("chatMapper.selectChatMessage", chatRoomNo);
 	}
+	
+	// 아.. 강의......
+		// 채팅 메세지 삽입
+		public int insertMessage(ChatMessage chatMessage) {
+			return sqlSession.insert("chatMapper.insertMessage", chatMessage);
+		}
+		
+		
+		// 채팅방 나가기
+		public int exitChatRoom(ChatParticipant join) {
+			return sqlSession.delete("chatMapper.exitChatRoom", join);
+		}
+		
+		// 채팅방 인원수
+		public int countChatRoomMemeber(int chatRoomNo) {
+			return sqlSession.selectOne("chatMapper.countChatRoomMemeber", chatRoomNo);
+		}
+		
+		
+		// 채팅방 닫기
+		public int closeChatRoom(int chatRoomNo) {
+			return sqlSession.update("chatMapper.closeChatRoom", chatRoomNo);
+		}
+	
 
 	
 	

@@ -88,9 +88,9 @@ public class ChatController {
 		if(chatRoomNo > 0) { //제대로 생성됨
 				
 			ra.addFlashAttribute("alertMsg","채팅방 생성 성공");
-			path += "chat";
+		//	path += "chat";
 				
-		// path += "room/"+ chatRoomNo;  // 상세화면 구현후 변경예정
+			path += "/chat/room/"+ chatRoomNo;  // 상세화면 구현후 변경예정
 		}else {
 			ra.addFlashAttribute("alertMsg", "채팅방 생성 실패");
 			path += "chat";
@@ -101,6 +101,7 @@ public class ChatController {
 	
 	
 	@GetMapping("/chat/room/{chatRoomNo}")
+	@ResponseBody
 	public String joinChatRoom(@ModelAttribute("loginUser") Member loginUser,								
 								Model model,
 								@PathVariable("chatRoomNo") int chatRoomNo,
@@ -108,12 +109,23 @@ public class ChatController {
 								RedirectAttributes ra
 								) {
 		join.setUserNo(loginUser.getUserNo());
+		
+		Map<String, Object> response = new HashMap<>();
+		
 		List<ChatMessage> list = chatService.joinChatRoom(join);
+			
 		
 		if(list != null) {
+			
 			model.addAttribute("list", list);
 			model.addAttribute("chatRoomNo", chatRoomNo);// session 스코프에 올라가게됨
-			return "chat/chatRoom";
+			
+			response.put("loginUser", loginUser);
+		    response.put("list", list);
+		    response.put("chatRoomNo", chatRoomNo);
+		    response.put("join", join);
+			
+			return new Gson().toJson(response);
 			
 		}else {
 			ra.addFlashAttribute("alertMsg", "채팅방이 존재하지 않습니다");

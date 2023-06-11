@@ -178,7 +178,7 @@ statusList.addEventListener('change', function() {
 
 
 
-/* 채팅방 목록 */
+/* 채팅방 목록 조회 */
 $.ajax({
   url: path+"/chat/chatRoom",
   method: "GET",
@@ -196,7 +196,7 @@ $.ajax({
       chatRoomList.forEach(function(chatRoom) {
         if (chatRoom.eno === loginUser.eno) {
         hasChatRoom = true;
-          chatRoomHtml += '<li class="chat_room_li"><a href="#">';
+          chatRoomHtml += '<li class="chat_room_li"><a href="#" data-chat-room-id="' + chatRoom.chatRoomNo + '">';
           
           if (chatRoom.profileImg) {
             chatRoomHtml += '<img src="' + chatRoom.profileImg + '" class="profile-img">';
@@ -221,12 +221,210 @@ $.ajax({
       chatRoomHtml = '<li class="chat_room_li">';
       chatRoomHtml += '<div>존재하는 채팅방이 없습니다.</div>';
       chatRoomHtml += '</li>';
-    } else {
-    }
+    } 
     
     $("ul.chat__room_ul").append(chatRoomHtml);
+   
+   
+  /* 채팅방 클릭 이벤트 및 변수 넘겨주기 */
+    $("ul.chat__room_ul a").on("click", function(e) {
+      e.preventDefault();
+      
+      var roomId = $(this).data("chat-room-id");
+      var clickedChatRoom = chatRoomList.find(function(chatRoom) {
+	  	 return chatRoom.chatRoomNo === roomId;
+	  });
+      
+      // roomId를 사용하여 다이얼로그 열기
+      openDialog(roomId, clickedChatRoom);  
+      
+      
+      
+     
+  /* 메세지 전달 */    
+  $(document).on("click", "#chatting_send", function() {
+ 	 sendMessage();
+   });
+
+  function sendMessage() {
+  
+    const inputChatting = document.getElementById("chatting_textarea");
+
+    if (inputChatting.value.trim().length == 0) {
+      alert("입력이 되지 않았습니다");
+
+      inputChatting.value = "";
+      inputChatting.focus();    
+      
+    }else{
+    
+    const chatMessage = {
+    	"userNo" : loginUser.userNo,
+    	"chatRoomNo" : roomId,
+    	"userName" : loginUser.userName,  	
+      	"message": inputChatting.value	
+    };
+    console.log("버튼이 눌렸다");
+     console.log(loginUser);
+     console.log(chatRoomList);
+     console.log(roomId);
+    chattingSock.send(JSON.stringify(chatMessage));
+    inputChatting.value = ""; 
+    }
+  }
+
+
+ // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
+ 	chattingSock.onmessage = function(e){
+	// 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
+	// e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
+	
+	// 전달받은 메세지를 js객체로 변환
+	
+	const chatMessage = JSON.parse(e.data); // json -> js Object
+	console.log(chatMessage);
+ 	
+ 	// 채팅창 
+ 	const display = document.getElementsByClass("main_chatting")[0];	
+ 	console.log(display[0]);
+ 	// 채팅창 제일 밑으로 내리는 코드 추가
+ 	display.scrollTop = display.scrollHeight;
+ 	// scrollTop : 스크롤 이동시켜주는 속성
+ 	// scrollHeight : 스크롤되는 요소의 전체 높이
+ }
+
+
+
+      
+ });
+      
+  // roomId를 사용하여 채팅방 데이터를 서버로부터 가져오는 Ajax 요청
+   
+  function openDialog(roomId, chatRoom) {
+  $.ajax({
+    url: path + "/chat/room/"+ roomId,
+    method: "GET",
+    data: { chatRoomNo: roomId },
+    dataType: "json",
+    success: function(response) {
+    
+    
+    const join = response.join;
+    const list = response.list;
+    
+      
+      console.log(chatRoom)
+      console.log(response);
+      console.log(join);
+      console.log(list);
+      
+      // 가져온 채팅방 데이터를 기반으로 다이얼로그 내용을 구성
+      var dialogContent = '<div id="chatting_body">' +
+    '<div class="chatting_setting_bar">' +
+    '<i class="fa-regular fa-window-restore" alt="최대화버튼" title="최대화"></i>' +
+    '<i class="fa-solid fa-xmark" alt="닫기버튼" title="닫기"></i>' +
+    '</div>' +
+    '<div class="chatting_main_menu">' +
+    '<i class="icon-bell" title="알림"></i>' +
+    '<i class="icon-ellipsis" title="메뉴"></i>' +
+    '</div>' +
+    '<header id="chatting_header">' +
+    '<img class="chatting_profile_img" src="./pic/default.png" alt="프로필사진">' +
+    '<div class="chatting_profile_col">' +
+    '<span class="chatting_profile_name">' + list.userName + '</span>' +
+    '<div class="chatting_sub_menu">' +
+    '<i class="icon-box" title="채팅방 서랍"></i>' +
+    '<i class="icon-search" title="검색"></i>' +
+    '</div>' +
+    '</div>' +
+    '</header>' +
+    '<main id="chatting_main">' +
+    '<div class="chatting_notice_bar">' +
+    '<i class="icon-bullhorn"></i>' +
+    '<span>공지 등록 하는곳</span>' +
+    '<i class="icon-down-open-big"></i>' +
+    '</div>' +
+    '<div class="chatting_content">' +
+    '<div class="chatting_date_line">' +
+    '<time datetime="2021-03-29">2021년 3월 29일 월요일</time>' +
+    '</div>' +
+    '<div class="main_chatting">';
+
+ for (var i = 0; i < list.length; i++) {
+        var message = list[i];
+
+        if (message.userNo !== loginUser.userNo) {
+          dialogContent +=
+            '<div class="friend_chatting">' +
+            '<img class="chatting_profile_img" src="./pic/default.png" alt="프로필사진">' +
+            '<div class="friend_chatting_col">' +
+            '<span class="chatting_profile_name">' + message.userName + '</span>' +
+            '<span class="chatting_balloon">' + message.message + '</span>' +
+            '</div>' +
+            '<time datetime="' + message.receivedDate + '" class="chatting_time">' + message.receivedDate + '</time>' +
+            '</div>';
+        } else {
+          dialogContent +=
+            '<div class="me_chatting">' +
+            '<div class="me_chatting_col">' +
+            '<span class="chatting_balloon">' + message.message + '</span>' +
+            '</div>' +
+            '<time datetime="' + message.receivedDate + '" class="chatting_time">' + message.receivedDate + '</time>' +
+            '</div>';
+        }
+      }
+
+      dialogContent +=
+        '</div>' +
+        '</div>' +
+        '<div class="chatting_insert_content">' +
+        '<div class="chatform">' +
+        '<textarea id="chatting_textarea"></textarea>' +
+        '<input type="button" id="chatting_send" value="전송">'  +
+        '</div>' +
+        '<div class="chatting_insert_menu">' +
+        '<i class="icon-smile"></i>' +
+        '<i class="icon-attach"></i>' +
+        '<i class="icon-phone"></i>' +
+        '<i class="icon-calendar-empty"></i>' +
+        '<i class="icon-camera"></i>' +
+        '</div>' +
+        '</div>' +
+        '</main>' +
+        '</div>';
+
+        
+  
+      // 다이얼로그(Dialog) 생성하기
+      var chattingDiglog = $("<div>").attr("title", chatRoom.roomTitle).html(dialogContent);
+
+      // 다이얼로그(Dialog)를 body 요소에 추가
+      chattingDiglog.appendTo("body");
+
+      // 다이얼로그(Dialog) 초기화 및 움직일 수 있도록 설정
+      chattingDiglog.dialog({
+        close: function() {
+          // 다이얼로그 닫힐 때 요소 제거
+          chattingDiglog.dialog("destroy").remove();
+        },
+        modal: false,
+        height: 800,
+        width: 400,
+      });
+    },
+    error: function(xhr, status, error) {
+      console.error("Failed to fetch chat room data:", error);
+      // 에러 처리
+    }
+  });
+}
   }
 });
+
+
+
+
+
 
 
 
@@ -274,8 +472,6 @@ $.ajax({
 });
 
 
-
-
  /* nav 메뉴 이동 */
    function toggleChatRoom() {
 
@@ -295,8 +491,28 @@ $.ajax({
 	 chatRoomContent.style.display = "none";	    
   }
  
-
-
+ 
+ $.ajax({
+    url: "/chat/openChatRoom",
+    method: "POST",
+    data: {
+        // 채팅방 생성에 필요한 데이터
+    },
+    dataType: "json",
+    success: function(response) {
+        var chatRoomNo = response;
+        if (chatRoomNo > 0) {
+            // 채팅방이 생성된 경우
+            // 이곳에서 생성된 채팅방 번호를 활용하여 다이얼로그 열기 등의 동작을 수행
+        } else {
+            // 채팅방 생성 실패
+            // 실패 메시지 표시 등의 처리
+        }
+    },
+    error: function(xhr, status, error) {
+        // 에러 처리
+    }
+});
 
 
 

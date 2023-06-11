@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.chat.model.dao.ChatDao;
@@ -61,6 +62,35 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.selectChatMessage(join.getChatRoomNo());
 	}
 	
+	
+	
+	// 아강의 .....
+	@Override
+	public int insertMessage(ChatMessage chatMessage) {
+		return chatDao.insertMessage(chatMessage);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int exitChatRoom(ChatParticipant join) {
+		
+		// 채팅방 나가기
+		int result = chatDao.exitChatRoom(join);
+		
+		// 채팅방 나가기 성공시
+		if(result > 0 ) {
+			// 현재 방에 남아있는 인원을 확인하고
+			int cnt = chatDao.countChatRoomMemeber(join.getChatRoomNo());
+		
+			// 0명일 경우 방을 닫기
+			if(cnt == 0 ) {
+				result = chatDao.closeChatRoom(join.getChatRoomNo());
+			}
+			
+		}
+		
+		return result;
+	}
 	
 	
 	

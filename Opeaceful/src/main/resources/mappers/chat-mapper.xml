@@ -12,6 +12,16 @@
 		<result column="PROFILE_IMG" property="profileImg"/>
 		<result column="ENO" property="eno"/>
 	</resultMap>
+	
+	<resultMap type="chatMessage" id="chatMessageResultSet">
+		<id column="CHAT_NO" property="chatNo"/>
+		<result column="CHATROOM_NO" property="chatRoomNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="MESSAGE" property="message" />
+		<result column="NOT_RECEIVED" property="notReceived" />
+		<result column="RECEIVED_DATE" property="receivedDate" />
+		<result column="MESSAGE_TYPE" property="messageType" />		
+	</resultMap>
 
 	<select id="selectChatRoomList" resultMap="chatRoomResultSet">
 		SELECT
@@ -47,11 +57,29 @@
 	
 	<!-- 채팅방 참여하기 -->
 	<insert id="joinChatRoom" parameterType="ChatParticipant">
-		INSERT INTO CHAT_PARTICIPANT
-			VALUES(#{userNo},#{chatRoomNo},#{roomTitle},0,0,NOW(),Y)
+    INSERT INTO CHAT_PARTICIPANT (CHATROOM_NO, USER_NO, ROOM_TITLE, NOT_READ_CHAT, LAST_READ_CHAT_NO, CREATE_DATE, BELL_SETTING)
+    SELECT #{chatRoomNo}, #{userNo}, ROOM_TITLE, 0, 0, NOW(), 'Y'
+    FROM CHAT_ROOM
+    WHERE CHATROOM_NO = #{chatRoomNo}
 	</insert>
 	
-
+	<!-- 채팅 메세지 목록 조회 -->
+	<select id="selectChatMessage" resultType="chatMessage">
+		SELECT  MESSAGE,
+				RECEIVED_DATE,
+				CHATROOM_NO,
+				USER_NO,
+				USER_NAME
+		FROM CHAT
+		JOIN MEMBER M USING(USER_NO)
+		WHERE CHATROOM_NO = #{chatRoomNo}
+		ORDER BY CHAT_NO
+	</select>
+	
+	<insert id="insertMessage" parameterType="chatMessage">
+		INSERT INTO CHAT (CHATROOM_NO, USER_NO, MESSAGE, NOT_RECEIVED, RECEIVED_DATE, MESSAGE_TYPE)
+			VALUES(#{chatRoomNo}, #{userNo}, #{message},0 ,NOW(), 1)
+	</insert>
 	
 	
 	

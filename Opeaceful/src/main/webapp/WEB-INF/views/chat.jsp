@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="${path}/resources/css/chat/chat-friend.css">
 <link rel="stylesheet" href="${path}/resources/css/chat/chat-general.css">
 <link rel="stylesheet" href="${path}/resources/css/chat/chat-room.css">
+<link rel="stylesheet" href="${path}/resources/css/chat/chatting.css">
 
 <style>
  #chat_room_content{
@@ -300,8 +301,24 @@
     </div>
    
    <script type="module" src="${path}/resources/js/chat/chat.js"></script> 
-   <script src="${path}/resources/js/chat/chatJs.js"></script> 
-
+   <script type="text/javascript" src="${path}/resources/js/chat/chatJs.js"></script> 
+   
+   <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+   
+   <script>
+   let chattingSock = new SockJS("${path}/chat/room/{roomId}");
+   </script>
+   
+   <script>
+   $(document).ready(function() {
+	   $("#chatting_send").click(function(){
+	       $("#dialog").dialog("close");
+	       console.log("클릭됨");
+	       });
+	      });
+   </script>
+   
+   
 </body>   
     
 </html>

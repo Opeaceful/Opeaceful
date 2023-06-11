@@ -23,5 +23,13 @@ public interface ChatService {
 	int openChatRoom(ChatRoom cr);
 	
 	List<ChatMessage> joinChatRoom(ChatParticipant cp);
+	
+	// 아 강의.....
+	
+	int insertMessage(ChatMessage cm);
+	
+	int exitChatRoom(ChatParticipant crj);
+	
+	
 
 }

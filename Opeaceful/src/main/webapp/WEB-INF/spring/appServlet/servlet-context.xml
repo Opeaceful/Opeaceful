@@ -48,7 +48,7 @@
 	 
 	 <websocket:handlers>
 	 	<!-- 웹 소켓에 대한 요청이 들어왔을때 요청주소를 처리할 bean객체 지정 -->
-	 	<websocket:mapping handler="chatHandler" path="/chatRoom"/>
+	 	<websocket:mapping handler="chatHandler" path="/chat/room/{roomId}"/>
 	 	
 	 	<websocket:handshake-interceptors>
 	 		<!-- 

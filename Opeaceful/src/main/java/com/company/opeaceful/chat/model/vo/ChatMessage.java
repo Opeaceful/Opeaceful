@@ -14,5 +14,7 @@ public class ChatMessage {
 	private int notReceived;
 	private Date receivedDate;
 	private int messageType;
+	
+	private String userName;
 
 }
