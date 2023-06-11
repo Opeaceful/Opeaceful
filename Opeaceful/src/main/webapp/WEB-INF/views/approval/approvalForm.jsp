@@ -2,7 +2,7 @@
 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
+	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/10(페이지당 표시수)
 	int count = (int) request.getAttribute("count");
 	int pageCount = (int) Math.ceil(count / 10.0);
 %>
