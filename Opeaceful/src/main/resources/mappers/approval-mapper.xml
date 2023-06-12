@@ -604,6 +604,14 @@
 	</update> -->
 	
 	
+	<!-- 결재문서 상태 수정 -->
+	<update id="updateApprovalStatus" parameterType="map">
+		UPDATE APPROVAL_MEMO
+		SET STATUS = #{ status }
+		WHERE APPROVAL_NO = #{ approvalNo }
+	</update>
+	
+	
 	<!-- 메모 내용 수정 -->
 	<update id="updateMemo" parameterType="approvalMemo">
 		UPDATE APPROVAL_MEMO

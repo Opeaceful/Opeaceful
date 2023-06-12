@@ -296,6 +296,16 @@ public class ApprovalDao {
 	};
 	
 	
+	// 결재문서 상태값 업데이트
+	public int updateApprovalStatus(int approvalNo, int status) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("status", status);
+		
+	    return sqlSession.update("aprMapper.updateApprovalStatus",params);
+	}
+	
+	
 	// 메모 업데이트
 	public int updateMemo(ApprovalMemo memo) {
 		return sqlSession.update("aprMapper.updateMemo",memo);

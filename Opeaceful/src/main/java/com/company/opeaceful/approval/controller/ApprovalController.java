@@ -66,6 +66,7 @@ public class ApprovalController {
 		// todo! 반려건, 승인대기건 개수 조회해서 같이 넣어주기
 		model.addAttribute("returnCount", aprService.selectApprovalListCount(userNo, -2 , -1, currentYear, false)  );
 		model.addAttribute("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, true) );
+		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, currentYear, true));
 		
 		if(menu != null && menu.equals("wait")) {
 			// 승인대기중인 메뉴로 선택
@@ -123,7 +124,7 @@ public class ApprovalController {
 	}
 	
 	
-	// ajax용 확인안한 반려, 승인대기 결재문서 수 반환 
+	// ajax용 확인안한 반려건 수, 확인안한 승인대기건 수, 확인안한 참조문서건 수  반환
 	@ResponseBody
 	@PostMapping("/selectUnReadCount")
 	public String selectUnReadCount( @ModelAttribute("loginUser") Member loginUser) {
@@ -134,18 +135,16 @@ public class ApprovalController {
 		
 		map.put( "returnCount" ,aprService.selectApprovalListCount(userNo, -2 , -1, currentYear, false));
 		map.put("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, true) );
-		
+		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, currentYear, true));
 		return new Gson().toJson(map);
 	}
 	
 	
-	// ajax용 선택된 결재문서 세부 내용 반환
+	// ajax용 선택된 결재문서 세부 내용 반환 + 확인된 문서 체크
 	@ResponseBody
 	@PostMapping("/selectApproval")
 	public String selectApproval( @ModelAttribute("loginUser") Member loginUser, Integer approvalNo) {
 		Map<String, Object > map  = new HashMap<>();
-		
-		System.out.println("=================== = 번호"+approvalNo);
 		
 		int userNo= loginUser.getUserNo();
 		
@@ -153,9 +152,21 @@ public class ApprovalController {
 		List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo);
 		List<ApprovalFile> files = aprService.selectFileList("approval", approvalNo, "attachment");
 		
+		if(userNo ==  approval.getUserNo() && approval.getStatus() == -1) {
+			// 만약 로그인유저가 기안자면서 문서 상태가 확인안한 반려(-1) 이라면 확인한 반려(-2)로 상태 변경 날려주기
+			int result = aprService.updateApprovalStatus( approvalNo, -2);
+			if(result > 0) {
+				// 상태 변경된걸로 다시 조회
+				approval = aprService.selectApproval(approvalNo);
+			}
+		}
+		
 		map.put("approval", approval);
 		map.put("lines", lines);
 		map.put("files", files);
+		map.put("isMine", userNo == approval.getUserNo());
+		
+
 		
 		return new Gson().toJson(map);
 	}
@@ -541,9 +552,9 @@ public class ApprovalController {
 					deleteFile.delete();// 파일 삭제
 				}
 			}
+			aprService.deleteFileList(files);
 		}
 		
-		aprService.deleteFileList(files);
 		int result = aprService.deleteMemo(memoNo);
 
 		return result;

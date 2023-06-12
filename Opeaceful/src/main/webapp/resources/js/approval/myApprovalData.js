@@ -232,14 +232,14 @@ export function selectApprovalList(year, type, page, menu, status) {
   });
 }
 
-// 안읽은 반려, 승인대기 결재문서 수 반환
+// 안읽은 반려, 승인대기, 참조 결재문서 수 반환
 export function selectUnReadCount() {
   $.ajax({
     url: defaultPath + '/selectUnReadCount',
     dataType: 'JSON',
     type: 'POST',
     success: function (result) {
-      MyAprFront.setAlamNum(result.returnCount, result.waitCount);
+      MyAprFront.setAlamNum(result.returnCount, result.waitCount, result.referCount);
     },
     error: function (request) {
       console.log('에러발생');
@@ -259,8 +259,12 @@ export function selectApproval(approvalNo) {
       MyAprFront.setEndApprovalModal(
         result.approval,
         result.lines,
-        result.files
+        result.files,
+        result.isMine
       );
+
+      // 문서 조회가일어나면 일단 안읽은 알림 개수 다시 체크
+      selectUnReadCount();
     },
     error: function (request) {
       console.log('에러발생');

@@ -110,14 +110,14 @@ pageEncoding="UTF-8"%>
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-danger">삭제</button>
-            <button type="button" class="btn btn-outline-primary">반려</button>
+            <button type="button" id="btn-delete-approval" class="btn btn-outline-danger">삭제</button>
+            <button type="button" id="btn-return-approval" class="btn btn-outline-primary">반려</button>
             <button id="btn-memo-open" type="button" class="btn btn-outline-primary">
               메모(0)
             </button>
-            <button type="button" class="btn btn-outline-primary">인쇄</button>
+            <button type="button" id="btn-print-approval" class="btn btn-outline-primary">인쇄</button>
 
-            <button type="button" class="btn btn-primary position-ok ms-auto">
+            <button type="button" id="btn-authorize-approval" class="btn btn-primary position-ok ms-auto">
               결재
             </button>
             <button

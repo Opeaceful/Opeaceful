@@ -554,9 +554,10 @@ export function resetPageBtn(currentBtnNum, count) {
 }
 
 // 안읽은 반려, 승인대기 결재문서 수받아와서 알람버튼에 세팅
-export function setAlamNum(waitCount, returnCount) {
+export function setAlamNum(waitCount, returnCount, referCount) {
   const waitAlam = document.getElementById('wait-alarm');
   const returnAlam = document.getElementById('return-alarm');
+  const referAlam = document.getElementById('refer-alarm');
 
   waitAlam.innerText = waitCount;
   returnAlam.innerText = returnCount;
@@ -571,6 +572,12 @@ export function setAlamNum(waitCount, returnCount) {
     returnAlam.className = 'alarm-hide alarm-balloon';
   } else {
     returnAlam.className = 'alarm-balloon';
+  }
+
+  if (referCount <= 0) {
+    referAlam.className = 'alarm-hide alarm-balloon';
+  } else {
+    referAlam.className = 'alarm-balloon';
   }
 }
 
@@ -624,7 +631,7 @@ let changeEndApprovalImgPath = (contentEl, imgPath) => {
 };
 
 // 결재문서 상세화면 세팅후 모달 오픈
-export function setEndApprovalModal(approval, lines, files) {
+export function setEndApprovalModal(approval, lines, files, isMine) {
   console.log('세부정보 불러옴 !!   ', approval, lines);
 
   const defaultFilePath = path + '/resources/file/approval/';
@@ -671,19 +678,14 @@ export function setEndApprovalModal(approval, lines, files) {
 
   // 종류 텍스트 세팅
   typeTd.innerText = formatApprovalType(approval.type);
-
   // 상태 텍스트 세팅
   statusTd.innerText = formatApprovalStatus(approval.status);
-
   // 기안일 세팅
   draftDateTd.innerText = approval.formatDraftDate;
-
   // 기안자 세팅
   userTd.innerText = `${approval.userName} ${approval.pName}(${approval.eno})`;
-
   // 제목 세팅
   titleH.innerText = approval.title;
-
   // 본문내용 세팅
   contentDiv.innerHTML = approval.content;
   changeEndApprovalImgPath(contentDiv, defaultFilePath);
@@ -750,6 +752,19 @@ export function setEndApprovalModal(approval, lines, files) {
   // 결재라인 세팅
   lineDiv.innerHTML = lineHtml;
 
+
+  if(isMine){
+    // 내가 기안한 문서면 삭제버튼 활성화
+    document.getElementById("btn-delete-approval").style.display = "inline-block";
+  }else{
+    document.getElementById("btn-delete-approval").style.display = "none";
+  }
+
+  const selectedMenu = document.querySelector('.top-menubar-item.selected').dataset.menu;
+  
+  switch()
+
+
   // todo! 내용 세팅 끝난 후  모달 오픈
   $('#end-approval').modal('show');
 }
@@ -769,6 +784,12 @@ export function setMemoList(memoList) {
               </td>
               <td>${formatDateTime(memo.date)}</td>
             </tr>`;
+  }
+
+  if(memoList.length <= 0){
+    html = `<tr>
+              <td colspan="3">작성된 메모가 없습니다</td>
+            </tr>`
   }
 
   // 메모 리스트 세팅
@@ -1156,7 +1177,7 @@ let setDefaultPageEvent = () => {
     const menu = document.querySelector('.top-menubar-item.selected').dataset
       .menu;
     const status = document.getElementById('check-show-status').value;
-    closet;
+
     MyAprData.selectApprovalList(year, Number(e.target.value), 1, menu, status);
   });
 

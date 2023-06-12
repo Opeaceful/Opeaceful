@@ -56,7 +56,12 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 					<span id="return-alarm" class="${ returnCount > 0 ? "" : "alarm-hide" } alarm-balloon" alt="알림수">${returnCount}</span>
 				</div>
 			</div>
-			<div class="top-menubar-item" id="approval-state-refer" data-menu="refer">참조</div>
+			<div class="top-menubar-item" id="approval-state-refer" data-menu="refer">
+				<div class="alarm-wrap">
+					참조
+					<span id="refer-alarm" class="${ referCount > 0 ? "" : "alarm-hide" } alarm-balloon" alt="알림수">${referCount}</span>
+				</div>
+			</div>
 			
 			<div class="${ menu eq 'wait' ? 'selected ' : '' } top-menubar-item" id="approval-state-wait" data-menu='wait'>
 				<div class="alarm-wrap">
@@ -218,11 +223,11 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
                     <div class="sign-img-item">
                     	<div>기존 이미지</div>
-                      <img id="img-my-sign" onerror="this.onerror=null;">
+                      <img id="img-my-sign" onerror="this.src='${path}/resources/image/approval/invisible.png';">
                     </div>
                     <div class="sign-img-item">
                     	<div>신규 이미지</div>
-                      <img id="img-new-sign"  onerror="this.onerror=null;">
+                      <img id="img-new-sign" onerror="this.src='${path}/resources/image/approval/invisible.png';">
                     </div>
 
                   </div>

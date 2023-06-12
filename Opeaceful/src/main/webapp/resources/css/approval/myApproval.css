@@ -179,6 +179,8 @@ div.selected {
 .sign-img-item img {
   width: 80px;
   height: 80px;
+
+  border: 1px solid black;
 }
 
 .sign-btn-wrap {
@@ -211,7 +213,6 @@ div.selected {
 }
 
 .paging-bar .selected-btn {
-  pointer-events: none;
   color: white !important;
   background-color: var(--color-navy);
   box-shadow: none;

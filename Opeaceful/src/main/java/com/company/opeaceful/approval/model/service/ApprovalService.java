@@ -73,6 +73,8 @@ public interface ApprovalService {
 	
 	int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList);
 	
+	int updateApprovalStatus(int approvalNo, int status);
+	
 	int updateMemo(ApprovalMemo memo, List<ApprovalFile> fileList);
 	
 	int updateSignImg(int userNo, String changeName);
