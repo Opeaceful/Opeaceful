@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.role.model.service.RoleService;
@@ -34,8 +36,24 @@ public class RoleController {
 	//[지영]
 	//granting-role로 이동
 	@RequestMapping("/granting")
-	public String granting(){
-		return "role/granting-role";
+	public String granting(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
+		
+		boolean RoleCheck = false;
+		
+		for(UserRole role :loginUserRole) {
+			if (role.getRoleCode().equals("M01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
+		
+		if (RoleCheck) {
+			return "role/granting-role";
+	    } else {
+	    	//일단은 로그인으로 보냄 : 에러페이지?
+	    	return "login";
+	    }
+		
 	}
 	
 	//[지영]
@@ -83,8 +101,24 @@ public class RoleController {
 	//[지영]
 	//user-role로 이동
 	@RequestMapping("/userRole")
-	public String memberRole(){
-		return "role/user-role";
+	public String memberRole(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
+		
+		boolean RoleCheck = false;
+		
+		for(UserRole role :loginUserRole) {
+			if (role.getRoleCode().equals("M01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
+		
+		if (RoleCheck) {
+			return "role/user-role";
+	    } else {
+	    	//일단은 로그인으로 보냄 : 에러페이지?
+	    	return "login";
+	    }
+		
 	}
 	
 	//[지영]
@@ -146,9 +180,6 @@ public class RoleController {
 			UserRole userRole,
 			Boolean checked
 			){
-		
-		System.out.println(userRole);
-		System.out.println(checked);
 		
 		int result = 0;
 		

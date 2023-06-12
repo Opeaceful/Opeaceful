@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.company.opeaceful.member.model.vo.Member;
@@ -26,7 +27,6 @@ import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/salary")
-@SessionAttributes({"loginUser"})
 public class SalaryController {
 	
 	private SalaryService salaryService;
@@ -77,7 +77,7 @@ public class SalaryController {
 	//employeeAllSalary로 이동 + 데이터 검색으로 세팅해주기
 	@GetMapping("/AllSalary")
 	public String employeeAllSalary(
-//	@ModelAttribute ("loginUser") Member loginUser, 
+			@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, 
 			Model model,
 			@RequestParam(value= "month", required = false) Integer month,
 			@RequestParam(value= "year",required = false) Integer year,
@@ -86,25 +86,40 @@ public class SalaryController {
 			@RequestParam(value="no", required = false) int[] no
 			) {
 		
-		//검색 select용 map
-		Map<String, Object> selectYMT = new HashMap<>();	
-	
-		selectYMT.put("month", month);
-		selectYMT.put("year", year);
-		selectYMT.put("team", team);
-		selectYMT.put("no", no);
+		boolean RoleCheck = false;
 		
-	
-		List<Salary> LSalry = salaryService.employeeAllSalary(currentPage,selectYMT);
-		List<String> dpNames = salaryService.salaryList();
-	
+		for(UserRole role :loginUserRole) {
+			if (role.getRoleCode().equals("S01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
 		
-		//model.addAttribute("loginUser", loginUser);
-		model.addAttribute("LSalry",LSalry);
-		model.addAttribute("dpNames",dpNames);
-		model.addAttribute("map",selectYMT);	
+		if (RoleCheck) {
+			//검색 select용 map
+			Map<String, Object> selectYMT = new HashMap<>();	
 		
-		return "salary/employeeAllSalary";
+			selectYMT.put("month", month);
+			selectYMT.put("year", year);
+			selectYMT.put("team", team);
+			selectYMT.put("no", no);
+			
+		
+			List<Salary> LSalry = salaryService.employeeAllSalary(currentPage,selectYMT);
+			List<String> dpNames = salaryService.salaryList();
+		
+			model.addAttribute("LSalry",LSalry);
+			model.addAttribute("dpNames",dpNames);
+			model.addAttribute("map",selectYMT);	
+			
+			return "salary/employeeAllSalary";
+	    } else {
+	    	//일단은 로그인으로 보냄 : 에러페이지?
+	    	return "login";
+	    }
+		
+		
+		
 		
 	}
 

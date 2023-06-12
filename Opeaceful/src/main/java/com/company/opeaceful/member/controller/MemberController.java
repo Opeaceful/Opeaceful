@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -165,11 +166,23 @@ public class MemberController {
 	//[지영]
 	//member-create로 이동
 	@RequestMapping("/create")
-	public String createMember(@ModelAttribute("loginUserRole") List<UserRole> loginUserRole) {
+	public String createMember(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
 		
-		System.out.println(loginUserRole);
+		boolean RoleCheck = false;
 		
-		return "member/member-create";
+		for(UserRole role :loginUserRole) {
+			if (role.getRoleCode().equals("R01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
+		
+		if (RoleCheck) {
+	        return "member/member-create";
+	    } else {
+	    	//일단은 로그인으로 보냄 : 에러페이지?
+	    	return "login";
+	    }
 	}
 	
 	//[지영]
@@ -213,12 +226,25 @@ public class MemberController {
 	//[지영]
 	//member-allview로 이동
 	@RequestMapping("/allview")
-	public String memberAllview(HttpSession session) {
+	public String memberAllview(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole){
 		
-//		Object rl = session.getAttribute("loginUserRole");
-//		System.out.println(rl);
+		boolean RoleCheck = false;
+		
+		for(UserRole role :loginUserRole) {
+			if (role.getRoleCode().equals("M01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
+		
+		if (RoleCheck) {
+			return "member/member-allview";
+	    } else {
+	    	//일단은 로그인으로 보냄 : 에러페이지?
+	    	return "login";
+	    }
 	 
-		return "member/member-allview";
+		
 	}
 	
 	
@@ -398,7 +424,6 @@ public class MemberController {
 	public String modalAllMemberView(
 			@RequestParam("keyword") String keyword){
 		
-		System.out.println(keyword);
 		
 		List<Member> m = memberService.modalAllMemberView(keyword);
 	
