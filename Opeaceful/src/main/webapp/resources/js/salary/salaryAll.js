@@ -64,28 +64,32 @@ function allSalaryData(dataId){
             let phtml = ""
             let dhtml = ""
 
-            for(let i = 0; i < payment.length;  i += 2){
-                phtml += 
+            if(payment.length > 1){
+
+                for(let i = 0; i < payment.length;  i += 2){
+                    phtml += 
+                    `
+                    <tr>
+                        <td>${payment[i]}</td>
+                        <td><input type="number" name="pay" class="form-control" required value=${payment[i+1]}></td>
+                        <td><button class="btn btn-danger"  type="button"><i class="fa-solid fa-minus"></i></button></td>
+                    </tr>
+                    `
+            }
+
+            }
+
+           if(deduction.length > 1){
+            for(let i = 0; i < deduction.length;  i += 2){
+                dhtml += 
                 `
                 <tr>
-                    <td>${payment[i]}</td>
-                    <td><input type="number" name="pay" class="form-control" required value=${payment[i+1]}></td>
-                    <td><button class="btn btn-danger"  type="button"><i class="fa-solid fa-minus"></i></button></td>
+                <td name="payName">${deduction[i]}</td>
+                <td><input type="number" name ="ded" class="form-control" required value=${deduction[i+1]}></td>
+                <td><button class="btn btn-danger"  type="button"><i class="fa-solid fa-minus"></i></button></td>
                 </tr>
                 `
-           }
-
-
-
-           for(let i = 0; i < deduction.length;  i += 2){
-            dhtml += 
-            `
-            <tr>
-            <td name="payName">${deduction[i]}</td>
-            <td><input type="number" name ="ded" class="form-control" required value=${deduction[i+1]}></td>
-            <td><button class="btn btn-danger"  type="button"><i class="fa-solid fa-minus"></i></button></td>
-            </tr>
-            `
+                }
             }
             document.getElementById("salary-table-pay").innerHTML = phtml;
             document.getElementById("salary-table-deduction").innerHTML = dhtml;
@@ -158,11 +162,11 @@ function deleteTable(button){
  }
 
 $("#salary-table-btn").click(function(){
-    addTable('salary-table','pay');
+    addTable('salary-table-pay','pay');
 });
 
 $("#deduction-table-btn").click(function(){
-    addTable('deduction-table','ded');
+    addTable('salary-table-deduction','ded');
 });
 
 
@@ -195,7 +199,7 @@ $("#salary-delete").click(function(e){
 });
 
 $("#salary-update").click(function(e){
-    
+
     let totalGP = tatalPay("pay");
     let totalDD = tatalPay("ded");
     let netP = totalGP-totalDD;
@@ -204,7 +208,6 @@ $("#salary-update").click(function(e){
     totalDD = totalDD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     netP = netP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     
-
     swal("수정하시겠습니까?",'총 금액 : '+totalGP+'원, 공제금액 : '+totalDD+'원, 실지급액 : '+netP+'원',{
         buttons: {confirm: "확인", cancel: "취소"}
     })
@@ -329,7 +332,12 @@ function tatalPay(name){
 
 //div세팅
 function tataldiv(tableid){
+
     const trs = document.querySelectorAll(tableid);
+   
+    
+    console.log(document.querySelectorAll("#salary-table-pay tr"));
+
     let payments = '';
     for (let i = 0; i < trs.length; i++) {;
         if(trs[i].firstElementChild.textContent){

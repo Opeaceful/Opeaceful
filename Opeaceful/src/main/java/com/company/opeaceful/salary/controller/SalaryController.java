@@ -1,9 +1,6 @@
 package com.company.opeaceful.salary.controller;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -194,7 +191,14 @@ public class SalaryController {
 		    		selectYMT.put("year", year);
 		    		selectYMT.put("no", m.getUserNo());
 		    		
-		    		salary = salaryService.selectUserCope(selectYMT);
+		    		
+		    		Salary ss = salaryService.selectUserCope(selectYMT);
+		    		
+		    		if(ss != null) {
+		    			salary = ss;
+		    		}
+		    		 
+		    		
 		    	}
 		    	
 		        salary.setUserNo(m.getUserNo());

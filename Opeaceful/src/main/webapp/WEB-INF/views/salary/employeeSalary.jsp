@@ -79,7 +79,7 @@
           <button type="button" class="btn" id="print-button"> <i class="bi bi-printer"></i></button>
           </div>
 
-          <h1 class="text-center">${LSalry[i].getPaymentDate()}</h1>
+          <h1 class="text-center" id="salaryModalTitle"></h1>
         </div>
           <br>
           <div class="row f-nowrap">

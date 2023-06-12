@@ -10,7 +10,7 @@
 	         TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
 	          VALUES
 	    <foreach item="s" collection="list" separator=",">
-	       (#{s.userNo}, #{s.yearReported}, #{s.monReported},#{s.sPaymentDate},#{s.totalGrosspay},#{s.totalDeductions},#{s.netPay},#{s.payments},#{s.deduction},#{s.pName},#{s.deptName})
+	       (#{s.userNo}, #{s.yearReported}, #{s.monReported},#{s.sPaymentDate},IFNULL(#{s.totalGrosspay},''),IFNULL(#{s.totalDeductions},''),IFNULL(#{s.netPay},''),IFNULL(#{s.payments},''),IFNULL(#{s.deduction},''),#{s.pName},#{s.deptName})
 	    </foreach>
 	</insert>
 
