@@ -453,7 +453,7 @@ $("#all-member-modal-button").click(function(){
 
 });
 
-//엔터를 눌렀을때 해당 직원들이 있따면 처리할 이벤트
+//엔터를 눌렀을때 해당 직원들이 있다면 처리할 이벤트
 searchInput.addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
         if(checkMemberNo.length > 0){

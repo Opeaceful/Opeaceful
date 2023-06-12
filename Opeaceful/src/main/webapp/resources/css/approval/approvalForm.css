@@ -201,13 +201,34 @@ th:nth-child(3) {
 }
 
 .paging-bar button {
-  font-size: var(--font13);
+  background-color: var(--color-background);
+  font-size: 0.75rem;
+  color: var(--color-navy);
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0px;
 }
 
-.selected-btn {
-  color: var(--bs-btn-disabled-color);
+.paging-bar .selected-btn {
   pointer-events: none;
-  background-color: var(--bs-btn-disabled-bg);
-  border-color: var(--bs-btn-disabled-border-color);
-  opacity: var(--bs-btn-disabled-opacity);
+  color: white !important;
+  background-color: var(--color-navy);
+  box-shadow: none;
+}
+
+.paging-bar .page-btn:hover {
+  color: var(--color-navy);
+  border-color: var(--white-hover);
+  background-color: var(--white-hover);
+}
+
+.paging-bar .selected-btn:hover {
+  color: white !important;
+  background-color: var(--color-navy);
+  box-shadow: none;
+}
+
+#prev-btn:hover,
+#next-btn:hover {
+  background-color: var(--color-light-gray);
 }
