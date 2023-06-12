@@ -1,7 +1,7 @@
 /**
  * [지의] - 마이페이지js
  */
-import {path} from './common/common.js';
+import {path} from '../common/common.js';
 /* 전화번호 이벤트 */
 // toast 메세지 띄우는 메서드
 let toast = function (text) {

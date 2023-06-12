@@ -3,8 +3,8 @@
  * member 테이블 ajax
 */
 
-import {path} from './common/common.js';
-import {checkMemberNo} from './common/memberSelect.js';
+import {path} from '../common/common.js';
+import {checkMemberNo} from '../common/memberSelect.js';
 
 //함수에 사용할 변수 세팅
 let pagination;

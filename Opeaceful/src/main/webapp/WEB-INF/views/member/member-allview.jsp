@@ -14,7 +14,7 @@
 
   	<!--메인 공통 css-->
 	<link rel="stylesheet" href="${path}/resources/css/common/common.css">
-	<link rel="stylesheet" href="${path}/resources/css/memberAllview.css">
+	<link rel="stylesheet" href="${path}/resources/css/member/memberAllview.css">
 
 
 </head>
@@ -206,7 +206,7 @@
  
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="module" src="${path}/resources/js/common/dtcodeselect.js"></script>
-<script type="module" src="${path}/resources/js/memberAllview.js"></script>
+<script type="module" src="${path}/resources/js/member/memberAllview.js"></script>
 <script src="${path}/resources/js/common/addressAPI.js"></script>
 
 
