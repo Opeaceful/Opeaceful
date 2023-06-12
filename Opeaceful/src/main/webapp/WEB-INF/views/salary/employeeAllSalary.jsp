@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,21 @@
 <body>
 <jsp:include page="/WEB-INF/views/sidebar.jsp" />
 <c:set var="LSalry" value="${LSalry}"/>
+<c:set var="dpNames" value="${dpNames}"/>
+<c:set var="pi" value="${map.pi}"/>
+<c:if test="${empty map.no}">
+	<c:set var="url" value="AllSalary?year=${map.year}&month=${map.month}&team=${map.team}&cpage="/>
+</c:if>
+<c:if test="${not empty map.no}">
+	<c:set var="url" value="AllSalary?year=${map.year}&month=${map.month}&no=${fn:join(map.no,',')}&cpage="/>
+</c:if>
+
+<c:if test="${ not empty alertMsg }">
+	<script>
+	swal('${alertMsg}');
+	</script>
+	<c:remove var="alertMsg"/>
+</c:if>
 <div class="content-wrap">
  <!--제목-->
   <div class="container">
@@ -30,8 +46,21 @@
  
     <!--부서/년도/월/이름 검색 구역-->
     <div class="d-inline-flex">
-		<select class="form-select form-select-sm mb-3" id="d-select" name="deptCode">
-			<option value="" selected>부서명</option>
+		<select class="form-select form-select-sm mb-3" id="dpSelect">
+			<option value="">부서명</option>
+			 <c:forEach items="${dpNames}" var="dpName">
+			 	<c:choose> 
+					<c:when test="${map.team} == null">
+						<option value="">${dpName}</option>
+					</c:when>
+					<c:when test="${map.team == dpName}">
+						<option value="" selected>${dpName}</option>
+					</c:when>  
+					<c:otherwise> 
+						<option value="">${dpName}</option>
+					</c:otherwise> 
+				</c:choose> 
+			</c:forEach>      
 		</select>
 		
 		<select class="form-select form-select-sm mb-3 ms-1" id="salary-year" name="year">
@@ -41,7 +70,7 @@
 		</select>
 		<div class="search-wrap2 input-group mb-3 ms-1">
 		    <input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원이름 입력">
-		    <button class="btn btn-outline-secondary search-btn2" type="button" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button type="button" class="btn btn-outline-secondary search-btn2" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
 		</div>
  	</div>
   
@@ -59,9 +88,9 @@
           <th scope="col">실지급액</th>
         </tr>
       </thead>
-      <tbody class="table-group-divider">
+      <tbody class="table-group-divider" id="Am-salary-table">
         <c:forEach items="${LSalry}" var="salry">
-	        <tr data-id=${salry.getSalaryNo()}>
+	        <tr data-id="${salry.getSalaryNo()},${salry.getUserName()}">
 		        <td>${salry.getEno()}</td>
 		        <td>${salry.getUserName()}</td>
 	            <th scope="row">${salry.getYearReported()}-${salry.getMonReported()}</th>
@@ -78,59 +107,65 @@
     <div class="pagingArea">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
+        <c:choose>
+			         <c:when test="${ pi.currentPage eq 1 }">
+			            <li class="page-item disabled"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
+			         </c:when>
+			         <c:otherwise>
+			            <li class="page-item"><a class="page-link" href="${url}${pi.currentPage -1}"><span aria-hidden="true">&laquo;</span></a></li>
+			         </c:otherwise>               
+			      </c:choose>
+			      
+			      <c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage}">
+			         <li class="page-item"><a class="page-link" href="${url}${item}" id="CP${item}">${item }</a></li>
+			      </c:forEach>
+			      
+			      <c:choose>
+			         <c:when test="${ pi.currentPage eq pi.maxPage }">
+			            <li class="page-item disabled"><a class="page-link" href="#"> <span aria-hidden="true">&raquo;</span></a></li>
+			         </c:when>
+			         <c:otherwise>
+			            <li class="page-item"><a class="page-link" href="${url}${pi.currentPage + 1 }"><span aria-hidden="true">&raquo;</span></a></li>
+			         </c:otherwise>               
+			      </c:choose>
         </ul>
       </nav>
     </div>
+   		      
+			 
 
     <div class="text-right">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#salaryModal">추가</button>
+      <button type="button" class="btn btn-primary" id="saray-button-add">추가</button>
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal : 수정+신규등록용 -->
     <div class="modal fade" id="salaryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body scroll-bar">
             <div class="container">
               
               <div class="salary-btn">        
-                <button type="button" class="btn"> <i class="bi bi-box-arrow-in-down"></i></button>
-                <button type="button" class="btn"> <i class="bi bi-printer"></i></button>
+                 <button type="button" class="btn btn-primary ms-1 ok-common " id="salary-update">수정</button>
+        	       <button type="button" class="btn btn-danger  ms-1 cancel-common" value=0 id="salary-delete">삭제</button>
               </div>
 
-              <h1 class="text-center">2023-3월 급여명세서</h1>
+              <h1 class="text-center" id="salaryModalTitle"></h1>
 
               <br>
-              <div class="row f-detween">
+              <div class="row f-detween" id="salryUserData">
                 
-                  <div class="hstack gap-3">
-                    <div><b>직원명 :  </b> 윤지영 </div> 
-                    <div><b>부서 : </b> 영업부 </div> 
-                    <div><b>직급 : </b> 사원 </div> 
-                  </div>
-                  <div><b>지급일 : </b> 2023-05-01</div>
+                 
+                   
               </div>
 
               <br><br>
 
-              <div class="row text-center">
+              <form class="row text-center" id="table-form-salary">
                 <div class="col-md-6">
                   <div class="salary-title">급여내역</div>
                   <table class="table" id="salary-table">
@@ -141,32 +176,13 @@
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>기본급</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                      <tr>
-                        <td>수당</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                      <tr>
-                        <td>추가수당</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                      <tr>
-                        <td>주휴수당</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
+                  
+                    <tbody id="salary-table-pay">
                      
                     </tbody>
                   </table>
                
-                  <button type="button" class="btn" onclick="addTable('salary-table')">
+                  <button type="button" class="btn" id="salary-table-btn" >
                     <i class="fa-solid fa-plus"></i>
                   </button>
                 </div>
@@ -181,36 +197,16 @@
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>소득세</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                      <tr>
-                        <td>국민연금</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                      <tr>
-                        <td>의료보험</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                      <tr>
-                        <td>의료보험</td>
-                        <td><input type="number" class="form-control" id="" value="" required></td>
-                        <td><button class="btn btn-danger" onclick="deleteTable(this)"><i class="fa-solid fa-minus"></i></button></td>
-                      </tr>
-                     
+                    <tbody id="salary-table-deduction">
+                      
                     </tbody>
                   </table>
                 
-                  <button type="button" class="btn" onclick="addTable('deduction-table')">
+                  <button type="button" class="btn" id="deduction-table-btn">
                     <i class="fa-solid fa-plus"></i>
                   </button>
                 </div>
-              </div>
+              </form>
           
             </div>
 
@@ -220,14 +216,14 @@
             
             <div class="row text-center">
                 <div class="col-md-3">지급액 계</div>
-                <div class="col-md-3">3,000,000</div>
+                <div class="col-md-3" id="total-salary"></div>
                 <div class="col-md-3">공제 계</div>
-                <div class="col-md-3">300,000</div>
+                <div class="col-md-3" id="total-Deductions"></div>
             </div>
 
   
             <div class="row t-margin ">
-              <div class="col-md-12 t-flex"><b>실지급액 : </b>자동계산</div>
+              <div class="col-md-12 t-flex" id="net-salary"></div>
             </div> 
           </div>
 
@@ -238,6 +234,7 @@
   </div>
     
 </div>
+
 
 
 <jsp:include page="/WEB-INF/views/member/member-select.jsp"/>
