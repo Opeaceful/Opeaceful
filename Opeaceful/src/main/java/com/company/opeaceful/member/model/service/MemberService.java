@@ -52,4 +52,8 @@ public interface MemberService {
 
 	String selectLoginStatus(int eno);
 
+	List<Object> selectAnnualMembers();
+
+	int updateAnnualMembers(List<Object> list);
+
 }

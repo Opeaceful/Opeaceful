@@ -80,7 +80,7 @@ $(document).ready(function() {
         success:function(data){
 
             for (let i = 1; i < 6; i++) {
-
+                console.log((i * 8) -1);
                 var $day =  getDayOfWeek(data.list[(i * 8) -1].dt_txt);
                 var $icon = (data.list[(i * 8)-1].weather[0].icon).substr(0, 2);
                 var $weekTemp = Math.floor(data.list[(i * 8)-1].main.temp) + 'º';

@@ -38,4 +38,6 @@ public class Member {
 	private String ShireDate;
 	private String ResignedDate;
 	
+	private int annualUnit;
+	
 }

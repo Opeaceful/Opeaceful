@@ -146,5 +146,15 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectLoginStatus(eno);
 	}
 	
+	@Override
+	public List<Object> selectAnnualMembers(){
+		return memberDao.selectAnnualMembers();
+	}
+	
+	@Override
+	public int updateAnnualMembers(List<Object> list) {
+		return memberDao.updateAnnualMembers(list);
+	}
+	
 
 }

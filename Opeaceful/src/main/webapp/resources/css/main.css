@@ -1,6 +1,8 @@
 /* 메인 css : 지의 */
 
-.main-wrap{height: 800px; margin-top: 30px; min-width: 950px;}
+.main-wrap{height: 800px; margin-top: 30px; min-width: 1200px;}
+.main-left{min-width: 740px;}
+.main-right{min-width: 430px;}
 .main-wrap>div{height: 100%;}
 /* .main-wrap .col-7{width:64%;} */
 /* 각각 컨텐츠 감싸고있는 네모박스 */
@@ -29,8 +31,8 @@
 	overflow: hidden;
 	white-space: nowrap;
 }
+
 /* ====================== 왼쪽 ====================== */
-.main-left{min-width: 740px;}
 /* ---------- 공지사항 ---------- */
 #board-box{height: 30%; min-height: 240px;}
 #main-notice-title{cursor: pointer;}
@@ -43,7 +45,6 @@
 
 /* ====================== 오른쪽 ====================== */
 /* ---------- 내정보 ---------- */
-.main-right .square-box{min-width: 410px;}
 #my-box{height: 40%; padding: 10px 20px; min-height: 300px;}
 /* 상단 시간 */
 .main-time-box{
@@ -188,12 +189,12 @@
     padding-top: 5px;
     padding-right: 12px;
 }
-.currIcon{height: 145px;}
-.currIcon img{width: 160px;}
+.currIcon{height: 134px;}
+.currIcon img{width: 146px;}
 .currTemp{
     font-size: 40px;
     font-weight: 300;
-    padding-bottom: 4px;
+    padding-bottom: 10px;
 }
 .currTemp>span{font-size: 16px; vertical-align: text-top;}
 .currWind, .currLT{align-self: end;}
@@ -204,7 +205,14 @@
 }
 .week-weather>div{justify-content: space-between;}
 /* 중앙배치 */
-.week-weather{align-self: center;}
+.week-weather{
+    align-self: center;
+
+    border: 1px solid var(--color-light-gray);
+    border-radius: 20px;
+    padding: 20px;
+    /* box-shadow: 5px 5px 15px -5px rgba(221, 221, 221); */
+}
 .weekIcon{margin: 24px auto;}
 .weekIcon img{width: 48px;}
 .weekDay{font-weight: 300;}

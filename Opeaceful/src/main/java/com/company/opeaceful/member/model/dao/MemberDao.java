@@ -121,5 +121,13 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectLoginStatus",eno);
 	}
 
+	public List<Object> selectAnnualMembers() {
+		return sqlSession.selectList("memberMapper.selectAnnualMembers");
+	}
+
+	public int updateAnnualMembers(List<Object> list) {
+		return sqlSession.update("memberMapper.updateAnnualMembers", list);
+	}
+
 
 }

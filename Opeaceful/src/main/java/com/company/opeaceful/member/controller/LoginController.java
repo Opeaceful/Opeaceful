@@ -189,6 +189,8 @@ public class LoginController {
 			List<Object> os = memberService.onlineStatusList();
 			// 사이드바 권한 조회
 			List<UserRole> loginUserRole = roleService.loginUserRoleSelect(userNo);
+
+			
 			
 			model.addAttribute("topDept",topDept);
 			model.addAttribute("mainNoticeList", mainNoticeList);
@@ -199,6 +201,16 @@ public class LoginController {
 			return "main";
 		}else {
 			return "login";
+		}
+	}
+	
+	// [지의] 스케줄러 - 매년 1월 1일 연차 조회 후 리셋
+	public void resetAnnualMembers() {
+		// 맴버들 연차갯수 조회
+		List<Object> list = memberService.selectAnnualMembers();
+		System.out.println("연차::::::"+list);
+		if(list != null) {
+			int result = memberService.updateAnnualMembers(list);
 		}
 	}
 

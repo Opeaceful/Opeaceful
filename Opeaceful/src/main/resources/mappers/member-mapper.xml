@@ -240,6 +240,14 @@
         AND STATUS = 'Y';
 	</select>
 	
+	<!-- [지의] member 연차갯수 조회 -->
+	<select id="selectAnnualMembers" resultType="member">
+		SELECT USER_NO, ANNUAL_LEAVE_COUNT, ANNUAL_UNIT
+		  FROM MEMBER m
+		  JOIN annual A
+		 WHERE YEAR(now()) - YEAR(HIRE_DATE) = A.YEAR;
+	</select>
+	
 	
 <!-- =============================================[update]=========================================================== -->	
 
@@ -316,7 +324,14 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 
-
+	<!-- [지의] 매년 1월 1일 연차 리셋 -->
+	<update id="updateAnnualMembers" parameterType="java.util.List">
+		<foreach collection="list" item="member" separator=";">
+		UPDATE MEMBER
+		SET ANNUAL_LEAVE_COUNT = #{member.annualUnit}
+		WHERE USER_NO = #{member.userNo}
+		</foreach>
+	</update>
 
 
 
