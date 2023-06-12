@@ -70,12 +70,12 @@
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="salary-modal-body">
         <div class="container">
           <div>
           <div class="salary-btn print-none">        
             
-          <button type="button" class="btn"> <i class="bi bi-box-arrow-in-down"></i></button>
+          <button type="button" class="btn" id="download-button"><i class="bi bi-box-arrow-in-down"></i></button>
           <button type="button" class="btn" id="print-button"> <i class="bi bi-printer"></i></button>
           </div>
 

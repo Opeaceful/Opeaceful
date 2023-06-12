@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.salary.model.dao.SalaryDao;
 import com.company.opeaceful.salary.model.vo.Salary;
 
@@ -48,4 +49,28 @@ public class SalaryServiceImpl implements SalaryService{
 		return salaryDao.salaryList(); 
 	}
 
+	@Override
+	public int salaryDelete(int num) {
+		return salaryDao.salaryDelete(num);
+	}
+	
+	@Override
+	public int salaryUpdate(Salary salary) {
+		return salaryDao.salaryUpdate(salary);
+	}
+	
+	@Override
+	public List<Member> selectSalayMember(int[] intArray){
+		return salaryDao.selectSalayMember(intArray);
+	}
+	
+	@Override
+	public int insertSalary(List<Salary> userList){
+		return salaryDao.insertSalary(userList);
+	}
+	
+	@Override
+	public Salary selectUserCope(Map<String, Object> selectYMT){
+		return salaryDao.selectUserCope(selectYMT);
+	}
 }

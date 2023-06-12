@@ -187,6 +187,21 @@
 		</foreach>
 		
 	 </select> 
+	 
+	 <!--[지영] check 박스로 조회된 인원만 select : salray용-->
+	 <select id="checkMemberNoSelectSalary"  resultMap="AllmemberVIewResultSet" >
+	 	SELECT  USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+	    left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE USER_NO IN 
+		<foreach item="userNo" collection="array"
+		       separator="," open="(" close=")">
+		       #{userNo}
+		</foreach>
+		
+	 </select> 
 
 	<!-- [지의] 로그인유저 -->
 	<select id="loginMember" parameterType="member" resultMap="AllmemberResultSet">

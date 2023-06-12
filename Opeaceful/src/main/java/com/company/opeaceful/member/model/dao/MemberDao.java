@@ -89,6 +89,7 @@ public class MemberDao {
 	}
 
 	public int resignedmember(ResignedMember resignedMember) {
+		
 		return sqlSession.insert("resignedMapper.resignedmember",resignedMember);
 	}
 

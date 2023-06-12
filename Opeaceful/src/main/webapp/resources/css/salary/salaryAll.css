@@ -59,21 +59,16 @@
 }
 
 
-/*인쇄 저장 아이콘 정렬 */
+/*버튼 정렬 */
 .salary-btn{
     display: flex;
     justify-content: flex-end;
 }
 
-.salary-btn> button{
-    font-size: 25px;
-}
-
-.salary-btn> button:hover{
-    background-color: var(--white-hover);
-}
 
 .form-control:focus {
     border-color: var(--navy-hover); 
     box-shadow: 0 0 0 0.1rem var(--navy-hover);
 }
+
+

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.company.opeaceful.commom.model.vo.PageInfo;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.salary.model.vo.Salary;
 
 @Repository
@@ -42,6 +43,28 @@ public class SalaryDao {
 	public List<String> salaryList() {
 		return sqlSession.selectList("salaryMapper.salaryList");
 	}
+
+	public int salaryDelete(int num) {
+		return sqlSession.delete("salaryMapper.salaryDelete",num);
+	}
+
+	public int salaryUpdate(Salary salary) {
+		return sqlSession.update("salaryMapper.salaryUpdate",salary);
+	}
+	
+	public List<Member> selectSalayMember(int[] intArray) {
+		return sqlSession.selectList("memberMapper.checkMemberNoSelectSalary",intArray);
+	}
+
+	public int insertSalary(List<Salary> userList) {
+		return sqlSession.insert("salaryMapper.insertSalary",userList);
+	}
+
+	public Salary selectUserCope(Map<String, Object> selectYMT) {
+		return sqlSession.selectOne("salaryMapper.selectUserCope",selectYMT);
+	}
+
+
 
 	
 

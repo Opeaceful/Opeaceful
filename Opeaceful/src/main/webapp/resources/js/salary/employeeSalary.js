@@ -11,7 +11,6 @@ employleeSalaryTable();
 function employleeSalaryTable() {
     //만들어진 tr태그에 이벤트 부여
     const salaryTableTr = document.querySelectorAll('#em-salary-table tr[data-id]');
-    console.log(salaryTableTr);
     salaryTableTr.forEach(function(tr){
         tr.addEventListener('click', function(e){
             const dataId = this.getAttribute('data-id');
@@ -144,3 +143,32 @@ function payReplace(){
     });
 }
     
+
+//다운로그
+$("#download-button").click(function() {
+
+    location.href=`${path}/pdf/salary`;
+    
+    // let htmlContent = document.getElementById("salary-modal-body").innerHTML;
+
+    // htmlContent = JSON.stringify(htmlContent)
+
+    // $.ajax({
+    //     url: `${path}/pdf/salary`, 
+    //     method: "POST",
+    //     dataType : "JSON",
+    //     contentType: "application/json", 
+    //     data: {
+    //         htmlContent : htmlContent,
+    //       },
+    //     success: function(response) {
+    //       var partialHtml = response;
+    //       console.log(partialHtml);
+    //     },
+    //     error: function(error) {
+    //       console.error(error);
+    //     }
+    //   });
+    
+});
+
