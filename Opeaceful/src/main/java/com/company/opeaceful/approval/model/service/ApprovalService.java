@@ -75,6 +75,8 @@ public interface ApprovalService {
 	
 	int updateApprovalStatus(int approvalNo, int status);
 	
+	int updateApprovalStateEnd(Approval approval);
+	
 	int updateApprovalLineReadStatus(int approvalNo, int userNo);
 	
 	int updateMemo(ApprovalMemo memo, List<ApprovalFile> fileList);

@@ -229,6 +229,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
+	public int updateApprovalStateEnd(Approval approval) {
+		return aprDao.updateApprovalStateEnd(approval);
+	}
+	
+	
+	@Override
 	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
 		return aprDao.updateApprovalLineReadStatus(approvalNo, userNo);
 	}
@@ -276,6 +282,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteMemo(int memoNo) {
 		return aprDao.deleteMemo(memoNo);
 	}
+
+	
 
 
 

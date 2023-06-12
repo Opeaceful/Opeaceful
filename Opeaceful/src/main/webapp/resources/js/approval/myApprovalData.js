@@ -166,13 +166,47 @@ export function deleteFavor(favorNo) {
 export function insertApproval(formData) {
   $.ajax({
     url: defaultPath + '/insertApproval',
+    dataType: 'JSON',
     data: formData,
     enctype: 'multipart/form-data', //form data 설정
     processData: false, //프로세스 데이터 설정 : false 값을 해야 form data로 인식합니다
     contentType: false, //헤더의 Content-Type을 설정 : false 값을 해야 form data로 인식합니다
     type: 'POST',
     success: function (result) {
-      if (result > 0) {
+      // 저장 하자마자 완결상태일 경우
+      if (result.result == -1) {
+        // Date 객체에서 연도, 월, 일 추출
+        let tempDate = new Date();
+        const year = tempDate.getFullYear();
+        const month = tempDate.getMonth() + 1; // 월은 0부터 시작하므로 +1 해줍니다.
+        const day = tempDate.getDate();
+
+        // 추출한 연도, 월, 일로 문자열 생성해서 반환
+        let nowDate = `${year}-${month.toString().padStart(2, '0')}-${day
+          .toString()
+          .padStart(2, '0')}`;
+
+        let content = `<div class="end-approval-lines">
+                      <div class="end-approval-lines-wrap">
+                        <div class="end-approval-lines-title">결<br />재</div>
+                        <div class="end-approval-lines-item">
+                          <div class="approver-name">${result.userName} ${result.pName}</div>
+                          <div class="approver-sign">
+                            <img src="${result.signImg}"/>
+                          </div>
+                          <div class="approver-date">
+                            ${nowDate}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="end-approval-content">
+                      ${result.approval.content}
+                    </div>`;
+
+        //결재라인 정보 추가해서 완결 다시 날리기
+        updateApprovalStateEnd(result.approval.approvalNo, content);
+      } else if (result.result == 1) {
         swal('저장이 완료되었습니다.', {
           buttons: { confirm: '확인' },
         });
@@ -186,6 +220,41 @@ export function insertApproval(formData) {
       }
 
       selectUnReadCount();
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
+  });
+}
+
+// 결재문서 완결처리
+export function updateApprovalStateEnd(approvalNo, content) {
+  $.ajax({
+    url: defaultPath + '/updateApprovalStateEnd',
+    dataType: 'JSON',
+    type: 'POST',
+    data: {
+      approvalNo,
+      content,
+    },
+    success: function (result) {
+      console.log('결재 완료 처리 결과 반환', result);
+      if (result > 0) {
+        swal('문서가 완결처리되었습니다.', {
+          buttons: { confirm: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      } else {
+        swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
+          buttons: { cancel: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      }
     },
     error: function (request) {
       console.log('에러발생');
@@ -234,6 +303,36 @@ export function selectApprovalList(year, type, page, menu, status) {
   });
 }
 
+// 결재 문서 삭제
+export function deleteApproval(approvalNo) {
+  $.ajax({
+    url: defaultPath + '/deleteApproval',
+    dataType: 'JSON',
+    type: 'POST',
+    data: {
+      approvalNo,
+    },
+    success: function (result) {
+      if (result > 0) {
+        swal('삭제가 완료되었습니다.', {
+          buttons: { cancel: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      } else {
+        swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
+          buttons: { cancel: '확인' },
+        });
+      }
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
+  });
+}
+
 // 안읽은 반려, 승인대기, 참조 결재문서 수 반환
 export function selectUnReadCount() {
   $.ajax({
@@ -241,7 +340,11 @@ export function selectUnReadCount() {
     dataType: 'JSON',
     type: 'POST',
     success: function (result) {
-      MyAprFront.setAlamNum(result.returnCount, result.waitCount, result.referCount);
+      MyAprFront.setAlamNum(
+        result.returnCount,
+        result.waitCount,
+        result.referCount
+      );
     },
     error: function (request) {
       console.log('에러발생');
@@ -258,11 +361,12 @@ export function selectApproval(approvalNo) {
     type: 'POST',
     data: { approvalNo },
     success: function (result) {
+      console.log(result);
       MyAprFront.setEndApprovalModal(
         result.approval,
         result.lines,
         result.files,
-        result.isMine
+        result.userNo
       );
 
       // 문서 조회가일어나면 일단 안읽은 알림 개수 다시 체크

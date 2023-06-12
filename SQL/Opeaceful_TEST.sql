@@ -280,7 +280,7 @@ DELIMITER $$
 CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시저
 BEGIN
     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-    WHILE (i <= 120) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
+    WHILE (i <= 10) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('일반', i), '<p>일반</p>');
         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('연차', i+1), '<p>연차</p>');
         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('오전반차', i+2), '<p>오전반차</p>');
@@ -359,12 +359,12 @@ BEGIN
 		INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 		VALUES 
 			(8, 1, "휴가", 0, CONCAT('2023-11-0', i, ' 15:28') ,CONCAT('2023-11-0', i, ' 15:28'),CONCAT('2023-11-0', i, ' 15:28')),
-			(8, 0, "일반", 1, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
+			(8, 0, "일반", 0, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
 			(8, 1, "휴가", -1,  CONCAT('2023-10-0', i, ' 15:28') ,CONCAT('2023-10-0', i, ' 15:28'),CONCAT('2023-10-0', i, ' 15:28')),
-			(8, 1, "휴가", 1,  CONCAT('2022-10-1', i, ' 15:28') ,CONCAT('2022-10-1', i, ' 15:28'),CONCAT('2022-10-1', i, ' 15:28')),
-			(8, 3, "오후반차", 1,  CONCAT('2023-09-0', i, ' 15:28') ,CONCAT('2023-09-0', i, ' 15:28'),CONCAT('2023-09-0', i, ' 15:28')),
+			(8, 1, "휴가", 0,  CONCAT('2022-10-1', i, ' 15:28') ,CONCAT('2022-10-1', i, ' 15:28'),CONCAT('2022-10-1', i, ' 15:28')),
+			(8, 3, "오후반차", 0,  CONCAT('2023-09-0', i, ' 15:28') ,CONCAT('2023-09-0', i, ' 15:28'),CONCAT('2023-09-0', i, ' 15:28')),
 			(8, 2, "오전반차", 2,  CONCAT('2022-09-1', i, ' 15:28') ,CONCAT('2022-09-1', i, ' 15:28'),CONCAT('2022-09-1', i, ' 15:28')),
-			(8, 1, "휴가", 1,  CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28')),
+			(8, 1, "휴가", 0,  CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28')),
 			(8, 1, "휴가", -1, CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28'));
 
         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동

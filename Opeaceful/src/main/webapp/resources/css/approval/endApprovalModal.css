@@ -170,6 +170,10 @@
   align-items: center;
 }
 
+.end-approval-lines-item {
+  text-align: center;
+}
+
 .end-approval-content {
   text-align: start;
 }

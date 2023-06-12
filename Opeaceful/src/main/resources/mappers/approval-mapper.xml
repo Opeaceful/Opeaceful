@@ -635,7 +635,15 @@
 		SET 
 			TITLE = #{title} ,
 			CONTENT = #{content},
-		WHERE FORM_NO  = #{formNo}
+		WHERE APPROVAL_NO  = #{approvalNo}
+	</update>
+	
+	<!-- 결재문서 완결처리 -->
+	<update id="updateApprovalStateEnd" parameterType="approval">
+		UPDATE APPROVAL
+		SET STATUS = 1 ,
+			CONTENT = #{content}
+		WHERE APPROVAL_NO = #{approvalNo}
 	</update>
 	
 	<!-- 결재라인 상태 읽음처리 -->

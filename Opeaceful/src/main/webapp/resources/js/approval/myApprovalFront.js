@@ -222,9 +222,10 @@ export function setApprovalModalContent(approval) {
   }
 }
 
-//  결재 작성 모달창 닫기
+//  결재 모달창들 모두 닫기
 export function closeApprovalModal() {
   $('#approval').modal('hide');
+  $('#end-approval').modal('hide');
 }
 
 export function clickCurrentPageBtn() {
@@ -308,14 +309,14 @@ export function setApprovalLines(list) {
     html += `<li >
               <select name="type" >
                 <option value="A" ${
-                  line.type === 'A' ? 'selected' : ''
+                  lines[i].type === 'A' ? 'selected' : ''
                 } >결재</option>
                 <option value="R" ${
-                  line.type === 'R' ? 'selected' : ''
+                  lines[i].type === 'R' ? 'selected' : ''
                 } >참조</option>
               </select>
-              <div value="${line.userNo}">
-                ${line.userName} ${line.pName}
+              <div value="${lines[i].userNo}">
+                ${lines[i].userName} ${lines[i].pName}
                 <button
                   class="btn-selected-delete btn btn-outline-primary"
                 >
@@ -640,11 +641,34 @@ let changeEndApprovalImgPath = (contentEl, imgPath) => {
   }
 };
 
+// 결재 서명용 이미지 src 경로 + 기본이미지 주소 바꿔주는 함수
+let changeEndApprovalSignImgPath = (contentEl, imgPath) => {
+  let imgArr = contentEl.getElementsByTagName('img');
+
+  if (imgArr) {
+    for (let img of imgArr) {
+      let imgSrc = img.src;
+      //  기존 이미지들 src 갈아끼기
+      // 이미지 실제 이름만 가져옴
+      imgSrc = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+      // 이미지 경로 재설정
+      img.src = imgPath + imgSrc;
+      // 이미지 기본 이미지 경로 재설정
+      img.onerror = (event) => {
+        event.target.src =
+          path + '/resources/image/approval/defaultiSignature.png';
+      };
+    }
+  }
+};
+
 // 결재문서 상세화면 세팅후 모달 오픈
-export function setEndApprovalModal(approval, lines, files, isMine) {
+export function setEndApprovalModal(approval, lines, files, loginUserNo) {
   console.log('세부정보 불러옴 !!   ', approval, lines);
 
   const defaultFilePath = path + '/resources/file/approval/';
+  const defaultSignPath = path + '/resources/file/signature/';
   const signImgPath = path + '/resources/file/signature/';
   const typeTd = document.getElementById('td-approval-type');
   const statusTd = document.getElementById('td-approval-status');
@@ -655,13 +679,7 @@ export function setEndApprovalModal(approval, lines, files, isMine) {
   const filesDiv = document.querySelector(
     '#end-approval .approval-files > div.scroll-bar'
   );
-  const titleH = document.getElementById('h-approval-title');
-  const lineDiv = document.querySelector(
-    '#end-approval .end-approval-lines-wrap'
-  );
-  const contentDiv = document.querySelector(
-    '#end-approval .end-approval-content'
-  );
+  const finalApprovalWrap = document.querySelector('.final-approval-wrap');
 
   // 문서 번호 세팅
   document.getElementById('end-approval').dataset.approvalno =
@@ -694,11 +712,6 @@ export function setEndApprovalModal(approval, lines, files, isMine) {
   draftDateTd.innerText = approval.formatDraftDate;
   // 기안자 세팅
   userTd.innerText = `${approval.userName} ${approval.pName}(${approval.eno})`;
-  // 제목 세팅
-  titleH.innerText = approval.title;
-  // 본문내용 세팅
-  contentDiv.innerHTML = approval.content;
-  changeEndApprovalImgPath(contentDiv, defaultFilePath);
 
   // 첨부파일 세팅
   let fileHtml = ``;
@@ -720,50 +733,94 @@ export function setEndApprovalModal(approval, lines, files, isMine) {
 
   // 참조자 세팅용
   let referNames = [];
-  // 결재라인 세팅용(결재 제목 + 본인꺼 먼저 추가)
-  let lineHtml = `<div class="end-approval-lines-title">결<br />재</div>
-                  <div class="end-approval-lines-item">
-                    <div class="approver-name">${approval.userName} ${
-    approval.pName
-  }</div>
-                    <div class="approver-sign">
-                      <img
-                        src="${signImgPath + approval.signatureImg}"
-                      />
-                    </div>
-                    <div class="approver-date">
-                      ${formatDate(approval.formatDraftDate)}
-                    </div>
-                  </div>`;
-  for (let line of lines) {
-    if (line.type == 'R') {
-      referNames.push(`${line.userName} ${line.pName}(${line.eno})`);
-    } else {
-      let img = '';
-      let date = '';
-      if (line.status == 2) {
-        img = `<img src="${signImgPath + line.signatureImg}" />`;
-        date = formatDate(line.date);
-      }
 
-      lineHtml += `<div class="end-approval-lines-item">
-                    <div class="approver-name">${line.userName} ${line.pName}</div>
-                    <div class="approver-sign">
-                      ${img}
-                    </div>
-                    <div class="approver-date">
-                      ${date}
-                    </div>
-                  </div>`;
+  // 기본적으로 본문 내용 날림
+  finalApprovalWrap.innerHTML = '';
+
+  // 본문내용 세팅용
+  let finalContentHtml = '';
+
+  //본문에 타이틀 추가
+  finalContentHtml += `<h2 ><u id="h-approval-title">${approval.title}</u></h2>`;
+
+  // 문서상태가 완결상태가 아닐경우에만 결재라인 내용추가
+  if (approval.status != 1) {
+    let lineItems = '';
+    for (let i in lines) {
+      if (lines[i].type == 'R') {
+        referNames.push(
+          `${lines[i].userName} ${lines[i].pName}(${lines[i].eno})`
+        );
+      } else {
+        let img = '';
+        let date = '';
+        if (lines[i].status == 2) {
+          img = `<img src="${signImgPath + lines[i].signatureImg}" />`;
+          date = formatDate(lines[i].date);
+        }
+
+        lineItems += `<div class="end-approval-lines-item" id="${
+          i == lines.length - 1 ? 'last-line' : ''
+        }" data-userno="${lines[i].userNo}">
+                      <div class="approver-name">${lines[i].userName} ${
+          lines[i].pName
+        }</div>
+                      <div class="approver-sign">
+                        ${img}
+                      </div>
+                      <div class="approver-date">
+                        ${date}
+                      </div>
+                    </div>`;
+      }
     }
+
+    // 본문에 결재라인 세팅(결재 제목 + 기안자꺼 추가 해서 안에 결재아이템들 넣고 생성)
+    finalContentHtml += `<div class="end-approval-lines">
+                          <div class="end-approval-lines-wrap">
+                            <div class="end-approval-lines-title">결<br />재</div>
+                            <div class="end-approval-lines-item">
+                              <div class="approver-name">${approval.userName} ${
+      approval.pName
+    }</div>
+                              <div class="approver-sign">
+                                <img
+                                  src="${signImgPath + approval.signatureImg}"
+                                />
+                              </div>
+                              <div class="approver-date">
+                                ${formatDate(approval.formatDraftDate)}
+                              </div>
+                            </div>
+                            ${lineItems}
+                          </div>
+                        </div> `;
   }
+
+  // 본문에 본문내용 추가
+  finalContentHtml += `<div class="end-approval-content">
+                        ${approval.content}
+                      </div>`;
+
+  // 실제 본문 내용 위에서 세팅한 내용으로 변경
+  finalApprovalWrap.innerHTML = finalContentHtml;
+
+  let signAreaEl = finalApprovalWrap.querySelector('.end-approval-lines-wrap');
+  let contentAreaEl = finalApprovalWrap.querySelector('.end-approval-content');
+
+  console.log(finalApprovalWrap, signAreaEl, contentAreaEl);
+
+  // 이미지 src 갈아껴주기
+  if (signAreaEl) {
+    changeEndApprovalSignImgPath(signAreaEl, defaultSignPath);
+  }
+  changeEndApprovalImgPath(contentAreaEl, defaultFilePath);
+
   // 참조자 세팅
   referTd.innerText = referNames.join(', ');
-  // 결재라인 세팅
-  lineDiv.innerHTML = lineHtml;
 
-  if (isMine) {
-    // 내가 기안한 문서면 삭제버튼 활성화
+  if (loginUserNo == approval.userNo && approval.status != 1) {
+    // 내가 기안한 문서면서 완결상태가 아니라면 삭제버튼 활성화
     document.getElementById('btn-delete-approval').style.display =
       'inline-block';
   } else {
@@ -775,9 +832,13 @@ export function setEndApprovalModal(approval, lines, files, isMine) {
   const returnBtn = document.getElementById('btn-return-approval');
   const authorizeBtn = document.getElementById('btn-authorize-approval');
 
+  // 결재문서 상태 대기중인 메뉴에서 문서 선택했을때
   if (selectedMenu == 'wait') {
+    // 결재 버튼 활성화, 반려버튼 활성화
     returnBtn.style.display = 'inline-block';
     authorizeBtn.style.visibility = 'visible';
+    authorizeBtn.dataset.userno = loginUserNo;
+    authorizeBtn.dataset.lastsrc = lines[lines.length - 1].signatureImg;
   } else {
     returnBtn.style.display = 'none';
     authorizeBtn.style.visibility = 'hidden';
@@ -1116,6 +1177,93 @@ let selectAprLineModalEvent = () => {
     });
 };
 
+// 전자결재 디테일 화면 모달창 관련 이벤트 부여구역
+let setEndModalEvent = () => {
+  // 삭제버튼 이벤트
+  document
+    .getElementById('btn-delete-approval')
+    .addEventListener('click', () => {
+      swal('결재문서를 삭제 하시겠습니까?', {
+        buttons: { confirm: '확인', cancel: '취소' },
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          // 결재 문서 삭제 진행
+          let approvalNo =
+            document.getElementById('end-approval').dataset.approvalno;
+          console.log('삭제할 문서 번호 ', approvalNo);
+          MyAprData.deleteApproval(Number(approvalNo));
+        }
+      });
+    });
+
+  // 반려버튼 이벤트
+  document
+    .getElementById('btn-return-approval')
+    .addEventListener('click', () => {
+      swal('반려 처리 하시겠습니까?', {
+        buttons: { confirm: '확인', cancel: '취소' },
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          // 결재 문서 반려 진행
+          let approvalNo =
+            document.getElementById('end-approval').dataset.approvalno;
+        }
+      });
+    });
+
+  // 결재버튼 이벤트
+  document
+    .getElementById('btn-authorize-approval')
+    .addEventListener('click', (e) => {
+      swal('결재 처리 하시겠습니까?', {
+        buttons: { confirm: '확인', cancel: '취소' },
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          // 결재 문서 결재 진행
+          let approvalNo = Number(
+            document.getElementById('end-approval').dataset.approvalno
+          );
+          const lastLine = document.getElementById('last-line');
+          let lastLineUserNo = Number(lastLine.dataset.userno);
+          let loginUserNo = Number(e.target.dataset.userno);
+
+          console.log('결재버튼 눌림', approvalNo, lastLineUserNo);
+          // Date 객체에서 연도, 월, 일 추출
+          let tempDate = new Date();
+          const year = tempDate.getFullYear();
+          const month = tempDate.getMonth() + 1; // 월은 0부터 시작하므로 +1 해줍니다.
+          const day = tempDate.getDate();
+
+          // 추출한 연도, 월, 일로 문자열 생성해서 반환
+          let nowDate = `${year}-${month.toString().padStart(2, '0')}-${day
+            .toString()
+            .padStart(2, '0')}`;
+
+          if (lastLineUserNo == loginUserNo) {
+            // 마지막 라인에 이미지 넣기
+            lastLine.querySelector(
+              '.approver-sign'
+            ).innerHTML = `<img src="${e.target.dataset.lastsrc}">`;
+            // 마지막 라인에 현재날짜로 날짜 입력하기
+            lastLine.querySelector('.approver-date').innerHTML = nowDate;
+            // 완결처리를 위한 본문내용 세팅해서 보내기
+            const content = document
+              .querySelector('.final-approval-wrap')
+              .cloneNode(true);
+            let h2 = content.querySelector('.final-approval-wrap > h2');
+            h2.remove();
+
+            let contentHtml = content.innerHTML;
+
+            console.log(content, contentHtml);
+
+            // todo! 결재 완료보내기
+          }
+        }
+      });
+    });
+};
+
 // 내결재 화면 기본 이벤트들 부여구역
 let setDefaultPageEvent = () => {
   // 상단 메뉴바 아이템들 클릭 이벤트 할당
@@ -1415,4 +1563,5 @@ window.onload = function () {
   setDefaultPageEvent();
   setMemoEvent();
   signModalEvent();
+  setEndModalEvent();
 };

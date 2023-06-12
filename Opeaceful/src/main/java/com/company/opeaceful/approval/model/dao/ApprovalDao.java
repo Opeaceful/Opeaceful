@@ -295,6 +295,13 @@ public class ApprovalDao {
 	    return result;
 	};
 	
+	// 결재문서 완결처리
+	public int updateApprovalStateEnd(Approval approval) {
+		int result = sqlSession.update("aprMapper.updateApprovalStateEnd", approval);
+		
+	    return result;
+	};
+	
 	
 	// 결재문서 상태값 업데이트
 	public int updateApprovalStatus(int approvalNo, int status) {
@@ -355,10 +362,9 @@ public class ApprovalDao {
 	};
 	
 	
-	// 결재문서 + 실제 저장된 파일들 삭제
+	//  결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
 	public int deleteApproval(int approvalNo,  String deleteFolderPath) {
 		
-		// todo! 나중에 결재문서 다시 조회해 와서 만약 결재라인 이미지 값 있으면 그것도 삭제해야함
 		int result = sqlSession.delete("aprMapper.deleteApproval", approvalNo);
 		if (result > 0) {
 			List<ApprovalFile> fileList = selectFileList("approval-memo", approvalNo, "all");
@@ -395,7 +401,6 @@ public class ApprovalDao {
 	public int deleteApprovalLine(int approvalNo) {
 		return sqlSession.delete("aprMapper.deleteApprovalLine", approvalNo);
 	}
-
 	
 
 	// 메모 삭제

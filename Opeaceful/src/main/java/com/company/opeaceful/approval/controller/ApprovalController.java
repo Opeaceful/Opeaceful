@@ -167,7 +167,7 @@ public class ApprovalController {
 		map.put("approval", approval);
 		map.put("lines", lines);
 		map.put("files", files);
-		map.put("isMine", userNo == approval.getUserNo());
+		map.put("userNo", userNo);
 		
 		// 읽음처리
 		aprService.updateApprovalLineReadStatus(approvalNo, userNo);
@@ -234,7 +234,7 @@ public class ApprovalController {
 	// ajax용 결재문서 저장
 	@ResponseBody
 	@PostMapping("/insertApproval")
-	public int insertApproval(	  @ModelAttribute("loginUser") Member loginUser,
+	public String insertApproval(	  @ModelAttribute("loginUser") Member loginUser,
 								  @ModelAttribute Approval approval,
 								  @RequestParam(value="images", required=false) MultipartFile[] imgList,
 								  @RequestParam(value="imgNames", required = false) String[] imgNameList,
@@ -364,10 +364,10 @@ public class ApprovalController {
 		
 		
 		// todo! 결재문서 저장되고 임시저장용이 아니라면 다음 상대한테 알림 날려야함!
-		int result = aprService.insertApproval(approval, lines , saveList);
+		int approvalNo = aprService.insertApproval(approval, lines , saveList);
 		
 		// 만약 insert 실패하면 위에서 파일 저장 진행했던거 다 날리는 구문 실행
-		if(result <= 0) {
+		if(approvalNo <= 0) {
 			if (saveList.size() > 0) {
 				// 저장된 파일 리스트 실제 파일들 삭제
 				for (ApprovalFile file : saveList) {
@@ -378,48 +378,58 @@ public class ApprovalController {
 				}
 			}
 		}
-		return result;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		// 만약 결재문서자체는 잘 저장되었는데 상태가 완결상태이면 앞단에 알려줌
+		if(approvalNo > 0 && approval.getStatus() == 1) {
+			approval.setApprovalNo(approvalNo);
+			// 본인정보 , 서명정보, 직급, 이름 돌려줘야함
+			String signImg = aprService.selectSignImg(loginUser.getUserNo());
+			map.put("result", -1);
+			map.put("approval", approval);
+			map.put("userName", loginUser.getUserName());
+			map.put("pName", loginUser.getPName());
+			map.put("signImg", signImg);
+		}else if(approvalNo > 0) {
+			map.put("result", 1);
+		}else {
+			map.put("result", 0);
+		}
+		
+		return new Gson().toJson(map);
 	}
 	
+	
+	
+	// ajax용 결재문서 완결처리
+	@ResponseBody
+	@PostMapping("/updateApprovalStateEnd")
+	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
+		int result = 0;
+		System.out.println("============================="+approval);
+		if(approval != null && approval.getApprovalNo() != 0 ) {
+			result = aprService.updateApprovalStateEnd(approval);
+		}
+		
+		return result;
+	}
 	
 	
 	// ajax용 결재문서 삭제
 	@ResponseBody
 	@PostMapping("/deleteApproval")
-	public int deleteApproval(	@ModelAttribute("loginUser") Member loginUser,
-								Integer approvalNo, 
+	public int deleteApproval(	Integer approvalNo, 
 								HttpSession session) {
-		
-		List<ApprovalFile> files = aprService.selectFileList("approval-memo", approvalNo, "all");
-		List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo);
-		List<ApprovalMemo> memos = aprService.selectMemoList(approvalNo);
-		
-		
 		// 파일 저장경로 얻어오기
 		String webPath = "/resources/file/approval/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
-		
-		// 실제 파일 삭제
-		if (files.size() > 0) {
-			// 저장된 파일 리스트 실제 파일들 삭제
-			for (ApprovalFile file : files) {
-				File deleteFile = new File(serverFolderPath + file.getChangeName());
-				if (deleteFile.exists()) { // 파일이 존재하면
-					deleteFile.delete();// 파일 삭제
-				}
-			}
-			aprService.deleteFileList(files);
-		}
-		
-		
-		for()
-		int result = aprService.deleteMemo(memoNo);
+
+		// 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
+		int result = aprService.deleteApproval(approvalNo, serverFolderPath);
 
 		return result;
 	}
-	
-	
-	
 	
 	
 	// ajax용 즐겨찾기 저장
