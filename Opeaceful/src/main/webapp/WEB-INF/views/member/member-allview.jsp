@@ -33,7 +33,13 @@
 		</script>
 		<c:remove var="success"/>
 	</c:if>
-
+	
+	 <c:forEach items="${loginUserRole}" var="role">
+	 
+	 	
+	 
+	 </c:forEach>
+	
 
 	<div class="content-wrap">
 	 	<div class="container">

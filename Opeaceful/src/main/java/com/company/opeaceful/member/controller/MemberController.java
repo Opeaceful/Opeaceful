@@ -31,6 +31,7 @@ import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
+import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
@@ -162,7 +163,9 @@ public class MemberController {
 	//[지영]
 	//member-create로 이동
 	@RequestMapping("/create")
-	public String createMember() {
+	public String createMember(@ModelAttribute("loginUserRole") List<UserRole> loginUserRole) {
+		
+		System.out.println(loginUserRole);
 		
 		return "member/member-create";
 	}
@@ -208,7 +211,11 @@ public class MemberController {
 	//[지영]
 	//member-allview로 이동
 	@RequestMapping("/allview")
-	public String memberAllview() {
+	public String memberAllview(HttpSession session) {
+		
+//		Object rl = session.getAttribute("loginUserRole");
+//		System.out.println(rl);
+	 
 		return "member/member-allview";
 	}
 	
