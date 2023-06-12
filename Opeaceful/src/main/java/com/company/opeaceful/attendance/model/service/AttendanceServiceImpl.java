@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.attendance.model.dao.AttendanceDao;
 import com.company.opeaceful.attendance.model.vo.Attendance;
+import com.company.opeaceful.commom.model.vo.PageInfo;
+import com.company.opeaceful.commom.template.Pagination;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired
 	private AttendanceDao attendanceDao;
+	
+	@Autowired
+	private Pagination pagination;
 	
 	@Override
 	public int insertWorkOn(int userNo) {
@@ -41,7 +46,18 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 	
 	@Override
-	public List<Attendance> selectUserAttendance(Map<String, Object> selectUser){
-		return attendanceDao.selectUserAttendance(selectUser); 
+	public void selectUserAttendance(Map<String, Object> selectUser){
+		
+		int listCount = attendanceDao.selectAttendanceListCount(selectUser);
+		int pageLimit = 10;
+		int settingLimit =10;
+		
+		PageInfo pi = pagination.getPageInfo(listCount, (int)(selectUser.get("currentPage")), pageLimit, settingLimit);
+		
+		List<Attendance> list = attendanceDao.selectUserAttendance(pi, selectUser); 
+		
+		selectUser.put("pi", pi);
+		selectUser.put("list", list);
+		
 	}
 }

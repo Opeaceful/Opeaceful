@@ -3,11 +3,13 @@ package com.company.opeaceful.attendance.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.company.opeaceful.attendance.model.vo.Attendance;
+import com.company.opeaceful.commom.model.vo.PageInfo;
 
 @Repository
 public class AttendanceDao {
@@ -35,7 +37,16 @@ public class AttendanceDao {
 		return sqlSession.update("memberMapper.updateOfflineStatus", userNo);
 	}
 	
-	public List<Attendance> selectUserAttendance(Map<String, Object> selectUser) {
-		return sqlSession.selectList("attendanceMapper.selectUserAttendance",selectUser);
+	public int selectAttendanceListCount(Map<String, Object> selectUser) {
+		return sqlSession.selectOne("attendanceMapper.selectAttendanceListCount", selectUser);
+	}
+	
+	public List<Attendance> selectUserAttendance(PageInfo pi, Map<String, Object> selectUser) {
+		
+		int offset = (pi.getCurrentPage() -1 ) * pi.getSettingLimit();
+		int limit = pi.getSettingLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSession.selectList("attendanceMapper.selectUserAttendance",selectUser, rowBounds);
 	}
 }

@@ -17,6 +17,6 @@ public interface AttendanceService {
 
 	int updateOfflineStatus(int userNo);
 	
-	List<Attendance> selectUserAttendance(Map<String, Object> selectUser);
+	void selectUserAttendance(Map<String, Object> selectUser);
 
 }

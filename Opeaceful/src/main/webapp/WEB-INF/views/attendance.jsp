@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="list" value="${selectUser.list}"/>
+<c:set var="pi" value="${selectUser.pi}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,17 +31,17 @@
                         기간
                     </div>
                     <div class="col-5 select-box1">
-                        <select name="year" id="year1" title="년도" class="custom-select"></select>
-                        <select name="month" id="month1" title="월" class="custom-select"></select>
-                        <select name="day" id="day1" title="일" class="custom-select"></select>
+                        <select name="year1" id="year1" title="년도" class="custom-select"></select>
+                        <select name="month1" id="month1" title="월" class="custom-select"></select>
+                        <select name="day1" id="day1" title="일" class="custom-select"></select>
                     </div>
                     <div class="col-1 wave">
                         ~
                     </div>
                     <div class="col-5">
-                        <select name="year" id="year2" title="년도" class="custom-select"></select>
-                        <select name="month" id="month2" title="월" class="custom-select"></select>
-                        <select name="day" id="day2" title="일" class="custom-select"></select>
+                        <select name="year2" id="year2" title="년도" class="custom-select"></select>
+                        <select name="month2" id="month2" title="월" class="custom-select"></select>
+                        <select name="day2" id="day2" title="일" class="custom-select"></select>
                     </div>
                     <button class="btn btn-outline-secondary search-btn2" id="ad-btn" type="button">조회</button>
                 </div>
@@ -71,26 +73,103 @@
                     </tr>
                 </thead>
                 <tbody id="AttendanceTbody">
-                	<c:forEach items="${userAd}" var="ad">
-	                    <tr>
-	                        <td>${ad.workDate}</td>
-	                        <td>${ad.userName}</td>
-	                        <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
-	                        <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
-	                        <td><fmt:formatDate value="${ad.totalWorkTime}" pattern="kk"/>시간</td>
-	                        <c:if test="${ad.type eq 1}">
-		                    	<td>연차</td>
-                        	</c:if>
-                        	<c:if test="${ad.type eq 2}">
-		                    	<td>오전 반차</td>
-                        	</c:if>
-                        	<c:if test="${ad.type eq 3}">
-		                    	<td>오후 반차</td>
-                        	</c:if>
-	                    </tr>                		
-                	</c:forEach>
+					    <c:forEach items="${userAd}" var="ad">
+					        <tr>
+			                	<c:if test="${ad.workDate != null and ad.userNo != null and ad.workOn != null and ad.workOff != null and ad.userName != null and ad.totalWorkTime != null and ad.approvalNo != null and ad.status != null and ad.startDate != null and ad.endDate != null}">
+						            <td>${ad.workDate}</td>
+						            <td>${ad.userName}</td>
+						            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
+						            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
+						            <td><fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간</td>
+						            <c:if test="${ad.type eq 1}">
+						                <td>연차</td>
+						            </c:if>
+						            <c:if test="${ad.type eq 2}">
+						                <td>오전 반차</td>
+						            </c:if>
+						            <c:if test="${ad.type eq 3}">
+						                <td>오후 반차</td>
+						            </c:if>
+								</c:if>
+								<c:if test="${ad.workDate == null and ad.userNo != null and ad.workOn == null and ad.workOff == null and ad.userName != null and ad.totalWorkTime == null and ad.approvalNo != null and ad.status != null and ad.startDate != null and ad.endDate != null}">
+						            <td>${ad.date}</td>
+						            <td>${ad.userName}</td>
+						            <td></td>
+						            <td></td>
+						            <td></td>
+						            <c:if test="${ad.type eq 1}">
+						                <td>연차</td>
+						            </c:if>
+						            <c:if test="${ad.type eq 2}">
+						                <td>오전 반차</td>
+						            </c:if>
+						            <c:if test="${ad.type eq 3}">
+						                <td>오후 반차</td>
+						            </c:if>
+								</c:if>
+					        </tr>
+					    </c:forEach>
                 </tbody>
             </table>
+            <!-- 페이징 영역 -->
+            <c:set var="url" value="${path}/attendance/check?cpage=" />
+            
+            <div class="board-wrap4">
+                <div class="pagingArea">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                        <!-- 이전페이지 버튼 -->
+                        <c:choose>
+							<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled">
+		                            <a class="page-link" href="#" aria-label="Previous">
+		                              <span aria-hidden="true">&laquo;</span>
+		                            </a>
+		                          </li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+		                            <a class="page-link" href="${url}${pi.currentPage -1}" aria-label="Previous">
+		                              <span aria-hidden="true">&laquo;</span>
+		                            </a>
+		                          </li>
+							</c:otherwise>					
+						</c:choose>
+                        
+                        <!-- 페이지버튼 -->
+                        <c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
+                        <c:choose>
+							<c:when test="${ pi.currentPage eq item }">
+                        	<li class="page-item active"><a class="page-link" href="${url}${item}">${item}</a></li>
+                        	<%-- <li class="page-item active"><a class="page-link" href="${url}${item}&year1=${year1}">${item}</a></li> --%>
+	                        </c:when>
+								<c:otherwise>	
+							<li class="page-item"><a class="page-link" href="${url}${item}">${item}</a></li>
+							</c:otherwise>					
+						</c:choose>
+						</c:forEach>
+                          
+                          <!-- 다음페이지 버튼 -->
+                          <c:choose>
+							<c:when test="${ (pi.currentPage eq pi.maxPage) or pi.maxPage == 0}">
+								<li class="page-item disabled">
+		                            <a class="page-link" href="#" aria-label="Next">
+		                              <span aria-hidden="true">&raquo;</span>
+		                            </a>
+	                            </li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+		                            <a class="page-link" href="${url}${pi.currentPage + 1}" aria-label="Next">
+		                              <span aria-hidden="true">&raquo;</span>
+		                            </a>
+		                         </li>
+							</c:otherwise>					
+						</c:choose>
+                        </ul>
+                      </nav>
+                </div>
+            </div>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/member/member-select.jsp"/>

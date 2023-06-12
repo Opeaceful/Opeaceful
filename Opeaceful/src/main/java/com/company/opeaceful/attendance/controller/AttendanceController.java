@@ -89,32 +89,38 @@ public class AttendanceController {
 	}
 	
 	// [가영] - 로그인한 유저의 출퇴근 조회
-
-	@GetMapping("/{userNo}")
+	@GetMapping("/check")
 	public String selectUserAttendance(@ModelAttribute("loginUser") Member loginUser,
-										@PathVariable("userNo") int userNo,
+										@RequestParam(value= "userNo",required = false) Integer userNo,
 										Model model,
-										@RequestParam(value= "year",required = false) Integer year,
-										@RequestParam(value= "month", required = false) Integer month,
-										@RequestParam(value= "day", required = false) Integer day) {
-			System.out.println("들어옴?");
-			System.out.println(userNo);
+										@RequestParam(value= "year1",required = false) Integer year1,
+										@RequestParam(value= "month1", required = false) Integer month1,
+										@RequestParam(value= "day1", required = false) Integer day1,
+										@RequestParam(value= "year2",required = false) Integer year2,
+										@RequestParam(value= "month2", required = false) Integer month2,
+										@RequestParam(value= "day2", required = false) Integer day2,
+										@RequestParam(value = "cpage", defaultValue = "1") int currentPage) {
 		 
 		Map<String, Object> selectUser = new HashMap<>();	
-				
-		selectUser.put("year", year);
-		selectUser.put("month", month);
-		selectUser.put("day", day);
+		
+		String startDate = year1 + "-" + month1 + "-" + day1;
+		String endDate = year2 + "-" + month2 + "-" + day2;
+			
+		selectUser.put("startDate", startDate);
+		selectUser.put("endDate", endDate);
 		selectUser.put("userNo", loginUser.getUserNo());
+		selectUser.put("currentPage", currentPage);
 				
-		List<Attendance> userAd = attendanceService.selectUserAttendance(selectUser);
+		attendanceService.selectUserAttendance(selectUser);
 				
 		model.addAttribute("loginUser", loginUser);
-		model.addAttribute("userAd", userAd);
+		model.addAttribute("selectUser", selectUser);
 		
-		System.out.println(selectUser);
-		System.out.println(userAd);
+		System.out.println("selectUser에 담긴 값 : "+selectUser);
+		System.out.println("userAd에 담긴 값 : "+selectUser);
 				
 		return "attendance";
 	}
+	
+	
 }
