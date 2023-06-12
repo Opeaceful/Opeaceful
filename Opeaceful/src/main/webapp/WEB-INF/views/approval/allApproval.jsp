@@ -39,7 +39,6 @@ pageEncoding="UTF-8"%>
           <div>진행중</div>
           <div>반려</div>
           <div>완료</div>
-          <div>승인대기</div>
           <div class="line"></div>
         </div>
 
@@ -54,7 +53,7 @@ pageEncoding="UTF-8"%>
                 <th>진행상태</th>
                 <th scope="col">
                   <select name="checkType" id="check-type">
-                    <option value="all" selected>구분</option>
+                    <option value="-1" selected>구분</option>
                     <option value="0">일반</option>
                     <option value="1">연차</option>
                     <option value="2">오전반차</option>

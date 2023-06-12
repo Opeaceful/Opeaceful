@@ -19,8 +19,11 @@ public class ApprovalLine {
 	private String confirmStatus;	//	CONFIRM_STATUS
 	private Timestamp date;			//	DATE
 	
+	
+	private int eno;				// 유저 사원번호 정보용
 	private String userName;		// 유저 이름 정보용
 	private String pName;			// 유저 직급 정보용
 	private int lineNo;				// 즐겨찾기의 결재자 정보용 필드
+	private String signatureImg;	// 서명 이미지 경로 + 이름 SIGNATURE_IMG
 
 }

@@ -7,6 +7,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
+import com.company.opeaceful.approval.model.vo.ApprovalMemo;
 
 //(승은)
 public interface ApprovalService {
@@ -31,7 +32,27 @@ public interface ApprovalService {
 
 		// [지의] 해당 유저 연차 조회
 		List<Approval> selectUserApproval(int userNo);
+		
+	Approval selectApproval(int approvalNo);
+		
+	List<Approval> selectApprovalList(int userNo, Integer status, int type, int year, int page , boolean isAdmin);
+	
+	int selectApprovalListCount(int userNo, Integer status, int type, int year, boolean isAdmin );
+	
+	List<Approval> selectApprovalListforAuthorize(int userNo, String menu, Integer status, int type, int year, int page );
 
+	int selectApprovalListforAuthorizeCount(int userNo, String menu, Integer status, int type, int year  , boolean isNotCheck);
+	
+	List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page );
+
+	int selectApprovalListforReferCount(int userNo, Integer status, int year  , boolean isNotCheck);
+	
+	List<ApprovalMemo> selectMemoList(int approvalNo);
+	
+	ApprovalMemo selectMemo(int memoNo);
+	
+	String selectSignImg(int userNo);
+	
 //----------------- insert ---------------------------------------
 	
 	int insertForm(ApprovalForm form, List<ApprovalFile> fileList );
@@ -42,11 +63,21 @@ public interface ApprovalService {
 	
 	int insertFavor(ApprovalFavor favor, List<ApprovalLine> lines);
 	
+	int insertMemo(ApprovalMemo memo , List<ApprovalFile> fileList);
+	
+	int insertSignImg(int userNo, String changeName);
+	
 //----------------- update ---------------------------------------
 
 	int updateForm(ApprovalForm form, List<ApprovalFile> fileList);
 	
 	int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList);
+	
+	int updateApprovalStatus(int approvalNo, int status);
+	
+	int updateMemo(ApprovalMemo memo, List<ApprovalFile> fileList);
+	
+	int updateSignImg(int userNo, String changeName);
 	
 //----------------- delete ---------------------------------------
 	
@@ -57,4 +88,6 @@ public interface ApprovalService {
 	int deleteFileList(List<ApprovalFile> fileList);
 	
 	int deleteFavor(int favorNo);
+	
+	int deleteMemo(int memoNo);
 }

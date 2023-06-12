@@ -164,6 +164,10 @@ export function returnFormData(tinyId) {
   let formData = new FormData();
   let fileList = [...InputFileList]; // 얕은복사
   let imgArr = tinymce.get(tinyId).contentDocument.getElementsByTagName('img');
+  // 이미지태그들 다 서버 전송용으로 갈아끼고 난 후 다시 원상복귀 시키기 위해 원래의 본문 html 저장
+  let originContent = tinymce
+    .get(tinyId)
+    .contentDocument.getElementById('tinymce').innerHTML;
 
   // 본문내용의 이미지들을 돌면서 등록된 파일들을 찾음
   for (let img of imgArr) {
@@ -203,5 +207,29 @@ export function returnFormData(tinyId) {
   // 정보 뽑아내기 끝나면 다음을 위해 파일리스트 비우기
   resetInputFileList();
 
+  // 다시 본문 원래 내용으로 복구
+  tinymce.get(tinyId).setContent(originContent);
+
   return formData;
+}
+
+// 서버에서 가져온 이미지 src 경로 재설정 해주는 함수
+// path경로가 변경될 경우를 대비
+export function changeImgPath(tinyId, imgPath) {
+  let imgArr = tinymce.get(tinyId).contentDocument.getElementsByTagName('img');
+
+  if (imgArr) {
+    for (let img of imgArr) {
+      let imgSrc = img.src;
+      // 신규로 추가된 이미지들의 src는 blob로 시작되도록 해두었음
+      // 그외 / 로 시작하지 않는 기존 이미지들 src 갈아끼기
+      if (!imgSrc.startsWith('blob')) {
+        // 이미지 실제 이름만 가져옴
+        imgSrc = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+
+        // 이미지 경로 재설정
+        img.src = imgPath + imgSrc;
+      }
+    }
+  }
 }
