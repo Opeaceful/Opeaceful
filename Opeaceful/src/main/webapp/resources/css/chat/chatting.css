@@ -269,7 +269,7 @@ body{
     flex-basis: 100%;
     flex-grow: 1;
 }
-#chatting_send{
+.chatting_send_button{
     margin-left: 10px;
     border: 1px solid rgb(94, 122, 100);
     background-color:rgb(248, 248, 248);
@@ -280,7 +280,7 @@ body{
     transition-duration: 1s;
     transition-timing-function: linear;
 }
-#chatting_send:hover{
+.chatting_send_button:hover{
     background-color: rgb(94, 122, 100);
     color: rgb(248, 248, 248);
 }
