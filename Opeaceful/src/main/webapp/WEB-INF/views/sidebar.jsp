@@ -45,7 +45,7 @@
                         <span class="sidebar-text">홈</span>
                     </a>
                 </li>
-
+			
                 <!-- 조직도 -->
                 <li id="sidebar-chart">
                     <div class="one-line sidebar-cursor" id="chart-menu">
@@ -55,7 +55,11 @@
                     </div>
 
                     <div class="sidebar-more" id="chart-menu-item">
-                        <a class="sidebar-more-text" href="${path}/orgChart/insert/department">조직도 등록</a>
+						<c:forEach items="${loginUserRole}" var="role">
+							<c:if test="${role.roleCode eq 'D01'}">
+		                        <a class="sidebar-more-text" href="${path}/orgChart/insert/department">조직도 등록</a>
+							</c:if>
+						</c:forEach>
                         <a class="sidebar-more-text" href="${path}/orgChart/orgChartView">조직도 현황</a>
                     </div>
                 </li>
@@ -116,51 +120,8 @@
 				    </a>
 				</li>
 				
-
-                <!-- 연차관리 -->
-                <li id="sidebar-annual">
-                    <div class="one-line sidebar-cursor" id="annual-menu">
-                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-umbrella-beach"></i></span>
-                        <span class="sidebar-text">연차관리</span>
-                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
-                    </div>
-
-                    <div class="sidebar-more" id="annual-menu-item">
-                        <a class="sidebar-more-text" href="${path}/annual/setting">총 연차 관리</a>
-                        <a class="sidebar-more-text" href="${path}/annual/list">연차 조회</a>
-                    </div>
-                </li>
-
-                <!-- 계정관리 -->
-                <li id="sidebar-account">
-                    <div class="one-line sidebar-cursor" id="account-menu">
-                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-user-plus"></i></span>
-                        <span class="sidebar-text">계정관리</span>
-                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
-                    </div>
-
-                    <div class="sidebar-more" id="account-menu-item">
-                        <a class="sidebar-more-text" href="${path}/member/allview">사용자 조회</a>
-                        <a class="sidebar-more-text" href="${path}/member/create">사용자 등록</a>
-                    </div>
-                </li>
-
-                <!-- 권한관리 -->
-                <li id="sidebar-role">
-                    <div class="one-line sidebar-cursor" id="role-menu">
-                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-user-gear"></i></span>
-                        <span class="sidebar-text">권한관리</span>
-                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
-                    </div>
-
-                    <div class="sidebar-more" id="role-menu-item">
-                        <a class="sidebar-more-text" href="${path}/role/granting">권한 등록</a>
-                        <a class="sidebar-more-text" href="${path}/role/userRole">사원별 권한 등록</a>
-                    </div>
-                </li>
-                
-                <!-- 급여관리 -->
-                <li id="sidebar-role">
+				<!-- 급여관리 -->
+                <li id="sidebar-salary">
                     <div class="one-line sidebar-cursor" id="salary-menu">
                         <span class="side-icon-size"><i class="sidebar-icon fa-solid bi-cash-coin"></i></span>
                         <span class="sidebar-text">급여관리</span>
@@ -169,9 +130,67 @@
 
                     <div class="sidebar-more" id="salary-menu-item">
                         <a class="sidebar-more-text" href="${path}/salary/employee">급여 조회</a>
-                        <a class="sidebar-more-text" href="${path}/salary/AllSalary">사원별 급여 관리</a>
+						<c:forEach items="${loginUserRole}" var="role">
+							<c:if test="${role.roleCode eq 'S01'}">
+		                        <a class="sidebar-more-text" href="${path}/salary/AllSalary">사원별 급여 관리</a>
+							</c:if>
+						</c:forEach>
                     </div>
                 </li>
+
+                <!-- 연차관리 -->
+                <c:forEach items="${loginUserRole}" var="role">
+	                <c:if test="${role.roleCode eq 'Y01'}">
+		                <li id="sidebar-annual">
+		                    <div class="one-line sidebar-cursor" id="annual-menu">
+		                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-umbrella-beach"></i></span>
+		                        <span class="sidebar-text">연차관리</span>
+		                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i> 
+		                    </div>
+		
+		                    <div class="sidebar-more" id="annual-menu-item">
+		                        <a class="sidebar-more-text" href="${path}/annual/setting">총 연차 관리</a>
+		                        <a class="sidebar-more-text" href="${path}/annual/list">연차 조회</a>
+		                    </div>
+		                </li>
+	                </c:if>
+				</c:forEach>
+				
+                <!-- 계정관리 -->
+                <c:forEach items="${loginUserRole}" var="role">
+	                <c:if test="${role.roleCode eq 'M01'}">
+		                <li id="sidebar-account">
+		                    <div class="one-line sidebar-cursor" id="account-menu">
+		                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-user-plus"></i></span>
+		                        <span class="sidebar-text">계정관리</span>
+		                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+		                    </div>
+		
+		                    <div class="sidebar-more" id="account-menu-item">
+		                        <a class="sidebar-more-text" href="${path}/member/allview">사용자 조회</a>
+		                        <a class="sidebar-more-text" href="${path}/member/create">사용자 등록</a>
+		                    </div>
+		                </li>
+	                </c:if>
+                </c:forEach>
+
+                <!-- 권한관리 -->
+                <c:forEach items="${loginUserRole}" var="role">
+	                <c:if test="${role.roleCode eq 'R01'}">
+		                <li id="sidebar-role">
+		                    <div class="one-line sidebar-cursor" id="role-menu">
+		                        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-user-gear"></i></span>
+		                        <span class="sidebar-text">권한관리</span>
+		                        <i class="sidebar-icon-arrow fa-solid fa-angle-down"></i>
+		                    </div>
+		
+		                    <div class="sidebar-more" id="role-menu-item">
+		                        <a class="sidebar-more-text" href="${path}/role/granting">권한 등록</a>
+		                        <a class="sidebar-more-text" href="${path}/role/userRole">사원별 권한 등록</a>
+		                    </div>
+		                </li>                
+	                </c:if>
+                </c:forEach>
             </ul>
         </div>
 

@@ -145,9 +145,9 @@ export function resetPageBtn(currentBtnNum, count) {
 
     if (pageNum > maxPage) {
       //만약 버튼의 숫자가 최대 페이지 수보다 크다면 버튼 비활성화
-      btns[i].className = 'disable-btn page-btn btn btn-outline-primary';
+      btns[i].className = 'disable-btn page-btn';
     } else {
-      btns[i].className = 'page-btn btn btn-outline-primary';
+      btns[i].className = 'page-btn';
     }
 
     if (pageNum == currentBtnNum) {
@@ -158,7 +158,7 @@ export function resetPageBtn(currentBtnNum, count) {
 
   if (startPage > 10) {
     // 페이지버튼 시작 숫자가 10보다 크면 앞으로 가기 버튼 활성화
-    document.getElementById('prev-btn').className = 'btn btn-outline-primary';
+    document.getElementById('prev-btn').className = '';
   } else {
     document.getElementById('prev-btn').className = 'disable-btn';
   }
@@ -166,7 +166,7 @@ export function resetPageBtn(currentBtnNum, count) {
   if (startPage + 9 < maxPage) {
     // 시작 숫자 + 9(=마지막페이지버튼숫자임)이
     // 최대페이지 수보다 작을때 뒤로가기 버튼 활성화
-    document.getElementById('next-btn').className = 'btn btn-outline-primary';
+    document.getElementById('next-btn').className = '';
   } else {
     document.getElementById('next-btn').className = 'disable-btn';
   }
@@ -188,7 +188,7 @@ let setFormModalInnerEvent = function () {
   document
     .getElementById('btn-copy-form')
     .addEventListener('click', function () {
-      AprData.selectFormList('copy');
+      AprData.selectFormListPage('copy');
     });
 
   // 양식복사창 닫기 버튼 이벤트 부여
@@ -391,19 +391,18 @@ let pageBtnEvent = function () {
     el.addEventListener('click', function () {
       // 기존에 선택되어있던 버튼이 있었다면 선택 해제
       if (document.querySelector('.selected-btn') != null) {
-        document.querySelector('.selected-btn').className =
-          'page-btn btn btn-outline-primary';
+        document.querySelector('.selected-btn').className = 'page-btn';
       }
 
       let checkType = document.getElementById('select-show-type').value;
 
-      AprData.selectFormList(
+      AprData.selectFormListPage(
         'table',
         Number(checkType),
         Number(this.innerText)
       );
 
-      this.className = 'selected-btn page-btn btn btn-outline-primary';
+      this.className = 'selected-btn page-btn';
     });
   });
 

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.company.opeaceful.approval.model.vo.Approval"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/20(페이지당 표시수)
-	int count = 200; //(int) request.getAttribute("count");
+	ArrayList<Approval> list = (ArrayList<Approval>) request.getAttribute("list");
+	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/10(페이지당 표시수)
+	int count = (int) request.getAttribute("count");
 	int pageCount = (int) Math.ceil(count / 10.0);
+	
 %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -47,38 +48,46 @@ pageEncoding="UTF-8"%>
         </div>
 
         <div class="top-menubar">
-			<div class="selected top-menubar-item" value="100">전체</div>
-			<div class="top-menubar-item" id="approval-state-temp" value="2">임시저장</div>
-			<div class="top-menubar-item" id="approval-state-process" value="0">진행중</div>
-			<div class="top-menubar-item" id="approval-state-return" value="-1">
+			<div class="${ menu eq 'all' ? 'selected ' : '' } top-menubar-item" data-menu="draft">기안</div>
+			<div class="top-menubar-item" id="approval-state-temp" data-menu="temp">임시저장</div>
+			<div class="top-menubar-item" id="approval-state-return" data-menu="return">
 				<div class="alarm-wrap">
 					반려
-					<!-- <div class="alarm"></div> -->
-					<span id="return-alarm" class="alarm-balloon" alt="알림수">3</span>
+					<span id="return-alarm" class="${ returnCount > 0 ? "" : "alarm-hide" } alarm-balloon" alt="알림수">${returnCount}</span>
 				</div>
 			</div>
-			<div class="top-menubar-item" id="approval-state-end" value="1">완료</div>
-			<div class="top-menubar-item" id="approval-state-wait">
+			<div class="top-menubar-item" id="approval-state-refer" data-menu="refer">
+				<div class="alarm-wrap">
+					참조
+					<span id="refer-alarm" class="${ referCount > 0 ? "" : "alarm-hide" } alarm-balloon" alt="알림수">${referCount}</span>
+				</div>
+			</div>
+			
+			<div class="${ menu eq 'wait' ? 'selected ' : '' } top-menubar-item" id="approval-state-wait" data-menu='wait'>
 				<div class="alarm-wrap">
 					승인대기
-					<!-- <div class="alarm"></div> -->
-					<span id="wait-alarm" class="alarm-balloon" alt="알림수">3</span>
+					<span id="wait-alarm" class="${ waitCount > 0 ? "" : "alarm-hide" } alarm-balloon" alt="알림수">${waitCount }</span>
 				</div>
 			</div>
-			<div id="approval-state-approval">결재</div>
+			
+			<div  class="top-menubar-item" id="approval-state-approval" data-menu='authorized'>결재</div>
 	
 			<div class="line"></div>
 		</div>
 
+
+		<c:set var="now" value="${LocalDate.now().getYear()}" />
+
         <div class="inner-wrap">
-        	<button  id="all-member-view-button" class="btn btn-primary position-btn"
-		data-bs-toggle="modal" data-bs-target="#all-user-view" type="button">
-		실험</button>
         	<select id="select-year" >
-        		<option selected>2023</option>
-        		<option>2022</option>
-        		<option>2021</option>
-        		<option>2020</option>
+        		<c:if test="${ menu eq 'wait' }">
+        			<option value="-1" selected>전체</option>
+        		</c:if>
+        		<option value="${ now }"  ${ menu eq 'all' ? 'selected ' : '' }>${ now }</option>
+        		<option value="${ now - 1 }" >${ now - 1 }</option>
+        		<option value="${ now - 2 }">${ now - 2 }</option>
+        		<option value="${ now - 3 }">${ now - 3 }</option>
+        		<option value="${ now - 4 }">${ now - 4 }</option>
         	</select>
         
           <table class="my-approval-table table table-common">
@@ -88,10 +97,26 @@ pageEncoding="UTF-8"%>
                 <th scope="col">기안일</th>
                 <th>제목</th>
                 <th>기안자</th>
-                <th>진행상태</th>
+                <th>
+                  <select name="checkStatus" id="check-show-status">
+					<c:choose>
+						<c:when test="${menu eq 'wait'}">
+		                  	<option value="0" selected>진행중</option>
+						</c:when>
+						<c:otherwise>
+		                  	<option value="all" selected>상태</option>
+		                  	<option value="0">진행중</option>
+		                    <option value="1">완료</option>
+		                    <option value="-1" >반려</option>
+						</c:otherwise>
+					</c:choose>                  
+                  </select>
+                
+                
+                </th>
                 <th scope="col">
-                  <select name="checkType" id="check-type">
-                    <option value="all" selected>구분</option>
+                  <select name="checkType" id="check-show-type">
+                    <option value="-1" selected>구분</option>
                     <option value="0">일반</option>
                     <option value="1">연차</option>
                     <option value="2">오전반차</option>
@@ -101,32 +126,36 @@ pageEncoding="UTF-8"%>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>3</td>
-                <td>2023-05-16 09:56</td>
-                <td>
-                  서지출결의서지출결의서지지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서지출결의서출결의서~~~
-                </td>
-                <td>김사원</td>
-                <td>진행중</td>
-                <td>일반</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>2023-05-16 09:55</td>
-                <td>휴가요청~~~</td>
-                <td>이사원</td>
-                <td>진행중</td>
-                <td>연차</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>2023-05-16 09:54</td>
-                <td>지출결의서~~~</td>
-                <td>김사원</td>
-                <td>완료</td>
-                <td>오후반차</td>
-              </tr>
+            	<% for(int i=0; i< list.size(); i++) { %>
+            		<%  String statusStr = "";
+            			String typeStr = "";
+            			switch(list.get(i).getStatus()){
+		                	case -1: statusStr = "반려";  break;
+		                	case 0:  statusStr =  "진행중";  break;
+		                	case 1:  statusStr =  "완료";  break;
+		                	case 2:  statusStr =  "임시저장";  break;
+	                	} 
+            			switch(list.get(i).getType()){
+		                	case 0:  typeStr =  "일반";  break;
+		                	case 1:  typeStr =  "휴가";  break;
+		                	case 2:  typeStr =  "오전반차";  break;
+		                	case 3: typeStr = "오후반차";  break;
+                		} 
+	                %>
+	              <tr data-approvalno = "<%= list.get(i).getApprovalNo() %>">
+	                <td><%= count - i %></td>
+	                <td><%= list.get(i).getFormatDraftDate() %></td>
+	                <td><%= list.get(i).getTitle()  %></td>
+	                <td><%= list.get(i).getUserName() %></td>
+	                <td><%= statusStr  %></td>
+	                <td><%= typeStr %></td>
+	              </tr>
+            	<% } %>
+            	<c:if test="${list.size() <= 0 }">
+            		<tr >
+	                	<td colspan="6">등록된 문서가 없습니다.</td>
+	                </tr>
+            	</c:if>
             </tbody>
           </table>
 
@@ -134,46 +163,42 @@ pageEncoding="UTF-8"%>
             <button
               id="btn-add-approval"
               class="btn btn-primary position-btn"
-              data-bs-toggle="modal"
-              data-bs-target="#approval"
               type="button"
             >
               <i class="fa-solid fa-plus"></i> 신규
             </button>
             <button
-              id="test"
-              data-bs-toggle="modal"
-              data-bs-target="#end-approval" 
+              id="btn-open-sign-modal"
               type="button"
             class="btn btn-outline-primary">My서명</button>
           </div>
 
           <div class="paging-bar">			
-			<button type="button" class="disable-btn btn btn-outline-primary" id="prev-btn">&lt;</button>
+			<button type="button" class="disable-btn" id="prev-btn"><span aria-hidden="true">«</span></button>
 
 			<% for(int i= 1; i <= 10; i++) { %>
 				<% if( i <= pageCount) { %>
 					<% if(i == 1) { %>
-						<button type="button" class="selected-btn page-btn btn btn-outline-primary"><%= i %></button>
+						<button type="button" class="selected-btn page-btn"><%= i %></button>
 					<% } else { %>
-						<button type="button" class="page-btn btn btn-outline-primary"><%= i %></button>
+						<button type="button" class="page-btn"><%= i %></button>
 					<% } %>
 				<% } else {%>
-					<button type="button" class="disable-btn page-btn btn btn-outline-primary"><%= i %></button>
+					<button type="button" class="disable-btn page-btn"><%= i %></button>
 				<% } %>
 			<% } %>
 			
 			<!-- 버튼의 최대 값보다 총 페이지 수가 크면 다음 버튼 활성화 -->
 			<% if( 10 < pageCount ) { %>
-				<button type="button" class="btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="" id="next-btn"><span aria-hidden="true">»</span></button>
 			<% } else { %>
-				<button type="button" class="disable-btn btn btn-outline-primary" id="next-btn">&gt;</button>
+				<button type="button" class="disable-btn" id="next-btn"><span aria-hidden="true">»</span></button>
 			<% } %>
 		 </div>
 
           <div
             class="modal fade"
-            id="sign"
+            id="sign-modal"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
             tabindex="-1"
@@ -181,7 +206,7 @@ pageEncoding="UTF-8"%>
             aria-hidden="true"
           >
             <div
-              class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+              class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable"
             >
               <div class="modal-content position-modal">
                 <div class="modal-header">
@@ -190,28 +215,27 @@ pageEncoding="UTF-8"%>
                   </h1>
                   <button
                     type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
+                    class="btn-close btn-sign-img-cancle"
                   ></button>
                 </div>
                 <div class="modal-body scroll-bar-none">
                   <div class="sign-img-wrap">
 
                     <div class="sign-img-item">
-                      <img src="${path}/resources/image/main/eat.svg" alt="">
+                    	<div>기존 이미지</div>
+                      <img id="img-my-sign" onerror="this.src='${path}/resources/image/approval/invisible.png';">
                     </div>
-
                     <div class="sign-img-item">
-                      <img src="${path}/resources/image/mypage/basic_profile.png" alt="">
+                    	<div>신규 이미지</div>
+                      <img id="img-new-sign" onerror="this.src='${path}/resources/image/approval/invisible.png';">
                     </div>
 
                   </div>
-                  <input type="file" hidden>
+                  <input id="input-new-sign" type="file" accept="image/*" hidden>
 
                   <div class="sign-btn-wrap">
                     <button id="btn-sign-img-save" class="btn btn-primary">저장</button>
-                    <button class="btn btn-outline-primary">취소</button>
+                    <button class="btn btn-outline-primary btn-sign-img-cancle">취소</button>
                   </div>
                 </div>
               </div>
@@ -229,7 +253,6 @@ pageEncoding="UTF-8"%>
 
 	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
 	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
-	<%-- <jsp:include page="/WEB-INF/views/member/member-select.jsp" /> --%>
 	
 	
 	<script type="module" src="${path}/resources/js/approval/myApprovalFront.js"></script>

@@ -44,3 +44,9 @@
 .annual-table-div::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
+
+#annual-count::-webkit-outer-spin-button,
+#annual-count::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+}

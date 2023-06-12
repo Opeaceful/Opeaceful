@@ -7,5 +7,7 @@ public class UserRole {
 	
 	private int userNo;
 	private String roleCode;
+	
+	private int pCode;
 
 }

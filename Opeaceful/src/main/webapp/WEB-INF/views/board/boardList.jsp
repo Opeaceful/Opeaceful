@@ -19,6 +19,8 @@
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<!-- 알랏 커스텀 링크 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<!--css -->
@@ -26,7 +28,12 @@
 	<link rel="stylesheet" href="${path}/resources/css/board/boardlist.css">
 </head>
 <body>
-
+	<!-- alert -->
+	<c:if test="${ not empty alertMsg }">
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
+	
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
 
 	<div id="content-wrap">
@@ -57,7 +64,22 @@
                 </div>
             </div>
             <div class="board-wrap2">
-                <button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
+            <c:choose>
+					<c:when test="${ boardCode eq 'T'}">
+						<button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>						
+					</c:when>
+	                 <c:when test="${ boardCode eq 'F'}">
+		                <button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
+	                 </c:when>
+						<c:otherwise>
+							<c:if test="${notiRoll > 0}">
+            					<button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
+            				</c:if>
+            				<c:if test="${notiRoll == 0}">
+            					<div><pre> </pre></div>
+            				</c:if>	
+						</c:otherwise>
+					</c:choose>
             </div>
             <div class="board-wrap3">
                 <table class="table table-hover table-common">
@@ -74,24 +96,75 @@
 						<td colspan="4">게시글이 없습니다</td>
 					</c:if>
 					<c:forEach items="${ list }" var="b">
-	                    <c:choose>
+						<c:choose>
+						<c:when test="${ boardCode eq 'N'}">
+							<c:choose>
 	                    <c:when test='${ b.fixed == "Y"}'>
-		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}"'>
+		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
 		                        <td class="list-ctn-title">${b.boardTitle}</td>
-		                        <td>${b.PName} ${b.userName}</td>
+		                        <td>${b.boardWriter}</td>
 		                        <td>${b.createDate}</td>
 		                        <td>${b.count}</td>
 		                    </tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}"'>
+	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
 	                        <td class="list-ctn-title">${b.boardTitle}</td>
-	                        <td>${b.PName} ${b.userName}</td>
+	                        <td>${b.boardWriter}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.count}</td>
 	                    </tr>
 	                    </c:otherwise>
 	                    </c:choose>
+						</c:when>
+						
+						<c:otherwise>
+							<c:choose>
+	                    <c:when test='${ b.fixed == "Y"}'>
+		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
+		                        <td class="list-ctn-title">${b.boardTitle}</td>
+		                        
+		                        <c:choose>
+		                        <c:when test="${b.secret eq 'Y'}">
+		                        <td>익명</td>
+		                        </c:when>
+		                        <c:otherwise>
+		                        <td>${b.PName} ${b.userName}</td>
+		                        </c:otherwise>
+		                        </c:choose>
+		                        
+		                        <td>${b.createDate}</td>
+		                        <td>${b.count}</td>
+		                    </tr>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
+	                        <td class="list-ctn-title">${b.boardTitle}</td>
+	                        
+	                        <c:choose>
+	                        <c:when test="${b.secret eq 'Y'}">
+	                        <td>익명</td>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <td>${b.PName} ${b.userName}</td>
+	                        </c:otherwise>
+	                        </c:choose>
+	                        
+	                        <td>${b.createDate}</td>
+	                        <td>${b.count}</td>
+	                    </tr>
+	                    </c:otherwise>
+	                    </c:choose>
+	                    
+						
+						</c:otherwise>
+						
+						</c:choose>
+					
+					
+	                    
+	                    
+	                    
                     </c:forEach> 
                     </tbody>
               </table>

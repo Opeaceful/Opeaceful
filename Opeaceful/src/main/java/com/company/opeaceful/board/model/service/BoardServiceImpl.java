@@ -6,13 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.company.opeaceful.board.model.dao.BoardDao;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
-import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.dept.model.vo.Department;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -45,8 +46,9 @@ public class BoardServiceImpl implements BoardService {
 		
 		map.put("pi", pi);
 		map.put("list", list);
-		
+		System.out.println("list 담긴 값 : " + map.get(list));
 		System.out.println("map에 담긴 값 서비스 : " + map);
+		
 	}
 	// 검색된 게시글 목록 조회
 	@Override
@@ -62,12 +64,49 @@ public class BoardServiceImpl implements BoardService {
 		map.put("list", list);
 		
 		System.out.println("map에 담긴 값 서비스 : " + map);
-		
 	}
 	
+	@Override
+	public int selectNoticeRoll(String userNo) {
+		return boardDao.selectNoticeRoll(userNo);
+	}
 	
+	@Override
+	public int selectFreeRoll(String userNo) {
+		return boardDao.selectFreeRoll(userNo);
+	}
 	
+	@Override
+	public Board selectBoardDetail(Map<String, Object> map) {
+		return boardDao.selectBoardDetail(map);
+	}
 	
+	@Override
+	public int updateAddCount(int boardNo) {
+		return boardDao.updateAddCount(boardNo);
+	}
 	
+	@Override
+	public int boardDelete(int boardNo) {
+		return boardDao.boardDelete(boardNo);
+	}
+	@Override
+	public ArrayList<Department> selectDeptList(){
+		return boardDao.selectDeptList();
+	}
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int insertBoard(Board b){
+		int boardNo = boardDao.insertBoard(b);
+		
+		return boardNo;
+	}
+	@Override
+	@Transactional(rollbackFor = {Exception.class})
+	public int updateBoard(Board b){
+		int result = boardDao.updateBoard(b);
+		
+		return result;
+	}
 	
 }
