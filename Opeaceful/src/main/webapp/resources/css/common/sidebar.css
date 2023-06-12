@@ -25,10 +25,6 @@
 .sidebar-wrap > ul > li > a,.one-line {display: block; white-space: nowrap;}
 .sidebar-more {white-space: nowrap;}
 
-.sidebar-more-text:hover{
-    /* color: var(--color-navy); */
-}
-
 
 
 /* ========================== 사이드바 ========================== */
@@ -84,6 +80,7 @@
 .sidebar-bottom {
     position: fixed;
     bottom: 0;
+    width: 60px;
 }
 .sidebar-more-text{
     font-size: var(--font14);
