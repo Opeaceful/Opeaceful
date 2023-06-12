@@ -17,7 +17,7 @@
 		FROM online_status;
 	</select>
 	
-	<!-- [가영] 출퇴근 리스트 카운트 -->
+	<!-- [가영] 로그인한 사원의 출퇴근 리스트 카운트 -->
 	<select id="selectAttendanceListCount" resultType="_int">
 		WITH RECURSIVE DATE_RANGE AS (
 		    SELECT CURDATE() AS date
@@ -52,8 +52,8 @@
 		) AS COUNT_RESULT
 	</select>
 	
-	<!-- [가영] 로그인한 유저의 출퇴근 조회 -->
-	<select id="selectUserAttendance" resultType="attendance">
+	<!-- [가영] 로그인한 사원의 출퇴근 조회 -->
+	<select id="selectUserAttendance" resultType="attendance" parameterType="hashMap">
 		WITH RECURSIVE DATE_RANGE AS (
 		    SELECT CURDATE() AS date
 		    UNION ALL
@@ -83,6 +83,144 @@
 		        AND #{endDate} >= D.DATE  
 		) AS RESULT
 		ORDER BY DATE ASC
+		<if test='year1 != null '>
+	      AND YEAR_REPORTED = #{year1}
+	    </if>
+	    <if test='month1 != 13 and month1 != null'>
+	      AND MON_REPORTED = #{month1}
+	    </if>
+		<if test='day1 != 32 and day1 != null'>
+	      AND MON_REPORTED = #{day1}
+	    </if>
+	    <if test='year2 != null '>
+	      AND YEAR_REPORTED = #{year2}
+	    </if>
+	    <if test='month2 != 13 and month2 != null'>
+	      AND MON_REPORTED = #{month2}
+	    </if>
+		<if test='day2 != 32 and day2 != null'>
+	      AND MON_REPORTED = #{day2}
+	    </if>
+	</select>
+	
+	<!-- [가영] 조회한 모든 사원의 출퇴근 조회 -->
+	<select id="selectAllUserAttendance" resultType="attendance" parameterType="hashMap">
+		WITH RECURSIVE DATE_RANGE AS (
+		    SELECT CURDATE() AS date
+		    UNION ALL
+		    SELECT DATE - INTERVAL 1 DAY
+		    FROM DATE_RANGE
+		    WHERE DATE > #{startDate} 
+		)
+		SELECT *,
+		    TIMEDIFF(WORK_OFF, WORK_ON) AS TOTAL_WORK_TIME
+		FROM (
+		    SELECT D.DATE AS DATE, A.WORK_DATE, COALESCE(A.USER_NO ,test.USER_NO) AS USER_NO, COALESCE(M.USER_NAME ,TEST.USER_NAME) AS USER_NAME, A.WORK_ON, A.WORK_OFF, APPROVAL_NO, TYPE, TEST.STATUS, START_DATE, END_DATE
+		    FROM DATE_RANGE D
+		    LEFT JOIN (
+				SELECT * FROM ATTENDANCE
+				) A ON D.date = A.WORK_DATE
+		    LEFT JOIN MEMBER M ON A.USER_NO = M.USER_NO
+		    LEFT JOIN (
+		        SELECT D.DATE AS DATE, APP.USER_NO AS USER_NO, M.USER_NAME AS USER_NAME , APP.APPROVAL_NO, APP.TYPE, APP.STATUS, APP.START_DATE, APP.END_DATE
+		        FROM DATE_RANGE D
+		        LEFT JOIN APPROVAL APP ON D.DATE >= APP.START_DATE AND APP.END_DATE >=  D.DATE 
+		        LEFT JOIN MEMBER M ON APP.USER_NO = M.USER_NO
+		        WHERE D.DATE >= #{startDate} 
+		            AND #{endDate} >= D.DATE
+		    ) TEST ON (D.DATE = TEST.DATE)
+		    WHERE D.DATE >= #{startDate} 
+		        AND #{endDate} >= D.DATE  
+		) AS RESULT
+		ORDER BY DATE ASC
+		<where>
+			<if test='year1 != null '>
+		      AND YEAR_REPORTED = #{year1}
+		    </if>
+		    <if test='month1 != 13 and month1 != null'>
+		      AND MON_REPORTED = #{month1}
+		    </if>
+			<if test='day1 != 32 and day1 != null'>
+		      AND MON_REPORTED = #{day1}
+		    </if>
+		    <if test='year2 != null '>
+		      AND YEAR_REPORTED = #{year2}
+		    </if>
+		    <if test='month2 != 13 and month2 != null'>
+		      AND MON_REPORTED = #{month2}
+		    </if>
+			<if test='day2 != 32 and day2 != null'>
+		      AND MON_REPORTED = #{day2}
+		    </if>
+		    <if test='no != null'>
+				AND A.USER_NO IN 
+				<foreach item="uno" collection="no"
+					separator="," open="(" close=")">
+					#{uno}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	
+	<!-- [가영] 조회한 모든 사원의 출퇴근 리스트 카운트 -->
+	<select id="selectAttendanceAllListCount" resultType="_int">
+		WITH RECURSIVE DATE_RANGE AS (
+		    SELECT CURDATE() AS date
+		    UNION ALL
+		    SELECT DATE - INTERVAL 1 DAY
+		    FROM DATE_RANGE
+		    WHERE DATE > #{startDate} 
+		)
+		SELECT COUNT(*) AS COUNT
+		FROM (
+			SELECT *,
+			    TIMEDIFF(WORK_OFF, WORK_ON) AS TOTAL_WORK_TIME
+			FROM (
+			    SELECT D.DATE AS DATE, A.WORK_DATE, COALESCE(A.USER_NO ,test.USER_NO) AS USER_NO, COALESCE(M.USER_NAME ,TEST.USER_NAME) AS USER_NAME, A.WORK_ON, A.WORK_OFF, APPROVAL_NO, TYPE, TEST.STATUS, START_DATE, END_DATE
+			    FROM DATE_RANGE D
+			    LEFT JOIN (
+					SELECT * FROM ATTENDANCE
+					) A ON D.date = A.WORK_DATE
+			    LEFT JOIN MEMBER M ON A.USER_NO = M.USER_NO
+			    LEFT JOIN (
+			        SELECT D.DATE AS DATE, APP.USER_NO AS USER_NO, M.USER_NAME AS USER_NAME , APP.APPROVAL_NO, APP.TYPE, APP.STATUS, APP.START_DATE, APP.END_DATE
+			        FROM DATE_RANGE D
+			        LEFT JOIN APPROVAL APP ON D.DATE >= APP.START_DATE AND APP.END_DATE >=  D.DATE 
+			        LEFT JOIN MEMBER M ON APP.USER_NO = M.USER_NO
+			        WHERE D.DATE >= #{startDate} 
+			            AND #{endDate} >= D.DATE  
+			    ) TEST ON (D.DATE = TEST.DATE)
+			    WHERE D.DATE >= #{startDate} 
+			        AND #{endDate} >= D.DATE  
+			) AS RESULT
+		) AS COUNT_RESULT
+		<where>
+			<if test='year1 != null '>
+		      AND YEAR_REPORTED = #{year1}
+		    </if>
+		    <if test='month1 != 13 and month1 != null'>
+		      AND MON_REPORTED = #{month1}
+		    </if>
+			<if test='day1 != 32 and day1 != null'>
+		      AND MON_REPORTED = #{day1}
+		    </if>
+		    <if test='year2 != null '>
+		      AND YEAR_REPORTED = #{year2}
+		    </if>
+		    <if test='month2 != 13 and month2 != null'>
+		      AND MON_REPORTED = #{month2}
+		    </if>
+			<if test='day2 != 32 and day2 != null'>
+		      AND MON_REPORTED = #{day2}
+		    </if>
+		    <if test='no != null'>
+				AND USER_NO IN 
+				<foreach item="uno" collection="no"
+					separator="," open="(" close=")">
+					#{uno}
+				</foreach>
+			</if>
+		</where>
 	</select>
 
 	<!-- =================== [insert] =================== -->	

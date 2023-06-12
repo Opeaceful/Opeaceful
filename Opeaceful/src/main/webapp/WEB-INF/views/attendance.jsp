@@ -2,8 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="list" value="${selectUser.list}"/>
-<c:set var="pi" value="${selectUser.pi}"/>
+<c:set var="adList" value="${adList}"/>
+<c:set var="pi" value="${map.pi}"/>
+<c:if test="${empty map.no}">
+	<c:set var="url" value="check?startDate=${startDate}&endDate=${endDate}&cpage="/>
+</c:if>
+<c:if test="${not empty map.no}">
+	<c:set var="url" value="check?startDate=${startDate}&endDate=${endDate}&cpage="/>
+	<%-- <c:set var="url" value="check?year1=${map.year1}&month1=${map.month1}&day1=${map.day1} --%>&cpage="/>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,20 +54,18 @@
                 </div>
              </div>
              <c:forEach items="${loginUserRole}" var="role">
-							<c:if test="${role.roleCode eq 'D01'}">
-								<div class="p-3">
-					                <div class="row">
-					                    <div class="col-1 text">
-					                        사원명
-					                    </div>
-					                    <div class="col-11 search-wrap2 input-group mb-3">
-					                        <input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
-					                        <button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
-					                    </div>
-					                </div>
-					             </div>
-							</c:if>
-						</c:forEach>
+				<c:if test="${role.roleCode eq 'D01'}">
+					<div class="p-3">
+						<div class="row">
+					    	<div class="col-1 text">사원명</div>
+					        <div class="col-11 search-wrap2 input-group mb-3">
+					        	<input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
+					            	<button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
+					        </div>
+					    </div>
+					</div>
+				</c:if>
+			</c:forEach>
              <table class="table table-hover table-common">
                 <thead>
                     <tr>
@@ -73,9 +78,9 @@
                     </tr>
                 </thead>
                 <tbody id="AttendanceTbody">
-					    <c:forEach items="${userAd}" var="ad">
-					        <tr>
-			                	<c:if test="${ad.workDate != null and ad.userNo != null and ad.workOn != null and ad.workOff != null and ad.userName != null and ad.totalWorkTime != null and ad.approvalNo != null and ad.status != null and ad.startDate != null and ad.endDate != null}">
+					<tr>
+					    <c:forEach items="${adList}" var="ad">
+			                	<c:if test="${ad.workDate != null and ad.userNo != 0 and ad.workOn != null and ad.workOff != null and ad.userName != null and ad.totalWorkTime != null and ad.approvalNo != 0 and ad.status != 0 and ad.startDate != null and ad.endDate != null}">
 						            <td>${ad.workDate}</td>
 						            <td>${ad.userName}</td>
 						            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
@@ -91,7 +96,7 @@
 						                <td>오후 반차</td>
 						            </c:if>
 								</c:if>
-								<c:if test="${ad.workDate == null and ad.userNo != null and ad.workOn == null and ad.workOff == null and ad.userName != null and ad.totalWorkTime == null and ad.approvalNo != null and ad.status != null and ad.startDate != null and ad.endDate != null}">
+								<c:if test="${ad.workDate == null and ad.userNo != 0 and ad.workOn == null and ad.workOff == null and ad.userName != null and ad.totalWorkTime == null and ad.approvalNo != 0 and ad.status != 0 and ad.startDate != null and ad.endDate != null}">
 						            <td>${ad.date}</td>
 						            <td>${ad.userName}</td>
 						            <td></td>
@@ -107,72 +112,66 @@
 						                <td>오후 반차</td>
 						            </c:if>
 								</c:if>
-					        </tr>
 					    </c:forEach>
+					</tr>
                 </tbody>
             </table>
             <!-- 페이징 영역 -->
-            <c:set var="url" value="${path}/attendance/check?cpage=" />
+            <%-- <c:set var="url" value="${path}/attendance/check?cpage=" /> --%>
             
-            <div class="board-wrap4">
                 <div class="pagingArea">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                        <!-- 이전페이지 버튼 -->
-                        <c:choose>
-							<c:when test="${ pi.currentPage eq 1 }">
-								<li class="page-item disabled">
-		                            <a class="page-link" href="#" aria-label="Previous">
-		                              <span aria-hidden="true">&laquo;</span>
-		                            </a>
-		                          </li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item">
-		                            <a class="page-link" href="${url}${pi.currentPage -1}" aria-label="Previous">
-		                              <span aria-hidden="true">&laquo;</span>
-		                            </a>
-		                          </li>
-							</c:otherwise>					
-						</c:choose>
-                        
-                        <!-- 페이지버튼 -->
-                        <c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
-                        <c:choose>
-							<c:when test="${ pi.currentPage eq item }">
-                        	<li class="page-item active"><a class="page-link" href="${url}${item}">${item}</a></li>
-                        	<%-- <li class="page-item active"><a class="page-link" href="${url}${item}&year1=${year1}">${item}</a></li> --%>
-	                        </c:when>
+                        	<!-- 이전페이지 버튼 -->
+                        	<c:choose>
+								<c:when test="${ pi.currentPage eq 1 }">
+									<li class="page-item disabled">
+		                            	<a class="page-link" href="#">
+		                              		<span aria-hidden="true">&laquo;</span>
+		                            	</a>
+		                          	</li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item">
+		                            	<a class="page-link" href="${url}${pi.currentPage -1}">
+		                              		<span aria-hidden="true">&laquo;</span>
+		                            	</a>
+		                          	</li>
+								</c:otherwise>					
+							</c:choose>
+					
+                        	<!-- 페이지버튼 -->
+                        	<c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
+                        		<li class="page-item">
+                        			<a class="page-link" href="${url}${item}" id="CP${item}">${item }</a>
+                        		</li>
+			      			</c:forEach>
+			      			
+			      			<!-- 다음 페이지 -->
+                        	<c:choose>
+								<c:when test="${ pi.currentPage eq pi.maxPage }">
+                        			<li class="page-item disabled">
+                        				<a class="page-link" href="#">
+                        					<span aria-hidden="true">&raquo;</span>
+                        				</a>
+                        			</li>
+                        		<%-- <li class="page-item active"><a class="page-link" href="${url}${item}&year1=${year1}">${item}</a></li> --%>
+	                        	</c:when>
 								<c:otherwise>	
-							<li class="page-item"><a class="page-link" href="${url}${item}">${item}</a></li>
-							</c:otherwise>					
-						</c:choose>
-						</c:forEach>
-                          
-                          <!-- 다음페이지 버튼 -->
-                          <c:choose>
-							<c:when test="${ (pi.currentPage eq pi.maxPage) or pi.maxPage == 0}">
-								<li class="page-item disabled">
-		                            <a class="page-link" href="#" aria-label="Next">
-		                              <span aria-hidden="true">&raquo;</span>
-		                            </a>
-	                            </li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item">
-		                            <a class="page-link" href="${url}${pi.currentPage + 1}" aria-label="Next">
-		                              <span aria-hidden="true">&raquo;</span>
-		                            </a>
-		                         </li>
-							</c:otherwise>					
-						</c:choose>
+									<li class="page-item">
+										<a class="page-link" href="${url}${pi.currentPage + 1 }">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</c:otherwise>					
+							</c:choose>
                         </ul>
                       </nav>
                 </div>
-            </div>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/member/member-select.jsp"/>
+	
     <script type="module" src="${path}/resources/js/attendance.js"></script>
     <script>
     	let userNo = ${loginUser.userNo};

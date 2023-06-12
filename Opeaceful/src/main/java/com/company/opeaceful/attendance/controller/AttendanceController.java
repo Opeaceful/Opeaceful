@@ -111,16 +111,49 @@ public class AttendanceController {
 		selectUser.put("userNo", loginUser.getUserNo());
 		selectUser.put("currentPage", currentPage);
 				
-		attendanceService.selectUserAttendance(selectUser);
+		List<Attendance> adList = attendanceService.selectUserAttendance(selectUser, currentPage);
 				
 		model.addAttribute("loginUser", loginUser);
-		model.addAttribute("selectUser", selectUser);
+		model.addAttribute("adList", adList);
 		
 		System.out.println("selectUser에 담긴 값 : "+selectUser);
-		System.out.println("userAd에 담긴 값 : "+selectUser);
+		System.out.println("adList에 담긴 값 : "+adList);
 				
 		return "attendance";
 	}
 	
+	// [가영] - 로그인한 유저의 출퇴근 조회
+	@GetMapping("/allCheck")
+	public String selectAllUserAttendance(@RequestParam(value= "userNo",required = false) Integer userNo,
+											Model model,
+											@RequestParam(value= "year1",required = false) Integer year1,
+											@RequestParam(value= "month1", required = false) Integer month1,
+											@RequestParam(value= "day1", required = false) Integer day1,
+											@RequestParam(value= "year2",required = false) Integer year2,
+											@RequestParam(value= "month2", required = false) Integer month2,
+											@RequestParam(value= "day2", required = false) Integer day2,
+											@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+											@RequestParam(value="no", required = false) int[] no) {
+			 
+		Map<String, Object> selectAllUser = new HashMap<>();	
+			
+		String startDate = year1 + "-" + month1 + "-" + day1;
+		String endDate = year2 + "-" + month2 + "-" + day2;
+				
+		selectAllUser.put("startDate", startDate);
+		selectAllUser.put("endDate", endDate);
+		selectAllUser.put("currentPage", currentPage);
+		selectAllUser.put("no", no);
+					
+		List<Attendance> adList = attendanceService.selectAllUserAttendance(selectAllUser, currentPage);
+		
+		model.addAttribute("adList", adList);
+		model.addAttribute("map", selectAllUser);
+			
+		System.out.println("selectAllUser에 담긴 값 : "+selectAllUser);
+		System.out.println("adList에 담긴 값 : "+adList);
+					
+		return "attendance";
+	}
 	
 }

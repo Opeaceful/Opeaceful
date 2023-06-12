@@ -3,35 +3,54 @@
  */
 
 import {path} from './common/common.js';
+import {checkMemberNo} from './common/memberSelect.js';
 
 setDateBox1();
 setDateBox2();
 
-// 조회 버튼 클릭 시 근태 조회
-// let selectBtn = document.getElementById('ad-btn');
-// console.log(selectBtn);
-// selectBtn.addEventListener('click', function(e){
-//     location.href = `${path}/attendance/${userNo}`;
-// }) 
+let selectButton = false;
 
-/* 날짜 선택에 따라 근태 조회*/
-$("#year1, #year2, #month1, #month2, #day1, #day2").change(function(){
+function redirectToAttendanceCheck() {
+
   let year1 = $("#year1").val(); 
   let year2 = $("#year2").val(); 
+
   let month1 = $("#month1").val();
   let month2 = $("#month2").val();
+
   let day1 = $("#day1").val();
   let day2 = $("#day2").val();
 
+  location.href = `${path}/attendance/check?userNo=${userNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
+}
+
+$("#year1, #year2, #month1, #month2, #day1, #day2").change(function() {
   let selectBtn = document.getElementById('ad-btn');
-  console.log(selectBtn);
-  selectBtn.addEventListener('click', function(e){
-    location.href=`${path}/attendance/check?cpage=1&userNo=${userNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
-  }) 
-
-
+  selectBtn.addEventListener('click', redirectToAttendanceCheck);
 });
 
+let selectBtn = document.getElementById('ad-btn');
+selectBtn.addEventListener('click', redirectToAttendanceCheck);
+
+$("#all-member-modal-button").click(function(){
+
+  let year1 = $("#year1").val(); 
+  let year2 = $("#year2").val(); 
+
+  let month1 = $("#month1").val();
+  let month2 = $("#month2").val();
+
+  let day1 = $("#day1").val();
+  let day2 = $("#day2").val();
+
+  //해당 버튼이 select용으로 눌렸을떄만
+  if(!selectButton){
+
+      if(checkMemberNo.length > 0){
+        location.href = `${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
+      }
+    }
+});
       
 // select box 연도 , 월 표시
 function setDateBox1() {
@@ -73,7 +92,22 @@ function setDateBox1() {
       $("#day1").append("<option value='"+ i +"'>"+ i + "일" +"</option>");
     }
     }
+
+  let urlParams = new URLSearchParams(window.location.search);
+  let urlYear1 = urlParams.get('year1');
+  let urlMonth1 = urlParams.get('month1');
+  let urlDay1 = urlParams.get('day1');
+
+  if(urlYear1){
+    $("#year1").val(urlYear1)
   }
+  if(urlMonth1){
+    $("#month1").val(urlMonth1)
+  }
+  if(urlDay1){
+    $("#day1").val(urlDay1)
+  }
+}
 
 function setDateBox2() {
   let dt = new Date();
@@ -112,6 +146,21 @@ function setDateBox2() {
       $("#day2").append("<option value='"+ i +"'>"+ i + "일" +"</option>");
     }
     }
+
+  let urlParams = new URLSearchParams(window.location.search);
+  let urlYear2 = urlParams.get('year2');
+  let urlMonth2 = urlParams.get('month2');
+  let urlDay2 = urlParams.get('day2');
+
+  if(urlYear2){
+    $("#year2").val(urlYear2)
+  }
+  if(urlMonth2){
+    $("#month2").val(urlMonth2)
+  }
+  if(urlDay2){
+    $("#day2").val(urlDay2)
+  }
 }
 
         // function lastday(){ //년과 월에 따라 마지막 일 구하기 
