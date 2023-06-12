@@ -15,23 +15,32 @@ import {path} from '../common/common.js';
 /*부서명을 불러오는 ajax */
 function teamRoad() {
 
-    let deptCode = document.querySelectorAll("[name=deptCode]")
+    let deptCode = document.querySelectorAll("[name=deptCode]");
+    let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
 
 
     $.ajax({
         url:`${path}/dept/selectDept`,
         dataType : "JSON",
         success: function(result){
+
+            console.log('부서불러오는 세ㄹ렉트:',result);
   
             for(let i=0; i<deptCode.length; i++){
 
                 for(let dept of result){
-                    if (dept.topDeptCode !== 0) { //상위 부서 뻇으나 일단 다시넣음
+                    if (dept.topDeptCode !== 0) { // 하위 부서 셀렉트
                     const option = document.createElement("option");
                     option.value = dept.deptCode;
                     option.text = dept.deptName;
                     deptCode[i].appendChild(option);
                     }
+                    if (dept.topDeptCode == 0) { //상위 부서 셀렉트
+                        const option = document.createElement("option");
+                        option.value = dept.deptCode;
+                        option.text = dept.deptName;
+                        topDeptCode[i].appendChild(option);
+                        }
                 };
 
             }

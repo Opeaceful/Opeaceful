@@ -16,4 +16,8 @@ public class Attendance {
 	private int userNo;
 	private Time workOn;
 	private Time workOff;
+	
+	private int type;
+	private String userName;
+	private Time totalWorkTime;
 }

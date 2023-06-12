@@ -154,13 +154,13 @@ function selectPersonnel(deptCode, topDeptCode) {
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" name="deptCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none" name="topDeptCode" aria-label="Default select example">
 										<option value="" selected>${team.topDeptName}</option>
 									</select>
 								</td>
 								<td>${team.deptName}</td>
 								<td>
-									<select class="form-select box-shadow-none"  aria-label="Default select example">
+									<select class="form-select box-shadow-none" name="deptCode"  aria-label="Default select example">
 										<option selected>${team.deptName}</option>
 									</select>
 								</td>
@@ -175,6 +175,8 @@ function selectPersonnel(deptCode, topDeptCode) {
 			}
 			let personnelUserList = document.getElementById("org-modal-tbody");
 			personnelUserList.innerHTML = html;
+			teamRoad();
+			positionRoad();
 		}
 	})
 }

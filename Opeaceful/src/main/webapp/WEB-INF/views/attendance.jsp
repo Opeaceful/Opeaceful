@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,19 +41,24 @@
                         <select name="month" id="month2" title="월" class="custom-select"></select>
                         <select name="day" id="day2" title="일" class="custom-select"></select>
                     </div>
+                    <button class="btn btn-outline-secondary search-btn2" id="ad-btn" type="button">조회</button>
                 </div>
              </div>
-             <div class="p-3">
-                <div class="row">
-                    <div class="col-1 text">
-                        사원명
-                    </div>
-                    <div class="col-11 search-wrap2 input-group mb-3">
-                        <input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
-                        <button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
-                    </div>
-                </div>
-             </div>
+             <c:forEach items="${loginUserRole}" var="role">
+							<c:if test="${role.roleCode eq 'D01'}">
+								<div class="p-3">
+					                <div class="row">
+					                    <div class="col-1 text">
+					                        사원명
+					                    </div>
+					                    <div class="col-11 search-wrap2 input-group mb-3">
+					                        <input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
+					                        <button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
+					                    </div>
+					                </div>
+					             </div>
+							</c:if>
+						</c:forEach>
              <table class="table table-hover table-common">
                 <thead>
                     <tr>
@@ -64,24 +70,34 @@
                         <th>비고</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>2023-05-23</td>
-                        <td>박가영</td>
-                        <td>09:00</td>
-                        <td>18:00</td>
-                        <td>9시간</td>
-                        <td>연차</td>
-                        <td class="icon">
-                            <i class="fa-solid fa-minus ad-minus"></i> 
-                            <i class="fa-solid fa-pen ad-pen"></i>
-                        </td>
-                    </tr>
+                <tbody id="AttendanceTbody">
+                	<c:forEach items="${userAd}" var="ad">
+	                    <tr>
+	                        <td>${ad.workDate}</td>
+	                        <td>${ad.userName}</td>
+	                        <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
+	                        <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
+	                        <td><fmt:formatDate value="${ad.totalWorkTime}" pattern="kk"/>시간</td>
+	                        <c:if test="${ad.type eq 1}">
+		                    	<td>연차</td>
+                        	</c:if>
+                        	<c:if test="${ad.type eq 2}">
+		                    	<td>오전 반차</td>
+                        	</c:if>
+                        	<c:if test="${ad.type eq 3}">
+		                    	<td>오후 반차</td>
+                        	</c:if>
+	                    </tr>                		
+                	</c:forEach>
                 </tbody>
             </table>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/member/member-select.jsp"/>
     <script type="module" src="${path}/resources/js/attendance.js"></script>
+    <script>
+    	let userNo = ${loginUser.userNo};
+    	console.log(userNo);
+    </script>
 </body>
 </html>

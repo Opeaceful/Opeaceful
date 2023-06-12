@@ -2,11 +2,45 @@
  * 
  */
 
+import {path} from './common/common.js';
+
 $(document).ready(function () {
           setDateBox1();
           // lastday();
           setDateBox2();
+
         });
+
+
+let selectBtn = document.getElementById('ad-btn');
+console.log(selectBtn);
+selectBtn.addEventListener('click', function(e){
+    console.log("dddddddddddd");
+    location.href = `${path}/attendance/${userNo}`;
+    // UserAttendance();
+  })
+// function UserAttendance(){
+    
+//   $.ajax({
+//       url:path+"/attendance/userAttendance",
+//       dataType : "JSON",
+//       method: 'post',
+//       // data: {id : id},
+//       success: function(result){
+          
+//         console.log(result);
+ 
+//       },
+//       error : function(request){
+//           console.log("에러발생");
+//           console.log(request.status);
+//       }
+
+     
+//   })
+
+
+// }
       
         // select box 연도 , 월 표시
         function setDateBox1() {

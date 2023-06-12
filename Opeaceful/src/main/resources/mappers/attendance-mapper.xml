@@ -16,6 +16,16 @@
 		SELECT *
 		FROM online_status;
 	</select>
+	
+	<!-- [가영] 로그인한 유저의 출퇴근 조회 -->
+	<select id="selectUserAttendance" resultType="attendance">
+		SELECT USER_NO, M.USER_NAME, WORK_DATE, WORK_ON, WORK_OFF, TYPE, (WORK_ON-WORK_OFF) AS TOTAL_WORK_TIME
+		FROM ATTENDANCE
+		LEFT JOIN APPROVAL USING (USER_NO)
+		LEFT JOIN MEMBER M USING (USER_NO)
+		WHERE USER_NO = #{userNo}
+		GROUP BY USER_NO, M.USER_NAME, WORK_DATE, WORK_ON, WORK_OFF, TYPE;
+	</select>
 
 	<!-- =================== [insert] =================== -->	
 	<!-- [지의] 출근 시간 등록 -->

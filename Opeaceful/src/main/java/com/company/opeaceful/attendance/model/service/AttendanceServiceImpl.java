@@ -1,5 +1,8 @@
 package com.company.opeaceful.attendance.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +38,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public int updateOfflineStatus(int userNo) {
 		return attendanceDao.updateOfflineStatus(userNo);
+	}
+	
+	@Override
+	public List<Attendance> selectUserAttendance(Map<String, Object> selectUser){
+		return attendanceDao.selectUserAttendance(selectUser); 
 	}
 }

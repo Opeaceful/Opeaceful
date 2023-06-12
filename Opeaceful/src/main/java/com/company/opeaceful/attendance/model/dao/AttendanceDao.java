@@ -1,5 +1,8 @@
 package com.company.opeaceful.attendance.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,5 +33,9 @@ public class AttendanceDao {
 
 	public int updateOfflineStatus(int userNo) {
 		return sqlSession.update("memberMapper.updateOfflineStatus", userNo);
+	}
+	
+	public List<Attendance> selectUserAttendance(Map<String, Object> selectUser) {
+		return sqlSession.selectList("attendanceMapper.selectUserAttendance",selectUser);
 	}
 }
