@@ -300,3 +300,20 @@ body{
 	overflow:auto;
 	height:26rem;
 }
+
+.chatting_made_dialog{
+	background-image: url(../../image/chat/talk_background.jpg);
+    border: 1px solid var(--color-navy);
+}
+
+#chatting_made_title{
+	text-align: center;
+	margin-top: 1rem;
+}
+
+#chatting_made_button{
+	display: flex;
+    justify-content: space-evenly;
+    margin: 1.3rem;
+}
+

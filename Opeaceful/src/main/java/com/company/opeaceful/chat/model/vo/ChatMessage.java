@@ -16,5 +16,6 @@ public class ChatMessage {
 	private int messageType;
 	
 	private String userName;
+	private String profileImg;
 
 }

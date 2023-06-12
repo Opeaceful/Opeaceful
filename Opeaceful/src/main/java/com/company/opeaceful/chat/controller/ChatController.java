@@ -75,6 +75,7 @@ public class ChatController {
 	
 	// 채팅방 만들기
 	@PostMapping("/chat/openChatRoom")
+	@ResponseBody
 	public String openChatRoom(@ModelAttribute("loginUser") Member loginUser,
 								Model model,
 								ChatRoom room,
@@ -83,20 +84,17 @@ public class ChatController {
 		room.setUserNo(loginUser.getUserNo());
 			
 		int chatRoomNo = chatService.openChatRoom(room); // 생성된 채팅방 번호
-				
-		String path = "redirect:/"; //
+		
+		
 		if(chatRoomNo > 0) { //제대로 생성됨
 				
 			ra.addFlashAttribute("alertMsg","채팅방 생성 성공");
-		//	path += "chat";
-				
-			path += "/chat/room/"+ chatRoomNo;  // 상세화면 구현후 변경예정
+		//	path += "chat";				
 		}else {
 			ra.addFlashAttribute("alertMsg", "채팅방 생성 실패");
-			path += "chat";
 		}
 			
-			return path;
+			return new Gson().toJson(chatRoomNo);
 		}
 	
 	

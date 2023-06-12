@@ -20,6 +20,10 @@
     $(document).on("click", "#dialog_close", function() {
     $("#dialog").dialog("close");
     });
+    
+    $(document).on("click", "#dialog_chatting_close", function() {
+    $("#dialog").dialog("close");
+    });
   
 
     // 다이얼로그 열기
@@ -179,6 +183,7 @@ statusList.addEventListener('change', function() {
 
 
 /* 채팅방 목록 조회 */
+function chatAll(){
 $.ajax({
   url: path+"/chat/chatRoom",
   method: "GET",
@@ -188,7 +193,7 @@ $.ajax({
     const loginUser = response.loginUser;
     const chatRoomList = response.crList;
     
-    console.log(chatRoomList);
+  //  console.log(chatRoomList);
     
    var chatRoomHtml = '';
     var hasChatRoom = false;
@@ -223,7 +228,7 @@ $.ajax({
       chatRoomHtml += '</li>';
     } 
     
-    $("ul.chat__room_ul").append(chatRoomHtml);
+    $("ul.chat__room_ul").html(chatRoomHtml);
    
    
   /* 채팅방 클릭 이벤트 및 변수 넘겨주기 */
@@ -238,7 +243,7 @@ $.ajax({
       // roomId를 사용하여 다이얼로그 열기
       openDialog(roomId, clickedChatRoom);  
       
-      
+   
       
      
   /* 메세지 전달 */    
@@ -282,18 +287,17 @@ $.ajax({
 	// 전달받은 메세지를 js객체로 변환
 	
 	const chatMessage = JSON.parse(e.data); // json -> js Object
-	console.log(chatMessage);
+//	console.log(chatMessage);
  	
  	// 채팅창 
- 	const display = document.getElementsByClass("main_chatting")[0];	
- 	console.log(display[0]);
+ //	const display = document.getElementsByClass("main_chatting")[0];	
+ //	console.log(display[0]);
  	// 채팅창 제일 밑으로 내리는 코드 추가
- 	display.scrollTop = display.scrollHeight;
+ //	display.scrollTop = display.scrollHeight;
  	// scrollTop : 스크롤 이동시켜주는 속성
  	// scrollHeight : 스크롤되는 요소의 전체 높이
+ 	
  }
-
-
 
       
  });
@@ -329,7 +333,7 @@ $.ajax({
     '<i class="icon-ellipsis" title="메뉴"></i>' +
     '</div>' +
     '<header id="chatting_header">' +
-    '<img class="chatting_profile_img" src="./pic/default.png" alt="프로필사진">' +
+    '<img class="chatting_profile_img" src="list." alt="프로필사진">' +
     '<div class="chatting_profile_col">' +
     '<span class="chatting_profile_name">' + list.userName + '</span>' +
     '<div class="chatting_sub_menu">' +
@@ -393,7 +397,7 @@ $.ajax({
         '</main>' +
         '</div>';
 
-        
+         
   
       // 다이얼로그(Dialog) 생성하기
       var chattingDiglog = $("<div>").attr("title", chatRoom.roomTitle).html(dialogContent);
@@ -421,12 +425,8 @@ $.ajax({
   }
 });
 
-
-
-
-
-
-
+};
+chatAll();
 
 /* 채팅방 생성 다이얼로그 */
  $(document).ready(function() {
@@ -437,23 +437,46 @@ $.ajax({
     // 동적으로 id 생성
     var dialogId = "new-dialog" + Date.now();
 
-    // 새로운 다이얼로그 요소 생성
-    var newDialog = $("<div>").attr("id", dialogId).attr("title", "채팅방 만들기");
-    newDialog.append(
-    	      '<div>' +
-    	      '<h5>채팅방 만들기</h5>' +
-    	      '</div>' +
-    	      '<form action="' + path + '/chat/openChatRoom" method="post">' +
-    	      '<div>' +
-    	      '<label for="title">제목</label>' +
-    	      '<input type="text" placeholder="채팅방 제목" id="roomTitle" name="roomTitle">' +
-    	      '</div>' +
-    	      '<div>' +
-    	      '<button type="submit" id="open-form" class="btn btn-primary">만들기</button>' +
-    	      '<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>' +
-    	      '</div>' +
-    	      '</form>'
-    	    );
+   // 새로운 다이얼로그 요소 생성
+	var newDialog = $("<div>").attr("id", dialogId).attr("title", "채팅방 만들기").addClass("chatting_made_dialog");
+	newDialog.append(
+	    '<div>' +
+	    '<h5>채팅방 만들기</h5>' +
+	    '</div>' +
+	    '<div id="chatting_made_title">' +
+	    '<input type="text" placeholder="채팅방 제목" id="roomTitle" name="roomTitle">' +
+	    '</div>' +
+	    '<div id="chatting_made_button">' +
+	    '<button type="button" id="open-form" class="btn btn-primary">만들기</button>' +
+	    '<button type="button" class="btn btn-outline-primary">취소</button>' +
+	    '</div>'
+	);
+
+	// 만들기 버튼 클릭 이벤트 핸들러
+	newDialog.on("click", "#open-form", function() {
+	    var roomTitle = $("#roomTitle").val();
+	    
+	    // AJAX 요청
+	    $.ajax({
+	        type: "POST",
+	        url: path + "/chat/openChatRoom",
+	        data: {
+	            roomTitle: roomTitle
+	        },
+	        success: function(response) {
+	            // 채팅방 생성 성공 시 동작
+	            alert("채팅방 생성 성공");
+	            // 추가로 수행할 작업이 있다면 여기에 작성
+	            newDialog.dialog("close");	      
+	            chatAll();
+	        },
+	        error: function(xhr, status, error) {
+	            // 채팅방 생성 실패 시 동작
+	            alert("채팅방 생성 실패");
+	            // 추가로 수행할 작업이 있다면 여기에 작성
+	        }
+	    });
+	});
 
     // 다이얼로그(Dialog)를 body 요소에 추가
     newDialog.appendTo("body");
@@ -492,31 +515,6 @@ $.ajax({
   }
  
  
- $.ajax({
-    url: "/chat/openChatRoom",
-    method: "POST",
-    data: {
-        // 채팅방 생성에 필요한 데이터
-    },
-    dataType: "json",
-    success: function(response) {
-        var chatRoomNo = response;
-        if (chatRoomNo > 0) {
-            // 채팅방이 생성된 경우
-            // 이곳에서 생성된 채팅방 번호를 활용하여 다이얼로그 열기 등의 동작을 수행
-        } else {
-            // 채팅방 생성 실패
-            // 실패 메시지 표시 등의 처리
-        }
-    },
-    error: function(xhr, status, error) {
-        // 에러 처리
-    }
-});
-
-
-
-
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
 //window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신

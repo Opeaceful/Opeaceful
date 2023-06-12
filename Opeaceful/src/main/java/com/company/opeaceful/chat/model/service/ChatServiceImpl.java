@@ -64,7 +64,7 @@ public class ChatServiceImpl implements ChatService{
 	
 	
 	
-	// 아강의 .....
+	// 아 강의 .....
 	@Override
 	public int insertMessage(ChatMessage chatMessage) {
 		return chatDao.insertMessage(chatMessage);
