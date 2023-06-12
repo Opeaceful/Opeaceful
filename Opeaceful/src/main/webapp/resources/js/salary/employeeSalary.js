@@ -56,7 +56,7 @@ function employleeSalaryData(id){
         
             }
 
-            if(payment.deduction > 1){
+            if(deduction.length > 1){
 
                 for(let i = 0; i < deduction.length;  i += 2){
                     dhtml += 
