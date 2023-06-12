@@ -113,7 +113,6 @@ function allSalaryData(dataId){
 
 
     $('#salaryModal').modal('show');
-
 }
 
 

@@ -71,7 +71,9 @@ public class MemberController {
 							   Model model,
 							   HttpSession session,
 							   @ModelAttribute ("loginUser") Member loginUser) {
-		
+		if(m.getExtension().equals("등록된 내선번호 없음")) {
+			m.setExtension(null);
+		}
 		// 이미지 저장경로 설정
 		String webPath = "/resources/file/mypage/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
@@ -144,7 +146,7 @@ public class MemberController {
 	@PostMapping("/updateStatusType")
 	public String updateStatusType(@RequestParam("statusType") int statusType,
 									 @ModelAttribute("loginUser") Member loginUser,
-									 Model model) {
+									 HttpSession session) {
 
 		int userNo = loginUser.getUserNo();
 		Map<String, Object> map = new HashMap<>();
@@ -153,7 +155,7 @@ public class MemberController {
 		int result = memberService.updateStatusType(map);
 		if(result > 0) {
 			loginUser.setStatusType(statusType);
-			model.addAttribute("loginUser", loginUser);
+			session.setAttribute("loginUser", loginUser);
 		}
 		
 		return new Gson().toJson(result);

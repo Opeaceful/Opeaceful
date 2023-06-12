@@ -200,7 +200,7 @@
 				<li id="sidebar-info">
 					<a href="${path}/member/mypage">
                         <span class="side-icon-size"><i class="sidebar-icon bi bi-person-circle"></i></span>
-                        <span class="sidebar-text">마이페이지</span>
+                        <span class="sidebar-text sidebar-bt">마이페이지</span>
                     </a>
                 </li>
 
@@ -208,7 +208,7 @@
                 <li id="sidebar-logout">
                     <a href="${path}/member/logout">
                         <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-power-off"></i></span>
-                        <span class="sidebar-text">로그아웃</span>
+                        <span class="sidebar-text sidebar-bt">로그아웃</span>
                     </a>
                 </li>
             </ul>
@@ -259,16 +259,16 @@
 		/* 호버이벤트 */
         $(".sidebar").hover(
    		  function() {
-   			  $(".sidebar").css("width", "300px")
+   			  $(".sidebar").css("width", "300px");
+              $(".sidebar-bt").css("display", "inline-block");
 		  }, 
    		  function() {
    			$(".sidebar").css("width", "60px");
    			$(".sidebar-more").css("display", "none");
+            $(".sidebar-bt").css("display", "none");
 		  }
    		);
-        
 
-        
     </script>
 </body>
 </html>
