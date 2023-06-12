@@ -12,7 +12,6 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.dao.MemberDao;
 import com.company.opeaceful.member.model.vo.Member;
-import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 
 @Service
@@ -142,5 +141,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateStatusType(map);
 	}
 	
+	@Override
+	public String selectLoginStatus(int eno) {
+		return memberDao.selectLoginStatus(eno);
+	}
 	
+	@Override
+	public List<Object> selectAnnualMembers(){
+		return memberDao.selectAnnualMembers();
+	}
+	
+	@Override
+	public int updateAnnualMembers(List<Object> list) {
+		return memberDao.updateAnnualMembers(list);
+	}
+	
+
 }

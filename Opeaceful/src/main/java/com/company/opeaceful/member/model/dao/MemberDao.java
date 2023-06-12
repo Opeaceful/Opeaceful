@@ -12,7 +12,6 @@ import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
-import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 
 @Repository
@@ -89,6 +88,7 @@ public class MemberDao {
 	}
 
 	public int resignedmember(ResignedMember resignedMember) {
+		
 		return sqlSession.insert("resignedMapper.resignedmember",resignedMember);
 	}
 
@@ -117,7 +117,18 @@ public class MemberDao {
 	public int updateStatusType(Map<String, Object> map) {
 		return sqlSession.update("memberMapper.updateStatusType",map);
 	}
-	
+
+	public String selectLoginStatus(int eno) {
+		return sqlSession.selectOne("memberMapper.selectLoginStatus",eno);
+	}
+
+	public List<Object> selectAnnualMembers() {
+		return sqlSession.selectList("memberMapper.selectAnnualMembers");
+	}
+
+	public int updateAnnualMembers(List<Object> list) {
+		return sqlSession.update("memberMapper.updateAnnualMembers", list);
+	}
 
 
 }

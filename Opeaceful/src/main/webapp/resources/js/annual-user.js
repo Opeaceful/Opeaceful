@@ -19,29 +19,6 @@ $("#all-member-modal-button").click(function(){
             document.body.appendChild(post);
             post.submit();
         }
-        //location.href = `${path}/annual/list/${checkMemberNo[0]}`;
-
-        // $.ajax({
-        //     url : `${path}/annual/selectUserAnnaul`,
-        //     data : {
-        //         userNo : `${checkMemberNo[0]}`
-        //     },
-        //     method: 'post',
-        //     dataType : 'json',
-        //     success : function(m){
-        //         console.log(m);
-        //         $("#annual-user-name").html(m.userName);
-        //         // $("#annual-dept").html(m.userName);
-        //         $("#annual-team").html(m.dName);
-        //         $("#annual-hire-text").html("입사일");
-        //         $("#annual-hire-date").html(m.hireDate);
-        //         $("#annual-count").val(m.annualLeaveCount);
-        //     },
-        //     error : function(e){
-        //         console.log(e.target);
-        //     }
-        // });
-
     }
 
 });

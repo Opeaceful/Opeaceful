@@ -16,6 +16,8 @@ $("#all-user-view-int").keyup(function(key){
         modalAllMemberView();
 });
 
+modalAllMemberView();
+
 function modalAllMemberView(){
 
     let keyword =  document.getElementById("all-user-view-int").value;
@@ -29,8 +31,7 @@ function modalAllMemberView(){
         data: {
             keyword : keyword,
         },
-        success: function(result){
-    
+        success: function(result){    
             let html = ""
 
             const deptMember = {};
@@ -54,7 +55,7 @@ function modalAllMemberView(){
                     <th rowspan="${deptMember[deptm].length}" class="t-v-middle"><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" ></th>
                     <th rowspan="${deptMember[deptm].length}" class="t-v-middle">${deptMember[deptm][0].dName}</th>
                     <td><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" value="${deptMember[deptm][0].userNo}"></td>
-                    <td>${deptMember[deptm][0].userName}</td>
+                    <td>${deptMember[deptm][0].userName} ${deptMember[deptm][0].pName}</td>
                 </tr>
                 `
 
@@ -63,7 +64,7 @@ function modalAllMemberView(){
                     `
                     <tr>
                         <td><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][i].deptCode}" value="${deptMember[deptm][i].userNo}"></td>
-                        <td>${deptMember[deptm][i].userName}</td>
+                        <td>${deptMember[deptm][i].userName} ${deptMember[deptm][i].pName}</td>
                     </tr>
                     `
                 } 
@@ -87,8 +88,8 @@ function modalAllMemberView(){
 
 //조회 버튼 클릭시
 $("#all-member-view-button").click(function(){
-    modalAllMemberView();
-
+   
+    $('#all-user-view').modal('show');
 });
 
 //체크박스에 cilck이벤트를 부여하는 함수
