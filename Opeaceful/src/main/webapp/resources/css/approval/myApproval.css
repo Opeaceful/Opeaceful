@@ -67,6 +67,7 @@ div.line {
 }
 
 .alarm-balloon {
+  pointer-events: none;
   box-shadow: 1px 1px 3px #00000040;
 
   min-width: 20px;
@@ -88,7 +89,7 @@ div.line {
 
 .inner-wrap,
 div.selected {
-  background-color:var(--color-background);
+  background-color: var(--color-background);
   border-bottom: 0px;
 }
 
@@ -154,7 +155,7 @@ div.selected {
   white-space: nowrap;
 }
 
-.not-read{
+.not-read {
   font-weight: 700;
   background-color: var(--white-hover);
 }

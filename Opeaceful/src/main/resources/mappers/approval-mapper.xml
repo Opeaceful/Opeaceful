@@ -694,6 +694,13 @@
 	</delete>
 	
 	
+	<!-- 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) -->
+	<delete id="deleteApproval" parameterType="_int">
+	  DELETE FROM APPROVAL_LINE WHERE APPROVAL_NO = #{approvalNo};
+	  DELETE FROM APPROVAL_MEMO WHERE APPROVAL_NO = #{approvalNo};
+	  DELETE FROM APPROVAL WHERE APPROVAL_NO = #{approvalNo};
+	</delete>
+	
 	<!-- 즐겨찾기 삭제 -->
 	<delete id="deleteFavor" parameterType="_int">
 		DELETE FROM  APPROVAL_FAVORITE_LINE

@@ -67,7 +67,7 @@ public class ApprovalDao {
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("refType", refType); // 테이블 타입 form , approval, memo, approval-memo
 	    params.put("refNo", refNo); // 참조 문서 no
-	    params.put("usage", usage); // 본문용 content, 첨부용 attachment
+	    params.put("usage", usage); // 본문용 content, 첨부용 attachment, 전체 all
 		
 	    return sqlSession.selectList( "aprMapper.selectFileList", params);
 	}

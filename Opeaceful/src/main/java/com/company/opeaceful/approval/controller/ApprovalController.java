@@ -2,6 +2,9 @@ package com.company.opeaceful.approval.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -234,6 +237,7 @@ public class ApprovalController {
 	public int insertApproval(	  @ModelAttribute("loginUser") Member loginUser,
 								  @ModelAttribute Approval approval,
 								  @RequestParam(value="images", required=false) MultipartFile[] imgList,
+								  @RequestParam(value="imgNames", required = false) String[] imgNameList,
 								  @RequestParam(value="files", required=false) MultipartFile[] fileList,
 								  @RequestParam(value="userNoList", required=false) int[] userNoList,
 								  @RequestParam(value="levelList", required=false) int[] levelList,
@@ -324,6 +328,23 @@ public class ApprovalController {
 				}
 			}
 		}
+		
+		// 양식복사 해왔을 경우를 위한 로직
+		// 실제로 저장되어있는 파일중 이미지 이름들과 같은 애들 복사해서 신규로 파일 생성
+		if (imgNameList != null && imgNameList.length > 0) {
+			for (int i = 0; i < imgNameList.length; i++) {
+				String src = "src=\"" + imgNameList[i] + "\"";
+				String changeName;
+				try {
+					changeName = FileRenamePolicy.copyFile(imgNameList[i], serverFolderPath);
+					content = content.replace(src, "src=\"" + changeName + "\"");
+					saveList.add(new ApprovalFile("approval" , null ,changeName));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		approval.setContent(content);
 		
 		//------------------------ 첨부파일 저장구역 --------------------------------
@@ -359,6 +380,45 @@ public class ApprovalController {
 		}
 		return result;
 	}
+	
+	
+	
+	// ajax용 결재문서 삭제
+	@ResponseBody
+	@PostMapping("/deleteApproval")
+	public int deleteApproval(	@ModelAttribute("loginUser") Member loginUser,
+								Integer approvalNo, 
+								HttpSession session) {
+		
+		List<ApprovalFile> files = aprService.selectFileList("approval-memo", approvalNo, "all");
+		List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo);
+		List<ApprovalMemo> memos = aprService.selectMemoList(approvalNo);
+		
+		
+		// 파일 저장경로 얻어오기
+		String webPath = "/resources/file/approval/";
+		String serverFolderPath = session.getServletContext().getRealPath(webPath);
+		
+		// 실제 파일 삭제
+		if (files.size() > 0) {
+			// 저장된 파일 리스트 실제 파일들 삭제
+			for (ApprovalFile file : files) {
+				File deleteFile = new File(serverFolderPath + file.getChangeName());
+				if (deleteFile.exists()) { // 파일이 존재하면
+					deleteFile.delete();// 파일 삭제
+				}
+			}
+			aprService.deleteFileList(files);
+		}
+		
+		
+		for()
+		int result = aprService.deleteMemo(memoNo);
+
+		return result;
+	}
+	
+	
 	
 	
 	
@@ -571,45 +631,58 @@ public class ApprovalController {
 	}
 	
 	
-	// ajax용 서명 이미지 등록/수정
+	// ajax용 서명 이미지 수정
 	@ResponseBody
 	@PostMapping("/updateSignImg")
 	public int updateSignImg(	HttpSession session, 
 								@ModelAttribute("loginUser") Member loginUser,
 								@RequestParam(value="signImg", required=false) MultipartFile signImg) {
+		// 기본적으로 서명 이미지는 하나의 이름으로 계속해서 사용!! 
+		// -> 전자결재 완결난 이후에 서명 이미지를 바꾸면 신규 서명이미지로 바로바로 표시되게끔 하기 위함임
 		
-		// 파일 저장할 저장경로 얻어오기
-		String webPath = "/resources/file/signature/";
-		String serverFolderPath = session.getServletContext().getRealPath(webPath);
-		
-		int userNo = loginUser.getUserNo();
-		String beforeSignImg  = aprService.selectSignImg(userNo);
-		String changeName = null;
 		int result = 0;
 		
 		if(signImg != null) {
-			try {
-				changeName = FileRenamePolicy.saveFile( signImg , serverFolderPath);
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		if(changeName != null ) {
-			//기존 파일 삭제
+			// 파일 저장경로 얻어오기
+			String imgPath = "/resources/file/signature/";
+			String realPath = session.getServletContext().getRealPath(imgPath);
+			
+			// 기존 이미지 이름
+			String beforeSignImg = aprService.selectSignImg(loginUser.getUserNo());
+			
+			// 만약 기존 서명 이미지가 있다면
 			if(beforeSignImg != null && !beforeSignImg.isEmpty()) {
-				File deleteFile = new File(serverFolderPath + beforeSignImg);
+				// 기존 파일 삭제
+				File deleteFile = new File(realPath + beforeSignImg);
 				if (deleteFile.exists()) { // 파일이 존재하면
 					deleteFile.delete();// 파일 삭제
 				}
-				result = aprService.updateSignImg(userNo, changeName);
-			}else  {
-				result = aprService.insertSignImg(userNo, changeName);
+				Path existingPath = Path.of(realPath + beforeSignImg);
+				try {
+					// 기존파일을 신규파일로 덮어쓰기
+					Files.copy(signImg.getInputStream(), existingPath, StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					e.printStackTrace();
+					result = 0;
+				}
+				result = 1;
+				
+			}else {
+				// 만약 기존 서명 이미지가 없다면 이미지 신규 저장 후 DB에 insert
+				String changeName;
+				try {
+					changeName = FileRenamePolicy.saveFile( signImg , realPath);
+					result = aprService.insertSignImg(loginUser.getUserNo(), changeName);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
 			}
 			
+		}else {
+			// 애초에 서명이미지 파일이 전송되지 않았다면 실패 반환
+			result = 0;
 		}
-
+		
 		return result;
 	}
 	
