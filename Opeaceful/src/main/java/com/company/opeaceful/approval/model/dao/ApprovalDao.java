@@ -306,6 +306,17 @@ public class ApprovalDao {
 	}
 	
 	
+	// 결재라인 상태값 읽음으로 업데이트
+	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("userNo", userNo);
+		
+	    return sqlSession.update("aprMapper.updateApprovalLineReadStatus",params);
+	}
+	
+	
+	
 	// 메모 업데이트
 	public int updateMemo(ApprovalMemo memo) {
 		return sqlSession.update("aprMapper.updateMemo",memo);

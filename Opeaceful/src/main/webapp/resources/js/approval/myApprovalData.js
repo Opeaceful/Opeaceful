@@ -184,6 +184,8 @@ export function insertApproval(formData) {
           buttons: { cancel: '확인' },
         });
       }
+
+      selectUnReadCount();
     },
     error: function (request) {
       console.log('에러발생');

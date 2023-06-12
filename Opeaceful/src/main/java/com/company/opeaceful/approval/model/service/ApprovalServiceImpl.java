@@ -230,6 +230,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
+	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
+		return aprDao.updateApprovalLineReadStatus(approvalNo, userNo);
+	}
+	
+	@Override
 	public int updateMemo(ApprovalMemo memo, List<ApprovalFile> fileList) {
 		int result = aprDao.updateMemo(memo);
 		if(result > 0 && fileList.size() > 0) {
@@ -272,6 +277,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteMemo(int memoNo) {
 		return aprDao.deleteMemo(memoNo);
 	}
+
+
 
 
 

@@ -64,9 +64,9 @@ public class ApprovalController {
 		int currentYear = Year.now().getValue();
 		
 		// todo! 반려건, 승인대기건 개수 조회해서 같이 넣어주기
-		model.addAttribute("returnCount", aprService.selectApprovalListCount(userNo, -2 , -1, currentYear, false)  );
-		model.addAttribute("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, true) );
-		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, currentYear, true));
+		model.addAttribute("returnCount", aprService.selectApprovalListCount(userNo, -2 , -1, 0, false)  );
+		model.addAttribute("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, 0, true) );
+		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, true));
 		
 		if(menu != null && menu.equals("wait")) {
 			// 승인대기중인 메뉴로 선택
@@ -131,11 +131,10 @@ public class ApprovalController {
 		Map<String, Integer > map  = new HashMap<>();
 		
 		int userNo= loginUser.getUserNo();
-		int currentYear = Year.now().getValue();
 		
-		map.put( "returnCount" ,aprService.selectApprovalListCount(userNo, -2 , -1, currentYear, false));
-		map.put("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, true) );
-		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, currentYear, true));
+		map.put( "returnCount" ,aprService.selectApprovalListCount(userNo, -2 , -1, 0, false));
+		map.put("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, 0, true) );
+		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, true));
 		return new Gson().toJson(map);
 	}
 	
@@ -149,6 +148,7 @@ public class ApprovalController {
 		int userNo= loginUser.getUserNo();
 		
 		Approval approval = aprService.selectApproval(approvalNo);
+		
 		List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo);
 		List<ApprovalFile> files = aprService.selectFileList("approval", approvalNo, "attachment");
 		
@@ -166,7 +166,8 @@ public class ApprovalController {
 		map.put("files", files);
 		map.put("isMine", userNo == approval.getUserNo());
 		
-
+		// 읽음처리
+		aprService.updateApprovalLineReadStatus(approvalNo, userNo);
 		
 		return new Gson().toJson(map);
 	}

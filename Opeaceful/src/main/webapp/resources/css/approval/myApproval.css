@@ -48,7 +48,7 @@
 
 div.line:hover,
 div.selected:hover {
-  background-color: var(--color-background);
+  background-color: unset;
 }
 
 div.line {
@@ -88,7 +88,7 @@ div.line {
 
 .inner-wrap,
 div.selected {
-  background-color: rgb(255, 255, 255);
+  background-color:var(--color-background);
   border-bottom: 0px;
 }
 
@@ -152,6 +152,11 @@ div.selected {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.not-read{
+  font-weight: 700;
+  background-color: var(--white-hover);
 }
 
 .btn-wrap > button {
