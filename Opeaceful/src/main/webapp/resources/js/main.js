@@ -127,6 +127,11 @@ $(function(){
 $("#main-notice-title").on("click", function(){
     location.href = path+"/board/list/N";
 })
+$(document).on("click", ".main-notice", function() {
+    let boardNo = $(this).children("#board-no").text();
+    console.log(boardNo);
+    location.href = path +"/board/detail/N/"+boardNo;
+})
 
 
 /* --------------------------- 출근 등록 --------------------------- */

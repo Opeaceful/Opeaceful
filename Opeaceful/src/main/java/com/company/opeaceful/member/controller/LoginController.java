@@ -1,6 +1,8 @@
 package com.company.opeaceful.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -32,7 +34,6 @@ import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.role.model.service.RoleService;
 import com.company.opeaceful.role.model.vo.UserRole;
-import com.google.gson.Gson;
 
 @Controller
 @SessionAttributes({"loginUser"})
@@ -189,8 +190,6 @@ public class LoginController {
 			List<Object> os = memberService.onlineStatusList();
 			// 사이드바 권한 조회
 			List<UserRole> loginUserRole = roleService.loginUserRoleSelect(userNo);
-
-			
 			
 			model.addAttribute("topDept",topDept);
 			model.addAttribute("mainNoticeList", mainNoticeList);

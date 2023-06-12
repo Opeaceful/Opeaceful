@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,8 +39,9 @@
 								</div>
 							</c:if>
 							<c:forEach items="${mainNoticeList}" var="n">
-								<div class="main-content-text row" onClick='location.href ="${path}/board/detail/N/${n.boardNo}"'>
-									<div style="display: none;">${n.boardNo }</div>
+								<!-- <div class="main-content-text row" onClick='location.href="${path}/board/detail/N/${n.boardNo}"'> -->
+								<div class="main-content-text main-notice row">
+									<div id="board-no" style="display: none;">${n.boardNo }</div>
 									<div class="col-9">${n.boardTitle }</div>
 									<div class="col-3 text-end">${n.createDate }</div>
 								</div>
@@ -90,9 +92,11 @@
 									</div>
 								</div>
 								<!-- 주간날씨 -->
-								<div class="week-weather col-7 text-center">
-									<div class="row">
-
+								<div class="week-weather col-7">
+									<div class="row text-center">
+									</div>
+									<div class="text-end">
+										<a id="main-naver-go" href="https://weather.naver.com/" target="_blank">날씨보기 &gt;&gt;</a>
 									</div>
 								</div>
 							</div>

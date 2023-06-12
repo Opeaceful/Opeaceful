@@ -31,7 +31,9 @@
 	overflow: hidden;
 	white-space: nowrap;
 }
-
+.main-naver-go{
+    font-size: var(--font14);
+}
 /* ====================== 왼쪽 ====================== */
 /* ---------- 공지사항 ---------- */
 #board-box{height: 30%; min-height: 240px;}
@@ -205,15 +207,20 @@
 }
 .week-weather>div{justify-content: space-between;}
 /* 중앙배치 */
-.week-weather{
+.week-weather>.row{
     align-self: center;
-
     border: 1px solid var(--color-light-gray);
     border-radius: 20px;
-    padding: 20px;
-    /* box-shadow: 5px 5px 15px -5px rgba(221, 221, 221); */
+    padding: 20px 0;
 }
+.week-weather {margin-top: 20px;}
+.week-weather>.text-end {margin-top: 5px;}
 .weekIcon{margin: 24px auto;}
 .weekIcon img{width: 48px;}
 .weekDay{font-weight: 300;}
 .currHumidity svg{width: 16px; height: 16px;}
+#main-naver-go{
+    color: gray;
+    text-decoration: none;
+    font-size: var(--font14);
+}

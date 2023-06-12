@@ -80,7 +80,7 @@ public class BoardController {
 							  @PathVariable("boardNo") int boardNo,
 							  @RequestParam(value = "cpage", required = false, defaultValue = "1") int currentPage,
 							  Model model,
-							  @ModelAttribute ("map") Map<String, Object> map,
+							  @ModelAttribute (value = "map") Map<String, Object> map,
 							  HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		
 		map.put("boardCode", boardCode);
