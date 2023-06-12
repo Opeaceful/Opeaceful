@@ -21,7 +21,7 @@
  -->
 
 <!-- ==============================  select 구간 ================================ -->
-
+	<!-- 폼리스트 개수 조회 -->
 	<select id="selectFormListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
 		FROM APPROVAL_FORM
@@ -134,19 +134,20 @@
 	
 	<!-- 즐겨찾기/결재문서 결재라인 조회 -->
 	<select id="selectLineList" parameterType="map" resultType="approvalLine">
-		SELECT A.*, USER_NAME, P_NAME
+		SELECT A.*, ENO, USER_NAME, P_NAME, SIGNATURE_IMG
 		FROM 
 		<choose>
 			<when test='type.equals("favor")'>
 				APPROVAL_ACTUAL_FAVORITE_LINE A
 			</when>	
 			<otherwise>
-				APPROVAL_LINE
+				APPROVAL_LINE A
 			</otherwise>
 		</choose>
 		LEFT JOIN MEMBER M USING (USER_NO)
 		LEFT JOIN USER_DEPARTMENT U USING (USER_NO)
 		LEFT JOIN POSITION P USING (P_CODE)
+		LEFT JOIN SIGNATURE_IMG USING (USER_NO)
 		<choose>
 			<when test='type.equals("favor")'>
 				WHERE LINE_NO = #{no}
@@ -157,7 +158,334 @@
 		</choose>
 		ORDER BY LEVEL
 	</select>
+	
+	<!-- 개별 결재문서 조회 -->
+	<select id="selectApproval" parameterType="_int" resultType="approval">
+		SELECT  APPROVAL_NO,
+				USER_NO,
+				ENO,
+				CONTENT,
+				TYPE,
+				TITLE,
+				DRAFT_DATE,
+				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
+				A.STATUS AS STATUS,
+				START_DATE,
+				END_DATE,
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME,
+				P_NAME,
+				SIGNATURE_IMG
+		FROM APPROVAL A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		LEFT JOIN USER_DEPARTMENT U USING (USER_NO)
+		LEFT JOIN POSITION P USING (P_CODE)
+		LEFT JOIN SIGNATURE_IMG USING (USER_NO)
+		WHERE APPROVAL_NO = #{ approvalNo }
+	</select>
+	
+	
+	<!-- 결재문서 리스트 조회(isAdmin값이 false면 내가 기안한용 그외 전체유저조회용) -->
+	<select id="selectApprovalList"  resultType="approval" parameterType="map" >
+		SELECT  APPROVAL_NO,
+				USER_NO,
+				TYPE,
+				TITLE,
+				DRAFT_DATE,
+				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
+				A.STATUS AS STATUS,
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME
+		FROM APPROVAL A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		WHERE 
+			<if test="!isAdmin">
+				USER_NO = #{ userNo } AND
+			</if>	
+			YEAR(DRAFT_DATE) = #{ year }
+			<choose>
+				<when test="status == null">
+				<!-- 반려, 임시저장 제외 전체 조회용 -->
+					AND A.STATUS != 2
+					AND A.STATUS >= 0 
+				</when>
+				<when test="status == -1">
+				<!-- 반려용 조회 -->
+					AND 0 > A.STATUS 
+				</when>
+				<otherwise>
+					AND A.STATUS = #{ status }
+				</otherwise>
+			</choose>
+			<choose>
+				<when test='type == 0'><!-- 일반 -->
+					AND TYPE = 0
+				</when>
+				<when test='type == 1'><!-- 연차 -->
+					AND TYPE = 1
+				</when>
+				<when test='type == 2'><!-- 오전반차 -->
+					AND TYPE = 2
+				</when>
+				<when test='type == 3'><!-- 오후반차 -->
+					AND TYPE = 3
+				</when>
+			</choose>
+		ORDER BY APPROVAL_NO DESC
+		LIMIT #{ page } , 10 	
+	</select>	
+	
+	<!-- 결재문서 리스트 총개수 조회(isAdmin값이 false면 내가 기안한용 그외 전체유저조회용) -->
+	<select id="selectApprovalListCount"  parameterType="map" resultType="_int" >
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE 
+			<if test="!isAdmin">
+				USER_NO = #{ userNo } AND
+			</if>	
+			YEAR(DRAFT_DATE) = #{ year }
+			<choose>
+				<when test="status == null">
+				<!-- 반려, 임시저장 제외 전체 조회용 -->
+					AND STATUS != 2
+					AND STATUS >= 0 
+				</when>
+				<when test="status == -1">
+				<!-- 반려용 조회 -->
+					AND 0 > STATUS 
+				</when>
+				<otherwise>
+					AND STATUS = #{ status }
+				</otherwise>
+			</choose>	
+			<choose>
+				<when test='type == 0'><!-- 일반 -->
+					AND TYPE = 0
+				</when>
+				<when test='type == 1'><!-- 연차 -->
+					AND TYPE = 1
+				</when>
+				<when test='type == 2'><!-- 오전반차 -->
+					AND TYPE = 2
+				</when>
+				<when test='type == 3'><!-- 오후반차 -->
+					AND TYPE = 3
+				</when>
+			</choose>
+	</select>	
+	
 
+	<!-- 승인대기/결재 메뉴용 리스트 조회 -->
+	<select id="selectApprovalListforAuthorize"  resultType="approval"  parameterType="map" >
+		SELECT  APPROVAL_NO,
+				USER_NO,
+				TYPE,
+				TITLE,
+				DRAFT_DATE,
+				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
+				A.STATUS AS STATUS,
+				START_DATE,
+				END_DATE,
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME
+		FROM APPROVAL A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		WHERE APPROVAL_NO IN (	SELECT APPROVAL_NO
+								FROM APPROVAL_LINE
+								WHERE
+									USER_NO = #{userNo}
+									AND TYPE = 'A'
+									AND STATUS  <choose>
+													<when test='menu.equals("wait")'>
+														= 1
+													</when>
+													<when test='menu.equals("authorized")'>
+														IN ( -1, 2 )
+													</when>
+												</choose>
+								)
+			<if test="year > 0">
+				AND YEAR(DRAFT_DATE) = #{ year }
+			</if>	
+			<choose>
+				<when test="status == null">
+				<!-- 임시저장 제외 전체 조회용 -->
+					AND A.STATUS != 2
+				</when>
+				<when test="status == -1">
+				<!-- 반려용 조회 -->
+					AND 0 > A.STATUS 
+				</when>
+				<otherwise>
+					AND A.STATUS = #{ status }
+				</otherwise>
+			</choose>
+			<choose>
+				<when test='type == 0'><!-- 일반 -->
+					AND TYPE = 0
+				</when>
+				<when test='type == 1'><!-- 연차 -->
+					AND TYPE = 1
+				</when>
+				<when test='type == 2'><!-- 오전반차 -->
+					AND TYPE = 2
+				</when>
+				<when test='type == 3'><!-- 오후반차 -->
+					AND TYPE = 3
+				</when>
+			</choose>
+		ORDER BY APPROVAL_NO DESC
+		LIMIT #{ page } , 10 
+	</select>	
+	
+
+	<!-- 승인대기/결재 메뉴용 리스트 총개수 조회 -->
+	<select id="selectApprovalListforAuthorizeCount"  resultType="_int" parameterType="map"  >
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE APPROVAL_NO IN (	SELECT APPROVAL_NO
+								FROM APPROVAL_LINE
+								WHERE
+									USER_NO = #{userNo}
+									AND TYPE = 'A'
+									<if test="isNotCheck">
+										AND CONFIRM_STATUS = 'N'
+									</if>
+									AND STATUS
+										<choose>
+											<when test='menu.equals("wait")'>
+												= 1
+											</when>
+											<when test='menu.equals("authorized")'>
+												IN ( 1, 0, -1 )
+											</when>
+										</choose>
+										) 
+		<if test="year > 0">
+			AND YEAR(DRAFT_DATE) = #{ year }
+		</if>
+		<choose>
+			<when test="status == null">
+			<!-- 임시저장 제외 전체 조회용 -->
+				AND STATUS != 2
+			</when>
+			<when test="status == -1">
+			<!-- 반려용 조회 -->
+				AND 0 > STATUS 
+			</when>
+			<otherwise>
+				AND STATUS = #{ status }
+			</otherwise>
+		</choose>	
+		<choose>
+			<when test='type == 0'><!-- 일반 -->
+				AND TYPE = 0
+			</when>
+			<when test='type == 1'><!-- 연차 -->
+				AND TYPE = 1
+			</when>
+			<when test='type == 2'><!-- 오전반차 -->
+				AND TYPE = 2
+			</when>
+			<when test='type == 3'><!-- 오후반차 -->
+				AND TYPE = 3
+			</when>
+		</choose>
+	</select>	
+	
+	<!-- 참조인용 결재문서 리스트 조회 -->
+	<select id="selectApprovalListforRefer"   resultType="approval"  parameterType="map" >
+		SELECT  APPROVAL_NO,
+				USER_NO,
+				TYPE,
+				TITLE,
+				DRAFT_DATE,
+				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
+				A.STATUS AS STATUS,
+				START_DATE,
+				END_DATE,
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME
+		FROM APPROVAL A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		WHERE APPROVAL_NO IN (	SELECT APPROVAL_NO
+								FROM APPROVAL_LINE
+								WHERE
+									USER_NO = #{userNo}
+									AND TYPE = 'R'
+									AND STATUS = 3	)
+		<choose>
+			<when test="status == null">
+			<!-- 임시저장 제외 전체 조회용 -->
+				AND A.STATUS != 2
+			</when>
+			<when test="status == -1">
+			<!-- 반려용 조회 -->
+				AND 0 > A.STATUS 
+			</when>
+			<otherwise>
+				AND A.STATUS = #{ status }
+			</otherwise>
+		</choose>	
+		AND YEAR(DRAFT_DATE) = #{ year }
+		ORDER BY APPROVAL_NO DESC
+		LIMIT #{ page } , 10 
+	</select>	
+
+	<!-- 참조인용 결재문서 리스트 총개수 조회 -->
+	<select id="selectApprovalListforReferCount" resultType="_int" parameterType="_int" >
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE APPROVAL_NO IN (	SELECT APPROVAL_NO
+								FROM APPROVAL_LINE
+								WHERE
+									USER_NO = #{userNo}
+									<if test="isNotCheck">
+										AND CONFIRM_STATUS = 'N'
+									</if>
+									AND TYPE = 'R'
+									AND STATUS = 3	)
+		AND YEAR(DRAFT_DATE) = #{ year }
+		<choose>
+			<when test="status == null">
+			<!-- 임시저장 제외 전체 조회용 -->
+				AND STATUS != 2
+			</when>
+			<when test="status == -1">
+			<!-- 반려용 조회 -->
+				AND 0 > STATUS 
+			</when>
+			<otherwise>
+				AND STATUS = #{ status }
+			</otherwise>
+		</choose>
+	</select>	
+
+	<!-- 메모리스트  조회용 -->
+	<select id="selectMemoList" resultType="approvalMemo" parameterType="_int" >
+		SELECT A.*, ENO, USER_NAME, P_NAME
+		FROM APPROVAL_MEMO A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		LEFT JOIN USER_DEPARTMENT U USING (USER_NO)
+		LEFT JOIN POSITION P USING (P_CODE)
+		WHERE APPROVAL_NO = #{approvalNo}
+		ORDER BY MEMO_NO DESC
+	</select>	
+
+	<!-- 메모 조회용 -->
+	<select id="selectMemo" resultType="approvalMemo" parameterType="_int" >
+		SELECT A.*, ENO, USER_NAME, P_NAME
+		FROM APPROVAL_MEMO A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		LEFT JOIN USER_DEPARTMENT U USING (USER_NO)
+		LEFT JOIN POSITION P USING (P_CODE)
+		WHERE MEMO_NO = #{memoNo}
+	</select>	
+	
+	<!-- 서명이미지 조회 -->
+	<select id="selectSignImg" parameterType="_int" resultType="string">
+		SELECT SIGNATURE_IMG
+		FROM SIGNATURE_IMG
+		WHERE USER_NO = #{ userNo }
+	</select>
+	
+	
 <!-- =============================== insert 구간  =========================================== -->
 	
 	<!-- 폼 등록 / 등록하면서 formNo반환 -->
@@ -234,7 +562,17 @@
 	</insert>
 	
 
+	<!-- 메모 등록 -->
+	<insert id="insertMemo" parameterType="approvalMemo" useGeneratedKeys="true" keyProperty="memoNo">
+		INSERT INTO APPROVAL_MEMO(USER_NO, APPROVAL_NO, CONTENT, DATE)
+		VALUES( #{userNo} , #{approvalNo} , #{content}, NOW() )
+	</insert>
 	
+	<!-- 서명이미지 등록 -->
+	<insert id="insertSignImg" parameterType="map">
+		INSERT INTO SIGNATURE_IMG (SIGNATURE_IMG, USER_NO)
+		VALUES( #{ changeName }, #{userNo} )
+	</insert>
 	
 <!-- ============================== update 구간 ============================== -->
 	
@@ -253,9 +591,40 @@
 		SET 
 			TITLE = #{title} ,
 			CONTENT = #{content},
-			
 		WHERE FORM_NO  = #{formNo}
 	</update>
+	
+	<!-- 결재라인 상태 수정 -->
+<!-- 	<update id="updateApprovalLine" parameterType="approval">
+		UPDATE APPROVAL
+		SET 
+			TITLE = #{title} ,
+			CONTENT = #{content},
+		WHERE FORM_NO  = #{formNo}
+	</update> -->
+	
+	
+	<!-- 결재문서 상태 수정 -->
+	<update id="updateApprovalStatus" parameterType="map">
+		UPDATE APPROVAL_MEMO
+		SET STATUS = #{ status }
+		WHERE APPROVAL_NO = #{ approvalNo }
+	</update>
+	
+	
+	<!-- 메모 내용 수정 -->
+	<update id="updateMemo" parameterType="approvalMemo">
+		UPDATE APPROVAL_MEMO
+		SET CONTENT = #{content}
+		WHERE MEMO_NO  = #{ memoNo }
+	</update>
+	
+	<!-- 서명이미지 수정 -->
+	<insert id="updateSignImg" parameterType="map">
+		UPDATE SIGNATURE_IMG 
+		SET SIGNATURE_IMG = #{changeName}
+		WHERE USER_NO = #{userNo}
+	</insert>
 	
 <!-- ============================ delete 구간 ============================ -->
 	
@@ -285,6 +654,12 @@
 	<delete id="deleteFavor" parameterType="_int">
 		DELETE FROM  APPROVAL_FAVORITE_LINE
 		WHERE LINE_NO = #{favorNo}
+	</delete>
+	
+	<!-- 즐겨찾기 삭제 -->
+	<delete id="deleteMemo" parameterType="_int">
+		DELETE FROM  APPROVAL_MEMO
+		WHERE MEMO_NO = #{ memoNo }
 	</delete>
 
 	

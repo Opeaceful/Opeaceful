@@ -258,41 +258,41 @@ WHERE USER_NO >= 20 AND USER_NO <= 44;
 UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 10
 WHERE USER_NO > 44;
 
+
+
 -- 휴가 등록 임시
 INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 VALUES 
 		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
-		(3, 3, "오후반차", 1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
+		(3, 3, "오후반차", 0, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
         (3, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
-		(3, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
+		(3, 1, "휴가", 0, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
 		(3, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
-        (3, 2, "오전반차", 1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
-        (3, 1, "휴가", 1, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
+        (3, 2, "오전반차", -1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
+        (3, 1, "휴가", 2, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
         (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
 
 -- 테스트 데이터 입력용 프로시저 
 
 -- approval_form 더미 데이터 생성용
-
 DELIMITER $$
 CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시저
 BEGIN
     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-    WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, CONCAT('title', i), '<p>fdsfdsfdsf</p>');
+    WHILE (i <= 120) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('일반', i), '<p>일반</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('연차', i+1), '<p>연차</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('오전반차', i+2), '<p>오전반차</p>');
+        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, CONCAT('오후반차', i+3), '<p>오후반차</p>');
         
-        SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+        SET i = i +4; -- ⓔ i값에 4더해주고 WHILE문 처음으로 이동
     END WHILE;
 END$$
 DELIMITER ;
 
-
 CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
-DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때리 이미 있는프로시저라고 오류남 
+DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남 
 
 
 -- 멤버 더미데이터 생성용 (사번 겹치면 오류발생하니까 테스트 돌릴때마다 잘 확인할것)
@@ -315,9 +315,33 @@ DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭
 
 
 
+-- 유저 8번에 연차 30개 임시로 넣어둠
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '3000' WHERE (`USER_NO` = '8');
 
 
+DELIMITER $$ 
+CREATE PROCEDURE addannual() -- ⓐ  프로시져
+BEGIN
+    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+    WHILE (i <= 9) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
 
+		INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+		VALUES 
+			(8, 1, "휴가", 0, CONCAT('2023-11-0', i, ' 15:28') ,CONCAT('2023-11-0', i, ' 15:28'),CONCAT('2023-11-0', i, ' 15:28')),
+			(8, 0, "일반", 1, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
+			(8, 1, "휴가", -1,  CONCAT('2023-10-0', i, ' 15:28') ,CONCAT('2023-10-0', i, ' 15:28'),CONCAT('2023-10-0', i, ' 15:28')),
+			(8, 1, "휴가", 1,  CONCAT('2022-10-1', i, ' 15:28') ,CONCAT('2022-10-1', i, ' 15:28'),CONCAT('2022-10-1', i, ' 15:28')),
+			(8, 3, "오후반차", 1,  CONCAT('2023-09-0', i, ' 15:28') ,CONCAT('2023-09-0', i, ' 15:28'),CONCAT('2023-09-0', i, ' 15:28')),
+			(8, 2, "오전반차", 2,  CONCAT('2022-09-1', i, ' 15:28') ,CONCAT('2022-09-1', i, ' 15:28'),CONCAT('2022-09-1', i, ' 15:28')),
+			(8, 1, "휴가", 1,  CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28')),
+			(8, 1, "휴가", -1, CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28'));
 
+        SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+    END WHILE;
+END$$
+DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
+
+CALL addannual(); -- 프로시저 실행
+DROP PROCEDURE IF EXISTS addannual; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남 
 
 

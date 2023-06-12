@@ -45,41 +45,39 @@ pageEncoding="UTF-8"%>
                   <td width="10%">
                     <div>종류</div>
                   </td>
-                  <td width="40%">연차</td>
+                  <td width="40%" id="td-approval-type"></td>
                   <td width="10%">
-                    <div>상태</div>
+                    <div >상태</div>
                   </td>
-                  <td width="40%">완결</td>
+                  <td width="40%" id="td-approval-status"></td>
                 </tr>
 
                 <tr>
                   <td width="10%">
                     <div>기안일</div>
                   </td>
-                  <td width="40%">
-                    <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
+                  <td width="40%" id="td-approval-draft-date">
                     2023-05-16
                   </td>
 
                   <td width="10%">
                     <div>기안자</div>
                   </td>
-                  <td width="30%">김뫄뫄 사원(23051601)</td>
+                  <td width="30%" id="td-approval-user"></td>
                 </tr>
                 <tr>
                   <td width="10%">
                     <div>신청일자</div>
                   </td>
-                  <td colspan="3" width="40%">
-                    <!-- <i class="bi bi-calendar-week"></i><input id="date" /> -->
-                    2023-05-16 ~ 2023-05-17
+                  <td id="td-approval-request-date" colspan="3" width="40%">
+                    
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <div>참조</div>
                   </td>
-                  <td colspan="3">김뫄뫄 사원, 이뫄뫄 사원</td>
+                  <td colspan="3" id="td-approval-refer"></td>
                 </tr>
                 <tr>
                   <td>
@@ -88,30 +86,6 @@ pageEncoding="UTF-8"%>
                   <td colspan="3">
                     <div class="approval-files">
                       <div class="scroll-bar">
-                        <div>
-                          fjkdlsjf.jpg
-                          <button class="btn-file-download">
-                            <i class="bi bi-download"></i>
-                          </button>
-                        </div>
-                        <div>
-                          fjkdlsjf.jpg
-                          <button class="btn-file-download">
-                            <i class="bi bi-download"></i>
-                          </button>
-                        </div>
-                        <div>
-                          fjkdlsjf.jpg
-                          <button class="btn-file-download">
-                            <i class="bi bi-download"></i>
-                          </button>
-                        </div>
-                        <div>
-                          fjkdlsjf.jpg
-                          <button class="btn-file-download">
-                            <i class="bi bi-download"></i>
-                          </button>
-                        </div>
                       </div>
                     </div>
                   </td>
@@ -121,79 +95,13 @@ pageEncoding="UTF-8"%>
                   <td colspan="4">
                     <div></div>
                     <div class="final-approval-wrap">
-                      <h2><u>2023년 상반기 A프로젝트 보고서</u></h2>
+                      <h2 ><u id="h-approval-title"></u></h2>
                       <div class="end-approval-lines">
                         <div class="end-approval-lines-wrap">
                           <div class="end-approval-lines-title">결<br />재</div>
-                          <div class="end-approval-lines-item">
-                            <div class="approver-name">뫄뫄뫄 사원</div>
-                            <div class="approver-sign">
-                              <img
-                                src="${path}/resources/image/mypage/basic_profile.png"
-                                alt=""
-                              />
-                            </div>
-                            <div class="approver-date">2023-05-26</div>
-                          </div>
-                          <div class="end-approval-lines-item">
-                            <div class="approver-name">뫄뫄뫄 부장</div>
-                            <div class="approver-sign">
-                              <img
-                                src="${path}/resources/image/main/absence.svg"
-                                alt=""
-                              />
-                            </div>
-                            <div class="approver-date">2023-05-26</div>
-                          </div>
-                          <div class="end-approval-lines-item">
-                            <div class="approver-name">뫄뫄뫄뫄 본부장</div>
-                            <div class="approver-sign">
-                              <img
-                                src="${path}/resources/image/main/absence.svg"
-                                alt=""
-                              />
-                            </div>
-                            <div class="approver-date">2023-05-26</div>
-                          </div>
                         </div>
                       </div>
                       <div class="end-approval-content">
-                        <p>Welcome to TinyMCE!</p>
-                        <p><br data-mce-bogus="1" /></p>
-                        <p>dddddddddddd</p>
-                        <p>d</p>
-                        <p>d</p>
-                        <p>d</p>
-                        <p>d</p>
-                        <p>d</p>
-                        <p>d</p>
-                        <p>d</p>
-                        <table
-                          style="border-collapse: collapse; width: 100%"
-                          border="1"
-                        >
-                          <tbody>
-                            <tr>
-                              <td style="width: 31.3593%"><br /></td>
-                              <td style="width: 31.3593%"><br /></td>
-                              <td style="width: 31.3593%"><br /></td>
-                            </tr>
-                            <tr>
-                              <td style="width: 31.3593%"><br /></td>
-                              <td style="width: 31.3593%"><br /></td>
-                              <td style="width: 31.3593%"><br /></td>
-                            </tr>
-                            <tr>
-                              <td style="width: 31.3593%"><br /></td>
-                              <td style="width: 31.3593%"><br /></td>
-                              <td style="width: 31.3593%">
-                                <br data-mce-bogus="1" />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <p>d</p>
-                        <p><br data-mce-bogus="1" /></p>
                       </div>
                     </div>
                   </td>
@@ -202,15 +110,14 @@ pageEncoding="UTF-8"%>
             </table>
           </div>
           <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-primary">결재 취소</button> -->
-            <button type="button" class="btn btn-outline-danger">삭제</button>
-            <button type="button" class="btn btn-outline-primary">반려</button>
-            <button type="button" class="btn btn-outline-primary">
+            <button type="button" id="btn-delete-approval" class="btn btn-outline-danger">삭제</button>
+            <button type="button" id="btn-return-approval" class="btn btn-outline-primary">반려</button>
+            <button id="btn-memo-open" type="button" class="btn btn-outline-primary">
               메모(0)
             </button>
-            <button type="button" class="btn btn-outline-primary">인쇄</button>
+            <button type="button" id="btn-print-approval" class="btn btn-outline-primary">인쇄</button>
 
-            <button type="button" class="btn btn-primary position-ok ms-auto">
+            <button type="button" id="btn-authorize-approval" class="btn btn-primary position-ok ms-auto">
               결재
             </button>
             <button
@@ -252,90 +159,6 @@ pageEncoding="UTF-8"%>
                     </table>
                     <table class="table table-common">
                       <tbody class="memo-list-table scroll-bar">
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
-                        <tr>
-                          <td>뫄뫄뫄 사원</td>
-                          <td>
-                            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                          </td>
-                          <td>2023-05-28</td>
-                        </tr>
                       </tbody>
                     </table>
                     <div>
@@ -355,35 +178,21 @@ pageEncoding="UTF-8"%>
                           </td>
                           <td>
                             <div class="memo-files-wrap">
-                              <button
+ <!--                              <button
                                 id="btn-memo-add-file"
                                 class="btn btn-outline-primary"
                               >
                                 추가
-                              </button>
-                              <div class="memo-files scroll-bar">
-                                <div class="memo-file-item">
-                                  fjkdlsjfkdlsf.jpg
-                                  <!-- <input class="form-control  form-control-sm" type="file" id="formFile"> -->
-                                  <button
-                                    id="btn-memo-file-delete"
-                                    class="btn-file-delete"
-                                  >
-                                    <i class="fa-solid fa-minus"></i>
-                                  </button>
-                                </div>
-                                <div class="memo-file-item">
-                                  <input
+                              </button> -->
+                              <input
                                     class="form-control form-control-sm"
                                     type="file"
-                                    id="formFile"
+                                    id="input-memo-add-file"
+                                    multiple
                                   />
-                                  <button
-                                    id="btn-memo-file-delete"
-                                    class="btn-file-delete"
-                                  >
-                                    <i class="fa-solid fa-minus"></i>
-                                  </button>
+                              <div class="memo-files scroll-bar">
+                                <div class="memo-file-item">
+                                  <a href="" download=""></a>
                                 </div>
                               </div>
                             </div>
@@ -396,7 +205,7 @@ pageEncoding="UTF-8"%>
                           <td>
                             <textarea
                               name="content"
-                              id="memo-content"
+                              id="memo-add-content"
                               cols="30"
                               rows="10"
                               maxlength="1000"
@@ -408,19 +217,19 @@ pageEncoding="UTF-8"%>
                     </table>
                     <div class="memo-btn-wrap">
                       <button
-                        id="btn-memo-back"
+                        id="btn-add-memo-back"
                         class="btn btn-outline-primary"
                       >
                         뒤로가기
                       </button>
                       <div>
                         <button
-                          id="btn-memo-delete"
-                          class="btn btn-outline-primary"
+                          id="btn-add-memo-delete"
+                          class="btn btn-outline-danger"
                         >
                           삭제
                         </button>
-                        <button id="btn-memo-save" class="btn btn-primary">
+                        <button id="btn-add-memo-save" class="btn btn-primary">
                           저장
                         </button>
                       </div>
@@ -431,7 +240,7 @@ pageEncoding="UTF-8"%>
             </div>
           </div>
 
-          <!-- 결재/반려 모달구역 -->
+<!--           결재/반려 모달구역
           <div id="approval-confirm-back" class="modal-back">
             <div id="confirm-modal" class="modal-content position-modal">
               <div class="modal-header">
@@ -451,10 +260,10 @@ pageEncoding="UTF-8"%>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
-
+    <script type="module" src="${path}/resources/js/approval/endApprovalModal.js"></script>
   </body>
 </html>
