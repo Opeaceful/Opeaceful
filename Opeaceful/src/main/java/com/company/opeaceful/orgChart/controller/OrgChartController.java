@@ -226,6 +226,8 @@ public class OrgChartController {
 		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
 		
 		System.out.println("personnelList에 담긴 값 : "+personnelList);
+		
+		System.out.println(deptCode);
 		return new Gson().toJson(personnelList);
 				
 	}
@@ -236,7 +238,7 @@ public class OrgChartController {
 	public String insertPersonnel(Integer deptCode) {
 		
 		System.out.println("실행 안됨????????");
-		
+		System.out.println(deptCode);
 		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
 		
 		

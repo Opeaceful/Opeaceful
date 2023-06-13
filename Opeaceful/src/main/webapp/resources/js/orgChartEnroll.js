@@ -174,11 +174,33 @@ function selectPersonnel(deptCode, topDeptCode) {
 			}
 			let personnelUserList = document.getElementById("org-modal-tbody");
 			personnelUserList.innerHTML = html;
+
 			teamRoad();
 			positionRoad();
+			changeBackground();
+			var selectElement = document.getElementById("topDeptName");
+			selectElement.addEventListener("change", function() {
+			  changeBackground(this);
+			});
+			
+			function changeBackground(selectElement) {
+			  var trElements = document.querySelectorAll(".change-tr");
+			
+			  trElements.forEach(function(trElement) {
+				trElement.style.backgroundColor = ""; // 초기 배경색으로 설정
+			  });
+			
+			  var selectedOption = selectElement.options[selectElement.selectedIndex];
+			  var selectedTr = selectedOption.closest(".change-tr");
+			
+			  if (selectedTr) {
+				selectedTr.style.backgroundColor = "yellow"; // 첫 번째 <tr> 요소의 배경색 변경
+			  }
+			}
 		}
 	})
 }
+
 
 function personnelClick() {
 
@@ -624,39 +646,35 @@ function personnelClick() {
 
 	///////////////////////////////////////////////////////////////////////// 인사발령
 
+
+
 let selectButton = false;
 
 //확인 버튼 눌렀을때 salaryAll에서 처리할 이벤트
-$("#ok-personnel").click(function(){
+// $("#ok-personnel").click(function(){
 
-    let topDeptName = $("#topDeptName").val(); 
-    let deptName = $("#deptName").val();
-    let pName = $("#pName").val();
-	// let userNo = $(".change-tr").dataset.id();
+//     let topDeptName = $("#topDeptName").val(); 
+//     let deptName = $("#deptName").val();
+//     let pName = $("#pName").val();
 
-	let orgChart = {
-		// userNo : userNo,
-		deptName : deptName,
-		pName : pName,
-		topDeptName : topDeptName
-	};
+// 	let html = "";
 
-	let html = "";
-
-	$.ajax({
-			url : path+"/orgChart/insertPersonnel",   
-			type : 'post', 
-			data: JSON.stringify(orgChart),
-			contentType: "application/json",
-			success : function(result){
-				console.log('인사발령 인서트 result: ' ,result);
+// 	$.ajax({
+// 			url : path+"/orgChart/insertPersonnel",   
+// 			type : 'post', 
+// 			data : {topDeptName : topDeptName,
+// 					deptName : deptName,
+// 					pName, pName},
+// 			dataType : "JSON",
+// 			success : function(result){
+// 				console.log('인사발령 인서트 result: ' ,result);
 	
 				
-			}
-		})
+// 			}
+// 		})
 
 	
-});
+// });
 
 //모달 종료시
 $("#cancel-personnel").click(function(){

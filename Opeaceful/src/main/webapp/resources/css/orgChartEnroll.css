@@ -123,3 +123,4 @@ input:focus{
 .d-grid>button, .personnel-btn{font-size: var(--font12);}
 .dp-btn{font-size: var(--font12);}
 .title-box{margin: 80px 0;}
+.changeValue{background-color: var(--color-light-gray);}
