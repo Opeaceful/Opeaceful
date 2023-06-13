@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.company.opeaceful.dept.model.vo.Department;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 
@@ -14,13 +14,13 @@ public interface MemberService {
 
 	Member loginMember(Member m);
 	
-	int insertUserDept(UserDepatment ud);
+	int insertUserDept(UserDepartment ud);
 
 	int selectENO();
 	
 	List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD);
 	
-	//UserDepatment selectdpName(int userNo);
+	//UserDepartment selectdpName(int userNo);
 
 	int updatePwd(Member loginUser);
 
