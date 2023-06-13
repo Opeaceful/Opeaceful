@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.company.opeaceful.approval.model.service.ApprovalService;
+import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.dept.model.vo.Department;
@@ -42,13 +44,14 @@ public class MemberController {
 	
 	private MemberService memberService;
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	private ApprovalService aprService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
 	public MemberController(MemberService memberService,  BCryptPasswordEncoder bcryptPasswordEncoder) {
 		this.memberService = memberService;
 		this.bcryptPasswordEncoder = bcryptPasswordEncoder;
-		
+		this.aprService = aprService;
 	}
 	// spring-quartz.xml 사용시 기본생성자 필요
 	public MemberController() {}
@@ -430,6 +433,58 @@ public class MemberController {
 		return new Gson().toJson(m);
 			
 	}
+	
+	
+	//[지영] 퇴사한지 3년 넘은 데이터들 삭제 (매달 1일에 체크)
+	public void deleteMembers() {
+
+		List<Integer> delist = memberService.resignedmemberList();
+		
+		if(delist.size()>0) {//삭제할 데이터가있다면
+			
+			//Approval 먼저 삭제! 
+			 for (Integer uesrNo : delist) {
+			       List<Integer> alist = memberService.resignedmemberApprovalList(uesrNo);
+			       for (Integer appNo : alist) {
+			    	   deleteMemberApproval(appNo);
+			    	   
+			       }
+		      }
+		      
+			 
+			 
+		}
+//			
+//			SELECT *
+//			FROM 
+//			opeaceful.approval
+//			where 3 AND
+//			STATUS != 1;
+			
+			//int result = memberService.deleteMembers(delist);
+			
+			
+			
+		
+		
+		
+		
+    }
+	
+	//Approval삭제용 메소드 
+	public void deleteMemberApproval(Integer approvalNo) {
+		// 파일 저장경로 얻어오기
+
+		String webPath = "/resources/file/approval/";
+		String serverFolderPath = session.getServletContext().getRealPath(webPath);
+		
+		// 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
+		int result = aprService.deleteApproval(approvalNo, serverFolderPath);
+		
+		System.out.println(result+"======삭제된 문서 숫자======");
+		
+	}
+	
 	
 
 	

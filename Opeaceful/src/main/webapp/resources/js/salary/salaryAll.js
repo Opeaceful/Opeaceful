@@ -10,6 +10,10 @@ let selectButton = false;
 let swalPaymentDateValue;
 let UserCope;
 
+let totalSalary = document.getElementById("total-salary");
+let totalDeductions = document.getElementById("total-Deductions");
+let netSalary =  document.querySelector("#net-salary span");
+
 /*검색에 따라 데이터를 불러오는*/
 $("#salary-year,#salary-month,#dpSelect").change(function(){
     let year = $("#salary-year").val(); 
@@ -19,6 +23,35 @@ $("#salary-year,#salary-month,#dpSelect").change(function(){
     location.href=`${path}/salary/AllSalary?year=${year}&month=${month}&team=${team}`;
 
 });
+
+
+/*급여 입력에 따라 총합 자동계산*/
+function SalaryTableCalculate() {
+    //만들어진 tr태그에 급여합산 이벤트 부여
+    $('#salary-table-pay input[type="number"],#salary-table-deduction input[type="number"]').keyup(function(){
+
+        let totalGP = tatalPay("pay");
+        let totalDD = tatalPay("ded");
+        let netP = totalGP-totalDD;
+
+        totalGP = totalGP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        totalDD = totalDD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        netP = netP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+
+        totalSalary.innerText = totalGP;
+        totalDeductions.innerText = totalDD;
+        netSalary.innerText = netP
+
+        
+    })
+
+
+
+    
+}
+
+
 
 //조회된 급여의 상세내역을 띄워주는 클릭이벤트
 function allSalaryTable() {
@@ -95,13 +128,14 @@ function allSalaryData(dataId){
             document.getElementById("salary-table-deduction").innerHTML = dhtml;
 
 
-            document.getElementById("total-salary").innerText  = s.totalGrosspay;
-            document.getElementById("total-Deductions").innerText  = s.totalDeductions;
-            document.getElementById("net-salary").innerHTML  = `<b>실지급액 : </b> : ${s.netPay}`;
+            totalSalary.innerText = s.totalGrosspay;
+            totalDeductions.innerText  = s.totalDeductions;
+            netSalary.innerHTML  = s.netPay;
             $("#salary-delete").val(s.salaryNo);
 
 
             deleteTableClick(); 
+            SalaryTableCalculate();
         },
         error : function(request){
             console.log("에러발생");
@@ -199,14 +233,11 @@ $("#salary-delete").click(function(e){
 
 $("#salary-update").click(function(e){
 
-    let totalGP = tatalPay("pay");
-    let totalDD = tatalPay("ded");
-    let netP = totalGP-totalDD;
+     let totalGP =totalSalary.innerText;
+     let totalDD = totalDeductions.innerText;
+     let netP = netSalary.innerText;
 
-    totalGP = totalGP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    totalDD = totalDD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    netP = netP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    
+
     swal("수정하시겠습니까?",'총 금액 : '+totalGP+'원, 공제금액 : '+totalDD+'원, 실지급액 : '+netP+'원',{
         buttons: {confirm: "확인", cancel: "취소"}
     })
@@ -318,8 +349,6 @@ function tatalPay(name){
 
     let pList = document.querySelectorAll(`td input[name="${name}"]`);
 
-   
-
     let pay = 0;
     pList.forEach(function(td) {
         pay = pay + parseInt(td.value)
@@ -334,9 +363,6 @@ function tataldiv(tableid){
 
     const trs = document.querySelectorAll(tableid);
    
-    
-    console.log(document.querySelectorAll("#salary-table-pay tr"));
-
     let payments = '';
     for (let i = 0; i < trs.length; i++) {;
         if(trs[i].firstElementChild.textContent){

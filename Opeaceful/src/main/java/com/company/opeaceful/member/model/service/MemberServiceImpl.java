@@ -156,5 +156,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateAnnualMembers(list);
 	}
 	
+	@Override
+	public List<Integer> resignedmemberList() {
+		return memberDao.resignedmemberList();
+	}
+	
+	@Override
+	public int deleteMembers(List<Integer> delist) {
+		return memberDao.deleteMembers(delist);
+	}
+	
+	@Override
+	public List<Integer> resignedmemberApprovalList(Integer uesrNo){
+		return memberDao.resignedmemberApprovalList(uesrNo);
+	}
+	
 
 }

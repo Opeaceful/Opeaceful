@@ -6,11 +6,11 @@
 
 	<!-- =================== [insert] =================== -->
 	<insert id="insertSalary" parameterType="java.util.List">
-			INSERT INTO salary (USER_NO, YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,
+			INSERT INTO salary (USER_NO, USER_NAME,YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,
 	         TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
 	          VALUES
 	    <foreach item="s" collection="list" separator=",">
-	       (#{s.userNo}, #{s.yearReported}, #{s.monReported},#{s.sPaymentDate},IFNULL(#{s.totalGrosspay},''),IFNULL(#{s.totalDeductions},''),IFNULL(#{s.netPay},''),IFNULL(#{s.payments},''),IFNULL(#{s.deduction},''),#{s.pName},#{s.deptName})
+	       (#{s.userNo},#{s.userName}, #{s.yearReported}, #{s.monReported},#{s.sPaymentDate},IFNULL(#{s.totalGrosspay},''),IFNULL(#{s.totalDeductions},''),IFNULL(#{s.netPay},''),IFNULL(#{s.payments},''),IFNULL(#{s.deduction},''),#{s.pName},#{s.deptName})
 	    </foreach>
 	</insert>
 
@@ -50,8 +50,8 @@
 		SELECT SALARY_NO,YEAR_REPORTED,MON_REPORTED,
 		 PAYMENT_DATE,TOTAL_GROSSPAY,
 		 TOTAL_DEDUCTIONS,
-		 NET_PAY,ENO,USER_NAME
-		FROM salary
+		 NET_PAY,ENO,s.USER_NAME
+		FROM salary s
 		left JOIN member USING(USER_NO)
 		<where>
 			<if test='year != null'>

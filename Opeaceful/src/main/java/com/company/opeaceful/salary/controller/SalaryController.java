@@ -39,7 +39,7 @@ public class SalaryController {
 	//[지영]
 	//employeeSalary로 이동 + 데이터 검색으로 세팅해주기
 	@GetMapping("/employee")
-	public String employeeSalary(@ModelAttribute ("loginUser") Member loginUser, 
+	public String employeeSalary(@SessionAttribute ("loginUser") Member loginUser, 
 			Model model,
 			@RequestParam(value= "month", required = false) Integer month,
 			@RequestParam(value= "year",required = false) Integer year
@@ -217,6 +217,7 @@ public class SalaryController {
 		    	}
 		    	
 		        salary.setUserNo(m.getUserNo());
+		        salary.setUserName(m.getUserName());
 		        salary.setDeptName(m.getDName());
 		        salary.setPName(m.getPName());
 		        salary.setYearReported(year);

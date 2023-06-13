@@ -340,7 +340,7 @@ LeaveDate.addEventListener('change', function() {
 
     if(inputLeaveDate){ //없던 퇴사일을 넣어준다면
        
-        swal(inputLeaveDate+" 퇴사일 설정","퇴사일 설정시 해당 직원은 변경할 수 없습니다.",{
+        swal(inputLeaveDate+" 퇴사일 설정",`퇴사일 설정시 해당 직원은 변경할 수 없습니다. 해당 직원은 3년뒤 자동 삭제 처리됩니다.`,{
             buttons: {confirm: "확인", cancel: "취소"}
         })
         .then(function(isConfirm){
