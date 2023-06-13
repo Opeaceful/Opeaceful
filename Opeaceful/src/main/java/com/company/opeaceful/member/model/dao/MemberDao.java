@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.company.opeaceful.dept.model.vo.Department;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.commom.model.vo.PageInfo;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
 
@@ -29,7 +29,7 @@ public class MemberDao {
 	public Member loginMember(Member m) {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
-	public int insertUserDept(UserDepatment ud) {
+	public int insertUserDept(UserDepartment ud) {
 		return sqlSession.insert("memberMapper.insertUserDept", ud);
 	}
 
@@ -47,7 +47,7 @@ public class MemberDao {
 		return sqlSession.selectList("memberMapper.selectMember",selectPD,rowBounds);
 	}
 
-	public UserDepatment selectdpName(int userNo) {
+	public UserDepartment selectdpName(int userNo) {
 		return sqlSession.selectOne("deptMapper.selectdpName", userNo);
 	}
 

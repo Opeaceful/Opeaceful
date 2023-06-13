@@ -1,22 +1,14 @@
-// $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric',function(result){
-//     $(".ctemp").append(result.main.temp);
-//     $(".lowtemp").append(result.main.temp_min);
-//     $(".hightemp").append(result.main.temp_max);
-//     let iconUrl = '<img src="https://openweathermap.org/img/wn/'+result.weather[0].icon+'.png" alt="'+result.weather[0].description+'">'
 
-//     $(".weather-icon").html(iconUrl);
-// });
+
 import {path} from './common/common.js';
-let position1 = 37.4923615;
-let position2 = 127.0292881;
-
+let lat = 37.4923615; // 위도
+let lon = 127.0292881; // 경도
 /* 현재 위치 확인 함수 */
 function getLocation() {
     if (navigator.geolocation) { // GPS를 지원하면
       navigator.geolocation.getCurrentPosition(function(position) {
-        position1 = position.coords.latitude;
-        position2 = position.coords.longitude;
-        console.log(position.coords.latitude + ' ' + position.coords.longitude);
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
       }, function(error) {
         console.error(error);
       }, {
@@ -57,7 +49,7 @@ $(document).ready(function() {
     // 현재날씨
     $.ajax({
         // url:'https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric',
-        url:`https://api.openweathermap.org/data/2.5/weather?lat=${position1}&lon=${position2}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        url:`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
 
         dataType:'json',
         type:'GET',
@@ -83,7 +75,7 @@ $(document).ready(function() {
 
     // 위치 - 일단 도시로 표현됨
     $.ajax({
-        url:`http://api.openweathermap.org/geo/1.0/reverse?lat=${position1}&lon=${position2}&limit=5&appid=19b55bb6f31f76e1ed9c216a460a592e`,
+        url:`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=19b55bb6f31f76e1ed9c216a460a592e`,
         dataType:'json',
         type:'GET',
         success:function(data){
@@ -97,7 +89,7 @@ $(document).ready(function() {
     //주간 날씨
     $.ajax({
         // url:'https://api.openweathermap.org/data/2.5/forecast?q=Seoul&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric',
-        url:`https://api.openweathermap.org/data/2.5/forecast?lat=${position1}&lon=${position2}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        url:`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
         dataType:'json',
         type:'GET',
         success:function(data){

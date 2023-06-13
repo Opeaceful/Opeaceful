@@ -6,6 +6,14 @@
 <head>
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.0/"></script>
+	<link href='${path}/resources/fullcalendar-4.4.0/packages/core/main.css' rel='stylesheet' />
+	<link href='${path}/resources/fullcalendar-4.4.0/packages/daygrid/main.css' rel='stylesheet' />
+	<script src='${path}/resources/fullcalendar-4.4.0/packages/core/main.js'></script>
+	<script src='${path}/resources/fullcalendar-4.4.0/packages/interaction/main.js'></script>
+	<script src='${path}/resources/fullcalendar-4.4.0/packages/daygrid/main.js'></script>
+	<!-- 캘린더 내 부트스트랩적용 스크립트 -->
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.7/index.global.min.js"></script>
 	
 	<!-- 알랏 커스텀 링크 -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -15,8 +23,11 @@
     <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
     <link rel="stylesheet" href="${path}/resources/css/main.css">
+
+	<link rel="stylesheet" href="${path}/resources/css/calendar/calendar.css">
 
 </head>
 <body>
@@ -201,13 +212,9 @@
 	        		
 	        		<!-- 캘린더 -->
 	        		<div class="square-box" id="calender-box">
-	        		
+						<div id='calendarM'></div>
 	        		</div>
 	        		
-	        		<!-- 메모박스 -->
-	        		<div class="square-box" id="memo-box">
-	        		
-	        		</div>
 	        	</div>
         	</div>
             
