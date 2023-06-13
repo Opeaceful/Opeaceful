@@ -51,7 +51,7 @@
                     <div class="login-input">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-user" style="width: 16px;"></i></span>
-                            <input type="text" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호" value="${cookie.saveId.value}">
+                            <input type="number" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호" required value="${cookie.saveId.value}">
                         </div>
             
                         <div class="input-group mb-3">
@@ -76,6 +76,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

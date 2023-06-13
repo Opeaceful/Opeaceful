@@ -43,8 +43,6 @@
 	display: grid;
     grid-template-rows: 160px auto 160px;
 }
-
-
 .sidebar-logo{margin-top: 50px;}
 /* ================ 상위 카테고리 ================ */
 .side-icon-size {
@@ -89,7 +87,7 @@
     display: block;
     padding: 0 0 14px 62px;
 }
-
+.sidebar-bt{display: none;}
 
 /* ========================== 채팅 아이콘 ========================== */
 /* 위치설정 */

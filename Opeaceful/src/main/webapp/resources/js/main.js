@@ -126,13 +126,7 @@ $(function(){
 /* --------------------------- 공지사항 제목부분 클릭시 공지사항 페이지로 --------------------------- */
 $("#main-notice-title").on("click", function(){
     location.href = path+"/board/list/N";
-})
-$(document).on("click", ".main-notice", function() {
-    let boardNo = $(this).children("#board-no").text();
-    console.log(boardNo);
-    location.href = path +"/board/detail/N/"+boardNo;
-})
-
+});
 
 /* --------------------------- 출근 등록 --------------------------- */
 $("#main-on").click(function(){
