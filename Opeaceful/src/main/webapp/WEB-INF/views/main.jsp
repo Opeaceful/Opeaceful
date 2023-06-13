@@ -39,8 +39,7 @@
 								</div>
 							</c:if>
 							<c:forEach items="${mainNoticeList}" var="n">
-								<!-- <div class="main-content-text row" onClick='location.href="${path}/board/detail/N/${n.boardNo}"'> -->
-								<div class="main-content-text main-notice row">
+								<div class="main-content-text row" onClick='location.href="${path}/board/detail/N/${n.boardNo}"'>
 									<div id="board-no" style="display: none;">${n.boardNo }</div>
 									<div class="col-9">${n.boardTitle }</div>
 									<div class="col-3 text-end">${n.createDate }</div>
@@ -221,6 +220,7 @@
 <script>
 	var mainHireDate = '${loginUser.hireDate}';
 </script>
+
 
 
 </body>
