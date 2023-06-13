@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class ChatMessage {
+public class Chat {
 	
 	private int chatNo;
 	private int chatRoomNo;

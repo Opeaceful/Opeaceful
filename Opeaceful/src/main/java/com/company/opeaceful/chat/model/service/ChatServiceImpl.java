@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.chat.model.dao.ChatDao;
-import com.company.opeaceful.chat.model.vo.ChatMessage;
+import com.company.opeaceful.chat.model.vo.Chat;
 import com.company.opeaceful.chat.model.vo.ChatParticipant;
 import com.company.opeaceful.chat.model.vo.ChatRoom;
 import com.company.opeaceful.member.model.vo.Member;
@@ -47,7 +47,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public List<ChatMessage> joinChatRoom(ChatParticipant join){
+	public List<Chat> joinChatRoom(ChatParticipant join){
 		
 		// 현재 회원이 해당 채팅방에 참여하고 있는지 확인
 		// CHAT_ROOM_JOIN에 현재 유저+채팅방 번호로 들어간 데이터가 있는지 확인
@@ -66,7 +66,7 @@ public class ChatServiceImpl implements ChatService{
 	
 	// 아 강의 .....
 	@Override
-	public int insertMessage(ChatMessage chatMessage) {
+	public int insertMessage(Chat chatMessage) {
 		return chatDao.insertMessage(chatMessage);
 	}
 	

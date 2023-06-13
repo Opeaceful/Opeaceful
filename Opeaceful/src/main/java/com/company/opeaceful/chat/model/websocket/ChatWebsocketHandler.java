@@ -12,7 +12,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.company.opeaceful.chat.model.service.ChatService;
-import com.company.opeaceful.chat.model.vo.ChatMessage;
+import com.company.opeaceful.chat.model.vo.Chat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
@@ -76,7 +76,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			// JackSon-databind -> ObjectMapper를 이용해서 JSON형태로 넘어온 데이터를 특정 VO필드에 맞게 자동 매핑
 			ObjectMapper objectMapper = new ObjectMapper();
 			
-			ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class); 
+			Chat chatMessage = objectMapper.readValue(message.getPayload(), Chat.class); 
 			
 			chatMessage.setReceivedDate(new Date(System.currentTimeMillis()));
 			

@@ -304,21 +304,7 @@
    <script type="text/javascript" src="${path}/resources/js/chat/chatJs.js"></script> 
    
    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-   
-   <script>
-   let chattingSock = new SockJS("${path}/chat/room/{roomId}");
-   </script>
-   
-   <script>
-   $(document).ready(function() {
-	   $("#chatting_send").click(function(){
-	       $("#dialog").dialog("close");
-	       console.log("클릭됨");
-	       });
-	      });
-   </script>
-   
-   
+      
 </body>   
     
 </html>

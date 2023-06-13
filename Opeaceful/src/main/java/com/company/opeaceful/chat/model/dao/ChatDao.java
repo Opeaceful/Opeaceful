@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.company.opeaceful.board.model.vo.Board;
-import com.company.opeaceful.chat.model.vo.ChatMessage;
+import com.company.opeaceful.chat.model.vo.Chat;
 import com.company.opeaceful.chat.model.vo.ChatParticipant;
 import com.company.opeaceful.chat.model.vo.ChatRoom;
 import com.company.opeaceful.member.model.vo.Member;
@@ -59,13 +59,13 @@ public class ChatDao {
 	}
 		
 	// 채팅방 메세지 목록 조회
-	public List<ChatMessage> selectChatMessage(int chatRoomNo){
+	public List<Chat> selectChatMessage(int chatRoomNo){
 		return sqlSession.selectList("chatMapper.selectChatMessage", chatRoomNo);
 	}
 	
 	// 아.. 강의......
 		// 채팅 메세지 삽입
-		public int insertMessage(ChatMessage chatMessage) {
+		public int insertMessage(Chat chatMessage) {
 			return sqlSession.insert("chatMapper.insertMessage", chatMessage);
 		}
 		

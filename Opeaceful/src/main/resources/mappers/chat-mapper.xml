@@ -13,7 +13,7 @@
 		<result column="ENO" property="eno"/>
 	</resultMap>
 	
-	<resultMap type="chatMessage" id="chatMessageResultSet">
+	<resultMap type="Chat" id="chatMessageResultSet">
 		<id column="CHAT_NO" property="chatNo"/>
 		<result column="CHATROOM_NO" property="chatRoomNo" />
 		<result column="USER_NO" property="userNo" />
@@ -64,7 +64,7 @@
 	</insert>
 	
 	<!-- 채팅 메세지 목록 조회 -->
-	<select id="selectChatMessage" resultType="chatMessage">
+	<select id="selectChatMessage" resultType="Chat">
 		SELECT  MESSAGE,
 				RECEIVED_DATE,
 				CHATROOM_NO,
@@ -76,7 +76,7 @@
 		ORDER BY CHAT_NO
 	</select>
 	
-	<insert id="insertMessage" parameterType="chatMessage">
+	<insert id="insertMessage" parameterType="Chat">
 		INSERT INTO CHAT (CHATROOM_NO, USER_NO, MESSAGE, NOT_RECEIVED, RECEIVED_DATE, MESSAGE_TYPE)
 			VALUES(#{chatRoomNo}, #{userNo}, #{message},0 ,NOW(), 1)
 	</insert>

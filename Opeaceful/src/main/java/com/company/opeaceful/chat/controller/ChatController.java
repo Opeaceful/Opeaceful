@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.chat.model.service.ChatService;
-import com.company.opeaceful.chat.model.vo.ChatMessage;
+import com.company.opeaceful.chat.model.vo.Chat;
 import com.company.opeaceful.chat.model.vo.ChatParticipant;
 import com.company.opeaceful.chat.model.vo.ChatRoom;
 import com.company.opeaceful.member.model.vo.Member;
@@ -110,7 +110,7 @@ public class ChatController {
 		
 		Map<String, Object> response = new HashMap<>();
 		
-		List<ChatMessage> list = chatService.joinChatRoom(join);
+		List<Chat> list = chatService.joinChatRoom(join);
 			
 		
 		if(list != null) {

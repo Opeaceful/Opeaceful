@@ -161,7 +161,8 @@ statusList.addEventListener('change', function() {
     changeStatus(this.value);
 });
 
-
+let chattingSock = {};
+var  roomId;
 
 /* 채팅방 목록 조회 */
 function chatAll() {
@@ -216,55 +217,23 @@ function chatAll() {
             $("ul.chat__room_ul a").on("click", function(e) {
                 e.preventDefault();
 
-                var roomId = $(this).data("chat-room-id");
+                roomId = $(this).data("chat-room-id");
                 var clickedChatRoom = chatRoomList.find(function(chatRoom) {
                     return chatRoom.chatRoomNo === roomId;
                 });
 
                 // roomId를 사용하여 다이얼로그 열기
                 openDialog(roomId, clickedChatRoom);
-
-
-
-
-                /* 메세지 전달 */
-               $(document).on("click", "#chatting_send_" + roomId, function() {
-				    sendMessage(roomId);
-				});
-
-                function sendMessage(roomId) {
-
-                    const inputChatting = document.getElementById("chatting_textarea");
-
-                    if (inputChatting.value.trim().length == 0) {
-                        alert("입력이 되지 않았습니다");
-
-                        inputChatting.value = "";
-                        inputChatting.focus();
-
-                    } else {
-
-                        const chatMessage = {
-                            "userNo": loginUser.userNo,
-                            "chatRoomNo": roomId,
-                            "userName": loginUser.userName,
-                            "message": inputChatting.value
-                        };
-                        console.log("버튼이 눌렸다");
-                        console.log(loginUser);
-                        console.log(chatRoomList);
-                        console.log(roomId);
-                        chattingSock.send(JSON.stringify(chatMessage));
-                        inputChatting.value = "";
-                    }
-                }
-
-
+         		
+         		 if (!chattingSock[roomId]) {
+					 console.log("채팅로그1 : "+roomId);			
+				chattingSock[roomId] = new SockJS(path + "/chat/room/" + roomId);
+				 console.log("채팅로그2 : "+roomId);	
                 // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
-                chattingSock.onmessage = function(e) {
+                chattingSock[roomId].onmessage = function(e) {
                     // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
                     // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
-
+					console.log("채팅로그3 : "+roomId);	
                     // 전달받은 메세지를 js객체로 변환
 
                     const chatMessage = JSON.parse(e.data); // json -> js Object
@@ -274,15 +243,17 @@ function chatAll() {
                     var receivedDate = chatMessage.receivedDate;
                     var isCurrentUser = chatMessage.userNo === loginUser.userNo;
 
-                    var chatContainer = document.querySelector(".main_chatting");
-
+                    var chatContainer = document.getElementById("main_chatting_" + roomId);
+                    console.log(chatContainer);
+	
+					
                     if (!isCurrentUser) {
                         var friendChat = document.createElement("div");
                         friendChat.classList.add("friend_chatting");
 
                         var profileImg = document.createElement("img");
                         profileImg.classList.add("chatting_profile_img");
-                        profileImg.src = "./pic/default.png";
+                        profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
                         profileImg.alt = "프로필사진";
 
                         var friendChatCol = document.createElement("div");
@@ -332,14 +303,52 @@ function chatAll() {
 
                         chatContainer.appendChild(meChat);
                     }
+                    
 
                     chatContainer.scrollTop = chatContainer.scrollHeight;
 
+                };
                 }
-
+                
+                  /* 메세지 전달 */
+               $(document).on("click", "#chatting_send_" + roomId, function() {
+				    sendMessage(roomId);
+				});
+                
+                             
 
             });
+            
+            
+            function sendMessage(roomId) {
 
+                    const inputChatting = document.getElementById("chatting_textarea_" + roomId);
+
+                    if (inputChatting.value.trim().length == 0) {
+                        alert("입력이 되지 않았습니다");
+
+                        inputChatting.value = "";
+                        inputChatting.focus();
+
+                    } else {
+
+                        const chatMessage = {
+                            "userNo": loginUser.userNo,
+                            "chatRoomNo": roomId,
+                            "userName": loginUser.userName,
+                            "message": inputChatting.value
+                        };
+                    //    console.log("버튼이 눌렸다");
+                    //    console.log(loginUser);
+                    //   console.log(chatRoomList);
+                       console.log(roomId);
+                        chattingSock[roomId].send(JSON.stringify(chatMessage));
+                        inputChatting.value = "";
+                    }
+                }
+            
+            
+            
             // roomId를 사용하여 채팅방 데이터를 서버로부터 가져오는 Ajax 요청
 
             function openDialog(roomId, chatRoom) {
@@ -357,10 +366,10 @@ function chatAll() {
                         const list = response.list;
 
 
-                        console.log(chatRoom)
-                        console.log(response);
-                        console.log(join);
-                        console.log(list);
+                     //   console.log(chatRoom)
+                     //  console.log(response);
+                     //   console.log(join);
+                     //   console.log(list);
 
                         // 가져온 채팅방 데이터를 기반으로 다이얼로그 내용을 구성
                         var dialogContent = '<div id="chatting_body">' +
@@ -373,7 +382,7 @@ function chatAll() {
                             '<i class="icon-ellipsis" title="메뉴"></i>' +
                             '</div>' +
                             '<header id="chatting_header">' +
-                            '<img class="chatting_profile_img" src="./pic/default.png" alt="프로필사진">' +
+                            '<img class="chatting_profile_img" src="'+ path + '/resources/image/chat/default.png" alt="프로필사진">' +
                             '<div class="chatting_profile_col">' +
                             '<span class="chatting_profile_name">' + list.userName + '</span>' +
                             '<div class="chatting_sub_menu">' +
@@ -392,7 +401,7 @@ function chatAll() {
                             '<div class="chatting_date_line">' +
                             '<time datetime="2021-03-29">2021년 3월 29일 월요일</time>' +
                             '</div>' +
-                            '<div class="main_chatting">';
+                            '<div id="main_chatting_' + roomId + '" class="main_chatting">';
 
                         /*	for (var i = 0; i < list.length; i++) {
                                var message = list[i]
@@ -400,7 +409,7 @@ function chatAll() {
                                if (message.userNo !== loginUser.userNo) {
                                  dialogContent +=
                                    '<div class="friend_chatting">' +
-                                   '<img class="chatting_profile_img" src="./pic/default.png" alt="프로필사진">' +
+                                   '<img class="chatting_profile_img" src="'+ path + '/resources/image/chat/default.png" alt="프로필사진">' +
                                    '<div class="friend_chatting_col">' +
                                    '<span class="chatting_profile_name">' + message.userName + '</span>' +
                                    '<span class="chatting_balloon">' + message.message + '</span>' +
@@ -423,7 +432,7 @@ function chatAll() {
                             '</div>' +
                             '<div class="chatting_insert_content">' +
                             '<div class="chatform">' +
-                            '<textarea id="chatting_textarea"></textarea>' +
+                            '<textarea id="chatting_textarea_' + roomId + '" class="chatting_send_textarea"></textarea>' +
                             '<input type="button" id="chatting_send_' + roomId + '" class="chatting_send_button" value="전송">' +
                             '</div>' +
                             '<div class="chatting_insert_menu">' +
@@ -440,7 +449,7 @@ function chatAll() {
 
 
                         // 다이얼로그(Dialog) 생성하기
-                        var chattingDiglog = $("<div>").attr("title", chatRoom.roomTitle).html(dialogContent);
+                        var chattingDiglog = $("<div>").attr("id", "chatting_dialog_" + roomId).attr("title", chatRoom.roomTitle).html(dialogContent);
 
                         // 다이얼로그(Dialog)를 body 요소에 추가
                         chattingDiglog.appendTo("body");
