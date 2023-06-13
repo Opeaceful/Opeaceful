@@ -39,6 +39,7 @@
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFile" alias="approvalFile"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalForm" alias="approvalForm"/>
 		<typeAlias type="com.company.opeaceful.salary.model.vo.Salary" alias="salary"/>
+		<typeAlias type="com.company.opeaceful.calendar.model.vo.Calendar" alias="calendar"/>
 	</typeAliases>
 	
 	<!-- 
@@ -58,6 +59,7 @@
 		<mapper resource="/mappers/annual-mapper.xml"/> 
 		<mapper resource="/mappers/approval-mapper.xml"/> 
 		<mapper resource="/mappers/salary-mapper.xml"/> 
+		<mapper resource="/mappers/calendar-mapper.xml"/> 
 	</mappers>
 
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="calendarMapper">
+
+	<!-- 캘린더 일정 리스트 조회용 -->
+	<resultMap type="calendar" id="calendarListResultSet">
+		<id column="CALENDAR_NO" property="calendarNo"/>
+		<result column="CATEGORY" property="category"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="TITLE" property="title"/>
+		<result column="CONTENT" property="content"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+		<result column="COLOR" property="color"/>
+		<result column="START" property="start"/>
+		<result column="END" property="end"/>
+		<result column="BORDER_COLOR" property="borderColor"/>
+		<result column="BACKGROUND_COLOR" property="backgroundColor"/>
+		
+	</resultMap>
+	
+	<!-- 개인캘린더 일정 조회 -->
+	<select id="myCalendarList" resultMap="calendarListResultSet">
+		SELECT CALENDAR_NO,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BORDER_COLOR,
+			   COLOR AS BACKGROUND_COLOR,
+			   D_DAY
+		FROM CALENDAR
+		WHERE CATEGORY = 'M' AND USER_NO = #{userNo};
+	</select>
+	
+	<!-- 팀캘린더 일정 조회 -->
+	<select id="teamCalendarList" resultMap="calendarListResultSet">
+		SELECT CALENDAR_NO,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY
+		FROM CALENDAR
+		WHERE CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
+												FROM USER_DEPARTMENT
+												WHERE USER_NO = #{userNo});
+	</select>
+	
+	<!-- 캘린더 전체(개인+팀) 일정 조회 -->
+	<select id="fullCalendarList" resultMap="calendarListResultSet">
+		SELECT CALENDAR_NO,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY
+		FROM CALENDAR
+		WHERE (CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
+												FROM USER_DEPARTMENT
+												WHERE USER_NO = #{userNo})) OR (CATEGORY = 'M' AND USER_NO = #{userNo});
+	</select> 
+	
+	
+	
+	
+	
+</mapper>

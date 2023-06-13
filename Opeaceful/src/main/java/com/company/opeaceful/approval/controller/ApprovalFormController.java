@@ -150,6 +150,8 @@ public class ApprovalFormController {
 		
 		// ---- 본문에 삭제된 이미지있으면 실제 파일도 삭제시키는 구역 -------
 		List<ApprovalFile> savedFileList = aprService.selectFileList("form", form.getFormNo(), "content");
+		//이 위에코드 수정!
+
 
 		System.out.println("검사 전 " + savedFileList);
 		System.out.println(savedFileList.size());

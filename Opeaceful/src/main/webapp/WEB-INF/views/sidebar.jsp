@@ -89,7 +89,7 @@
 
                 <!-- 캘린더 -->
                 <li id="sidebar-calender">
-                    <a href="">
+                    <a href="${path}/calendar/calendarForm/M">
                         <span class="side-icon-size"><i class="sidebar-icon bi bi-calendar-date"></i></span>
                         <span class="sidebar-text">캘린더</span>
                     </a>
