@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDepatment {
+public class UserDepartment {
 	
 	private int userNo;
 	private int pCode;

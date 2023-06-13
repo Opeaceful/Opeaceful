@@ -195,6 +195,7 @@ public class LoginController {
 			map.put("currentPage", 1);
 			session.setAttribute("map", map);
 			
+			model.addAttribute("loginUser", loginUser);
 			model.addAttribute("topDept",topDept);
 			model.addAttribute("mainNoticeList", mainNoticeList);
 			model.addAttribute("attendance",attendance);

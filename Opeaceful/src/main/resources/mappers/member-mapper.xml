@@ -91,7 +91,7 @@
 	</insert>
 	
 	<!-- [지영] 2.dept insert -->
-	<insert id="insertUserDept" parameterType="userDepatment" useGeneratedKeys="true">
+	<insert id="insertUserDept" parameterType="userDepartment" useGeneratedKeys="true">
 		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
 	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
 	 	</selectKey>

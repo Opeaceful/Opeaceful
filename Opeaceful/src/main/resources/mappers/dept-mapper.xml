@@ -14,7 +14,7 @@
 	<result column="P_NAME" property="pName"/>
 </resultMap>
 
-<resultMap type="userDepatment" id="userDepartResultSet">
+<resultMap type="userDepartment" id="userDepartResultSet">
 	<result column="USER_NO" property="userNo"/>
 	<result column="P_CODE" property="pCode"/>
 	<result column="DEPT_CODE" property="deptCode"/>

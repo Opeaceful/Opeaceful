@@ -168,12 +168,39 @@
 
 
 /* ---------- 캘린더 ---------- */
-#calender-box{height: 40%;}
-/* ---------- 메모 ---------- */
-#memo-box{height: 20%;}
-
-
-
+#calender-box{
+    height: 60%;
+    padding: 40px 22px 0 20px;
+}
+/* 양쪽 화살표 버튼 */
+#calender-box .fc-button-primary {
+    color: var(--color-navy);
+    background-color: var(--color-white);
+    border-color: var(--color-white);
+}
+/* 보더 없앰 */
+#calender-box .fc th, .fc td {
+    border-style: solid;
+    border-width: 0px;
+    vertical-align: top;
+}
+/* 연/월 폰트 설정 */
+#calender-box  .fc-center>div>h2 {
+    font-size: 26px;
+    font-weight: 300;
+}
+/* th 폰트 굵기 */
+#calender-box .fc th{font-weight: 500;}
+/* td 숫자 위치 조정 및 폰트 */
+#calender-box .fc-day-number {
+    margin-top: 10px;
+    margin-right: 10px;
+    font-weight: 300;
+    font-size: 12px;
+}
+#calender-box .fc-dayGrid-view .fc-body .fc-row {
+    min-height: 3.5em;
+}
 
 /* ---------- 날씨 ---------- */
 .weather .row{
