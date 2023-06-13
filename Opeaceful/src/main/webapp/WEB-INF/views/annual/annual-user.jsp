@@ -19,7 +19,7 @@
 <body>
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
-        <div class="container">
+        <div class="annual-wrap container">
             <!-- 제목 -->
    			<div class="title-box">
 				<h2 class="title-common">연차</h2>
@@ -31,7 +31,7 @@
                     <input type="search" name="keyword" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
                     <button type="button" class="search-btn btn btn-outline-secondary"  id="all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
                 </div>
-                <div class="annual-user-info container row align-items-center">
+                <div class="annual-user-info row align-items-center">
                         <div class="col-9">
                             <article id="no" data-userno="${m.userNo}"></article>
                             <span class="ms-5 fs-4" id="annual-user-name">${m.userName}</span>

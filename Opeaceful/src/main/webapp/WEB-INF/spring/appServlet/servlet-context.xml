@@ -50,6 +50,7 @@
 				<beans:bean class="com.company.opeaceful.commom.interceptor.BoardTypeInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-
+	
+	
 	
 </beans:beans>

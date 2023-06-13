@@ -10,8 +10,7 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
-
+	<script src="https://kit.fontawesome.com/3d2d296c5f.js" crossorigin="anonymous"></script>
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"/>
    
@@ -89,7 +88,7 @@
 
                 <!-- 캘린더 -->
                 <li id="sidebar-calender">
-                    <a href="">
+                    <a href="${path}/calendar/calendarForm/M">
                         <span class="side-icon-size"><i class="sidebar-icon bi bi-calendar-date"></i></span>
                         <span class="sidebar-text">캘린더</span>
                     </a>
@@ -261,6 +260,8 @@
    		  function() {
    			  $(".sidebar").css("width", "300px");
               $(".sidebar-bt").css("display", "inline-block");
+            //   $("#sidebar-info>a").css('white-space','nowrap');
+            //   $("#sidebar-logout>a").css('white-space','nowrap');
 		  }, 
    		  function() {
    			$(".sidebar").css("width", "60px");
