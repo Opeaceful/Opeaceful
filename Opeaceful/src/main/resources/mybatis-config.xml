@@ -22,7 +22,7 @@
 		<typeAlias type="com.company.opeaceful.orgChart.model.vo.OrgChart" alias="orgChart"/>
 		<typeAlias type="com.company.opeaceful.dept.model.vo.Department" alias="department"/>
 		<typeAlias type="com.company.opeaceful.dept.model.vo.Position" alias="position"/>
-		<typeAlias type="com.company.opeaceful.dept.model.vo.UserDepatment" alias="userDepatment"/>
+		<typeAlias type="com.company.opeaceful.dept.model.vo.UserDepartment" alias="userDepartment"/>
 		<typeAlias type="com.company.opeaceful.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.company.opeaceful.board.model.vo.Board" alias="board"/>
 		<typeAlias type="com.company.opeaceful.member.model.vo.ResignedMember" alias="resignedMember"/>
@@ -39,6 +39,7 @@
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFile" alias="approvalFile"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalForm" alias="approvalForm"/>
 		<typeAlias type="com.company.opeaceful.salary.model.vo.Salary" alias="salary"/>
+		<typeAlias type="com.company.opeaceful.calendar.model.vo.Calendar" alias="calendar"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFavor" alias="approvalFavor"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalLine" alias="approvalLine"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalMemo" alias="approvalMemo"/>
@@ -61,6 +62,7 @@
 		<mapper resource="/mappers/annual-mapper.xml"/> 
 		<mapper resource="/mappers/approval-mapper.xml"/> 
 		<mapper resource="/mappers/salary-mapper.xml"/> 
+		<mapper resource="/mappers/calendar-mapper.xml"/> 
 	</mappers>
 
 

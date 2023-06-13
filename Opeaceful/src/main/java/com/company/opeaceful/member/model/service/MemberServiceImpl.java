@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
 import com.company.opeaceful.dept.model.vo.Department;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.dao.MemberDao;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int insertUserDept(UserDepatment ud) {
+	public int insertUserDept(UserDepartment ud) {
 		return memberDao.insertUserDept(ud);
 	}
 	

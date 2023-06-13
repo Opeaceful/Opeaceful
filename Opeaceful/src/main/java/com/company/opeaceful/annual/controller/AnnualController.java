@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.company.opeaceful.annual.model.service.AnnualService;
@@ -23,10 +25,12 @@ import com.company.opeaceful.approval.model.service.ApprovalService;
 import com.company.opeaceful.approval.model.vo.Approval;
 import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
-@SessionAttributes({"loginUser"})
+@SessionAttributes({"loginUser", "loginUserRole"})
+//@SessionAttributes({"loginUser", "loginUserRole"})
 @RequestMapping("/annual")
 public class AnnualController {
 
@@ -44,14 +48,24 @@ public class AnnualController {
 
 	// [지의] 총 연차테이블 조회
 	@GetMapping("/setting")
-	public String selectAnnualAll(Model model){
+	public String selectAnnualAll(Model model, @SessionAttribute("loginUserRole") List<UserRole> loginUserRole){
 		
 		List<Annual> list = annualService.selectAnnualAll();
-		
-		//logger.info("get : "+list);
-		model.addAttribute("annual", list);
-		
-		return "annual/annual";
+
+		boolean roleCheck = false;
+		for(UserRole role:loginUserRole) {
+			if(role.getRoleCode().equals("Y01")) {
+				roleCheck = true;
+				break;
+			}
+		}
+		if(roleCheck == true) {
+			model.addAttribute("annual", list);
+			return "annual/annual";
+		}else {
+			model.addAttribute("errorMsg", "권한이 없는 사용자입니다.");
+			return "errorPage";
+		}
 	}
 	
 	// [지의] 총 연차 수정
@@ -71,21 +85,31 @@ public class AnnualController {
 	
 	// [지의] 유저 연차 조회 페이지 포워딩
 	@GetMapping("/list")
-	public String listAnnaul(){
-		
-		return "annual/annual-user";
+	public String listAnnaul(Model model,@SessionAttribute("loginUserRole") List<UserRole> loginUserRole){
+		boolean roleCheck = false;
+		for(UserRole role:loginUserRole) {
+			if(role.getRoleCode().equals("Y01")) {
+				roleCheck = true;
+				break;
+			}
+		}
+		if(roleCheck == true) {
+			return "annual/annual-user";
+		}else {
+			model.addAttribute("errorMsg", "권한이 없는 사용자입니다.");
+			return "errorPage";
+		}
 	}
 	
 	// [지의] 유저 연차 조회
 	@PostMapping("/list/{userNo}")
 	public String selectUserAnnaul(@PathVariable("userNo") int userNo,
+									@SessionAttribute("loginUserRole") List<UserRole> loginUserRole,
 									Model model){
 
 		Member m = annualService.selectUserAnnaul(userNo);
 		List<Approval> apr = approvalService.selectUserApproval(userNo);
-		
-//		logger.info("m : "+ m);
-//		logger.info("a : "+ apr);
+
 		model.addAttribute("m",m);
 		model.addAttribute("apr", apr);
 		

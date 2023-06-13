@@ -28,7 +28,7 @@
             <h2 class="title-underline">마이페이지</h2>
 
             <!-- 회원정보 -->
-            <form class="mypage-content container row row-col-2" action="${path}/member/mypage" enctype="multipart/form-data" method="post">
+            <form class="mypage-content row row-col-2" action="${path}/member/mypage" enctype="multipart/form-data" method="post">
                 <!-- 이미지부분 -->
                 <div class="col-3 mypage-left">
                     <div class="mypage-profile-box">
