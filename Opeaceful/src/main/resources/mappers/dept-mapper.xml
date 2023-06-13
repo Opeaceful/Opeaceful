@@ -14,7 +14,7 @@
 	<result column="P_NAME" property="pName"/>
 </resultMap>
 
-<resultMap type="userDepatment" id="userDepartResultSet">
+<resultMap type="userDepartment" id="userDepartResultSet">
 	<result column="USER_NO" property="userNo"/>
 	<result column="P_CODE" property="pCode"/>
 	<result column="DEPT_CODE" property="deptCode"/>
@@ -51,7 +51,12 @@
 	where top_dept_code is null;
   </select>
   
- 
+ <!-- [혜린] 유저 직급코드 조회 -->
+ <select id="calendarDeptCode" resultType="int">
+ 	SELECT DEPT_CODE
+ 	FROM USER_DEPARTMENT
+ 	WHERE USER_NO = #{userNo}
+ </select>
   
   
 </mapper>

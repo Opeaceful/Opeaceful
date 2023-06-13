@@ -17,8 +17,15 @@
 		<result column="END" property="end"/>
 		<result column="BORDER_COLOR" property="borderColor"/>
 		<result column="BACKGROUND_COLOR" property="backgroundColor"/>
-		
 	</resultMap>
+	
+	<!-- 캘린더 내부 메모 -->
+	<resultMap type="calendarMemo" id="memoResultSet">
+		<id column="USER_NO" property="userNo"/>
+		<result column="MEMO" property="memo"/>
+	</resultMap>
+	
+	
 	
 	<!-- 개인캘린더 일정 조회 -->
 	<select id="myCalendarList" resultMap="calendarListResultSet">
@@ -75,7 +82,45 @@
 												WHERE USER_NO = #{userNo})) OR (CATEGORY = 'M' AND USER_NO = #{userNo});
 	</select> 
 	
+	<!-- 일정 추가 -->
+	<insert id="insertEvent" parameterType="calendar">
+		INSERT INTO CALENDAR(CATEGORY, 
+							 USER_NO, 
+							 TITLE, 
+							 CONTENT, 
+							 START_DATE, 
+							 END_DATE, 
+							 COLOR, 
+							 D_DAY)
+		VALUES (#{category},
+		        #{userNo},
+		        #{title},
+		        #{content},
+		        #{startDate},
+		        #{endDate},
+		        #{color},
+		        #{dDay})
+	</insert>
 	
+	<!-- 메모 추가 -->
+	<insert id="insertMemo" parameterType="calendarMemo">
+	 	INSERT INTO CALENDAR_MEMO(USER_NO, MEMO)
+	 					VALUES(#{userNo}, #{memo})
+	</insert>
+	
+	<!-- 메모 수정 -->
+	<update id="updateMemo" parameterType="calendarMemo">
+		UPDATE CALENDAR_MEMO SET
+			MEMO = #{memo}
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<!-- 메모 조회 (존재확인용) -->
+	<select id="selectMemo" resultMap="memoResultSet">
+		SELECT *
+		FROM CALENDAR_MEMO
+		WHERE USER_NO = #{userNo}
+	</select>
 	
 	
 	

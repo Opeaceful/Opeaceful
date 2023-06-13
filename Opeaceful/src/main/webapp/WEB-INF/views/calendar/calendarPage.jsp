@@ -68,7 +68,7 @@
         </div>
         <!-- 일정추가버튼 영역 -->
         <div class="add-event-wrap modify-btn">
-          <div><button type="button" class="test10 add-event btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-plus-square"></i> 일정추가</button></div>
+          <div><button type="button" id="addEventBtn" class="test10 add-event btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-plus-square"></i> 일정추가</button></div>
         </div>
       </div>
 
@@ -152,7 +152,7 @@
                       <tr>
                         <td colspan="3">
                           <div class="event-td">
-                            <input type="date" name="dateStart" class="date-box box-shadow-put"> 시작 <input type="date" name="dateEnd" class="date-box box-shadow-put"> 종료
+                            <input type="date" name="dateStart" class="date-box box-shadow-put" required> 시작 <input type="date" name="dateEnd" class="date-box box-shadow-put" required> 종료
                           </div>
                         </td>
                       </tr>
@@ -161,7 +161,7 @@
                       </tr>
                       <tr>
                         <td colspan="3">
-                          <div class="event-td"><input id="event-title" class="modal-event-title box-shadow-put form-control" type="text" aria-label="default input example" maxlength="20"></div>
+                          <div class="event-td"><input id="event-title" class="modal-event-title box-shadow-put form-control" type="text" aria-label="default input example" maxlength="20" required></div>
                         </td>
                       </tr>
                       <tr>
@@ -180,7 +180,7 @@
                       <tr>
                         <td colspan="3">
                           <div class="event-td my-event-col-box">
-                            <input type="radio" class="btn-check" name="color" id="col1" value="var(--col1)" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="color" id="col1" value="var(--col1)" autocomplete="off">
                             <label class="color color1" for="col1"></label>
 
                             <input type="radio" class="btn-check" name="color" id="col2" value="var(--col2)" autocomplete="off">
@@ -205,7 +205,7 @@
                             <label class="color color8" for="col8"></label>
                           </div>
                           <div class="event-td tm-event-col-box">
-                            <input type="radio" class="btn-check" name="t-color" id="col11" value="var(--col11)" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="t-color" id="col11" value="var(--col11)" autocomplete="off">
                             <label class="color color11" for="col11"></label>
                             
                             <input type="radio" class="btn-check" name="t-color" id="col12" value="var(--col12)" autocomplete="off">
@@ -225,7 +225,7 @@
                       <tr>
                         <td>
                           <div class="form-check form-switch">
-                            <input class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <input name="event-d-day" value="Y" class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                           </div>
                         </td>
                       </tr>
@@ -233,8 +233,10 @@
                 </form>
             </div>
             <div class="modal-footer">
+            
+              <button type="button" class="w90-btn btn btn-outline-danger" id="modal-submit-btn" style="display:none">일정삭제</button>
               <button type="button" class="w90-btn btn btn-primary" id="modal-submit-btn" data-submit="${cno}">일정등록</button>
-              <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+              <button type="button" class="w90-btn btn btn-outline-primary" id="modal-cancel-btn" data-bs-dismiss="modal" aria-label="Close">취소</button>
           </div>
         </div>
     </div>
@@ -261,37 +263,12 @@
   // }, 100);
   
 
-  $(function(){
-    // ===== 일정추가 모달 내 카테고리 색 지정박스 =====
-    //color box div
-    let mycol = $(".my-event-col-box");
-    let tmcol = $(".tm-event-col-box");
-    
-    $('.my-event-btn').on('click', function(){
-      // console.log("mine check");
-      tmcol.css('display', 'none');
-      mycol.css('display', 'block');
-    })
-
-    $('.tm-event-btn').on('click', function(){
-      // console.log("team check");
-      mycol.css('display', 'none');
-      tmcol.css('display', 'block');
-    })
-
-    $(".d-event").hover(function(){
-      $(".d-xbtn").css('display', 'block');
-    }, function(){
-      $(".d-xbtn").css('display', 'none');
-    })
-
-
-    //.fc-content 일정 클릭 시 모달열리게
-	
+  
 
 
 
-  })
+
+  
 </script>
 
 
