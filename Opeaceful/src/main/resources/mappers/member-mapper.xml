@@ -349,7 +349,14 @@
 	</update>
 
 
-
+	<!-- =================== [delete] =================== -->
+  	<!-- [지영] 3년이 지난 유저 데이터 삭제 
+  	<delete id="deleteMembers" parameterType="java.util.List">
+  		<foreach collection="list" item="uesrNo" separator=";">
+  		DELETE FROM salary 
+		WHERE SALARY_NO = #{uesrNo}
+		</foreach>	
+  	</delete> -->
 
 
 </mapper>

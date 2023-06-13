@@ -19,8 +19,6 @@ public interface MemberService {
 	int selectENO();
 	
 	List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD);
-	
-	//UserDepartment selectdpName(int userNo);
 
 	int updatePwd(Member loginUser);
 

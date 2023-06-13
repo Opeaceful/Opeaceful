@@ -144,45 +144,11 @@ public class MemberDao {
 	
 	
 	//3년 지난 퇴사자 데이터 삭제
-		public int deleteMembers(List<Integer> delist) {
-			
-			
-			return 0;
-		}
+	public int deleteMembers(List<Integer> delist) {
+		
+		//리플 삭제, 게시판삭제, 사인삭제, 유저직급삭제 , 멤버삭제 
+		return 0;
+	}
 	
-	//3년 지난 멤버 데이터 삭제
-	
-	// 파일 저장할 저장경로 얻어오기
-//			
-//			
-	
-//	user
-	
-//  결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
-//	public int deleteApproval(int approvalNo,  String deleteFolderPath) {
-//		
-//		int result = sqlSession.delete("aprMapper.deleteApproval", approvalNo);
-//		if (result > 0) {
-//			List<ApprovalFile> fileList = selectFileList("approval-memo", approvalNo, "all");
-//			if (fileList.size() > 0) {
-//				// 파일 리스트 실제 파일들 삭제
-//				for (ApprovalFile file : fileList) {
-//					File deleteFile = new File(deleteFolderPath + file.getChangeName());
-//					if (deleteFile.exists()) { // 파일이 존재하면
-//						deleteFile.delete();// 파일 삭제
-//					}
-//				}
-//				result = deleteFileList(fileList);
-//			}
-//		}
-	
-//	SELECT SIGNATURE_IMG
-//	FROM SIGNATURE_IMG
-//	WHERE USER_NO = #{ userNo }
-//
-//		return result;
-//	};
-
-
 
 }

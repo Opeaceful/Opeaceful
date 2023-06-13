@@ -29,7 +29,7 @@
 	<task:scheduler id="opeacefulScheduler" pool-size="100"/>
 	<task:scheduled-tasks scheduler="opeacefulScheduler">
 		<task:scheduled ref="loginController" method="resetAnnualMembers" cron="0 0 0 1 1 ?"/>
-		<task:scheduled ref="memberController" method="deleteMembers" cron="0/5 * * * * ?"/>
+		<task:scheduled ref="scheduling" method="deleteMembers" cron="1 * * * * ?"/>
 		
 		
 		<!--  <task:scheduled ref="MemberController" method="deleteMembers" cron="0 0 0 1 * *"/>-->
