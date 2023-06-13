@@ -132,7 +132,6 @@ function deptListClick() {
 }
 
 function selectPersonnel(deptCode, topDeptCode) {
-	console.log("실행돼??????????????????");
 
 	let html = "";
 
@@ -149,24 +148,24 @@ function selectPersonnel(deptCode, topDeptCode) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					html += `<tr class="change-tr">
+					html += `<tr class="change-tr" data-id="${team.userNo}">
 								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" name="topDeptCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none" id="topDeptName" name="topDeptCode" aria-label="Default select example">
 										<option value="" selected>${team.topDeptName}</option>
 									</select>
 								</td>
 								<td>${team.deptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" name="deptCode"  aria-label="Default select example">
+									<select class="form-select box-shadow-none" id="deptName" name="deptCode"  aria-label="Default select example">
 										<option selected>${team.deptName}</option>
 									</select>
 								</td>
 								<td>${team.pName}</td>
 								<td>
-									<select class="form-select box-shadow-none" name="pCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none" id="pName" name="pCode" aria-label="Default select example">
 										<option value="" selected>${team.pName}</option>
 									</select>
 								</td>
@@ -624,6 +623,46 @@ function personnelClick() {
 	});
 
 	///////////////////////////////////////////////////////////////////////// 인사발령
+
+let selectButton = false;
+
+//확인 버튼 눌렀을때 salaryAll에서 처리할 이벤트
+$("#ok-personnel").click(function(){
+
+    let topDeptName = $("#topDeptName").val(); 
+    let deptName = $("#deptName").val();
+    let pName = $("#pName").val();
+	// let userNo = $(".change-tr").dataset.id();
+
+	let orgChart = {
+		// userNo : userNo,
+		deptName : deptName,
+		pName : pName,
+		topDeptName : topDeptName
+	};
+
+	let html = "";
+
+	$.ajax({
+			url : path+"/orgChart/insertPersonnel",   
+			type : 'post', 
+			data: JSON.stringify(orgChart),
+			contentType: "application/json",
+			success : function(result){
+				console.log('인사발령 인서트 result: ' ,result);
+	
+				
+			}
+		})
+
+	
+});
+
+//모달 종료시
+$("#cancel-personnel").click(function(){
+    selectButton = false;
+
+});
 
 	// let deptInput = document.querySelector('.input-click');
 

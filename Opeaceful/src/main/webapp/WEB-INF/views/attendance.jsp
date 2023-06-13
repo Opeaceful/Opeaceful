@@ -78,14 +78,19 @@
                     </tr>
                 </thead>
                 <tbody id="AttendanceTbody">
-					<tr>
-					    <c:forEach items="${adList}" var="ad">
-			                	<c:if test="${ad.workDate != null and ad.userNo != 0 and ad.workOn != null and ad.workOff != null and ad.userName != null and ad.totalWorkTime != null and ad.approvalNo != 0 and ad.status != 0 and ad.startDate != null and ad.endDate != null}">
-						            <td>${ad.workDate}</td>
+					<c:forEach items="${adList}" var="ad">
+						<tr>
+							<td>${ad.date}</td>
+					    	<c:choose>
+					    		<c:when test="${ ad.userNo != 0 }">
 						            <td>${ad.userName}</td>
 						            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
 						            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
-						            <td><fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간</td>
+						            <td>
+							            <c:if test="${ad.type eq 0}">
+							            	<fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간
+							            </c:if>
+						            </td>
 						            <c:if test="${ad.type eq 1}">
 						                <td>연차</td>
 						            </c:if>
@@ -95,25 +100,17 @@
 						            <c:if test="${ad.type eq 3}">
 						                <td>오후 반차</td>
 						            </c:if>
-								</c:if>
-								<c:if test="${ad.workDate == null and ad.userNo != 0 and ad.workOn == null and ad.workOff == null and ad.userName != null and ad.totalWorkTime == null and ad.approvalNo != 0 and ad.status != 0 and ad.startDate != null and ad.endDate != null}">
-						            <td>${ad.date}</td>
-						            <td>${ad.userName}</td>
+					    		</c:when>
+						    	<c:otherwise>
 						            <td></td>
 						            <td></td>
 						            <td></td>
-						            <c:if test="${ad.type eq 1}">
-						                <td>연차</td>
-						            </c:if>
-						            <c:if test="${ad.type eq 2}">
-						                <td>오전 반차</td>
-						            </c:if>
-						            <c:if test="${ad.type eq 3}">
-						                <td>오후 반차</td>
-						            </c:if>
-								</c:if>
-					    </c:forEach>
+						            <td></td>
+						            <td></td>
+						    	</c:otherwise>
+					    	</c:choose>
 					</tr>
+					    </c:forEach>
                 </tbody>
             </table>
             <!-- 페이징 영역 -->
@@ -144,6 +141,7 @@
                         	<c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
                         		<li class="page-item">
                         			<a class="page-link" href="${url}${item}" id="CP${item}">${item }</a>
+                        			<%-- <a class="page-link" href="${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}&cpage=${cpage}" id="CP${item}">${item }</a>                  --%>       		
                         		</li>
 			      			</c:forEach>
 			      			

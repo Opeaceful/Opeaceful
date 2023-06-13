@@ -165,13 +165,13 @@ public class OrgChartController {
 	// 직급명 변경
 	@PostMapping("/updatePname")
 	@ResponseBody
-	public int updatePname(OrgChart orgChart) {
+	public String updatePname(OrgChart orgChart) {
 				
 		int result = orgchartService.updatePname(orgChart);
 				
 		System.out.println("생성 : "+result+", "+orgChart);
 
-		return result;
+		return new Gson().toJson(result);
 	}
 	
 	// 직급 삭제
@@ -228,5 +228,23 @@ public class OrgChartController {
 		System.out.println("personnelList에 담긴 값 : "+personnelList);
 		return new Gson().toJson(personnelList);
 				
+	}
+	
+	// 인사발령 
+	@PostMapping("insertPersonnel")
+	@ResponseBody
+	public String insertPersonnel(Integer deptCode) {
+		
+		System.out.println("실행 안됨????????");
+		
+		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
+		
+		
+		
+		List<OrgChart> insertPersonnel = orgchartService.insertPersonnel(personnelList);
+		
+		System.out.println("insertPersonnel에 담긴 값 : "+insertPersonnel);
+		
+		return new Gson().toJson(insertPersonnel);
 	}
 }

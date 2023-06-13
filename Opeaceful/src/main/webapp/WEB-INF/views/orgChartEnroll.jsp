@@ -185,8 +185,8 @@
 							</table>
 						</div>
 						<div class="modal-footer org-footer">
-							<button type="button" class="btn btn-primary w90-btn ms-auto">저장</button>
-							<button type="button" class="btn btn-outline-primary w90-btn" data-bs-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-primary w90-btn ms-auto" id="ok-personnel">저장</button>
+							<button type="button" class="btn btn-outline-primary w90-btn" id="cancel-personnel" data-bs-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</div>

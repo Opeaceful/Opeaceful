@@ -83,24 +83,6 @@
 		        AND #{endDate} >= D.DATE  
 		) AS RESULT
 		ORDER BY DATE ASC
-		<if test='year1 != null '>
-	      AND YEAR_REPORTED = #{year1}
-	    </if>
-	    <if test='month1 != 13 and month1 != null'>
-	      AND MON_REPORTED = #{month1}
-	    </if>
-		<if test='day1 != 32 and day1 != null'>
-	      AND MON_REPORTED = #{day1}
-	    </if>
-	    <if test='year2 != null '>
-	      AND YEAR_REPORTED = #{year2}
-	    </if>
-	    <if test='month2 != 13 and month2 != null'>
-	      AND MON_REPORTED = #{month2}
-	    </if>
-		<if test='day2 != 32 and day2 != null'>
-	      AND MON_REPORTED = #{day2}
-	    </if>
 	</select>
 	
 	<!-- [가영] 조회한 모든 사원의 출퇴근 조회 -->
@@ -128,37 +110,23 @@
 		        LEFT JOIN MEMBER M ON APP.USER_NO = M.USER_NO
 		        WHERE D.DATE >= #{startDate} 
 		            AND #{endDate} >= D.DATE
+		            <if test='no != null'>
+						AND APP.USER_NO IN 
+						<foreach item="uno" collection="no"
+							separator="," open="(" close=")">
+							#{uno}
+						</foreach>
+					</if>
+					<if test = 'status != null'>
+						AND APP.STATUS = 1
+					</if>
 		    ) TEST ON (D.DATE = TEST.DATE)
 		    WHERE D.DATE >= #{startDate} 
 		        AND #{endDate} >= D.DATE  
 		) AS RESULT
 		ORDER BY DATE ASC
 		<where>
-			<if test='year1 != null '>
-		      AND YEAR_REPORTED = #{year1}
-		    </if>
-		    <if test='month1 != 13 and month1 != null'>
-		      AND MON_REPORTED = #{month1}
-		    </if>
-			<if test='day1 != 32 and day1 != null'>
-		      AND MON_REPORTED = #{day1}
-		    </if>
-		    <if test='year2 != null '>
-		      AND YEAR_REPORTED = #{year2}
-		    </if>
-		    <if test='month2 != 13 and month2 != null'>
-		      AND MON_REPORTED = #{month2}
-		    </if>
-			<if test='day2 != 32 and day2 != null'>
-		      AND MON_REPORTED = #{day2}
-		    </if>
-		    <if test='no != null'>
-				AND A.USER_NO IN 
-				<foreach item="uno" collection="no"
-					separator="," open="(" close=")">
-					#{uno}
-				</foreach>
-			</if>
+		    
 		</where>
 	</select>
 	
@@ -170,6 +138,9 @@
 		    SELECT DATE - INTERVAL 1 DAY
 		    FROM DATE_RANGE
 		    WHERE DATE > #{startDate} 
+		    	<if test="startDate == null">
+		    		#{startDate} = #{startDate}
+		    	</if>
 		)
 		SELECT COUNT(*) AS COUNT
 		FROM (
@@ -189,38 +160,21 @@
 			        LEFT JOIN MEMBER M ON APP.USER_NO = M.USER_NO
 			        WHERE D.DATE >= #{startDate} 
 			            AND #{endDate} >= D.DATE  
+			            <if test='no != null'>
+							AND APP.USER_NO IN 
+							<foreach item="uno" collection="no"
+								separator="," open="(" close=")">
+								#{uno}
+							</foreach>
+						</if>
+						<if test = 'status != null'>
+							AND APP.STATUS = 1
+						</if>
 			    ) TEST ON (D.DATE = TEST.DATE)
 			    WHERE D.DATE >= #{startDate} 
 			        AND #{endDate} >= D.DATE  
 			) AS RESULT
 		) AS COUNT_RESULT
-		<where>
-			<if test='year1 != null '>
-		      AND YEAR_REPORTED = #{year1}
-		    </if>
-		    <if test='month1 != 13 and month1 != null'>
-		      AND MON_REPORTED = #{month1}
-		    </if>
-			<if test='day1 != 32 and day1 != null'>
-		      AND MON_REPORTED = #{day1}
-		    </if>
-		    <if test='year2 != null '>
-		      AND YEAR_REPORTED = #{year2}
-		    </if>
-		    <if test='month2 != 13 and month2 != null'>
-		      AND MON_REPORTED = #{month2}
-		    </if>
-			<if test='day2 != 32 and day2 != null'>
-		      AND MON_REPORTED = #{day2}
-		    </if>
-		    <if test='no != null'>
-				AND USER_NO IN 
-				<foreach item="uno" collection="no"
-					separator="," open="(" close=")">
-					#{uno}
-				</foreach>
-			</if>
-		</where>
 	</select>
 
 	<!-- =================== [insert] =================== -->	

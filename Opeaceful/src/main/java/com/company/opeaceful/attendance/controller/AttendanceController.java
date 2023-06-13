@@ -110,11 +110,19 @@ public class AttendanceController {
 		selectUser.put("endDate", endDate);
 		selectUser.put("userNo", loginUser.getUserNo());
 		selectUser.put("currentPage", currentPage);
+		
+		selectUser.put("year1", year1);
+		selectUser.put("month1", month1);
+		selectUser.put("day1", day1);
+		selectUser.put("year2", year2);
+		selectUser.put("month2", month2);
+		selectUser.put("day2", day2);
 				
 		List<Attendance> adList = attendanceService.selectUserAttendance(selectUser, currentPage);
 				
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("adList", adList);
+		model.addAttribute("map", selectUser);
 		
 		System.out.println("selectUser에 담긴 값 : "+selectUser);
 		System.out.println("adList에 담긴 값 : "+adList);
@@ -144,6 +152,13 @@ public class AttendanceController {
 		selectAllUser.put("endDate", endDate);
 		selectAllUser.put("currentPage", currentPage);
 		selectAllUser.put("no", no);
+		
+		selectAllUser.put("year1", year1);
+		selectAllUser.put("month1", month1);
+		selectAllUser.put("day1", day1);
+		selectAllUser.put("year2", year2);
+		selectAllUser.put("month2", month2);
+		selectAllUser.put("day2", day2);
 					
 		List<Attendance> adList = attendanceService.selectAllUserAttendance(selectAllUser, currentPage);
 		

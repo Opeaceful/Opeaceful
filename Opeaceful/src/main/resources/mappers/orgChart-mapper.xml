@@ -76,6 +76,8 @@
 		SELECT  USER_NAME,
 				DEPT_NAME,
 				P_NAME,
+				USER_NO,
+				P_CODE,
 				DEPT_CODE,
 				TOP_DEPT_CODE,
                 (SELECT DEPT_NAME
@@ -115,6 +117,12 @@
 	<insert id="insertPname" parameterType="orgChart" useGeneratedKeys="true" keyProperty="pCode">
 		INSERT INTO POSITION (P_NAME)
 		VALUES(#{pName})
+	</insert>
+	
+	<!-- 인사발령 -->
+	<insert id="insertPersonnel" parameterType="orgChart" useGeneratedKeys="true" keyProperty="personnelCode">
+		INSERT INTO PERSONNEL (PERSONNEL_DATE, USER_NO, P_BEFORE, P_PERSONNEL, D_BEFORE, D_PERSONNER)
+		VALUES (DATE_FORMAT(now(),'%Y-%m-%d'), #{userNo}, #{topDeptName} #{deptName}, #{topDeptName} #{deptName}, #{pName}, #{pName});
 	</insert>
 	
 	<!-- =================== [update] =================== -->

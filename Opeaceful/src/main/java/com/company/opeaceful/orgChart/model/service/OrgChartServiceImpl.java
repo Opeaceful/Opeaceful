@@ -94,4 +94,10 @@ public class OrgChartServiceImpl implements OrgChartService {
 	public List<OrgChart> selectPersonnel(int deptCode) {
 		return orgChartDao.selectPersonnel(deptCode);
 	}
+	
+	// 인사발령
+	@Override
+	public List<OrgChart> insertPersonnel(List<OrgChart> personnelList) {
+		return orgChartDao.insertPersonnel(personnelList);
+	}
 }

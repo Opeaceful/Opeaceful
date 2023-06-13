@@ -121,4 +121,9 @@ public class OrgChartDao {
 	public List<OrgChart> selectPersonnel(int deptCode) {
 		return sqlSession.selectList("orgChartMapper.selectPersonnel", deptCode);
 	}
+	
+	// 인사발령
+	public List<OrgChart> insertPersonnel(List<OrgChart> personnelList) {
+		return sqlSession.selectList("orgChartMapper.insertPersonnel", personnelList);
+	}
 }
