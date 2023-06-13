@@ -113,7 +113,7 @@ public class ApprovalController {
 	public String selectUserAnnualInfo( @ModelAttribute("loginUser") Member loginUser) {
 		Map<String, Double > map  = new HashMap<>();
 		
-		List<Approval> list = aprService.selectUserApproval(loginUser.getUserNo());
+		List<Approval> list = aprService.selectUserApprovalAll(loginUser.getUserNo());
 		
 		double usedAnnual = 0;
 		for(Approval apr : list) {
@@ -402,12 +402,53 @@ public class ApprovalController {
 	
 	
 	
+	// ajax용 결재문서 결재처리 ( + 결재자가 결재 후 다음 결재라인들 상태 변경) 
+	@ResponseBody
+	@PostMapping("/updateApprovalStateAuthorized")
+	public int updateApprovalStateAuthorized( 	Integer approvalNo,
+												Integer myLevel
+												) {
+		int result = 0;
+		// 다음 결재자 변수용
+		int nextAuthorizeLevel = 999;
+		if(approvalNo != null && approvalNo != 0 && myLevel != null && myLevel != 0 ) {
+			List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo) ;
+
+			// 라인 리스트 돌면서 내 다음 결재자 찾기
+			for(int i=0; i<lines.size(); i++) {
+				ApprovalLine line = lines.get(i);
+				if(line.getType().equals("A")) {
+					if(line.getLevel() > myLevel && line.getLevel() < nextAuthorizeLevel) {
+						nextAuthorizeLevel = line.getLevel();
+					}
+				}
+			}
+			
+			if(nextAuthorizeLevel == 999) {
+				// 다음 결재자를 못찾았다는 소리임 -> 다음 결재자 값 갈아끼기
+				nextAuthorizeLevel = 0;
+			}
+			
+			// 결재라인 상태들 변경
+			result = aprService.updateNextLinesStatus(approvalNo, nextAuthorizeLevel, myLevel);
+		}
+		
+		return result;
+	}
+	
+	
 	// ajax용 결재문서 완결처리
 	@ResponseBody
 	@PostMapping("/updateApprovalStateEnd")
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
 		int result = 0;
 		System.out.println("============================="+approval);
+		
+		Approval existApproval = aprService.selectApproval(approval.getApprovalNo());
+		
+		// 작성자 userNo 세팅
+		approval.setUserNo(existApproval.getUserNo());
+		
 		if(approval != null && approval.getApprovalNo() != 0 ) {
 			result = aprService.updateApprovalStateEnd(approval);
 		}

@@ -78,6 +78,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<Approval> selectUserApproval(int userNo) {
 		return aprDao.selectUserApproval(userNo);
 	}
+	
+	@Override
+	public List<Approval> selectUserApprovalAll(int userNo) {
+		return aprDao.selectUserApprovalAll(userNo);
+	}
 
 	
 	@Override
@@ -229,6 +234,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	@Override
+	public int updateNextLinesStatus(int approvalNo, int nextAuthorizeLevel, int myLevel) {
+		return aprDao.updateNextLinesStatus(approvalNo, nextAuthorizeLevel, myLevel);
+	}
+	
+	@Override
 	public int updateApprovalStateEnd(Approval approval) {
 		return aprDao.updateApprovalStateEnd(approval);
 	}
@@ -282,6 +292,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteMemo(int memoNo) {
 		return aprDao.deleteMemo(memoNo);
 	}
+
+
+
+
 
 	
 

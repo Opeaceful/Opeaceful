@@ -32,6 +32,9 @@ public interface ApprovalService {
 
 		// [지의] 해당 유저 연차 조회
 		List<Approval> selectUserApproval(int userNo);
+	
+		// 유저 연차 조회(진행중, 완결 모두 다) 
+		List<Approval> selectUserApprovalAll(int userNo);	
 		
 	Approval selectApproval(int approvalNo);
 		
@@ -74,6 +77,8 @@ public interface ApprovalService {
 	int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList);
 	
 	int updateApprovalStatus(int approvalNo, int status);
+	
+	int updateNextLinesStatus(int approvalNo, int nextAuthorizeLevel, int myLevel);
 	
 	int updateApprovalStateEnd(Approval approval);
 	

@@ -309,14 +309,14 @@ export function setApprovalLines(list) {
     html += `<li >
               <select name="type" >
                 <option value="A" ${
-                  lines[i].type === 'A' ? 'selected' : ''
+                  line.type === 'A' ? 'selected' : ''
                 } >결재</option>
                 <option value="R" ${
-                  lines[i].type === 'R' ? 'selected' : ''
+                  line.type === 'R' ? 'selected' : ''
                 } >참조</option>
               </select>
-              <div value="${lines[i].userNo}">
-                ${lines[i].userName} ${lines[i].pName}
+              <div value="${line.userNo}">
+                ${line.userName} ${line.pName}
                 <button
                   class="btn-selected-delete btn btn-outline-primary"
                 >
@@ -421,6 +421,9 @@ let makeApprovalSendData = function () {
   // 본문데이터랑 본문용 이미지 파일 리스트 담겨서 반환됨
   let finalData = Tiny.returnFormData('approval-tiny');
 
+  // 선택된 타입 저장
+  finalData.append('type', type);
+
   // 첨부파일저장용
   let inputFile = document.getElementById('input-add-file').files;
   for (let file of inputFile) {
@@ -473,7 +476,7 @@ export function setTableList(approvalList, count, page) {
                       <td>${count - i - (page - 1) * 10}</td>
                       <td>${approval.formatDraftDate}</td>
                       <td>${approval.title}</td>
-                      <td>${approval.userName}</td>
+                      <td>${approval.userName}${approval.eno != 0 ? '('+approval.eno+')' : '' }</td>
                       <td>${approval.status}</td>
                       <td>${approval.type}</td>
                     </tr>`;
@@ -594,7 +597,8 @@ export function setAlamNum(returnCount, waitCount, referCount) {
 
 // 날짜 형식 yyyy-MM-dd로포맷팅해서 반환
 let formatDate = (date) => {
-  let tempDate = new Date(date);
+  let tempDate = new Date(Date.parse(date));
+  console.log("날짜변환중 ",tempDate);
 
   // Date 객체에서 연도, 월, 일 추출
   const year = tempDate.getFullYear();
@@ -680,7 +684,12 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
     '#end-approval .approval-files > div.scroll-bar'
   );
   const finalApprovalWrap = document.querySelector('.final-approval-wrap');
-
+  const selectedMenu = document.querySelector('.top-menubar-item.selected').dataset.menu;
+  const returnBtn = document.getElementById('btn-return-approval');
+  //결재버튼
+  const authorizeBtn = document.getElementById('btn-authorize-approval');
+  // 기본적으로 내 레벨 0으로 초기화
+  authorizeBtn.dataset.mylevel = '0';
   // 문서 번호 세팅
   document.getElementById('end-approval').dataset.approvalno =
     approval.approvalNo;
@@ -692,12 +701,13 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
   } else {
     // 그외 신청일자란 활성화
     requestDateTd.parentNode.style.display = 'table-row';
-    let startDate = formatDate(approval.startDate);
+    let startDate = approval.formatStartDate;
     if (approval.type == 1) {
       // 연차
-      let endDate = formatDate(approval.startDate);
+      let endDate = approval.formatEndDate;
       // 신청일자 세팅
       requestDateTd.innerText = startDate + ' ~ ' + endDate;
+      
     } else {
       // 반차들 신청일자 세팅
       requestDateTd.innerText = startDate;
@@ -752,6 +762,11 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
           `${lines[i].userName} ${lines[i].pName}(${lines[i].eno})`
         );
       } else {
+        if(lines[i].userNo == loginUserNo){
+          // 내 레벨 저장
+          authorizeBtn.dataset.mylevel = lines[i].level;
+        }
+
         let img = '';
         let date = '';
         if (lines[i].status == 2) {
@@ -827,10 +842,7 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
     document.getElementById('btn-delete-approval').style.display = 'none';
   }
 
-  const selectedMenu = document.querySelector('.top-menubar-item.selected')
-    .dataset.menu;
-  const returnBtn = document.getElementById('btn-return-approval');
-  const authorizeBtn = document.getElementById('btn-authorize-approval');
+
 
   // 결재문서 상태 대기중인 메뉴에서 문서 선택했을때
   if (selectedMenu == 'wait') {
@@ -1224,45 +1236,53 @@ let setEndModalEvent = () => {
             document.getElementById('end-approval').dataset.approvalno
           );
           const lastLine = document.getElementById('last-line');
-          let lastLineUserNo = Number(lastLine.dataset.userno);
+          let lastLineUserNo = lastLine ? Number(lastLine.dataset.userno) : -1;
           let loginUserNo = Number(e.target.dataset.userno);
+          let myLevel = Number(e.target.dataset.mylevel);
+          let contentHtml = null;
 
-          console.log('결재버튼 눌림', approvalNo, lastLineUserNo);
-          // Date 객체에서 연도, 월, 일 추출
-          let tempDate = new Date();
-          const year = tempDate.getFullYear();
-          const month = tempDate.getMonth() + 1; // 월은 0부터 시작하므로 +1 해줍니다.
-          const day = tempDate.getDate();
+          console.log('결재버튼 눌림', approvalNo, lastLineUserNo, myLevel);
 
-          // 추출한 연도, 월, 일로 문자열 생성해서 반환
-          let nowDate = `${year}-${month.toString().padStart(2, '0')}-${day
-            .toString()
-            .padStart(2, '0')}`;
-
+          // 본인이 마지막 결재자일 경우 완결처리위한 세팅 모두 하고 보내기
           if (lastLineUserNo == loginUserNo) {
+            // Date 객체에서 연도, 월, 일 추출
+            let tempDate = new Date();
+            const year = tempDate.getFullYear();
+            const month = tempDate.getMonth() + 1; // 월은 0부터 시작하므로 +1 해줍니다.
+            const day = tempDate.getDate();
+
+            // 추출한 연도, 월, 일로 문자열 생성해서 반환
+            let nowDate = `${year}-${month.toString().padStart(2, '0')}-${day
+              .toString()
+              .padStart(2, '0')}`;
+
+              console.log("결재 후 결재완료찍을때 현재날짜",nowDate);
+
             // 마지막 라인에 이미지 넣기
             lastLine.querySelector(
               '.approver-sign'
             ).innerHTML = `<img src="${e.target.dataset.lastsrc}">`;
             // 마지막 라인에 현재날짜로 날짜 입력하기
-            lastLine.querySelector('.approver-date').innerHTML = nowDate;
+            lastLine.querySelector('.approver-date').innerText = nowDate;
+
+            console.log("결재 후 결재완료찍을때 현재날짜",lastLine);
             // 완결처리를 위한 본문내용 세팅해서 보내기
             const content = document
               .querySelector('.final-approval-wrap')
               .cloneNode(true);
             let h2 = content.querySelector('.final-approval-wrap > h2');
             h2.remove();
-
-            let contentHtml = content.innerHTML;
-
+            contentHtml = content.innerHTML;
             console.log(content, contentHtml);
-
-            // todo! 결재 완료보내기
           }
+
+            // 내 라인상태 결재로 변경하기
+            MyAprData.updateApprovalStateAuthorized(approvalNo, myLevel, contentHtml);
         }
       });
     });
 };
+
 
 // 내결재 화면 기본 이벤트들 부여구역
 let setDefaultPageEvent = () => {

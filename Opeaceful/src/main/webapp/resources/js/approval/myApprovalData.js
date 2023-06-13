@@ -186,6 +186,8 @@ export function insertApproval(formData) {
           .toString()
           .padStart(2, '0')}`;
 
+          console.log("저장하자마자 결재완료찍을때 현재날짜",nowDate);
+
         let content = `<div class="end-approval-lines">
                       <div class="end-approval-lines-wrap">
                         <div class="end-approval-lines-title">결<br />재</div>
@@ -228,6 +230,49 @@ export function insertApproval(formData) {
   });
 }
 
+
+// 결재문서 결재처리
+export function updateApprovalStateAuthorized(approvalNo, myLevel, content = null) {
+  $.ajax({
+    url: defaultPath + '/updateApprovalStateAuthorized',
+    type: 'POST',
+    data: {
+      approvalNo,
+      myLevel,
+    },
+    success: function (result) {
+      console.log('결재 처리 결과', result);
+      if (result > 0) {
+        // 완결처리까지 해야하는지 상태 확인
+        if(content != null){
+          // 완결 처리
+          updateApprovalStateEnd(approvalNo, content);
+        }else{
+          swal('결재처리가 완료되었습니다.', {
+            buttons: { confirm: '확인' },
+          });
+  
+          MyAprFront.closeApprovalModal();
+          MyAprFront.clickCurrentPageBtn();
+        }
+      } else {
+        swal('예기치 않은 오류가 발생했습니다.', {
+          buttons: { cancel: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      }
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
+  });
+}
+
+
+
 // 결재문서 완결처리
 export function updateApprovalStateEnd(approvalNo, content) {
   $.ajax({
@@ -248,7 +293,7 @@ export function updateApprovalStateEnd(approvalNo, content) {
         MyAprFront.closeApprovalModal();
         MyAprFront.clickCurrentPageBtn();
       } else {
-        swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
+        swal('예기치 않은 오류가 발생했습니다.', {
           buttons: { cancel: '확인' },
         });
 

@@ -125,6 +125,25 @@
 		ORDER BY START_DATE DESC;
 	</select>
 
+	<!-- 유저 연차 조회(진행중, 완결 모두 다) -->
+	<select id="selectUserApprovalAll" resultType="approval" parameterType="_int">
+		SELECT USER_NO,
+			   TYPE,
+			   START_DATE,
+			   END_DATE,
+			   CASE
+					WHEN TYPE = 1 THEN (END_DATE - START_DATE) + 1
+					WHEN TYPE = 2 THEN 0.5
+					WHEN TYPE = 3 THEN 0.5
+			   END AS APPROVAL_COUNT
+		 FROM approval
+		WHERE USER_NO = #{userNo}
+		  AND STATUS IN (1, 0)
+		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
+		ORDER BY START_DATE DESC;
+	</select>
+
+
 	<!-- 즐겨찾기 조회 -->
 	<select id="selectFavorList" parameterType="_int" resultType="approvalFavor">
 		SELECT *
@@ -170,8 +189,8 @@
 				DRAFT_DATE,
 				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
 				A.STATUS AS STATUS,
-				START_DATE,
-				END_DATE,
+				DATE_FORMAT(START_DATE, '%Y-%m-%d') AS FORMAT_START_DATE,
+				DATE_FORMAT(END_DATE, '%Y-%m-%d') AS FORMAT_END_DATE,
 				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME,
 				P_NAME,
 				SIGNATURE_IMG
@@ -188,6 +207,7 @@
 	<select id="selectApprovalList"  resultType="approval" parameterType="map" >
 		SELECT  APPROVAL_NO,
 				USER_NO,
+				ENO,
 				TYPE,
 				TITLE,
 				DRAFT_DATE,
@@ -285,34 +305,9 @@
 
 	<!-- 승인대기/결재 메뉴용 리스트 조회 -->
 	<select id="selectApprovalListforAuthorize"  resultType="approval"  parameterType="map" >
-<!-- 		SELECT  APPROVAL_NO,
-				USER_NO,
-				TYPE,
-				TITLE,
-				DRAFT_DATE,
-				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
-				A.STATUS AS STATUS,
-				START_DATE,
-				END_DATE,
-				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME
-		FROM APPROVAL A
-		LEFT JOIN MEMBER M USING (USER_NO)
-		WHERE APPROVAL_NO IN (	SELECT APPROVAL_NO
-								FROM APPROVAL_LINE
-								WHERE
-									USER_NO = #{userNo}
-									AND TYPE = 'A'
-									AND STATUS  <choose>
-													<when test='menu.equals("wait")'>
-														= 1
-													</when>
-													<when test='menu.equals("authorized")'>
-														IN ( -1, 2 )
-													</when>
-												</choose>
-								) -->
 		SELECT  APPROVAL_NO,
 				USER_NO,
+				ENO,
 				TYPE,
 				TITLE,
 				DRAFT_DATE,
@@ -395,13 +390,16 @@
 												= 1
 											</when>
 											<when test='menu.equals("authorized")'>
-												IN ( 1, 0, -1 )
+												IN ( -1, 2 )
 											</when>
 										</choose>
 										) 
 		<if test="year > 0">
 			AND YEAR(DRAFT_DATE) = #{ year }
 		</if>
+		<if test="0 >= year">
+			AND YEAR(DRAFT_DATE) > #{ year }
+		</if>	
 		<choose>
 			<when test="status == null">
 			<!-- 임시저장 제외 전체 조회용 -->
@@ -435,6 +433,7 @@
 	<select id="selectApprovalListforRefer"   resultType="approval"  parameterType="map" >
 		SELECT  APPROVAL_NO,
 				USER_NO,
+				ENO,
 				TYPE,
 				TITLE,
 				DRAFT_DATE,
@@ -642,7 +641,13 @@
 	<update id="updateApprovalStateEnd" parameterType="approval">
 		UPDATE APPROVAL
 		SET STATUS = 1 ,
-			CONTENT = #{content}
+			CONTENT = #{content},
+			USER_NAME = (	SELECT CONCAT(USER_NAME, ' ', P_NAME) AS USER_NAME
+							FROM MEMBER
+							LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+							LEFT JOIN position USING(P_CODE)
+							WHERE USER_NO = #{ userNo }
+						)
 		WHERE APPROVAL_NO = #{approvalNo}
 	</update>
 	
@@ -663,6 +668,30 @@
 		WHERE APPROVAL_NO = #{ approvalNo }
 	</update>
 	
+	<!-- 결재자가 결재 후 다음 결재라인들 상태 변경 (다음결재자 상태1 , 다음결재자 전단계의 참조자들 상태3) -->
+	<update id="updateNextLinesStatus" parameterType="map">
+		UPDATE APPROVAL_LINE
+			SET STATUS = 2, 
+				DATE = NOW()
+			WHERE APPROVAL_NO = #{ approvalNo }
+				  AND TYPE = 'A'
+				  AND LEVEL =  #{ myLevel };
+	
+		UPDATE APPROVAL_LINE 
+		SET STATUS = 3
+		WHERE APPROVAL_NO = #{ approvalNo }
+			  AND TYPE = 'R'
+		<if test="nextAuthorizeLevel > 0">
+				  AND LEVEL &lt;  #{ nextAuthorizeLevel };
+			
+			UPDATE APPROVAL_LINE
+			SET STATUS = 1
+			WHERE APPROVAL_NO = #{ approvalNo }
+				  AND TYPE = 'A'
+				  AND LEVEL =  #{ nextAuthorizeLevel };
+		</if>
+	</update>
+	
 	
 	<!-- 메모 내용 수정 -->
 	<update id="updateMemo" parameterType="approvalMemo">
@@ -672,11 +701,13 @@
 	</update>
 	
 	<!-- 서명이미지 수정 -->
-	<insert id="updateSignImg" parameterType="map">
+	<update id="updateSignImg" parameterType="map">
 		UPDATE SIGNATURE_IMG 
 		SET SIGNATURE_IMG = #{changeName}
 		WHERE USER_NO = #{userNo}
-	</insert>
+	</update>
+	
+
 	
 <!-- ============================ delete 구간 ============================ -->
 	

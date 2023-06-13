@@ -77,6 +77,11 @@ public class ApprovalDao {
 		return sqlSession.selectList("aprMapper.selectUserApproval", userNo);
 	}
 	
+	// 유저 연차 조회(진행중, 완결 모두 다) 
+	public List<Approval> selectUserApprovalAll(int userNo) {
+		return sqlSession.selectList("aprMapper.selectUserApprovalAll", userNo);
+	}
+	
 	
 	// 즐겨찾기 리스트 조회용
 	public List<ApprovalFavor> selectFavorList(int userNo) {
@@ -313,6 +318,19 @@ public class ApprovalDao {
 	}
 	
 	
+	// 결재자가 결재 후 다음 결재라인들 상태 변경 (다음결재자 상태1 , 다음결재자 전단계의 참조자들 상태3) 
+	public int updateNextLinesStatus(int approvalNo, int nextAuthorizeLevel, int myLevel) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("nextAuthorizeLevel", nextAuthorizeLevel);
+	    params.put("myLevel", myLevel);
+		
+	    return sqlSession.update("aprMapper.updateNextLinesStatus",params);
+	}
+	
+	
+	
+	
 	// 결재라인 상태값 읽음으로 업데이트
 	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
 		Map<String, Object> params = new HashMap<>();
@@ -322,7 +340,7 @@ public class ApprovalDao {
 	    return sqlSession.update("aprMapper.updateApprovalLineReadStatus",params);
 	}
 	
-	
+
 	
 	// 메모 업데이트
 	public int updateMemo(ApprovalMemo memo) {
@@ -338,6 +356,10 @@ public class ApprovalDao {
 		
 		return sqlSession.update("aprMapper.updateSignImg" , params);
 	}
+	
+	
+	
+	
 	
 //	-------------------------------- delete 구간 ----------------------------------------
 
