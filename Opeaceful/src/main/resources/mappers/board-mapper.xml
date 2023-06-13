@@ -284,7 +284,7 @@
 	</delete>
 	
 	<!-- [혜린] - 게시글 등록 -->
-	<insert id="insertBoard" parameterType="board">
+	<insert id="insertBoard" parameterType="board" useGeneratedKeys="true" keyProperty="boardNo">
 		INSERT INTO BOARD(BOARD_CD,
 						  BOARD_TITLE,
 						  BOARD_CONTENT,
@@ -300,7 +300,24 @@
 			    #{fixed},
 			    #{secret})
 	</insert>
-
+	
+	<!-- [혜린] 첨부파일 insert -->
+	<insert id="insertUpFile" parameterType="map" >
+        INSERT INTO BOARD_FILE
+            (FILE_NO, BOARD_NO, ORIGIN_FILE, CHANGE_FILE)
+           SELECT FILE.*
+           FROM (
+	<foreach collection="fileList" item="file" separator="UNION ALL">
+        SELECT
+        #{file.fileNo} AS FILE_NO,
+        #{boardNo} AS BOARD_NO,
+        #{file.originFile} AS ORIGIN_FILE, 
+        #{file.changeFile} AS CHANGE_FILE
+        FROM DUAL
+    </foreach>
+    ) FILE
+	</insert>
+	
 	<!-- [혜린] - 게시글 수정 -->
 	<update id="updateBoard" parameterType="board">
 		UPDATE BOARD SET
@@ -311,9 +328,18 @@
 		FIXED = #{fixed}
 		WHERE BOARD_NO = #{boardNo}
 	</update>
+	
+	<!-- [혜린] - 게시글 첨부파일 조회 -->
+	<select id="selectUpfileList" resultMap="boardFileResultSet">
+		SELECT *
+		FROM BOARD_FILE
+		WHERE BOARD_NO = ${boardNo}
+	</select>
 
-
-
-
+	<!-- [혜린] - 첨부파일 삭제 -->
+	<delete id="deleteUpfile">
+		DELETE FROM BOARD_FILE
+		WHERE BOARD_NO = #{boardNo}
+	</delete>
 
 </mapper>

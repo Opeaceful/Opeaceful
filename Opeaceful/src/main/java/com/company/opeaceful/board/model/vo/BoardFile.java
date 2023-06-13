@@ -14,6 +14,18 @@ import lombok.NoArgsConstructor;
 public class BoardFile {
 	private int boardNo;
 	private int fileNo;
-	private String originFIle;
+	private String originFile;
 	private String changeFile;
+	
+	public BoardFile(String changFile) {
+		super();
+		this.changeFile = changFile;
+	}
+	
+	public BoardFile(String originFile, String changFile ) {
+		super();
+		this.originFile = originFile;
+		this.changeFile = changFile;
+	}
+	
 }

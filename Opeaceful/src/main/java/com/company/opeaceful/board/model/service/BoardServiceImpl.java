@@ -7,9 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.company.opeaceful.board.model.dao.BoardDao;
 import com.company.opeaceful.board.model.vo.Board;
+import com.company.opeaceful.board.model.vo.BoardFile;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
@@ -96,17 +98,42 @@ public class BoardServiceImpl implements BoardService {
 	}
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
-	public int insertBoard(Board b){
+	public int insertBoard(Board b, List<BoardFile> fileList) throws Exception{
+		System.out.println("서비스 단 시작 전");
 		int boardNo = boardDao.insertBoard(b);
-		
-		return boardNo;
+		System.out.println("인서트 보드 결과 : " + boardNo);
+		if(boardNo > 0 && fileList.size() > 0) {
+					
+			int result = insertUpFile(fileList, boardNo);
+			
+			System.out.println("인서트 업파일 결과 : " + result);
+		}
+			return boardNo; // 인서트 결과 반환 (1/0)
 	}
+			
+	public int insertUpFile(List<BoardFile> fileList, int boardNo) {
+		return boardDao.insertUpFile(fileList, boardNo);
+	}
+	
+	
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
-	public int updateBoard(Board b){
+	public int updateBoard(Board b, List<BoardFile> fileList) throws Exception{
 		int result = boardDao.updateBoard(b);
 		
 		return result;
 	}
+	
+	@Override
+	public List<BoardFile> selectUpFileList(int boardNo){
+		return boardDao.selectUpfileList(boardNo);
+	}
+	
+	@Override
+	public int deleteUpfile(int boardNo) {
+		return boardDao.deleteUpfile(boardNo);
+	}
+	
+	
 	
 }

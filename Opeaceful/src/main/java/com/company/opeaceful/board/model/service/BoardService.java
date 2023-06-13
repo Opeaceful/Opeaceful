@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.company.opeaceful.board.model.vo.Board;
+import com.company.opeaceful.board.model.vo.BoardFile;
 import com.company.opeaceful.board.model.vo.BoardType;
 import com.company.opeaceful.dept.model.vo.Department;
 
@@ -30,7 +31,22 @@ public interface BoardService {
 	
 	public ArrayList<Department> selectDeptList();
 	
-	public int insertBoard(Board b);
+	public int insertBoard(Board b, List<BoardFile> fileList) throws Exception;
 	
-	public int updateBoard(Board b);
+	public int updateBoard(Board b, List<BoardFile> fileList) throws Exception;
+	
+	public List<BoardFile> selectUpFileList(int boardNo);
+	
+	public int deleteUpfile(int boardNo);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
