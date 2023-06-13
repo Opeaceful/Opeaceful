@@ -25,10 +25,6 @@
 .sidebar-wrap > ul > li > a,.one-line {display: block; white-space: nowrap;}
 .sidebar-more {white-space: nowrap;}
 
-.sidebar-more-text:hover{
-    /* color: var(--color-navy); */
-}
-
 
 
 /* ========================== 사이드바 ========================== */
@@ -47,8 +43,6 @@
 	display: grid;
     grid-template-rows: 160px auto 160px;
 }
-
-
 .sidebar-logo{margin-top: 50px;}
 /* ================ 상위 카테고리 ================ */
 .side-icon-size {
@@ -84,6 +78,7 @@
 .sidebar-bottom {
     position: fixed;
     bottom: 0;
+    width: 60px;
 }
 .sidebar-more-text{
     font-size: var(--font14);
@@ -92,7 +87,7 @@
     display: block;
     padding: 0 0 14px 62px;
 }
-
+.sidebar-bt{display: none;}
 
 /* ========================== 채팅 아이콘 ========================== */
 /* 위치설정 */

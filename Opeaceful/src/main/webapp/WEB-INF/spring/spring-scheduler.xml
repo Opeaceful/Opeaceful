@@ -24,9 +24,12 @@
 		5. 스케쥴링을 원하는 메소드에 가서 schedule 어노테이션 추가하기
 		6. 원하는 실행방식을 결정하여 스케쥴링하기(고정방식, crontab방식이 있음)(crontab이 더 많이 사용됨)
 	 -->
-	 <context:component-scan base-package="com.company.opeaceful"></context:component-scan>
-	
-	  
+	<context:component-scan base-package="com.company.opeaceful"></context:component-scan>
+	<task:annotation-driven scheduler="opeacefulScheduler"/>
+	<task:scheduler id="opeacefulScheduler" pool-size="100"/>
+	<task:scheduled-tasks scheduler="opeacefulScheduler">
+		<task:scheduled ref="loginController" method="resetAnnualMembers" cron="0 0 0 1 1 ?"/>
+	</task:scheduled-tasks>	  
 
 </beans>
 

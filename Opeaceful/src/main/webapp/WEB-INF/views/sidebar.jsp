@@ -10,8 +10,7 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
-    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
-
+	<script src="https://kit.fontawesome.com/3d2d296c5f.js" crossorigin="anonymous"></script>
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"/>
    
@@ -200,7 +199,7 @@
 				<li id="sidebar-info">
 					<a href="${path}/member/mypage">
                         <span class="side-icon-size"><i class="sidebar-icon bi bi-person-circle"></i></span>
-                        <span class="sidebar-text">마이페이지</span>
+                        <span class="sidebar-text sidebar-bt">마이페이지</span>
                     </a>
                 </li>
 
@@ -208,7 +207,7 @@
                 <li id="sidebar-logout">
                     <a href="${path}/member/logout">
                         <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-power-off"></i></span>
-                        <span class="sidebar-text">로그아웃</span>
+                        <span class="sidebar-text sidebar-bt">로그아웃</span>
                     </a>
                 </li>
             </ul>
@@ -259,16 +258,18 @@
 		/* 호버이벤트 */
         $(".sidebar").hover(
    		  function() {
-   			  $(".sidebar").css("width", "300px")
+   			  $(".sidebar").css("width", "300px");
+              $(".sidebar-bt").css("display", "inline-block");
+            //   $("#sidebar-info>a").css('white-space','nowrap');
+            //   $("#sidebar-logout>a").css('white-space','nowrap');
 		  }, 
    		  function() {
    			$(".sidebar").css("width", "60px");
    			$(".sidebar-more").css("display", "none");
+            $(".sidebar-bt").css("display", "none");
 		  }
    		);
-        
 
-        
     </script>
 </body>
 </html>

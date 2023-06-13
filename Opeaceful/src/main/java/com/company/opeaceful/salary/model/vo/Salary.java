@@ -19,15 +19,12 @@ public class Salary {
 	private String deduction;
 	private String pName;
 	private String deptName;
-	
-	//계산후 db저장용
-	private int intTotalGrosspay;
-	private int intTotalDeductions;
-	private int intNetPay;
+
 	
 	//관리용
 	private int eno;
 	private String userName;
+	private String sPaymentDate;
 
 }
 

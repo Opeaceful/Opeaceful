@@ -74,9 +74,9 @@ export function selectForm(formNo) {
   });
 }
 
-export function selectFormList(actKind, checkType, currentPage) {
+export function selectFormListPage(actKind, checkType, currentPage) {
   $.ajax({
-    url: defaultPath + '/selectFormList',
+    url: defaultPath + '/selectFormListPage',
     dataType: 'JSON',
     data: {
       checkType,
@@ -98,7 +98,6 @@ export function selectFormList(actKind, checkType, currentPage) {
 }
 
 export function updateForm(formData) {
-  console.log('수정 시작');
   $.ajax({
     url: defaultPath + '/updateForm',
     data: formData,
