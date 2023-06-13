@@ -28,6 +28,7 @@ public class Approval {
 	private double approvalCount;		// APPROVAL_COUNT : 연차갯수
 	private String formatDraftDate;		//	DRAFT_DATE
 	private String signatureImg;	// 서명 이미지 경로 + 이름 SIGNATURE_IMG
+	private String confirmStatus;			// 문서 읽었는지 안읽었는지 상태값 전달용 CONFIRM_STATUS
 	
 
 }
