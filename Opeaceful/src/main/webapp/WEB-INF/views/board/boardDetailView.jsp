@@ -107,15 +107,18 @@
                 <div class="ctn-date">${b.createDate }</div>
             </div>
             <!-- 첨부파일영역 -->
+            <c:if test="${not empty file}">
             <div class="board-wrap4">
                 <div class="atc-icon">
                     <i class="fa-solid fa-paperclip"></i>
                 </div>
                 <div class="atc-box">
-                    <div class="atc-txt"><a href="">main.css</a></div>
-
+                <c:forEach items="${file}" var="f">
+                	<div class="atc-txt"><a href="${path}/resources/file/board/${f.changeFile}">${f.originFile}</a></div>
+                </c:forEach>
                 </div>
             </div>
+            </c:if>
             <!-- 글 내용 영역 -->
             <div class="board-wrap5">
                 <div class="detail-ctn">
@@ -179,10 +182,11 @@
             </div>
             </c:if>
             
-            
+          
             <div class="board-wrap7">
                 <div></div>
             </div>
+              <!-- 
             <div class="board-wrap8">
                 <div><i class="bf-icon fa-solid fa-angle-up"></i></div>
                 <div class="bf-title">이전글</div>
@@ -194,7 +198,9 @@
                 <div class="af-title">다음글</div>
                 <div class="af-txt"><Span>3차 훈련장려금 신청 공지입니다.</Span></div>
             </div>
+              -->
             <div class="board-wrap10">
+           
            <!-- 
             <c:choose>
             	<c:when test="${!empty map.condition }">
@@ -214,6 +220,34 @@
     <script type="module" src="${path}/resources/js/board/boardDetail.js"></script>
     
     <script>
+    
+    // 상세조회 페이지가 열릴 때 윈도우실행되자마자 파일이름 갈아끼워주는 함수 실행하기!!!!!!!!!!!!!!!!!   
+    //changeImgPath
+    /*
+    
+    let changeImgPath = function () {
+    	
+    	
+    let imgArr = (이위치에 보드 컨텐츠 싸여있는 태그 같다붙이기.).getElementsByTagName('img');
+  
+    if (imgArr) {
+      for (let img of imgArr) {
+        let imgSrc = img.src;
+        // 신규로 추가된 이미지들의 src는 blob로 시작되도록 해두었음
+        // 그외 / 로 시작하지 않는 기존 이미지들 src 갈아끼기
+        if (!imgSrc.startsWith('blob')) {
+          // 이미지 실제 이름만 가져옴
+          imgSrc = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+  
+          // 이미지 경로 재설정
+          img.src = path + '/resources/file/board/' + imgSrc;
+        }
+      }
+    }
+  };
+  
+  */
+    
     let lockCheckObj = {
     	    secretReply : 'N'
     	 }
@@ -424,10 +458,12 @@
     	location.href="${path}/board/enrollForm/${boardCode}?mode=update&bno=${b.boardNo}";
     });
     
-    
-    
-    
-    
+    /*
+    if(${boardCode} == N){
+    	$(".board-wrap5").css("border-bottom","2px solid var(--color-navy)");
+    }
+    */
+
     
     
     

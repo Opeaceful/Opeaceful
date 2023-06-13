@@ -82,7 +82,6 @@ public class LoginController {
 		int eno = m.getEno();
 		// status 값 -> 탈퇴회원 조회
 		String status = memberService.selectLoginStatus(eno);
-		
 		// 비밀번호 틀린 횟수 -> count라는 쿠키가 있는지 검사
 		Cookie[] cookies = req.getCookies();
 		int count = 0; // count값이 저장될 변수 선언 // 없을때는 대비하여 생성
@@ -181,7 +180,7 @@ public class LoginController {
 			loginUser = memberService.loginMember(loginUser);
 			// 부서
 			Department topDept = memberService.selecTopDept(loginUser);
-			// 공지사항
+			// 공지사항 리스트(최신 5개순)
 			List<Board> mainNoticeList = boardService.mainSelectNoticeList();
 			int userNo = loginUser.getUserNo();
 			// 출퇴근 테이블 조회 > main에서 출퇴근 여부 판별
@@ -190,6 +189,11 @@ public class LoginController {
 			List<Object> os = memberService.onlineStatusList();
 			// 사이드바 권한 조회
 			List<UserRole> loginUserRole = roleService.loginUserRoleSelect(userNo);
+			// 공지사항 상세
+			Map<String, Object> map = new HashMap<>();
+			map.put("mainNoticeList", mainNoticeList);
+			map.put("currentPage", 1);
+			session.setAttribute("map", map);
 			
 			model.addAttribute("topDept",topDept);
 			model.addAttribute("mainNoticeList", mainNoticeList);
@@ -207,7 +211,7 @@ public class LoginController {
 	public void resetAnnualMembers() {
 		// 맴버들 연차갯수 조회
 		List<Object> list = memberService.selectAnnualMembers();
-		System.out.println("연차::::::"+list);
+//		System.out.println("연차::::::"+list);
 		if(list != null) {
 			int result = memberService.updateAnnualMembers(list);
 		}

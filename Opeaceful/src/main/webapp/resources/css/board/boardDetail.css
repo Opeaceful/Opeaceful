@@ -134,6 +134,9 @@ div *{
     margin-right: 15px;
     font-size:  var(--font14);
 }
+/* .board-wrap5{
+    border-bottom: 2px solid var(--color-navy);
+} */
 .board-wrap6{
     width: 100%;
     border-top: 2px solid var(--white-hover);

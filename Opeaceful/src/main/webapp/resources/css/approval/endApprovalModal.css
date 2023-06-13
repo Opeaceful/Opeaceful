@@ -50,7 +50,7 @@
 }
 
 .modal-xl {
-  min-width: 800px;
+  min-width: fit-content;
 }
 
 #end-approval button {
@@ -110,12 +110,6 @@
   margin: 0.5rem 0px;
 }
 
-.final-approval-wrap {
-  width: 90%;
-  margin: auto;
-  padding-top: 2rem;
-}
-
 #end-approval .approval-files {
   width: 100%;
   padding: 0.5rem 1rem;
@@ -142,8 +136,12 @@
 }
 
 .final-approval-wrap {
-  font-size: var(--font14);
+  width: 90%;
+  min-width: fit-content;
+  margin: auto;
   padding: 1rem;
+  padding-top: 2rem;
+  font-size: var(--font14);
   background-color: white;
   border: 1px solid var(--color-board-black);
 }
@@ -172,6 +170,14 @@
   align-items: center;
 }
 
+.end-approval-lines-item {
+  text-align: center;
+}
+
+.end-approval-content {
+  text-align: start;
+}
+
 .approver-name {
   background-color: var(--color-light-gray);
   width: max-content;
@@ -191,7 +197,7 @@
 }
 
 .approver-sign img {
-  min-width: 48px;
+  width: 48px;
   height: 48px;
 }
 

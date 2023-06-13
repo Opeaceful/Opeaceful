@@ -1,8 +1,6 @@
 /* 메인 css : 지의 */
 
-.main-wrap{height: 800px; margin-top: 30px; min-width: 1200px;}
-.main-left{min-width: 740px;}
-.main-right{min-width: 430px;}
+.main-wrap{height: 800px; margin-top: 30px; min-width: 1250px;}
 .main-wrap>div{height: 100%;}
 /* .main-wrap .col-7{width:64%;} */
 /* 각각 컨텐츠 감싸고있는 네모박스 */

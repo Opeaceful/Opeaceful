@@ -200,7 +200,12 @@
 			<if test="!isAdmin">
 				USER_NO = #{ userNo } AND
 			</if>	
-			YEAR(DRAFT_DATE) = #{ year }
+			<if test="year > 0">
+				YEAR(DRAFT_DATE) = #{ year }
+			</if>	
+			<if test="0 >= year">
+				YEAR(DRAFT_DATE) > #{ year }
+			</if>
 			<choose>
 				<when test="status == null">
 				<!-- 반려, 임시저장 제외 전체 조회용 -->
@@ -241,7 +246,12 @@
 			<if test="!isAdmin">
 				USER_NO = #{ userNo } AND
 			</if>	
-			YEAR(DRAFT_DATE) = #{ year }
+			<if test="year > 0">
+				YEAR(DRAFT_DATE) = #{ year }
+			</if>	
+			<if test="0 >= year">
+				YEAR(DRAFT_DATE) > #{ year }
+			</if>
 			<choose>
 				<when test="status == null">
 				<!-- 반려, 임시저장 제외 전체 조회용 -->
@@ -275,7 +285,7 @@
 
 	<!-- 승인대기/결재 메뉴용 리스트 조회 -->
 	<select id="selectApprovalListforAuthorize"  resultType="approval"  parameterType="map" >
-		SELECT  APPROVAL_NO,
+<!-- 		SELECT  APPROVAL_NO,
 				USER_NO,
 				TYPE,
 				TITLE,
@@ -300,9 +310,40 @@
 														IN ( -1, 2 )
 													</when>
 												</choose>
-								)
+								) -->
+		SELECT  APPROVAL_NO,
+				USER_NO,
+				TYPE,
+				TITLE,
+				DRAFT_DATE,
+				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
+				A.STATUS AS STATUS,
+				START_DATE,
+				END_DATE,
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME,
+                L.CONFIRM_STATUS
+		FROM (	SELECT APPROVAL_NO, CONFIRM_STATUS
+				FROM APPROVAL_LINE
+				WHERE
+					USER_NO = #{userNo}
+					AND TYPE = 'A'
+					AND STATUS  <choose>
+									<when test='menu.equals("wait")'>
+										= 1
+									</when>
+									<when test='menu.equals("authorized")'>
+										IN ( -1, 2 )
+									</when>
+								</choose>
+					) L
+		LEFT JOIN APPROVAL A USING(APPROVAL_NO)
+		LEFT JOIN MEMBER M USING (USER_NO)
+		WHERE 
 			<if test="year > 0">
-				AND YEAR(DRAFT_DATE) = #{ year }
+				YEAR(DRAFT_DATE) = #{ year }
+			</if>	
+			<if test="0 >= year">
+				YEAR(DRAFT_DATE) > #{ year }
 			</if>	
 			<choose>
 				<when test="status == null">
@@ -401,15 +442,17 @@
 				A.STATUS AS STATUS,
 				START_DATE,
 				END_DATE,
-				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME
-		FROM APPROVAL A
-		LEFT JOIN MEMBER M USING (USER_NO)
-		WHERE APPROVAL_NO IN (	SELECT APPROVAL_NO
-								FROM APPROVAL_LINE
-								WHERE
-									USER_NO = #{userNo}
-									AND TYPE = 'R'
-									AND STATUS = 3	)
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME,
+                L.CONFIRM_STATUS <!-- 읽음 여부 -->
+		FROM (	SELECT APPROVAL_NO, CONFIRM_STATUS
+				FROM APPROVAL_LINE
+				WHERE
+					USER_NO = 2
+					AND TYPE = 'R'
+					AND STATUS = 3	) L
+		LEFT JOIN APPROVAL A USING(APPROVAL_NO)
+		LEFT JOIN MEMBER M USING(USER_NO)
+		WHERE YEAR(DRAFT_DATE) = #{ year }
 		<choose>
 			<when test="status == null">
 			<!-- 임시저장 제외 전체 조회용 -->
@@ -423,7 +466,6 @@
 				AND A.STATUS = #{ status }
 			</otherwise>
 		</choose>	
-		AND YEAR(DRAFT_DATE) = #{ year }
 		ORDER BY APPROVAL_NO DESC
 		LIMIT #{ page } , 10 
 	</select>	
@@ -441,7 +483,9 @@
 									</if>
 									AND TYPE = 'R'
 									AND STATUS = 3	)
-		AND YEAR(DRAFT_DATE) = #{ year }
+		<if test="year > 0">
+			AND YEAR(DRAFT_DATE) = #{ year }
+		</if>
 		<choose>
 			<when test="status == null">
 			<!-- 임시저장 제외 전체 조회용 -->
@@ -591,17 +635,25 @@
 		SET 
 			TITLE = #{title} ,
 			CONTENT = #{content},
-		WHERE FORM_NO  = #{formNo}
+		WHERE APPROVAL_NO  = #{approvalNo}
 	</update>
 	
-	<!-- 결재라인 상태 수정 -->
-<!-- 	<update id="updateApprovalLine" parameterType="approval">
+	<!-- 결재문서 완결처리 -->
+	<update id="updateApprovalStateEnd" parameterType="approval">
 		UPDATE APPROVAL
-		SET 
-			TITLE = #{title} ,
-			CONTENT = #{content},
-		WHERE FORM_NO  = #{formNo}
-	</update> -->
+		SET STATUS = 1 ,
+			CONTENT = #{content}
+		WHERE APPROVAL_NO = #{approvalNo}
+	</update>
+	
+	<!-- 결재라인 상태 읽음처리 -->
+ 	<update id="updateApprovalLineReadStatus" parameterType="map">
+		UPDATE APPROVAL_LINE
+		SET CONFIRM_STATUS = 'Y'
+		WHERE USER_NO  = #{ userNo }
+			AND APPROVAL_NO = #{ approvalNo }
+			AND STATUS IN( 1 , 3 ) 
+	</update> 
 	
 	
 	<!-- 결재문서 상태 수정 -->
@@ -649,6 +701,13 @@
 							</foreach> )
 	</delete>
 	
+	
+	<!-- 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) -->
+	<delete id="deleteApproval" parameterType="_int">
+	  DELETE FROM APPROVAL_LINE WHERE APPROVAL_NO = #{approvalNo};
+	  DELETE FROM APPROVAL_MEMO WHERE APPROVAL_NO = #{approvalNo};
+	  DELETE FROM APPROVAL WHERE APPROVAL_NO = #{approvalNo};
+	</delete>
 	
 	<!-- 즐겨찾기 삭제 -->
 	<delete id="deleteFavor" parameterType="_int">

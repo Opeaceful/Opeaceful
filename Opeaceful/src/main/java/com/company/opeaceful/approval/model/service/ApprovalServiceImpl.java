@@ -205,10 +205,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 //	-------------------------------- update 구간 ----------------------------------------
 	@Override
 	public int updateForm(ApprovalForm form, List<ApprovalFile> fileList) {
-		int result = 0;
-		int formNo = aprDao.updateForm(form);
-		if(formNo > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "form", formNo);
+		int result = aprDao.updateForm(form);
+		if(result > 0 && fileList.size() > 0) {
+			result = insertFile(fileList, "form", form.getFormNo());
 		}
 		
 		return result;
@@ -227,6 +226,17 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int updateApprovalStatus(int approvalNo, int status) {
 		return aprDao.updateApprovalStatus(approvalNo, status);
+	}
+	
+	@Override
+	public int updateApprovalStateEnd(Approval approval) {
+		return aprDao.updateApprovalStateEnd(approval);
+	}
+	
+	
+	@Override
+	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
+		return aprDao.updateApprovalLineReadStatus(approvalNo, userNo);
 	}
 	
 	@Override
@@ -272,6 +282,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteMemo(int memoNo) {
 		return aprDao.deleteMemo(memoNo);
 	}
+
+	
+
+
 
 
 
