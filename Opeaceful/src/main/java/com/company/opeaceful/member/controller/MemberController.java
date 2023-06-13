@@ -30,7 +30,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.dept.model.vo.Department;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
@@ -192,7 +192,7 @@ public class MemberController {
 	//사용자생성 
 	@PostMapping("/insert")
 	public String insertMember(Member m,
-			UserDepatment ud,
+			UserDepartment ud,
 			HttpSession session) {
 		
 		//암호화 작업
