@@ -2,6 +2,9 @@ package com.company.opeaceful.approval.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,9 +67,9 @@ public class ApprovalController {
 		int currentYear = Year.now().getValue();
 		
 		// todo! 반려건, 승인대기건 개수 조회해서 같이 넣어주기
-		model.addAttribute("returnCount", aprService.selectApprovalListCount(userNo, -2 , -1, currentYear, false)  );
-		model.addAttribute("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, true) );
-		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, currentYear, true));
+		model.addAttribute("returnCount", aprService.selectApprovalListCount(userNo, -2 , -1, 0, false)  );
+		model.addAttribute("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, 0, true) );
+		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, true));
 		
 		if(menu != null && menu.equals("wait")) {
 			// 승인대기중인 메뉴로 선택
@@ -131,11 +134,10 @@ public class ApprovalController {
 		Map<String, Integer > map  = new HashMap<>();
 		
 		int userNo= loginUser.getUserNo();
-		int currentYear = Year.now().getValue();
 		
-		map.put( "returnCount" ,aprService.selectApprovalListCount(userNo, -2 , -1, currentYear, false));
-		map.put("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, true) );
-		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, currentYear, true));
+		map.put( "returnCount" ,aprService.selectApprovalListCount(userNo, -2 , -1, 0, false));
+		map.put("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, 0, true) );
+		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, true));
 		return new Gson().toJson(map);
 	}
 	
@@ -149,6 +151,7 @@ public class ApprovalController {
 		int userNo= loginUser.getUserNo();
 		
 		Approval approval = aprService.selectApproval(approvalNo);
+		
 		List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo);
 		List<ApprovalFile> files = aprService.selectFileList("approval", approvalNo, "attachment");
 		
@@ -164,9 +167,10 @@ public class ApprovalController {
 		map.put("approval", approval);
 		map.put("lines", lines);
 		map.put("files", files);
-		map.put("isMine", userNo == approval.getUserNo());
+		map.put("userNo", userNo);
 		
-
+		// 읽음처리
+		aprService.updateApprovalLineReadStatus(approvalNo, userNo);
 		
 		return new Gson().toJson(map);
 	}
@@ -230,9 +234,10 @@ public class ApprovalController {
 	// ajax용 결재문서 저장
 	@ResponseBody
 	@PostMapping("/insertApproval")
-	public int insertApproval(	  @ModelAttribute("loginUser") Member loginUser,
+	public String insertApproval(	  @ModelAttribute("loginUser") Member loginUser,
 								  @ModelAttribute Approval approval,
 								  @RequestParam(value="images", required=false) MultipartFile[] imgList,
+								  @RequestParam(value="imgNames", required = false) String[] imgNameList,
 								  @RequestParam(value="files", required=false) MultipartFile[] fileList,
 								  @RequestParam(value="userNoList", required=false) int[] userNoList,
 								  @RequestParam(value="levelList", required=false) int[] levelList,
@@ -323,6 +328,23 @@ public class ApprovalController {
 				}
 			}
 		}
+		
+		// 양식복사 해왔을 경우를 위한 로직
+		// 실제로 저장되어있는 파일중 이미지 이름들과 같은 애들 복사해서 신규로 파일 생성
+		if (imgNameList != null && imgNameList.length > 0) {
+			for (int i = 0; i < imgNameList.length; i++) {
+				String src = "src=\"" + imgNameList[i] + "\"";
+				String changeName;
+				try {
+					changeName = FileRenamePolicy.copyFile(imgNameList[i], serverFolderPath);
+					content = content.replace(src, "src=\"" + changeName + "\"");
+					saveList.add(new ApprovalFile("approval" , null ,changeName));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		approval.setContent(content);
 		
 		//------------------------ 첨부파일 저장구역 --------------------------------
@@ -342,10 +364,10 @@ public class ApprovalController {
 		
 		
 		// todo! 결재문서 저장되고 임시저장용이 아니라면 다음 상대한테 알림 날려야함!
-		int result = aprService.insertApproval(approval, lines , saveList);
+		int approvalNo = aprService.insertApproval(approval, lines , saveList);
 		
 		// 만약 insert 실패하면 위에서 파일 저장 진행했던거 다 날리는 구문 실행
-		if(result <= 0) {
+		if(approvalNo <= 0) {
 			if (saveList.size() > 0) {
 				// 저장된 파일 리스트 실제 파일들 삭제
 				for (ApprovalFile file : saveList) {
@@ -356,9 +378,58 @@ public class ApprovalController {
 				}
 			}
 		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		// 만약 결재문서자체는 잘 저장되었는데 상태가 완결상태이면 앞단에 알려줌
+		if(approvalNo > 0 && approval.getStatus() == 1) {
+			approval.setApprovalNo(approvalNo);
+			// 본인정보 , 서명정보, 직급, 이름 돌려줘야함
+			String signImg = aprService.selectSignImg(loginUser.getUserNo());
+			map.put("result", -1);
+			map.put("approval", approval);
+			map.put("userName", loginUser.getUserName());
+			map.put("pName", loginUser.getPName());
+			map.put("signImg", signImg);
+		}else if(approvalNo > 0) {
+			map.put("result", 1);
+		}else {
+			map.put("result", 0);
+		}
+		
+		return new Gson().toJson(map);
+	}
+	
+	
+	
+	// ajax용 결재문서 완결처리
+	@ResponseBody
+	@PostMapping("/updateApprovalStateEnd")
+	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
+		int result = 0;
+		System.out.println("============================="+approval);
+		if(approval != null && approval.getApprovalNo() != 0 ) {
+			result = aprService.updateApprovalStateEnd(approval);
+		}
+		
 		return result;
 	}
 	
+	
+	// ajax용 결재문서 삭제
+	@ResponseBody
+	@PostMapping("/deleteApproval")
+	public int deleteApproval(	Integer approvalNo, 
+								HttpSession session) {
+		// 파일 저장경로 얻어오기
+		String webPath = "/resources/file/approval/";
+		String serverFolderPath = session.getServletContext().getRealPath(webPath);
+
+		// 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
+		int result = aprService.deleteApproval(approvalNo, serverFolderPath);
+
+		return result;
+	}
 	
 	
 	// ajax용 즐겨찾기 저장
@@ -570,45 +641,58 @@ public class ApprovalController {
 	}
 	
 	
-	// ajax용 서명 이미지 등록/수정
+	// ajax용 서명 이미지 수정
 	@ResponseBody
 	@PostMapping("/updateSignImg")
 	public int updateSignImg(	HttpSession session, 
 								@ModelAttribute("loginUser") Member loginUser,
 								@RequestParam(value="signImg", required=false) MultipartFile signImg) {
+		// 기본적으로 서명 이미지는 하나의 이름으로 계속해서 사용!! 
+		// -> 전자결재 완결난 이후에 서명 이미지를 바꾸면 신규 서명이미지로 바로바로 표시되게끔 하기 위함임
 		
-		// 파일 저장할 저장경로 얻어오기
-		String webPath = "/resources/file/signature/";
-		String serverFolderPath = session.getServletContext().getRealPath(webPath);
-		
-		int userNo = loginUser.getUserNo();
-		String beforeSignImg  = aprService.selectSignImg(userNo);
-		String changeName = null;
 		int result = 0;
 		
 		if(signImg != null) {
-			try {
-				changeName = FileRenamePolicy.saveFile( signImg , serverFolderPath);
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		if(changeName != null ) {
-			//기존 파일 삭제
+			// 파일 저장경로 얻어오기
+			String imgPath = "/resources/file/signature/";
+			String realPath = session.getServletContext().getRealPath(imgPath);
+			
+			// 기존 이미지 이름
+			String beforeSignImg = aprService.selectSignImg(loginUser.getUserNo());
+			
+			// 만약 기존 서명 이미지가 있다면
 			if(beforeSignImg != null && !beforeSignImg.isEmpty()) {
-				File deleteFile = new File(serverFolderPath + beforeSignImg);
+				// 기존 파일 삭제
+				File deleteFile = new File(realPath + beforeSignImg);
 				if (deleteFile.exists()) { // 파일이 존재하면
 					deleteFile.delete();// 파일 삭제
 				}
-				result = aprService.updateSignImg(userNo, changeName);
-			}else  {
-				result = aprService.insertSignImg(userNo, changeName);
+				Path existingPath = Path.of(realPath + beforeSignImg);
+				try {
+					// 기존파일을 신규파일로 덮어쓰기
+					Files.copy(signImg.getInputStream(), existingPath, StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					e.printStackTrace();
+					result = 0;
+				}
+				result = 1;
+				
+			}else {
+				// 만약 기존 서명 이미지가 없다면 이미지 신규 저장 후 DB에 insert
+				String changeName;
+				try {
+					changeName = FileRenamePolicy.saveFile( signImg , realPath);
+					result = aprService.insertSignImg(loginUser.getUserNo(), changeName);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
 			}
 			
+		}else {
+			// 애초에 서명이미지 파일이 전송되지 않았다면 실패 반환
+			result = 0;
 		}
-
+		
 		return result;
 	}
 	

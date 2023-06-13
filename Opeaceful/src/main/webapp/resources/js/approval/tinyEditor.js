@@ -233,3 +233,37 @@ export function changeImgPath(tinyId, imgPath) {
     }
   }
 }
+
+// function loadImage(src, fileName) {
+//   return new Promise((resolve, reject) => {
+//     const xhr = new XMLHttpRequest();
+//     xhr.open("GET", src, true);
+//     xhr.responseType = "blob";
+//     xhr.onload = function() {
+//       if (xhr.status === 200) {
+//         const blob = xhr.response;
+//         const file = new File([blob], fileName, { type: blob.type });
+//         resolve(file);
+//       } else {
+//         reject(new Error("Failed to load image"));
+//       }
+//     };
+//     xhr.onerror = function() {
+//       reject(new Error("Failed to load image"));
+//     };
+//     xhr.send();
+//   });
+// }
+
+// // 예제 사용법
+// const imageUrl = "https://example.com/image.jpg";
+// const imageFileName = "image.jpg";
+
+// loadImage(imageUrl, imageFileName)
+//   .then(file => {
+//     // 생성된 File 객체를 사용하여 원하는 작업 수행
+//     console.log(file);
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });

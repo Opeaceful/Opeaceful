@@ -110,28 +110,41 @@ public class ApprovalFormController {
 	@PostMapping("/insertForm")
 	public int insertForm(  @ModelAttribute	 ApprovalForm form, 
 							@RequestParam(value="images", required = false) MultipartFile[]  imgList,
+							@RequestParam(value="imgNames", required = false) String[] imgNameList,
 							HttpSession session) {
 		
 		String content = form.getContent();
-		//	TODO ! 파일들 가공하고 기존파일들이랑 비교해서 삭제할거 삭제해야함
 		List<ApprovalFile> fileList = new ArrayList<>();
 		
 		// 파일 저장할 저장경로 얻어오기
 		String webPath = "/resources/file/approval/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
 		
+		// 일단 신규로 추가된 파일들 저장
 		if(imgList != null && imgList.length > 0) {
 			for(int i=0; i< imgList.length; i++) {
 				String src = "src=\""+i+"\""; 
 				String changeName;
-				
 				try {
 					changeName = FileRenamePolicy.saveFile( imgList[i] , serverFolderPath);
 					content = content.replace(src,"src=\""+changeName+"\"");
-					System.out.println(content);
-					
 					fileList.add(new ApprovalFile(changeName));
 				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 실제로 저장되어있는 파일중 이미지 이름들과 같은 애들 복사해서 신규로 파일 생성
+		if (imgNameList != null && imgNameList.length > 0) {
+			for (int i = 0; i < imgNameList.length; i++) {
+				String src = "src=\"" + imgNameList[i] + "\"";
+				String changeName;
+				try {
+					changeName = FileRenamePolicy.copyFile(imgNameList[i], serverFolderPath);
+					content = content.replace(src, "src=\"" + changeName + "\"");
+					fileList.add(new ApprovalFile(changeName));
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
