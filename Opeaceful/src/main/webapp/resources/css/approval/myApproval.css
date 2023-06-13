@@ -175,7 +175,7 @@ div.selected {
 }
 
 .sign-img-item {
-  margin: 2rem;
+  margin: 1rem 2rem;
 }
 
 .sign-img-item > div {
@@ -187,6 +187,10 @@ div.selected {
   height: 80px;
 
   border: 1px solid black;
+}
+
+#img-new-sign {
+  cursor: pointer;
 }
 
 .sign-btn-wrap {
@@ -239,4 +243,11 @@ div.selected {
 #prev-btn:hover,
 #next-btn:hover {
   background-color: var(--color-light-gray);
+}
+
+.return_text {
+  font-size: x-large;
+  font-weight: 900;
+  font-family: cursive;
+  color: red;
 }

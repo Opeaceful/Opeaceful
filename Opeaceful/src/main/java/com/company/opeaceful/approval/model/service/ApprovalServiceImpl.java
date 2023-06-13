@@ -122,13 +122,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page) {
-		return aprDao.selectApprovalListforRefer( userNo,  status,  year,  page);
+	public List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page, int type) {
+		return aprDao.selectApprovalListforRefer( userNo,  status,  year,  page, type);
 	}
 
 	@Override
-	public int selectApprovalListforReferCount(int userNo, Integer status, int year , boolean isNotCheck) {
-		return aprDao.selectApprovalListforReferCount( userNo,  status,  year, isNotCheck);
+	public int selectApprovalListforReferCount(int userNo, Integer status, int year, int type , boolean isNotCheck) {
+		return aprDao.selectApprovalListforReferCount( userNo,  status,  year, type ,isNotCheck);
 	}
 	
 	
@@ -220,10 +220,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	
 	@Override
 	public int updateApproval(Approval approval, List<ApprovalLine> lineList, List<ApprovalFile> fileList) {
-		int result = 0;
-		int approvalNo = aprDao.updateApproval(approval, lineList);
-		if(approvalNo > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "approval", approvalNo);
+		int result = aprDao.updateApproval(approval, lineList);
+		if(result > 0 && fileList.size() > 0) {
+			// 결재문서 업데이트가 잘 끝난 후 파일들도 저장 시작하기
+			result = insertFile(fileList, "approval", approval.getApprovalNo());
 		}
 		return result;
 	}
@@ -241,6 +241,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int updateApprovalStateEnd(Approval approval) {
 		return aprDao.updateApprovalStateEnd(approval);
+	}
+	
+	@Override
+	public int updateLineStatusReturn(int approvalNo, int userNo) {
+		return aprDao.updateLineStatusReturn(approvalNo , userNo);
 	}
 	
 	
@@ -292,6 +297,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteMemo(int memoNo) {
 		return aprDao.deleteMemo(memoNo);
 	}
+
+	@Override
+	public int deleteApprovalLine(int approvalNo) {
+		return aprDao.deleteApprovalLine(approvalNo);
+	}
+
+	
 
 
 

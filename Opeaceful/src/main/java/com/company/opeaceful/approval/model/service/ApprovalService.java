@@ -46,9 +46,9 @@ public interface ApprovalService {
 
 	int selectApprovalListforAuthorizeCount(int userNo, String menu, Integer status, int type, int year  , boolean isNotCheck);
 	
-	List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page );
+	List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page, int type );
 
-	int selectApprovalListforReferCount(int userNo, Integer status, int year  , boolean isNotCheck);
+	int selectApprovalListforReferCount(int userNo, Integer status, int year, int type  , boolean isNotCheck);
 	
 	List<ApprovalMemo> selectMemoList(int approvalNo);
 	
@@ -84,6 +84,8 @@ public interface ApprovalService {
 	
 	int updateApprovalLineReadStatus(int approvalNo, int userNo);
 	
+	int updateLineStatusReturn(int approvalNo, int userNo);
+	
 	int updateMemo(ApprovalMemo memo, List<ApprovalFile> fileList);
 	
 	int updateSignImg(int userNo, String changeName);
@@ -93,6 +95,8 @@ public interface ApprovalService {
 	int deleteForm(int formNo, String deleteFolderPath);
 	
 	int deleteApproval(int approvalNo, String deleteFolderPath);
+	
+	int deleteApprovalLine(int approvalNo);
 
 	int deleteFileList(List<ApprovalFile> fileList);
 	

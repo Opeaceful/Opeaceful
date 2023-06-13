@@ -134,8 +134,20 @@ let formatApprovalStatus = (status) => {
 };
 
 // 결재 수정/작성 모달 창 내용 리셋시켜주는 함수
-export function setApprovalModalContent(approval) {
+export function setApprovalModalContent(
+  approval,
+  lines = [],
+  files = [],
+  loginUserNo = -1
+) {
   const typeTd = document.getElementById('td-approval-table-type');
+  const approvalLine = document.querySelector(
+    '#approval .approval-lines > ol.scroll-bar'
+  );
+  const fileLine = document.querySelector(
+    '#approval .approval-files > .scroll-bar'
+  );
+  const fileInput = document.querySelector('#input-add-file');
 
   // 타입을 종류 태그에 저장
   typeTd.dataset.type = approval.type;
@@ -148,19 +160,31 @@ export function setApprovalModalContent(approval) {
     ? approval.title
     : '';
 
-  // todo! 결재라인.... 첨부.... 기존에 내용 있었으면 끌어오기
-
   // 결재라인 리셋
-  document.querySelector(
-    '#approval .approval-lines > ol.scroll-bar'
-  ).innerHTML = '';
+  approvalLine.innerHTML = '';
+  for (let line of lines) {
+    approvalLine.innerHTML += `<li data-type="${line.type}" data-user="${
+      line.userNo
+    }">
+                    <b>${line.type == 'R' ? '참조' : '결재'}</b> ${
+      line.userName
+    } ${line.pName ? line.pName : ''}
+                </li>`;
+  }
 
   // 첨부파일 리스트 리셋
-  document.querySelector('#approval .approval-files > .scroll-bar').innerHTML =
-    '';
+  fileLine.innerHTML = '';
+  for (let file of files) {
+    fileLine.innerHTML += `<div class="div-file-saved" data-changename="${file.changeName}" >
+                            <button type="button" class="btn-file-delete">
+                              <div class="div-minus">
+                            </div></button>
+                            ${file.originName}
+                          </div>`;
+  }
 
   // 첨부파일인풋의 실제 파일들 리셋
-  document.querySelector('#input-add-file').files = new DataTransfer().files;
+  fileInput.files = new DataTransfer().files;
 
   // 내용 리셋
   tinymce
@@ -185,12 +209,15 @@ export function setApprovalModalContent(approval) {
       td.style.display = '';
     });
 
-    // todo! 나중에 연차정보 조회해서 와야함
     typeTd.innerHTML = '연차';
 
     // 수정일 경우 날짜 정보 들어올테니 그에 맞게 날짜 표시
     if (approval.startDate && approval.endDate) {
-      setDatePickerType(false, approval.startDate, approval.endDate);
+      setDatePickerType(
+        false,
+        approval.formatStartDate,
+        approval.formatEndDate
+      );
     } else {
       setDatePickerType(false);
     }
@@ -212,13 +239,43 @@ export function setApprovalModalContent(approval) {
 
     // 수정일 경우 날짜 정보 들어올테니 그에 맞게 날짜 표시
     if (approval.startDate) {
-      setDatePickerType(true, startDate);
+      setDatePickerType(true, approval.formatStartDate);
     } else {
       setDatePickerType(true);
     }
 
     // 로그인유저 연차정보 불러오기
     MyAprData.selectUserAnnualInfo();
+  }
+
+  const deleteBtn = document.getElementById('btn-temp-return-approval-delete');
+  const saveBtn = document.getElementById('btn-save-approval');
+  const tempBtn = document.getElementById('btn-save-approval-temporary');
+  // 만약 approvalNo 값이 있다면 수정 창이라는 소리임
+  if (approval.approvalNo && approval.approvalNo > 0) {
+    // 삭제버튼 표시
+    deleteBtn.style.display = 'inline-block';
+
+    //결재 저장버튼에다 no값 세팅해주기
+    saveBtn.dataset.approvalno = approval.approvalNo;
+
+    if (approval.status && (approval.status == -1 || approval.status == -2)) {
+      // 만약 반려문서라면 임시저장버튼 숨기기
+      tempBtn.style.display = 'none';
+    } else {
+      //  임시저장 버튼 표시
+      tempBtn.style.display = 'inline-block';
+    }
+  } else {
+    // 신규 작성창이라는 소리
+    // 삭제버튼 숨기기
+    deleteBtn.style.display = 'none';
+
+    //  임시저장 버튼 표시
+    tempBtn.style.display = 'inline-block';
+
+    //결재 저장버튼 no값 리셋
+    saveBtn.dataset.approvalno = -1;
   }
 }
 
@@ -331,7 +388,7 @@ export function setApprovalLines(list) {
 }
 
 // 결재문서 저장용 formData 데이터 만들어서 반환하는 함수
-let makeApprovalSendData = function () {
+let makeApprovalSendData = function (isUpdate = false) {
   let title = document.getElementById('approval-title').value;
   if (title == '' || !title) {
     // 제목 없으면 리턴
@@ -387,7 +444,6 @@ let makeApprovalSendData = function () {
     startDate = date;
     endDate = date;
   }
-  console.log('날짜', startDate, endDate);
 
   // 결재 문서 타입이 연차면 선택된 날짜 범위 계산 해서 남은 연차개수랑 비교
   if (type == 1) {
@@ -430,9 +486,18 @@ let makeApprovalSendData = function () {
     finalData.append('files', file);
   }
 
+  // 만약 수정용이면 기존 첨부파일들 정보도 필요하므로 담아주기
+  if (isUpdate) {
+    let savedFileArr = document.querySelectorAll('.div-file-saved');
+    if (savedFileArr.length > 0) {
+      for (let savedFile of savedFileArr) {
+        finalData.append('fileNames', savedFile.dataset.changename);
+      }
+    }
+  }
+
   finalData.append('title', title);
   if (startDate != null) {
-    console.log(startDate, '스타트데이트 찍어보기');
     finalData.append('startDate', startDate);
     finalData.append('endDate', endDate);
   }
@@ -448,7 +513,7 @@ let makeApprovalSendData = function () {
 };
 
 // 결재 테이블 아이템 갈아끼기
-export function setTableList(approvalList, count, page) {
+export function setTableList(approvalList, count, page, loginUserNo) {
   // 최신정보로 페이지 버튼 정보 리셋
   if (resetPageBtn(page, count)) {
     // 버튼 리셋되면서 페이지 이동이 일어나게 된다면 함수 종료
@@ -462,6 +527,13 @@ export function setTableList(approvalList, count, page) {
       let approval = approvalList[i];
 
       let isNotRead;
+
+      // 로그인한 유저번호와 기안자 번호가 같을경우 읽은 반려문서인지, 아닌지 체크
+      if (loginUserNo == approval.userNo) {
+        isNotRead = approval.status == -1;
+      }
+
+      // 만약 내가 참조자거나 결재자인 경우 들어오는 데이터
       if (approval.confirmStatus) {
         isNotRead = approval.confirmStatus == 'N';
       } else {
@@ -476,7 +548,9 @@ export function setTableList(approvalList, count, page) {
                       <td>${count - i - (page - 1) * 10}</td>
                       <td>${approval.formatDraftDate}</td>
                       <td>${approval.title}</td>
-                      <td>${approval.userName}${approval.eno != 0 ? '('+approval.eno+')' : '' }</td>
+                      <td>${approval.userName}${
+        approval.eno != 0 ? '(' + approval.eno + ')' : ''
+      }</td>
                       <td>${approval.status}</td>
                       <td>${approval.type}</td>
                     </tr>`;
@@ -598,7 +672,7 @@ export function setAlamNum(returnCount, waitCount, referCount) {
 // 날짜 형식 yyyy-MM-dd로포맷팅해서 반환
 let formatDate = (date) => {
   let tempDate = new Date(Date.parse(date));
-  console.log("날짜변환중 ",tempDate);
+  console.log('날짜변환중 ', tempDate);
 
   // Date 객체에서 연도, 월, 일 추출
   const year = tempDate.getFullYear();
@@ -667,10 +741,8 @@ let changeEndApprovalSignImgPath = (contentEl, imgPath) => {
   }
 };
 
-// 결재문서 상세화면 세팅후 모달 오픈
+// 결재문서 디테일 상세화면 세팅후 모달 오픈
 export function setEndApprovalModal(approval, lines, files, loginUserNo) {
-  console.log('세부정보 불러옴 !!   ', approval, lines);
-
   const defaultFilePath = path + '/resources/file/approval/';
   const defaultSignPath = path + '/resources/file/signature/';
   const signImgPath = path + '/resources/file/signature/';
@@ -684,7 +756,8 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
     '#end-approval .approval-files > div.scroll-bar'
   );
   const finalApprovalWrap = document.querySelector('.final-approval-wrap');
-  const selectedMenu = document.querySelector('.top-menubar-item.selected').dataset.menu;
+  const selectedMenu = document.querySelector('.top-menubar-item.selected')
+    .dataset.menu;
   const returnBtn = document.getElementById('btn-return-approval');
   //결재버튼
   const authorizeBtn = document.getElementById('btn-authorize-approval');
@@ -707,7 +780,6 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
       let endDate = approval.formatEndDate;
       // 신청일자 세팅
       requestDateTd.innerText = startDate + ' ~ ' + endDate;
-      
     } else {
       // 반차들 신청일자 세팅
       requestDateTd.innerText = startDate;
@@ -762,7 +834,7 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
           `${lines[i].userName} ${lines[i].pName}(${lines[i].eno})`
         );
       } else {
-        if(lines[i].userNo == loginUserNo){
+        if (lines[i].userNo == loginUserNo) {
           // 내 레벨 저장
           authorizeBtn.dataset.mylevel = lines[i].level;
         }
@@ -772,13 +844,16 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
         if (lines[i].status == 2) {
           img = `<img src="${signImgPath + lines[i].signatureImg}" />`;
           date = formatDate(lines[i].date);
+        } else if (lines[i].status == -1) {
+          img = `<div class="return_text">반려</div>`;
+          date = formatDate(lines[i].date);
         }
 
-        lineItems += `<div class="end-approval-lines-item" id="${
-          i == lines.length - 1 ? 'last-line' : ''
-        }" data-userno="${lines[i].userNo}">
+        lineItems += `<div class="end-approval-lines-item" data-userno="${
+          lines[i].userNo
+        }">
                       <div class="approver-name">${lines[i].userName} ${
-          lines[i].pName
+          lines[i].pName ? lines[i].pName : ''
         }</div>
                       <div class="approver-sign">
                         ${img}
@@ -823,8 +898,6 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
   let signAreaEl = finalApprovalWrap.querySelector('.end-approval-lines-wrap');
   let contentAreaEl = finalApprovalWrap.querySelector('.end-approval-content');
 
-  console.log(finalApprovalWrap, signAreaEl, contentAreaEl);
-
   // 이미지 src 갈아껴주기
   if (signAreaEl) {
     changeEndApprovalSignImgPath(signAreaEl, defaultSignPath);
@@ -834,15 +907,8 @@ export function setEndApprovalModal(approval, lines, files, loginUserNo) {
   // 참조자 세팅
   referTd.innerText = referNames.join(', ');
 
-  if (loginUserNo == approval.userNo && approval.status != 1) {
-    // 내가 기안한 문서면서 완결상태가 아니라면 삭제버튼 활성화
-    document.getElementById('btn-delete-approval').style.display =
-      'inline-block';
-  } else {
-    document.getElementById('btn-delete-approval').style.display = 'none';
-  }
-
-
+  // 기본적으로 삭제 버튼 비활성화(관리자만 관리쪽 메뉴에서 삭제 가능함)
+  document.getElementById('btn-delete-approval').style.display = 'none';
 
   // 결재문서 상태 대기중인 메뉴에서 문서 선택했을때
   if (selectedMenu == 'wait') {
@@ -865,7 +931,10 @@ export function setMemoList(memoList) {
   const count = memoList.length;
 
   // 메모 버튼에 메모 수 표시
-  document.getElementById('btn-memo-open').innerText = `메모(${count})`;
+  document.querySelectorAll('.btn-memo-open').forEach((btn) => {
+    btn.innerText = `메모(${count})`;
+  });
+
   let html = '';
   for (let memo of memoList) {
     html += `<tr data-memono="${memo.memoNo}">
@@ -1019,16 +1088,86 @@ let extraAprModalEvent = () => {
   // 결재/저장 버튼 클릭 시 이벤트
   document
     .getElementById('btn-save-approval')
-    .addEventListener('click', function () {
+    .addEventListener('click', function (e) {
       swal('결재를 신청 하시겠습니까?', {
         buttons: { confirm: '확인', cancel: '취소' },
       }).then(function (isConfirm) {
         if (isConfirm) {
-          // 아래함수에서 알림창 다 날리기때문에 여기서는 따로 처리 X
-          let formData = makeApprovalSendData();
-          if (formData != null) {
-            MyAprData.insertApproval(formData);
+          let formData;
+          let approvalNo = e.target.dataset.approvalno;
+          if (approvalNo && Number(approvalNo) > 0) {
+            // 수정이라는 뜻이므로 요청 수정으로 보내야함
+
+            // 보낼 정보들 담아주는 함수(수정용으로 세팅)
+            formData = makeApprovalSendData(true);
+
+            formData.append('approvalNo', Number(approvalNo));
+            MyAprData.registerApproval(formData, '/updateApproval');
+          } else {
+            // 신규로 보내면 됨
+
+            // 아래함수에서 알림창 다 날리기때문에 여기서는 따로 처리 X
+            let formData = makeApprovalSendData(false);
+            if (formData != null) {
+              MyAprData.registerApproval(formData, '/insertApproval');
+            }
           }
+        }
+      });
+    });
+
+  // 임시 저장 버튼 클릭 시 이벤트
+  document
+    .getElementById('btn-save-approval-temporary')
+    .addEventListener('click', function () {
+      swal('임시저장 하시겠습니까?', {
+        buttons: { confirm: '확인', cancel: '취소' },
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          let approvalNo =
+            document.getElementById('btn-save-approval').dataset.approvalno;
+
+          let formData;
+          if (approvalNo && Number(approvalNo) > 0) {
+            // 수정이라는 뜻이므로 요청 수정으로 보내야함
+
+            // 보낼 정보들 담아주는 함수(수정용으로 세팅)
+            formData = makeApprovalSendData(true);
+            if (formData != null) {
+              // 상태 임시저장 값으로 지정
+              formData.append('status', 2);
+              formData.append('approvalNo', Number(approvalNo));
+              MyAprData.registerApproval(formData, '/updateApproval');
+            }
+          } else {
+            // 신규로 보내면 됨
+
+            // 보낼 정보들 담아주는 함수
+            formData = makeApprovalSendData(false);
+            if (formData != null) {
+              // 상태 임시저장 값으로 지정
+              formData.append('status', 2);
+              MyAprData.registerApproval(formData, '/insertApproval');
+            }
+          }
+        }
+      });
+    });
+
+  // todo! 삭제버튼 이벤트는 나중에 관리자 화면에서도 부여해줘야함
+  // 임시저장/반려 문서용 삭제 버튼에 이벤트 부여
+  document
+    .getElementById('btn-temp-return-approval-delete')
+    .addEventListener('click', () => {
+      swal('문서를 삭제 하시겠습니까?', {
+        buttons: { confirm: '확인', cancel: '취소' },
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          // 결재 문서 삭제 진행
+          let approvalNo =
+            document.getElementById('btn-save-approval').dataset.approvalno;
+          console.log('삭제할 문서 번호 ', approvalNo);
+          MyAprData.deleteApproval(Number(approvalNo));
         }
       });
     });
@@ -1191,34 +1330,20 @@ let selectAprLineModalEvent = () => {
 
 // 전자결재 디테일 화면 모달창 관련 이벤트 부여구역
 let setEndModalEvent = () => {
-  // 삭제버튼 이벤트
-  document
-    .getElementById('btn-delete-approval')
-    .addEventListener('click', () => {
-      swal('결재문서를 삭제 하시겠습니까?', {
-        buttons: { confirm: '확인', cancel: '취소' },
-      }).then(function (isConfirm) {
-        if (isConfirm) {
-          // 결재 문서 삭제 진행
-          let approvalNo =
-            document.getElementById('end-approval').dataset.approvalno;
-          console.log('삭제할 문서 번호 ', approvalNo);
-          MyAprData.deleteApproval(Number(approvalNo));
-        }
-      });
-    });
-
   // 반려버튼 이벤트
   document
     .getElementById('btn-return-approval')
     .addEventListener('click', () => {
-      swal('반려 처리 하시겠습니까?', {
+      swal('반려 처리하시겠습니까?', {
         buttons: { confirm: '확인', cancel: '취소' },
       }).then(function (isConfirm) {
         if (isConfirm) {
           // 결재 문서 반려 진행
-          let approvalNo =
-            document.getElementById('end-approval').dataset.approvalno;
+          let approvalNo = Number(
+            document.getElementById('end-approval').dataset.approvalno
+          );
+
+          MyAprData.updateApprovalReturn(approvalNo);
         }
       });
     });
@@ -1227,7 +1352,7 @@ let setEndModalEvent = () => {
   document
     .getElementById('btn-authorize-approval')
     .addEventListener('click', (e) => {
-      swal('결재 처리 하시겠습니까?', {
+      swal('결재 진행하시겠습니까?', {
         buttons: { confirm: '확인', cancel: '취소' },
       }).then(function (isConfirm) {
         if (isConfirm) {
@@ -1235,8 +1360,9 @@ let setEndModalEvent = () => {
           let approvalNo = Number(
             document.getElementById('end-approval').dataset.approvalno
           );
-          const lastLine = document.getElementById('last-line');
-          let lastLineUserNo = lastLine ? Number(lastLine.dataset.userno) : -1;
+          const lines = document.querySelectorAll('.end-approval-lines-item');
+          let lastLine = lines[lines.length - 1];
+          let lastLineUserNo = lastLine.dataset.userno;
           let loginUserNo = Number(e.target.dataset.userno);
           let myLevel = Number(e.target.dataset.mylevel);
           let contentHtml = null;
@@ -1256,7 +1382,7 @@ let setEndModalEvent = () => {
               .toString()
               .padStart(2, '0')}`;
 
-              console.log("결재 후 결재완료찍을때 현재날짜",nowDate);
+            console.log('결재 후 결재완료찍을때 현재날짜', nowDate);
 
             // 마지막 라인에 이미지 넣기
             lastLine.querySelector(
@@ -1265,7 +1391,7 @@ let setEndModalEvent = () => {
             // 마지막 라인에 현재날짜로 날짜 입력하기
             lastLine.querySelector('.approver-date').innerText = nowDate;
 
-            console.log("결재 후 결재완료찍을때 현재날짜",lastLine);
+            console.log('결재 후 결재완료찍을때 현재날짜', lastLine);
             // 완결처리를 위한 본문내용 세팅해서 보내기
             const content = document
               .querySelector('.final-approval-wrap')
@@ -1276,13 +1402,16 @@ let setEndModalEvent = () => {
             console.log(content, contentHtml);
           }
 
-            // 내 라인상태 결재로 변경하기
-            MyAprData.updateApprovalStateAuthorized(approvalNo, myLevel, contentHtml);
+          // 내 라인상태 결재로 변경하기
+          MyAprData.updateApprovalStateAuthorized(
+            approvalNo,
+            myLevel,
+            contentHtml
+          );
         }
       });
     });
 };
-
 
 // 내결재 화면 기본 이벤트들 부여구역
 let setDefaultPageEvent = () => {
@@ -1400,7 +1529,9 @@ let setDefaultPageEvent = () => {
       // 부모 tr 찾기
       const tr = e.target.closest('tr');
       let approvalNo = tr.dataset.approvalno;
-      MyAprData.selectApproval(Number(approvalNo));
+      let selectedMenu = document.querySelector('.selected.top-menubar-item')
+        .dataset.menu;
+      MyAprData.selectApproval(Number(approvalNo), selectedMenu);
 
       // 일단 클래스 빼기(== 읽음으로 처리)
       tr.className = '';
@@ -1465,6 +1596,21 @@ let signModalEvent = () => {
 
 // 메모 관련 이벤트들 부여구역
 let setMemoEvent = () => {
+  // 메모 버튼 클릭 이벤트
+  document.querySelectorAll('.btn-memo-open').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      /* 메모 리스트 오픈 */
+      document.querySelector('#memo-modal-back .memo-list').style.display =
+        'block';
+      /* 메모 추가/디테일 화면 감추기 */
+      document.querySelector('#memo-modal-back .memo-detail').style.display =
+        'none';
+
+      // 메모 모달 오픈
+      document.getElementById('memo-modal-back').style.display = 'flex';
+    });
+  });
+
   // 메모 저장버튼 클릭 이벤트
   document
     .getElementById('btn-add-memo-save')

@@ -254,7 +254,7 @@
 					AND TYPE = 3
 				</when>
 			</choose>
-		ORDER BY APPROVAL_NO DESC
+		ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
 		LIMIT #{ page } , 10 	
 	</select>	
 	
@@ -279,8 +279,12 @@
 					AND STATUS >= 0 
 				</when>
 				<when test="status == -1">
-				<!-- 반려용 조회 -->
+				<!-- 반려문서 전체 조회용 -->
 					AND 0 > STATUS 
+				</when>
+				<when test="status == -2">
+				<!-- 반려 안읽은 문서 조회용 -->
+					AND STATUS = -1
 				</when>
 				<otherwise>
 					AND STATUS = #{ status }
@@ -367,7 +371,7 @@
 					AND TYPE = 3
 				</when>
 			</choose>
-		ORDER BY APPROVAL_NO DESC
+		ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
 		LIMIT #{ page } , 10 
 	</select>	
 	
@@ -446,7 +450,7 @@
 		FROM (	SELECT APPROVAL_NO, CONFIRM_STATUS
 				FROM APPROVAL_LINE
 				WHERE
-					USER_NO = 2
+					USER_NO = #{userNo}
 					AND TYPE = 'R'
 					AND STATUS = 3	) L
 		LEFT JOIN APPROVAL A USING(APPROVAL_NO)
@@ -465,7 +469,21 @@
 				AND A.STATUS = #{ status }
 			</otherwise>
 		</choose>	
-		ORDER BY APPROVAL_NO DESC
+		<choose>
+			<when test='type == 0'><!-- 일반 -->
+				AND TYPE = 0
+			</when>
+			<when test='type == 1'><!-- 연차 -->
+				AND TYPE = 1
+			</when>
+			<when test='type == 2'><!-- 오전반차 -->
+				AND TYPE = 2
+			</when>
+			<when test='type == 3'><!-- 오후반차 -->
+				AND TYPE = 3
+			</when>
+		</choose>
+		ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
 		LIMIT #{ page } , 10 
 	</select>	
 
@@ -497,6 +515,20 @@
 			<otherwise>
 				AND STATUS = #{ status }
 			</otherwise>
+		</choose>
+		<choose>
+			<when test='type == 0'><!-- 일반 -->
+				AND TYPE = 0
+			</when>
+			<when test='type == 1'><!-- 연차 -->
+				AND TYPE = 1
+			</when>
+			<when test='type == 2'><!-- 오전반차 -->
+				AND TYPE = 2
+			</when>
+			<when test='type == 3'><!-- 오후반차 -->
+				AND TYPE = 3
+			</when>
 		</choose>
 	</select>	
 
@@ -631,10 +663,20 @@
 	<!-- 결재문서 내용 수정 -->
 	<update id="updateApproval" parameterType="approval">
 		UPDATE APPROVAL
-		SET 
-			TITLE = #{title} ,
+		SET TITLE = #{title} ,
 			CONTENT = #{content},
-		WHERE APPROVAL_NO  = #{approvalNo}
+			STATUS = #{ status },
+			DRAFT_DATE = NOW(),
+			START_DATE = #{startDate},
+			END_DATE =  #{endDate} 
+		WHERE APPROVAL_NO = #{approvalNo}
+	</update>
+	
+	<!-- 결재문서 상태 수정 -->
+	<update id="updateApprovalStatus" parameterType="map">
+		UPDATE APPROVAL
+		SET STATUS = #{ status }
+		WHERE APPROVAL_NO = #{ approvalNo }
 	</update>
 	
 	<!-- 결재문서 완결처리 -->
@@ -660,14 +702,7 @@
 			AND STATUS IN( 1 , 3 ) 
 	</update> 
 	
-	
-	<!-- 결재문서 상태 수정 -->
-	<update id="updateApprovalStatus" parameterType="map">
-		UPDATE APPROVAL_MEMO
-		SET STATUS = #{ status }
-		WHERE APPROVAL_NO = #{ approvalNo }
-	</update>
-	
+
 	<!-- 결재자가 결재 후 다음 결재라인들 상태 변경 (다음결재자 상태1 , 다음결재자 전단계의 참조자들 상태3) -->
 	<update id="updateNextLinesStatus" parameterType="map">
 		UPDATE APPROVAL_LINE
@@ -690,6 +725,17 @@
 				  AND TYPE = 'A'
 				  AND LEVEL =  #{ nextAuthorizeLevel };
 		</if>
+	</update>
+	
+	
+	<!-- 결재자가 반려처리 했을경우 본인 결재라인 상태 -1로 변경 -->
+	<update id="updateLineStatusReturn" parameterType="map">
+		UPDATE APPROVAL_LINE
+			SET STATUS = -1, 
+				DATE = NOW()
+			WHERE APPROVAL_NO = #{ approvalNo }
+				  AND TYPE = 'A'
+				  AND USER_NO =  #{ userNo };
 	</update>
 	
 	

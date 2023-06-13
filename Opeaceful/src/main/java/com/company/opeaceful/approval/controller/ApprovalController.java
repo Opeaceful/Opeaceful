@@ -69,7 +69,7 @@ public class ApprovalController {
 		// todo! 반려건, 승인대기건 개수 조회해서 같이 넣어주기
 		model.addAttribute("returnCount", aprService.selectApprovalListCount(userNo, -2 , -1, 0, false)  );
 		model.addAttribute("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, 0, true) );
-		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, true));
+		model.addAttribute( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, -1,true));
 		
 		if(menu != null && menu.equals("wait")) {
 			// 승인대기중인 메뉴로 선택
@@ -137,7 +137,7 @@ public class ApprovalController {
 		
 		map.put( "returnCount" ,aprService.selectApprovalListCount(userNo, -2 , -1, 0, false));
 		map.put("waitCount", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, 0, true) );
-		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, true));
+		map.put( "referCount", aprService.selectApprovalListforReferCount(userNo, null, 0, -1, true));
 		return new Gson().toJson(map);
 	}
 	
@@ -186,7 +186,7 @@ public class ApprovalController {
 										String menu,
 										String status
 										) {
-		System.out.println(year+"==========들어온 페이지=========================="+page);
+		System.out.println(year+"==========들어온 페이지=========================="+status);
 		Integer aprStatus = null;
 		if (status != null && !status.equals("all")) {
 			aprStatus = Integer.parseInt(status);
@@ -198,8 +198,8 @@ public class ApprovalController {
 		
 		switch (menu) {
 		// 참조중인 문서 리스트 조회용
-		case "refer": list = aprService.selectApprovalListforRefer(userNo, aprStatus, year, page);
-					 count = aprService.selectApprovalListforReferCount(userNo, aprStatus, year, false);
+		case "refer": list = aprService.selectApprovalListforRefer(userNo, aprStatus, year, page, type);
+					 count = aprService.selectApprovalListforReferCount(userNo, aprStatus, year, type, false);
 			break;
 			
 		// 결재대기중인 문서 리스트 조회용
@@ -220,10 +220,10 @@ public class ApprovalController {
 		}
 		
 		
-		
 		Map<String, Object> result = new HashMap<>();
 		result.put("list", list);
 		result.put("count", count);
+		result.put("loginUserNo", loginUser.getUserNo());
 
 		return new Gson().toJson(result);
 	}
@@ -234,7 +234,7 @@ public class ApprovalController {
 	// ajax용 결재문서 저장
 	@ResponseBody
 	@PostMapping("/insertApproval")
-	public String insertApproval(	  @ModelAttribute("loginUser") Member loginUser,
+	public String insertApproval( @ModelAttribute("loginUser") Member loginUser,
 								  @ModelAttribute Approval approval,
 								  @RequestParam(value="images", required=false) MultipartFile[] imgList,
 								  @RequestParam(value="imgNames", required = false) String[] imgNameList,
@@ -402,6 +402,221 @@ public class ApprovalController {
 	
 	
 	
+	// ajax용 결재문서 업데이트 (임시저장건, 반려건)
+		@ResponseBody
+		@PostMapping("/updateApproval")
+		public String updateApproval( @ModelAttribute("loginUser") Member loginUser,
+									  @ModelAttribute Approval approval,
+									  @RequestParam(value="images", required=false) MultipartFile[] imgList,
+									  @RequestParam(value="imgNames", required = false) String[] imgNameList,
+									  @RequestParam(value="files", required=false) MultipartFile[] fileList,
+									  @RequestParam(value="fileNames", required=false) String[] fileNameList,
+									  @RequestParam(value="userNoList", required=false) int[] userNoList,
+									  @RequestParam(value="levelList", required=false) int[] levelList,
+									  @RequestParam(value="typeList", required=false) String[] typeList,
+									  HttpSession session
+									) {
+			// 기안자 유저번호 저장
+			approval.setUserNo(loginUser.getUserNo());
+			int approvalNo = approval.getApprovalNo();
+			System.out.println("문서 업데이트=============== "+ approvalNo);
+			
+			//------------------------ 결재라인 저장 구역 --------------------------------
+			// 결재라인 저장용
+			List<ApprovalLine> lines = new ArrayList<>();
+			
+			// 첫번째 결재자 찾는 용도
+			int firstA = 999;
+			int reali = 0;
+			
+			for(int i= 0; i< userNoList.length; i++) {
+				ApprovalLine line = new ApprovalLine();
+				line.setLevel(levelList[i]);
+				line.setUserNo(userNoList[i]);
+				line.setType(typeList[i]);
+				
+				int status = 0; // == 기본상태임
+				if(typeList[i].equals("A")) {
+					// 결재자면서 가장 첫번째인 사람 찾는용도
+					if( levelList[i] < firstA ) {
+						firstA = levelList[i];
+						reali = i;
+					}
+				}
+				line.setStatus(status);
+
+				lines.add(line);
+			}
+			
+			if(firstA <= lines.size()) {			
+				// 가장 첫번째 결재자 상태 대기상태로 변경
+				lines.get(reali).setStatus(1);
+				
+				// 결재자가 존재하는 문서이므로 임시저장용이 아니면 문서상태 진행중으로 저장
+				if(approval.getStatus() != 2) {
+					approval.setStatus(0);
+				}
+				
+				// 첫번째 결재자 전의 라인들은 모두 참조자라는 뜻이므로 상태 3(참조자용)으로 변경
+				for(int i = 0; i< reali; i++) {
+					lines.get(i).setStatus(3);
+				}
+				
+			}else {
+				// 결재자 없이 참조자만있는 문서라는 뜻이므로 임시저장용이 아니면 문서상태 완료로 찍어야함
+				if(approval.getStatus() != 2) {
+					approval.setStatus(1);
+					// todo! 결재문서 완료처리되면 자동으로 이름이랑 서명칸 이미지 저장시켜야함
+					// 리턴값에 변화를 줘서 앞단에서 처리하는게 좋을 듯
+				}
+				
+				// 결재자 없이 참조자만 있는 문서이니 모든 참조자 상태 3(참조자용)으로 변경
+				for(ApprovalLine line : lines) {
+					line.setStatus(3);
+				}
+				
+			}
+			
+			// ----------------- 본문 이미지 파일 + 첨부파일 내용 변동있으면 필요없어진 실제파일 삭제시키는 구역 ------------------------
+			
+			// 일단 먼저 저장되어있던 모든 파일 리스트 불러옴
+			List<ApprovalFile> savedFileList = aprService.selectFileList("approval", approvalNo, "all");
+
+			// 파일 저장경로 얻어오기
+			String webPath = "/resources/file/approval/";
+			String serverFolderPath = session.getServletContext().getRealPath(webPath);
+			
+			// 본문 이미지 리스트와 비교 먼저 수행
+			if (imgNameList != null && imgNameList.length > 0) {
+				// 이미지 이름들과 실제 db에 저장되어있는 파일명들 비교해서 있는애들은 빼고 없는애들만 리스트에 남김
+				for (int i = 0; i < savedFileList.size(); i++) {
+					String changeName = savedFileList.get(i).getChangeName();
+
+					for (int j = 0; j < imgNameList.length; j++) {
+						String imgName = imgNameList[j];
+
+						if (changeName.equals(imgName)) {
+							savedFileList.remove(i);
+							// 아이템을 하나 지웠으므로 다시 이전 숫자부터 반복하게 -- 함
+							i--;
+							break;
+						}
+					}
+				}
+			}
+			
+			// 첨부파일 리스트와 비교 수행
+			if (fileNameList != null && fileNameList.length > 0) {
+				// 첨부파일 이름들과 실제 db에 저장되어있는 파일명들 비교해서 있는애들은 빼고 없는애들만 리스트에 남김
+				for (int i = 0; i < savedFileList.size(); i++) {
+					String changeName = savedFileList.get(i).getChangeName();
+
+					for (int j = 0; j < fileNameList.length; j++) {
+						String fileName = fileNameList[j];
+
+						if (changeName.equals(fileName)) {
+							savedFileList.remove(i);
+							// 아이템을 하나 지웠으므로 다시 이전 숫자부터 반복하게 -- 함
+							i--;
+							break;
+						}
+					}
+				}
+			}
+			
+			// 검열하고 남은 이미지 리스트 실제 파일들 삭제
+			for (ApprovalFile file : savedFileList) {
+				File deleteFile = new File(serverFolderPath + file.getChangeName());
+				if (deleteFile.exists()) { // 파일이 존재하면
+					// 파일 삭제
+					deleteFile.delete();
+				}
+			}
+
+			// db에서도 파일 삭제 진행
+			if (savedFileList.size() > 0) {
+				aprService.deleteFileList(savedFileList);
+			}
+
+			//----------------- 신규로 들어온 파일 가공해서 업데이트 및 저장시키는 구역 -------------------------
+			
+			//----- 본문 이미지 저장 구역 --------
+			// 본문용으로 저장시킬 파일 객체 리스트
+			List<ApprovalFile> forSaveFileList = new ArrayList<>();
+			
+			// 본문 가공을 위해 별도로 빼서 저장
+			String content = approval.getContent();
+			
+			if(imgList != null && imgList.length > 0) {
+				for(int i=0; i< imgList.length; i++) {
+					String src = "src=\""+i+"\"";
+					String changeName;
+					try {
+						changeName = FileRenamePolicy.saveFile( imgList[i] , serverFolderPath);
+						content = content.replace(src,"src=\""+changeName+"\"");
+						
+						forSaveFileList.add(new ApprovalFile( "approval" , null ,changeName));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			approval.setContent(content);
+
+			//---------- 첨부파일 저장구역 --------------
+			
+			if(fileList != null && fileList.length > 0) {
+				for(int i=0; i< fileList.length; i++) {
+					try {
+						String originName = fileList[i].getOriginalFilename();
+						String changeName = FileRenamePolicy.saveFile( fileList[i] , serverFolderPath);
+						
+						forSaveFileList.add(new ApprovalFile("approval" , originName ,changeName));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			
+			int result = aprService.updateApproval(approval, lines , forSaveFileList);
+			
+			// 만약 업데이트 실패하면 위에서 파일 저장 진행했던거 다 날리는 구문 실행
+			if(result <= 0) {
+				if (forSaveFileList.size() > 0) {
+					// 저장된 파일 리스트 실제 파일들 삭제
+					for (ApprovalFile file : forSaveFileList) {
+						File deleteFile = new File(serverFolderPath + file.getChangeName());
+						if (deleteFile.exists()) { // 파일이 존재하면
+							deleteFile.delete();// 파일 삭제
+						}
+					}
+				}
+			}
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			// 만약 결재문서자체는 잘 저장되었는데 상태를 완결상태로 해야하는거면 앞단에 알려줌
+			if(result > 0 && approval.getStatus() == 1) {
+				// 본인정보 , 서명정보, 직급, 이름 돌려줘야함
+				String signImg = aprService.selectSignImg(loginUser.getUserNo());
+				map.put("result", -1);
+				map.put("approval", approval);
+				map.put("userName", loginUser.getUserName());
+				map.put("pName", loginUser.getPName());
+				map.put("signImg", signImg);
+			}else if(result > 0) {
+				map.put("result", 1);
+			}else {
+				map.put("result", 0);
+			}
+			
+			return new Gson().toJson(map);
+		}
+	
+	
+	
 	// ajax용 결재문서 결재처리 ( + 결재자가 결재 후 다음 결재라인들 상태 변경) 
 	@ResponseBody
 	@PostMapping("/updateApprovalStateAuthorized")
@@ -451,6 +666,25 @@ public class ApprovalController {
 		
 		if(approval != null && approval.getApprovalNo() != 0 ) {
 			result = aprService.updateApprovalStateEnd(approval);
+		}
+		
+		return result;
+	}
+	
+	
+	// ajax용 결재문서 반려처리
+	@ResponseBody
+	@PostMapping("/updateApprovalReturn")
+	public int updateApprovalReturn( 	@ModelAttribute("loginUser") Member loginUser,
+										Integer approvalNo) {
+		int result = 0;
+		System.out.println("=============================반려처리=========="+approvalNo);
+		
+		if(approvalNo != 0 ) {
+			result =aprService.updateApprovalStatus(approvalNo, -1);
+			if(result > 0) {				
+				result = aprService.updateLineStatusReturn(approvalNo, loginUser.getUserNo());
+			}
 		}
 		
 		return result;
