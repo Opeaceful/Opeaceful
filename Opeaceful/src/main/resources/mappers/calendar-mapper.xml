@@ -13,16 +13,24 @@
 		<result column="START_DATE" property="startDate"/>
 		<result column="END_DATE" property="endDate"/>
 		<result column="COLOR" property="color"/>
+		<result column="ID" property="id"/>
 		<result column="START" property="start"/>
 		<result column="END" property="end"/>
 		<result column="BORDER_COLOR" property="borderColor"/>
 		<result column="BACKGROUND_COLOR" property="backgroundColor"/>
-		
 	</resultMap>
+	
+	<!-- 캘린더 내부 메모 -->
+	<resultMap type="calendarMemo" id="memoResultSet">
+		<id column="USER_NO" property="userNo"/>
+		<result column="MEMO" property="memo"/>
+	</resultMap>
+	
+	
 	
 	<!-- 개인캘린더 일정 조회 -->
 	<select id="myCalendarList" resultMap="calendarListResultSet">
-		SELECT CALENDAR_NO,
+		SELECT CALENDAR_NO AS ID,
 			   CATEGORY,
 			   USER_NO,
 			   DEPT_CODE,
@@ -39,7 +47,7 @@
 	
 	<!-- 팀캘린더 일정 조회 -->
 	<select id="teamCalendarList" resultMap="calendarListResultSet">
-		SELECT CALENDAR_NO,
+		SELECT CALENDAR_NO AS ID,
 			   CATEGORY,
 			   USER_NO,
 			   DEPT_CODE,
@@ -53,12 +61,31 @@
 		FROM CALENDAR
 		WHERE CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
 												FROM USER_DEPARTMENT
-												WHERE USER_NO = #{userNo});
+												WHERE USER_NO = #{userNo})
+		UNION										
+		SELECT CALENDAR_NO AS ID,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY 
+		FROM CALENDAR 
+		WHERE USER_NO in (
+		SELECT USER_NO 
+		FROM user_department
+		where CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
+		FROM user_department
+		where USER_NO = #{userNo}))										
 	</select>
 	
 	<!-- 캘린더 전체(개인+팀) 일정 조회 -->
 	<select id="fullCalendarList" resultMap="calendarListResultSet">
-		SELECT CALENDAR_NO,
+		SELECT CALENDAR_NO AS ID,
 			   CATEGORY,
 			   USER_NO,
 			   DEPT_CODE,
@@ -72,10 +99,117 @@
 		FROM CALENDAR
 		WHERE (CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
 												FROM USER_DEPARTMENT
-												WHERE USER_NO = #{userNo})) OR (CATEGORY = 'M' AND USER_NO = #{userNo});
+												WHERE USER_NO = #{userNo})) OR (CATEGORY = 'M' AND USER_NO = #{userNo})
+		UNION										
+		SELECT CALENDAR_NO AS ID,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY 
+		FROM CALENDAR 
+		WHERE USER_NO in (
+		SELECT USER_NO 
+		FROM user_department
+		where CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
+		FROM user_department
+		where USER_NO = #{userNo}))					
 	</select> 
 	
+	<!-- 일정 추가 -->
+	<insert id="insertEvent" parameterType="calendar">
+		INSERT INTO CALENDAR(CATEGORY, 
+							 USER_NO,
+							 <if test='category == "T"'>
+							 DEPT_CODE, 
+							 </if>
+							 TITLE, 
+							 CONTENT, 
+							 START_DATE, 
+							 END_DATE, 
+							 COLOR, 
+							 D_DAY)
+		VALUES (#{category},
+		        #{userNo},
+		        <if test='category == "T"'>
+		        #{deptCode},
+		        </if>
+		        #{title},
+		        #{content},
+		        #{startDate},
+		        #{endDate},
+		        #{color},
+		        #{dDay})
+	</insert>
 	
+	<!-- 일정번호로 일정정보 조회 -->
+	<select id="selectEvent" resultMap="calendarListResultSet">
+		SELECT CALENDAR_NO AS ID,
+				   CATEGORY,
+				   USER_NO,
+				   DEPT_CODE,
+				   TITLE,
+				   CONTENT,
+				   START_DATE AS START,
+				   END_DATE AS END,
+				   COLOR AS BACKGROUND_COLOR,
+				   COLOR AS BORDER_COLOR,
+				   D_DAY
+			FROM CALENDAR
+			WHERE CALENDAR_NO = #{cno}
+	</select>
+	
+	<!-- 일정수정 -->
+	<update id="updateEvent" parameterType="calendar">
+		UPDATE CALENDAR SET
+			CATEGORY = #{category},
+			TITLE = #{title},
+			CONTENT = #{content},
+			START_DATE = #{startDate},
+			END_DATE = #{endDate},
+			COLOR = #{color},
+			D_DAY = #{dDay}
+		
+		WHERE CALENDAR_NO = #{calendarNo}
+	</update>
+	
+	<!-- 일정삭제 -->
+	<delete id="deleteEvent">
+		DELETE FROM CALENDAR
+		WHERE CALENDAR_NO = #{cno}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 메모 추가 -->
+	<insert id="insertMemo" parameterType="calendarMemo">
+	 	INSERT INTO CALENDAR_MEMO(USER_NO, MEMO)
+	 					VALUES(#{userNo}, #{memo})
+	</insert>
+	
+	<!-- 메모 수정 -->
+	<update id="updateMemo" parameterType="calendarMemo">
+		UPDATE CALENDAR_MEMO SET
+			MEMO = #{memo}
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<!-- 메모 조회 (존재확인용) -->
+	<select id="selectMemo" resultMap="memoResultSet">
+		SELECT *
+		FROM CALENDAR_MEMO
+		WHERE USER_NO = #{userNo}
+	</select>
 	
 	
 	
