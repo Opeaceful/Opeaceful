@@ -112,6 +112,13 @@
 		ORDER BY PAYMENT_DATE DESC LIMIT 1;
   	</select>
   	
+  	<!-- [지영] 5년 지난 데이터 조회 : 스케줄용 -->
+  	<select id="deleteSalayselect" resultType="_int">
+  		SELECT SALARY_NO
+		FROM salary
+		WHERE (YEAR(SYSDATE())-5) > YEAR_REPORTED
+  	</select>
+  	
   	
   	<!-- =================== [update] =================== -->
   	<!-- [지영] 모든유저 급여업데이트 -->
@@ -133,5 +140,14 @@
   		DELETE FROM salary 
 		WHERE SALARY_NO = #{num}	
   	</delete>
+  	
+  	<!-- [지영] 5년 지난 데이터 조회 : 스케줄용 -->
+  	<delete id="deleteSalay" parameterType="java.util.List">
+  		<foreach collection="list" item="salaryNo" separator=";">
+	  		DELETE FROM salary 
+			WHERE SALARY_NO = #{salaryNo}
+  		</foreach>		
+  	</delete>
+  	
   
 </mapper>

@@ -36,7 +36,7 @@ public class RoleController {
 	//[지영]
 	//granting-role로 이동
 	@RequestMapping("/granting")
-	public String granting(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
+	public String granting(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model) {
 		
 		boolean RoleCheck = false;
 		
@@ -50,8 +50,8 @@ public class RoleController {
 		if (RoleCheck) {
 			return "role/granting-role";
 	    } else {
-	    	//일단은 로그인으로 보냄 : 에러페이지?
-	    	return "login";
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
 	    }
 		
 	}
@@ -101,7 +101,7 @@ public class RoleController {
 	//[지영]
 	//user-role로 이동
 	@RequestMapping("/userRole")
-	public String memberRole(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
+	public String memberRole(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model) {
 		
 		boolean RoleCheck = false;
 		
@@ -115,8 +115,8 @@ public class RoleController {
 		if (RoleCheck) {
 			return "role/user-role";
 	    } else {
-	    	//일단은 로그인으로 보냄 : 에러페이지?
-	    	return "login";
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
 	    }
 		
 	}

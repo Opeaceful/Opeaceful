@@ -49,7 +49,8 @@ public class Scheduling {
 			       }
 		      }
 		
-			int result = memberService.deleteMembers(delist);
+			 memberService.deleteMembers(delist);
+			
 			
 				
 		}
@@ -69,5 +70,8 @@ public class Scheduling {
 		System.out.println(result+"======삭제된 문서 숫자======");
 		
 	}
+	
+	
+	
 
 }

@@ -114,8 +114,8 @@ public class SalaryController {
 			
 			return "salary/employeeAllSalary";
 	    } else {
-	    	//일단은 로그인으로 보냄 : 에러페이지?
-	    	return "login";
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
 	    }
 		
 		
@@ -240,5 +240,17 @@ public class SalaryController {
 		return new Gson().toJson(result);
 			
 	}
+	
+	//[지영] 회계기간 5년이 지난 급여자료 삭제
+	public void deleteSalay() {
+	
+			
+		List<Integer> dslist = salaryService.deleteSalayselect();
+		int result = salaryService.deleteSalay(dslist);
+		
+		System.out.println(result);
+		
+	}
+		
 
 }

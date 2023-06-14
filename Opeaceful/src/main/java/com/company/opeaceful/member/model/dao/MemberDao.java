@@ -147,7 +147,7 @@ public class MemberDao {
 	public int deleteMembers(List<Integer> delist) {
 		
 		//리플 삭제, 게시판삭제, 사인삭제, 유저직급삭제 , 멤버삭제 
-		return 0;
+		return sqlSession.delete("deleteMembers",delist);
 	}
 	
 

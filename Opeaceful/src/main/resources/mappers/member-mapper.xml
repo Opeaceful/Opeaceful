@@ -67,7 +67,7 @@
 	  	<result column="TOP_DEPT_NAME" property="topDeptName"/>
 	</resultMap>
 
-<!-- =============================================[insert]=========================================================== -->	
+	<!-- =================== [insert] =================== -->	
 	<!-- [지영] member insert구문 -->
 	<!--[지영] member insert -->
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
@@ -111,7 +111,7 @@
 	
 
 	
-<!-- =============================================[selects]=========================================================== -->	
+	<!-- =================== [select] =================== -->	
 
 	
 	<!-- [지영] member select 구문 -->	
@@ -264,7 +264,7 @@
 	</select>
 	
 	
-<!-- =============================================[update]=========================================================== -->	
+	<!-- =================== [update] =================== -->
 
 	<!-- [지의] 비밀번호 변경 -->
 	<update id="updatePwd" parameterType="member">
@@ -350,13 +350,25 @@
 
 
 	<!-- =================== [delete] =================== -->
-  	<!-- [지영] 3년이 지난 유저 데이터 삭제 
+  	<!-- [지영] 3년이 지난 유저 데이터 삭제 -->
   	<delete id="deleteMembers" parameterType="java.util.List">
-  		<foreach collection="list" item="uesrNo" separator=";">
-  		DELETE FROM salary 
-		WHERE SALARY_NO = #{uesrNo}
+  		<foreach collection="list" item="uesrNo" >
+	  		DELETE FROM board_reply 
+			WHERE USER_NO = #{uesrNo};
+		    
+		    DELETE FROM board 
+			WHERE BOARD_WRITER = #{uesrNo} AND BOARD_CD = 'F';
+		    
+			DELETE FROM user_department 
+			WHERE USER_NO = #{uesrNo};
+		    
+			DELETE FROM SIGNATURE_IMG 
+		    WHERE USER_NO = #{uesrNo};
+		    
+			DELETE FROM member 
+			WHERE USER_NO = #{uesrNo};
 		</foreach>	
-  	</delete> -->
+  	</delete> 
 
 
 </mapper>

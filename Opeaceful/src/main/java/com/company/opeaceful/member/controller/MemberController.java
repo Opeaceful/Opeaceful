@@ -170,7 +170,7 @@ public class MemberController {
 	//[지영]
 	//member-create로 이동
 	@RequestMapping("/create")
-	public String createMember(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
+	public String createMember(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model) {
 		
 		boolean RoleCheck = false;
 		
@@ -184,8 +184,8 @@ public class MemberController {
 		if (RoleCheck) {
 	        return "member/member-create";
 	    } else {
-	    	//일단은 로그인으로 보냄 : 에러페이지?
-	    	return "login";
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
 	    }
 	}
 	
@@ -230,7 +230,7 @@ public class MemberController {
 	//[지영]
 	//member-allview로 이동
 	@RequestMapping("/allview")
-	public String memberAllview(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole){
+	public String memberAllview(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model){
 		
 		boolean RoleCheck = false;
 		
@@ -244,8 +244,8 @@ public class MemberController {
 		if (RoleCheck) {
 			return "member/member-allview";
 	    } else {
-	    	//일단은 로그인으로 보냄 : 에러페이지?
-	    	return "login";
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
 	    }
 	 
 		
