@@ -3,6 +3,10 @@
 import {path} from './common/common.js';
 let lat = 37.4923615; // 위도
 let lon = 127.0292881; // 경도
+
+//다크모드변수
+let colorMode = window.localStorage.getItem('color-theme');
+
 /* 현재 위치 확인 함수 */
 function getLocation() {
     if (navigator.geolocation) { // GPS를 지원하면
@@ -64,7 +68,11 @@ $(document).ready(function() {
             var $hightTemp = Math.floor(data.main.temp_max) + 'º';
             // console.log($a);
             // $('.city').append($city);
-            $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
+            if(colorMode == 'dark'){
+              $('.currIcon').append('<img src="'+path+'/resources/image/weather/dark/'+weatherIcon[$icon]+'.png">');
+            }else{
+              $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
+            }
             $('.currTemp').prepend($temp);
             $('.currWind').append($currWind);
             $('.currHumidity').append($currHumidity);
@@ -101,7 +109,13 @@ $(document).ready(function() {
 
                 var $weekDiv = $('<div>').addClass('week col');
                 var $weekDayDiv = $('<div>').addClass('weekDay').text($day);
-                var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
+
+                if(colorMode == 'dark'){
+                  var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/dark/' + weatherIcon[$icon] + '.png">');
+                }else{
+                  var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
+                }
+               
                 var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
 
                 $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);

@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
-	<link rel="stylesheet" href="${path}/resources/css/mypage.css">
+	<link rel="stylesheet" href="${path}/resources/css/member/mypage.css">
 </head>
 <body>
 	<c:if test="${ not empty alertMsg }">
@@ -195,7 +195,7 @@
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="${path}/resources/js/common/addressAPI.js"></script>
-    <script type="module" src="${path}/resources/js/mypage.js"></script>
+    <script type="module" src="${path}/resources/js/member/mypage.js"></script>
 
 </body>
 </html>

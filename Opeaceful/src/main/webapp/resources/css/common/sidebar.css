@@ -1,9 +1,10 @@
 /* 사이드바 css : 지의 */
 
 :root{
-    --side-bar : 60px;
-    --color-white: rgb(255, 255, 255);
-    --color-navy : rgb(3, 3, 62);
+    /* --side-bar : 60px;
+    --color-white: rgb(3, 3, 62);
+    --color-navy :  rgb(255, 255, 255); */
+   
     
     --font11 : 0.69rem;
     --font12 : 0.75rem;

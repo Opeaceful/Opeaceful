@@ -37,6 +37,11 @@
 .attendance-thead{
     position: sticky;
     top: 0;
-    background-color: #ffffff;
+    background-color: var(--color-background);
 }
  
+
+select {
+    background-color: var(--color-background);
+    color: var(--font-black);
+} 

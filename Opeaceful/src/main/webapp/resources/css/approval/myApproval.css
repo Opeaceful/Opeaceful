@@ -103,6 +103,7 @@ div.selected {
   min-width: 100px;
   cursor: pointer;
   color: var(--color-navy);
+  background-color: var(--color-background);
   font-weight: 600;
   vertical-align: middle;
   text-align-last: center;
@@ -122,9 +123,14 @@ div.selected {
   border: 0px;
   cursor: pointer;
   color: var(--color-navy);
+  background-color: var(--color-background);
   font-weight: 600;
   vertical-align: middle;
   text-align-last: center;
+}
+select {
+  color: var(--color-navy);
+  background-color: var(--color-background);
 }
 
 .my-approval-table {
