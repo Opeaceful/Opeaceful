@@ -162,8 +162,7 @@ statusList.addEventListener('change', function() {
 });
 
 let chattingSock = {};
-var  roomId;
-
+//var roomId;
 /* 채팅방 목록 조회 */
 function chatAll() {
     $.ajax({
@@ -217,103 +216,104 @@ function chatAll() {
             $("ul.chat__room_ul a").on("click", function(e) {
                 e.preventDefault();
 
-                roomId = $(this).data("chat-room-id");
+                const roomId = $(this).data("chat-room-id");
                 var clickedChatRoom = chatRoomList.find(function(chatRoom) {
                     return chatRoom.chatRoomNo === roomId;
                 });
 
-                // roomId를 사용하여 다이얼로그 열기
+                
+                if (!chattingSock[roomId]) {
+                    console.log("채팅로그1 : "+roomId);	
+                // roomId를 사용하여 다이얼로그 열기               
+                
                 openDialog(roomId, clickedChatRoom);
-         		
-         		 if (!chattingSock[roomId]) {
-					 console.log("채팅로그1 : "+roomId);			
-				chattingSock[roomId] = new SockJS(path + "/chat/room/" + roomId);
-				 console.log("채팅로그2 : "+roomId);	
-                // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
-                chattingSock[roomId].onmessage = function(e) {
-                    // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
-                    // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
-					console.log("채팅로그3 : "+roomId);	
-                    // 전달받은 메세지를 js객체로 변환
+					 		
+				// chattingSock[roomId] = new SockJS(path + "/chat/room/" + roomId);
+				//  console.log("채팅로그2 : "+roomId);	
+				 
+                // // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
+                // chattingSock[roomId].onmessage = function(e) {
+                //     // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
+                //     // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
+				// 	console.log("채팅로그3 : "+roomId);	
+                //     // 전달받은 메세지를 js객체로 변환
 
-                    const chatMessage = JSON.parse(e.data); // json -> js Object
-                    //	console.log(chatMessage);
+                //     const chatMessage = JSON.parse(e.data); // json -> js Object
+                //     //	console.log(chatMessage);
 
-                    var message = chatMessage.message;
-                    var receivedDate = chatMessage.receivedDate;
-                    var isCurrentUser = chatMessage.userNo === loginUser.userNo;
+                //     var message = chatMessage.message;
+                //     var receivedDate = chatMessage.receivedDate;
+                //     var isCurrentUser = chatMessage.userNo === loginUser.userNo;
 
-                    var chatContainer = document.getElementById("main_chatting_" + roomId);
-                    console.log(chatContainer);
+                //     var chatContainer = document.getElementById("main_chatting_" + roomId);
+                //     console.log(chatContainer);
 	
 					
-                    if (!isCurrentUser) {
-                        var friendChat = document.createElement("div");
-                        friendChat.classList.add("friend_chatting");
+                //     if (!isCurrentUser) {
+                //         var friendChat = document.createElement("div");
+                //         friendChat.classList.add("friend_chatting");
 
-                        var profileImg = document.createElement("img");
-                        profileImg.classList.add("chatting_profile_img");
-                        profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
-                        profileImg.alt = "프로필사진";
+                //         var profileImg = document.createElement("img");
+                //         profileImg.classList.add("chatting_profile_img");
+                //         profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
+                //         profileImg.alt = "프로필사진";
 
-                        var friendChatCol = document.createElement("div");
-                        friendChatCol.classList.add("friend_chatting_col");
+                //         var friendChatCol = document.createElement("div");
+                //         friendChatCol.classList.add("friend_chatting_col");
 
-                        var profileName = document.createElement("span");
-                        profileName.classList.add("chatting_profile_name");
-                        profileName.textContent = chatMessage.userName;
+                //         var profileName = document.createElement("span");
+                //         profileName.classList.add("chatting_profile_name");
+                //         profileName.textContent = chatMessage.userName;
 
-                        var chattingBalloon = document.createElement("span");
-                        chattingBalloon.classList.add("chatting_balloon");
-                        chattingBalloon.textContent = message;
+                //         var chattingBalloon = document.createElement("span");
+                //         chattingBalloon.classList.add("chatting_balloon");
+                //         chattingBalloon.textContent = message;
 
-                        var chattingTime = document.createElement("time");
-                        chattingTime.classList.add("chatting_time");
-                        chattingTime.datetime = receivedDate;
-                        chattingTime.textContent = receivedDate;
+                //         var chattingTime = document.createElement("time");
+                //         chattingTime.classList.add("chatting_time");
+                //         chattingTime.datetime = receivedDate;
+                //         chattingTime.textContent = receivedDate;
 
-                        friendChatCol.appendChild(profileName);
-                        friendChatCol.appendChild(chattingBalloon);
+                //         friendChatCol.appendChild(profileName);
+                //         friendChatCol.appendChild(chattingBalloon);
 
-                        friendChat.appendChild(profileImg);
-                        friendChat.appendChild(friendChatCol);
-                        friendChat.appendChild(chattingTime);
+                //         friendChat.appendChild(profileImg);
+                //         friendChat.appendChild(friendChatCol);
+                //         friendChat.appendChild(chattingTime);
 
-                        chatContainer.appendChild(friendChat);
-                    } else {
-                        var meChat = document.createElement("div");
-                        meChat.classList.add("me_chatting");
+                //         chatContainer.appendChild(friendChat);
+                //     } else {
+                //         var meChat = document.createElement("div");
+                //         meChat.classList.add("me_chatting");
 
-                        var meChatCol = document.createElement("div");
-                        meChatCol.classList.add("me_chatting_col");
+                //         var meChatCol = document.createElement("div");
+                //         meChatCol.classList.add("me_chatting_col");
 
-                        var chattingBalloon = document.createElement("span");
-                        chattingBalloon.classList.add("chatting_balloon");
-                        chattingBalloon.textContent = message;
+                //         var chattingBalloon = document.createElement("span");
+                //         chattingBalloon.classList.add("chatting_balloon");
+                //         chattingBalloon.textContent = message;
 
-                        var chattingTime = document.createElement("time");
-                        chattingTime.classList.add("chatting_time");
-                        chattingTime.datetime = receivedDate;
-                        chattingTime.textContent = receivedDate;
+                //         var chattingTime = document.createElement("time");
+                //         chattingTime.classList.add("chatting_time");
+                //         chattingTime.datetime = receivedDate;
+                //         chattingTime.textContent = receivedDate;
 
-                        meChatCol.appendChild(chattingBalloon);
+                //         meChatCol.appendChild(chattingBalloon);
 
-                        meChat.appendChild(meChatCol);
-                        meChat.appendChild(chattingTime);
+                //         meChat.appendChild(meChatCol);
+                //         meChat.appendChild(chattingTime);
 
-                        chatContainer.appendChild(meChat);
-                    }
+                //         chatContainer.appendChild(meChat);
+                //     }
                     
 
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                //     chatContainer.scrollTop = chatContainer.scrollHeight;
 
-                };
+                // };
                 }
                 
                   /* 메세지 전달 */
-               $(document).on("click", "#chatting_send_" + roomId, function() {
-				    sendMessage(roomId);
-				});
+               $(document).on("click", "#chatting_send_" + roomId, sendMessage.bind(roomId));
                 
                              
 
@@ -321,8 +321,7 @@ function chatAll() {
             
             
             function sendMessage(roomId) {
-
-                    const inputChatting = document.getElementById("chatting_textarea_" + roomId);
+                    const inputChatting = document.getElementById("chatting_textarea_" + this);
 
                     if (inputChatting.value.trim().length == 0) {
                         alert("입력이 되지 않았습니다");
@@ -334,15 +333,15 @@ function chatAll() {
 
                         const chatMessage = {
                             "userNo": loginUser.userNo,
-                            "chatRoomNo": roomId,
+                            "chatRoomNo": this,
                             "userName": loginUser.userName,
                             "message": inputChatting.value
                         };
                     //    console.log("버튼이 눌렸다");
                     //    console.log(loginUser);
                     //   console.log(chatRoomList);
-                       console.log(roomId);
-                        chattingSock[roomId].send(JSON.stringify(chatMessage));
+                       console.log(this);
+                        chattingSock[this].send(JSON.stringify(chatMessage));
                         inputChatting.value = "";
                     }
                 }
@@ -468,7 +467,92 @@ function chatAll() {
                     error: function(xhr, status, error) {
                         console.error("Failed to fetch chat room data:", error);
                         // 에러 처리
+                    },
+                    complete : function(){
+                        chattingSock[roomId] = new SockJS(path + "/chat/room/" + roomId);
+                        console.log("채팅로그2 : "+roomId);	
+                        
+                        // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
+                        chattingSock[roomId].onmessage = function(e) {
+                            // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
+                            // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
+                            console.log("채팅로그3 : "+roomId);	
+                            // 전달받은 메세지를 js객체로 변환
+
+                            const chatMessage = JSON.parse(e.data); // json -> js Object
+                            //	console.log(chatMessage);
+
+                            var message = chatMessage.message;
+                            var receivedDate = chatMessage.receivedDate;
+                            var isCurrentUser = chatMessage.userNo === loginUser.userNo;
+
+                            var chatContainer = document.getElementById("main_chatting_" + roomId);
+                            console.log(chatContainer);
+            
+                            
+                            if (!isCurrentUser) {
+                                var friendChat = document.createElement("div");
+                                friendChat.classList.add("friend_chatting");
+
+                                var profileImg = document.createElement("img");
+                                profileImg.classList.add("chatting_profile_img");
+                                profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
+                                profileImg.alt = "프로필사진";
+
+                                var friendChatCol = document.createElement("div");
+                                friendChatCol.classList.add("friend_chatting_col");
+
+                                var profileName = document.createElement("span");
+                                profileName.classList.add("chatting_profile_name");
+                                profileName.textContent = chatMessage.userName;
+
+                                var chattingBalloon = document.createElement("span");
+                                chattingBalloon.classList.add("chatting_balloon");
+                                chattingBalloon.textContent = message;
+
+                                var chattingTime = document.createElement("time");
+                                chattingTime.classList.add("chatting_time");
+                                chattingTime.datetime = receivedDate;
+                                chattingTime.textContent = receivedDate;
+
+                                friendChatCol.appendChild(profileName);
+                                friendChatCol.appendChild(chattingBalloon);
+
+                                friendChat.appendChild(profileImg);
+                                friendChat.appendChild(friendChatCol);
+                                friendChat.appendChild(chattingTime);
+
+                                chatContainer.appendChild(friendChat);
+                            } else {
+                                var meChat = document.createElement("div");
+                                meChat.classList.add("me_chatting");
+
+                                var meChatCol = document.createElement("div");
+                                meChatCol.classList.add("me_chatting_col");
+
+                                var chattingBalloon = document.createElement("span");
+                                chattingBalloon.classList.add("chatting_balloon");
+                                chattingBalloon.textContent = message;
+
+                                var chattingTime = document.createElement("time");
+                                chattingTime.classList.add("chatting_time");
+                                chattingTime.datetime = receivedDate;
+                                chattingTime.textContent = receivedDate;
+
+                                meChatCol.appendChild(chattingBalloon);
+
+                                meChat.appendChild(meChatCol);
+                                meChat.appendChild(chattingTime);
+
+                                chatContainer.appendChild(meChat);
+                            }
+                            
+
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                        };
                     }
+                    
                 });
             }
         }

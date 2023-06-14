@@ -89,6 +89,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 				// 같은 방에 접속중인 클라이언트에게 전달받은 메세지 뿌리기
 				for( WebSocketSession s : sessions ) {
 					// 반복을 진행중인 WebSocketSession 안에 담겨있는 방번호 == 메세지 안에 담겨있는 방번호가 일치하는 경우 메세지 뿌리기
+					System.out.println(s.getAttributes());
 					int chatRoomNo = (int) s.getAttributes().get("chatRoomNo");
 
 					
