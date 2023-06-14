@@ -166,10 +166,6 @@ public class ApprovalFormController {
 								@RequestParam(value="images", required = false) MultipartFile[] imgList,
 								@RequestParam(value="imgNames", required = false) String[] imgNameList,
 								HttpSession session	) {
-		
-		System.out.println("---------update-------"+form.getFormNo());
-		System.out.println(imgNameList);
-		
 		// 파일 저장할 저장경로 얻어오기
 		String webPath = "/resources/file/approval/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
@@ -177,11 +173,6 @@ public class ApprovalFormController {
 		
 		// ---- 본문에 삭제된 이미지있으면 실제 파일도 삭제시키는 구역 -------
 		List<ApprovalFile> savedFileList = aprService.selectFileList("form", form.getFormNo(), "content");
-		//이 위에코드 수정!
-
-
-		System.out.println("검사 전 " + savedFileList);
-		System.out.println(savedFileList.size());
 
 		if (imgNameList != null && imgNameList.length > 0) {
 			// 이미지 이름들과 실제 db에 저장되어있는 파일명들 비교해서 있는애들은 빼고 없는애들만 리스트에 남김
@@ -199,18 +190,15 @@ public class ApprovalFormController {
 					}
 				}
 			}
-			System.out.println("검사 후 " + savedFileList);
-			System.out.println(savedFileList.size());
 
 		}
 
 		// 검열하고 남은 이미지 리스트 실제 파일들 삭제
 		for (ApprovalFile file : savedFileList) {
 			File deleteFile = new File(serverFolderPath + file.getChangeName());
-			System.out.println("---------------삭제할 파일-------------------" + file.getChangeName());
 			if (deleteFile.exists()) { // 파일이 존재하면
 				// 파일 삭제
-				System.out.println(deleteFile.delete());
+				deleteFile.delete();
 			}
 		}
 
