@@ -6,14 +6,12 @@
 <head>
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.0/"></script>
+	<!-- 캘린더 내 부트스트랩적용 스크립트 -->
 	<link href='${path}/resources/fullcalendar-4.4.0/packages/core/main.css' rel='stylesheet' />
 	<link href='${path}/resources/fullcalendar-4.4.0/packages/daygrid/main.css' rel='stylesheet' />
 	<script src='${path}/resources/fullcalendar-4.4.0/packages/core/main.js'></script>
 	<script src='${path}/resources/fullcalendar-4.4.0/packages/interaction/main.js'></script>
 	<script src='${path}/resources/fullcalendar-4.4.0/packages/daygrid/main.js'></script>
-	<!-- 캘린더 내 부트스트랩적용 스크립트 -->
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.7/index.global.min.js"></script>
 	
 	<!-- 알랏 커스텀 링크 -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
