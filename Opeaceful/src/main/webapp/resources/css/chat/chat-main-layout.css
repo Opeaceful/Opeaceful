@@ -180,3 +180,8 @@ body{
 .ui-dialog-content .ui-widget-content{
     display: none;
 }
+
+.ui-dialog .ui-corner-all .ui-widget .ui-widget-content .ui-front .ui-draggable .ui-resizable{
+	position:absolute;
+	
+}

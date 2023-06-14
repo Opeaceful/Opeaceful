@@ -261,7 +261,7 @@
 		  FROM MEMBER m
 		  JOIN annual A
 		 WHERE YEAR(now()) - YEAR(HIRE_DATE) = A.YEAR;
-	</select>
+	</select>	
 	
 	<!-- [진기]-->
 	<select id="adminAll" resultMap="AllmemberResultSet">
