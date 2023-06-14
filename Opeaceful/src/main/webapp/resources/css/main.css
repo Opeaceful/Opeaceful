@@ -212,7 +212,7 @@
 }
 
 #calender-box .fc-unthemed td.fc-today{
-    background: var(--fc-today-tobay);
+    background: var(--fc-mini-tobay);
  
 }
 

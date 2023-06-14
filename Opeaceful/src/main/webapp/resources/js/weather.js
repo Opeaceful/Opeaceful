@@ -68,7 +68,11 @@ $(document).ready(function() {
             var $hightTemp = Math.floor(data.main.temp_max) + 'º';
             // console.log($a);
             // $('.city').append($city);
-            $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
+            if(colorMode == 'dark'){
+              $('.currIcon').append('<img src="'+path+'/resources/image/weather/dark/'+weatherIcon[$icon]+'.png">');
+            }else{
+              $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
+            }
             $('.currTemp').prepend($temp);
             $('.currWind').append($currWind);
             $('.currHumidity').append($currHumidity);
@@ -112,8 +116,6 @@ $(document).ready(function() {
                   var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
                 }
                
-               
-                console.log(colorMode);
                 var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
 
                 $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);

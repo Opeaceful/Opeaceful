@@ -17,6 +17,8 @@
 
     --color-background : white;
     --color-background-bk : rgb(30, 30, 30);
+
+    --chat-hover:rgb(207, 226, 250);
     
     --font-white : white;
     --font-black : rgb(30, 30, 30);
@@ -26,10 +28,11 @@
     
     --color-serch-box:#ced4da;
 
-    --accordion-color:white
+    --accordion-color:white;
     
-    /*미니캘린더 */
+    /*캘린더 */
     --fc-mini-tobay:#fcf8e3;
+    --memo-day-color: rgb(74, 71, 71);
 
     /*테이블 부트스트랩 고유색상*/
     --bootstrap-color:#212529;
@@ -38,6 +41,9 @@
 
     --action-hover-color:#495057;
     --action-hover-bg:#f8f9fa;
+
+    --list-group-color: #212529;
+    --list-group-bg: #fff;
 
   
     /*swal 고유색상*/
@@ -71,11 +77,13 @@
 
     --white-hover: rgba(0, 0, 0, 0.9);
     --color-light-gray : rgb(235, 235, 235);
-    --color-light-navy:#rgb(30, 30, 30);
+    --color-light-navy:rgb(30, 30, 30);
 
     /* 기본 배경색상 */
     --color-background : rgb(30, 30, 30);
     --color-background-bk : white;
+
+    --chat-hover:rgba(83, 69, 0, 0.815);
     
     
     --font-white : rgb(30, 30, 30);
@@ -87,12 +95,17 @@
     --fix-black:black;
     --fix-white:white;
     
-    /*미니캘린더 */
+    /*캘린더 */
+    --fc-mini-tobay: black;
+    --memo-day-color: rgb(180,180, 180);
+
+
     --color-serch-box:#ced4da;
+   
 
     --accordion-color:white;
 
-    --fc-mini-tobay: black;
+   
 
     --bs-body-color:none;
 
@@ -103,6 +116,9 @@
 
     --action-hover-color:#495057;
     --action-hover-bg:#ffc107c4;
+
+    --list-group-color: #fff;
+    --list-group-bg: rgb(30, 30, 30);
 
     /*swal 고유색상*/
     --swal-text-color:white;
@@ -160,7 +176,10 @@
     background: var(--fc-mini-tobay);
 }
 
-
+.form-select {
+    background-color: var(--color-background);
+    color: var(--font-black);
+} 
 
 
 
@@ -248,17 +267,26 @@ body{
 
 /* 공통 카테고리 설정 변경 */
 /* ex) <div class="accordion-item accordion-item-common"> 해당 클래스 옆에 클래스-common 추가한 것임!! */
+
+.accordion {
+    --bs-accordion-bg: var(--color-background);
+}
+
 .accordion-item-common{
     border: none;
     border-color: var(--color-white);
-    background-color:  var(--color-white);
+    background-color:  var(--color-background);
+}
+.accordion-item {
+    color: var(--bootstrap-color);
 }
 
 .accordion-button-common:not(.collapsed) {
     border: none;
     border-color:  var(--color-white);
-    background-color: var(--color-white);
-    color: var(--accordion-color);
+    background-color: var(--color-background);
+    color: var(--font-black);
+    
 }
 .accordion-button-common:focus {
     box-shadow: none;
@@ -273,6 +301,21 @@ body{
     background-color: var(--action-hover-bg);
    
 }
+
+.list-group {
+    --bs-list-group-color: var(--list-group-color);
+    --bs-list-group-bg: var(--list-group-bg);
+}
+
+.accordion-button {
+    color: var(--bootstrap-color);
+}
+
+
+.active>.page-link, .page-link.active { 
+    background-color: var(--navy-hover);
+}
+
 
 /* 카테고리 상위, 하위 css */
 .d-grid-common{

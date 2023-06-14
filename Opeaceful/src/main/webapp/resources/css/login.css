@@ -44,7 +44,10 @@
 	  -webkit-appearance: none;
 	  margin: 0;
 }
-.login-form #eno,.login-form #userPwd{background: var(--color-background);}
+.login-form #eno,.login-form #userPwd{
+    background: var(--color-background);
+    color: var(--font-black);
+}
 /* 아이디 저장 폰트 */
 .form-check-label{color: var(--font-black);}
 
