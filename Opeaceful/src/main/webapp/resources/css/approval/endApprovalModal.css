@@ -124,6 +124,10 @@
   padding: 1rem;
   padding-top: 2rem;
   font-size: var(--font14);
+  text-align: center;
+}
+
+td .final-approval-wrap{
   background-color: white;
   border: 1px solid var(--color-board-black);
 }

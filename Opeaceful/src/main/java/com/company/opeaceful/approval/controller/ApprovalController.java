@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,11 +35,12 @@ import com.company.opeaceful.approval.model.vo.ApprovalMemo;
 import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/approval")
-@SessionAttributes({"loginUser"})
+@SessionAttributes({"loginUser", "loginUserRole"})
 public class ApprovalController {
 	
 	
@@ -51,12 +53,25 @@ public class ApprovalController {
 	
 
 	@GetMapping("/allApproval")
-	public String allApproval( Model model ){
-		int currentYear = Year.now().getValue();
-		model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
-		model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
+	public String allApproval( @SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model ){
+		
+		boolean roleCheck = false;
+		for(UserRole role:loginUserRole) {
+			if(role.getRoleCode().equals("T02")) {
+				roleCheck = true;
+				break;
+			}
+		}
+		if(roleCheck == true) {
+			int currentYear = Year.now().getValue();
+			model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
+			model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
 
-		return "approval/allApproval";
+			return "approval/allApproval";
+		}else {
+			model.addAttribute("errorMsg", "권한이 없는 사용자입니다.");
+			return "errorPage";
+		}
 	}
 	
 	@GetMapping("/myApproval")
@@ -146,7 +161,7 @@ public class ApprovalController {
 	// ajax용 선택된 결재문서 세부 내용 반환 + 확인된 문서 체크
 	@ResponseBody
 	@PostMapping("/selectApproval")
-	public String selectApproval( @ModelAttribute("loginUser") Member loginUser, Integer approvalNo) {
+	public String selectApproval( @ModelAttribute("loginUser") Member loginUser, Integer approvalNo, String isAdmin) {
 		Map<String, Object > map  = new HashMap<>();
 		
 		int userNo= loginUser.getUserNo();
@@ -170,8 +185,10 @@ public class ApprovalController {
 		map.put("files", files);
 		map.put("userNo", userNo);
 		
-		// 읽음처리
-		aprService.updateApprovalLineReadStatus(approvalNo, userNo);
+		if(isAdmin == null  || !isAdmin.equals("admin") ) {
+			// 어드민용 조회가 아닐때  읽음처리
+			aprService.updateApprovalLineReadStatus(approvalNo, userNo);
+		}
 		
 		return new Gson().toJson(map);
 	}

@@ -251,6 +251,7 @@ export function setApprovalModalContent(
   const deleteBtn = document.getElementById("btn-temp-return-approval-delete");
   const saveBtn = document.getElementById("btn-save-approval");
   const tempBtn = document.getElementById("btn-save-approval-temporary");
+  const memoBtn = document.querySelector("#approval .btn-memo-open");
   // 만약 approvalNo 값이 있다면 수정 창이라는 소리임
   if (approval.approvalNo && approval.approvalNo > 0) {
     // 삭제버튼 표시
@@ -262,9 +263,14 @@ export function setApprovalModalContent(
     if (approval.status && (approval.status == -1 || approval.status == -2)) {
       // 만약 반려문서라면 임시저장버튼 숨기기
       tempBtn.style.display = "none";
+
+      // 메모 버튼 오픈
+      memoBtn.style.display = "inline-block";
     } else {
       //  임시저장 버튼 표시
       tempBtn.style.display = "inline-block";
+      // 반려문서 아니면 메모 버튼 숨기기
+      memoBtn.style.display = "none";
     }
   } else {
     // 신규 작성창이라는 소리
@@ -276,6 +282,9 @@ export function setApprovalModalContent(
 
     //결재 저장버튼 no값 리셋
     saveBtn.dataset.approvalno = -1;
+   
+    //메모 버튼 숨기기
+    memoBtn.style.display = "none";
   }
 }
 
@@ -1411,6 +1420,43 @@ let setEndModalEvent = () => {
         }
       });
     });
+
+    // 인쇄 버튼이벤트
+    document.getElementById("btn-print-approval").addEventListener("click", ()=>{
+      const finalWrap = document.querySelector(".final-approval-wrap");
+      const sw = screen.width;
+      const sh = screen.height;
+      const w = 800;//팝업창 가로길이
+      const h = 600;//세로길이
+      let xpos=(sw-w)/2; //화면에 띄울 위치
+      let ypos=(sh-h)/2; //중앙에 띄웁니다.
+  
+      const pHeader=`<html>
+                        <head>
+                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+                            <link rel="stylesheet" href="${path}/resources/css/common/common.css">
+                            <link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+                            <link rel="stylesheet" href="${path}/resources/css/approval/endApprovalModal.css" />
+                            <title></title>
+                        </head>
+                        <body>
+                          <div class="final-approval-wrap">`
+      const pgetContent = finalWrap.innerHTML + "<br>";
+      //이사이에 안넣고 싶은 div가 있다면 class print-none 추가해주면 됌
+  
+      const pFooter="</div></body></html>";
+      let pContent= pHeader + pgetContent + pFooter;	
+      
+      let pWin = window.open("","print","width=" + w +",height="+ h +",top=" + ypos + ",left="+ xpos +",status=yes,scrollbars=yes");
+
+      pWin.document.open(); //팝업창 오픈
+      pWin.document.write(pContent); //새롭게 만든 html소스를 씁니다.
+      setTimeout(() => {
+        pWin.document.close(); //클로즈
+        pWin.print(); //윈도우 인쇄 창 
+        pWin.close();  //닫기
+      }, 100);
+    })
 };
 
 // 내결재 화면 기본 이벤트들 부여구역

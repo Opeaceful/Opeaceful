@@ -30,7 +30,7 @@
 }
 
 #memo-modal {
-  width: 60%;
+  min-width: 50%;
   min-height: 25vh;
 }
 
