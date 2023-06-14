@@ -4,6 +4,8 @@
 import {path} from './common/common.js';
 import {topDeptRoad, positionRoad} from './common/dtcodeselect.js';
 
+$(document).ready(function() {
+	
 selectDept();
 
 // 부서+팀명 조회
@@ -203,16 +205,25 @@ function personnelClick() {
 
 // 상위부서 옵션 변경 시 하위부서 옵션에 상위부서에 해당하는 하위부서 뜨게하기 
 function deptSelcet() {
-	$("#topDeptName").change(function(e){
+	$(".topDeptName").change(function(e){
 
 		e.target.parentElement.parentElement.classList.add("changeValue");
 
 		let codes ={}; 
-		const topDeptCode = document.getElementById('topDeptName');
-		
-		codes.topDeptCode = topDeptCode.options[topDeptCode.selectedIndex].value;
+		const topDeptCode = document.querySelectorAll('.topDeptName');
 
-		console.log("codes.topDeptCode : ",codes.topDeptCode);
+		for (let i = 0; i < topDeptCode.length; i++) {
+			const selectedIndex = topDeptCode[i].selectedIndex;
+			console.log("selectedIndex : ", selectedIndex);
+
+			if (selectedIndex >= 0) {
+			  const selectedOption = topDeptCode[i].options[selectedIndex];
+			  const value = selectedOption.value;
+			  codes[`topDeptCode${i}`] = value;
+			  console.log("value : ", value);
+				console.log(" codes[`topDeptCode${i}`] : ", codes[`topDeptCode${i}`]);
+			}
+		  }
 
 		let deptCode = document.querySelectorAll("[name=deptCode]");
 
@@ -222,9 +233,12 @@ function deptSelcet() {
 			success: function(result){
 				
 				for(let i = 0; i < deptCode.length; i++){
+					deptCode[i].innerHTML = "";
 					for(let dept of result){
 						if (dept.topDeptCode !== 0) {
-							if (codes.topDeptCode == dept.topDeptCode) {
+							const codesPropertyName = `topDeptCode${i}`;
+							if (codes.hasOwnProperty(codesPropertyName) && codes[codesPropertyName] == dept.topDeptCode) {
+								console.log("codes.hasOwnProperty(codesPropertyName) && codes[codesPropertyName] : ",codes.hasOwnProperty(codesPropertyName) && codes[codesPropertyName]);
 								const option = document.createElement("option");
 								option.value = dept.deptCode;
 								option.text = dept.deptName;
@@ -243,46 +257,67 @@ function deptSelcet() {
 	})
 }
 
-function changeValue(){
-
+function changeValue() {
 	$('#ok-personnel').click(function() {
-
-		if (document.querySelectorAll('tr.changeValue').length > 0) {
-
-			let userNo = $(".changeValue").attr('data-id').split(",");
-			console.log(userNo[0]);
-
-			let deptCodes ={}; 
-			const deptCode = document.getElementById('deptName');
-			
-			deptCodes.deptCode = deptCode.options[deptCode.selectedIndex].value;
-			console.log("deptCodes.deptCode : ",deptCodes.deptCode);
-
-			let pCodes = {};
-			const pCode = document.getElementById('pName');
-
-			pCodes.pCode = pCode.options[pCode.selectedIndex].value;
-			console.log("pCodes.pCode : ",pCodes.pCode);
-
-			let defaultPcode = $(".pCode").attr('data-id');
-			console.log("defaultPcode : ",defaultPcode);
-
-			// $.ajax({
-			// 	url : path+"/orgChart/updatePersonnel",   
-			// 	type : 'post', 
-			// 	data : {deptCode : deptCode,
-			// 			pCode : pCode,
-			// 			userNo, userNo},
-			// 	dataType : "JSON",
-			// 	success : function(result){
-			// 		console.log('인사발령 인서트 result: ' ,result);
-					
-								
-			// 	}
-			// })
+	  if (document.querySelectorAll('tr.changeValue').length > 0) {
+		let userNo = $(".changeValue").attr('data-id').split(",");
+		console.log(userNo[0]);
+  
+		let deptCodes = {}; 
+		const deptCode = document.querySelectorAll('.deptName');
+		let deptCodesPropertyName; // 변수 선언
+  
+		for (let i = 0; i < deptCode.length; i++) {
+		  const selectedIndex = deptCode[i].selectedIndex;
+		  console.log("selectedIndex : ", selectedIndex);
+  
+		  if (selectedIndex >= 0) {
+			const selectedOption = deptCode[i].options[selectedIndex];
+			const value = selectedOption.value;
+			deptCodesPropertyName = `deptCode${i}`; // 변수 할당
+			deptCodes[deptCodesPropertyName] = value;
+			console.log("value : ", value);
+			console.log(`deptCodes[${deptCodesPropertyName}] : `, deptCodes[deptCodesPropertyName]);
+		  }
 		}
-		
-	})
+  
+		let pCodes = {}; 
+		const pCode = document.querySelectorAll('.deptName');
+		let pCodesPropertyName; // 변수 선언
+  
+		for (let i = 0; i < pCode.length; i++) {
+		  const selectedIndex = pCode[i].selectedIndex;
+		  console.log("selectedIndex : ", selectedIndex);
+  
+		  if (selectedIndex >= 0) {
+			const selectedOption = pCode[i].options[selectedIndex];
+			const value = selectedOption.value;
+			pCodesPropertyName = `pCode${i}`; // 변수 할당
+			pCodes[pCodesPropertyName] = value;
+			console.log("value : ", value);
+			console.log(`pCodes[${pCodesPropertyName}] : `, pCodes[pCodesPropertyName]);
+		  }
+		}
+  
+		let defaultPcode = $(".pCode").attr('data-id');
+		console.log("defaultPcode : ", defaultPcode);
+  
+		$.ajax({
+		  url: path + "/orgChart/updatePersonnel",   
+		  type: 'post', 
+		  data: {
+			deptCode: deptCodes.hasOwnProperty(deptCodesPropertyName) && deptCodes[deptCodesPropertyName],
+			pCode: pCodes.hasOwnProperty(pCodesPropertyName) && pCodes[pCodesPropertyName] ? pCodes.hasOwnProperty(pCodesPropertyName) && pCodes[pCodesPropertyName] : defaultPcode,
+			userNo: userNo},
+		  dataType: "JSON",
+		  success: function(result) {
+			console.log('인사발령 인서트 result: ', result);
+		  }
+		});
+	  }
+	});
+  }
+  
 
 	// document.querySelectorAll('tr.changeValue').length > 0 
 	// $("#topDeptName, #deptName, #pName").change(function(e){
@@ -300,7 +335,7 @@ function changeValue(){
 		
 		
 	// })
-}
+
 
 
 
@@ -730,12 +765,13 @@ function changeValue(){
 			}
 		})
 	});
+})
 
 	///////////////////////////////////////////////////////////////////////// 인사발령
 
 
 
-let selectButton = false;
+// let selectButton = false;
 
 //확인 버튼 눌렀을때 salaryAll에서 처리할 이벤트
 // $("#ok-personnel").click(function(){
@@ -764,10 +800,10 @@ let selectButton = false;
 // });
 
 //모달 종료시
-$("#cancel-personnel").click(function(){
-    selectButton = false;
+// $("#cancel-personnel").click(function(){
+//     selectButton = false;
 
-});
+// });
 
 	// let deptInput = document.querySelector('.input-click');
 
