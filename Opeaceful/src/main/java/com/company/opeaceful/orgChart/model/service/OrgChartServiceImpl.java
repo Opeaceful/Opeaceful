@@ -95,7 +95,7 @@ public class OrgChartServiceImpl implements OrgChartService {
 	
 	// 인사발령
 	@Override
-	public List<OrgChart> insertPersonnel(List<OrgChart> personnelList) {
-		return orgChartDao.insertPersonnel(personnelList);
+	public int updatePersonnel(OrgChart orgChart) {
+		return orgChartDao.updatePersonnel(orgChart);
 	}
 }

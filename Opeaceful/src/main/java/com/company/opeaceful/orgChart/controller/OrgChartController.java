@@ -233,20 +233,15 @@ public class OrgChartController {
 	}
 	
 	// 인사발령 
-	@PostMapping("insertPersonnel")
+	@PostMapping("updatePersonnel")
 	@ResponseBody
-	public String insertPersonnel(Integer deptCode) {
+	public String updatePersonnel(OrgChart orgChart) {
 		
-		System.out.println("실행 안됨????????");
-		System.out.println(deptCode);
-		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
+		int result = orgchartService.updatePersonnel(orgChart);
 		
+		System.out.println("인사발령 됨 : "+result+", "+orgChart);
+
+		return new Gson().toJson(result);
 		
-		
-		List<OrgChart> insertPersonnel = orgchartService.insertPersonnel(personnelList);
-		
-		System.out.println("insertPersonnel에 담긴 값 : "+insertPersonnel);
-		
-		return new Gson().toJson(insertPersonnel);
 	}
 }

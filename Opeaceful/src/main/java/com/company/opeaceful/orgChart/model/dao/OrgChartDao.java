@@ -120,7 +120,7 @@ public class OrgChartDao {
 	}
 	
 	// 인사발령
-	public List<OrgChart> insertPersonnel(List<OrgChart> personnelList) {
-		return sqlSession.selectList("orgChartMapper.insertPersonnel", personnelList);
+	public int updatePersonnel(OrgChart orgChart) {
+		return sqlSession.update("orgChartMapper.updatePersonnel", orgChart);
 	}
 }

@@ -46,5 +46,5 @@ public interface OrgChartService {
 	List<OrgChart> selectPersonnel(int deptCode);
 	
 	// 인사발령
-	List<OrgChart> insertPersonnel(List<OrgChart> personnelList);
+	int updatePersonnel(OrgChart orgChart);
 }

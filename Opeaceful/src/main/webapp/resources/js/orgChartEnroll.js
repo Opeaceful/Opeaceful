@@ -148,7 +148,7 @@ function selectPersonnel(deptCode, topDeptCode) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					html += `<tr class="change-tr" data-id="${team.userNo}">
+					html += `<tr class="change-tr" data-id="${team.userNo}, ${deptCode}, ${topDeptCode}, ${team.pCode}">
 								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
@@ -200,14 +200,37 @@ function personnelClick() {
 }
 
 function changeValue(){
-
 	$("#topDeptName, #deptName, #pName").change(function(e){
-		let userCode = e.target.parentElement.parentElement.dataset.id
-
 		e.target.parentElement.parentElement.classList.add("changeValue");
-		selectPersonnel(userCode);
+
+		let dataID = e.target.parentElement.parentElement.dataset.id.split(",");
+
+		let userNo = dataID[0];
+		let deptCode = dataID[1];
+		let topDeptCode = dataID[2];
+		let pCode = dataID[3];
+		
+		$('#ok-personnel').click(function() {
+			if ($("tr[class='changeValue']")) {
+				$.ajax({
+					url : path+"/orgChart/updatePersonnel",   
+					type : 'post', 
+					data : {deptCode : deptCode,
+							pCode : pCode,
+							userNo, userNo},
+					dataType : "JSON",
+					success : function(result){
+						console.log('인사발령 인서트 result: ' ,result);
+						
+									
+					}
+				})
+			}
+			
+		})
 	})
 }
+
 
 	///////////////////////////////////////////////////////////////////////////// 상위부서 추가
 
