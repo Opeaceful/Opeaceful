@@ -191,11 +191,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     center: 'prevYear,prev,title,next,nextYear',
                     right: 'none'
                 },
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                editable: false, // 일정 움직이는거 막기
+                eventLimit: false, // allow "more" link when too many events
                 events: data
             });
             calendar.render();
+            $(".fc-title").text(null);
+            window.reload();
         })
       
         request.fail(function() {
