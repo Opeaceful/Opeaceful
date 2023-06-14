@@ -1,0 +1,6 @@
+testingcheats true    치트 활성화
+bb.moveobjects on   자유배치
+
+bb.ignoregameplayunlocksentitlement    
+bb.showhiddenobjects    숨겨진 아이템 추가
+bb.showliveeditobjects    월드에 사용된 아이템 추가

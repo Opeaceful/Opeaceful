@@ -27,7 +27,9 @@ public class Approval {
 	private int eno;					// 유저 사원번호 정보용
 	private double approvalCount;		// APPROVAL_COUNT : 연차갯수
 	private String formatDraftDate;		//	DRAFT_DATE
-	private String signatureImg;	// 서명 이미지 경로 + 이름 SIGNATURE_IMG
+	private String formatStartDate;		//	START_DATE
+	private String formatEndDate;		//	END_DATE
+	private String signatureImg;		// 서명 이미지 경로 + 이름 SIGNATURE_IMG
 	private String confirmStatus;			// 문서 읽었는지 안읽었는지 상태값 전달용 CONFIRM_STATUS
 	
 

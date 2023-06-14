@@ -191,6 +191,15 @@ pageEncoding="UTF-8"%>
             <button type="button" id="btn-save-approval-temporary" class="btn btn-outline-primary">
               임시 저장
             </button>
+             <button
+               id="btn-temp-return-approval-delete"
+               class="btn btn-outline-danger"
+             >
+               삭제
+             </button>
+            <button type="button" class="btn-memo-open btn btn-outline-primary">
+              메모(0)
+            </button>
 
             <button type="button" id="btn-save-approval" class="btn btn-primary position-ok ms-auto">
               결재/저장

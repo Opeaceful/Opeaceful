@@ -263,6 +263,13 @@
 		 WHERE YEAR(now()) - YEAR(HIRE_DATE) = A.YEAR;
 	</select>
 	
+	<!-- [진기]-->
+	<select id="adminAll" resultMap="AllmemberResultSet">
+	 	SELECT *
+	 	FROM MEMBER
+	 	WHERE STATUS='Y'
+	 </select>
+	 
 	
 <!-- =============================================[update]=========================================================== -->	
 

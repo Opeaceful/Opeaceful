@@ -162,10 +162,10 @@ export function deleteFavor(favorNo) {
   });
 }
 
-// 결재 문서 저장
-export function insertApproval(formData) {
+// 결재 문서 저장/수정 모두 처리
+export function registerApproval(formData, urlPath) {
   $.ajax({
-    url: defaultPath + '/insertApproval',
+    url: defaultPath + urlPath,
     dataType: 'JSON',
     data: formData,
     enctype: 'multipart/form-data', //form data 설정
@@ -185,6 +185,8 @@ export function insertApproval(formData) {
         let nowDate = `${year}-${month.toString().padStart(2, '0')}-${day
           .toString()
           .padStart(2, '0')}`;
+
+        console.log('저장하자마자 결재완료찍을때 현재날짜', nowDate);
 
         let content = `<div class="end-approval-lines">
                       <div class="end-approval-lines-wrap">
@@ -228,6 +230,83 @@ export function insertApproval(formData) {
   });
 }
 
+// 결재문서 결재처리
+export function updateApprovalStateAuthorized(
+  approvalNo,
+  myLevel,
+  content = null
+) {
+  $.ajax({
+    url: defaultPath + '/updateApprovalStateAuthorized',
+    type: 'POST',
+    data: {
+      approvalNo,
+      myLevel,
+    },
+    success: function (result) {
+      console.log('결재 처리 결과', result);
+      if (result > 0) {
+        // 완결처리까지 해야하는지 상태 확인
+        if (content != null) {
+          // 완결 처리
+          updateApprovalStateEnd(approvalNo, content);
+        } else {
+          swal('결재처리가 완료되었습니다.', {
+            buttons: { confirm: '확인' },
+          });
+
+          MyAprFront.closeApprovalModal();
+          MyAprFront.clickCurrentPageBtn();
+        }
+      } else {
+        swal('예기치 않은 오류가 발생했습니다.', {
+          buttons: { cancel: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      }
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
+  });
+}
+
+// 결재문서 반려처리
+export function updateApprovalReturn(approvalNo) {
+  $.ajax({
+    url: defaultPath + '/updateApprovalReturn',
+    type: 'POST',
+    data: {
+      approvalNo,
+    },
+    success: function (result) {
+      if (result > 0) {
+        swal('반려처리가 완료되었습니다.', {
+          buttons: { confirm: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      } else {
+        swal('예기치 않은 오류가 발생했습니다.', {
+          buttons: { cancel: '확인' },
+        });
+
+        MyAprFront.closeApprovalModal();
+        MyAprFront.clickCurrentPageBtn();
+      }
+      selectUnReadCount();
+    },
+    error: function (request) {
+      console.log('에러발생');
+      console.log(request.status);
+    },
+  });
+}
+
 // 결재문서 완결처리
 export function updateApprovalStateEnd(approvalNo, content) {
   $.ajax({
@@ -248,7 +327,7 @@ export function updateApprovalStateEnd(approvalNo, content) {
         MyAprFront.closeApprovalModal();
         MyAprFront.clickCurrentPageBtn();
       } else {
-        swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
+        swal('예기치 않은 오류가 발생했습니다.', {
           buttons: { cancel: '확인' },
         });
 
@@ -294,7 +373,12 @@ export function selectApprovalList(year, type, page, menu, status) {
     },
     success: function (result) {
       console.log(result);
-      MyAprFront.setTableList(result.list, result.count, page);
+      MyAprFront.setTableList(
+        result.list,
+        result.count,
+        page,
+        result.loginUserNo
+      );
     },
     error: function (request) {
       console.log('에러발생');
@@ -354,7 +438,7 @@ export function selectUnReadCount() {
 }
 
 // 선택한 결재 문서 세부 내용 조회
-export function selectApproval(approvalNo) {
+export function selectApproval(approvalNo, selectedMenu) {
   $.ajax({
     url: defaultPath + '/selectApproval',
     dataType: 'JSON',
@@ -362,12 +446,22 @@ export function selectApproval(approvalNo) {
     data: { approvalNo },
     success: function (result) {
       console.log(result);
-      MyAprFront.setEndApprovalModal(
-        result.approval,
-        result.lines,
-        result.files,
-        result.userNo
-      );
+
+      if (selectedMenu == 'return' || selectedMenu == 'temp') {
+        MyAprFront.setApprovalModalContent(
+          result.approval,
+          result.lines,
+          result.files,
+          result.userNo
+        );
+      } else {
+        MyAprFront.setEndApprovalModal(
+          result.approval,
+          result.lines,
+          result.files,
+          result.userNo
+        );
+      }
 
       // 문서 조회가일어나면 일단 안읽은 알림 개수 다시 체크
       selectUnReadCount();

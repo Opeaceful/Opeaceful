@@ -22,12 +22,14 @@
     ></script>
    
    <!-- jquery  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    
-	<link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
+   <link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+
 </head>
 <body>
-
 	<!-- 
 		a 태그에 각자 페이지 넣어주기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 -->
@@ -56,10 +58,10 @@
                     <div class="sidebar-more" id="chart-menu-item">
 						<c:forEach items="${loginUserRole}" var="role">
 							<c:if test="${role.roleCode eq 'D01'}">
-		                        <a class="sidebar-more-text" href="${path}/orgChart/insert/department">조직도 등록</a>
+		                        <a class="sidebar-more-text" href="${path}/orgChart/">조직도 등록</a>
 							</c:if>
 						</c:forEach>
-                        <a class="sidebar-more-text" href="${path}/orgChart/orgChartView">조직도 현황</a>
+                        <a class="sidebar-more-text" href="${path}/orgChart/selectOrgChart">조직도 현황</a>
                     </div>
                 </li>
 
@@ -113,7 +115,7 @@
 
                 <!-- 근태 -->
 				<li id="sidebar-work">
-				    <a href="${path}/attendance/attendanceInquiry">
+				    <a href="${path}/attendance/">
 				        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-clock"></i></span>
 				        <span class="sidebar-text">근태</span>
 				    </a>
@@ -216,10 +218,11 @@
     
     <!-- 채팅아이콘 -->
     <div id="chat-icon" >
-		<i class="bi bi-chat"></i>
+		<i class="bi bi-chat" id="openDialogButton"></i>
     </div>
-
-
+    
+     <jsp:include page="/WEB-INF/views/chat.jsp"></jsp:include>
+	 
     <script>
     	/* 하위카테고리 숨겨두기 */
         $(".sidebar-more").css("display", "none");

@@ -188,20 +188,25 @@ function approvalModalEvent() {
 
       const removeTargetId = currentTarget.dataset.index;
       const removeTarget = document.getElementById(removeTargetId);
-      const files = document.querySelector('#input-add-file').files;
-      const dataTranster = new DataTransfer();
+      // 만약 삭제할 타겟이 있다면 아래 로직 실행
+      if (removeTarget) {
+        const files = document.querySelector('#input-add-file').files;
+        const dataTranster = new DataTransfer();
 
-      Array.from(files)
-        .filter((file) => file.lastModified != removeTargetId)
-        .forEach((file) => {
-          dataTranster.items.add(file);
-        });
+        Array.from(files)
+          .filter((file) => file.lastModified != removeTargetId)
+          .forEach((file) => {
+            dataTranster.items.add(file);
+          });
 
-      // 인풋요소에 클릭된 파일을 삭제한 버전으로 파일들 다시 세팅
-      document.querySelector('#input-add-file').files = dataTranster.files;
-
-      // 미리보기 요소 삭제
-      removeTarget.remove();
+        // 인풋요소에 클릭된 파일을 삭제한 버전으로 파일들 다시 세팅
+        document.querySelector('#input-add-file').files = dataTranster.files;
+        // 미리보기 요소 삭제
+        removeTarget.remove();
+      } else {
+        // 실제파일이 없이 수정용으로 끌어와진 껍데기 요소라는 뜻으로 div자체를 날려야함
+        currentTarget.closest('.div-file-saved').remove();
+      }
     });
 }
 
