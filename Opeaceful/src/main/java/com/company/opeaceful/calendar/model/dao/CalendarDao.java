@@ -1,12 +1,12 @@
 package com.company.opeaceful.calendar.model.dao;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.approval.model.vo.Approval;
 import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.calendar.model.vo.CalendarMemo;
 
@@ -59,4 +59,9 @@ public class CalendarDao {
 	public CalendarMemo selectMemo(int userNo) {
 		return sqlSession.selectOne("calendarMapper.selectMemo", userNo);
 	}
+	
+	
+	
+	
+	
 }

@@ -61,7 +61,26 @@
 		FROM CALENDAR
 		WHERE CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
 												FROM USER_DEPARTMENT
-												WHERE USER_NO = #{userNo});
+												WHERE USER_NO = #{userNo})
+		UNION										
+		SELECT CALENDAR_NO AS ID,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY 
+		FROM CALENDAR 
+		WHERE USER_NO in (
+		SELECT USER_NO 
+		FROM user_department
+		where CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
+		FROM user_department
+		where USER_NO = #{userNo}))										
 	</select>
 	
 	<!-- 캘린더 전체(개인+팀) 일정 조회 -->
@@ -80,7 +99,26 @@
 		FROM CALENDAR
 		WHERE (CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
 												FROM USER_DEPARTMENT
-												WHERE USER_NO = #{userNo})) OR (CATEGORY = 'M' AND USER_NO = #{userNo});
+												WHERE USER_NO = #{userNo})) OR (CATEGORY = 'M' AND USER_NO = #{userNo})
+		UNION										
+		SELECT CALENDAR_NO AS ID,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   END_DATE AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY 
+		FROM CALENDAR 
+		WHERE USER_NO in (
+		SELECT USER_NO 
+		FROM user_department
+		where CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
+		FROM user_department
+		where USER_NO = #{userNo}))					
 	</select> 
 	
 	<!-- 일정 추가 -->
