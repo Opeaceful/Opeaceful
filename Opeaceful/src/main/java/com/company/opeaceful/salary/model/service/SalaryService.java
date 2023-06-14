@@ -26,6 +26,10 @@ public interface SalaryService {
 
 	Salary selectUserCope(Map<String, Object> selectYMT);
 
+	List<Integer> deleteSalayselect();
+
+	int deleteSalay(List<Integer> dslist);
+
 	
 
 }

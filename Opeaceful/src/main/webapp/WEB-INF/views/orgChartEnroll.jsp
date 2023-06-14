@@ -105,7 +105,7 @@
 							<h1 class="modal-title fs-5" id="staticBackdropLabel">직급관리</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body org-modal-body">
+						<div class="modal-body org-modal-body scroll-bar">
 							<!-- <ul class="list-group list-group-flush org-list-group">
 								<li class="list-group-item position-list">
 									<input type="text" name="position-name"> 
@@ -132,7 +132,7 @@
 							<h1 class="modal-title fs-5" id="staticBackdropLabel">인사발령관리</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body">
+						<div class="modal-body scroll-bar">
 							<table class="table table-hover table-common">
 								<thead class="table-active">
 									<tr>
