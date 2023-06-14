@@ -28,7 +28,7 @@ $(document).ready(function() {
 	
 	// 다이얼로그 열기
 	$("#openDialogButton").click(function() {
-	
+		dialogStyle();
 		// 로컬 스토리지에 다이얼로그 상태를 저장
 		localStorage.setItem('dialogVisible', 'true');
 	
@@ -43,6 +43,7 @@ $(document).ready(function() {
 	    
 	      	// 다이얼로그가 닫혀있는 경우
 	    	$("#dialog").dialog("open");
+	    	dialogStyle();
 	    }    
 	});
 	
@@ -51,7 +52,8 @@ $(document).ready(function() {
 		
 	if (dialogVisible === 'true') {
 		      
-		$("#dialog").dialog("open");	
+		$("#dialog").dialog("open");
+		dialogStyle();	
 	}         
 });
  
@@ -127,7 +129,7 @@ function adminAll() {
                 li.appendChild(div);
                 li.appendChild(p3);
 
-                adminList.appendChild(li);
+                adminList.appendChild(li);             
             }
         },
         error: function(request) {
@@ -647,6 +649,11 @@ function toggleChat() {
     chatRoomContent.style.display = "none";
 }
 
+function dialogStyle(){
+	document.getElementById("dialog").parentNode.style.position='absolute';
+	document.getElementById("dialog").parentNode.style.top='100px';
+	document.getElementById("dialog").parentNode.style.zIndex='100';
+}
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
