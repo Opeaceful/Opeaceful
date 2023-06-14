@@ -22,12 +22,14 @@
     ></script>
    
    <!-- jquery  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    
-	<link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> -->
+   <link rel="stylesheet" href="${path}/resources/css/common/sidebar.css">
+
 </head>
 <body>
-
 	<!-- 
 		a 태그에 각자 페이지 넣어주기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 -->
@@ -216,10 +218,11 @@
     
     <!-- 채팅아이콘 -->
     <div id="chat-icon" >
-		<i class="bi bi-chat"></i>
+		<i class="bi bi-chat" id="openDialogButton"></i>
     </div>
-
-
+    
+     <jsp:include page="/WEB-INF/views/chat.jsp"></jsp:include>
+	 
     <script>
     	/* 하위카테고리 숨겨두기 */
         $(".sidebar-more").css("display", "none");
