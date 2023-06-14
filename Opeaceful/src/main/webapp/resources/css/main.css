@@ -1,6 +1,6 @@
 /* 메인 css : 지의 */
 
-.main-wrap{height: 800px; margin-top: 30px; min-width: 1250px;}
+.main-wrap{height: 800px; margin-top: 60px; min-width: 1250px;}
 .main-wrap>div{height: 100%;}
 /* .main-wrap .col-7{width:64%;} */
 /* 각각 컨텐츠 감싸고있는 네모박스 */
@@ -127,7 +127,7 @@
 }
 
 #state img{width: 16px; height: 18px; background-color: var(--color-white);}
-#state{margin-bottom: 6px;}
+#state{margin-bottom: 7px;}
 .select {position: relative;}
 .select .option-list {
   position: absolute;
@@ -170,7 +170,7 @@
 /* ---------- 캘린더 ---------- */
 #calender-box{
     height: 60%;
-    padding: 40px 22px 0 20px;
+    padding: 30px 22px 0 20px;
 }
 /* 양쪽 화살표 버튼 */
 #calender-box .fc-button-primary {
@@ -198,8 +198,17 @@
     font-weight: 300;
     font-size: 12px;
 }
-#calender-box .fc-dayGrid-view .fc-body .fc-row {
-    min-height: 3.5em;
+/* 달력 숫자있는 곳 tr 높이 설정 */
+#calender-box .fc-dayGrid-view .fc-body .fc-row {min-height: 3.2em;}
+/* 오늘날짜 박스 */
+/* #calender-box .fc-unthemed td.fc-today {border-radius: 10px;} */
+/* 일정표시 */
+#calender-box .fc-day-grid-event{
+    width: 7px;
+    height: 10px;
+    border-radius: 70%;
+    margin-left: 25px;
+    margin-top: -16px;
 }
 
 #calender-box .fc-unthemed td.fc-today{

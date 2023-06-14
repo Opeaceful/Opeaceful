@@ -93,10 +93,10 @@
                         <div class="fs-14 col-3">내선번호</div>
                         <div class="fs-18 col-9">
                         	<c:if test="${empty loginUser.extension }">
-	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" maxlength="13" value="등록된 내선번호 없음">
+	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" minlength="9" maxlength="13" value="등록된 내선번호 없음">
                         	</c:if>
                         	<c:if test="${!empty loginUser.extension }">
-	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" value="${loginUser.extension}">
+	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" minlength="9" maxlength="13" value="${loginUser.extension}">
                         	</c:if>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
 	                        <c:set var="addEtc">
 		                        <c:forEach items="${fn:split(loginUser.address, ',')}" var="add" begin="1" varStatus="i"><c:if test="${!i.last}">${add}, </c:if><c:if test="${i.last}">${add} </c:if></c:forEach>
 	                        </c:set>
-	                        <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" required value="${addEtc }" >
+	                        <input type="text" id="user-address-dtail" name="address" class="mypage-input form-control box-shadow-put" value="${addEtc }" >
                         </div>
                     </div>
 
