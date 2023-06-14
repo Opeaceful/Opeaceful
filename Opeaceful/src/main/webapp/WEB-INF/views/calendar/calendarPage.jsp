@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 <%@page import="java.util.List"%>
 <%@page import="com.company.opeaceful.calendar.model.vo.Calendar"%>    
 <!DOCTYPE html>
@@ -68,11 +69,10 @@
         </div>
         <!-- 일정추가버튼 영역 -->
         <div class="add-event-wrap modify-btn">
-          <div><button type="button" class="test10 add-event btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-plus-square"></i> 일정추가</button></div>
+          <div><button type="button" id="addEventBtn" class="add-event btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#event-modal"><i class="bi bi-plus-square"></i> 일정추가</button></div>
         </div>
       </div>
-
-      
+	
 
       <div class="calendar-wrap" id="calendar-wrap" data-category="${ category }">
         <!-- 캘린더 -->
@@ -118,7 +118,7 @@
             <!-- 메모박스 -->
             <div class="memo-wrap">
                 <div class="sm-box-title">MEMO</div>
-                <div class="child-memo-wrap"><textarea class="input-memo" maxlength="950">5/3 일정 까먹지 말고 체킹하기</textarea></div>
+                <div class="child-memo-wrap"><textarea class="input-memo" maxlength="950">${memo}</textarea></div>
             </div>
         </div>
       </div>
@@ -129,7 +129,7 @@
 
 
   <!-- 일정추가 모달 -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" id="event-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="table-box annual-modify-modal modal-body">
@@ -139,29 +139,29 @@
                         <th colspan="3">
                           <div class="event-ctg-btn">
                               <input type="radio" class="btn-check" name="event" id="myEvent" value="M" autocomplete="off" checked>
-                              <label class="my-event-btn btn btn-outline-warning" for="myEvent">내 일정</label>
+                              <label class="my-event-btn btn btn-outline-warning" for="myEvent" name="M">내 일정</label>
        
                               <input type="radio" class="btn-check" name="event" id="tmEvent" value="T" autocomplete="off">
-                              <label class="tm-event-btn btn btn-outline-warning" for="tmEvent">팀 일정</label>      
+                              <label class="tm-event-btn btn btn-outline-warning" for="tmEvent" name="T">팀 일정</label>      
                           </div>
                         </th>
                       </tr>
                       <tr>
-                        <th class="modal-th">날짜 지정</th>
+                        <th class="modal-th">날짜 지정 *</th>
                       </tr>
                       <tr>
                         <td colspan="3">
                           <div class="event-td">
-                            <input type="date" name="dateStart" class="date-box box-shadow-put"> 시작 <input type="date" name="dateEnd" class="date-box box-shadow-put"> 종료
+                            <input type="date" name="dateStart" class="date-box box-shadow-put" required> 시작 <input type="date" name="dateEnd" class="date-box box-shadow-put" required> 종료
                           </div>
                         </td>
                       </tr>
                       <tr>
-                        <th class="modal-th">일정 제목</th>
+                        <th class="modal-th">일정 제목 *</th>
                       </tr>
                       <tr>
                         <td colspan="3">
-                          <div class="event-td"><input id="event-title" class="modal-event-title box-shadow-put form-control" type="text" aria-label="default input example" maxlength="20"></div>
+                          <div class="event-td"><input id="event-title" class="modal-event-title box-shadow-put form-control" type="text" aria-label="default input example" maxlength="20" required></div>
                         </td>
                       </tr>
                       <tr>
@@ -180,7 +180,7 @@
                       <tr>
                         <td colspan="3">
                           <div class="event-td my-event-col-box">
-                            <input type="radio" class="btn-check" name="color" id="col1" value="var(--col1)" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="color" id="col1" value="var(--col1)" autocomplete="off">
                             <label class="color color1" for="col1"></label>
 
                             <input type="radio" class="btn-check" name="color" id="col2" value="var(--col2)" autocomplete="off">
@@ -205,7 +205,7 @@
                             <label class="color color8" for="col8"></label>
                           </div>
                           <div class="event-td tm-event-col-box">
-                            <input type="radio" class="btn-check" name="t-color" id="col11" value="var(--col11)" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="t-color" id="col11" value="var(--col11)" autocomplete="off">
                             <label class="color color11" for="col11"></label>
                             
                             <input type="radio" class="btn-check" name="t-color" id="col12" value="var(--col12)" autocomplete="off">
@@ -225,7 +225,7 @@
                       <tr>
                         <td>
                           <div class="form-check form-switch">
-                            <input class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <input name="event-d-day" value="Y" class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                           </div>
                         </td>
                       </tr>
@@ -233,8 +233,11 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="w90-btn btn btn-primary" id="modal-submit-btn" data-submit="${cno}">일정등록</button>
-              <button type="button" class="w90-btn btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+            
+              <button type="button" class="w90-btn btn btn-outline-danger" id="dlt-event-btn" style="display:none">일정삭제</button>
+              <button type="button" class="w90-btn btn btn-primary" id="modal-update-btn" style="display:none" data-update="${cno}">일정수정</button>
+              <button type="button" class="w90-btn btn btn-primary" id="modal-submit-btn"style="display:none" data-submit="${cno}">일정등록</button>
+              <button type="button" class="w90-btn btn btn-outline-primary" id="modal-cancel-btn" data-bs-dismiss="modal" aria-label="Close">취소</button>
           </div>
         </div>
     </div>
@@ -261,37 +264,12 @@
   // }, 100);
   
 
-  $(function(){
-    // ===== 일정추가 모달 내 카테고리 색 지정박스 =====
-    //color box div
-    let mycol = $(".my-event-col-box");
-    let tmcol = $(".tm-event-col-box");
-    
-    $('.my-event-btn').on('click', function(){
-      // console.log("mine check");
-      tmcol.css('display', 'none');
-      mycol.css('display', 'block');
-    })
-
-    $('.tm-event-btn').on('click', function(){
-      // console.log("team check");
-      mycol.css('display', 'none');
-      tmcol.css('display', 'block');
-    })
-
-    $(".d-event").hover(function(){
-      $(".d-xbtn").css('display', 'block');
-    }, function(){
-      $(".d-xbtn").css('display', 'none');
-    })
-
-
-    //.fc-content 일정 클릭 시 모달열리게
-	
+  
 
 
 
-  })
+
+  
 </script>
 
 

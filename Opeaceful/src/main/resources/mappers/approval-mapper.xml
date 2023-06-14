@@ -805,7 +805,14 @@
 		DELETE FROM  APPROVAL_MEMO
 		WHERE MEMO_NO = #{ memoNo }
 	</delete>
-
-	
+	<!-- [혜린] 같은 팀 유저들 연차 조회 
+	<select id="selectTeamApv"  resultType="approval" parameterType="_int">
+		SELECT * FROM APPROVAL WHERE USER_NO in (
+		SELECT USER_NO 
+		FROM user_department
+		where DEPT_CODE = (SELECT DEPT_CODE
+		FROM user_department
+		where USER_NO = #{userNo}))
+	</select>-->
 	
 </mapper>
