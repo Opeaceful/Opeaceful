@@ -56,10 +56,10 @@
                     <div class="sidebar-more" id="chart-menu-item">
 						<c:forEach items="${loginUserRole}" var="role">
 							<c:if test="${role.roleCode eq 'D01'}">
-		                        <a class="sidebar-more-text" href="${path}/orgChart/insert/department">조직도 등록</a>
+		                        <a class="sidebar-more-text" href="${path}/orgChart/">조직도 등록</a>
 							</c:if>
 						</c:forEach>
-                        <a class="sidebar-more-text" href="${path}/orgChart/orgChartView">조직도 현황</a>
+                        <a class="sidebar-more-text" href="${path}/orgChart/selectOrgChart">조직도 현황</a>
                     </div>
                 </li>
 
@@ -113,7 +113,7 @@
 
                 <!-- 근태 -->
 				<li id="sidebar-work">
-				    <a href="${path}/attendance/attendanceInquiry">
+				    <a href="${path}/attendance/">
 				        <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-clock"></i></span>
 				        <span class="sidebar-text">근태</span>
 				    </a>
