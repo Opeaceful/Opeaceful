@@ -211,7 +211,7 @@ function changeValue(){
 		let pCode = dataID[3];
 		
 		$('#ok-personnel').click(function() {
-			if ($("tr[class='changeValue']")) {
+			if (document.querySelectorAll("tr[class='changeValue']").length > 0) {
 				$.ajax({
 					url : path+"/orgChart/updatePersonnel",   
 					type : 'post', 
