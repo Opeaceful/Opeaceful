@@ -89,8 +89,8 @@ public class OrgChartServiceImpl implements OrgChartService {
 	
 	// 인사발령 사원 조회
 	@Override
-	public List<OrgChart> selectPersonnel(int deptCode) {
-		return orgChartDao.selectPersonnel(deptCode);
+	public List<OrgChart> selectPersonnel(Map<String, Object> map) {
+		return orgChartDao.selectPersonnel(map);
 	}
 	
 	// 인사발령

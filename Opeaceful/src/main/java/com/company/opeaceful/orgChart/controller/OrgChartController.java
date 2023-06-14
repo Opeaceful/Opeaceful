@@ -221,9 +221,12 @@ public class OrgChartController {
 	// 인사발령용 사원 조회
 	@PostMapping("/personnel")
 	@ResponseBody
-	public String selectPersonnel(int deptCode) {
-		
-		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
+	public String selectPersonnel(int deptCode,int topDeptCode) {
+		System.out.println(topDeptCode);
+		Map<String, Object> map = new HashMap<>();
+		map.put("deptCode", deptCode);
+		map.put("topDeptCode", topDeptCode);
+		List<OrgChart> personnelList = orgchartService.selectPersonnel(map);
 		
 		System.out.println("personnelList에 담긴 값 : "+personnelList);
 		

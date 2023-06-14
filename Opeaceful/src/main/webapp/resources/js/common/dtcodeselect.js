@@ -16,8 +16,6 @@ import {path} from '../common/common.js';
 function teamRoad() {
 
     let deptCode = document.querySelectorAll("[name=deptCode]");
-    let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
-
 
     $.ajax({
         url:`${path}/dept/selectDept`,
@@ -35,6 +33,30 @@ function teamRoad() {
                     option.text = dept.deptName;
                     deptCode[i].appendChild(option);
                     }
+                };
+            }
+        },
+        error : function(request){
+            console.log("에러발생");
+            console.log(request.status);
+        }
+    })
+}
+
+function topDeptRoad() {
+
+    let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
+
+    $.ajax({
+        url:`${path}/dept/selectDept`,
+        dataType : "JSON",
+        success: function(result){
+
+            console.log('부서불러오는 세ㄹ렉트:',result);
+  
+            for(let i=0; i<topDeptCode.length; i++){
+
+                for(let dept of result){
                     if(document.getElementById("org-tbody")){
                         if (dept.topDeptCode == 0) { //상위 부서 셀렉트
                             const option = document.createElement("option");
@@ -43,13 +65,8 @@ function teamRoad() {
                             topDeptCode[i].appendChild(option);
                         }
                     }
-                  
                 };
-
             }
-
-           
-            
         },
         error : function(request){
             console.log("에러발생");
@@ -57,6 +74,9 @@ function teamRoad() {
         }
     })
 }
+
+
+
 
 
 /*직급을 불러오는 ajax */
@@ -89,4 +109,4 @@ function positionRoad() {
 teamRoad();
 positionRoad();
 
-export {teamRoad, positionRoad};
+export {topDeptRoad, positionRoad};

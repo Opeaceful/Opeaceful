@@ -2,7 +2,7 @@
  *  가영 : 부서, 직급, 인사발령 js
  */
 import {path} from './common/common.js';
-import {teamRoad, positionRoad} from './common/dtcodeselect.js';
+import {topDeptRoad, positionRoad} from './common/dtcodeselect.js';
 
 selectDept();
 
@@ -138,7 +138,8 @@ function selectPersonnel(deptCode, topDeptCode) {
 	$.ajax({
 		url : path+"/orgChart/personnel",   
 		type : 'post', 
-		data : {deptCode : deptCode},
+		data : {deptCode : deptCode,
+				topDeptCode : topDeptCode},
 		dataType : "JSON",
 		success : function(result){
 			console.log('인사발령 result: ' ,result);
@@ -153,19 +154,19 @@ function selectPersonnel(deptCode, topDeptCode) {
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" id="topDeptName" name="topDeptCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none" data-id="${topDeptCode}" id="topDeptName" name="topDeptCode" aria-label="Default select example">
 										<option value="" selected>부서선택</option>
 									</select>
 								</td>
 								<td>${team.deptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" id="deptName" name="deptCode"  aria-label="Default select example">
+									<select class="form-select box-shadow-none" data-id="${deptCode}" id="deptName" name="deptCode"  aria-label="Default select example">
 										<option selected>부서선택</option>
 									</select>
 								</td>
 								<td>${team.pName}</td>
 								<td>
-									<select class="form-select box-shadow-none" id="pName" name="pCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none" data-id=${team.pCode} id="pName" name="pCode" aria-label="Default select example">
 										<option value="" selected>직급선택</option>
 									</select>
 								</td>
@@ -177,13 +178,63 @@ function selectPersonnel(deptCode, topDeptCode) {
 			let personnelUserList = document.getElementById("org-modal-tbody");
 			personnelUserList.innerHTML = html;
 			
-			teamRoad();
+			topDeptRoad();
+			deptSelcet();
 			positionRoad();
-			changeValue();
+			// changeValue();
 
 		}
 	})
 }
+
+// function deptSelectBoxRoad() {
+
+//     let deptCode = document.querySelectorAll("[name=deptCode]");
+//     let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
+
+	
+// 	console.log("실행됨???????????");
+
+//     $.ajax({
+//         url:`${path}/dept/selectDept`,
+//         dataType : "JSON",
+//         success: function(result){
+
+//             console.log('부서불러오는 세ㄹ렉트:',result);
+  
+//             for (let i = 0; i < topDeptCode.length; i++) {
+//                 for (let dept of result) {
+//                   if (dept.topDeptCode !== 0) { // 하위 부서 셀렉트
+//                     const option = document.createElement("option");
+//                     option.value = dept.deptCode;
+//                     option.text = dept.deptName;
+//                     if (topDeptCode[i].value === dept.deptCode) {
+//                       deptCode[i].appendChild(option);
+//                     }
+//                   }
+//                   if (document.getElementById("org-tbody")) {
+//                     if (dept.topDeptCode == 0) { // 상위 부서 셀렉트
+//                       const option = document.createElement("option");
+//                       option.value = dept.topDeptCode;
+//                       option.text = dept.deptName;
+//                       if (topDeptCode[i].value === dept.topDeptCode) {
+//                         topDeptCode[i].appendChild(option);
+//                       }
+//                     }
+//                   }
+//                 }
+//               }
+              
+
+           
+            
+//         },
+//         error : function(request){
+//             console.log("에러발생");
+//             console.log(request.status);
+//         }
+//     })
+// }
 
 function personnelClick() {
 
@@ -195,39 +246,88 @@ function personnelClick() {
 		btn.addEventListener("click", function(e) {
 			let id = e.target.dataset.id.split(",");
 			selectPersonnel(id[0], id[1]);
+			console.log(id[0], id[1]);
 		});
 	});
 }
 
-function changeValue(){
-	$("#topDeptName, #deptName, #pName").change(function(e){
-		e.target.parentElement.parentElement.classList.add("changeValue");
+// function changeValue(){
+// 	$("#topDeptName, #deptName, #pName").change(function(e){
+// 		e.target.parentElement.parentElement.classList.add("changeValue");
+// 		console.log(e.target);
+// 		console.log(e.target.dataset.id);
+// 		let dataID = e.target.parentElement.parentElement.dataset.id.split(",");
 
-		let dataID = e.target.parentElement.parentElement.dataset.id.split(",");
+// 		let userNo = dataID[0];
+// 		let deptCode = dataID[1];
+// 		let topDeptCode = dataID[2];
+// 		let pCode = dataID[3];
 
-		let userNo = dataID[0];
-		let deptCode = dataID[1];
-		let topDeptCode = dataID[2];
-		let pCode = dataID[3];
+// 		let target = e.target.dataset.id; 
 		
-		$('#ok-personnel').click(function() {
-			if (document.querySelectorAll("tr[class='changeValue']").length > 0) {
-				$.ajax({
-					url : path+"/orgChart/updatePersonnel",   
-					type : 'post', 
-					data : {deptCode : deptCode,
-							pCode : pCode,
-							userNo, userNo},
-					dataType : "JSON",
-					success : function(result){
-						console.log('인사발령 인서트 result: ' ,result);
+// 		$('#ok-personnel').click(function() {
+// 			if (document.querySelectorAll('tr.changeValue').length > 0) {
+// 				console.log("눌렸어????????");
+// 				$.ajax({
+// 					url : path+"/orgChart/updatePersonnel",   
+// 					type : 'post', 
+// 					data : {deptCode : deptCode,
+// 							pCode : pCode,
+// 							userNo, userNo},
+// 					dataType : "JSON",
+// 					success : function(result){
+// 						console.log('인사발령 인서트 result: ' ,result);
 						
 									
-					}
-				})
-			}
+// 					}
+// 				})
+// 			}
 			
-		})
+// 		})
+// 	})
+// }
+
+function deptSelcet() {
+	$("#topDeptName").change(function(e){
+
+		// let topDeptCode = e.target.dataset.id; 
+		// console.log("topDeptName의 topDeptCode : ",topDeptCode);
+		let result ={}; // ajax 안의 result랑 이름이 같음 바꿔주기
+		const topDeptCode = document.getElementById('topDeptName');
+		
+		result.topDeptCode = topDeptCode.options[topDeptCode.selectedIndex].value;
+		console.log("result.topDeptCode : ",result.topDeptCode);
+
+		let deptCode = document.querySelectorAll("[name=deptCode]");
+		console.log("deptCode : ",deptCode);
+
+    $.ajax({
+        url:`${path}/dept/selectDept`,
+        dataType : "JSON",
+        success: function(result){
+
+            console.log('인사발령에서 하위부서 불러옴 :',result);
+			
+            for(let i = 0; i < deptCode.length; i++){
+                for(let dept of result){
+                    if (dept.topDeptCode !== 0) {
+						if (result.topDeptCode == dept.topDeptCode) {
+							console.log("여기?????????");
+							const option = document.createElement("option");
+							option.value = dept.deptCode;
+							option.text = dept.deptName;
+							deptCode[i].appendChild(option);
+						} // 하위 부서 셀렉트
+                    }
+                };
+            }
+        },
+        error : function(request){
+            console.log("에러발생");
+            console.log(request.status);
+        }
+    })
+
 	})
 }
 

@@ -115,8 +115,8 @@ public class OrgChartDao {
 	}
 	
 	// 인사발령 사원 조회
-	public List<OrgChart> selectPersonnel(int deptCode) {
-		return sqlSession.selectList("orgChartMapper.selectPersonnel", deptCode);
+	public List<OrgChart> selectPersonnel(Map<String, Object> map) {
+		return sqlSession.selectList("orgChartMapper.selectPersonnel", map);
 	}
 	
 	// 인사발령

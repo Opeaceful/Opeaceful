@@ -43,7 +43,7 @@ public interface OrgChartService {
 	List<OrgChart> selectTopDeptUser(int deptCode); // 하위부서 조회
 	
 	// 인사발령 사원 조회
-	List<OrgChart> selectPersonnel(int deptCode);
+	List<OrgChart> selectPersonnel(Map<String, Object> map);
 	
 	// 인사발령
 	int updatePersonnel(OrgChart orgChart);
