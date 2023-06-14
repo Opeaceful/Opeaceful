@@ -40,7 +40,7 @@
 		
 		<!--검색창 구역-->
 		<div class="search-wrap2 input-group mb-3 ms-1">
-		    <input type="text" class="search-input2 form-control box-shadow-none" placeholder="사원이름 입력">
+		    <input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword"placeholder="사원이름 입력">
 		    <!--data-bs-target="#all-user-view" 조회할 구역에 data-target넣어주기-->
 		    <button class="btn btn-outline-secondary search-btn2" type="button" data-bs-toggle="modal" data-bs-target="#all-user-view" id="all-member-view-button"><i class="fa-solid fa-magnifying-glass"></i></button>
 		</div>

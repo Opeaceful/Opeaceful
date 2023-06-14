@@ -127,6 +127,7 @@
 }
 
 #state img{width: 16px; height: 18px; background-color: var(--color-white);}
+
 #state{margin-bottom: 7px;}
 .select {position: relative;}
 .select .option-list {

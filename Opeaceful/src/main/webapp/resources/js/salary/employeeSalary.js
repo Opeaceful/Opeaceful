@@ -167,8 +167,11 @@ $("#print-button").click(function() {
     pWin.document.open(); //팝업창 오픈
     pWin.document.write(pContent); //새롭게 만든 html소스를 씁니다.
     pWin.document.close(); //클로즈
-    pWin.print(); //윈도우 인쇄 창 
-    pWin.close();  //닫기
+
+    setTimeout(function() {
+        pWin.print(); // 윈도우 인쇄 창
+        pWin.close(); // 닫기
+      }, 300);
    
 });
 
@@ -185,28 +188,36 @@ function payReplace(){
 //다운로그
 $("#download-button").click(function() {
 
-    location.href=`${path}/pdf/salary`;
-    
-    // let htmlContent = document.getElementById("salary-modal-body").innerHTML;
+    // location.href=`${path}/pdf/salary`;
 
-    // htmlContent = JSON.stringify(htmlContent)
+    const pHeader=`
+    <html>
+        <head>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+            <link rel="stylesheet" href="${path}/resources/css/common/common.css">
+            <link rel="stylesheet" href="${path}/resources/css/salary/employeeSalary.css">
+            <title></title>
+        </head>
+    <body>`
+    const pgetContent = document.getElementById("salary-modal-body").innerHTML + "<br>";
+    //이사이에 안넣고 싶은 div가 있다면 class print-none 추가해주면 됌
 
-    // $.ajax({
-    //     url: `${path}/pdf/salary`, 
-    //     method: "POST",
-    //     dataType : "JSON",
-    //     contentType: "application/json", 
-    //     data: {
-    //         htmlContent : htmlContent,
-    //       },
-    //     success: function(response) {
-    //       var partialHtml = response;
-    //       console.log(partialHtml);
-    //     },
-    //     error: function(error) {
-    //       console.error(error);
-    //     }
-    //   });
+    const pFooter="</body></html>";
+    let pContent= pHeader + pgetContent + pFooter;	
+
+    $.ajax({
+        url: `${path}/pdf/salary`, 
+        method: "POST",
+        data: {
+            htmlContent : pContent,
+          },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
     
 });
 
