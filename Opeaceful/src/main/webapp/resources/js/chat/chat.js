@@ -28,7 +28,7 @@ $(document).ready(function() {
 	
 	// 다이얼로그 열기
 	$("#openDialogButton").click(function() {
-		dialogStyle();
+		dialogElementStyle("dialog",'100px','600px','100');
 		// 로컬 스토리지에 다이얼로그 상태를 저장
 		localStorage.setItem('dialogVisible', 'true');
 	
@@ -43,7 +43,7 @@ $(document).ready(function() {
 	    
 	      	// 다이얼로그가 닫혀있는 경우
 	    	$("#dialog").dialog("open");
-	    	dialogStyle();
+	    	dialogElementStyle("dialog",'100px','600px','100');
 	    }    
 	});
 	
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	if (dialogVisible === 'true') {
 		      
 		$("#dialog").dialog("open");
-		dialogStyle();	
+		dialogElementStyle("dialog",'100px','600px','100');	
 	}         
 });
  
@@ -149,7 +149,7 @@ function changeStatus(status) {
             statusType: status
         },
         success: function(response) {
-            console.log('상태값이 성공적으로 업데이트되었습니다.');
+            console.log('상태값이 성공적으로 업데이트되었습니다.');                       
         },
         error: function(request) {
             console.error('상태값 업데이트 중 오류가 발생했습니다.');
@@ -160,7 +160,12 @@ function changeStatus(status) {
 const statusList = document.getElementById('statusList');
 
 statusList.addEventListener('change', function() {
-    changeStatus(this.value);
+	if(document.getElementById("state")){
+		$(`#state .option-list .option#${this.value}`).click();
+        $('#state .select').removeClass("active");
+	}else{
+    	changeStatus(this.value);
+	}
 });
 
 let chattingSock = {};
@@ -450,8 +455,8 @@ function chatAll() {
 
 
                         // 다이얼로그(Dialog) 생성하기
-                        var chattingDiglog = $("<div>").attr("id", "chatting_dialog_" + roomId).attr("title", chatRoom.roomTitle).html(dialogContent);
-
+                        var chattingDiglog = $("<div>").attr("id", "chatting_dialog_" + roomId).attr("title", chatRoom.roomTitle).html(dialogContent);						
+						
                         // 다이얼로그(Dialog)를 body 요소에 추가
                         chattingDiglog.appendTo("body");
 
@@ -460,11 +465,12 @@ function chatAll() {
                             close: function() {
                                 // 다이얼로그 닫힐 때 요소 제거
                                 chattingDiglog.dialog("destroy").remove();
-                            },
+                            },                            
                             modal: false,
                             height: 800,
-                            width: 400,
+                            width: 400,                           
                         });
+                        dialogElementStyle("chatting_dialog_" + roomId, '100px', '500px', '105');
                     },
                     error: function(xhr, status, error) {
                         console.error("Failed to fetch chat room data:", error);
@@ -570,8 +576,8 @@ $(document).ready(function() {
     // 버튼 클릭 시 새로운 다이얼로그 열기
     $("#open-dialog-button").on("click", function() {
         // 동적으로 id 생성
-        var dialogId = "new-dialog" + Date.now();
-
+        var dialogId = "new-dialog" + Date.now();       
+	
         // 새로운 다이얼로그 요소 생성
         var newDialog = $("<div>").attr("id", dialogId).attr("title", "채팅방 만들기").addClass("chatting_made_dialog");
         newDialog.append(
@@ -626,6 +632,7 @@ $(document).ready(function() {
 
         // 다이얼로그(Dialog)를 드래그 가능하도록 설정
         newDialog.dialog("option", "draggable", true);
+        dialogElementStyle(dialogId,'100px','840px','110');
     });
 });
 
@@ -649,10 +656,11 @@ function toggleChat() {
     chatRoomContent.style.display = "none";
 }
 
-function dialogStyle(){
-	document.getElementById("dialog").parentNode.style.position='absolute';
-	document.getElementById("dialog").parentNode.style.top='100px';
-	document.getElementById("dialog").parentNode.style.zIndex='100';
+function dialogElementStyle(Id, top, left, zIndex){
+	document.getElementById(Id).parentNode.style.position='absolute'
+	document.getElementById(Id).parentNode.style.top=top;
+	document.getElementById(Id).parentNode.style.left=left;
+	document.getElementById(Id).parentNode.style.zIndex=zIndex;
 }
 
 
