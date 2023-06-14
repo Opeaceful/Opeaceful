@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+
+	<resultMap type="ChatRoom" id="chatRoomResultSet">
+		<id column="CHATROOM_NO" property="chatRoomNo"/>
+		<result column="USER_NO" property="userNo" />
+		<result column="ROOM_TITLE" property="roomTitle" />
+		<result column="LAST_CHAT" property="lastChat" />
+		<result column="CREATED_CHAT" property="createdChat" />
+		<result column="USER_NAME" property="userName" />
+		<result column="PROFILE_IMG" property="profileImg"/>
+		<result column="ENO" property="eno"/>
+	</resultMap>
+	
+	<resultMap type="Chat" id="chatMessageResultSet">
+		<id column="CHAT_NO" property="chatNo"/>
+		<result column="CHATROOM_NO" property="chatRoomNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="MESSAGE" property="message" />
+		<result column="NOT_RECEIVED" property="notReceived" />
+		<result column="RECEIVED_DATE" property="receivedDate" />
+		<result column="MESSAGE_TYPE" property="messageType" />		
+	</resultMap>
+
+	<select id="selectChatRoomList" resultMap="chatRoomResultSet">
+		SELECT
+		CHATROOM_NO,
+		USER_NO,
+		ROOM_TITLE,
+		CREATED_CHAT,
+		USER_NAME,
+		PROFILE_IMG,
+		ENO
+		FROM CHAT_ROOM
+		JOIN MEMBER USING(USER_NO)
+		ORDER BY CHATROOM_NO DESC
+	</select>	
+	
+	<insert id="openChatRoom" useGeneratedKeys="true">   	
+    	<selectKey keyProperty="chatRoomNo" order="AFTER" resultType="int">
+	        SELECT LAST_INSERT_ID()
+	    </selectKey>
+		    INSERT INTO CHAT_ROOM
+		    (USER_NO, ROOM_TITLE, LAST_CHAT, CREATED_CHAT)
+		    VALUES
+		    (#{userNo}, #{roomTitle}, 0, NOW())
+	</insert>
+	
+	<!-- 채팅방 참여여부 확인 -->
+	<select id="joinCheck" resultType="_int" parameterType="ChatParticipant">
+		SELECT COUNT(*)
+		FROM CHAT_PARTICIPANT
+		WHERE CHATROOM_NO = #{chatRoomNo}
+			AND USER_NO = #{userNo}
+	</select>
+	
+	<!-- 채팅방 참여하기 -->
+	<insert id="joinChatRoom" parameterType="ChatParticipant">
+    INSERT INTO CHAT_PARTICIPANT (CHATROOM_NO, USER_NO, ROOM_TITLE, NOT_READ_CHAT, LAST_READ_CHAT_NO, CREATE_DATE, BELL_SETTING)
+    SELECT #{chatRoomNo}, #{userNo}, ROOM_TITLE, 0, 0, NOW(), 'Y'
+    FROM CHAT_ROOM
+    WHERE CHATROOM_NO = #{chatRoomNo}
+	</insert>
+	
+	<!-- 채팅 메세지 목록 조회 -->
+	<select id="selectChatMessage" resultType="Chat">
+		SELECT  MESSAGE,
+				RECEIVED_DATE,
+				CHATROOM_NO,
+				USER_NO,
+				USER_NAME
+		FROM CHAT
+		JOIN MEMBER M USING(USER_NO)
+		WHERE CHATROOM_NO = #{chatRoomNo}
+		ORDER BY CHAT_NO
+	</select>
+	
+	<insert id="insertMessage" parameterType="Chat">
+		INSERT INTO CHAT (CHATROOM_NO, USER_NO, MESSAGE, NOT_RECEIVED, RECEIVED_DATE, MESSAGE_TYPE)
+			VALUES(#{chatRoomNo}, #{userNo}, #{message},0 ,NOW(), 1)
+	</insert>
+	
+	
+	
+	
+	
+	
+	 
+</mapper>

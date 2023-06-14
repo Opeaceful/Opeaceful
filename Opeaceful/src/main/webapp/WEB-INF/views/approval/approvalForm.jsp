@@ -26,6 +26,7 @@ pageEncoding="UTF-8"%>
       crossorigin="anonymous"
     />
 
+
     <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
     <link
       rel="stylesheet"
