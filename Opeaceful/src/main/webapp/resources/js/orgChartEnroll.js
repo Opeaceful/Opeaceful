@@ -88,7 +88,7 @@ function selectDeptList(deptCode, topDeptCode, deptName) {
 				if (topDeptCode == team.topDeptCode) {
 
 					str = `<div class="department-name-box">${deptName}</div>
-							<button class="btn btn-primary personnel-btn" data-id="${deptCode}, ${topDeptCode}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
+							<button class="btn btn-primary personnel-btn" data-id="${deptCode}, ${topDeptCode}, ${team.userNo}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
 
 					html += `<tr>
 								<td>${team.eno}</td>
@@ -131,14 +131,15 @@ function deptListClick() {
     });
 }
 
-function selectPersonnel(deptCode, topDeptCode) {
+function selectPersonnel(deptCode, topDeptCode, userNo) {
 
 	let html = "";
 
 	$.ajax({
 		url : path+"/orgChart/personnel",   
 		type : 'post', 
-		data : {deptCode : deptCode},
+		data : {deptCode : deptCode,
+				userNo : userNo},
 		dataType : "JSON",
 		success : function(result){
 			console.log('인사발령 result: ' ,result);
@@ -148,73 +149,122 @@ function selectPersonnel(deptCode, topDeptCode) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					html += `<tr class="change-tr" data-id="${team.userNo}">
+					html += `<tr class="change-tr" id="change-tr" data-id="${team.userNo}">
 								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
 								<td>
 									<select class="form-select box-shadow-none" id="topDeptName" name="topDeptCode" aria-label="Default select example">
-										<option value="" selected>${team.topDeptName}</option>
+										<option value="" selected>부서선택</option>
 									</select>
 								</td>
 								<td>${team.deptName}</td>
 								<td>
 									<select class="form-select box-shadow-none" id="deptName" name="deptCode"  aria-label="Default select example">
-										<option selected>${team.deptName}</option>
+										<option selected>부서선택</option>
 									</select>
 								</td>
 								<td>${team.pName}</td>
 								<td>
 									<select class="form-select box-shadow-none" id="pName" name="pCode" aria-label="Default select example">
-										<option value="" selected>${team.pName}</option>
+										<option value="" selected>직급선택</option>
 									</select>
 								</td>
 							</tr>`
 				}
 			}
+			
+			
 			let personnelUserList = document.getElementById("org-modal-tbody");
 			personnelUserList.innerHTML = html;
-
+			
 			teamRoad();
 			positionRoad();
-			changeBackground();
-			var selectElement = document.getElementById("topDeptName");
-			selectElement.addEventListener("change", function() {
-			  changeBackground(this);
-			});
-			
-			function changeBackground(selectElement) {
-			  var trElements = document.querySelectorAll(".change-tr");
-			
-			  trElements.forEach(function(trElement) {
-				trElement.style.backgroundColor = ""; // 초기 배경색으로 설정
-			  });
-			
-			  var selectedOption = selectElement.options[selectElement.selectedIndex];
-			  var selectedTr = selectedOption.closest(".change-tr");
-			
-			  if (selectedTr) {
-				selectedTr.style.backgroundColor = "yellow"; // 첫 번째 <tr> 요소의 배경색 변경
-			  }
-			}
+
 		}
 	})
 }
 
-
 function personnelClick() {
 
-    let personnel = document.querySelectorAll(".personnel-btn"); 
+	let personnel = document.querySelectorAll(".personnel-btn"); 
 	console.log(personnel);
 
-    // 각 버튼에 클릭 이벤트 리스너 추가
+	// 각 버튼에 클릭 이벤트 리스너 추가
 	personnel.forEach(btn => {
 		btn.addEventListener("click", function(e) {
 			let id = e.target.dataset.id.split(",");
-			selectPersonnel(id[0], id[1]);
+			selectPersonnel(id[0], id[1], id[2]);
 		});
 	});
 }
+
+// let tbody = document.getElementById("org-modal-tbody");
+// console.log(tbody.children);
+
+// let tr = document.querySelectorAll("change-tr");
+// let trCollection = Array.from(tr.children);
+// console.log("trCollection",trCollection);
+
+// trCollection.forEach(function(e) {
+//   // 각 tr 요소에 대한 동작 수행
+//   console.log(e.target);
+//   console.log("trElement",trElement);
+// });
+
+// let tr = document.querySelectorAll("#change-tr");
+// let grandchildren = tr.querySelectorAll("select");
+// console.log(grandchildren);
+
+let trElements = document.querySelectorAll("#change-tr");
+let grandchildren = [];
+
+trElements.forEach(function(trElement) {
+  let selects = trElement.querySelectorAll("select");
+  console.log(selects);
+  grandchildren.push(selects);
+  console.log(grandchildren);
+});
+
+
+// $(document).on("change","#topDeptName, #deptName, #pName",function(e){
+
+// 	let userCode = e.target.parentElement.parentElement.dataset.id
+// 	console.log(e.target.parentElement.parentElement.dataset.id);
+	
+// 	$(".change-tr"). attr({ "class" : "changeValue" });
+// })
+// ("#topDeptName, #deptName, #pName").change(function() {
+  
+// });
+// let changeTr = document.querySelectorAll(".change-tr");
+
+// changeTr.forEach(function(tr) {
+// 	tr.classList.add('changeValue');
+// 	console.log(changeTr);
+//   });
+
+
+
+
+// function personnelUser() {
+
+// 	let changeTr = document.querySelectorAll(".change-tr");
+
+// 	changeTr.forEach(function(tr) {
+// 		tr.addEventListener('click', function(e) {
+
+// 			let userNo = this.getAttribute('data-id');
+
+// 		})
+// 	})
+// }
+
+// ("#topDeptName, #deptName, #pName").change(function() {
+  
+// });
+
+
 
 
 

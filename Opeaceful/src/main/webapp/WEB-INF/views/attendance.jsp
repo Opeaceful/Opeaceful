@@ -9,7 +9,7 @@
 </c:if>
 <c:if test="${not empty map.no}">
 	<c:set var="url" value="check?startDate=${startDate}&endDate=${endDate}&cpage="/>
-	<%-- <c:set var="url" value="check?year1=${map.year1}&month1=${map.month1}&day1=${map.day1} --%>&cpage="/>
+	<%-- <c:set var="url" value="check?year1=${map.year1}&month1=${map.month1}&day1=${map.day1}&cpage="/> --%>
 </c:if>
 <!DOCTYPE html>
 <html>
@@ -66,57 +66,59 @@
 					</div>
 				</c:if>
 			</c:forEach>
-             <table class="table table-hover table-common">
-                <thead>
-                    <tr>
-                        <th>일자</th>
-                        <th>사원명</th>
-                        <th>출근시간</th>
-                        <th>퇴근시간</th>
-                        <th>근무시간</th>
-                        <th>비고</th>
-                    </tr>
-                </thead>
-                <tbody id="AttendanceTbody">
-					<c:forEach items="${adList}" var="ad">
-						<tr>
-							<td>${ad.date}</td>
-					    	<c:choose>
-					    		<c:when test="${ ad.userNo != 0 }">
-						            <td>${ad.userName}</td>
-						            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
-						            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
-						            <td>
-							            <c:if test="${ad.type eq 0}">
-							            	<fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간
+			<div class="attendance-table-div">
+	             <table class="table table-hover table-common">
+	                <thead class="attendance-thead">
+	                    <tr>
+	                        <th>일자</th>
+	                        <th>사원명</th>
+	                        <th>출근시간</th>
+	                        <th>퇴근시간</th>
+	                        <th>근무시간</th>
+	                        <th>비고</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="AttendanceTbody">
+						<c:forEach items="${adList}" var="ad">
+							<tr>
+								<td>${ad.date}</td>
+						    	<c:choose>
+						    		<c:when test="${ ad.userNo != 0 }">
+							            <td>${ad.userName}</td>
+							            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
+							            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
+							            <td>
+								            <c:if test="${ad.type eq 0}">
+								            	<fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간
+								            </c:if>
+							            </td>
+							            <c:if test="${ad.type eq 1}">
+							                <td>연차</td>
 							            </c:if>
-						            </td>
-						            <c:if test="${ad.type eq 1}">
-						                <td>연차</td>
-						            </c:if>
-						            <c:if test="${ad.type eq 2}">
-						                <td>오전 반차</td>
-						            </c:if>
-						            <c:if test="${ad.type eq 3}">
-						                <td>오후 반차</td>
-						            </c:if>
-					    		</c:when>
-						    	<c:otherwise>
-						            <td></td>
-						            <td></td>
-						            <td></td>
-						            <td></td>
-						            <td></td>
-						    	</c:otherwise>
-					    	</c:choose>
-					</tr>
-					    </c:forEach>
-                </tbody>
-            </table>
+							            <c:if test="${ad.type eq 2}">
+							                <td>오전 반차</td>
+							            </c:if>
+							            <c:if test="${ad.type eq 3}">
+							                <td>오후 반차</td>
+							            </c:if>
+						    		</c:when>
+							    	<c:otherwise>
+							            <td></td>
+							            <td></td>
+							            <td></td>
+							            <td></td>
+							            <td></td>
+							    	</c:otherwise>
+						    	</c:choose>
+							</tr>
+						</c:forEach>
+	                </tbody>
+	            </table>
+			</div>
             <!-- 페이징 영역 -->
             <%-- <c:set var="url" value="${path}/attendance/check?cpage=" /> --%>
             
-                <div class="pagingArea">
+                <%-- <div class="pagingArea">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                         	<!-- 이전페이지 버튼 -->
@@ -141,7 +143,7 @@
                         	<c:forEach var="item" begin="${pi.startPage }" end="${pi.endPage }">
                         		<li class="page-item">
                         			<a class="page-link" href="${url}${item}" id="CP${item}">${item }</a>
-                        			<%-- <a class="page-link" href="${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}&cpage=${cpage}" id="CP${item}">${item }</a>                  --%>       		
+                        			<a class="page-link" href="${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}&cpage=${cpage}" id="CP${item}">${item }</a>                        		
                         		</li>
 			      			</c:forEach>
 			      			
@@ -153,7 +155,7 @@
                         					<span aria-hidden="true">&raquo;</span>
                         				</a>
                         			</li>
-                        		<%-- <li class="page-item active"><a class="page-link" href="${url}${item}&year1=${year1}">${item}</a></li> --%>
+                        		<li class="page-item active"><a class="page-link" href="${url}${item}&year1=${year1}">${item}</a></li>
 	                        	</c:when>
 								<c:otherwise>	
 									<li class="page-item">
@@ -165,7 +167,7 @@
 							</c:choose>
                         </ul>
                       </nav>
-                </div>
+                </div> --%>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/member/member-select.jsp"/>

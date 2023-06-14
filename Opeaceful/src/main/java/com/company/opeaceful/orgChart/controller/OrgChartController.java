@@ -18,7 +18,7 @@ import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.dept.model.service.DeptService;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.Position;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 import com.google.gson.Gson;
@@ -133,7 +133,7 @@ public class OrgChartController {
 	@ResponseBody
 	public String selectMember(int deptCode) {
 //		System.out.println(DeptCode);
-		List<UserDepatment> udList = orgchartService.selectMember(deptCode);
+		List<UserDepartment> udList = orgchartService.selectMember(deptCode);
 		
 		System.out.println("udList에 담긴 값 : "+udList);
 		return new Gson().toJson(udList);

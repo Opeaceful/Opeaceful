@@ -1,11 +1,9 @@
 package com.company.opeaceful.orgChart.model.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.company.opeaceful.dept.model.vo.Department;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
 public interface OrgChartService {
@@ -23,7 +21,7 @@ public interface OrgChartService {
 	int insertDp(OrgChart orgChart);
 	
 	// 하위부서 사원 조회
-	List<UserDepatment> selectMember(int deptCode);
+	List<UserDepartment> selectMember(int deptCode);
 	
 	// 직급추가
 	int insertPname(OrgChart orgChart);

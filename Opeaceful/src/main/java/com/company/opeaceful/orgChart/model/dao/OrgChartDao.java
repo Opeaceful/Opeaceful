@@ -1,16 +1,13 @@
 package com.company.opeaceful.orgChart.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.company.opeaceful.dept.model.vo.Department;
-import com.company.opeaceful.dept.model.vo.UserDepatment;
+import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
 @Repository
@@ -64,7 +61,7 @@ public class OrgChartDao {
 	}
 	
 	// 하위부서 사원 조회
-	public List<UserDepatment> selectMember(int deptCode) {
+	public List<UserDepartment> selectMember(int deptCode) {
 		return sqlSession.selectList("deptMapper.selectMember", deptCode);
 	}
 	
