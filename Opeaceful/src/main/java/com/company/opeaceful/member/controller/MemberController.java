@@ -157,8 +157,7 @@ public class MemberController {
 			loginUser.setStatusType(statusType);
 			session.setAttribute("loginUser", loginUser);
 		}
-		
-		return new Gson().toJson(result);
+		return new Gson().toJson(statusType);
 	}
 	
 	//[지영]

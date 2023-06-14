@@ -64,15 +64,16 @@ document.querySelector("#state .select").addEventListener("click", onClickState)
 function onClickStateOption(e) {
     const selectedValue = e.currentTarget.innerHTML;
     document.querySelector("#state .text").innerHTML = selectedValue;
-    
-    console.log(e.currentTarget.id);
     /* --------------------------- 접속 상태 변경 --------------------------- */
     $.ajax({
         type : "POST",
         dataType : "json",
         data : {statusType : e.currentTarget.id},
         url : path+"/member/updateStatusType",
-        success : function(result){},
+        success : function(statusType){
+            // 채팅 모달 option도 변경
+            $("#statusList").val(`${statusType}`).prop("selected", true);
+        },
         error : function(e){
             console.log(e.target);
         }
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       
         request.done(function(data){
-            console.log(data);
+            // console.log(data);
       
             var calendar = new FullCalendar.Calendar(calendarM, {
                 plugins: [ 'interaction', 'dayGrid' ],
@@ -191,11 +192,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     center: 'prevYear,prev,title,next,nextYear',
                     right: 'none'
                 },
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                editable: false, // 일정 움직이는거 막기
+                eventLimit: false, // allow "more" link when too many events
                 events: data
             });
             calendar.render();
+            $(".fc-title").text(null);
         })
       
         request.fail(function() {
