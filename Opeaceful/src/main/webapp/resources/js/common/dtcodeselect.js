@@ -12,7 +12,7 @@ import {path} from '../common/common.js';
 
 
 
-/*부서명을 불러오는 ajax */
+/*하위부서명을 불러오는 ajax */
 function teamRoad() {
 
     let deptCode = document.querySelectorAll("[name=deptCode]");
@@ -43,6 +43,7 @@ function teamRoad() {
     })
 }
 
+/*상위부서명을 불러오는 ajax */
 function topDeptRoad() {
 
     let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
@@ -51,8 +52,6 @@ function topDeptRoad() {
         url:`${path}/dept/selectDept`,
         dataType : "JSON",
         success: function(result){
-
-            console.log('부서불러오는 세ㄹ렉트:',result);
   
             for(let i=0; i<topDeptCode.length; i++){
 
@@ -74,10 +73,6 @@ function topDeptRoad() {
         }
     })
 }
-
-
-
-
 
 /*직급을 불러오는 ajax */
 function positionRoad() {
