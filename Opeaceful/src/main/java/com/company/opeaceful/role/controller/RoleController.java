@@ -41,7 +41,7 @@ public class RoleController {
 		boolean RoleCheck = false;
 		
 		for(UserRole role :loginUserRole) {
-			if (role.getRoleCode().equals("M01")) {
+			if (role.getRoleCode().equals("R01")) {
 				RoleCheck = true;
 	            break;
 	        }	
@@ -106,7 +106,7 @@ public class RoleController {
 		boolean RoleCheck = false;
 		
 		for(UserRole role :loginUserRole) {
-			if (role.getRoleCode().equals("M01")) {
+			if (role.getRoleCode().equals("R01")) {
 				RoleCheck = true;
 	            break;
 	        }	

@@ -175,7 +175,8 @@ public class MemberController {
 		boolean RoleCheck = false;
 		
 		for(UserRole role :loginUserRole) {
-			if (role.getRoleCode().equals("R01")) {
+		
+			if (role.getRoleCode().equals("M01")) {
 				RoleCheck = true;
 	            break;
 	        }	
