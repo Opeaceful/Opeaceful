@@ -45,22 +45,14 @@ public class AttendanceDao {
 		return sqlSession.selectOne("attendanceMapper.selectAttendanceAllListCount", selectAllUser);
 	}
 	
-	public List<Attendance> selectUserAttendance(PageInfo pi, Map<String, Object> selectUser) {
+	public List<Attendance> selectUserAttendance(int listCount, Map<String, Object> selectUser) {
 		
-		int offset = (pi.getCurrentPage() - 1) * pi.getSettingLimit();
-		int limit = pi.getSettingLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return sqlSession.selectList("attendanceMapper.selectUserAttendance",selectUser, rowBounds);
+		return sqlSession.selectList("attendanceMapper.selectUserAttendance",selectUser);
 	}
 	
-	public List<Attendance> selectAllUserAttendance(Map<String, Object> selectAllUser, PageInfo pi) {
+	public List<Attendance> selectAllUserAttendance(Map<String, Object> selectAllUser, int listCount) {
 		
-		int offset = (pi.getCurrentPage() - 1) * pi.getSettingLimit();
-		int limit = pi.getSettingLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return sqlSession.selectList("attendanceMapper.selectAllUserAttendance",selectAllUser, rowBounds);
+		return sqlSession.selectList("attendanceMapper.selectAllUserAttendance",selectAllUser);
 	}
 	
 }

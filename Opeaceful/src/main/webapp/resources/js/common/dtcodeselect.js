@@ -35,12 +35,15 @@ function teamRoad() {
                     option.text = dept.deptName;
                     deptCode[i].appendChild(option);
                     }
-                    if (dept.topDeptCode == 0) { //상위 부서 셀렉트
-                        const option = document.createElement("option");
-                        option.value = dept.deptCode;
-                        option.text = dept.deptName;
-                        topDeptCode[i].appendChild(option);
+                    if(document.getElementById("org-tbody")){
+                        if (dept.topDeptCode == 0) { //상위 부서 셀렉트
+                            const option = document.createElement("option");
+                            option.value = dept.deptCode;
+                            option.text = dept.deptName;
+                            topDeptCode[i].appendChild(option);
                         }
+                    }
+                  
                 };
 
             }

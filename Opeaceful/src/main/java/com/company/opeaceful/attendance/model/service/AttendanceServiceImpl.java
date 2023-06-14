@@ -49,14 +49,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public List<Attendance> selectUserAttendance(Map<String, Object> selectUser, int currentPage){
 		
 		int listCount = attendanceDao.selectAttendanceListCount(selectUser);
-		int pageLimit = 10;
-		int settingLimit = 10;
 		
-		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, settingLimit);
-		
-		selectUser.put("pi", pi);
-		
-		return attendanceDao.selectUserAttendance(pi, selectUser); 
+		return attendanceDao.selectUserAttendance(listCount, selectUser); 
 		
 	}
 	
@@ -64,13 +58,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public List<Attendance> selectAllUserAttendance(Map<String, Object> selectAllUser, int currentPage) {
 		
 		int listCount = attendanceDao.selectAttendanceAllListCount(selectAllUser);
-		int pageLimit = 10;
-		int settingLimit = 10;
 		
-		PageInfo pi = pagination.getPageInfo(listCount, currentPage, pageLimit, settingLimit);
-		
-		selectAllUser.put("pi", pi);
-		
-		return attendanceDao.selectAllUserAttendance(selectAllUser, pi);
+		return attendanceDao.selectAllUserAttendance(selectAllUser, listCount);
 	}
 }

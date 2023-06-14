@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="adList" value="${adList}"/>
-<c:set var="pi" value="${map.pi}"/>
 <c:if test="${empty map.no}">
 	<c:set var="url" value="check?startDate=${startDate}&endDate=${endDate}&cpage="/>
 </c:if>

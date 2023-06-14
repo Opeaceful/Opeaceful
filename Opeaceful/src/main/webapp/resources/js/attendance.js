@@ -21,7 +21,20 @@ function redirectToAttendanceCheck() {
   let day1 = $("#day1").val();
   let day2 = $("#day2").val();
 
-  location.href = `${path}/attendance/check?userNo=${userNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
+  let startDate = new Date(`${year1}-${month1}-${day1}`);
+  let endDate = new Date(`${year2}-${month2}-${day2}`);
+
+
+  let diff = Math.abs(startDate.getTime() - endDate.getTime());
+  diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  if (diff < 365) {
+  
+          location.href = `${path}/attendance/check?userNo=${userNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
+  } else {
+   swal('최대 일년까지 조회 가능합니다.',{buttons: {cancel :'확인'}});
+  }
+
 }
 
 $("#year1, #year2, #month1, #month2, #day1, #day2").change(function() {
@@ -43,13 +56,27 @@ $("#all-member-modal-button").click(function(){
   let day1 = $("#day1").val();
   let day2 = $("#day2").val();
 
-  //해당 버튼이 select용으로 눌렸을떄만
-  if(!selectButton){
+  let startDate = new Date(`${year1}-${month1}-${day1}`);
+  let endDate = new Date(`${year2}-${month2}-${day2}`);
 
-      if(checkMemberNo.length > 0){
-        location.href = `${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
-      }
-    }
+
+  let diff = Math.abs(startDate.getTime() - endDate.getTime());
+  diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  if (diff < 365) {
+    if(!selectButton){
+  
+        if(checkMemberNo.length > 0){
+          location.href = `${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
+        }
+      } 
+  } else {
+   swal('최대 일년까지 조회 가능합니다.',{buttons: {cancel :'확인'}});
+  }
+  console.log(diff);
+
+
+  //해당 버튼이 select용으로 눌렸을떄만
 });
       
 // select box 연도 , 월 표시

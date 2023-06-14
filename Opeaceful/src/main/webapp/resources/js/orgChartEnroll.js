@@ -131,15 +131,14 @@ function deptListClick() {
     });
 }
 
-function selectPersonnel(deptCode, topDeptCode, userNo) {
+function selectPersonnel(deptCode, topDeptCode) {
 
 	let html = "";
 
 	$.ajax({
 		url : path+"/orgChart/personnel",   
 		type : 'post', 
-		data : {deptCode : deptCode,
-				userNo : userNo},
+		data : {deptCode : deptCode},
 		dataType : "JSON",
 		success : function(result){
 			console.log('인사발령 result: ' ,result);
@@ -149,7 +148,7 @@ function selectPersonnel(deptCode, topDeptCode, userNo) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					html += `<tr class="change-tr" id="change-tr" data-id="${team.userNo}">
+					html += `<tr class="change-tr" data-id="${team.userNo}">
 								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
@@ -180,6 +179,7 @@ function selectPersonnel(deptCode, topDeptCode, userNo) {
 			
 			teamRoad();
 			positionRoad();
+			changeValue();
 
 		}
 	})
@@ -194,79 +194,20 @@ function personnelClick() {
 	personnel.forEach(btn => {
 		btn.addEventListener("click", function(e) {
 			let id = e.target.dataset.id.split(",");
-			selectPersonnel(id[0], id[1], id[2]);
+			selectPersonnel(id[0], id[1]);
 		});
 	});
 }
 
-// let tbody = document.getElementById("org-modal-tbody");
-// console.log(tbody.children);
+function changeValue(){
 
-// let tr = document.querySelectorAll("change-tr");
-// let trCollection = Array.from(tr.children);
-// console.log("trCollection",trCollection);
+	$("#topDeptName, #deptName, #pName").change(function(e){
+		let userCode = e.target.parentElement.parentElement.dataset.id
 
-// trCollection.forEach(function(e) {
-//   // 각 tr 요소에 대한 동작 수행
-//   console.log(e.target);
-//   console.log("trElement",trElement);
-// });
-
-// let tr = document.querySelectorAll("#change-tr");
-// let grandchildren = tr.querySelectorAll("select");
-// console.log(grandchildren);
-
-let trElements = document.querySelectorAll("#change-tr");
-let grandchildren = [];
-
-trElements.forEach(function(trElement) {
-  let selects = trElement.querySelectorAll("select");
-  console.log(selects);
-  grandchildren.push(selects);
-  console.log(grandchildren);
-});
-
-
-// $(document).on("change","#topDeptName, #deptName, #pName",function(e){
-
-// 	let userCode = e.target.parentElement.parentElement.dataset.id
-// 	console.log(e.target.parentElement.parentElement.dataset.id);
-	
-// 	$(".change-tr"). attr({ "class" : "changeValue" });
-// })
-// ("#topDeptName, #deptName, #pName").change(function() {
-  
-// });
-// let changeTr = document.querySelectorAll(".change-tr");
-
-// changeTr.forEach(function(tr) {
-// 	tr.classList.add('changeValue');
-// 	console.log(changeTr);
-//   });
-
-
-
-
-// function personnelUser() {
-
-// 	let changeTr = document.querySelectorAll(".change-tr");
-
-// 	changeTr.forEach(function(tr) {
-// 		tr.addEventListener('click', function(e) {
-
-// 			let userNo = this.getAttribute('data-id');
-
-// 		})
-// 	})
-// }
-
-// ("#topDeptName, #deptName, #pName").change(function() {
-  
-// });
-
-
-
-
+		e.target.parentElement.parentElement.classList.add("changeValue");
+		selectPersonnel(userCode);
+	})
+}
 
 	///////////////////////////////////////////////////////////////////////////// 상위부서 추가
 
