@@ -21,7 +21,8 @@
 	<!-- jquery -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-	<!-- css -->
+	<!-- 공통 스크립트 -->
+    <script type="module" src="${path}/resources/js/common/common.js"></script>
     
 </head>
 <body>

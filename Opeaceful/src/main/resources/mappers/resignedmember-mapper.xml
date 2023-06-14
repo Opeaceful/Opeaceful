@@ -25,6 +25,13 @@
 		FROM RESIGNED_MEMBER
 		WHERE USER_NO = #{userNo} 
 	</select>
+	
+	<!-- [지영] 스케쥴시 3년 넘은 퇴사자 조회-->
+	<select id="deleteMembersList" resultType='_int'>
+		SELECT USER_NO
+		FROM resigned_member
+		WHERE SYSDATE() > DATE_ADD(RESIGNED_SET_DATE, INTERVAL 3 YEAR);
+	</select>
 	 
 	<!-- =================== [update] =================== -->			 
 	<!-- [지영] 퇴사자료 업데이트 -->
@@ -33,7 +40,8 @@
 		SET RESIGNED_DATE = #{resignedDate},
 			DEPT_NAME = #{deptName},
 			T_NAME  = #{tName},
-			P_NAME  = #{pName}
+			P_NAME  = #{pName},
+			RESIGNED_SET_DATE = (CURRENT_DATE)
 		WHERE USER_NO = #{userNo} 
 	</update>
 	 

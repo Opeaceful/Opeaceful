@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import org.springframework.stereotype.Component;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import com.lowagie.text.pdf.BaseFont;
+
 @Component
 public class PdfRender {
 	
@@ -17,6 +19,12 @@ public class PdfRender {
         ITextRenderer renderer = new ITextRenderer();
         
         renderer.setDocumentFromString(htmlContent);
+        
+        
+    
+
+        renderer.getFontResolver().addFont("C:/Opeaceful/Opeaceful/src/main/webapp/resources/font/notokr-regular.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
         renderer.layout();
         //PDF로 만들어줌
         renderer.createPDF(outputStream);

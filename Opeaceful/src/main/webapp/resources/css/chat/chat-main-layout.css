@@ -22,7 +22,7 @@ body{
         "nav  .   header     .    "
         "nav  .    main      .    "
         "ad  ad     ad      ad    ";
-    background: white;
+    background: var(--color-background);
     border:0.1rem solid var(--color-navy);
 }
 
@@ -31,7 +31,7 @@ body{
     grid-area: setting;
     position: sticky;
     top: 0;
-    background-color: white;
+    background-color: var(--color-background);
 }
 .chat_setting_bar > *{
     line-height: 1.875rem; /* grid row의 첫번째 크기와 동일 */
@@ -44,7 +44,7 @@ body{
     grid-area: header;
     position: sticky;
     top: 1.875rem; /* grid row의 첫번째 + gap 크기와 동일*/
-    background-color: white;
+    background-color: var(--color-background);
 }
 #chat_header > *{
     /* 가운데 정렬 */
@@ -123,11 +123,11 @@ body{
     /* transition-delay: 0; */
 }
 .chat_main_li:hover{
-    background-color: rgb(244, 248, 253);
+    background-color: var(--white-hover);
 }
 .chat_main_li:active{
     /* transition-delay: 0; */
-    background-color: rgb(207, 226, 250);
+    background-color: var(--chat-hover);
 }
 
 /* 광고(aside) 영역 레이아웃 지정 */
@@ -180,8 +180,6 @@ body{
 .ui-dialog-content .ui-widget-content{
     display: none;
 }
-
-.ui-dialog .ui-corner-all .ui-widget .ui-widget-content .ui-front .ui-draggable .ui-resizable{
-	position:absolute;
-	
+#dialog{
+	display: none;
 }

@@ -173,8 +173,8 @@
 										<div class="mode-select">
 											<div class="mode-text"><span class="color-frame" id="white"></span></div>
 											<ul class="mode-list">
-												<li class="mode"><span class="color-frame" id="white"></span></li>
-												<li class="mode"><span class="color-frame" id="black"></span></li>
+												<li class="mode" id="white-icon"><span class="color-frame" id="white"></span></li>
+												<li class="mode" id="black-icon"><span class="color-frame" id="black"></span></li>
 											</ul>
 										</div>
 		        					</div>
