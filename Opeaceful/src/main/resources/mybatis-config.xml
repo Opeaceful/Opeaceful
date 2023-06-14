@@ -4,6 +4,16 @@
 
 
 <configuration>
+
+	<!-- 
+		기본적으로 MySQL에서는 재귀 쿼리의 최대 반복 횟수가 1000으로 제한되어 있습니다. 따라서 오류가 발생하며 쿼리가 중단됩니다.
+
+		이 오류를 해결하기 위해서는 @@cte_max_recursion_depth 변수를 더 큰 값으로 설정하여 재귀 쿼리의 최대 반복 횟수 제한을 늘려야 합니다. 
+	 -->
+	<properties>
+	    <property name="cte_max_recursion_depth" value="2000" />
+  	</properties>
+  	
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 		
@@ -38,6 +48,9 @@
 		<typeAlias type="com.company.opeaceful.approval.model.vo.Approval" alias="approval"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFile" alias="approvalFile"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalForm" alias="approvalForm"/>
+		<typeAlias type="com.company.opeaceful.chat.model.vo.Chat" alias="Chat"/>
+		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatParticipant" alias="ChatParticipant"/>
+		<typeAlias type="com.company.opeaceful.chat.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.company.opeaceful.salary.model.vo.Salary" alias="salary"/>
 		<typeAlias type="com.company.opeaceful.calendar.model.vo.Calendar" alias="calendar"/>
 		<typeAlias type="com.company.opeaceful.approval.model.vo.ApprovalFavor" alias="approvalFavor"/>
@@ -60,6 +73,7 @@
 		<mapper resource="/mappers/reply-mapper.xml"/>  
 		<mapper resource="/mappers/role-mapper.xml"/> 
 		<mapper resource="/mappers/annual-mapper.xml"/> 
+		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/approval-mapper.xml"/> 
 		<mapper resource="/mappers/salary-mapper.xml"/> 
 		<mapper resource="/mappers/calendar-mapper.xml"/> 
