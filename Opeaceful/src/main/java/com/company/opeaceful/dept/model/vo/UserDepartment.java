@@ -1,5 +1,7 @@
 package com.company.opeaceful.dept.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +18,8 @@ public class UserDepartment {
 	private String pName;
 	private String deptName;
 	
+	private int eno;
+	private String userName;
+	private int topDeptCode;
 	
 }
