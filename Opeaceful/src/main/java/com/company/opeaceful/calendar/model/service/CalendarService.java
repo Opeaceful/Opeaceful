@@ -1,6 +1,7 @@
 package com.company.opeaceful.calendar.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.calendar.model.vo.CalendarMemo;
@@ -16,6 +17,12 @@ public interface CalendarService {
 	public int selectDeptCode(int userNo);
 	
 	public int insertEvent(Calendar calendar);
+	
+	public Calendar selectEvent(int cno);
+	
+	public int updateEvent(Calendar calendar);
+	
+	public int deleteEvent(int cno);
 	
 	public int insertMemo(CalendarMemo calendarMemo);
 

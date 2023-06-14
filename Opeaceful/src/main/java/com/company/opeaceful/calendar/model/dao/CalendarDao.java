@@ -1,6 +1,7 @@
 package com.company.opeaceful.calendar.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,17 @@ public class CalendarDao {
 		return sqlSession.insert("calendarMapper.insertEvent", calendar);
 	}
 	
+	public Calendar selectEvent(int cno) {
+		return sqlSession.selectOne("calendarMapper.selectEvent", cno);
+	}
 	
+	public int updateEvent(Calendar calendar) {
+		return sqlSession.update("calendarMapper.updateEvent", calendar);
+	}
 	
-	
-	
+	public int deleteEvent(int cno) {
+		return sqlSession.delete("calendarMapper.deleteEvent", cno);
+	}
 	
 	public int insertMemo(CalendarMemo calendarMemo) {
 		return sqlSession.insert("calendarMapper.insertMemo", calendarMemo);

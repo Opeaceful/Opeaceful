@@ -1,6 +1,7 @@
 package com.company.opeaceful.calendar.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,21 @@ public class CalendarServiceImpl implements CalendarService{
 	@Override 
 	public int insertEvent(Calendar calendar) {
 		return calendarDao.insertEvent(calendar);
+	}
+	
+	@Override 
+	public Calendar selectEvent(int cno) {
+		return calendarDao.selectEvent(cno);
+	}
+	
+	@Override 
+	public int updateEvent(Calendar calendar) {
+		return calendarDao.updateEvent(calendar);
+	}
+	
+	@Override 
+	public int deleteEvent(int cno) {
+		return calendarDao.deleteEvent(cno);
 	}
 	
 	@Override 
