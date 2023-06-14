@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ErrorSettingController {
 	
+	
+	 //[지영]
+	 //에러페이지 연동 
 	 @GetMapping("/error")
 	  public String Error404(Model model, HttpServletResponse res,
 			  @RequestParam(value= "code", required = false) String code
