@@ -139,7 +139,103 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 			<% } %>
 		 </div>
 
-        </div>
+
+
+
+
+
+		<div class="modal fade" id="modal-select-search-user"
+			data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div
+				class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content position-modal">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="staticBackdropLabel">결재양식
+							선택</h1>
+
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							data-bs-target="#modal-select-approval-type" aria-label="Close"></button>
+					</div>
+					<div class="modal-body scroll-bar-none">
+
+						<div class="org-chart">
+							<div>
+								<!--검색창-->
+								<div class="input-group mb-3">
+									<input type="text"
+										class="form-control box-shadow-none input-search-member"
+										placeholder="사원번호/이름 입력">
+									<button class="btn btn-outline-secondary search-btn2"
+										type="button">
+										<i class="fa-solid fa-magnifying-glass"></i>
+									</button>
+								</div>
+								<table class="org-table-head table table-common">
+									<thead>
+										<th width="50%">부서</th>
+										<th width="50%">사원</th>
+									</thead>
+								</table>
+							</div>
+							<div class="org-table-content scroll-bar-none">
+								<table class="table table-common" id="select-member-table">
+									<tbody>
+										<tr>
+											<td rowspan="2">경영전략</td>
+											<td>김뫄뫄 사원</td>
+										</tr>
+										<tr>
+											<td>김뫄뫄 사원</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="modal-footer">
+						<button id="btn-select-copy-form-type" type="button"
+							class="btn btn-primary" data-bs-dismiss="modal"
+							data-bs-target="#modal-select-approval-type">선택</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</div>
       </div>
     </div>
 
