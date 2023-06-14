@@ -91,7 +91,14 @@
       <tbody class="table-group-divider" id="Am-salary-table">
         <c:forEach items="${LSalry}" var="salry">
 	        <tr data-id="${salry.getSalaryNo()},${salry.getUserName()}">
-		        <td>${salry.getEno()}</td>
+		        <td>
+		        <c:if test="${salry.getEno() == 0}">
+					퇴사자
+				</c:if>
+				<c:if test="${salry.getEno() != 0}">
+					${salry.getEno()}
+				</c:if>
+		        </td>
 		        <td>${salry.getUserName()}</td>
 	            <th scope="row">${salry.getYearReported()}-${salry.getMonReported()}</th>
 	            <td>${salry.getPaymentDate()}</td>
@@ -223,7 +230,10 @@
 
   
             <div class="row t-margin ">
-              <div class="col-md-12 t-flex" id="net-salary"></div>
+              <div class="col-md-12 t-flex" id="net-salary">
+                <b>실지급액 :  </b>
+                <span></span>
+              </div>
             </div> 
           </div>
 

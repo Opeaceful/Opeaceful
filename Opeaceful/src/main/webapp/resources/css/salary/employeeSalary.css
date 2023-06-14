@@ -58,6 +58,7 @@
 
 .salary-btn> button{
     font-size: 25px;
+    color: var(--bootstrap-color);
 }
 
 .salary-btn> button:hover{

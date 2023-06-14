@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,10 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.company.opeaceful.approval.model.service.ApprovalService;
+import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.dept.model.vo.Department;
@@ -31,6 +35,7 @@ import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.service.MemberService;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.member.model.vo.ResignedMember;
+import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
@@ -40,6 +45,7 @@ public class MemberController {
 	
 	private MemberService memberService;
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
@@ -163,9 +169,24 @@ public class MemberController {
 	//[지영]
 	//member-create로 이동
 	@RequestMapping("/create")
-	public String createMember() {
+	public String createMember(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model) {
 		
-		return "member/member-create";
+		boolean RoleCheck = false;
+		
+		for(UserRole role :loginUserRole) {
+		
+			if (role.getRoleCode().equals("M01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
+		
+		if (RoleCheck) {
+	        return "member/member-create";
+	    } else {
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
+	    }
 	}
 	
 	//[지영]
@@ -209,8 +230,25 @@ public class MemberController {
 	//[지영]
 	//member-allview로 이동
 	@RequestMapping("/allview")
-	public String memberAllview() {
-		return "member/member-allview";
+	public String memberAllview(@SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model){
+		
+		boolean RoleCheck = false;
+		
+		for(UserRole role :loginUserRole) {
+			if (role.getRoleCode().equals("M01")) {
+				RoleCheck = true;
+	            break;
+	        }	
+		}
+		
+		if (RoleCheck) {
+			return "member/member-allview";
+	    } else {
+	    	model.addAttribute("errorMsg", "권한이 없습니다");
+	    	return "errorPage";
+	    }
+	 
+		
 	}
 	
 	
@@ -390,16 +428,13 @@ public class MemberController {
 	public String modalAllMemberView(
 			@RequestParam("keyword") String keyword){
 		
-		System.out.println(keyword);
 		
 		List<Member> m = memberService.modalAllMemberView(keyword);
 	
 		return new Gson().toJson(m);
 			
 	}
-	
 
-	
 	
 	
 	
