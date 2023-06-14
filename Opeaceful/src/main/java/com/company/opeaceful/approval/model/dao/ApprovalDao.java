@@ -77,6 +77,11 @@ public class ApprovalDao {
 		return sqlSession.selectList("aprMapper.selectUserApproval", userNo);
 	}
 	
+	// 유저 연차 조회(진행중, 완결 모두 다) 
+	public List<Approval> selectUserApprovalAll(int userNo) {
+		return sqlSession.selectList("aprMapper.selectUserApprovalAll", userNo);
+	}
+	
 	
 	// 즐겨찾기 리스트 조회용
 	public List<ApprovalFavor> selectFavorList(int userNo) {
@@ -158,21 +163,23 @@ public class ApprovalDao {
 	}
 
 	// 참조인용 결재문서 리스트 조회
-	public List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page) {
+	public List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page, int type) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userNo", userNo);
 		map.put("status", status);
 		map.put("year", year);
 		map.put("page", (page-1)* 10);
+		map.put("type", type);
 		return sqlSession.selectList("aprMapper.selectApprovalListforRefer" , map);
 	}
 
 	// 참조인용 결재문서 리스트 총개수 조회
-	public int selectApprovalListforReferCount(int userNo, Integer status, int year , boolean isNotCheck) {
+	public int selectApprovalListforReferCount(int userNo, Integer status, int year, int type , boolean isNotCheck) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userNo", userNo);
 		map.put("status", status);
 		map.put("year", year);
+		map.put("type", type);
 		map.put("isNotCheck", isNotCheck);
 		
 		return sqlSession.selectOne("aprMapper.selectApprovalListforReferCount" , map);
@@ -282,16 +289,22 @@ public class ApprovalDao {
 	
 	// 결재문서 업데이트
 	public int updateApproval(Approval approval, List<ApprovalLine> lines) {
-		int result = sqlSession.update("aprMapper.updateApproval", approval);
-		int result2 = deleteApprovalLine(approval.getApprovalNo());
-		
-		if(result*result2 > 0) {
-		    Map<String, Object> params = new HashMap<>();
+		// 기존 라인 삭제
+		int result = deleteApprovalLine(approval.getApprovalNo());
+
+		if(result > 0) {
+			Map<String, Object> params = new HashMap<>();
 		    params.put("approvalNo", approval.getApprovalNo());
 		    params.put("lines", lines);
 		    
+		    // 신규 결재라인 추가
 			result =  sqlSession.insert("aprMapper.insertApprovalLine", params);
+			if(result > 0 ) {
+				// 위의 모든것이 성공하면 결재문서 업데이트
+				result = sqlSession.update("aprMapper.updateApproval", approval);
+			}
 	    }
+		
 	    return result;
 	};
 	
@@ -313,6 +326,25 @@ public class ApprovalDao {
 	}
 	
 	
+	// 결재자가 결재 후 다음 결재라인들 상태 변경 (다음결재자 상태1 , 다음결재자 전단계의 참조자들 상태3) 
+	public int updateNextLinesStatus(int approvalNo, int nextAuthorizeLevel, int myLevel) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("nextAuthorizeLevel", nextAuthorizeLevel);
+	    params.put("myLevel", myLevel);
+		
+	    return sqlSession.update("aprMapper.updateNextLinesStatus",params);
+	}
+	
+	// 결재자가 반려처리 했을경우 본인 결재라인 상태 -1로 변경 
+	public int updateLineStatusReturn(int approvalNo, int userNo) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("userNo", userNo);
+		return sqlSession.update("aprMapper.updateLineStatusReturn",params);
+	}
+	
+	
 	// 결재라인 상태값 읽음으로 업데이트
 	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
 		Map<String, Object> params = new HashMap<>();
@@ -322,7 +354,7 @@ public class ApprovalDao {
 	    return sqlSession.update("aprMapper.updateApprovalLineReadStatus",params);
 	}
 	
-	
+
 	
 	// 메모 업데이트
 	public int updateMemo(ApprovalMemo memo) {
@@ -338,6 +370,10 @@ public class ApprovalDao {
 		
 		return sqlSession.update("aprMapper.updateSignImg" , params);
 	}
+	
+	
+	
+	
 	
 //	-------------------------------- delete 구간 ----------------------------------------
 
@@ -365,6 +401,7 @@ public class ApprovalDao {
 	//  결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
 	public int deleteApproval(int approvalNo,  String deleteFolderPath) {
 		
+		// 결재라인은 fk로 연결되어있어서 결재문서 삭제되면 알아서 다 날아감
 		int result = sqlSession.delete("aprMapper.deleteApproval", approvalNo);
 		if (result > 0) {
 			List<ApprovalFile> fileList = selectFileList("approval-memo", approvalNo, "all");
@@ -384,6 +421,12 @@ public class ApprovalDao {
 	};
 	
 
+	// 결재라인 삭제 (결재번호 받아서 해당 결재번호에 등록되어있던 결재라인 모두삭제)  
+	public int deleteApprovalLine(int approvalNo) {
+		return sqlSession.delete("aprMapper.deleteApprovalLine", approvalNo);
+	}
+
+	
 	// 파일들 삭제
 	public int deleteFileList( List<ApprovalFile> fileList) {
 		return sqlSession.delete("aprMapper.deleteFileList", fileList);
@@ -397,11 +440,6 @@ public class ApprovalDao {
 		return sqlSession.delete("aprMapper.deleteFavor", favorNo);
 	}
 
-	// 결재라인 삭제
-	public int deleteApprovalLine(int approvalNo) {
-		return sqlSession.delete("aprMapper.deleteApprovalLine", approvalNo);
-	}
-	
 
 	// 메모 삭제
 	public int deleteMemo(int memoNo) {

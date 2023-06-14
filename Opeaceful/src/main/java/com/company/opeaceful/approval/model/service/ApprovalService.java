@@ -32,6 +32,9 @@ public interface ApprovalService {
 
 		// [지의] 해당 유저 연차 조회
 		List<Approval> selectUserApproval(int userNo);
+	
+		// 유저 연차 조회(진행중, 완결 모두 다) 
+		List<Approval> selectUserApprovalAll(int userNo);	
 		
 	Approval selectApproval(int approvalNo);
 		
@@ -43,9 +46,9 @@ public interface ApprovalService {
 
 	int selectApprovalListforAuthorizeCount(int userNo, String menu, Integer status, int type, int year  , boolean isNotCheck);
 	
-	List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page );
+	List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page, int type );
 
-	int selectApprovalListforReferCount(int userNo, Integer status, int year  , boolean isNotCheck);
+	int selectApprovalListforReferCount(int userNo, Integer status, int year, int type  , boolean isNotCheck);
 	
 	List<ApprovalMemo> selectMemoList(int approvalNo);
 	
@@ -75,9 +78,13 @@ public interface ApprovalService {
 	
 	int updateApprovalStatus(int approvalNo, int status);
 	
+	int updateNextLinesStatus(int approvalNo, int nextAuthorizeLevel, int myLevel);
+	
 	int updateApprovalStateEnd(Approval approval);
 	
 	int updateApprovalLineReadStatus(int approvalNo, int userNo);
+	
+	int updateLineStatusReturn(int approvalNo, int userNo);
 	
 	int updateMemo(ApprovalMemo memo, List<ApprovalFile> fileList);
 	
@@ -88,6 +95,8 @@ public interface ApprovalService {
 	int deleteForm(int formNo, String deleteFolderPath);
 	
 	int deleteApproval(int approvalNo, String deleteFolderPath);
+	
+	int deleteApprovalLine(int approvalNo);
 
 	int deleteFileList(List<ApprovalFile> fileList);
 	

@@ -39,6 +39,10 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
   </head>
   <body>
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
+	
+	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
+	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
+	<jsp:include page="/WEB-INF/views/approval/memoModal.jsp" />
   
     <!-- [승은] -->
     <div class="my-approval-wrap content-wrap">
@@ -146,7 +150,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 	                <td><%= count - i %></td>
 	                <td><%= list.get(i).getFormatDraftDate() %></td>
 	                <td><%= list.get(i).getTitle()  %></td>
-	                <td><%= list.get(i).getUserName() %></td>
+	                <td><%= list.get(i).getUserName()%><%= list.get(i).getEno() != 0 ? "("+list.get(i).getEno()+")" : "" %></td>
 	                <td><%= statusStr  %></td>
 	                <td><%= typeStr %></td>
 	              </tr>
@@ -223,7 +227,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
                     <div class="sign-img-item">
                     	<div>기존 이미지</div>
-                      <img id="img-my-sign" onerror="this.src='${path}/resources/image/approval/invisible.png';">
+                      <img id="img-my-sign" onerror="this.src='${path}/resources/image/approval/defaultiSignature.png';">
                     </div>
                     <div class="sign-img-item">
                     	<div>신규 이미지</div>
@@ -241,18 +245,11 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
               </div>
             </div>
           </div>
-
-
-
-
         </div>
       </div>
     </div>
 
 
-
-	<jsp:include page="/WEB-INF/views/approval/approvalModal.jsp" />
-	<jsp:include page="/WEB-INF/views/approval/endApprovalModal.jsp" />
 	
 	
 	<script type="module" src="${path}/resources/js/approval/myApprovalFront.js"></script>
