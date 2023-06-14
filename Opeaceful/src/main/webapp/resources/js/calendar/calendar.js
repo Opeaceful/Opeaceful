@@ -386,7 +386,7 @@ function teamCalendar(){
         abled.end = true;
         abled.title = true;
         enableU();
-
+        console.log("카테고리담긴값",info.event.category);
         
         console.log("일정 고유번호 : "+info.event.id);
 
@@ -464,7 +464,7 @@ function fullCalendar(){
     //defaultDate: '2020-02-12', //defaultDate없으면 현재날짜 -> 나중에 지워주기
     editable: false,
     eventLimit: true, // allow "more" link when too many events
-    events: data, 
+    events: data,
       eventClick: function(info){
         /* 선택된 일정 정보 표시 + 일정 수정 모달창 열림 */
         console.log("클릭됨");
