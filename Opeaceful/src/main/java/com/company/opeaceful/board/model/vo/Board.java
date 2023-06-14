@@ -1,6 +1,6 @@
 package com.company.opeaceful.board.model.vo;
 
-import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,4 +25,6 @@ public class Board {
 	private String pName;
 	private String userName;
 	private int userNo;
+	
+	
 }

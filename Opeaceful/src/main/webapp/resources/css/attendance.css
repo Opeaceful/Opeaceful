@@ -23,3 +23,20 @@
     font-size: var(--font15);
 }
 .ad-pen{padding-left: 9px;}
+#ad-btn{width: 6%;}
+.attendance-table-div {
+    overflow-y: auto;
+    max-height: 55vh;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none;
+}
+.attendance-table-div::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+ 
+.attendance-thead{
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+}
+ 

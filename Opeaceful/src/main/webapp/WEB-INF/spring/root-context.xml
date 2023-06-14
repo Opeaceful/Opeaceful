@@ -15,7 +15,7 @@
 			 
 			 useSSL=false&amp;useUnicode=true&amp;serverTimezone=Asia/Seoul
 		-->
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;serverTimezone=Asia/Seoul"/>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
 		<property name="username" value="opeaceful"/>
 		<property name="password" value="opeaceful123"/>
 		

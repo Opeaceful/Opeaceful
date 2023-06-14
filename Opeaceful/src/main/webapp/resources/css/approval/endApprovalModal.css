@@ -20,6 +20,11 @@
   margin-left: var(--side-bar);
 } */
 
+#end-approval select:focus-visible,
+#end-approval input:focus-visible {
+  outline: none;
+}
+
 /* 메모 모달 감추기 */
 #memo-modal-back {
   display: none;
@@ -27,20 +32,17 @@
 
 /* 메모 리스트 감추기 */
 .memo-list {
-  display: none;
+  /* display: none; */
 }
 /* 메모 추가/디테일 화면 감추기 */
 .memo-detail {
   display: none;
 }
 
-
 /* 결재/반려 모달 감추기 */
-#approval-confirm-back{
+#approval-confirm-back {
   display: none;
 }
-
-
 
 #end-approval .modal-header {
   border-bottom: 0px;
@@ -48,7 +50,7 @@
 }
 
 .modal-xl {
-  min-width: 800px;
+  min-width: fit-content;
 }
 
 #end-approval button {
@@ -108,12 +110,6 @@
   margin: 0.5rem 0px;
 }
 
-.final-approval-wrap {
-  width: 90%;
-  margin: auto;
-  padding-top: 2rem;
-}
-
 #end-approval .approval-files {
   width: 100%;
   padding: 0.5rem 1rem;
@@ -140,20 +136,23 @@
 }
 
 .final-approval-wrap {
-  font-size: var(--font14);
+  width: 90%;
+  min-width: fit-content;
+  margin: auto;
   padding: 1rem;
+  padding-top: 2rem;
+  font-size: var(--font14);
   background-color: white;
   border: 1px solid var(--color-board-black);
 }
 
-.end-approval-lines{
-  margin: 2rem 0px; 
+.end-approval-lines {
+  margin: 2rem 0px;
   display: flex;
   justify-content: flex-end;
 }
 
 .end-approval-lines-wrap {
-
   width: max-content;
   display: flex;
   flex-direction: row;
@@ -171,15 +170,25 @@
   align-items: center;
 }
 
+.end-approval-lines-item {
+  text-align: center;
+}
+
+.end-approval-content {
+  text-align: start;
+}
+
 .approver-name {
   background-color: var(--color-light-gray);
   width: max-content;
+  min-width: 100%;
   padding: 0px 4px;
   box-shadow: var(--box-shadow);
 }
 
 .approver-sign {
   width: 100%;
+  min-width: 80px;
   height: 60px;
   display: flex;
   align-items: center;
@@ -188,11 +197,12 @@
 }
 
 .approver-sign img {
-  min-width: 48px;
+  width: 48px;
   height: 48px;
 }
 
 .approver-date {
+  min-height: 21px;
   box-shadow: var(--box-shadow);
 }
 
@@ -212,7 +222,6 @@
   max-height: 60vh;
   min-height: 25vh;
 }
-
 
 .memo-list-table {
   overflow: auto;
@@ -243,8 +252,9 @@
 
 .memo-files-wrap {
   display: flex;
-  align-items: flex-start;
   max-height: 100px;
+  flex-direction: column;
+  align-items: center;
 }
 
 #btn-memo-add-file {
@@ -261,6 +271,7 @@
   overflow-x: hidden;
   width: 70%;
   margin: auto;
+  margin-top: 1rem;
   text-align: left;
 }
 
@@ -268,7 +279,7 @@
   margin-bottom: 0.5rem;
 }
 
-#memo-content {
+#memo-add-content {
   width: 100%;
   height: 20vh;
   resize: none;
@@ -280,24 +291,23 @@
   justify-content: space-between;
 }
 
-#btn-memo-delete {
+#btn-add-memo-delete {
   margin-right: 0.5rem;
 }
 
-
-#confirm-modal{
+#confirm-modal {
   width: max-content;
 }
-.confirm-body{
+.confirm-body {
   padding: 0px 3rem;
 }
 
-.confirm-body{
+.confirm-body {
   text-align: center;
 }
 
-.confirm-btn-wrap > button{
-  margin: 1rem;  
+.confirm-btn-wrap > button {
+  margin: 1rem;
   margin-bottom: 0px;
   width: 5rem;
 }

@@ -16,4 +16,14 @@ public class Attendance {
 	private int userNo;
 	private Time workOn;
 	private Time workOff;
+	
+	private int type;
+	private String userName;
+	private Time totalWorkTime;
+	private Date date;
+	private int approvalNo;
+	private int status;
+	private Date startDate;				//	START_DATE
+	private Date endDate;
+	private int count;
 }

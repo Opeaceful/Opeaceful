@@ -5,11 +5,13 @@
 <head>
 <meta charset="UTF-8">
 	<title>Opeaceful</title>
-
+	<link rel="stylesheet" href="${path}/resources/css/login.css">
     <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${path}/resources/css/common/common.css">
+    
     <!-- fontawesome라이브러리추가 다양한 아이콘을 지원함.(EX) 검색용 돋보기 버튼) -->
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
     <!-- JavaScript Bundle with Popper -->
@@ -20,8 +22,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 	<!-- css -->
-    <link rel="stylesheet" href="${path}/resources/css/common/common.css">
-    <link rel="stylesheet" href="${path}/resources/css/login.css">
+    
 </head>
 <body>
 	<c:if test="${ not empty alertMsg }">
@@ -31,7 +32,7 @@
 	
 	<!-- 로그인시 세션에 정보있다면 메인페이지로 바로 보냄 -->
    	<c:if test="${!empty loginUser}">
-		<script> location.href = "${path}/main";</script>
+		<script>location.href = "${path}/main";</script>
 	</c:if>
     
     <div class="login-wrap">
@@ -50,12 +51,12 @@
                     <div class="login-input">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-user" style="width: 16px;"></i></span>
-                            <input type="text" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호" value="${cookie.saveId.value}">
+                            <input type="number" class="form-control box-shadow-put" id="eno" name="eno" placeholder="사원번호" required value="${cookie.saveId.value}">
                         </div>
             
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                            <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호" value="1234">
+                            <input type="password" class="form-control box-shadow-put" id="userPwd" name="userPwd" placeholder="비밀번호">
                         </div>
 
 						<c:if test="${!empty cookie.saveId.value}">
@@ -66,8 +67,8 @@
                             <input type="checkbox" class="form-check-input box-shadow-put" id="saveId" name="saveId" ${chk}>
                             <label class="form-check-label" for="saveId">아이디 저장</label>
                         </div>
+
                     </div>
-                    
                     <div class="login-btn">
                         <button type="submit" class="btn btn-primary" id="login-btn">로그인</button>
                     </div>
@@ -75,7 +76,5 @@
             </div>
         </div>
     </div>
-    
-
 </body>
 </html>

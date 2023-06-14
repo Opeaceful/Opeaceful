@@ -15,6 +15,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
+import com.company.opeaceful.approval.model.vo.ApprovalMemo;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 
 //(승은)
@@ -66,7 +67,7 @@ public class ApprovalDao {
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("refType", refType); // 테이블 타입 form , approval, memo, approval-memo
 	    params.put("refNo", refNo); // 참조 문서 no
-	    params.put("usage", usage); // 본문용 content, 첨부용 attachment
+	    params.put("usage", usage); // 본문용 content, 첨부용 attachment, 전체 all
 		
 	    return sqlSession.selectList( "aprMapper.selectFileList", params);
 	}
@@ -90,6 +91,110 @@ public class ApprovalDao {
 		return sqlSession.selectList("aprMapper.selectLineList", map);
 	}
 	
+//	// 결재 문서리스트 조회용(terms -> 유저번호, 연도, 타입, 상태, 페이지번호 들어있음 한페이지당 10개 표시 예정)
+//	public List<Approval> selectApprovalList( Map<String, Integer> terms) {
+//		return sqlSession.selectList("aprMapper.selectApprovalList", terms);
+//	}
+//
+//	// 결재 문서리스트 총개수 반환용(위의 함수와 같은 term을 받아 쓰지만 총개수용이라 페이지는 안쓰임 )
+//	public int selectApprovalCount( Map<String, Integer> terms) {
+//		return sqlSession.selectOne("aprMapper.selectApprovalCount",terms);
+//	}
+	
+	
+	// 개별 결재문서 조회용
+	public Approval selectApproval(int approvalNo) {
+		return sqlSession.selectOne("aprMapper.selectApproval", approvalNo);
+	}
+
+	// 결재문서 리스트 조회(isAdmin값이 false면 내가 기안한용  그외 전체유저조회용)
+	public List<Approval> selectApprovalList(int userNo, Integer status, int type, int year, int page, boolean isAdmin) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("status", status);
+		map.put("type", type);
+		map.put("year", year);
+		map.put("page", (page-1)* 10);
+		map.put("isAdmin", isAdmin);
+		
+		return sqlSession.selectList("aprMapper.selectApprovalList" , map);
+	}
+
+	// 결재문서 리스트 총개수 조회(isAdmin값이 false면 내가 기안한용  그외 전체유저조회용)
+	public int selectApprovalListCount(int userNo, Integer status, int type, int year, boolean isAdmin) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("status", status);
+		map.put("type", type);
+		map.put("year", year);
+		map.put("isAdmin", isAdmin);
+		return sqlSession.selectOne("aprMapper.selectApprovalListCount" , map);
+	}
+
+	// 승인대기/결재 메뉴용 리스트 조회
+	public List<Approval> selectApprovalListforAuthorize(int userNo, String menu, Integer status, int type, int year, int page) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("status", status);
+		map.put("menu", menu);
+		map.put("type", type);
+		map.put("year", year);
+		map.put("page", (page-1)* 10);
+		
+		return sqlSession.selectList("aprMapper.selectApprovalListforAuthorize" , map);
+	}
+
+	// 승인대기/결재 메뉴용 리스트 총개수 조회
+	public int selectApprovalListforAuthorizeCount(int userNo, String menu, Integer status, int type, int year , boolean isNotCheck) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("status", status);
+		map.put("menu", menu);
+		map.put("type", type);
+		map.put("year", year);
+		map.put("isNotCheck", isNotCheck);
+
+		return sqlSession.selectOne( "aprMapper.selectApprovalListforAuthorizeCount" , map);
+	}
+
+	// 참조인용 결재문서 리스트 조회
+	public List<Approval> selectApprovalListforRefer(int userNo, Integer status, int year, int page) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("status", status);
+		map.put("year", year);
+		map.put("page", (page-1)* 10);
+		return sqlSession.selectList("aprMapper.selectApprovalListforRefer" , map);
+	}
+
+	// 참조인용 결재문서 리스트 총개수 조회
+	public int selectApprovalListforReferCount(int userNo, Integer status, int year , boolean isNotCheck) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("status", status);
+		map.put("year", year);
+		map.put("isNotCheck", isNotCheck);
+		
+		return sqlSession.selectOne("aprMapper.selectApprovalListforReferCount" , map);
+	}
+	
+	
+	// 메모 리스트 조회용
+	public List<ApprovalMemo> selectMemoList(int approvalNo) {
+		return sqlSession.selectList("aprMapper.selectMemoList" , approvalNo);
+	}
+
+	// 메모 디테일 조회용
+	public ApprovalMemo selectMemo(int memoNo) {
+		return sqlSession.selectOne("aprMapper.selectMemo" , memoNo);
+	}
+	
+	
+	// 서명 이미지 조회용
+	public String selectSignImg(int userNo) {
+		return sqlSession.selectOne("aprMapper.selectSignImg" , userNo);
+	}
+	
 //	-------------------------------- insert 구간 ----------------------------------------
 	
 	// 폼 등록
@@ -107,13 +212,19 @@ public class ApprovalDao {
 		int result = sqlSession.insert("aprMapper.insertApproval", approval);
 		
 		if (result > 0) {
+			int approvalNo = approval.getApprovalNo();
 			Map<String, Object> params = new HashMap<>();
-			params.put("approvalNo", approval.getApprovalNo());
+			params.put("approvalNo", approvalNo);
 			params.put("lines", lines);
 
 			result = sqlSession.insert("aprMapper.insertApprovalLine", params);
+			
+			if(result > 0 ) {
+				// 만약 라인들 저장도 성공하면 리턴값에 현재 등록된 결재문서 no 값 넣어 반환
+				result = approvalNo;
+			}
 		}
-
+		
 	    return result;
 	}
 	
@@ -142,6 +253,26 @@ public class ApprovalDao {
 	    return result;
 	}
 	
+	// 메모 추가
+	public int insertMemo(ApprovalMemo memo, List<ApprovalFile> fileList) {
+		int result = sqlSession.insert("aprMapper.insertMemo", memo);
+		if (result > 0 ) {
+			result = memo.getMemoNo();
+		}
+		
+	    return result;
+	}
+
+	
+	// 서명 이미지 추가용
+	public int insertSignImg(int userNo, String changeName) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("userNo", userNo);
+	    params.put("changeName", changeName);
+		
+		return sqlSession.insert("aprMapper.insertSignImg" , params);
+	}
+	
 //	-------------------------------- update 구간 ----------------------------------------
 	
 	// 폼 업데이트
@@ -163,6 +294,50 @@ public class ApprovalDao {
 	    }
 	    return result;
 	};
+	
+	// 결재문서 완결처리
+	public int updateApprovalStateEnd(Approval approval) {
+		int result = sqlSession.update("aprMapper.updateApprovalStateEnd", approval);
+		
+	    return result;
+	};
+	
+	
+	// 결재문서 상태값 업데이트
+	public int updateApprovalStatus(int approvalNo, int status) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("status", status);
+		
+	    return sqlSession.update("aprMapper.updateApprovalStatus",params);
+	}
+	
+	
+	// 결재라인 상태값 읽음으로 업데이트
+	public int updateApprovalLineReadStatus(int approvalNo, int userNo) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("approvalNo", approvalNo);
+	    params.put("userNo", userNo);
+		
+	    return sqlSession.update("aprMapper.updateApprovalLineReadStatus",params);
+	}
+	
+	
+	
+	// 메모 업데이트
+	public int updateMemo(ApprovalMemo memo) {
+		return sqlSession.update("aprMapper.updateMemo",memo);
+	}
+	
+	
+	// 서명 이미지 업데이트
+	public int updateSignImg(int userNo, String changeName) {
+		Map<String, Object> params = new HashMap<>();
+	    params.put("userNo", userNo);
+	    params.put("changeName", changeName);
+		
+		return sqlSession.update("aprMapper.updateSignImg" , params);
+	}
 	
 //	-------------------------------- delete 구간 ----------------------------------------
 
@@ -187,10 +362,9 @@ public class ApprovalDao {
 	};
 	
 	
-	// 결재문서 + 실제 저장된 파일들 삭제
+	//  결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
 	public int deleteApproval(int approvalNo,  String deleteFolderPath) {
 		
-		// todo! 나중에 결재문서 다시 조회해 와서 만약 결재라인 이미지 값 있으면 그것도 삭제해야함
 		int result = sqlSession.delete("aprMapper.deleteApproval", approvalNo);
 		if (result > 0) {
 			List<ApprovalFile> fileList = selectFileList("approval-memo", approvalNo, "all");
@@ -227,7 +401,12 @@ public class ApprovalDao {
 	public int deleteApprovalLine(int approvalNo) {
 		return sqlSession.delete("aprMapper.deleteApprovalLine", approvalNo);
 	}
+	
 
+	// 메모 삭제
+	public int deleteMemo(int memoNo) {
+		return sqlSession.delete("aprMapper.deleteMemo", memoNo);
+	}
 
 
 

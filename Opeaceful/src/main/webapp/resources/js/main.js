@@ -126,8 +126,7 @@ $(function(){
 /* --------------------------- 공지사항 제목부분 클릭시 공지사항 페이지로 --------------------------- */
 $("#main-notice-title").on("click", function(){
     location.href = path+"/board/list/N";
-})
-
+});
 
 /* --------------------------- 출근 등록 --------------------------- */
 $("#main-on").click(function(){
@@ -142,13 +141,9 @@ $("#main-on").click(function(){
                 url : path+"/attendance/workOn",
                 dataType : "json",
                 success : function(result) {
-                    if(result > 0){
-                        location.reload();
-                    }
+                    if(result > 0){ location.reload(); }
                 },
-                error : function(e) {
-                    swal("error");
-                }
+                error : function(e) { swal("error"); }
             })
         }
     })
@@ -167,71 +162,48 @@ $("#main-off").click(function(){
                 url : path+"/attendance/workOff",
                 dataType : "json",
                 success : function(result) {
-                    if(result > 0){
-                        location.reload();
-                    }
+                    if(result > 0){ location.reload(); }
                 },
-                error : function(e) {
-                    swal("error");
-                }
+                error : function(e) { swal("error");}
             })
         }
     })
 });
 
-
-
-// input radio로 작업
-// $("#main-on").change(function(){
-//     swal(hur +":"+ min,"출근 처리 하시겠습니까?",{
-//         buttons: {confirm: "확인", cancel: "취소"}
-//     })
-//     .then(function(isConfirm){
-//         if(isConfirm){
-//             $.ajax({
-//                 type : "POST",
-//                 // url : "",
-//                 url : path+"/attendance/workOn",
-//                 dataType : "json",
-//                 success : function(result) {
-//                     swal("성공", "작업을 정상적으로 완료하였습니다.");
-//                     console.log(result);
-//                 },
-//                 error : function(e) {
-//                     swal("작업수행에 실패하였습니다.");
-//                 }
-//             })
-//         }
-//     })
-// });
-
-
+// 캘린더
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarM = document.getElementById('calendarM');
+    function fullCalendar(){
+        /* 전체 캘린더 */
+        var request = $.ajax({
+            type:"POST",
+            url: path+"/calendar/calendarForm/F",
+            dataType: "json"
+        });
+      
+        request.done(function(data){
+            console.log(data);
+      
+            var calendar = new FullCalendar.Calendar(calendarM, {
+                plugins: [ 'interaction', 'dayGrid' ],
+                header: {
+                    left: 'none',
+                    center: 'prevYear,prev,title,next,nextYear',
+                    right: 'none'
+                },
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: data
+            });
+            calendar.render();
+        })
+      
+        request.fail(function() {
+            alert( "Request failed");
+        });
+    }
+    
+    fullCalendar();
+});
 // 시간표시 함수 실행
 getTime();
-
-function weather(){
-    $.ajax({
-        url : "/api/weather",
-        type: "get",
-        timeout : 30000,
-        contentType : "application/json",
-        dataType : "json",
-        success : function(data, status, xhr){
-            let dataHeader = data.result.response.header.resultCode;
-
-            if(dataHeader == '00'){
-                console.log("success ==> ");
-                console.log(data);
-            }else{
-                console.log("fail ==> ");
-                console.log(data);
-                
-            }
-        },
-        error : function(e, status, xhr, data){
-            console.log("error ==> ");
-            console.log(e);
-        }
-    })
-}
-weather();

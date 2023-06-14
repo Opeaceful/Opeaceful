@@ -91,7 +91,7 @@
 	</insert>
 	
 	<!-- [지영] 2.dept insert -->
-	<insert id="insertUserDept" parameterType="userDepatment" useGeneratedKeys="true">
+	<insert id="insertUserDept" parameterType="userDepartment" useGeneratedKeys="true">
 		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
 	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
 	 	</selectKey>
@@ -198,6 +198,21 @@
 		</foreach>
 		
 	 </select> 
+	 
+	 <!--[지영] check 박스로 조회된 인원만 select : salray용-->
+	 <select id="checkMemberNoSelectSalary"  resultMap="AllmemberVIewResultSet" >
+	 	SELECT  USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+		FROM member
+		left JOIN user_department USING(USER_NO)
+	    left JOIN department USING(DEPT_CODE)
+	    left JOIN position USING(P_CODE)
+		WHERE USER_NO IN 
+		<foreach item="userNo" collection="array"
+		       separator="," open="(" close=")">
+		       #{userNo}
+		</foreach>
+		
+	 </select> 
 
 	<!-- [지의] 로그인유저 -->
 	<select id="loginMember" parameterType="member" resultMap="AllmemberResultSet">
@@ -207,8 +222,16 @@
 	    LEFT JOIN department USING(DEPT_CODE)
 	    LEFT JOIN position USING(P_CODE)
 		 WHERE ENO = #{eno}
-		   AND STATUS = 'Y'
+		   AND STATUS = 'Y';
 	</select>
+	
+	<!-- [지의] 탈퇴회원 조회 -->
+	<select id="selectLoginStatus" resultType="string">
+		SELECT STATUS
+		  FROM MEMBER
+		 WHERE ENO = #{eno};
+	</select>
+
 	
 	<!-- [지의] 유저 연차 조회 -->
 	<select id="selectUserAnnaul" resultMap="UserAnnaulResultSet" parameterType="_int">
@@ -232,6 +255,23 @@
         AND STATUS = 'Y';
 	</select>
 	
+	<!-- [지의] member 연차갯수 조회 -->
+	<select id="selectAnnualMembers" resultType="member">
+		SELECT USER_NO, ANNUAL_LEAVE_COUNT, ANNUAL_UNIT
+		  FROM MEMBER m
+		  JOIN annual A
+		 WHERE YEAR(now()) - YEAR(HIRE_DATE) = A.YEAR;
+	</select>
+	
+	<!-- [지의] member 연차갯수 조회 -->
+	<select id="selectAnnualMembers" resultType="member">
+		SELECT USER_NO, ANNUAL_LEAVE_COUNT, ANNUAL_UNIT
+		  FROM MEMBER m
+		  JOIN annual A
+		 WHERE YEAR(now()) - YEAR(HIRE_DATE) = A.YEAR;
+	</select>
+	
+	<!-- [진기]-->
 	<select id="adminAll" resultMap="AllmemberResultSet">
 	 	SELECT *
 	 	FROM MEMBER
@@ -314,7 +354,14 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 
-
+	<!-- [지의] 매년 1월 1일 연차 리셋 -->
+	<update id="updateAnnualMembers" parameterType="java.util.List">
+		<foreach collection="list" item="member" separator=";">
+		UPDATE MEMBER
+		SET ANNUAL_LEAVE_COUNT = #{member.annualUnit}
+		WHERE USER_NO = #{member.userNo}
+		</foreach>
+	</update>
 
 
 

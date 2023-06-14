@@ -18,7 +18,8 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    
+    <!-- tiny editor -->
+    <script src="https://cdn.tiny.cloud/1/4u88c1x1vlsys5jtx9tpp86cmfiahnx5rgsxendvyyqg2464/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- css-->
     <link rel="stylesheet" href="${path}/resources/css/common/common.css">
 	<link rel="stylesheet" href="${path}/resources/css/board/boardEnroll.css">
@@ -103,7 +104,10 @@
                     <tr>
                         <th>내용</th>
                         <td colspan="2" class="enroll-cnt">
-                            <div><textarea style="resize:none;" rows ="10" class="form-control" name="boardContent" required="required">${b.boardContent }</textarea></div>
+                            <div>
+                            <!-- <textarea class="tinymce" id="form-tiny" name="boardContent" maxlength="3000" required="required">${b.boardContent }</textarea> -->
+                            <textarea  name="boardContent" maxlength="3000" required="required">${b.boardContent }</textarea>
+                            </div>
                         </td>
                     </tr>
                     <!-- 첨부파일 영역 -->
@@ -111,7 +115,7 @@
                         <th><i class="fa-solid fa-paperclip"></i></th>
                         <td colspan="2" class="atc-box">
                             <div class="mb-0">
-                                <input name="atcFile" class="box-shadow-none form-control" type="file" id="formFileMultiple" multiple>
+                                <input name="upFile" class="box-shadow-none form-control" type="file" id="formFileMultiple" multiple>
                             </div>
                         </td>
                     </tr>
@@ -158,8 +162,11 @@
                 
             </div>
             
+            <input type="hidden" name="img" value=""/>
             <input type="hidden" name="mode" value="${param.mode}"/>
 			<input type="hidden" name="boardNo" value="${empty b.boardNo ? 0 : b.boardNo}" />
+            
+            
             
             <!-- submit 버튼 영역 -->
             <div class="board-wrap3">
@@ -182,11 +189,38 @@
     	location.href="${path}/board/list/${boardCode}";
     });
     
+	/* 첨뷰파일 리스트 뷰어용 */
+    $(document).ready( function() {
+    	 
+        $("input[type=file]").change(function () {
+            
+            var fileInput = document.getElementById("formFileMultiple");
+            
+            var files = fileInput.files;
+            var file;
+            
+            for (var i = 0; i < files.length; i++) {
+                
+                file = files[i];
+ 
+                console.log(file.name);
+            }
+            
+        });
+ 
+    });
+	
+	
+	
+	
+	
 	
 	
 	
 	</script>
 
+	<script type="module" src="${path}/resources/js/board/boardEnrollForm.js"></script>
+	
 
 </body>
 </html>

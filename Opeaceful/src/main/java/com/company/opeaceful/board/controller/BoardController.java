@@ -1,5 +1,6 @@
 package com.company.opeaceful.board.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.board.model.vo.Board;
+import com.company.opeaceful.board.model.vo.BoardFile;
+import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.member.model.vo.Member;
 
@@ -36,6 +43,7 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@GetMapping("/list")
 	public String settingAnnaul(){
@@ -80,7 +88,7 @@ public class BoardController {
 							  @PathVariable("boardNo") int boardNo,
 							  @RequestParam(value = "cpage", required = false, defaultValue = "1") int currentPage,
 							  Model model,
-							  @ModelAttribute ("map") Map<String, Object> map,
+							  @ModelAttribute (value = "map") Map<String, Object> map,
 							  HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		
 		map.put("boardCode", boardCode);
@@ -95,6 +103,10 @@ public class BoardController {
 		map.put("boardNo", boardNo);
 		
 		Board detail = boardService.selectBoardDetail(map);
+		
+		List<BoardFile> file = boardService.selectUpFileList(boardNo);
+		System.out.println("file담긴 값 : " + file);
+		model.addAttribute("file", file);
 		
 		System.out.println("detail담긴ㄱ값 : " + detail);
 		
@@ -202,6 +214,7 @@ public class BoardController {
 		map.put("boardNo", bno);
 		
 		if(mode.equals("update")) {
+			//수정하기 페이지 요청
 			Board b = boardService.selectBoardDetail(map);
 			model.addAttribute("b",b);
 		}
@@ -217,7 +230,19 @@ public class BoardController {
 								int boardNo,
 							  @ModelAttribute ("loginUser") Member loginUser,
 							  @ModelAttribute ("map") Map<String, Object> map,
-							  @RequestParam(value="mode" , required = false, defaultValue = "insert") String mode) {
+							  @RequestParam(value="mode" , required = false, defaultValue = "insert") String mode,
+							  @RequestParam(value="upFile" , required = false) MultipartFile[] upFileList,
+							  @RequestParam(value="deleteList", required=false) String deleteList) {
+		
+		logger.info("zzzz");
+		
+		String boardContent = b.getBoardContent();
+		
+		List<BoardFile> fileList = new ArrayList<>();
+		
+		// 파일 저장 경로
+		String webPath = "/resources/file/board/";
+		String serverFolderPath = session.getServletContext().getRealPath(webPath);
 		
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
@@ -246,37 +271,110 @@ public class BoardController {
 		
 		if(mode.equals("insert")) {
 			//게시글 등록
+			try {
+				System.out.println("upFileList: " + upFileList);
+				System.out.println("upFileList.toString(): "+upFileList.toString());
 				
-				result = boardService.insertBoard(b);
-				System.out.println("인서트 실행 후 리절틈 담김/??"+result);
+				if(!upFileList.toString().isEmpty()) {
+					System.out.println("if문 안 =-upFileList: " + upFileList);
+					
+					for(int i=0; i< upFileList.length; i++) {
+						String src = "src=\""+i+"\"";
+						String changeFile;
+						String originFile;
+						System.out.println("for문 안 =-upFileList: " + upFileList);
+						try {
+							
+							originFile = upFileList[i].getOriginalFilename();
+							
+							changeFile = FileRenamePolicy.saveFile( upFileList[i] , serverFolderPath);
+							//boardContent= boardContent.replace(src,"src=\""+changeName+"\"");
+							//System.out.println(boardContent);
+							
+							fileList.add(new BoardFile(originFile, changeFile)); // fileList에 첨부파일 담김
+						} catch (IllegalStateException | IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				System.out.println("첨부파일 담긴 리스트 : "+ fileList);
+				
+				System.out.println("====게시글 등록====");
+				result = boardService.insertBoard(b, fileList);
+				System.out.println("컨트롤러 인서트 실행 후 리절틈 담김 보드넘버임??"+result);
 				System.out.println("등록 후 Board b 에 담긴 값 : "+ b);
 				
-				if(result > 0) {
-					session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
-					return "redirect:/board/list/{boardCode}";
-					
-				}else {
-					System.out.println("게시글 작성 실패");
-					return "board/boardEnrollForm";
-				}
+			}catch(Exception e) {
+				System.out.println("insert메서드 에러");
+			}
+			
+			if(result > 0) {
+				session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+				return "redirect:/board/list/{boardCode}";
+				
+			}else {
+				System.out.println("게시글 작성 실패");
+				return "board/boardEnrollForm";
+			}
 			
 			
 		}else {
 			//게시글 수정 (b객체 안에 boardNo 존재)
-			
-				result = boardService.updateBoard(b);
+			try {
+				System.out.println("====게시글 수정====");
+				
+
+				System.out.println("첨부파일리스트담김? : "+upFileList);
+				
+				
+				
+				if(upFileList.toString().isEmpty()) {
+					
+					System.out.println("수정할 보드넘버 값 : " + b.getBoardNo());
+					
+					//int dltResult = boardService.deleteUpfile(b.getBoardNo());
+					
+					//System.out.println("해당게시글 첨부파일 지우기 성공? (1/0) :"+dltResult);
+					
+					for(int i=0; i< upFileList.length; i++) {
+						String src = "src=\""+i+"\"";
+						String changeFile;
+						String originFile;
+						
+						try {
+							originFile = upFileList[i].getOriginalFilename();
+							
+							changeFile = FileRenamePolicy.saveFile( upFileList[i] , serverFolderPath);
+							//boardContent= boardContent.replace(src,"src=\""+changeName+"\"");
+							//System.out.println(boardContent);
+							
+							fileList.add(new BoardFile(originFile, changeFile)); // fileList에 첨부파일 담김
+						} catch (IllegalStateException | IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				System.out.println("첨부파일 담긴 리스트 : "+ fileList);
+				
+				
+				result = boardService.updateBoard(b, fileList);
 				System.out.println("업데이트 실행 후 리절틈 담김/??"+result);
 				System.out.println("수정 후 Board b 에 담긴 값 : "+ b);
 				
-				boardNo = b.getBoardNo();
-				model.addAttribute("boardNo",boardNo);
-				if(result > 0) {
-					session.setAttribute("alertMsg", "게시글이 수정되었습니다.");
-					return "redirect:/board/detail/{boardCode}/{boardNo}";
-				}else {
-					System.out.println("게시글 작성 실패");
-					return "board/boardEnrollForm";
-				}
+			}catch(Exception e) {
+				System.out.println("update메서드 에러");
+			}
+			
+			boardNo = b.getBoardNo();
+			model.addAttribute("boardNo",boardNo);
+			
+			if(result > 0) {
+				session.setAttribute("alertMsg", "게시글이 수정되었습니다.");
+				return "redirect:/board/detail/{boardCode}/{boardNo}";
+			}else {
+				System.out.println("게시글 작성 실패");
+				return "board/boardEnrollForm";
+			}
 			
 			
 		}

@@ -2,14 +2,26 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="salaryMapper">
 
+	
+
+	<!-- =================== [insert] =================== -->
+	<insert id="insertSalary" parameterType="java.util.List">
+			INSERT INTO salary (USER_NO, YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,
+	         TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
+	          VALUES
+	    <foreach item="s" collection="list" separator=",">
+	       (#{s.userNo}, #{s.yearReported}, #{s.monReported},#{s.sPaymentDate},IFNULL(#{s.totalGrosspay},''),IFNULL(#{s.totalDeductions},''),IFNULL(#{s.netPay},''),IFNULL(#{s.payments},''),IFNULL(#{s.deduction},''),#{s.pName},#{s.deptName})
+	    </foreach>
+	</insert>
+
 	<!-- =================== [select] =================== -->
 	
 	<!-- [지영] 로그인 유저 급여조회 -->
 	<select id="employeeSalary"  resultType="salary" parameterType="hashMap">
 		SELECT SALARY_NO,YEAR_REPORTED,MON_REPORTED,
-		 PAYMENT_DATE,FORMAT(TOTAL_GROSSPAY,0) AS TOTAL_GROSSPAY,
-		 FORMAT(TOTAL_DEDUCTIONS,0) AS TOTAL_DEDUCTIONS,
-		 FORMAT(NET_PAY,0) AS NET_PAY
+		 PAYMENT_DATE,TOTAL_GROSSPAY,
+		 TOTAL_DEDUCTIONS,
+		 NET_PAY
 		FROM salary
 		WHERE USER_NO = #{userNo}
 		<if test='year != null '>
@@ -21,12 +33,12 @@
 		ORDER BY PAYMENT_DATE DESC, SALARY_NO DESC LIMIT 12;
 	</select>
   
-  	<!-- [지영] 모달 ajax -->
+  	<!-- [지영] 모달 ajax  FORMAT(TOTAL_DEDUCTIONS,0)-->
   	<select id="salaryOne" resultType="salary" parameterType="_int">
   		SELECT SALARY_NO,YEAR_REPORTED,MON_REPORTED,
-		 PAYMENT_DATE,FORMAT(TOTAL_GROSSPAY,0) AS TOTAL_GROSSPAY,
-		 FORMAT(TOTAL_DEDUCTIONS,0) AS TOTAL_DEDUCTIONS,
-		 FORMAT(NET_PAY,0) AS NET_PAY,
+		 DATE_FORMAT(PAYMENT_DATE, '%Y-%m-%d') S_PAYMENT_DATE,TOTAL_GROSSPAY,
+		 TOTAL_DEDUCTIONS,
+		 NET_PAY,P_NAME,DEPT_NAME,
 		 PAYMENTS,
 		 DEDUCTION
 		FROM salary
@@ -36,9 +48,9 @@
   	<!-- [지영] 모든유저 급여조회 -->
  	<select id="employeeAllSalary"  resultType="salary" parameterType="hashMap">
 		SELECT SALARY_NO,YEAR_REPORTED,MON_REPORTED,
-		 PAYMENT_DATE,FORMAT(TOTAL_GROSSPAY,0) AS TOTAL_GROSSPAY,
-		 FORMAT(TOTAL_DEDUCTIONS,0) AS TOTAL_DEDUCTIONS,
-		 FORMAT(NET_PAY,0) AS NET_PAY,ENO,USER_NAME
+		 PAYMENT_DATE,TOTAL_GROSSPAY,
+		 TOTAL_DEDUCTIONS,
+		 NET_PAY,ENO,USER_NAME
 		FROM salary
 		left JOIN member USING(USER_NO)
 		<where>
@@ -51,10 +63,75 @@
 		    <if test='team != "부서명" and team != null'>
 		      AND DEPT_NAME = #{team}
 		    </if>
+		    <if test='no != null'>
+		     	AND USER_NO IN 
+				<foreach item="uno" collection="no"
+				       separator="," open="(" close=")">
+				       #{uno}
+				</foreach>
+		    </if>
 		 </where>
-		ORDER BY PAYMENT_DATE DESC, SALARY_NO DESC;
+		ORDER BY PAYMENT_DATE DESC, SALARY_NO DESC 
 	</select>
-  
+	
+	<!-- count 용 -->
+	<select id="employeeAllSalaryCount" resultType="_int" parameterType="hashMap">
+		SELECT COUNT(*)
+		FROM salary
+		<where>
+			<if test='year != null'>
+		      YEAR_REPORTED = #{year}
+		    </if>
+		    <if test='month != 13 and month != null'>
+		      AND MON_REPORTED = #{month}
+		    </if>
+		    <if test='team != "부서명" and team != null'>
+		      AND DEPT_NAME = #{team}
+		    </if>
+		    <if test='no != null'>
+		     	AND USER_NO IN 
+				<foreach item="uno" collection="no"
+				       separator="," open="(" close=")">
+				       #{uno}
+				</foreach>
+		    </if>
+	 	</where>
+	</select> 
+	
+  	<!-- [지영] 모든유저 급여조회 -->
+ 	<select id="salaryList" resultType="String">
+		SELECT DISTINCT DEPT_NAME
+	  	FROM salary
+  	</select>
   	
+  	<select id="selectUserCope" resultType="salary" parameterType="hashMap">
+  		SELECT * FROM salary 
+		where USER_NO = #{no}
+		AND YEAR_REPORTED = #{year}
+		AND MON_REPORTED = (#{month}-1)
+		ORDER BY PAYMENT_DATE DESC LIMIT 1;
+  	</select>
+  	
+  	
+  	<!-- =================== [update] =================== -->
+  	<!-- [지영] 모든유저 급여업데이트 -->
+  	<update id="salaryUpdate" parameterType="salary">
+		UPDATE SALARY
+		   SET NET_PAY = #{netPay},
+			   PAYMENTS = #{payments},
+			   DEDUCTION = #{deduction},
+			   TOTAL_GROSSPAY = #{totalGrosspay},
+			   TOTAL_DEDUCTIONS = #{totalDeductions}
+			  
+		 WHERE SALARY_NO = #{salaryNo}
+	</update>
+
+
+  	<!-- =================== [delete] =================== -->
+  	<!-- [지영] 모든유저 급여삭제 -->
+  	<delete id="salaryDelete">
+  		DELETE FROM salary 
+		WHERE SALARY_NO = #{num}	
+  	</delete>
   
 </mapper>
