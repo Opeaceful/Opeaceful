@@ -202,6 +202,11 @@
     min-height: 3.5em;
 }
 
+#calender-box .fc-unthemed td.fc-today{
+    background: var(--fc-today-tobay);
+ 
+}
+
 /* ---------- 날씨 ---------- */
 .weather .row{
     margin-left: 0;
@@ -249,3 +254,4 @@
     text-decoration: none;
     font-size: var(--font14);
 }
+

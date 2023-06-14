@@ -1,10 +1,10 @@
 /* 모든 페이지의 공통 스타일만 작성 */
 
 /* 기본 배경화면은 white */
-body{
+/* body{
     font-family: fontello, 'Nanum Gothic', sans-serif, Arial;
-    background-color: white;
-}
+    background-color:  var(--color-background);
+} */
 *{
     box-sizing: border-box;
 }

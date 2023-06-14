@@ -100,3 +100,9 @@ to {
     opacity: 0;
 }
 }
+
+/*다크모드 input 박스*/
+.mypage-input[color-theme='dark']{
+    background: var(--color-background);
+    color: var(--font-black);
+}

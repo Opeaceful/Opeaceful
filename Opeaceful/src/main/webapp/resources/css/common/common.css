@@ -14,14 +14,69 @@
     --white-hover: rgba(3, 3, 62, 0.09);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
-    /* 기본 배경색상 */
+
     --color-background : white;
     --color-background-bk : rgb(30, 30, 30);
     
     --font-white : white;
     --font-black : rgb(30, 30, 30);
+
+    --color-white:white;
+    --color-black:black;
+    
+    --accordion-color:white
+    
+    --fc-today-tobay:#fcf8e3;
+  
+
+    --font10 : 0.31rem;
+    --font11 : 0.69rem;
+    --font12 : 0.75rem;
+    --font13 : 0.81rem;
+    --font14 : 0.875rem;
+    --font15 : 0.937rem;
+    --font18 : 1.125rem;
+    --font20 : 1.25rem;
+    --font21 : 1.375rem;
+    --font22 : 1.75rem;
+
+
+    --color-scroll-start : rgb(42, 42, 90);
+    --color-scroll-end :  rgb(66, 66, 156);
+}
+
+/* 다크모드 */
+
+:root[color-theme='dark']{
+    --side-bar : 60px;
+    --color-navy : #ffc107;
+    --color-gold : rgb(3, 3, 62);
+    --navy-hover:#ffc107c4;
+    --gold-hover : :rgba(3, 3, 62, 0.77);
+
+    --white-hover: rgba(3, 3, 62, 0.09);
+    --color-light-gray : rgb(235, 235, 235);
+    --color-light-navy:rgba(3, 3, 97, 0.06);
+
+    /* 기본 배경색상 */
+    --color-background : rgb(30, 30, 30);
+    --color-background-bk : white;
+    
+    
+    --font-white : rgb(30, 30, 30);
+    --font-black : white;
+    
+    --color-white:black;
+    --color-black:white;
+    
+    --fix-black:black;
+    --fix-white:white;
     
     --color-serch-box:#ced4da;
+
+    --accordion-color:white;
+
+    --fc-today-tobay: black;
 
     /*폰트사이즈 뺴놓음*/
     --font10 : 0.31rem;
@@ -35,12 +90,33 @@
     --font21 : 1.375rem;
     --font22 : 1.75rem;
 
-
-
     /* 스크롤바 컬러 그라데이션용 */
     --color-scroll-start : rgb(42, 42, 90);
     --color-scroll-end :  rgb(66, 66, 156);
 }
+
+
+/*다크모드 추가용 css*/
+.modal[data-theme='dark']{
+    color: var(--fix-black);
+}
+.table[color-theme='dark']{
+    --bs-table-color: var(--font-black);
+    --bs-table-hover-color: var(--font-black);
+}
+.input[color-theme='dark']{
+    color: var(--font-black);
+}
+
+.modal-content {
+    background-color: var(--color-background);
+}
+
+/* .table {
+    --bs-table-color: var(--font-black);
+} */
+
+
 
 .content-wrap{
     width: calc(100vw - var(--side-bar));
@@ -60,6 +136,7 @@ body{
     background-color: var(--color-background);
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
+    color: var(--font-black);
 }
 
 .btn-primary{
@@ -113,6 +190,7 @@ body{
 }
 .table-common>tbody>tr{
     font-size: var(--font14);
+    font: var(--font-black);
 }
 .table-common>tbody>tr:hover{
     background-color:var(--white-hover);
@@ -123,15 +201,15 @@ body{
 /* ex) <div class="accordion-item accordion-item-common"> 해당 클래스 옆에 클래스-common 추가한 것임!! */
 .accordion-item-common{
     border: none;
-    border-color: white;
-    background-color: white;
+    border-color: var(--color-white);
+    background-color:  var(--color-white);
 }
 
 .accordion-button-common:not(.collapsed) {
     border: none;
-    border-color: white;
-    background-color: white;
-    color: black;
+    border-color:  var(--color-white);
+    background-color: var(--color-white);
+    color: var(--accordion-color);
 }
 .accordion-button-common:focus {
     box-shadow: none;
@@ -202,7 +280,7 @@ body{
 
 }
 .page-link:focus {
-    color: white;
+    color: var(--color-white);
     background-color: var(--color-navy);
     box-shadow: none;
 }
@@ -351,3 +429,8 @@ input::-webkit-search-cancel-button{
 .modal-backdrop:nth-last-child(n+2){
     background-color: unset;
 }
+
+
+
+
+

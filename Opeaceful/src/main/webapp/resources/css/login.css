@@ -47,3 +47,8 @@
 .login-form #eno,.login-form #userPwd{background: var(--color-background);}
 /* 아이디 저장 폰트 */
 .form-check-label{color: var(--font-black);}
+
+.login-form #eno,.login-form #userPwd[data-theme='dark']{
+    color: var(--fix-white); 
+}
+

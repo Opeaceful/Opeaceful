@@ -3,6 +3,10 @@
 import {path} from './common/common.js';
 let lat = 37.4923615; // 위도
 let lon = 127.0292881; // 경도
+
+//다크모드변수
+let colorMode = window.localStorage.getItem('color-theme');
+
 /* 현재 위치 확인 함수 */
 function getLocation() {
     if (navigator.geolocation) { // GPS를 지원하면
@@ -101,7 +105,15 @@ $(document).ready(function() {
 
                 var $weekDiv = $('<div>').addClass('week col');
                 var $weekDayDiv = $('<div>').addClass('weekDay').text($day);
-                var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
+
+                if(colorMode == 'dark'){
+                  var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/dark/' + weatherIcon[$icon] + '.png">');
+                }else{
+                  var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
+                }
+               
+               
+                console.log(colorMode);
                 var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
 
                 $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);

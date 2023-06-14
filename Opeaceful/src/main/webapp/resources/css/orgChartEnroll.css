@@ -96,7 +96,7 @@ input:focus{
     cursor: pointer;
 }
 .dropdown-toggle{
-    background-color: white;
+    background-color:  var(--color-white);
     color: black;
     font-size: 11px;
     border: none;
