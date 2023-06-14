@@ -18,6 +18,7 @@
   cursor: pointer;
 
   color: var(--color-navy);
+  background-color: var(--color-background);
   font-weight: 600;
 
   vertical-align: middle;
@@ -106,6 +107,7 @@ th:nth-child(3) {
 
 #add-form-modal select {
   cursor: pointer;
+  background-color: white;
 }
 
 #add-form-modal button {
@@ -135,7 +137,7 @@ th:nth-child(3) {
 .custom-modal {
   margin: auto;
   width: 70%;
-  background-color: var(--bs-modal-bg);
+  background-color: var(--color-background);
   background-clip: padding-box;
   border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
   border-radius: var(--bs-modal-border-radius);

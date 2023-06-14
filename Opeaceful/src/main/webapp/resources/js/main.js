@@ -111,6 +111,22 @@ for (var i = 0; i < ModeList.length; i++) {
     mode.addEventListener("click", onClickModeOption);
 }
 
+/*다크모드, 화이트모드 변경 */
+$("#white-icon").on("click", function(){
+    localStorage.setItem('color-theme', 'light');
+    // 페이지 새로고침 : 아이콘 색바꿔야해서 새로고침
+    console.log("화이트 들어와?")
+    location.reload();
+   
+});
+$("#black-icon").on("click", function(){
+    localStorage.setItem('color-theme', 'dark');
+    console.log("들어와?")
+    // 페이지 새로고침 : 아이콘 색바꿔야해서 새로고침
+    location.reload();
+});
+
+
 /* --------------------------- 입사날짜 구하기 --------------------------- */
 $(function(){
     // mainHireDate : main.jsp에서 입사날짜 빼옴

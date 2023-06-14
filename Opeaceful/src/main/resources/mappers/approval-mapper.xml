@@ -561,6 +561,14 @@
 	</select>
 	
 	
+	<!-- [지영] 삭제멤버 approval 조회 -->
+	<select id="resignedmemberApprovalList" resultType="_int">
+		SELECT APPROVAL_NO
+		FROM APPROVAL
+		WHERE USER_NO = #{uesrNo} AND
+		STATUS != 1
+	</select>
+	
 <!-- =============================== insert 구간  =========================================== -->
 	
 	<!-- 폼 등록 / 등록하면서 formNo반환 -->

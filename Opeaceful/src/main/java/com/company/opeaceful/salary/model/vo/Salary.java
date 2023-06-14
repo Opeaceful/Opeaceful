@@ -19,11 +19,11 @@ public class Salary {
 	private String deduction;
 	private String pName;
 	private String deptName;
-
+	private String userName;
+	
 	
 	//관리용
 	private int eno;
-	private String userName;
 	private String sPaymentDate;
 
 }
