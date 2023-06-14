@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		int listCount = boardDao.selectBoardListCount(map);
 		int pageLimit = 10;
-		int settingLimit = 14;
+		int settingLimit = 12;
 		PageInfo pi = pagination.getPageInfo(listCount, (int)(map.get("currentPage")), pageLimit, settingLimit);
 		
 		ArrayList<Board> list = (ArrayList) boardDao.selectBoardList(pi, map);
@@ -57,7 +57,7 @@ public class BoardServiceImpl implements BoardService {
 	public void selectSearchBoardList(Map<String, Object> map){
 		int listCount = boardDao.searchBoardListCount(map);
 		int pageLimit = 10;
-		int settingLimit = 14;
+		int settingLimit = 12;
 		PageInfo pi = pagination.getPageInfo(listCount, (int)(map.get("currentPage")), pageLimit, settingLimit);
 		
 		ArrayList<Board> list= boardDao.selectSearchBoardList(pi, map);

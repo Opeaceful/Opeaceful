@@ -31,6 +31,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.approval.model.vo.ApprovalMemo;
+import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.member.model.vo.Member;
 import com.google.gson.Gson;
@@ -666,6 +667,19 @@ public class ApprovalController {
 		
 		if(approval != null && approval.getApprovalNo() != 0 ) {
 			result = aprService.updateApprovalStateEnd(approval);
+			
+			/* [혜린] - 연차 insert 시 캘린더 내 연차일정 추가 */
+			//approval인지 existApproval인지 확인하기!
+			Calendar calendar = new Calendar();
+			calendar.setCategory("H");
+			calendar.setUserNo(approval.getUserNo());
+			calendar.setTitle("");
+			calendar.setStartDate("");
+			calendar.setEndDate("");
+			calendar.setColor("var(--col9)");
+			calendar.setDDay("N");
+			
+			
 		}
 		
 		return result;
