@@ -5,7 +5,9 @@ let memoEvent = () => {
     .getElementById('btn-memo-modal-close')
     .addEventListener('click', () => {
       // 메모 모달 감추기
-      document.getElementById('memo-modal-back').style.display = 'none';
+
+      $("#memo-modal-back").modal("hide");
+
     });
 
   // 작성버튼 클릭시 메모 추가 화면 리셋 후 열기

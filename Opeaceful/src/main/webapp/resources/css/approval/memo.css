@@ -31,7 +31,6 @@
 
 #memo-modal {
   width: 60%;
-  max-height: 60vh;
   min-height: 25vh;
 }
 
@@ -55,7 +54,7 @@
 }
 
 #btn-add-memo {
-  margin-left: 90%;
+  width: max-content;
 }
 
 .memo-detail-table td:nth-child(1) > div {
