@@ -7,8 +7,11 @@
 
 	
 	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bcryptPasswordEncoder" />
-	
-
-
+<!-- 	
+  <http>
+    <session-management>
+        <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+    </session-management>
+  </http> -->
 
 </beans>
