@@ -79,7 +79,7 @@
                         	<img src="${path}/resources/image/chat/default.png" alt="나의프로필사진">
                         </c:if>
                         <c:if test="${!empty loginUser.profileImg}">
-                        	<img src="${loginUser.profileImg}" alt="나의프로필사진">
+                        	<img src="${path}/resources/file/mypage/${loginUser.profileImg}" alt="나의프로필사진">
                          </c:if>
                         <div class="chat_profile">
                             <p>${loginUser.userName}</p>                         
