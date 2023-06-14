@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.company.opeaceful.approval.model.service.ApprovalService;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.commom.FileRenamePolicy;
+import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/approval/approvalForm")
+@SessionAttributes({ "loginUserRole"})
 //(승은)
 public class ApprovalFormController {
 
@@ -37,14 +41,26 @@ public class ApprovalFormController {
 	}
 
 	@GetMapping("")   
-	public String approvalForm(Model model) {
-		List<ApprovalForm> formList = aprService.selectFormListPage( 1 , -1);
-		int count = aprService.selectFormListCount(-1);
+	public String approvalForm(Model model,  @SessionAttribute("loginUserRole") List<UserRole> loginUserRole) {
+		boolean roleCheck = false;
+		for(UserRole role:loginUserRole) {
+			if(role.getRoleCode().equals("T01")) {
+				roleCheck = true;
+				break;
+			}
+		}
+		if(roleCheck == true) {
+			List<ApprovalForm> formList = aprService.selectFormListPage( 1 , -1);
+			int count = aprService.selectFormListCount(-1);
 
-		model.addAttribute("formList", formList );
-		model.addAttribute("count",count);
+			model.addAttribute("formList", formList );
+			model.addAttribute("count",count);
 
-		return "approval/approvalForm";
+			return "approval/approvalForm";
+		}else {
+			model.addAttribute("errorMsg", "권한이 없는 사용자입니다.");
+			return "errorPage";
+		}
 	}
 	
 	
