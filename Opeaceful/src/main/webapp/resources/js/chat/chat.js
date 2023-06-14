@@ -12,7 +12,7 @@ $(document).ready(function() {
 		resizable: true,
 		title: "Opeaceful",   
 		width: 500,
-		height: 800,
+		height: 800		
 	});
 
 	// 다이얼로그 타이틀바 삭제    
@@ -28,7 +28,7 @@ $(document).ready(function() {
 	
 	// 다이얼로그 열기
 	$("#openDialogButton").click(function() {
-		dialogElementStyle("dialog",'100px','600px','100');
+		dialogElementStyle("dialog",'83px','125px','100');
 		// 로컬 스토리지에 다이얼로그 상태를 저장
 		localStorage.setItem('dialogVisible', 'true');
 	
@@ -43,7 +43,7 @@ $(document).ready(function() {
 	    
 	      	// 다이얼로그가 닫혀있는 경우
 	    	$("#dialog").dialog("open");
-	    	dialogElementStyle("dialog",'100px','600px','100');
+	    	dialogElementStyle("dialog",'83px','125px','100');
 	    }    
 	});
 	
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	if (dialogVisible === 'true') {
 		      
 		$("#dialog").dialog("open");
-		dialogElementStyle("dialog",'100px','600px','100');	
+		dialogElementStyle("dialog",'83px','125px','100');	
 	}         
 });
  
@@ -102,7 +102,7 @@ function adminAll() {
                 } else {
                     img.src = path + "/resources/image/chat/default.png"
                 }
-                img.alt = item.userName;
+                img.alt = item.userName;               
 
                 const div = document.createElement("div");
                 div.classList.add("chat_profile");
@@ -128,6 +128,10 @@ function adminAll() {
                 li.appendChild(img);
                 li.appendChild(div);
                 li.appendChild(p3);
+                
+                li.addEventListener("click", function() {
+                    openMemberDialog(item); // 클릭한 멤버의 정보를 인자로 전달하여 다이얼로그 생성
+                });
 
                 adminList.appendChild(li);             
             }
@@ -138,6 +142,73 @@ function adminAll() {
         }
     });
 }
+
+/* 채팅메인에서 사원 명함 */
+function openMemberDialog(member) {
+console.log(member);
+    // 다이얼로그 내용을 구성
+    var memberDialogContent = `
+        <div id="content-wrap">      
+            <div class="container">
+                <div class="card-container shadow p-3 mb-5 bg-body rounded">
+                    <div class="adminUserPicture">
+                    ${member.profileImg ? `<img src="${member.profileImg}">` : `<img src="${path}/resources/image/chat/default.png" alt="나의프로필사진">`}
+                    </div>
+                    <table class="adminInfoTable">
+                        <tr class="adminInfo">
+                            <td scope="row">이름</td>
+                            <td>${member.userName}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">조직</td>
+                            <td>${member.dName} ${member.pName}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">이메일</td>
+                            <td>${member.email}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">연락처</td>
+                            <td>${member.phone}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">입사일</td>
+                            <td>${member.hireDate}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 다이얼로그(Dialog) 생성하기
+    var memberDialog = $("<div>").attr("id", "memberDialog").attr("title", "멤버 정보").html(memberDialogContent);
+
+    // 다이얼로그(Dialog)를 body 요소에 추가
+    memberDialog.appendTo("body");
+
+    // 다이얼로그(Dialog) 초기화 및 움직일 수 있도록 설정
+    memberDialog.dialog({
+        close: function() {
+            // 다이얼로그 닫힐 때 요소 제거
+            memberDialog.dialog("destroy").remove();
+        },
+        modal: true,
+        height: 200,
+        width: 480
+    });
+    dialogElementStyle("memberDialog",'83px','125px','120');	
+} 
+
+
+
+
+
+
+
+
+
+
 
 
 /* 접속 상태 제어 */
@@ -468,9 +539,9 @@ function chatAll() {
                             },                            
                             modal: false,
                             height: 800,
-                            width: 400,                           
+                            width: 400                           
                         });
-                        dialogElementStyle("chatting_dialog_" + roomId, '100px', '500px', '105');
+                        dialogElementStyle("chatting_dialog_" + roomId, '83px', '630px', '120');
                     },
                     error: function(xhr, status, error) {
                         console.error("Failed to fetch chat room data:", error);
@@ -632,7 +703,7 @@ $(document).ready(function() {
 
         // 다이얼로그(Dialog)를 드래그 가능하도록 설정
         newDialog.dialog("option", "draggable", true);
-        dialogElementStyle(dialogId,'100px','840px','110');
+        dialogElementStyle(dialogId,'83px','630px','130');
     });
 });
 
@@ -656,6 +727,7 @@ function toggleChat() {
     chatRoomContent.style.display = "none";
 }
 
+/* 다이얼로그들 위치 및 포지션 설정 */
 function dialogElementStyle(Id, top, left, zIndex){
 	document.getElementById(Id).parentNode.style.position='absolute'
 	document.getElementById(Id).parentNode.style.top=top;
