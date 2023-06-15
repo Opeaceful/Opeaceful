@@ -147,7 +147,8 @@ VALUES
    
 /*멤버 데이터 부서등록*/
 INSERT INTO user_department(USER_NO, DEPT_CODE,P_CODE )
-VALUES (2,4,1),
+VALUES (1,4,1),
+	  (2,4,3),
       (3,4,3),
       (4,4,4),
       (5,5,4),

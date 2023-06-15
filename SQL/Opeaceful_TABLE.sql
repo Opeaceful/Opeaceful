@@ -740,21 +740,3 @@ INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
    VALUES ( 'N', '공지사항' ),
 			( 'F', '자유게시판' ),
             ( 'T', '팀게시판' );
-
-
-INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-   VALUES ( 1 , 'Y01'),
-			( 1 , 'D01'),
-            ( 1 , 'A01'),
-            ( 1 , 'B01'),
-            ( 1 , 'B02'),
-			( 1 , 'M01'),
-			( 1 , 'R01'),
-            ( 1 , 'S01'),
-            ( 1 , 'T01'),
-            ( 1 , 'T02') ;
-            
-
-
-
-
