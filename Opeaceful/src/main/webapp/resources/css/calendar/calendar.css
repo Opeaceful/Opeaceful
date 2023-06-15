@@ -163,7 +163,7 @@ div *{
 }
 .input-memo{
   font-size: var(--font14);
-  color: var(--col8);
+  color: var(--memo-col8);
 }
 .d-event{
   font-size: var(--font13);
@@ -287,6 +287,7 @@ div *{
   color: var(--memo-day-color);
   margin-right: 5px;
   padding-left: 7px;
+  background-color: var(--color-background);
 }
 .date-box:focus{
   outline:none;

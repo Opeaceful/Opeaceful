@@ -26,9 +26,9 @@ const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme
  if (getUserTheme() === 'dark') {
     localStorage.setItem('color-theme', 'dark');
     document.documentElement.setAttribute('color-theme', 'dark');
-   } else {
+  } else {
     localStorage.setItem('color-theme', 'light');
-     document.documentElement.setAttribute('color-theme', 'light');
+    document.documentElement.setAttribute('color-theme', 'light');
    }
 };
 

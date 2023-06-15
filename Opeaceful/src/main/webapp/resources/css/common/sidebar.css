@@ -97,9 +97,14 @@
 	width: 50px;
 	height: 50px;
 	position: fixed;
-   	bottom: 60px;
-   	right: 60px;
+   	bottom: 7vh;
+   	right: 7vw;
 }
 /* 크기설정 */
-#chat-icon>i{ cursor:pointer; font-size: 3rem; line-height: 1rem; }
+#chat-icon>i{
+    cursor:pointer;
+    font-size: 3rem;
+    line-height: 1rem;
+    color: var(--color-navy);
+}
 
