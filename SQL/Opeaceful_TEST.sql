@@ -26,11 +26,6 @@ INSERT INTO position (P_NAME) VALUES
    ('주임'),
    ('사원');
 
-
-
-INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
-   VALUES ( 230502 , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', 'test', SYSDATE(), 'test@gmail.com');
-
 /* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!! user_no = 5 는  마케팅팀!*/
 
 /*공지사항 고정게시글 데이터*/
@@ -95,6 +90,8 @@ VALUES (5,'여기는','TEST1','5','T',default,'2023-05-12'),
 /*멤버 데이터*/
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME,HIRE_DATE, PHONE,EMAIL, ADDRESS,EXTENSION)
 VALUES
+  (200501, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이하나', '2020-05-01', '010-1234-5677', 'example0@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200502, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김둘셋', '2020-05-01', '010-1234-5666', 'example23@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200503, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김철수', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200504, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김지민', '2020-05-01', '010-9876-5432','testuser2@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200505, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이예진', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
@@ -150,7 +147,8 @@ VALUES
    
 /*멤버 데이터 부서등록*/
 INSERT INTO user_department(USER_NO, DEPT_CODE,P_CODE )
-VALUES (2,4,1),
+VALUES (1,4,1),
+	  (2,4,3),
       (3,4,3),
       (4,4,4),
       (5,5,4),
