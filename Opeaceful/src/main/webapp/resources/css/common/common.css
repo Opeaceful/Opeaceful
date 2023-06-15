@@ -15,6 +15,10 @@
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
 
+    /* 메인 박스 */
+    --square-box:rgb(235, 235, 235);
+    --box-shadow: rgba(221, 221, 221);
+
     --color-background : white;
     --color-background-bk : rgb(30, 30, 30);
 
@@ -65,6 +69,9 @@
 
     --color-scroll-start : rgb(42, 42, 90);
     --color-scroll-end :  rgb(66, 66, 156);
+
+    /* main status아이콘 */
+    --filter : invert(0%);
 }
 
 /* 다크모드 */
@@ -79,6 +86,9 @@
     --white-hover: rgba(0, 0, 0, 0.9);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgb(30, 30, 30);
+
+    --square-box:rgb(79,79,79);
+    --box-shadow: rgb(87, 87, 87);
 
     /* 기본 배경색상 */
     --color-background : rgb(30, 30, 30);
@@ -140,6 +150,9 @@
     /* 스크롤바 컬러 그라데이션용 */
     --color-scroll-start : #ffc107;
     --color-scroll-end :  #fef0c4;
+
+    /* main status아이콘 */
+    --filter : invert(100%);
 }
 
 
