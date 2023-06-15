@@ -64,6 +64,9 @@
 
     --color-scroll-start : rgb(42, 42, 90);
     --color-scroll-end :  rgb(66, 66, 156);
+
+    /* main status아이콘 */
+    --filter : invert(0%);
 }
 
 /* 다크모드 */
@@ -138,6 +141,9 @@
     /* 스크롤바 컬러 그라데이션용 */
     --color-scroll-start : #ffc107;
     --color-scroll-end :  #fef0c4;
+
+    /* main status아이콘 */
+    --filter : invert(100%);
 }
 
 

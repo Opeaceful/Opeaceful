@@ -119,15 +119,16 @@
     
 }
 .white-btn{
-    background: var(--color-white);
+    background: var(--color-background);
     border: 1px solid;
     color: var(--color-navy);
     cursor: default;
     pointer-events: none;
 }
-
-#state img{width: 16px; height: 18px; background-color: var(--color-white);}
+/* filter: invert(100%); */
+#state img{width: 16px; height: 18px; filter: var(--filter);}
 #state{margin-bottom: 7px;}
+#state .option-list>li:first-child{background-color: var(--color-background);}
 .select {position: relative;}
 .select .option-list {
   position: absolute;
@@ -137,7 +138,6 @@
   width: 100%;
   overflow: hidden;
   max-height: 0;
-
 }
 .select.active .option-list {max-height: none;}
 #state .select {cursor: pointer;}
@@ -150,8 +150,8 @@
     border-radius: 70%;
     display: inline-block;
 }
-#white{background: white; border: 1px solid black;}
-#black{background: black;}
+#white{background: white; border: 1px solid var(--color-background-bk);}
+#black{background: black; border: 1px solid var(--color-background-bk);}
 .mode-select {position: relative;}
 .mode-select .mode-list {
   position: absolute;
@@ -175,8 +175,8 @@
 /* 양쪽 화살표 버튼 */
 #calender-box .fc-button-primary {
     color: var(--color-navy);
-    background-color: var(--color-white);
-    border-color: var(--color-white);
+    background-color: var(--color-background);
+    border-color: var(--color-background);
 }
 /* 보더 없앰 */
 #calender-box .fc th, .fc td {
