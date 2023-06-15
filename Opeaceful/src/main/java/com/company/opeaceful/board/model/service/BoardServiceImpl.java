@@ -134,6 +134,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.deleteUpfile(boardNo);
 	}
 	
-	
+	@Override
+	public int selectDeptCode(int userNo) {
+		return boardDao.selectDeptCode(userNo);
+	}
 	
 }

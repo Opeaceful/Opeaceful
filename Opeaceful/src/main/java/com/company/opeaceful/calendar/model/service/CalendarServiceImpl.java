@@ -70,4 +70,14 @@ public class CalendarServiceImpl implements CalendarService{
 	public CalendarMemo selectMemo(int userNo) {
 		return calendarDao.selectMemo(userNo);
 	}
+	
+	@Override
+	public ArrayList<Calendar> dDayList (int userNo){
+		return calendarDao.dDayList(userNo);
+	}
+	
+	@Override
+	public int dDayNone(int calendarNo) {
+		return calendarDao.dDayNone(calendarNo);
+	}
 }

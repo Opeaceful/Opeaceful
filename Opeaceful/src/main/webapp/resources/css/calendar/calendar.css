@@ -161,8 +161,12 @@ div *{
   color: grey;
   padding-top: 5px;
 }
-.d-event, .input-memo{
+.input-memo{
   font-size: var(--font14);
+  color: var(--col8);
+}
+.d-event{
+  font-size: var(--font13);
   color: var(--col8);
 }
 /* 메모 textarea영역 */
@@ -201,7 +205,9 @@ div *{
   margin-left: 5px;
   cursor: pointer;
 }
-
+.d-day-txt{
+  margin-bottom: 5px;
+}
 /* 왼쪽 캘린더 설정 */
 #calendar{
   width: 100%;
@@ -373,4 +379,49 @@ input[name="t-color"]:checked + label{
 /* 디데이 */
 .form-switch{
   font-size: var(--font18);
+}
+/* 일정등록 / 일정수정 버튼 */
+/* #modal-submit-btn:disabled{
+  background-color: #08429896;
+  border-color: rgba(0, 0, 0, 0.125);
+}
+#modal-update-btn:disabled{
+  background-color: #08429896;
+  border-color: rgba(0, 0, 0, 0.125);
+} */
+
+
+/* ---------- 캘린더 ---------- */
+
+/* 양쪽 화살표 버튼 */
+.fc-button-primary, .fc-button-primary:hover{
+  color: var(--color-navy);
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+}
+/* 보더 없앰 */
+#mini-calendar th, #mini-calendar td {
+  border-style: solid;
+  border-width: 0px;
+  vertical-align: top;
+}
+/* th 폰트 굵기 */
+#mini-calendar .fc th{font-weight: 500;}
+/* td 숫자 위치 조정 및 폰트 */
+#mini-calendar .fc-day-number {
+  margin-top: 5px;
+  margin-right: 5px;
+  font-weight: 300;
+  font-size: 12px;
+}
+/* 달력 숫자있는 곳 tr 높이 설정 */
+#mini-calendar .fc-dayGrid-view .fc-body .fc-row {min-height: 2.4em;}
+/* 일정표시 */
+#mini-calendar .fc-day-grid-event{
+  width: 2px;
+  height: 5px;
+  border-radius: 70%;
+  margin-left: 7px;
+  margin-top: -10px;
+  color: rgba(243, 241, 241, 0);
 }

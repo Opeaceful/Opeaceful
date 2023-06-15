@@ -93,26 +93,17 @@
             <div class="d-day-wrap">
               <div class="sm-box-title">D-day</div>
               <div class="d-day-box">
-                <table>
-                    <tr class="d-event">
-                        <td>
-                          <span>d-2</span>
-                          <span>노지의 사원 연차</span>
-                        </td>
-                        <td><div class="d-xbtn"><i class="fa-solid fa-xmark"></i></div></td>                      
-                    </tr>
-                    <tr class="d-event">
-                      <td>
-                        <span>d-2</span>
-                        <span>노지의 사원 연차</span>
-                      </td>
-                      <td><div class="d-xbtn"><i class="fa-solid fa-xmark"></i></div></td>                      
-                    </tr>
-
-
-
-
-                </table>
+              	<table>
+				<c:forEach items="${listD}" var="d">
+			 	<tr class="d-event">
+			    <td>
+			    <div class="d-day-txt"><span style="font-weight:500">D${d.name} </span>&nbsp
+			    <span>${ d.title }</span></div>
+			    </td>
+			    <!-- <td><div class="d-xbtn" data-dayNone="${d.calendarNo}"><i class="fa-solid fa-xmark"></i></div></td>     -->                  
+			 	</tr>
+			 	</c:forEach>
+			 </table>
               </div>
             </div>
             <!-- 메모박스 -->
@@ -234,7 +225,7 @@
             </div>
             <div class="modal-footer">
             
-              <button type="button" class="w90-btn btn btn-outline-danger" id="dlt-event-btn" style="display:none">일정삭제</button>
+              <button type="button" class="w90-btn btn btn-outline-danger" id="dlt-event-btn" style="display:none" data-apv="${H}">일정삭제</button>
               <button type="button" class="w90-btn btn btn-primary" id="modal-update-btn" style="display:none" data-update="${cno}">일정수정</button>
               <button type="button" class="w90-btn btn btn-primary" id="modal-submit-btn"style="display:none" data-submit="${cno}">일정등록</button>
               <button type="button" class="w90-btn btn btn-outline-primary" id="modal-cancel-btn" data-bs-dismiss="modal" aria-label="Close">취소</button>
@@ -253,27 +244,66 @@
 </div>
 
 
-
-
-
+<script type="module" src="${path}/resources/js/calendar/calendar.js"></script>
 
 <script>
-  // 모달 띄워놓는 코드
-  // setTimeout(() => {
-  //   document.getElementsByClassName("test10")[0].click();
-  // }, 100);
-  
+/*
+ $(function(){
+	 dDayList(); 
+ }
+ 
+ function dDayList(){
+	 $.ajax({
+		url : '${path}/calendar/dDayList',
+		type: 'post',
+		dataType : 'json',
+		success: function(result){
+			console.log("디데이 리스트 조회 : ",result);
+			
+			let html ="";
+				html += "<table>";
+			for(let d of result){
+				html += "<tr class='d-event'>";
+				html += "<td>";
+				html += "<span style='font-weight:600'>D"+d.name+"</span>&nbsp";
+				html += "<span style='font-weight:500'>"+d.title+"</span>";
+				html += "<td>";
+				html += "<td><div class='d-xbtn' data-dayNone='"+d.calendarNo+"'><i class='fa-solid fa-xmark'></i></div></td>";
+				html += "</tr>";
+			}
+				html += "</table>";
+			$(".d-day-box").html(html);
+			
+		}
+	 })
+ }
+ 
 
-  
-
-
-
+ */
+ 
+ /*
+function updateDdayN(){
+	$.ajax({
+		url : '${path}/calendar/updateDdayN',
+		type: 'post',
+		dataType : 'json',
+		success: function(result){
+			if(result > 0){
+				
+				
+			}
+			
+		}
+	 })
+	
+	
+}*/
 
   
 </script>
 
 
-<script type="module" src="${path}/resources/js/calendar/calendar.js"></script>
+
 
 
 
