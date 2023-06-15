@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -22,6 +23,9 @@ import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 import com.google.gson.Gson;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/orgChart")
@@ -238,13 +242,38 @@ public class OrgChartController {
 	// 인사발령 
 	@PostMapping("updatePersonnel")
 	@ResponseBody
-	public String updatePersonnel(OrgChart orgChart) {
+	public int updatePersonnel(@RequestParam String jsonData) {
+	 
+	    Map<String, Object> paramMap = new HashMap<String, Object>();
+	    
+	    JSONArray array = JSONArray.fromObject(jsonData);
+        
+	    List<Map<String, Object>> resendList = new ArrayList<Map<String, Object>>();
 		
-		int result = orgchartService.updatePersonnel(orgChart);
-		
-		System.out.println("인사발령 됨 : "+result+", "+orgChart);
-
-		return new Gson().toJson(result);
+	    for(int i=0; i<array.size(); i++){
+	        
+	        //JSONArray 형태의 값을 가져와 JSONObject 로 풀어준다.    
+	        JSONObject obj = (JSONObject)array.get(i);
+	                
+	        Map<String, Object> resendMap = new HashMap<String, Object>();
+	            
+	        resendMap.put("userNo", obj.get("userNo"));
+	        resendMap.put("deptCode", obj.get("deptCode"));
+	        resendMap.put("pCode", obj.get("pCode"));
+	        
+	            
+	        resendList.add(resendMap);
+	        System.out.println("resendMap"+resendMap);
+	    }
+	    
+	    System.out.println("resendList"+resendList);
+	    System.out.println("paramMap"+paramMap);
+	 
+	    paramMap.put("resendList", resendList);
+	 
+	    int cnt = orgchartService.updatePersonnel(paramMap);
+	        
+	    return cnt;
 		
 	}
 }

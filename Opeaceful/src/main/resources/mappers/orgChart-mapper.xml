@@ -138,10 +138,12 @@
 	</update>
 	
 	<!-- 인사발령 -->
-	<update id="updatePersonnel" parameterType="orgChart">
+	<update id="updatePersonnel" parameterType="java.util.List">
+		<foreach collection="resendList" item="userDepartment" separator=";">
 		UPDATE USER_DEPARTMENT
-		SET DEPT_CODE = #{deptCode}, P_CODE = #{pCode}
-		WHERE USER_NO = #{userNo}
+		SET DEPT_CODE = #{userDepartment.deptCode}, P_CODE = #{userDepartment.pCode}
+		WHERE USER_NO = #{userDepartment.userNo}
+		</foreach>
 	</update>
 	
 	<!-- =================== [delete] =================== -->

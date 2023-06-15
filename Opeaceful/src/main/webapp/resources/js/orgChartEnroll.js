@@ -90,7 +90,7 @@ function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
 				if (topDeptCode == team.topDeptCode) {
 
 					str = `<div class="department-name-box">${topDeptName}</div>
-							<button class="btn btn-primary personnel-btn" data-id="${deptCode}, ${topDeptCode}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
+							<button class="btn btn-primary personnel-btn" data-id="${deptCode},${topDeptCode}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
 
 					html += `<tr>
 								<td>${team.eno}</td>
@@ -150,7 +150,7 @@ function selectPersonnel(deptCode, topDeptCode) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					html += `<tr class="change-tr" data-id="${team.userNo}, ${deptCode}, ${topDeptCode}, ${team.pCode}">
+					html += `<tr class="change-tr" data-userno="${team.userNo}" data-deptcode="${deptCode}" data-pcode="${team.pCode}" data-id="${topDeptCode}">
 								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
@@ -167,7 +167,7 @@ function selectPersonnel(deptCode, topDeptCode) {
 								</td>
 								<td>${team.pName}</td>
 								<td>
-									<select class="form-select box-shadow-none pCode" data-id=${team.pCode} id="pName" name="pCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none pName" data-id=${team.pCode} id="pName" name="pCode" aria-label="Default select example">
 										<option value="" selected>직급선택</option>
 									</select>
 								</td>
@@ -202,6 +202,10 @@ function personnelClick() {
 		});
 	});
 }
+let oldDeptCode = "";
+let newDeptCode = "";
+let oldPcode = ""
+let newPcode = "";
 
 // 상위부서 옵션 변경 시 하위부서 옵션에 상위부서에 해당하는 하위부서 뜨게하기 
 function deptSelcet() {
@@ -209,23 +213,16 @@ function deptSelcet() {
 
 		e.target.parentElement.parentElement.classList.add("changeValue");
 
-		let codes ={}; 
-		const topDeptCode = document.querySelectorAll('.topDeptName');
+		oldDeptCode = e.target.parentElement.parentElement.dataset.deptcode;
+		oldPcode = e.target.parentElement.parentElement.dataset.pcode;
+		
+		let topDeptCode = $("option:selected", this).attr("value");
 
-		for (let i = 0; i < topDeptCode.length; i++) {
-			const selectedIndex = topDeptCode[i].selectedIndex;
-			console.log("selectedIndex : ", selectedIndex);
-
-			if (selectedIndex >= 0) {
-			  const selectedOption = topDeptCode[i].options[selectedIndex];
-			  const value = selectedOption.value;
-			  codes[`topDeptCode${i}`] = value;
-			  console.log("value : ", value);
-				console.log(" codes[`topDeptCode${i}`] : ", codes[`topDeptCode${i}`]);
-			}
-		  }
-
-		let deptCode = document.querySelectorAll("[name=deptCode]");
+		// console.log( $(this).val());
+		// console.log( $("option:selected", this).attr("value"));
+		// console.log(this);
+		// console.dir(this);
+		let deptCode = this.parentElement.parentElement.querySelectorAll("[name=deptCode]");
 
 		$.ajax({
 			url:`${path}/dept/selectDept`,
@@ -236,9 +233,7 @@ function deptSelcet() {
 					deptCode[i].innerHTML = "";
 					for(let dept of result){
 						if (dept.topDeptCode !== 0) {
-							const codesPropertyName = `topDeptCode${i}`;
-							if (codes.hasOwnProperty(codesPropertyName) && codes[codesPropertyName] == dept.topDeptCode) {
-								console.log("codes.hasOwnProperty(codesPropertyName) && codes[codesPropertyName] : ",codes.hasOwnProperty(codesPropertyName) && codes[codesPropertyName]);
+							if (topDeptCode == dept.topDeptCode) {
 								const option = document.createElement("option");
 								option.value = dept.deptCode;
 								option.text = dept.deptName;
@@ -253,88 +248,149 @@ function deptSelcet() {
 				console.log(request.status);
 			}
 		})
-		changeValue();
+
+		$(".deptName").change(function(e) {
+			newDeptCode = $("option:selected", this).attr("value")
+		})
+
+		$(".pName").change(function(e) {
+			newPcode = $("option:selected", this).attr("value")
+		})
 	})
 }
 
-function changeValue() {
-	$('#ok-personnel').click(function() {
-	  if (document.querySelectorAll('tr.changeValue').length > 0) {
-		let userNo = $(".changeValue").attr('data-id').split(",");
-		console.log(userNo[0]);
-  
-		let deptCodes = {}; 
-		const deptCode = document.querySelectorAll('.deptName');
-		let deptCodesPropertyName; // 변수 선언
-  
-		for (let i = 0; i < deptCode.length; i++) {
-		  const selectedIndex = deptCode[i].selectedIndex;
-		  console.log("selectedIndex : ", selectedIndex);
-  
-		  if (selectedIndex >= 0) {
-			const selectedOption = deptCode[i].options[selectedIndex];
-			const value = selectedOption.value;
-			deptCodesPropertyName = `deptCode${i}`; // 변수 할당
-			deptCodes[deptCodesPropertyName] = value;
-			console.log("value : ", value);
-			console.log(`deptCodes[${deptCodesPropertyName}] : `, deptCodes[deptCodesPropertyName]);
-		  }
-		}
-  
-		let pCodes = {}; 
-		const pCode = document.querySelectorAll('.deptName');
-		let pCodesPropertyName; // 변수 선언
-  
-		for (let i = 0; i < pCode.length; i++) {
-		  const selectedIndex = pCode[i].selectedIndex;
-		  console.log("selectedIndex : ", selectedIndex);
-  
-		  if (selectedIndex >= 0) {
-			const selectedOption = pCode[i].options[selectedIndex];
-			const value = selectedOption.value;
-			pCodesPropertyName = `pCode${i}`; // 변수 할당
-			pCodes[pCodesPropertyName] = value;
-			console.log("value : ", value);
-			console.log(`pCodes[${pCodesPropertyName}] : `, pCodes[pCodesPropertyName]);
-		  }
-		}
-  
-		let defaultPcode = $(".pCode").attr('data-id');
-		console.log("defaultPcode : ", defaultPcode);
-  
-		$.ajax({
-		  url: path + "/orgChart/updatePersonnel",   
-		  type: 'post', 
-		  data: {
-			deptCode: deptCodes.hasOwnProperty(deptCodesPropertyName) && deptCodes[deptCodesPropertyName],
-			pCode: pCodes.hasOwnProperty(pCodesPropertyName) && pCodes[pCodesPropertyName] ? pCodes.hasOwnProperty(pCodesPropertyName) && pCodes[pCodesPropertyName] : defaultPcode,
-			userNo: userNo},
-		  dataType: "JSON",
-		  success: function(result) {
-			console.log('인사발령 인서트 result: ', result);
-		  }
-		});
-	  }
+$('#ok-personnel').click(function() {
+console.log("클릭됨????");
+	let changeValue = document.querySelectorAll(".changeValue");
+
+	let Arr = [];
+	var jsonData
+	changeValue.forEach(tr => {
+
+		let originUserNo = tr.dataset.userno;
+
+		let originDeptCode = tr.dataset.deptcode;
+		let changeDeptCode = tr.querySelector(".deptName").value;
+
+		let originPcode = tr.dataset.pcode;
+		let changePcode =  tr.querySelector(".pName").value;
+
+		console.log("기존 부서코드 : ", originDeptCode);
+		console.log("바뀐 부서코드 : ",changeDeptCode);
+		console.log("기존 직급코드 : ", originPcode);
+		console.log("바뀐 직급코드 : ",changePcode);
+
+			let data = {
+				userNo : originUserNo,
+				deptCode : (originDeptCode != changeDeptCode) ? changeDeptCode : originDeptCode,
+				pCode : (originPcode != changePcode) ? changePcode : originPcode
+			}; 
+
+			if (changeDeptCode != "") {
+				Arr.push(data);
+			}
+		
+
+		console.log(Arr);
+
+		jsonData = JSON.stringify(Arr);
+    	jQuery.ajaxSettings.traditional = true;
+
+		
+
 	});
+	$.ajax({
+		url : path+"/orgChart/updatePersonnel",
+		type: 'POST',
+		data: {"jsonData" : jsonData},
+		dataType:'json',
+		success: function(result) {
+			console.log("인사발령 성공 : ",result);
+		},
+		error: function(x, e) {
+			//err msg 출력
+			$.failMsg('error');
+		}
+	});
+
+
+
+
+})
+
+
+function changeValue() {
+
+	//   if (document.querySelectorAll('tr.changeValue').length > 0) {
+	// 	let userNo = $(".changeValue").attr('data-id').split(",");
+	// 	console.log(userNo[0]);
+  
+	// 	let deptCodes = {}; 
+	// 	const deptCode = document.querySelectorAll('.deptName');
+	// 	let deptCodesPropertyName; // 변수 선언
+  
+	// 	for (let i = 0; i < deptCode.length; i++) {
+	// 	  const selectedIndex = deptCode[i].selectedIndex;
+	// 	  console.log("selectedIndex : ", selectedIndex);
+  
+	// 	  if (selectedIndex >= 0) {
+	// 		const selectedOption = deptCode[i].options[selectedIndex];
+	// 		const value = selectedOption.value;
+	// 		deptCodesPropertyName = `deptCode${i}`; // 변수 할당
+	// 		deptCodes[deptCodesPropertyName] = value;
+	// 		console.log("value : ", value);
+	// 		console.log(`deptCodes[${deptCodesPropertyName}] : `, deptCodes[deptCodesPropertyName]);
+	// 	  }
+	// 	}
+  
+	// 	let pCodes = {}; 
+	// 	const pCode = document.querySelectorAll('.deptName');
+	// 	let pCodesPropertyName; // 변수 선언
+  
+	// 	for (let i = 0; i < pCode.length; i++) {
+	// 	  const selectedIndex = pCode[i].selectedIndex;
+	// 	  console.log("selectedIndex : ", selectedIndex);
+  
+	// 	  if (selectedIndex >= 0) {
+	// 		const selectedOption = pCode[i].options[selectedIndex];
+	// 		const value = selectedOption.value;
+	// 		pCodesPropertyName = `pCode${i}`; // 변수 할당
+	// 		pCodes[pCodesPropertyName] = value;
+	// 		console.log("value : ", value);
+	// 		console.log(`pCodes[${pCodesPropertyName}] : `, pCodes[pCodesPropertyName]);
+	// 	  }
+	// 	}
+  
+	// 	let defaultPcode = $(".pCode").attr('data-id');
+	// 	console.log("defaultPcode : ", defaultPcode);
+  
+	// 	$.ajax({
+	// 	  url: path + "/orgChart/updatePersonnel",   
+	// 	  type: 'post', 
+	// 	  data: {
+	// 		deptCode: deptCodes.hasOwnProperty(deptCodesPropertyName) && deptCodes[deptCodesPropertyName],
+	// 		pCode: pCodes.hasOwnProperty(pCodesPropertyName) && pCodes[pCodesPropertyName] ? pCodes.hasOwnProperty(pCodesPropertyName) && pCodes[pCodesPropertyName] : defaultPcode,
+	// 		userNo: userNo},
+	// 	  dataType: "JSON",
+	// 	  success: function(result) {
+	// 		console.log('인사발령 인서트 result: ', result);
+	// 	  }
+	// 	});
+	//   }
+	// });
   }
   
-
-	// document.querySelectorAll('tr.changeValue').length > 0 
-	// $("#topDeptName, #deptName, #pName").change(function(e){
-	// 	e.target.parentElement.parentElement.classList.add("changeValue");
-	// 	console.log(e.target);
-	// 	console.log(e.target.dataset.id);
-	// 	let dataID = e.target.parentElement.parentElement.dataset.id.split(",");
-
-	// 	let userNo = dataID[0];
-	// 	let deptCode = dataID[1];
-	// 	let topDeptCode = dataID[2];
-	// 	let pCode = dataID[3];
-
-	// 	let target = e.target.dataset.id; 
-		
-		
-	// })
+// console.log(e.target);
+// 			console.log(e.target.dataset.id);
+// 			let dataID = e.target.parentElement.parentElement.dataset.id.split(",");
+	
+// 			let userNo = dataID[0];
+// 			let deptCode = dataID[1];
+// 			let topDeptCode = dataID[2];
+// 			let pCode = dataID[3];
+	
+// 			let target = e.target.dataset.id;
+	
 
 
 

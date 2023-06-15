@@ -46,5 +46,5 @@ public interface OrgChartService {
 	List<OrgChart> selectPersonnel(Map<String, Object> map);
 	
 	// 인사발령
-	int updatePersonnel(OrgChart orgChart);
+	int updatePersonnel(Map<String, Object> paramMap);
 }
