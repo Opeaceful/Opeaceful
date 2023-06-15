@@ -63,7 +63,7 @@ public class calendarController {
 		model.addAttribute("category", category);
 		model.addAttribute("memo", memo);
 		
-		
+		/* 우측 디데이 리스트 조회 */
 		ArrayList<Calendar> listD = calendarService.dDayList(userNo);
 		model.addAttribute("listD", listD);	
 		return "calendar/calendarPage";
