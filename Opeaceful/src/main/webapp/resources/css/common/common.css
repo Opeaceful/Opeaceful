@@ -37,6 +37,7 @@
     /*캘린더 */
     --fc-mini-tobay:#fcf8e3;
     --memo-day-color: rgb(74, 71, 71);
+    --memo-col8: #495057;
 
     /*테이블 부트스트랩 고유색상*/
     --bootstrap-color:#212529;
@@ -108,6 +109,7 @@
     /*캘린더 */
     --fc-mini-tobay: black;
     --memo-day-color: rgb(180,180, 180);
+    --memo-col8: white;
 
 
     --color-serch-box:#ced4da;
@@ -184,6 +186,7 @@
     color: var(--bs-btn-color);
 }
 
+
 /*캘린더*/
 .fc-unthemed td.fc-today {
     background: var(--fc-mini-tobay);
@@ -193,8 +196,15 @@
     background-color: var(--color-background);
     color: var(--font-black);
 } 
-
-
+.form-control {
+    background-color: var(--color-background);
+    color: var(--font-black);
+    
+}
+.form-control:focus {
+    background-color: var(--color-background);
+    color: var(--font-black);
+}
 
 
 .content-wrap{
@@ -370,7 +380,8 @@ body{
         color: var(--color-navy);
         padding-left: 20px;
 }
-    
+
+
 
 
 /*페이징*/
@@ -397,6 +408,11 @@ body{
     box-shadow: none;
 }
 
+.pagination {
+    --bs-pagination-bg: var(--color-background);
+    --bs-pagination-disabled-bg: var(--color-background);
+}
+
 /* 공통 검색창 <html>*/
 /* <div class="search-wrap">
         <input type="search" name="keyword" class="search-box">
@@ -417,6 +433,8 @@ body{
     width: 350px;
     height: 28px;
     font-size: 0.81rem; /*13px*/
+    background-color: var(--color-background);
+    color: var(--font-black);
 }
 .search-btn{
     border: none;
