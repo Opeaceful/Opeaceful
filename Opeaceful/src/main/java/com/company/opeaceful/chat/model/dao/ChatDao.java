@@ -88,7 +88,9 @@ public class ChatDao {
 	
 
 	
-	
+		public ArrayList<ChatParticipant> chatRoomList(Member loginUser){
+			return (ArrayList)sqlSession.selectList("chatMapper.chatRoomList", loginUser);
+		}
 	
 	
 	

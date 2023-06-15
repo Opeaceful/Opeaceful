@@ -27,7 +27,7 @@ import com.company.opeaceful.member.model.vo.OnlineStatus;
 import com.google.gson.Gson;
 
 @Controller
-@SessionAttributes({ "loginUser", "chatRoomNo" })
+@SessionAttributes({ "loginUser", "chatRoomList", "userNo" })
 public class ChatController {
 
 	@Autowired
@@ -98,15 +98,18 @@ public class ChatController {
 		}
 	
 	
-	@GetMapping("/chat/room/{chatRoomNo}")
+	@GetMapping("/chat/webSocket")
 	@ResponseBody
 	public String joinChatRoom(@ModelAttribute("loginUser") Member loginUser,								
-								Model model,
-								@PathVariable("chatRoomNo") int chatRoomNo,
+								Model model,																
 								ChatParticipant join,
+								
 								RedirectAttributes ra
 								) {
 		join.setUserNo(loginUser.getUserNo());
+		
+		ArrayList<ChatParticipant> chatRoomList = chatService.chatRoomList(loginUser);
+		
 		
 		Map<String, Object> response = new HashMap<>();
 		
@@ -116,11 +119,12 @@ public class ChatController {
 		if(list != null) {
 			
 			model.addAttribute("list", list);
-			model.addAttribute("chatRoomNo", chatRoomNo);// session 스코프에 올라가게됨
+			model.addAttribute("chatRoomList", chatRoomList);
+			model.addAttribute("userNo", loginUser.getUserNo());
+			System.out.println(chatRoomList);
 			
 			response.put("loginUser", loginUser);
 		    response.put("list", list);
-		    response.put("chatRoomNo", chatRoomNo);
 		    response.put("join", join);
 			
 			return new Gson().toJson(response);

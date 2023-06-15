@@ -12,7 +12,7 @@ $(document).ready(function() {
 		resizable: true,
 		title: "Opeaceful",   
 		width: 500,
-		height: 800,
+		height: 800		
 	});
 
 	// 다이얼로그 타이틀바 삭제    
@@ -28,7 +28,7 @@ $(document).ready(function() {
 	
 	// 다이얼로그 열기
 	$("#openDialogButton").click(function() {
-		dialogElementStyle("dialog",'100px','600px','100');
+		dialogElementStyle("dialog",'83px','125px','100');
 		// 로컬 스토리지에 다이얼로그 상태를 저장
 		localStorage.setItem('dialogVisible', 'true');
 	
@@ -43,7 +43,7 @@ $(document).ready(function() {
 	    
 	      	// 다이얼로그가 닫혀있는 경우
 	    	$("#dialog").dialog("open");
-	    	dialogElementStyle("dialog",'100px','600px','100');
+	    	dialogElementStyle("dialog",'83px','125px','100');
 	    }    
 	});
 	
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	if (dialogVisible === 'true') {
 		      
 		$("#dialog").dialog("open");
-		dialogElementStyle("dialog",'100px','600px','100');	
+		dialogElementStyle("dialog",'83px','125px','100');	
 	}         
 });
  
@@ -98,11 +98,11 @@ function adminAll() {
                 li.classList.add("chat_main_li");
                 const img = document.createElement("img");
                 if (item.profileImg) {
-                    img.src = item.profileImg; // 프로필 이미지 속성에 따라 변경
+                    img.src = path + "/resources/file/mypage/"+item.profileImg; // 프로필 이미지 속성에 따라 변경
                 } else {
                     img.src = path + "/resources/image/chat/default.png"
                 }
-                img.alt = item.userName;
+                img.alt = item.userName;               
 
                 const div = document.createElement("div");
                 div.classList.add("chat_profile");
@@ -128,6 +128,10 @@ function adminAll() {
                 li.appendChild(img);
                 li.appendChild(div);
                 li.appendChild(p3);
+                
+                li.addEventListener("click", function() {
+                    openMemberDialog(item); // 클릭한 멤버의 정보를 인자로 전달하여 다이얼로그 생성
+                });
 
                 adminList.appendChild(li);             
             }
@@ -138,6 +142,75 @@ function adminAll() {
         }
     });
 }
+
+
+/* 채팅메인에서 사원 명함 */
+function openMemberDialog(member) {
+if (document.getElementById("memberDialog" + member.userNo)) {
+    return;
+    }
+console.log(member);
+    // 다이얼로그 내용을 구성
+    var memberDialogContent = `
+        <div id="content-wrap">      
+            <div class="member-chat-profile-container">
+                <div class="card-container shadow p-3 bg-body">
+                    <div class="adminUserPicture">
+                    ${member.profileImg ? `<img src="${path}/resources/file/mypage/${member.profileImg}">` : `<img src="${path}/resources/image/chat/default.png" alt="나의프로필사진">`}
+                    </div>                  
+                    <table class="adminInfoTable">
+                        <tr class="adminInfo">
+                            <td scope="row">이름</td>
+                            <td>${member.userName}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">조직</td>
+                            <td>${member.dName} ${member.pName}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">이메일</td>
+                            <td>${member.email}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">연락처</td>
+                            <td>${member.phone}</td>
+                        </tr>
+                        <tr class="adminInfo">
+                            <td scope="row">입사일</td>
+                            <td>${member.hireDate}</td>
+                        </tr>
+                    </table>
+                    <i class="fa-solid fa-xmark member-chat-profile-close" data-id="${"memberDialog" + member.userNo}"></i>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // 다이얼로그(Dialog) 생성하기
+    var memberDialog = $("<div>").attr({
+    								id : "memberDialog" + member.userNo,
+    								title : "멤버 정보",
+    								}).html(memberDialogContent);
+
+    // 다이얼로그(Dialog)를 body 요소에 추가
+    memberDialog.appendTo("body");
+
+    // 다이얼로그(Dialog) 초기화 및 움직일 수 있도록 설정
+    memberDialog.dialog({  
+        modal: false,
+        height: 200,
+        width: 480
+    });
+    
+    dialogElementStyle("memberDialog" + member.userNo ,'250px','610px','150');	
+    
+    $(document).on("click", "#memberDialog" + member.userNo + " " + ".member-chat-profile-close", function(e) {
+		$("#"+e.target.dataset.id).dialog("destroy").remove();				
+	});
+    
+} 
+
+
 
 
 /* 접속 상태 제어 */
@@ -192,7 +265,7 @@ function chatAll() {
                     chatRoomHtml += '<li class="chat_room_li"><a href="#" data-chat-room-id="' + chatRoom.chatRoomNo + '">';
 
                     if (chatRoom.profileImg) {
-                        chatRoomHtml += '<img src="' + chatRoom.profileImg + '" class="profile-img">';
+                        chatRoomHtml += '<img src="' + path + '/resources/file/mypage/'+ chatRoom.profileImg + '" class="profile-img">';
                     } else {
                         chatRoomHtml += '<img src="' + path + '/resources/image/chat/default.png" class="profile-img" alt="나의프로필사진">';
                     }
@@ -228,108 +301,29 @@ function chatAll() {
                     return chatRoom.chatRoomNo === roomId;
                 });
 
+                console.log("왔니?");
                 
-                if (!chattingSock[roomId]) {
+                
+                if (!document.getElementById("chatting_dialog_" + roomId)) {
+           //     if (!chattingSock[roomId]) {
                     console.log("채팅로그1 : "+roomId);	
-                // roomId를 사용하여 다이얼로그 열기               
-                
+                // roomId를 사용하여 다이얼로그 열기                              
                 openDialog(roomId, clickedChatRoom);
-					 		
-				// chattingSock[roomId] = new SockJS(path + "/chat/room/" + roomId);
-				//  console.log("채팅로그2 : "+roomId);	
-				 
-                // // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
-                // chattingSock[roomId].onmessage = function(e) {
-                //     // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
-                //     // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
-				// 	console.log("채팅로그3 : "+roomId);	
-                //     // 전달받은 메세지를 js객체로 변환
-
-                //     const chatMessage = JSON.parse(e.data); // json -> js Object
-                //     //	console.log(chatMessage);
-
-                //     var message = chatMessage.message;
-                //     var receivedDate = chatMessage.receivedDate;
-                //     var isCurrentUser = chatMessage.userNo === loginUser.userNo;
-
-                //     var chatContainer = document.getElementById("main_chatting_" + roomId);
-                //     console.log(chatContainer);
-	
-					
-                //     if (!isCurrentUser) {
-                //         var friendChat = document.createElement("div");
-                //         friendChat.classList.add("friend_chatting");
-
-                //         var profileImg = document.createElement("img");
-                //         profileImg.classList.add("chatting_profile_img");
-                //         profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
-                //         profileImg.alt = "프로필사진";
-
-                //         var friendChatCol = document.createElement("div");
-                //         friendChatCol.classList.add("friend_chatting_col");
-
-                //         var profileName = document.createElement("span");
-                //         profileName.classList.add("chatting_profile_name");
-                //         profileName.textContent = chatMessage.userName;
-
-                //         var chattingBalloon = document.createElement("span");
-                //         chattingBalloon.classList.add("chatting_balloon");
-                //         chattingBalloon.textContent = message;
-
-                //         var chattingTime = document.createElement("time");
-                //         chattingTime.classList.add("chatting_time");
-                //         chattingTime.datetime = receivedDate;
-                //         chattingTime.textContent = receivedDate;
-
-                //         friendChatCol.appendChild(profileName);
-                //         friendChatCol.appendChild(chattingBalloon);
-
-                //         friendChat.appendChild(profileImg);
-                //         friendChat.appendChild(friendChatCol);
-                //         friendChat.appendChild(chattingTime);
-
-                //         chatContainer.appendChild(friendChat);
-                //     } else {
-                //         var meChat = document.createElement("div");
-                //         meChat.classList.add("me_chatting");
-
-                //         var meChatCol = document.createElement("div");
-                //         meChatCol.classList.add("me_chatting_col");
-
-                //         var chattingBalloon = document.createElement("span");
-                //         chattingBalloon.classList.add("chatting_balloon");
-                //         chattingBalloon.textContent = message;
-
-                //         var chattingTime = document.createElement("time");
-                //         chattingTime.classList.add("chatting_time");
-                //         chattingTime.datetime = receivedDate;
-                //         chattingTime.textContent = receivedDate;
-
-                //         meChatCol.appendChild(chattingBalloon);
-
-                //         meChat.appendChild(meChatCol);
-                //         meChat.appendChild(chattingTime);
-
-                //         chatContainer.appendChild(meChat);
-                //     }
-                    
-
-                //     chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                // };
+					 					
                 }
                 
                   /* 메세지 전달 */
-               $(document).on("click", "#chatting_send_" + roomId, sendMessage.bind(roomId));
+               // $(document).on("click", "#chatting_send_" + roomId, sendMessage.bind(roomId));
                 
                              
 
             });
             
             
-            function sendMessage(roomId) {
+   /*         function sendMessage(roomId) {
                     const inputChatting = document.getElementById("chatting_textarea_" + this);
 
+            		console.log("이게뭐야????? ",this, inputChatting.value);
                     if (inputChatting.value.trim().length == 0) {
                         alert("입력이 되지 않았습니다");
 
@@ -350,8 +344,8 @@ function chatAll() {
                        console.log(this);
                         chattingSock[this].send(JSON.stringify(chatMessage));
                         inputChatting.value = "";
-                    }
-                }
+                  }
+          }   */ 
             
             
             
@@ -359,7 +353,7 @@ function chatAll() {
 
             function openDialog(roomId, chatRoom) {
                 $.ajax({
-                    url: path + "/chat/room/" + roomId,
+                    url: path + "/chat/webSocket",
                     method: "GET",
                     data: {
                         chatRoomNo: roomId
@@ -381,7 +375,7 @@ function chatAll() {
                         var dialogContent = '<div id="chatting_body">' +
                             '<div class="chatting_setting_bar">' +
                             '<i class="fa-regular fa-window-restore" alt="최대화버튼" title="최대화"></i>' +
-                            '<i class="fa-solid fa-xmark" alt="닫기버튼" title="닫기"></i>' +
+                            `<i class="fa-solid fa-xmark member-chat-room-close" data-id="${"chatting_dialog_" + roomId}" alt="닫기버튼" title="닫기"></i>` +
                             '</div>' +
                             '<div class="chatting_main_menu">' +
                             '<i class="icon-bell" title="알림"></i>' +
@@ -455,29 +449,33 @@ function chatAll() {
 
 
                         // 다이얼로그(Dialog) 생성하기
-                        var chattingDiglog = $("<div>").attr("id", "chatting_dialog_" + roomId).attr("title", chatRoom.roomTitle).html(dialogContent);						
+                        var chattingDiglog = $("<div>").attr({
+                        						id : "chatting_dialog_" + roomId,
+                        						title : chatRoom.roomTitle}).html(dialogContent);						
 						
                         // 다이얼로그(Dialog)를 body 요소에 추가
                         chattingDiglog.appendTo("body");
 
                         // 다이얼로그(Dialog) 초기화 및 움직일 수 있도록 설정
-                        chattingDiglog.dialog({
-                            close: function() {
-                                // 다이얼로그 닫힐 때 요소 제거
-                                chattingDiglog.dialog("destroy").remove();
-                            },                            
+                        chattingDiglog.dialog({                         
                             modal: false,
                             height: 800,
-                            width: 400,                           
+                            width: 400                           
                         });
-                        dialogElementStyle("chatting_dialog_" + roomId, '100px', '500px', '105');
+                        dialogElementStyle("chatting_dialog_" + roomId, '83px', '630px', '120');
+                        
+                        $(document).on("click", "#chatting_dialog_" + roomId + " " + ".member-chat-room-close", function(e) {
+                        console.log()
+							$("#"+e.target.dataset.id).dialog("destroy").remove();				
+						}); 									
+						
                     },
                     error: function(xhr, status, error) {
                         console.error("Failed to fetch chat room data:", error);
                         // 에러 처리
                     },
                     complete : function(){
-                        chattingSock[roomId] = new SockJS(path + "/chat/room/" + roomId);
+                        chattingSock[roomId] = new SockJS(path + "/chat/webSocket");
                         console.log("채팅로그2 : "+roomId);	
                         
                         // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
@@ -493,6 +491,8 @@ function chatAll() {
                             var message = chatMessage.message;
                             var receivedDate = chatMessage.receivedDate;
                             var isCurrentUser = chatMessage.userNo === loginUser.userNo;
+                            
+                            console.log(chatMessage.userNo, loginUser.userNo,isCurrentUser);	
 
                             var chatContainer = document.getElementById("main_chatting_" + roomId);
                             console.log(chatContainer);
@@ -569,6 +569,41 @@ function chatAll() {
 };
 chatAll();
 
+
+$(document).on("click", ".chatting_send_button", function(e){
+	let roomId = $(e.target).attr("id");
+	roomId = roomId.replace("chatting_send_", "");
+
+    const inputChatting = document.getElementById("chatting_textarea_" + roomId);
+
+	console.log("이게뭐야????? ",this, inputChatting.value);
+    if (inputChatting.value.trim().length == 0) {
+        alert("입력이 되지 않았습니다");
+
+        inputChatting.value = "";
+        inputChatting.focus();
+
+    } else {
+
+        const chatMessage = {
+            // "userNo": loginUser.userNo,
+            "chatRoomNo": roomId,
+            // "userName": loginUser.userName,
+            "message": inputChatting.value
+        };
+    //    console.log("버튼이 눌렸다");
+    //    console.log(loginUser);
+    //   console.log(chatRoomList);
+       console.log(roomId);
+        chattingSock[roomId].send(JSON.stringify(chatMessage));
+        inputChatting.value = "";
+  }
+   
+
+
+})
+
+
 /* 채팅방 생성 다이얼로그 */
 $(document).ready(function() {
     // 다이얼로그(Dialog) 생성하기
@@ -632,7 +667,7 @@ $(document).ready(function() {
 
         // 다이얼로그(Dialog)를 드래그 가능하도록 설정
         newDialog.dialog("option", "draggable", true);
-        dialogElementStyle(dialogId,'100px','840px','110');
+        dialogElementStyle(dialogId,'83px','630px','130');
     });
 });
 
@@ -656,6 +691,7 @@ function toggleChat() {
     chatRoomContent.style.display = "none";
 }
 
+/* 다이얼로그들 위치 및 포지션 설정 */
 function dialogElementStyle(Id, top, left, zIndex){
 	document.getElementById(Id).parentNode.style.position='absolute'
 	document.getElementById(Id).parentNode.style.top=top;
