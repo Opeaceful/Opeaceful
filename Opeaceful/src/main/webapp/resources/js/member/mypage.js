@@ -61,6 +61,7 @@ function updatePwdF(originPwd, updatePwd){
 		success : function(result){
 			console.log(result);
 			if(result>0){
+				swal("비밀번호가 변경되었습니다.");
 				location.href = path+"/member/mypage";
 			}else{
 				toast("현재 비밀번호가 일치하지 않습니디다.");

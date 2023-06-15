@@ -17,5 +17,5 @@ public class Chat {
 	
 	private String userName;
 	private String profileImg;
-
+	private boolean isNew;
 }

@@ -115,16 +115,24 @@ for (var i = 0; i < ModeList.length; i++) {
 $("#white-icon").on("click", function(){
     localStorage.setItem('color-theme', 'light');
     // 페이지 새로고침 : 아이콘 색바꿔야해서 새로고침
-    console.log("화이트 들어와?")
+    // console.log("화이트 들어와?");
     location.reload();
-   
+    
 });
 $("#black-icon").on("click", function(){
     localStorage.setItem('color-theme', 'dark');
-    console.log("들어와?")
+    // console.log("들어와?");
     // 페이지 새로고침 : 아이콘 색바꿔야해서 새로고침
     location.reload();
 });
+/* 다크모드, 화이트모드 아이콘 변경 */
+$(function(){
+    if(localStorage.getItem('color-theme') == 'light'){
+        document.querySelector('.color-show').setAttribute("id", "white");
+    }else{
+        document.querySelector('.color-show').setAttribute("id", "black");
+    }
+})
 
 
 /* --------------------------- 입사날짜 구하기 --------------------------- */
@@ -213,14 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 events: data
             });
             calendar.render();
-            $(".fc-title").text(null);
         })
       
         request.fail(function() {
-            alert( "Request failed");
+            alert("Request failed");
         });
     }
-    
     fullCalendar();
 });
 // 시간표시 함수 실행

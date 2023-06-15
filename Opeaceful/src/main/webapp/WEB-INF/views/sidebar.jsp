@@ -226,7 +226,8 @@
     
     <!-- 채팅아이콘 -->
     <div id="chat-icon" >
-		<i class="bi bi-chat" id="openDialogButton"></i>
+		<!-- <i class="bi bi-chat" id="openDialogButton"></i> -->
+        <i class="fa-solid fa-comments" id="openDialogButton"></i>
     </div>
     
      <jsp:include page="/WEB-INF/views/chat.jsp"></jsp:include>

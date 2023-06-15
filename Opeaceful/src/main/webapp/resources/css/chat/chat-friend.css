@@ -38,6 +38,7 @@
 .chat_main_li > img{
     /* 프로필사진 사이즈 조절 */
     width: 3.125rem;
+    border-radius: 1rem;
 }
 .chat_profile > *{
     /* 이름과 프로필 사진의 margin 조절 */
@@ -77,4 +78,41 @@
  border-radius: 100px;
  background-image: linear-gradient(180deg, var(--color-navy) 0%, #a0afd8 99%);
  box-shadow: inset 2px 2px 5px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 사원 명함 */
+.card-container{
+    border: 1px solid var(--color-light-gray);
+    width: 30rem;
+    height: 13rem;
+/*     border-radius: 16px; */
+    display: flex;
+/*     justify-content: center; */
+/*     align-items: flex-start; */
+/*     padding-left: 20px; */
+}
+.adminUserPicture{
+    width: 35%;
+    height: 90%;
+    margin-right: 2rem;
+    margin-left: 1.6rem;
+}
+.adminUserPicture>img{
+	width: 100%; height: 100%;
+	border-radius: 1rem;
+}
+.adminInfoTable{
+/*     margin: 0; */
+    font-size: var(--font13);
+    font-weight: 300;
+    text-align-last: center;
+}
+.adminInfo{
+	border-bottom: white;
+}
+.member-chat-profile-close{
+	position: absolute;
+    left: 95%;
+    top: 15%;
+    font-size: 1.3rem;	
 }

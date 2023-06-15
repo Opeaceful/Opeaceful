@@ -175,7 +175,8 @@ function checkMember(){
 }
 
 //input창이 있을 경우 input창을 통한 검색
-if (document.getElementById("member-search-keyword")) {
+if(document.getElementById("member-search-keyword")) {
+
 
     document.getElementById("member-search-keyword").addEventListener("keydown", function(event) {
          if (event.key === "Enter") {

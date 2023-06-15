@@ -102,7 +102,7 @@ public class BoardDao {
 	
 	public int updateBoard(Board b) {
 		
-		
+		//수정
 		
 		return sqlSession.update("boardMapper.updateBoard", b);
 	}
@@ -114,6 +114,10 @@ public class BoardDao {
 	
 	public int deleteUpfile(int boardNo) {
 		return sqlSession.delete("boardMapper.deleteUpfile", boardNo);
+	}
+	
+	public int selectDeptCode(int userNo) {
+		return sqlSession.selectOne("deptMapper.calendarDeptCode", userNo);
 	}
 	
 }

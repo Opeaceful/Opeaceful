@@ -251,9 +251,12 @@ public class BoardController {
 		
 		b.setBoardCd(boardCode);
 		
+		
 		b.setCreateDate(date);
 		
 		int userNo = loginUser.getUserNo();
+		int deptCode = boardService.selectDeptCode(userNo);
+		b.setDeptCode(deptCode);
 		
 		if(b.getFixed() == null) {
 			b.setFixed("N");

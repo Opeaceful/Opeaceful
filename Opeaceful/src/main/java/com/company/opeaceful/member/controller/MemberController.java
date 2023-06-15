@@ -77,9 +77,7 @@ public class MemberController {
 							   Model model,
 							   HttpSession session,
 							   @ModelAttribute ("loginUser") Member loginUser) {
-		if(m.getExtension().equals("등록된 내선번호 없음")) {
-			m.setExtension(null);
-		}
+
 		// 이미지 저장경로 설정
 		String webPath = "/resources/file/mypage/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);

@@ -8,6 +8,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.approval.model.vo.ApprovalMemo;
+import com.company.opeaceful.calendar.model.vo.Calendar;
 
 //(승은)
 public interface ApprovalService {
@@ -56,6 +57,9 @@ public interface ApprovalService {
 	
 	String selectSignImg(int userNo);
 	
+	/* [혜린 - 캘린더용 연차 일정 조회] */
+	Approval selectAddEvent(int approvalNo);
+	
 //----------------- insert ---------------------------------------
 	
 	int insertForm(ApprovalForm form, List<ApprovalFile> fileList );
@@ -69,6 +73,9 @@ public interface ApprovalService {
 	int insertMemo(ApprovalMemo memo , List<ApprovalFile> fileList);
 	
 	int insertSignImg(int userNo, String changeName);
+	
+	/* [혜린 - 캘린더 연차 일정 추가] */
+	int insertEvent(Calendar calendar);
 	
 //----------------- update ---------------------------------------
 
@@ -103,4 +110,7 @@ public interface ApprovalService {
 	int deleteFavor(int favorNo);
 	
 	int deleteMemo(int memoNo);
+	
+	/* [혜린 - 캘린더 취소 연차 일정 삭제] */
+	int deleteApvEvent(Calendar calendar);
 }

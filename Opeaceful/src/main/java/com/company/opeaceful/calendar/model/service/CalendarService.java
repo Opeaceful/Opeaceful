@@ -29,5 +29,9 @@ public interface CalendarService {
 	public int updateMemo(CalendarMemo calendarMemo);
 	
 	public CalendarMemo selectMemo(int userNo);
+
+	public ArrayList<Calendar> dDayList (int userNo);
+	
+	public int dDayNone(int calendarNo);
 	
 }
