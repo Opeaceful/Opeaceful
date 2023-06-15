@@ -40,7 +40,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 	<jsp:include page="/WEB-INF/views/approval/memoModal.jsp" />
   
     <!-- [승은] -->
-    <div class="my-approval-wrap content-wrap">
+    <div class="content-wrap" id="all-approval-wrap">
       <div class="container">
         <div class="title-box">
           <h2 class="title-common">MY 전자결재</h2>
@@ -59,7 +59,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
         		<option value="${ now - 4 }">${ now - 4 }</option>
         	</select>
         
-          <table class="my-approval-table table table-common">
+          <table class="all-approval-table table table-common">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -223,7 +223,31 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
 
 
+	<div class="div-approval-search-wrap"
+		>
+		
+		<div id="div-select-member-search">
+			<img src="${path }/resources/image/approval/person-search-icon.svg">
+			
+			<div class = "div-searched-member-name">
+				사원 검색
+			</div>
+				
+		</div>
 
+		<div class="div-search-input-wrap input-group">
+			
+			<input type="text"
+				class="form-control box-shadow-none input-search-member"
+				placeholder="제목 검색"
+				>
+			<button class="btn btn-outline-secondary search-btn2" type="button"
+				style="border: none;">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</div>
+
+	</div>
 
 
 
@@ -242,31 +266,15 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
 			</div>
       </div>
+      
+      
+      
+
+      
+      
+      
     </div>
 
-	<div
-		style="display: flex; justify-content: center; margin-top: 2rem;">
-		
-		<div id="div-select-member-search">
-			사원 선택
-			<button class="btn-outline-secondary search-btn2" type="button" style="border: none;">
-				<i class="fa-solid fa-magnifying-glass"></i>
-			</button>
-		</div>
-
-		<div class="input-group"
-			style="width: 30%; border: none; border-bottom: 2px solid; font-size: small; ">
-			<input type="text"
-				class="form-control box-shadow-none input-search-member"
-				placeholder="제목 검색"
-				style="width: 30%; border: none; text-align: center; font-size: 14px;">
-			<button class="btn btn-outline-secondary search-btn2" type="button"
-				style="border: none;">
-				<i class="fa-solid fa-magnifying-glass"></i>
-			</button>
-		</div>
-
-	</div>
 
 	<script type="module" src="${path}/resources/js/approval/allApprovalFront.js"></script>
 

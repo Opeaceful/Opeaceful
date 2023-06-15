@@ -1,20 +1,124 @@
-
-#div-select-member-search{
-
-    vertical-align: middle;
-        border-bottom: 2px solid var(--color-navy);
-        display: flex;
-        align-items: center;
-        margin: 0px 1rem;
-        padding-left: 1rem;
-        padding-right: 0.5rem;
-        cursor: pointer;
-
-
+#all-approval-wrap input:focus-visible,
+#all-approval-wrap textarea:focus-visible,
+#all-approval-wrap select:focus-visible,
+#all-approval-wrap input:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
-#div-select-member-search > *{
-    margin-left: 0.5rem;
-    background-color: unset;
-    color: gray;
+/* 부트스트랩 인풋 디자인 막기용 */
+#all-approval-wrap input:focus {
+  box-shadow: none;
+  border: none;
 }
+
+#all-approval-wrap input::placeholder{
+  color: var(--font-black);
+}
+
+#all-approval-wrap input::-webkit-input-placeholder{
+  color: var(--font-black);
+}
+
+#all-approval-wrap input:-ms-input-placeholder{
+  color: var(--font-black);
+}
+
+
+
+
+.all-approval-table {
+  table-layout: fixed;
+  margin-bottom: 1rem;
+}
+.all-approval-table th:nth-child(1) {
+  width: 5%;
+}
+.all-approval-table th:nth-child(2) {
+  width: 15%;
+}
+.all-approval-table th:nth-child(3) {
+  width: 40%;
+}
+.all-approval-table th:nth-child(4) {
+  width: 20%;
+}
+.all-approval-table th:nth-child(5) {
+  width: 10%;
+}
+.all-approval-table th:nth-child(6) {
+  width: 10%;
+}
+
+.all-approval-table td:nth-child(3) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+
+
+
+.div-approval-search-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+  margin-bottom: 10vh;
+}
+
+#div-select-member-search {
+  min-width: 180px;
+  vertical-align: middle;
+  border-bottom: 2px solid var(--color-navy);
+  display: flex;
+  align-items: center;
+  margin: 0px 1rem;
+  cursor: pointer;
+}
+
+#div-select-member-search img {
+  width: 20px;
+  height: 20px;
+  filter: var(--filter);
+}
+
+.div-searched-member-name {
+  flex: 1;
+  margin-left: 0.5rem;
+  text-align: center;
+  font-size: var(--font14);
+  color: var(--font-black);
+}
+
+
+
+.div-search-input-wrap i {
+  color: var(--font-black);
+}
+
+.div-search-input-wrap{
+  width: 30%;
+  border: none;
+  border-bottom: 2px solid var(--color-navy);
+}
+
+.div-search-input-wrap > input{
+  width: 30%;
+  border: none;
+  font-size: small;
+  text-align: center;
+  font-size: var(--font14);
+}
+
+/* 
+style="width: 30%; border: none;  font-size: 14px;" */
+
+/* 
+#div-select-member-search > * {
+  margin-left: 0.5rem;
+  background-color: unset;
+  color: gray;
+  border: none;
+} */
