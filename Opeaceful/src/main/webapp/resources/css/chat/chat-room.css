@@ -34,6 +34,7 @@
 }
 .profile-img{
     width: 3.125rem;
+    border-radius: 1rem;
 }
 .chat_room_li .chat_talk{
     /* 프로필 사진과 메시지(채팅) 내용 사이 간격 조절 */
