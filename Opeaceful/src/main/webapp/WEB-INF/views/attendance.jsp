@@ -65,7 +65,7 @@
 					</div>
 				</c:if>
 			</c:forEach>
-			<div class="attendance-table-div">
+			<div class="attendance-table-div .scroll-bar">
 	             <table class="table table-hover table-common">
 	                <thead class="attendance-thead">
 	                    <tr>
@@ -78,6 +78,7 @@
 	                    </tr>
 	                </thead>
 	                <tbody id="AttendanceTbody">
+	                	<c:set var="total" value="0"/>
 						<c:forEach items="${adList}" var="ad">
 							<tr>
 								<td>${ad.date}</td>
@@ -110,10 +111,12 @@
 							    	</c:otherwise>
 						    	</c:choose>
 							</tr>
+							<c:set var="total" value="${total + ad.totalWorkTime}"/>
 						</c:forEach>
 	                </tbody>
 	            </table>
 			</div>
+			<div class="total"><c:out value="${total}"/>시간</div>
             <!-- 페이징 영역 -->
             <%-- <c:set var="url" value="${path}/attendance/check?cpage=" /> --%>
             

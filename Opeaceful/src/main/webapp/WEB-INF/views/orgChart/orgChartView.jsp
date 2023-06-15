@@ -26,8 +26,8 @@
 					<c:set var="deptList" value="${map[deptKey]}"/>
 						<li>
 							<div class="dp-name" id="dp-name">${td.deptName}</div>
-								<ul>
-									<c:forEach items="${deptList}" var="team">
+								<c:forEach items="${deptList}" var="team">
+									<ul>
 										<li>
 											<table>
 												<thead>
@@ -48,8 +48,8 @@
 												</c:forEach>
 											</table>
 										</li>
-									</c:forEach>
-								</ul>
+									</ul>
+								</c:forEach>
 							</li>
 					</c:forEach>
 				</ul>

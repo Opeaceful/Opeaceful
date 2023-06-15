@@ -78,7 +78,7 @@
 						</div> --%>
 					</div>
 				</div>
-				<div class="col right-box">
+				<div class="col right-box org-right-box">
 					<div class="name-btn-box">
 						<!-- <div class="department-name-box"></div> -->
 						<!-- <button class="btn btn-primary personnel-btn" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button> -->
@@ -125,7 +125,7 @@
 				</div>
 			</div>
 			<!-- 인사발령 Modal -->
-			<div class="modal fade" id="change" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal fade" id="pesonnel-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
 					<div class="modal-content change-modal">
 						<div class="modal-header">

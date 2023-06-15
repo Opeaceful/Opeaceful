@@ -15,6 +15,7 @@ body *{
     margin-right: 26px;
     pointer-events: none;
 }
+.input-click {width: 77%;}
 .input-click>input{
     pointer-events: none;
 }
@@ -26,6 +27,12 @@ input{
 input:focus{
     outline: none;
 }
+.team{
+    margin-bottom: 7px; 
+    font-size: var(--font17);
+    width: 108%;
+    display: flex;
+}
 .team-plus{
     padding-left: 16px;
     font-size: var(--font14);
@@ -36,9 +43,15 @@ input:focus{
     font-size: var(--font13);
     cursor: pointer;
 }
-.li-team-minus, .li-team-change{
+.team-icons{margin-left: 5px;}
+.li-team-minus{
     padding-left: 8px;
-    font-size: var(--font11);
+    font-size: var(--font17);
+    cursor: pointer;
+}
+.li-team-change{
+    padding-left: 8px;
+    font-size: var(--font12);
     cursor: pointer;
 }
 .oc-all{
