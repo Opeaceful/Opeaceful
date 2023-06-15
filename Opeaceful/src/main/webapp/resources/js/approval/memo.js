@@ -6,8 +6,7 @@ let memoEvent = () => {
     .addEventListener('click', () => {
       // 메모 모달 감추기
 
-      $("#memo-modal-back").modal("hide");
-
+      $('#memo-modal-back').modal('hide');
     });
 
   // 작성버튼 클릭시 메모 추가 화면 리셋 후 열기
@@ -51,4 +50,3 @@ let memoEvent = () => {
 };
 
 memoEvent();
-s;

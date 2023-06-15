@@ -43,16 +43,14 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
     <div class="content-wrap" id="all-approval-wrap">
       <div class="container">
         <div class="title-box">
-          <h2 class="title-common">MY 전자결재</h2>
+          <h2 class="title-common">전자결재 관리</h2>
         </div>
 
 		<c:set var="now" value="${LocalDate.now().getYear()}" />
         <div class="inner-wrap">
         	<select id="select-year" >
-        		<c:if test="${ menu eq 'wait' }">
-        			<option value="-1" selected>전체</option>
-        		</c:if>
-        		<option value="${ now }"  ${ menu eq 'all' ? 'selected ' : '' }>${ now }</option>
+        		<option value="-1" >전체</option>
+        		<option value="${ now }" selected>${ now }</option>
         		<option value="${ now - 1 }" >${ now - 1 }</option>
         		<option value="${ now - 2 }">${ now - 2 }</option>
         		<option value="${ now - 3 }">${ now - 3 }</option>
@@ -170,7 +168,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 								<div class="input-group mb-3">
 									<input type="text"
 										class="form-control box-shadow-none input-search-member"
-										placeholder="사원번호/이름 입력">
+										placeholder="이름 입력">
 									<button class="btn btn-outline-secondary search-btn2"
 										type="button">
 										<i class="fa-solid fa-magnifying-glass"></i>
@@ -178,8 +176,8 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 								</div>
 								<table class="org-table-head table table-common">
 									<thead>
-										<th width="50%">부서</th>
-										<th width="50%">사원</th>
+										<th width="40%">부서</th>
+										<th width="60%">사원</th>
 									</thead>
 								</table>
 							</div>
@@ -201,9 +199,11 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
 					</div>
 					<div class="modal-footer">
-						<button id="btn-select-copy-form-type" type="button"
-							class="btn btn-primary" data-bs-dismiss="modal"
-							data-bs-target="#modal-select-approval-type">선택</button>
+						<button id="btn-reset-search-member" type="button"
+							class="btn btn-outline-primary" data-bs-dismiss="modal"
+							data-bs-target="#modal-select-search-user">선택해제</button>
+						<button id="btn-select-search-member" type="button"
+							class="btn btn-primary" >선택</button>
 					</div>
 				</div>
 			</div>
@@ -237,8 +237,8 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
 		<div class="div-search-input-wrap input-group">
 			
-			<input type="text"
-				class="form-control box-shadow-none input-search-member"
+			<input type="text" id="input-search-title"
+				class="form-control box-shadow-none"
 				placeholder="제목 검색"
 				>
 			<button class="btn btn-outline-secondary search-btn2" type="button"

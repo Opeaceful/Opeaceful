@@ -120,7 +120,7 @@ public class ApprovalDao {
 		map.put("status", status);
 		map.put("type", type);
 		map.put("year", year);
-		map.put("page", (page-1)* 10);
+		map.put("page", (page-1) * 10);
 		map.put("isAdmin", isAdmin);
 		
 		return sqlSession.selectList("aprMapper.selectApprovalList" , map);
@@ -145,7 +145,7 @@ public class ApprovalDao {
 		map.put("menu", menu);
 		map.put("type", type);
 		map.put("year", year);
-		map.put("page", (page-1)* 10);
+		map.put("page", (page-1) * 10);
 		
 		return sqlSession.selectList("aprMapper.selectApprovalListforAuthorize" , map);
 	}
@@ -204,25 +204,31 @@ public class ApprovalDao {
 	}
 	
 	// 결재문서 서치 리스트 조회용 (관리권한가진 유저용임)
-	public List<Approval> searchApprovalList(int userNo, int year, Integer status, int type, String keyword ){
+	public List<Approval> searchApprovalList(int userNo, int year, Integer status, int type, String keyword, int page ){
 		Map<String, Object> params = new HashMap<>();
 		params.put("userNo", userNo);
 		params.put("year", year);
 		params.put("status", status);
 		params.put("type", type);
+		params.put("page",(page-1) * 10);
 		
-		if(keyword.isBlank()) {
+		if(keyword==null || keyword.isBlank()) {
 			params.put("keyword", null);
 		}else {
 			// like문에 들어갈 문자열 혹시 모를 _ 와 % escape 처리 
-			keyword = keyword.replaceAll("%", "\\%");
-			keyword = keyword.replaceAll("_", "\\_");
+			keyword = keyword.replaceAll("%", "^%");
+			keyword = keyword.replaceAll("_", "^_");
+
+			String keyword1 = keyword+"%";
+			String keyword2 = "%"+keyword;
+			String keyword3 = "%"+keyword+"%";
 			
 			params.put("keyword", keyword);
-			params.put("keyword1", keyword+"%");
-			params.put("keyword2", "%"+keyword);
-			params.put("keyword3", "%"+keyword+"%");
+			params.put("keyword1", keyword1);
+			params.put("keyword2", keyword2);
+			params.put("keyword3", keyword3);
 		}
+		
 		
 		return sqlSession.selectList("aprMapper.searchApprovalList" , params);
 	}
@@ -236,21 +242,18 @@ public class ApprovalDao {
 		params.put("status", status);
 		params.put("type", type);
 		
-		if(keyword.isBlank()) {
+		if(keyword==null ||keyword.isBlank()) {
 			params.put("keyword", null);
 		}else {
 			// like문에 들어갈 문자열 혹시 모를 _ 와 % escape 처리 
-			keyword = keyword.replaceAll("%", "\\%");
-			keyword = keyword.replaceAll("_", "\\_");
-			
+			keyword = keyword.replaceAll("%", "^%");
+			keyword = keyword.replaceAll("_", "^_");
+			keyword = "%"+keyword+"%";
 			params.put("keyword", keyword);
 		}
 		
 		return sqlSession.selectOne("aprMapper.searchApprovalListCount" , params);
 	}
-
-
-
 
 
 	
@@ -480,7 +483,7 @@ public class ApprovalDao {
 				result = deleteFileList(fileList);
 			}
 		}
-
+		
 		return result;
 	};
 	

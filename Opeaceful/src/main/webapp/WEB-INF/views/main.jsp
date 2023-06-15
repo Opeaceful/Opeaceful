@@ -63,8 +63,8 @@
 						
 						<div class="main-content-wrap">
 							<div class="main-content-text row">
-								<div class="col">결재 문서가 <span class="main-sign-count" id="main-sign-ck">3</span> 건 있습니다.</div>
-								<div class="col">승인 대기중인 결재 문서가 <span class="main-sign-count" id="main-sign-wait">3</span> 건 있습니다.</div>
+								<div class="col"  id="main-sign-ck">결재 문서가 <span class="main-sign-count">${ progressApr }</span> 건 있습니다.</div>
+								<div class="col"  id="main-sign-wait">승인 대기중인 결재 문서가 <span class="main-sign-count">${ waitApr }</span> 건 있습니다.</div>
 							</div>
 							<div class="main-content-text text-end" id="main-sign-go">
 								결제확인 &gt;&gt;
