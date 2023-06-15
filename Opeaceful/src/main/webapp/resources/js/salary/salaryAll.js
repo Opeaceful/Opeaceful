@@ -394,7 +394,7 @@ $("#saray-button-add").click(function(){
                 element: "div",
                 attributes: {
                   innerHTML: `
-                    <label for="paymentDate">지급 년 월: </label>
+                    <label for="paymentDate">지급 년 월 : </label>
                     <input id="swalPaymentDate" type="date" >
                   `
                 }
@@ -435,4 +435,13 @@ $("#saray-button-add").click(function(){
 
 });
 
+$("#member-search-keyword").on("keyup", function(){
 
+    let year = $("#salary-year").val(); 
+    let month = $("#salary-month").val();
+
+
+    if (checkMemberNo.length > 0){
+            location.href=`${path}/salary/AllSalary?year=${year}&month=${month}&no=${checkMemberNo}`;
+     }
+})
