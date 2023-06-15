@@ -221,14 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 events: data
             });
             calendar.render();
-            $(".fc-title").text(null);
         })
       
         request.fail(function() {
-            alert( "Request failed");
+            alert("Request failed");
         });
     }
-    
     fullCalendar();
 });
 // 시간표시 함수 실행

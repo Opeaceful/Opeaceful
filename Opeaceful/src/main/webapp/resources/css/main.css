@@ -181,8 +181,7 @@
     background-color: var(--color-background);
     border-color: var(--color-background);
 }
-/* 보더 없앰 */
-#calender-box .fc th, .fc td {
+/* 보더 없앰 */ .fc th, .fc td {
     border-style: solid;
     border-width: 0px;
     vertical-align: top;
@@ -214,11 +213,8 @@
     margin-top: -16px;
 }
 
-#calender-box .fc-unthemed td.fc-today{
-    background: var(--fc-mini-tobay);
- 
-}
-
+#calender-box .fc-unthemed td.fc-today{background: var(--fc-mini-tobay);}
+#calender-box .fc-title{display: none;}
 /* ---------- 날씨 ---------- */
 .weather .row{
     margin-left: 0;

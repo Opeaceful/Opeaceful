@@ -665,4 +665,4 @@ function dialogElementStyle(Id, top, left, zIndex){
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
-window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신
+//window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신
