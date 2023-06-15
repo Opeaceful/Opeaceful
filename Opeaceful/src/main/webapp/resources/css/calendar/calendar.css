@@ -163,7 +163,7 @@ div *{
 }
 .d-event, .input-memo{
   font-size: var(--font14);
-  color: var(--col8);
+  color: var(--memo-col8);
 }
 /* 메모 textarea영역 */
 .child-memo-wrap{
@@ -281,6 +281,7 @@ div *{
   color: var(--memo-day-color);
   margin-right: 5px;
   padding-left: 7px;
+  background-color: var(--color-background);
 }
 .date-box:focus{
   outline:none;

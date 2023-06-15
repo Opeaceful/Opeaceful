@@ -107,7 +107,8 @@ th:nth-child(3) {
 
 #add-form-modal select {
   cursor: pointer;
-  background-color: white;
+  background-color: var(--color-background);
+  color: var(--font-black);
 }
 
 #add-form-modal button {
@@ -177,9 +178,14 @@ th:nth-child(3) {
   margin: auto;
 }
 
-#form-name {
+#form-name{
   width: 25vw;
   min-width: 300px;
+}
+
+#form-name[color-theme='dark']{
+  background-color: var(--color-background);
+  color: var(--font-black);
 }
 
 #add-form-modal .modal-header {
