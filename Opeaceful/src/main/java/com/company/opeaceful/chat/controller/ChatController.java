@@ -46,31 +46,33 @@ public class ChatController {
 	    
 	    ArrayList<Member> list = chatService.adminAll();
 	    ArrayList<OnlineStatus> onlineStatus = chatService.onlineStatusList();
-	    ArrayList<Board> notice = chatService.noticeList();	    
+	    ArrayList<Board> notice = chatService.noticeList();
+	    List<ChatRoom> crList = chatService.selectChatRoomList();
 	    
 	    response.put("loginUser", loginUser);
 	    response.put("memberList", list);
 	    response.put("onlineStatus", onlineStatus);
 	    response.put("notice", notice);
+	    response.put("crList", crList);
 
 	    return new Gson().toJson(response);
 
 	}
 	
-	// 채팅방 목록 조회
-	@GetMapping("/chat/chatRoom")
-	@ResponseBody
-	public String selectChatRoomList(@ModelAttribute("loginUser") Member loginUser) {
-		
-		Map<String, Object> response = new HashMap<>();
-		
-		List<ChatRoom> crList = chatService.selectChatRoomList();
-		
-		response.put("crList", crList);
-		response.put("loginUser", loginUser);
-			
-		return new Gson().toJson(response);
-	}
+//	// 채팅방 목록 조회
+//	@GetMapping("/chat/chatRoom")
+//	@ResponseBody
+//	public String selectChatRoomList(@ModelAttribute("loginUser") Member loginUser) {
+//		
+//		Map<String, Object> response = new HashMap<>();
+//		
+//		
+//		
+//		
+//		response.put("loginUser", loginUser);
+//			
+//		return new Gson().toJson(response);
+//	}
 	
 	
 	// 채팅방 만들기
@@ -108,7 +110,7 @@ public class ChatController {
 								) {
 		join.setUserNo(loginUser.getUserNo());
 		
-		ArrayList<ChatParticipant> chatRoomList = chatService.chatRoomList(loginUser);
+		List<ChatParticipant> chatRoomList = chatService.chatRoomList(loginUser);
 		
 		
 		Map<String, Object> response = new HashMap<>();

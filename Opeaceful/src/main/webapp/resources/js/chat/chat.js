@@ -241,12 +241,14 @@ statusList.addEventListener('change', function() {
 	}
 });
 
-let chattingSock = {};
+
+
+let chattingSock = new SockJS(path + "/chat/webSocket");
 //var roomId;
 /* 채팅방 목록 조회 */
 function chatAll() {
     $.ajax({
-        url: path + "/chat/chatRoom",
+        url: path + "/chat",
         method: "GET",
         dataType: "json",
         success: function(response) {
@@ -254,7 +256,7 @@ function chatAll() {
             const loginUser = response.loginUser;
             const chatRoomList = response.crList;
 
-            //  console.log(chatRoomList);
+            console.log(chatRoomList);
 
             var chatRoomHtml = '';
             var hasChatRoom = false;
@@ -293,7 +295,7 @@ function chatAll() {
 
 
             /* 채팅방 클릭 이벤트 및 변수 넘겨주기 */
-            $("ul.chat__room_ul a").on("click", function(e) {
+           $("ul.chat__room_ul a").on("click", function(e) {
                 e.preventDefault();
 
                 const roomId = $(this).data("chat-room-id");
@@ -317,7 +319,7 @@ function chatAll() {
                 
                              
 
-            });
+            }); 
             
             
    /*         function sendMessage(roomId) {
@@ -361,10 +363,9 @@ function chatAll() {
                     dataType: "json",
                     success: function(response) {
 
-
+					
                         const join = response.join;
                         const list = response.list;
-
 
                      //   console.log(chatRoom)
                      //  console.log(response);
@@ -401,7 +402,7 @@ function chatAll() {
                             '<div class="chatting_date_line">' +
                             '<time datetime="2021-03-29">2021년 3월 29일 월요일</time>' +
                             '</div>' +
-                            '<div id="main_chatting_' + roomId + '" class="main_chatting">';
+                            '<div id="main_chatting_here" class="main_chatting">';
 
                         /*	for (var i = 0; i < list.length; i++) {
                                var message = list[i]
@@ -475,18 +476,74 @@ function chatAll() {
                         // 에러 처리
                     },
                     complete : function(){
-                        chattingSock[roomId] = new SockJS(path + "/chat/webSocket");
+                        
                         console.log("채팅로그2 : "+roomId);	
                         
                         // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
-                        chattingSock[roomId].onmessage = function(e) {
+                       
+                       
+                       
+                       
+                       
+                    }
+                    
+                });
+            }
+        }
+    });
+	
+	
+	
+	
+	
+};
+chatAll();
+
+
+$(document).on("click", ".chatting_send_button", function(e){
+	let roomId = $(e.target).attr("id");
+	roomId = roomId.replace("chatting_send_", "");
+
+    const inputChatting = document.getElementById("chatting_textarea_" + roomId);
+	
+	
+
+	console.log("이게뭐야????? ",this, inputChatting.value);
+    if (inputChatting.value.trim().length == 0) {
+        alert("입력이 되지 않았습니다");
+
+        inputChatting.value = "";
+        inputChatting.focus();
+
+    } else {
+
+        const chatMessage = {
+            // "userNo": loginUser.userNo,
+            "chatRoomNo": roomId,
+            // "userName": loginUser.userName,
+            "message": inputChatting.value
+        };
+    //    console.log("버튼이 눌렸다");
+    //    console.log(loginUser);
+    //   console.log(chatRoomList);
+       console.log(roomId);
+        chattingSock.send(JSON.stringify(chatMessage));
+        inputChatting.value = "";
+  }
+   
+})
+
+ chattingSock.onmessage = function(e) {
                             // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
                             // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
-                            console.log("채팅로그3 : "+roomId);	
+                         //   console.log("채팅로그3 : "+roomId);	
                             // 전달받은 메세지를 js객체로 변환
 
                             const chatMessage = JSON.parse(e.data); // json -> js Object
                             //	console.log(chatMessage);
+                            console.log(e);
+                            console.log(chatMessage);
+                            console.log("나야3? :" +loginUser);
 
                             var message = chatMessage.message;
                             var receivedDate = chatMessage.receivedDate;
@@ -494,8 +551,8 @@ function chatAll() {
                             
                             console.log(chatMessage.userNo, loginUser.userNo,isCurrentUser);	
 
-                            var chatContainer = document.getElementById("main_chatting_" + roomId);
-                            console.log(chatContainer);
+                           var chatContainer = document.getElementById("main_chatting_here");
+                    //        console.log(chatContainer);
             
                             
                             if (!isCurrentUser) {
@@ -556,52 +613,30 @@ function chatAll() {
                             }
                             
 
-                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                      //      chatContainer.scrollTop = chatContainer.scrollHeight;
 
                         };
-                    }
-                    
-                });
-            }
-        }
-    });
-
-};
-chatAll();
 
 
-$(document).on("click", ".chatting_send_button", function(e){
-	let roomId = $(e.target).attr("id");
-	roomId = roomId.replace("chatting_send_", "");
-
-    const inputChatting = document.getElementById("chatting_textarea_" + roomId);
-
-	console.log("이게뭐야????? ",this, inputChatting.value);
-    if (inputChatting.value.trim().length == 0) {
-        alert("입력이 되지 않았습니다");
-
-        inputChatting.value = "";
-        inputChatting.focus();
-
-    } else {
-
-        const chatMessage = {
-            // "userNo": loginUser.userNo,
-            "chatRoomNo": roomId,
-            // "userName": loginUser.userName,
-            "message": inputChatting.value
-        };
-    //    console.log("버튼이 눌렸다");
-    //    console.log(loginUser);
-    //   console.log(chatRoomList);
-       console.log(roomId);
-        chattingSock[roomId].send(JSON.stringify(chatMessage));
-        inputChatting.value = "";
-  }
-   
 
 
-})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* 채팅방 생성 다이얼로그 */
@@ -644,7 +679,7 @@ $(document).ready(function() {
                     alert("채팅방 생성 성공");
                     // 추가로 수행할 작업이 있다면 여기에 작성
                     newDialog.dialog("close");
-                    chatAll();
+              //      chatAll();
                 },
                 error: function(xhr, status, error) {
                     // 채팅방 생성 실패 시 동작
@@ -701,4 +736,4 @@ function dialogElementStyle(Id, top, left, zIndex){
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
-window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신
+//window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신
