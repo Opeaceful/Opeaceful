@@ -123,8 +123,8 @@ CREATE TABLE `CALENDAR` (
 	`DEPT_CODE`	INT	NULL	COMMENT '팀(부서)코드FK',
 	`TITLE`	NVARCHAR(20)	NOT NULL	COMMENT '일정제목',
 	`CONTENT`	NVARCHAR(500)	NULL	COMMENT '일정내용',
-	`START_DATE`	NVARCHAR(30)	NOT NULL	COMMENT '시작일',
-	`END_DATE`	NVARCHAR(30)	NOT NULL	COMMENT '종료일',
+	`START_DATE`	DATE	NOT NULL	COMMENT '시작일',
+	`END_DATE`	DATE	NOT NULL	COMMENT '종료일',
 	`COLOR`	NVARCHAR(20)	NOT NULL	COMMENT '일정 색상',
 	`D_DAY`	CHAR(1)	NOT NULL	COMMENT '디데이지정여부'
 );
@@ -740,25 +740,3 @@ INSERT INTO ONLINE_STATUS(STATUS_TYPE, STATUS_NAME, STATUS_IMG)
    VALUES ( 'N', '공지사항' ),
 			( 'F', '자유게시판' ),
             ( 'T', '팀게시판' );
-
-
--- 관리자 계정 데이터
-INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
-   VALUES ( 230501 , 0,'$2a$10$yxK11.vtoleH4hCUbWfIrezMoyK7Jf4pJQ4INP.5L1G4C3vkCO4Pm', 'admin', SYSDATE(), 'admin@gmail.com');
-
-INSERT INTO USER_ROLE(USER_NO, ROLE_CODE)
-   VALUES ( 1 , 'Y01'),
-			( 1 , 'D01'),
-            ( 1 , 'A01'),
-            ( 1 , 'B01'),
-            ( 1 , 'B02'),
-			( 1 , 'M01'),
-			( 1 , 'R01'),
-            ( 1 , 'S01'),
-            ( 1 , 'T01'),
-            ( 1 , 'T02') ;
-            
-
-
-
-

@@ -28,4 +28,6 @@ public class Calendar {
 	private String end;
 	private String backgroundColor;
 	
+	private String name;
+	
 }

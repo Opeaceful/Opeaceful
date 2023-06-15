@@ -287,6 +287,9 @@
 	<insert id="insertBoard" parameterType="board" useGeneratedKeys="true" keyProperty="boardNo">
 		INSERT INTO BOARD(BOARD_CD,
 						  BOARD_TITLE,
+						  <if test='boardCd == "T"'>
+						  DEPT_CODE,
+						  </if>
 						  BOARD_CONTENT,
 						  BOARD_WRITER,
 						  CREATE_DATE,
@@ -294,6 +297,9 @@
 						  SECRET)
 		VALUES (#{boardCd},
 			    #{boardTitle},
+			    <if test='boardCd == "T"'>
+			    #{deptCode},
+			    </if>
 			    #{boardContent},
 			    #{boardWriter},
 			    #{createDate},

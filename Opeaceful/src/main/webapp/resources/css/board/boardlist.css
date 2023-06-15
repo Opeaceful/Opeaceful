@@ -94,6 +94,9 @@ div *{
     height: 30px;
     font-size: var(--font13);
 }
+.search-box{
+    height:27px;
+}
 .board-wrap5>*{
     display: flex;
     justify-content: center;

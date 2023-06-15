@@ -14,6 +14,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.approval.model.vo.ApprovalMemo;
+import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 import com.company.opeaceful.commom.template.Pagination;
 
@@ -147,7 +148,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public String selectSignImg(int userNo) {
 		return aprDao.selectSignImg(userNo);
 	}
-
+	
+	/* [혜린 - 캘린더용 연차 일정 조회] */
+	@Override
+	public Approval selectAddEvent(int approvalNo) {
+		return aprDao.selectAddEvent(approvalNo);
+	}
 	
 //	-------------------------------- insert 구간 ----------------------------------------
 	@Override
@@ -205,6 +211,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int insertSignImg(int userNo, String changeName) {
 		return aprDao.insertSignImg(userNo, changeName);
+	}
+	
+	/* [혜린 - 캘린더 연차 일정 추가] */
+	@Override
+	public int insertEvent(Calendar calendar) {
+		return aprDao.insertEvent(calendar);
 	}
 	
 //	-------------------------------- update 구간 ----------------------------------------
@@ -301,6 +313,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int deleteApprovalLine(int approvalNo) {
 		return aprDao.deleteApprovalLine(approvalNo);
+	}
+	
+	/* [혜린 - 캘린더 취소 연차 일정 삭제] */
+	@Override
+	public int deleteApvEvent(Calendar calendar) {
+		return aprDao.deleteApvEvent(calendar);
 	}
 
 	

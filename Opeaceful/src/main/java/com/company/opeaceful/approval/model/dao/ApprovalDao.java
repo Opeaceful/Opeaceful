@@ -16,6 +16,7 @@ import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalForm;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.approval.model.vo.ApprovalMemo;
+import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.commom.model.vo.PageInfo;
 
 //(승은)
@@ -254,6 +255,11 @@ public class ApprovalDao {
 
 	
 	
+	/* [혜린 - 캘린더용 연차 일정 조회] */
+	public Approval selectAddEvent(int approvalNo) {
+		return sqlSession.selectOne("aprMapper.selectAddEvent", approvalNo);
+	}
+	
 //	-------------------------------- insert 구간 ----------------------------------------
 	
 	// 폼 등록
@@ -331,6 +337,12 @@ public class ApprovalDao {
 		
 		return sqlSession.insert("aprMapper.insertSignImg" , params);
 	}
+	
+	/* [혜린 - 캘린더 연차 일정 추가] */
+	public int insertEvent(Calendar calendar) {
+		return sqlSession.insert("calendarMapper.insertEvent", calendar);
+	}
+	
 	
 //	-------------------------------- update 구간 ----------------------------------------
 	
@@ -496,6 +508,11 @@ public class ApprovalDao {
 	// 메모 삭제
 	public int deleteMemo(int memoNo) {
 		return sqlSession.delete("aprMapper.deleteMemo", memoNo);
+	}
+	
+	/* [혜린 - 캘린더 취소 연차 일정 삭제] */
+	public int deleteApvEvent(Calendar calendar) {
+		return sqlSession.delete("calendarMapper.deleteApvEvent", calendar);
 	}
 
 

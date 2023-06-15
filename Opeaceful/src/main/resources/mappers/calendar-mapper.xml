@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="calendarMapper">
+<!-- [혜린 - 캘린더 매퍼] -->
 
 	<!-- 캘린더 일정 리스트 조회용 -->
 	<resultMap type="calendar" id="calendarListResultSet">
@@ -18,6 +19,7 @@
 		<result column="END" property="end"/>
 		<result column="BORDER_COLOR" property="borderColor"/>
 		<result column="BACKGROUND_COLOR" property="backgroundColor"/>
+		<result column="NAME" property="name"/>
 	</resultMap>
 	
 	<!-- 캘린더 내부 메모 -->
@@ -25,8 +27,6 @@
 		<id column="USER_NO" property="userNo"/>
 		<result column="MEMO" property="memo"/>
 	</resultMap>
-	
-	
 	
 	<!-- 개인캘린더 일정 조회 -->
 	<select id="myCalendarList" resultMap="calendarListResultSet">
@@ -37,7 +37,7 @@
 			   TITLE,
 			   CONTENT,
 			   START_DATE AS START,
-			   END_DATE AS END,
+			   DATE_ADD(END_DATE, INTERVAL 1 DAY) AS END,
 			   COLOR AS BORDER_COLOR,
 			   COLOR AS BACKGROUND_COLOR,
 			   D_DAY
@@ -54,7 +54,7 @@
 			   TITLE,
 			   CONTENT,
 			   START_DATE AS START,
-			   END_DATE AS END,
+			   DATE_ADD(END_DATE, INTERVAL 1 DAY) AS END,
 			   COLOR AS BACKGROUND_COLOR,
 			   COLOR AS BORDER_COLOR,
 			   D_DAY
@@ -70,7 +70,7 @@
 			   TITLE,
 			   CONTENT,
 			   START_DATE AS START,
-			   END_DATE AS END,
+			   DATE_ADD(END_DATE, INTERVAL 1 DAY) AS END,
 			   COLOR AS BACKGROUND_COLOR,
 			   COLOR AS BORDER_COLOR,
 			   D_DAY 
@@ -92,7 +92,7 @@
 			   TITLE,
 			   CONTENT,
 			   START_DATE AS START,
-			   END_DATE AS END,
+			   DATE_ADD(END_DATE, INTERVAL 1 DAY) AS END,
 			   COLOR AS BACKGROUND_COLOR,
 			   COLOR AS BORDER_COLOR,
 			   D_DAY
@@ -108,7 +108,7 @@
 			   TITLE,
 			   CONTENT,
 			   START_DATE AS START,
-			   END_DATE AS END,
+			   DATE_ADD(END_DATE, INTERVAL 1 DAY) AS END,
 			   COLOR AS BACKGROUND_COLOR,
 			   COLOR AS BORDER_COLOR,
 			   D_DAY 
@@ -184,12 +184,12 @@
 		WHERE CALENDAR_NO = #{cno}
 	</delete>
 	
-	
-	
-	
-	
-	
-	
+	<!-- 연차일정 삭제 -->
+	<delete id="deleteApvEvent">
+		DELETE FROM CALENDAR
+		WHERE CATEGORY = 'H'
+		AND CONTENT = #{content}
+	</delete>
 	
 	<!-- 메모 추가 -->
 	<insert id="insertMemo" parameterType="calendarMemo">
@@ -211,6 +211,31 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+	<!-- 디데이 조회 -->
+	<select id="dDayList" resultMap="calendarListResultSet">
+		SELECT CONCAT('+',cast(ABS(DATEDIFF(date(START_DATE), now())) as char)) as NAME, TITLE , START_DATE, CALENDAR_NO
+				FROM CALENDAR
+				WHERE D_DAY = 'Y' AND ((CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
+														FROM USER_DEPARTMENT
+														WHERE USER_NO =  #{userNo})) 
+				OR (CATEGORY = 'M' AND USER_NO = #{userNo}))
+				AND DATEDIFF(date(START_DATE), now()) <![CDATA[ < ]]> 0
+		union
+		SELECT cast(DATEDIFF(date(START_DATE), now())*-1 as char) as NAME, TITLE, START_DATE, CALENDAR_NO
+				FROM CALENDAR
+				WHERE D_DAY = 'Y' AND ((CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
+														FROM USER_DEPARTMENT
+														WHERE USER_NO =  #{userNo})) 
+				OR (CATEGORY = 'M' AND USER_NO =  #{userNo}))
+		        AND DATEDIFF(date(START_DATE), now()) > 0
+		 ORDER BY START_DATE ASC
+		 LIMIT 7
+	</select>
 	
+	<update id="dDayNone" parameterType="calendar">
+		UPDATE CALENDAR SET
+		D_DAY = 'N'
+		WHERE CALENDAR_NO = #{calendarNo}
+	</update>
 	
 </mapper>
