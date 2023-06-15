@@ -23,9 +23,14 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
     />
     
     <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
+    
     <link
       rel="stylesheet"
       href="${path}/resources/css/approval/myApproval.css"
+    />
+        <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/allApproval.css"
     />
 
   </head>
@@ -241,21 +246,19 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 
 	<div
 		style="display: flex; justify-content: center; margin-top: 2rem;">
-
-		<select id="select-year"
-			style="border: none; border-bottom: 2px solid; margin: 0px 1rem;">
-			<option value="2023">2023</option>
-			<option value="2022">2022</option>
-			<option value="2021">2021</option>
-			<option value="2020">2020</option>
-			<option value="2019">2019</option>
-		</select>
+		
+		<div id="div-select-member-search">
+			사원 선택
+			<button class="btn-outline-secondary search-btn2" type="button" style="border: none;">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</div>
 
 		<div class="input-group"
 			style="width: 30%; border: none; border-bottom: 2px solid; font-size: small; ">
 			<input type="text"
 				class="form-control box-shadow-none input-search-member"
-				placeholder="사원번호/이름 검색"
+				placeholder="제목 검색"
 				style="width: 30%; border: none; text-align: center; font-size: 14px;">
 			<button class="btn btn-outline-secondary search-btn2" type="button"
 				style="border: none;">

@@ -1,0 +1,20 @@
+
+#div-select-member-search{
+
+    vertical-align: middle;
+        border-bottom: 2px solid var(--color-navy);
+        display: flex;
+        align-items: center;
+        margin: 0px 1rem;
+        padding-left: 1rem;
+        padding-right: 0.5rem;
+        cursor: pointer;
+
+
+}
+
+#div-select-member-search > *{
+    margin-left: 0.5rem;
+    background-color: unset;
+    color: gray;
+}
