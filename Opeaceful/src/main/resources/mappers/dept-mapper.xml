@@ -63,7 +63,12 @@
 	where top_dept_code is null;
   </select>
   
- 
+ <!-- [혜린] 유저 직급코드 조회 -->
+ <select id="calendarDeptCode" resultType="int">
+ 	SELECT DEPT_CODE
+ 	FROM USER_DEPARTMENT
+ 	WHERE USER_NO = #{userNo}
+ </select>
   
   
 </mapper>

@@ -5,9 +5,9 @@
 /* .main-wrap .col-7{width:64%;} */
 /* 각각 컨텐츠 감싸고있는 네모박스 */
 .square-box{ 
-    border: 1px solid var(--color-light-gray);
+    border: 1px solid var(--square-box);
     border-radius: 20px;
-    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+    box-shadow: 5px 5px 15px -5px var(--box-shadow);
 	margin: 24px 0;
 }
 .main-title {
@@ -18,7 +18,7 @@
     margin: 20px 20px 0px 20px;
     font-weight: 600;
 }
-.main-content-wrap{margin: 10px 20px;}
+.main-content-wrap{margin: 15px 20px;}
 .main-content-text{
     font-size: var(--font14);
     cursor: pointer;
@@ -32,7 +32,7 @@
 .main-naver-go{
     font-size: var(--font14);
 }
-/* ====================== 왼쪽 ====================== */
+/* ====================== 왼쪽 영역 설정 ====================== */
 /* ---------- 공지사항 ---------- */
 #board-box{height: 30%; min-height: 240px;}
 #main-notice-title{cursor: pointer;}
@@ -41,11 +41,18 @@
 .main-sign-count{font-size: 20px; color: var(--color-navy);}
 #main-sign-go{padding-top:5px; padding-right: 12px; color: gray;}
 /* ---------- 날씨 ---------- */
-#weather-box{height: 40%;min-height: 320px;}
+#weather-box{height: 43%;min-height: 320px;}
+/* ====================== 오른쪽 영역 설정 ====================== */
+/* ---------- 내정보 ---------- */
+#my-box{height: 40%; padding: 10px 20px; min-height: 300px;}
+/* ---------- 캘린더 ---------- */
+#calender-box{height: 56%; padding: 30px 22px 0 20px;}
+
+
+
 
 /* ====================== 오른쪽 ====================== */
 /* ---------- 내정보 ---------- */
-#my-box{height: 40%; padding: 10px 20px; min-height: 300px;}
 /* 상단 시간 */
 .main-time-box{
 	height: 25%;
@@ -119,15 +126,16 @@
     
 }
 .white-btn{
-    background: var(--color-white);
+    background: var(--color-background);
     border: 1px solid;
     color: var(--color-navy);
     cursor: default;
     pointer-events: none;
 }
-
-#state img{width: 16px; height: 18px; background-color: var(--color-white);}
+/* filter: invert(100%); */
+#state img{width: 16px; height: 18px; filter: var(--filter);}
 #state{margin-bottom: 7px;}
+#state .option-list>li:first-child{background-color: var(--color-background);}
 .select {position: relative;}
 .select .option-list {
   position: absolute;
@@ -137,7 +145,6 @@
   width: 100%;
   overflow: hidden;
   max-height: 0;
-
 }
 .select.active .option-list {max-height: none;}
 #state .select {cursor: pointer;}
@@ -150,8 +157,8 @@
     border-radius: 70%;
     display: inline-block;
 }
-#white{background: white; border: 1px solid black;}
-#black{background: black;}
+#white{background: white; border: 1px solid var(--color-background-bk);}
+#black{background: black; border: 1px solid var(--color-background-bk);}
 .mode-select {position: relative;}
 .mode-select .mode-list {
   position: absolute;
@@ -168,15 +175,11 @@
 
 
 /* ---------- 캘린더 ---------- */
-#calender-box{
-    height: 60%;
-    padding: 30px 22px 0 20px;
-}
 /* 양쪽 화살표 버튼 */
 #calender-box .fc-button-primary {
     color: var(--color-navy);
-    background-color: var(--color-white);
-    border-color: var(--color-white);
+    background-color: var(--color-background);
+    border-color: var(--color-background);
 }
 /* 보더 없앰 */
 #calender-box .fc th, .fc td {
@@ -211,6 +214,11 @@
     margin-top: -16px;
 }
 
+#calender-box .fc-unthemed td.fc-today{
+    background: var(--fc-mini-tobay);
+ 
+}
+
 /* ---------- 날씨 ---------- */
 .weather .row{
     margin-left: 0;
@@ -230,7 +238,8 @@
 .currTemp{
     font-size: 40px;
     font-weight: 300;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 16px;
 }
 .currTemp>span{font-size: 16px; vertical-align: text-top;}
 .currWind, .currLT{align-self: end;}
@@ -247,8 +256,8 @@
     border-radius: 20px;
     padding: 20px 0;
 }
-.week-weather {margin-top: 20px;}
-.week-weather>.text-end {margin-top: 5px;}
+.week-weather {margin-top: 24px;}
+.week-weather>.text-end {margin-top: 12px;}
 .weekIcon{margin: 24px auto;}
 .weekIcon img{width: 48px;}
 .weekDay{font-weight: 300;}
@@ -258,3 +267,4 @@
     text-decoration: none;
     font-size: var(--font14);
 }
+

@@ -18,7 +18,11 @@ body *{
 .input-click>input{
     pointer-events: none;
 }
-input{border: none;}
+input{
+    border: none;
+    background-color: var(--color-background);
+    color: var(--font-black); 
+}
 input:focus{
     outline: none;
 }
@@ -96,7 +100,7 @@ input:focus{
     cursor: pointer;
 }
 .dropdown-toggle{
-    background-color: white;
+    background-color:  var(--color-white);
     color: black;
     font-size: 11px;
     border: none;

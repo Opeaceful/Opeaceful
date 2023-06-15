@@ -64,6 +64,14 @@ public class SalaryDao {
 		return sqlSession.selectOne("salaryMapper.selectUserCope",selectYMT);
 	}
 
+	public List<Integer> deleteSalayselect() {
+		return sqlSession.selectList("salaryMapper.deleteSalayselect");
+	}
+
+	public int deleteSalay(List<Integer> dslist) {
+		return sqlSession.delete("salaryMapper.deleteSalay",dslist);
+	}
+
 
 
 	

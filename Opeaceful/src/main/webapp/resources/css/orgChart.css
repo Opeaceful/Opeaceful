@@ -140,3 +140,10 @@ thead td:first-child{width: 199px;}
 }
 .chart-col2{border-right: 1px solid #ccc;}
 .chart-col2, .chart-col3{width: 50%;} */
+
+
+/*스크롤바 설정*/
+.scroll-bar::-webkit-scrollbar {
+    height: 5px;
+}
+

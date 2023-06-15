@@ -19,6 +19,27 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	
+	<!-- 에러페이지 세팅 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error?code=404</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>405</error-code>
+		<location>/error?code=405</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error?code=500</location>
+	</error-page>
+	
+	<error-page>
+		<location>/error?code=ERR</location>
+	</error-page>
 
 	<!-- Processes application requests -->
 	<servlet>

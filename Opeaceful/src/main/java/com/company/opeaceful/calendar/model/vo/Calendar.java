@@ -21,10 +21,13 @@ public class Calendar {
 	private String endDate;
 	private String color;
 	private String dDay;
-	 
+	
+	private int id;
 	private String borderColor;
 	private String start;
 	private String end;
 	private String backgroundColor;
+	
+	private String name;
 	
 }

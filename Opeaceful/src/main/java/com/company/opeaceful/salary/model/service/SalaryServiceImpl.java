@@ -73,4 +73,14 @@ public class SalaryServiceImpl implements SalaryService{
 	public Salary selectUserCope(Map<String, Object> selectYMT){
 		return salaryDao.selectUserCope(selectYMT);
 	}
+	
+	@Override
+	public List<Integer> deleteSalayselect(){
+		return salaryDao.deleteSalayselect();
+	}
+	
+	@Override
+	public int deleteSalay(List<Integer> dslist) {
+		return salaryDao.deleteSalay(dslist);
+	}
 }

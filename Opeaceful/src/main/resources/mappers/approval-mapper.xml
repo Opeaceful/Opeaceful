@@ -561,6 +561,20 @@
 	</select>
 	
 	
+	<!-- [지영] 삭제멤버 approval 조회 -->
+	<select id="resignedmemberApprovalList" resultType="_int">
+		SELECT APPROVAL_NO
+		FROM APPROVAL
+		WHERE USER_NO = #{uesrNo} AND
+		STATUS != 1
+	</select>
+	
+	<!-- [혜린] 캘린더 일정 추가할 연차 조회 -->
+	<select id="selectAddEvent" resultType="approval" parameterType="_int">
+		SELECT *
+		 FROM approval
+		WHERE approval_no = #{approvalNo}
+	</select>
 <!-- =============================== insert 구간  =========================================== -->
 	
 	<!-- 폼 등록 / 등록하면서 formNo반환 -->
@@ -797,7 +811,14 @@
 		DELETE FROM  APPROVAL_MEMO
 		WHERE MEMO_NO = #{ memoNo }
 	</delete>
-
-	
+	<!-- [혜린] 같은 팀 유저들 연차 조회 
+	<select id="selectTeamApv"  resultType="approval" parameterType="_int">
+		SELECT * FROM APPROVAL WHERE USER_NO in (
+		SELECT USER_NO 
+		FROM user_department
+		where DEPT_CODE = (SELECT DEPT_CODE
+		FROM user_department
+		where USER_NO = #{userNo}))
+	</select>-->
 	
 </mapper>

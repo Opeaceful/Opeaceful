@@ -1,9 +1,10 @@
 /* 사이드바 css : 지의 */
 
 :root{
-    --side-bar : 60px;
-    --color-white: rgb(255, 255, 255);
-    --color-navy : rgb(3, 3, 62);
+    /* --side-bar : 60px;
+    --color-white: rgb(3, 3, 62);
+    --color-navy :  rgb(255, 255, 255); */
+   
     
     --font11 : 0.69rem;
     --font12 : 0.75rem;
@@ -96,9 +97,14 @@
 	width: 50px;
 	height: 50px;
 	position: fixed;
-   	bottom: 60px;
-   	right: 60px;
+   	bottom: 7vh;
+   	right: 7vw;
 }
 /* 크기설정 */
-#chat-icon>i{ cursor:pointer; font-size: 3rem; line-height: 1rem; }
+#chat-icon>i{
+    cursor:pointer;
+    font-size: 3rem;
+    line-height: 1rem;
+    color: var(--color-navy);
+}
 

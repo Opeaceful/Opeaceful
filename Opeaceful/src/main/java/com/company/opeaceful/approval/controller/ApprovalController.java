@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,13 +34,17 @@ import com.company.opeaceful.approval.model.vo.ApprovalFavor;
 import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.approval.model.vo.ApprovalLine;
 import com.company.opeaceful.approval.model.vo.ApprovalMemo;
+import com.company.opeaceful.calendar.controller.calendarController;
+import com.company.opeaceful.calendar.model.service.CalendarService;
+import com.company.opeaceful.calendar.model.vo.Calendar;
 import com.company.opeaceful.commom.FileRenamePolicy;
 import com.company.opeaceful.member.model.vo.Member;
+import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/approval")
-@SessionAttributes({"loginUser"})
+@SessionAttributes({"loginUser", "loginUserRole"})
 public class ApprovalController {
 	
 	
@@ -50,12 +57,25 @@ public class ApprovalController {
 	
 
 	@GetMapping("/allApproval")
-	public String allApproval( Model model ){
-		int currentYear = Year.now().getValue();
-		model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
-		model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
+	public String allApproval( @SessionAttribute("loginUserRole") List<UserRole> loginUserRole, Model model ){
+		
+		boolean roleCheck = false;
+		for(UserRole role:loginUserRole) {
+			if(role.getRoleCode().equals("T02")) {
+				roleCheck = true;
+				break;
+			}
+		}
+		if(roleCheck == true) {
+			int currentYear = Year.now().getValue();
+			model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
+			model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
 
-		return "approval/allApproval";
+			return "approval/allApproval";
+		}else {
+			model.addAttribute("errorMsg", "권한이 없는 사용자입니다.");
+			return "errorPage";
+		}
 	}
 	
 	@GetMapping("/myApproval")
@@ -145,7 +165,7 @@ public class ApprovalController {
 	// ajax용 선택된 결재문서 세부 내용 반환 + 확인된 문서 체크
 	@ResponseBody
 	@PostMapping("/selectApproval")
-	public String selectApproval( @ModelAttribute("loginUser") Member loginUser, Integer approvalNo) {
+	public String selectApproval( @ModelAttribute("loginUser") Member loginUser, Integer approvalNo, String isAdmin) {
 		Map<String, Object > map  = new HashMap<>();
 		
 		int userNo= loginUser.getUserNo();
@@ -169,8 +189,10 @@ public class ApprovalController {
 		map.put("files", files);
 		map.put("userNo", userNo);
 		
-		// 읽음처리
-		aprService.updateApprovalLineReadStatus(approvalNo, userNo);
+		if(isAdmin == null  || !isAdmin.equals("admin") ) {
+			// 어드민용 조회가 아닐때  읽음처리
+			aprService.updateApprovalLineReadStatus(approvalNo, userNo);
+		}
 		
 		return new Gson().toJson(map);
 	}
@@ -651,11 +673,12 @@ public class ApprovalController {
 		return result;
 	}
 	
-	
+	private static final Logger logger = LoggerFactory.getLogger(calendarController.class);
 	// ajax용 결재문서 완결처리
 	@ResponseBody
 	@PostMapping("/updateApprovalStateEnd")
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
+		logger.info("결재 추가 로거");
 		int result = 0;
 		System.out.println("============================="+approval);
 		
@@ -666,6 +689,37 @@ public class ApprovalController {
 		
 		if(approval != null && approval.getApprovalNo() != 0 ) {
 			result = aprService.updateApprovalStateEnd(approval);
+			
+			/* [혜린] - 연차 insert 시 캘린더 내 연차일정 추가 */
+			Approval apv = aprService.selectAddEvent(approval.getApprovalNo());
+			
+			System.out.println("조회해온 apv: "+apv);
+			
+			if(existApproval.getType() != 0) { // 0:일반 제외 1,2,3 연차만
+				
+				Calendar calendar = new Calendar();
+				String name = "";
+				
+				System.out.println("타입 : " + apv.getType());
+				switch(apv.getType()) {
+				case 1 :name = "휴가"; break;
+				case 2 :name = "오전반차"; break;
+				case 3 :name = "오후반차"; break;
+				}
+				System.out.println("name 값 : " + name);
+				System.out.println("시작일 : " + apv.getStartDate());
+				System.out.println("막날 : " + apv.getEndDate());
+				calendar.setTitle(apv.getUserName()+" "+name); // ex)ㅇㅇㅇ 휴가
+				calendar.setContent(apv.getApprovalNo()+"");
+				calendar.setCategory("H");
+				calendar.setUserNo(apv.getUserNo());
+				calendar.setStartDate(apv.getStartDate()+"");
+				calendar.setEndDate(apv.getEndDate()+"");
+				calendar.setColor("var(--col9)");
+				calendar.setDDay("N");
+				
+				aprService.insertEvent(calendar); //연차 일정 추가
+			}
 		}
 		
 		return result;
@@ -702,7 +756,13 @@ public class ApprovalController {
 
 		// 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) + 실제 저장된 파일들 삭제 
 		int result = aprService.deleteApproval(approvalNo, serverFolderPath);
-
+		
+		/* [혜린] - 취소된 연차관련 일정 삭제 */
+		Calendar calendar = new Calendar();
+		calendar.setContent(approvalNo+"");
+		
+		aprService.deleteApvEvent(calendar);
+		
 		return result;
 	}
 	

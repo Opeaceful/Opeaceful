@@ -14,16 +14,47 @@
     --white-hover: rgba(3, 3, 62, 0.09);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
-    /* 기본 배경색상 */
+
+    /* 메인 박스 */
+    --square-box:rgb(235, 235, 235);
+    --box-shadow: rgba(221, 221, 221);
+
     --color-background : white;
     --color-background-bk : rgb(30, 30, 30);
+
+    --chat-hover:rgb(207, 226, 250);
     
     --font-white : white;
     --font-black : rgb(30, 30, 30);
+
+    --color-white:white;
+    --color-black:black;
     
     --color-serch-box:#ced4da;
 
-    /*폰트사이즈 뺴놓음*/
+    --accordion-color:white;
+    
+    /*캘린더 */
+    --fc-mini-tobay:#fcf8e3;
+    --memo-day-color: rgb(74, 71, 71);
+    --memo-col8: #495057;
+
+    /*테이블 부트스트랩 고유색상*/
+    --bootstrap-color:#212529;
+    --btn-close-color:none;  
+    --bs-btn-color: #212529;
+
+    --action-hover-color:#495057;
+    --action-hover-bg:#f8f9fa;
+
+    --list-group-color: #212529;
+    --list-group-bg: #fff;
+
+  
+    /*swal 고유색상*/
+    --swal-text-color:rgba(0,0,0,.64);
+
+
     --font10 : 0.31rem;
     --font11 : 0.69rem;
     --font12 : 0.75rem;
@@ -36,11 +67,145 @@
     --font22 : 1.75rem;
 
 
-
-    /* 스크롤바 컬러 그라데이션용 */
     --color-scroll-start : rgb(42, 42, 90);
     --color-scroll-end :  rgb(66, 66, 156);
+
+    /* main status아이콘 */
+    --filter : invert(0%);
 }
+
+/* 다크모드 */
+
+:root[color-theme='dark']{
+    --side-bar : 60px;
+    --color-navy : #ffc107;
+    --color-gold : rgb(3, 3, 62);
+    --navy-hover:#ffc107c4;
+    --gold-hover : :rgba(3, 3, 62, 0.77);
+
+    --white-hover: rgba(0, 0, 0, 0.9);
+    --color-light-gray : rgb(235, 235, 235);
+    --color-light-navy:rgb(30, 30, 30);
+
+    --square-box:rgb(79,79,79);
+    --box-shadow: rgb(87, 87, 87);
+
+    /* 기본 배경색상 */
+    --color-background : rgb(30, 30, 30);
+    --color-background-bk : white;
+
+    --chat-hover:rgba(83, 69, 0, 0.815);
+    
+    
+    --font-white : rgb(30, 30, 30);
+    --font-black : white;
+    
+    --color-white:black;
+    --color-black:white;
+    
+    --fix-black:black;
+    --fix-white:white;
+    
+    /*캘린더 */
+    --fc-mini-tobay: black;
+    --memo-day-color: rgb(180,180, 180);
+    --memo-col8: white;
+
+
+    --color-serch-box:#ced4da;
+   
+
+    --accordion-color:white;
+
+   
+
+    --bs-body-color:none;
+
+    /*테이블 부트스트랩 고유색상 다크모드 반전*/ 
+    --bootstrap-color:#ced4da;
+    --btn-close-color:white;
+    --bs-btn-color: white;
+
+    --action-hover-color:#495057;
+    --action-hover-bg:#ffc107c4;
+
+    --list-group-color: #fff;
+    --list-group-bg: rgb(30, 30, 30);
+
+    /*swal 고유색상*/
+    --swal-text-color:white;
+    
+    /*폰트사이즈 뺴놓음*/
+    --font10 : 0.31rem;
+    --font11 : 0.69rem;
+    --font12 : 0.75rem;
+    --font13 : 0.81rem;
+    --font14 : 0.875rem;
+    --font15 : 0.937rem;
+    --font18 : 1.125rem;
+    --font20 : 1.25rem;
+    --font21 : 1.375rem;
+    --font22 : 1.75rem;
+
+    /* 스크롤바 컬러 그라데이션용 */
+    --color-scroll-start : #ffc107;
+    --color-scroll-end :  #fef0c4;
+
+    /* main status아이콘 */
+    --filter : invert(100%);
+}
+
+
+/*다크모드 추가용 css*/
+
+.modal-content {
+    background-color: var(--color-background);
+}
+
+.table {
+    --bs-table-color: var(--bs-body-color);
+    --bs-table-hover-color: var(--navy-hover);
+}
+.btn-close {
+    background-color: var(--btn-close-color);
+}
+
+
+.swal-modal {
+    background-color: var(--color-background);
+}
+
+.swal-text {
+    color: var(--swal-text-color);
+}
+.swal-title {
+    color: var(--swal-text-color);
+}
+
+.form-control-plaintext {
+    color: var(--bs-btn-color);
+}
+
+
+/*캘린더*/
+.fc-unthemed td.fc-today {
+    background: var(--fc-mini-tobay);
+}
+
+.form-select {
+    background-color: var(--color-background);
+    color: var(--font-black);
+} 
+.form-control {
+    background-color: var(--color-background);
+    color: var(--font-black);
+    
+}
+.form-control:focus {
+    background-color: var(--color-background);
+    color: var(--font-black);
+}
+
 
 .content-wrap{
     width: calc(100vw - var(--side-bar));
@@ -60,6 +225,7 @@ body{
     background-color: var(--color-background);
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
+    color: var(--font-black);
 }
 
 .btn-primary{
@@ -67,6 +233,7 @@ body{
     background-color:var(--color-navy);
     --bs-btn-active-bg:var(--navy-hover);
     --bs-btn-active-border-color:var(--navy-hover);
+    --bs-btn-color: var(--color-white);
 }
 
 .btn-primary:hover{
@@ -91,6 +258,7 @@ body{
     --bs-btn-active-color:var(--color-navy);
 }
 
+
 .btn-outline-primary:hover{
     background-color: var(--white-hover);
     color: var(--color-navy);
@@ -113,6 +281,7 @@ body{
 }
 .table-common>tbody>tr{
     font-size: var(--font14);
+    font: var(--font-black);
 }
 .table-common>tbody>tr:hover{
     background-color:var(--white-hover);
@@ -121,17 +290,26 @@ body{
 
 /* 공통 카테고리 설정 변경 */
 /* ex) <div class="accordion-item accordion-item-common"> 해당 클래스 옆에 클래스-common 추가한 것임!! */
+
+.accordion {
+    --bs-accordion-bg: var(--color-background);
+}
+
 .accordion-item-common{
     border: none;
-    border-color: white;
-    background-color: white;
+    border-color: var(--color-white);
+    background-color:  var(--color-background);
+}
+.accordion-item {
+    color: var(--bootstrap-color);
 }
 
 .accordion-button-common:not(.collapsed) {
     border: none;
-    border-color: white;
-    background-color: white;
-    color: black;
+    border-color:  var(--color-white);
+    background-color: var(--color-background);
+    color: var(--font-black);
+    
 }
 .accordion-button-common:focus {
     box-shadow: none;
@@ -139,6 +317,28 @@ body{
 .accordion-button-common:not(.collapsed)::after {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
+
+.list-group-item-action:focus, .list-group-item-action:hover {
+
+    color: var(--action-hover-color); 
+    background-color: var(--action-hover-bg);
+   
+}
+
+.list-group {
+    --bs-list-group-color: var(--list-group-color);
+    --bs-list-group-bg: var(--list-group-bg);
+}
+
+.accordion-button {
+    color: var(--bootstrap-color);
+}
+
+
+.active>.page-link, .page-link.active { 
+    background-color: var(--navy-hover);
+}
+
 
 /* 카테고리 상위, 하위 css */
 .d-grid-common{
@@ -180,7 +380,8 @@ body{
         color: var(--color-navy);
         padding-left: 20px;
 }
-    
+
+
 
 
 /*페이징*/
@@ -202,9 +403,14 @@ body{
 
 }
 .page-link:focus {
-    color: white;
+    color: var(--color-white);
     background-color: var(--color-navy);
     box-shadow: none;
+}
+
+.pagination {
+    --bs-pagination-bg: var(--color-background);
+    --bs-pagination-disabled-bg: var(--color-background);
 }
 
 /* 공통 검색창 <html>*/
@@ -227,6 +433,8 @@ body{
     width: 350px;
     height: 28px;
     font-size: 0.81rem; /*13px*/
+    background-color: var(--color-background);
+    color: var(--font-black);
 }
 .search-btn{
     border: none;
@@ -257,6 +465,8 @@ input::-webkit-search-cancel-button{
     --bs-btn-active-bg: none;
     --bs-btn-active-border-color: var(--color-serch-box);
 }
+
+
 
 
 /* 부트스트랩 text박스 하늘색 포커스 제거 */
@@ -351,3 +561,8 @@ input::-webkit-search-cancel-button{
 .modal-backdrop:nth-last-child(n+2){
     background-color: unset;
 }
+
+
+
+
+

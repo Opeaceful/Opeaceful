@@ -131,4 +131,24 @@ public class MemberDao {
 	}
 
 
+	public List<Integer> resignedmemberList() {
+		//3년 지난 퇴사멤버 불러오기
+		return sqlSession.selectList("resignedMapper.deleteMembersList");
+				
+	}
+
+	public List<Integer> resignedmemberApprovalList(Integer uesrNo) {
+		//3년 지난 퇴사멤버 resignedmemberApprovalList 불러오기
+		return sqlSession.selectList("aprMapper.resignedmemberApprovalList",uesrNo);
+	}
+	
+	
+	//3년 지난 퇴사자 데이터 삭제
+	public int deleteMembers(List<Integer> delist) {
+		
+		//리플 삭제, 게시판삭제, 사인삭제, 유저직급삭제 , 멤버삭제 
+		return sqlSession.delete("deleteMembers",delist);
+	}
+	
+
 }
