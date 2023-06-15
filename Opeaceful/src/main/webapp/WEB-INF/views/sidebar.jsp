@@ -66,12 +66,12 @@
                 </li>
 
                 <!-- 메일 -->
-                <li id="sidebar-mail">
+<!--                 <li id="sidebar-mail">
                     <a href="">
                         <span class="side-icon-size"><i class="sidebar-icon fa-solid fa-envelope"></i></span>
                         <span class="sidebar-text">메일</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- 게시판 -->
                 <li id="sidebar-board">
@@ -105,8 +105,16 @@
                     </div>
 
                     <div class="sidebar-more" id="sign-menu-item">
-                        <a class="sidebar-more-text" href="${path}/approval/approvalForm">결재 양식</a>
-                        <a class="sidebar-more-text" href="${path}/approval/allApproval">전자결재 관리</a>
+                        <c:forEach items="${loginUserRole}" var="role">
+           					<c:if test="${role.roleCode eq 'T01'}">
+		                        <a class="sidebar-more-text" href="${path}/approval/approvalForm">결재 양식</a>
+           					</c:if>
+						</c:forEach>
+						<c:forEach items="${loginUserRole}" var="role">
+           					<c:if test="${role.roleCode eq 'T02'}">
+		                        <a class="sidebar-more-text" href="${path}/approval/allApproval">전자결재 관리</a>
+           					</c:if>
+						</c:forEach>
                         <a class="sidebar-more-text" href="${path}/approval/myApproval">MY 전자결재</a>
                     </div>
                     
