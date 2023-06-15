@@ -2,9 +2,9 @@
 
 /* 그림자있는 박스 */
 .mypage-wrap{
-    border: 1px solid var(--color-light-gray);
+    border: 1px solid var(--square-box);
     border-radius: 20px;
-    box-shadow: 5px 5px 15px -5px rgba(221, 221, 221);
+    box-shadow: 5px 5px 15px -5px var(--box-shadow);
     margin-top: 80px;
     min-width: 1100px;
 }

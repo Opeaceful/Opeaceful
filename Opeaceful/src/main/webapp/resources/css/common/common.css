@@ -15,6 +15,10 @@
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgba(3, 3, 97, 0.06);
 
+    /* 메인 박스 */
+    --square-box:rgb(235, 235, 235);
+    --box-shadow: rgba(221, 221, 221);
+
     --color-background : white;
     --color-background-bk : rgb(30, 30, 30);
 
@@ -81,6 +85,9 @@
     --white-hover: rgba(0, 0, 0, 0.9);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgb(30, 30, 30);
+
+    --square-box:rgb(79,79,79);
+    --box-shadow: rgb(87, 87, 87);
 
     /* 기본 배경색상 */
     --color-background : rgb(30, 30, 30);
