@@ -18,6 +18,8 @@ public interface ChatService {
 	
 	public abstract ArrayList<Board> noticeList();
 	
+	public abstract ArrayList<ChatParticipant> chatRoomList(Member loginUser);
+	
 	List<ChatRoom> selectChatRoomList();
 	
 	int openChatRoom(ChatRoom cr);

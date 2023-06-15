@@ -81,7 +81,12 @@
 			VALUES(#{chatRoomNo}, #{userNo}, #{message},0 ,NOW(), 1)
 	</insert>
 	
-	
+	<select id="chatRoomList" parameterType="member" resultType="ChatParticipant">
+	    SELECT CR.*
+	    FROM CHAT_PARTICIPANT CP
+	    JOIN CHAT_ROOM CR ON CP.CHATROOM_NO = CR.CHATROOM_NO
+	    WHERE CP.USER_NO = #{userNo}
+	</select>
 	
 	
 	

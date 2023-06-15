@@ -1,8 +1,11 @@
 package com.company.opeaceful.chat.model.websocket;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.company.opeaceful.chat.model.service.ChatService;
 import com.company.opeaceful.chat.model.vo.Chat;
+import com.company.opeaceful.chat.model.vo.ChatParticipant;
+import com.company.opeaceful.member.model.vo.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
@@ -43,6 +48,9 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 	
 	private Set<WebSocketSession> sessions = Collections.synchronizedSet( new HashSet<WebSocketSession>());
 	
+	private Map< String, Object > map  = new HashMap<>();
+	
+	
 	// synchronizedSet : 동기화된 Set반환
     // -> 멀티 스레드 환경에서 하나의 컬렉션 요소에 여러 스레드가 동시에 접근하면 충돌이 발생할 수 있으므로 동기화를 진행
 	
@@ -53,7 +61,11 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			// WebSocketSession : 웹소켓에 접속/요청한 클라이언트의 세션 정보
 			System.out.println(session.getId()+" 연결됨");
 			
+			System.out.println();
+			
 			sessions.add(session); // 전달받은 session을 set에 추가
+			map.put( session.getId() , (ArrayList<ChatParticipant>) session.getAttributes().get("chatRoomList"));
+			map.put( session.getId() + "userNo" , (int)session.getAttributes().get("userNo"));
 		}
 		
 		// 클라이언트와 연결이 종료되면 수행
@@ -68,6 +80,8 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 		protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 			// TextMessage : 웹소켓을 이용해 전달된 텍스트가 담겨있는 객체
 			
+			Member loginUser = (Member)session.getAttributes().get("loginUser");
+			
 			//payLoad : 전송되는 데이터(json객체)
 			System.out.println("메세지 : " + message.getPayload());
 			
@@ -78,27 +92,60 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			
 			Chat chatMessage = objectMapper.readValue(message.getPayload(), Chat.class); 
 			
+			//룸생성되었을때 올라온 요청건임
+			if(chatMessage.isNew()) {
+				/*
+				 * 여기서 db를 한번 조회해오긴 해야함
+				 * 신규 룸번호에 딸린 유저들 조회해와서 chatService.chatRoomList(룸번호를 넘겨서 여기 참여중인 유저 목록 받아오기)
+				 * 저장되어있는 세션들 돌면서
+				 * map에서 get(세션아이디+"userNo")  ==  각 세션 userNo 
+				 * 참여중인 유저 목록이랑 비교해서 참여중인 유저라면 아래 로직 진행
+				 * 세션들의 아이디를 getId로 가져와서 map.get(세션아이디값) -> chatRoomList 반환할것임
+				 * chatRoomList 여기에 룸번호 추가하고 
+				 * map.put(session.getId() , 가공한 chatRoomList);
+				 * (맵에 기존에 있던 세션.아디 키값을 아예 삭제하고 다시 넣어주는 식으로 해도됨)
+				 * 룸 리스트에 신규 룸번호 추가해서 다시 저장해주기
+				 * 
+				 * 
+				 * 신규 룸 생성용이니까 이후 로직은 진행하지 않고 return 시키거나
+				 * 취향대로 이후동작 선택
+				 * */
+			}
+			
 			chatMessage.setReceivedDate(new Date(System.currentTimeMillis()));
-			
 			// 전달받은 채팅 메세지를 db에 삽입
-			System.out.println(chatMessage);
 			
+			chatMessage.setUserName(loginUser.getUserName());
+			chatMessage.setUserNo(loginUser.getUserNo());
+			
+			System.out.println(chatMessage);
 			int result = chatService.insertMessage(chatMessage);
 			
 			if(result > 0) {
 				// 같은 방에 접속중인 클라이언트에게 전달받은 메세지 뿌리기
 				for( WebSocketSession s : sessions ) {
 					// 반복을 진행중인 WebSocketSession 안에 담겨있는 방번호 == 메세지 안에 담겨있는 방번호가 일치하는 경우 메세지 뿌리기
-					System.out.println(s.getAttributes());
-					int chatRoomNo = (int) s.getAttributes().get("chatRoomNo");
-
+				//	System.out.println(s.getAttributes());
 					
-					// 메세지에 담겨있는 채팅방 번호와 chatRoomNo 일치하는지 비교
-					if(chatMessage.getChatRoomNo() == chatRoomNo) {
-						// 같은 방 클라이언트에게 json형태로 메세지를 보냄
-						// s.sendMessage( new TextMessage( JSON객체 ) )
-						s.sendMessage(new TextMessage( new Gson().toJson(chatMessage) ));
+					ArrayList<ChatParticipant> chatRoomList = (ArrayList<ChatParticipant>) s.getAttributes().get("chatRoomList");
+					
+					
+					System.out.println("채팅룸 리스트 불러와졌남"+chatRoomList);
+					for(ChatParticipant room : chatRoomList) {
+						
+							if(room.getChatRoomNo() == chatMessage.getChatRoomNo()) {
+								s.sendMessage(new TextMessage( new Gson().toJson(chatMessage) ));
+								break;
+							}
+						
 					}
+					
+//					// 메세지에 담겨있는 채팅방 번호와 chatRoomNo 일치하는지 비교
+//					if(chatMessage.getChatRoomNo() == chatRoomNo) {
+//						// 같은 방 클라이언트에게 json형태로 메세지를 보냄
+//						// s.sendMessage( new TextMessage( JSON객체 ) )
+//						s.sendMessage(new TextMessage( new Gson().toJson(chatMessage) ));
+//					}
 				
 				}
 			}

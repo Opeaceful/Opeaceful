@@ -92,6 +92,11 @@ public class ChatServiceImpl implements ChatService{
 		return result;
 	}
 	
+	@Override
+	public ArrayList<ChatParticipant> chatRoomList(Member loginUser){
+		return chatDao.chatRoomList(loginUser);
+	}
+	
 	
 	
 	
