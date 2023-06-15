@@ -114,7 +114,7 @@
                 </div>
                 <div class="atc-box">
                 <c:forEach items="${file}" var="f">
-                	<div class="atc-txt"><a href="${path}/resources/file/board/${f.changeFile}">${f.originFile}</a></div>
+                	<div class="atc-txt"><a download href="${path}/resources/file/board/${f.changeFile}">${f.originFile}</a></div>
                 </c:forEach>
                 </div>
             </div>

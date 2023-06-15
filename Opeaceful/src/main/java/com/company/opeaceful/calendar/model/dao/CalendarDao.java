@@ -60,8 +60,12 @@ public class CalendarDao {
 		return sqlSession.selectOne("calendarMapper.selectMemo", userNo);
 	}
 	
+	public ArrayList<Calendar> dDayList (int userNo){
+		return (ArrayList)sqlSession.selectList("calendarMapper.dDayList", userNo);
+	}
 	
-	
-	
+	public int dDayNone(int calendarNo) {
+		return sqlSession.update("calendarMapper.dDayNone", calendarNo);
+	}
 	
 }

@@ -14,6 +14,7 @@ let category = document.getElementById('calendar-wrap').dataset.category;
     let mycol = $(".my-event-col-box");
     let tmcol = $(".tm-event-col-box");
     
+    /* 모달 내 카테고리 버튼에 따른 색 영역 변경 */
     $('.my-event-btn').on('click', function(){
       // console.log("mine check");
       tmcol.css('display', 'none');
@@ -280,6 +281,7 @@ function deleteEvent(){
       events: data,
 
       eventClick: function(info){
+
         /* 선택된 일정 정보 표시 + 일정 수정 모달창 열림 */
         console.log("클릭됨");
         modalReset();
@@ -293,7 +295,6 @@ function deleteEvent(){
         abled.title = true;
         enableU();
 
-        
         console.log("일정 고유번호 : "+info.event.id);
 
         let cno = info.event.id;
@@ -386,7 +387,7 @@ function teamCalendar(){
         abled.end = true;
         abled.title = true;
         enableU();
-
+        console.log("카테고리담긴값",info.event.category);
         
         console.log("일정 고유번호 : "+info.event.id);
 
@@ -408,6 +409,8 @@ function teamCalendar(){
           data: {id : cno},
           dataType: "json",
           success: function(result){
+            console.log("result.category",result.category)
+            
             /* 조회된 일정의 정보 모달에 띄우기 */
             console.log(result);
             console.log("캘린더 일정 제목: ",result.title);
@@ -428,7 +431,11 @@ function teamCalendar(){
             if(result.dDay == 'Y'){ // 디데이 표시면 checked
               eveDday.prop('checked',true); 
             }
-          
+            /* 연차일정은 수정 못하게 */
+            if(result.category == 'H'){
+              $('#dlt-event-btn').css('display','none');
+              $('#modal-update-btn').css('display','none');
+            }
           }
         })
       }
@@ -464,7 +471,7 @@ function fullCalendar(){
     //defaultDate: '2020-02-12', //defaultDate없으면 현재날짜 -> 나중에 지워주기
     editable: false,
     eventLimit: true, // allow "more" link when too many events
-    events: data, 
+    events: data,
       eventClick: function(info){
         /* 선택된 일정 정보 표시 + 일정 수정 모달창 열림 */
         console.log("클릭됨");
@@ -520,7 +527,11 @@ function fullCalendar(){
             if(result.dDay == 'Y'){ // 디데이 표시면 checked
               eveDday.prop('checked',true); 
             }
-
+            /* 연차일정은 수정 못하게 */
+            if(result.category == 'H'){
+              $('#dlt-event-btn').css('display','none');
+              $('#modal-update-btn').css('display','none');
+            }
           }
         })
       }

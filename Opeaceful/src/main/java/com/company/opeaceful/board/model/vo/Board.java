@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Board {
 	private int boardNo;
 	private String boardCd;
+	private int deptCode;
 	private String boardTitle;
 	private String boardContent;
 	private String boardWriter;

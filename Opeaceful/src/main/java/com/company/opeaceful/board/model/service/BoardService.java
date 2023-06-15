@@ -39,6 +39,7 @@ public interface BoardService {
 	
 	public int deleteUpfile(int boardNo);
 	
+	public int selectDeptCode(int userNo);
 	
 	
 	

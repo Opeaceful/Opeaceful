@@ -1,7 +1,7 @@
 package com.company.opeaceful.calendar.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -46,10 +46,7 @@ public class calendarController {
 		
 		System.out.println("category 담긴 값 : " + category);
 		
-		//map.put("category", category);
-		
 		int userNo = loginUser.getUserNo();
-		//map.put("userNo", userNo);
 		
 		calendarMemo = calendarService.selectMemo(userNo);
 		
@@ -61,17 +58,14 @@ public class calendarController {
 		
 		System.out.println("memo담긴값 : "+memo);
 		
-			ArrayList<Calendar> listM = calendarService.selectMyCalendarList(userNo);
-			ArrayList<Calendar> listT = calendarService.selectTeamCalendarList(userNo);
-			model.addAttribute("category", category);
-			//model.addAttribute("listM", listM);
-			//model.addAttribute("listT", listT);
-			model.addAttribute("memo", memo);
-			//System.out.println("listT담긴 값 : "+listT);
-			//System.out.println("listM담긴 값 : "+listM);
-			//return new Gson().toJson(list);
+		ArrayList<Calendar> listM = calendarService.selectMyCalendarList(userNo);
+		ArrayList<Calendar> listT = calendarService.selectTeamCalendarList(userNo);
+		model.addAttribute("category", category);
+		model.addAttribute("memo", memo);
 		
 		
+		ArrayList<Calendar> listD = calendarService.dDayList(userNo);
+		model.addAttribute("listD", listD);	
 		return "calendar/calendarPage";
 	}
 	
@@ -270,15 +264,6 @@ public class calendarController {
 			
 		}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 메모 추가 및 변경
 	@ResponseBody
 	@PostMapping("/addMemo")
@@ -304,8 +289,16 @@ public class calendarController {
 	
 	}
 	
-	
-	
-	
+	// 디데이 리스트
+//		@ResponseBody
+//		@PostMapping("/dDayList")
+//		public String dDayList(@ModelAttribute ("loginUser") Member loginUser,
+//								 Calendar calendar) {
+//			
+//			int userNo = loginUser.getUserNo();
+//			List<Calendar> listD = calendarService.dDayList(userNo);
+//			
+//			return new Gson().toJson(listD);
+//		}
 	
 }
