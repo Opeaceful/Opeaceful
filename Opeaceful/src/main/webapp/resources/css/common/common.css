@@ -46,6 +46,8 @@
 
     /*채팅창*/
     --chat-hover:rgb(207, 226, 250);
+    --chat-notice: rgba(255, 255, 255, 0.95);
+    --chat-date:rgb(88, 88, 88);
 
     /*폰트크기*/
     --font10 : 0.31rem;
@@ -63,10 +65,14 @@
     /*스크롤*/
     --color-scroll-start : rgb(42, 42, 90);
     --color-scroll-end :  rgb(66, 66, 156);
+    --chattingScrollbar: #a0afd8;
 
     /* main status아이콘 */
     --filter : invert(0%);
+
+    
 }
+
 
 /* 다크모드 */
 
@@ -114,7 +120,12 @@
     --swal-text-color:white;
     --cancel-button:white;
 
+    /*채팅창*/
     --chat-hover:rgba(83, 69, 0, 0.815);
+    --chat-notice: none;
+    --chat-date:white;
+
+    
     
     /*폰트크기*/
     --font10 : 0.31rem;
@@ -132,6 +143,7 @@
     /* 스크롤바 컬러 그라데이션용 */
     --color-scroll-start : #ffc107;
     --color-scroll-end :  #fef0c4;
+    --chattingScrollbar: #fef0c4;
 
     /* main status아이콘 */
     --filter : invert(100%);
@@ -434,8 +446,8 @@ input::-webkit-search-cancel-button{
 
 
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color:var(--cancel-button);
-            opacity: 1; /* Firefox */
+    color:var(--cancel-button);
+    opacity: 1; /* Firefox */
 }
 
 .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
@@ -443,7 +455,7 @@ input::-webkit-search-cancel-button{
 }
 
 .form-control::-ms-input-placeholder { /* Microsoft Edge */
-            color:var(--cancel-button);
+    color:var(--cancel-button);
  }
 
 /* 공통검색창2 <html> */
