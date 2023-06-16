@@ -82,7 +82,7 @@
 }
 #btn-memo-add-file:hover,
 .btn-file-delete:hover {
-  background-color: var(--color-background);
+  background-color: var(--color-navy);
 }
 
 .memo-files {
