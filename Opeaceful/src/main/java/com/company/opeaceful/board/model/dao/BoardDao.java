@@ -53,12 +53,12 @@ public class BoardDao {
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList", map, rowBounds);
 	}
-	
-	public int selectNoticeRoll(String userNo) {
+	// 공지사항 권한 조회
+	public String selectNoticeRoll(String userNo) {
 		return sqlSession.selectOne("boardMapper.selectNoticeRoll", userNo);
 	}
 	
-	public int selectFreeRoll(String userNo) {
+	public String selectFreeRoll(String userNo) {
 		return sqlSession.selectOne("boardMapper.selectFreeRoll", userNo);
 	}
 
@@ -90,20 +90,15 @@ public class BoardDao {
 		return result;
 	}
 	
-	public int insertUpFile(List<BoardFile> fileList, int boardNo) {
-		 Map<String, Object> map = new HashMap<>();
-		    map.put("fileList", fileList);
-		    map.put("boardNo", boardNo);
-		    
-		    System.out.println("dao-인서트파일 맵 담긴값 : " + map);
-		    
-		return sqlSession.insert("boardMapper.insertUpFile", map);
+	public int lastPk() {
+		return sqlSession.selectOne("boardMapper.lastPk");
+	}
+	
+	public int insertUpFile(List<BoardFile> fileList) {
+		return sqlSession.insert("boardMapper.insertUpFile", fileList);
 	}
 	
 	public int updateBoard(Board b) {
-		
-		//수정
-		
 		return sqlSession.update("boardMapper.updateBoard", b);
 	}
 	
@@ -111,9 +106,12 @@ public class BoardDao {
 		return sqlSession.selectList("boardMapper.selectUpfileList", boardNo);
 	}
 	
-	
 	public int deleteUpfile(int boardNo) {
 		return sqlSession.delete("boardMapper.deleteUpfile", boardNo);
+	}
+	
+	public int deleteFileList(List<BoardFile> dbList){
+		return sqlSession.delete("boardMapper.deleteFileList", dbList);
 	}
 	
 	public int selectDeptCode(int userNo) {
