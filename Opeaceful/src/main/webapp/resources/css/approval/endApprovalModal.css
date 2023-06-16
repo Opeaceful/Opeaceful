@@ -133,7 +133,7 @@
 }
 
 td .final-approval-wrap{
-  border: 1px solid var(--color-black);
+  border: 1px solid var(--font-black);
 }
 
 .end-approval-lines {
@@ -207,7 +207,7 @@ td .final-approval-wrap{
 }
 
 #end-approval .btn-file-delete:hover {
-  background-color: var(--color-background);
+  background-color: var(--color-navy);
 }
 
 #confirm-modal {
