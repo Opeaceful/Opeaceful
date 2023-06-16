@@ -184,7 +184,7 @@
 
 	 <!--[지영] 모달용 전체조회 -->
 	 <select id="modalAllMemberView" resultMap="AllmemberVIewResultSet" >
-	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME, ENO
 		FROM member
 		left JOIN user_department USING(USER_NO)
 		left JOIN department USING(DEPT_CODE)

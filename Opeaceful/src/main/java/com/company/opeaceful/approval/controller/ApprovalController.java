@@ -68,8 +68,10 @@ public class ApprovalController {
 		}
 		if(roleCheck == true) {
 			int currentYear = Year.now().getValue();
-			model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
-			model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
+			List<Approval> list = aprService.searchApprovalList(-1,currentYear, null, -1, null, 1 );
+			int count  = aprService.searchApprovalListCount(-1, currentYear, null, -1, null);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
 
 			return "approval/allApproval";
 		}else {
@@ -105,6 +107,40 @@ public class ApprovalController {
 		}
 		return "approval/myApproval";
 	}
+	
+	
+	
+	
+	// ajax용 관리자 결재 리스트 서치용
+	@ResponseBody
+	@PostMapping("/searchApprovalList")
+	public String searchApprovalList(	Integer userNo,
+										Integer year,
+										Integer type,
+										Integer page,
+										String status,
+										String keyword
+										) {
+		Integer aprStatus = null;
+		if (status != null && !status.equals("all")) {
+			aprStatus = Integer.parseInt(status);
+	    }
+		
+		if(userNo == null || userNo <= 0) {
+			userNo = -1;
+		}
+		
+		List<Approval> list = aprService.searchApprovalList(userNo,year, aprStatus, type, keyword, page );
+		int count  = aprService.searchApprovalListCount(userNo, year, aprStatus, type, keyword);
+		
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("count", count);
+
+		return new Gson().toJson(result);
+	}
+	
 	
 	// ajax용 즐겨찾기 리스트 조회
 	@ResponseBody
@@ -750,6 +786,7 @@ public class ApprovalController {
 	@PostMapping("/deleteApproval")
 	public int deleteApproval(	Integer approvalNo, 
 								HttpSession session) {
+		
 		// 파일 저장경로 얻어오기
 		String webPath = "/resources/file/approval/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
@@ -762,6 +799,7 @@ public class ApprovalController {
 		calendar.setContent(approvalNo+"");
 		
 		aprService.deleteApvEvent(calendar);
+		
 		
 		return result;
 	}
