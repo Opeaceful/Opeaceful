@@ -117,6 +117,7 @@ right connector from last child*/
     color: white;
 	font-weight: 500;
 	font-size: var(--font18);
+	min-width: 150px;
 }
 table{
     border: 1px solid #ccc;

@@ -52,7 +52,8 @@ public class OrgChartController {
 	
 	@GetMapping("/")
 	public String orgChart() {
-		return "orgChartEnroll";
+		System.out.println("들어옴????");
+		return "orgChart/orgChartEnroll";
 	}
 	
 	// 부서조회
@@ -218,7 +219,7 @@ public class OrgChartController {
 		
 		model.addAttribute("map", map);
 			
-		return "orgChartView";
+		return "orgChart/orgChartView";
 			
 	}
 	
