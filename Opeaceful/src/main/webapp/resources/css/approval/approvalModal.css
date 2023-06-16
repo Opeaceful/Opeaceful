@@ -1,27 +1,40 @@
 :root {
   /* 흐린 검정선 */
   --color-blurred-black: rgba(0, 0, 0, 0.2);
-  --color-border-line-black :  rgba(0, 0, 0, 0.3);
-  --color-linear : linear-gradient(rgba(255, 255, 0, 0), 99%, rgb(241, 241, 241));;
+  --color-border-line-black: rgba(0, 0, 0, 0.3);
+  --color-linear: linear-gradient(
+    rgba(255, 255, 0, 0),
+    99%,
+    rgb(241, 241, 241)
+  );
+
+  --color-datepicker: white;
+  --color-datepicker-off: #eee;
+  --color-datepicker-start: #357ebd;
+  --color-datepicker-range: #ebf4f8;
 }
 
-:root[color-theme='dark']{
+:root[color-theme='dark'] {
   --color-blurred-black: lightgray;
-  --color-border-line-black :  lightgray;
-  --color-linear : linear-gradient(rgb(255 255 255 / 0%), 99%, rgb(0 0 0));
+  --color-border-line-black: lightgray;
+  --color-linear: linear-gradient(rgb(255 255 255 / 0%), 99%, rgb(0 0 0));
+
+  --color-datepicker: #272727;
+  --color-datepicker-off: unset;
+  --color-datepicker-start: #ffc107;
+  --color-datepicker-range: #ffc107c4;
 }
 * {
   box-sizing: border-box;
 }
 
-
 #modal-select-approval-type input,
-#approval input{
+#approval input {
   border-radius: 0.3em;
   outline: none;
-    border: 1px solid var(--font-black);
-    background-color: var(--color-background);
-    color: var(--font-black);
+  border: 1px solid var(--font-black);
+  background-color: var(--color-background);
+  color: var(--font-black);
 }
 
 #modal-select-approval-type .modal-header,
@@ -55,13 +68,13 @@
 /* 삭제버튼 호버 색상 공통으로 걸어둠 */
 .my-favor tbody td > button:hover,
 .btn-file-delete:hover,
-.btn-selected-delete:hover{
+.btn-selected-delete:hover {
   background-color: var(--color-navy);
 }
 
 .my-favor tbody td > button:hover .div-minus,
 .btn-file-delete:hover .div-minus,
-.btn-selected-delete:hover .div-minus{
+.btn-selected-delete:hover .div-minus {
   background-color: var(--color-background);
 }
 
@@ -144,8 +157,6 @@
 .approval-line-wrap {
   width: 90%;
   display: flex;
-
-  
 }
 
 .approval-line-wrap > :nth-child(1) {
@@ -175,7 +186,7 @@
   max-height: 100px;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  border: 1px solid var(--font-black );
+  border: 1px solid var(--font-black);
   background-color: var(--color-background);
   color: var(--font-black);
 }
@@ -217,8 +228,6 @@
   margin-right: 1rem;
   border: 1px solid var(--color-navy);
 }
-
-
 
 .div-minus {
   width: 10px;
@@ -316,8 +325,6 @@
   --bs-table-border-color: var(--color-background);
 }
 
-
-
 .my-list {
   margin: auto;
   width: 48%;
@@ -355,9 +362,7 @@
   align-items: center;
 }
 
-
-
-.my-favor tbody td > div{
+.my-favor tbody td > div {
   width: 80%;
   margin: auto;
 }
@@ -472,4 +477,38 @@
 #input-favor-title {
   margin-left: 1rem;
   width: 250px;
+}
+
+/* ------- 데이트 피커 다크모드 대응용--------- */
+
+.daterangepicker {
+  background-color: var(--color-background);
+}
+
+.daterangepicker .calendar-table,
+div.calendar-table {
+  background-color: var(--color-datepicker);
+}
+
+/* .off.ends {
+  background-color: var();
+} */
+.daterangepicker td.off,
+.daterangepicker td.off.in-range,
+.daterangepicker td.off.start-date,
+.daterangepicker td.off.end-date {
+  background-color: var(--color-datepicker-off);
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active:hover,
+.daterangepicker td.active.end-date {
+  background-color: var(--color-datepicker-start);
+}
+.daterangepicker td.in-range {
+  background-color: var(--color-datepicker-range);
+}
+.daterangepicker .drp-buttons .btn.cancelBtn {
+  color: var(--font-black);
+  border-color: var(--font-black);
 }

@@ -1,16 +1,13 @@
-.div-approval-search-wrap input:focus-visible,
-.div-approval-search-wrap textarea:focus-visible,
-.div-approval-search-wrap select:focus-visible,
-.div-approval-search-wrap input:focus-visible {
+#all-approval-wrap textarea:focus-visible,
+#all-approval-wrap select:focus-visible,
+#all-approval-wrap input:focus-visible {
   outline: none;
   box-shadow: none;
-  border: none;
+  /* border: none; */
 }
 
-/* 부트스트랩 인풋 디자인 막기용 */
-#all-approval-wrap input:focus {
-  /* box-shadow: none;
-  border: none; */
+input#input-search-title:focus-visible {
+  border: none;
 }
 
 .inner-wrap {
@@ -113,7 +110,7 @@
   height: 50vh;
   padding: 1rem;
   border-radius: 4px;
-  border: 1px solid var(--color-blurred-black);
+  border: 1px solid var(--font-black);
 }
 
 .org-chart .input-group {
