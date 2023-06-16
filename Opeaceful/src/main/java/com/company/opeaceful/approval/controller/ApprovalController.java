@@ -709,12 +709,12 @@ public class ApprovalController {
 		return result;
 	}
 	
-	private static final Logger logger = LoggerFactory.getLogger(calendarController.class);
+	
 	// ajax용 결재문서 완결처리
 	@ResponseBody
 	@PostMapping("/updateApprovalStateEnd")
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
-		logger.info("결재 추가 로거");
+		
 		int result = 0;
 		System.out.println("============================="+approval);
 		
@@ -729,22 +729,16 @@ public class ApprovalController {
 			/* [혜린] - 연차 insert 시 캘린더 내 연차일정 추가 */
 			Approval apv = aprService.selectAddEvent(approval.getApprovalNo());
 			
-			System.out.println("조회해온 apv: "+apv);
-			
 			if(existApproval.getType() != 0) { // 0:일반 제외 1,2,3 연차만
 				
 				Calendar calendar = new Calendar();
 				String name = "";
 				
-				System.out.println("타입 : " + apv.getType());
 				switch(apv.getType()) {
 				case 1 :name = "휴가"; break;
 				case 2 :name = "오전반차"; break;
 				case 3 :name = "오후반차"; break;
 				}
-				System.out.println("name 값 : " + name);
-				System.out.println("시작일 : " + apv.getStartDate());
-				System.out.println("막날 : " + apv.getEndDate());
 				calendar.setTitle(apv.getUserName()+" "+name); // ex)ㅇㅇㅇ 휴가
 				calendar.setContent(apv.getApprovalNo()+"");
 				calendar.setCategory("H");

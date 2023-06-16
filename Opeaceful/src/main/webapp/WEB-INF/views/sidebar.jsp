@@ -264,9 +264,7 @@
         $("#salary-menu").click(function () {
             $("#salary-menu-item").slideToggle();
         });
-		
-        
-        
+    	           
 		/* 호버이벤트 */
         $(".sidebar").hover(
    		  function() {

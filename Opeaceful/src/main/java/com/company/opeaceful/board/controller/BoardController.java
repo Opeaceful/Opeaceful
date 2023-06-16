@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.company.opeaceful.approval.model.vo.ApprovalFile;
 import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardFile;
@@ -57,28 +57,27 @@ public class BoardController {
 							@PathVariable("boardCode") String boardCode,
 							Model model,
 							@RequestParam Map<String, Object> map) {
-		
+		//logger.info("보드 목록 로거");
 		String userNo = Integer.toString(loginUser.getUserNo());
 		
 		map.put("userNo", userNo);
 		map.put("currentPage", currentPage);
 		map.put("boardCode", boardCode);
 		
-		int rollCount = 0;
+		String rollCount = "";
 		if(map.get("condition") == null) {
 			rollCount = boardService.selectNoticeRoll(userNo);	
 			boardService.selectBoardList(map);				
 		}else {
 			rollCount = boardService.selectNoticeRoll(userNo);	
+			
 			boardService.selectSearchBoardList(map);
 		}
-		
+		System.out.println("rollcolunt : " + rollCount );
 		model.addAttribute("map", map);
 		model.addAttribute("notiRoll", rollCount);
 		
-		
-		System.out.println("map에 담긴 값 컨트롤러 : " + map);
-		System.out.println(" 공지사항 권한관리 유무값(1/0) : " + rollCount);
+		//System.out.println(" 공지사항 권한관리 유무값(1/0) : " + rollCount);
 		return "board/boardList";
 	}
 	
@@ -90,34 +89,30 @@ public class BoardController {
 							  Model model,
 							  @ModelAttribute (value = "map") Map<String, Object> map,
 							  HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
-		
+		//logger.info("보드 상세조회 로거");
 		map.put("boardCode", boardCode);
 		
-		System.out.println("가져온 맵:" + map);
 		currentPage = (int) map.get("currentPage");
 		
 		ArrayList<Board> boardList = (ArrayList<Board>) map.get("list");
-		
-		System.out.println("boardNo 값 : "+ boardNo);
 		
 		map.put("boardNo", boardNo);
 		
 		Board detail = boardService.selectBoardDetail(map);
 		
 		List<BoardFile> file = boardService.selectUpFileList(boardNo);
-		System.out.println("file담긴 값 : " + file);
-		model.addAttribute("file", file);
 		
-		System.out.println("detail담긴ㄱ값 : " + detail);
+		model.addAttribute("file", file);
 		
 		String userNo = (String) map.get("userNo");
 		
-		int notiRollCount = boardService.selectNoticeRoll(userNo);
+		String notiRollCount = boardService.selectNoticeRoll(userNo);
 		
-		int freeRollCount = boardService.selectFreeRoll(userNo);
+		String freeRollCount = boardService.selectFreeRoll(userNo);
 		
 		model.addAttribute("notiRoll", notiRollCount);
 		model.addAttribute("freeRoll", freeRollCount);
+		
 		
 		// 조회수 중복 증가 방지 (타인이 작성한 글만 조회수 카운트)
 		if (detail != null) { // 상세조회 성공
@@ -126,7 +121,6 @@ public class BoardController {
 
 			int memberNo = 0;
 
-			System.out.println("현재 loginUser : " + loginUser);
 			memberNo = loginUser.getUserNo();
 
 			// 글쓴이와 현재 상세보기요청을한 클라이언트가 같지 않을 경우에만 조회수 증가서비스 호출.
@@ -141,8 +135,8 @@ public class BoardController {
 
 						if (c.getName().equals("readBoardNo")) {
 							cookie = c;
-							System.out.println("c담긴 값 : " + c);
-							System.out.println("보드넘버로 된 쿠키 있을때 쿠키 담긴 값 : "+cookie);
+							//System.out.println("c담긴 값 : " + c);
+							//System.out.println("보드넘버로 된 쿠키 있을때 쿠키 담긴 값 : "+cookie);
 						}
 					}
 
@@ -156,7 +150,7 @@ public class BoardController {
 					// 단, 기존 쿠키값중에 중복되는 번호가 없어야한다.
 					String temp[] = cookie.getValue().split("/");// 기존 value
 					// "readBoardNo" / "1/2/3/4/5/6/7/8/9/100"
-					System.out.println("temp : "+temp);
+					//System.out.println("temp : "+temp);
 					List<String> list = Arrays.asList(temp); // 배열 --> List로 변환시켜주는 함수
 					
 					// List.indexOf(Object) :
@@ -165,22 +159,18 @@ public class BoardController {
 					if (list.indexOf(boardNo + "") == -1) {// 즉 , 기존값에 같은 글번호가 없다면
 						cookie.setValue(cookie.getValue() + "/" + boardNo);
 						
-						System.out.println("보드넘버 추가 후 쿠키 담긴 값 : "+cookie);
+						//System.out.println("보드넘버 추가 후 쿠키 담긴 값 : "+cookie);
 						
 						result = boardService.updateAddCount(boardNo); // 조회수 증가서비스 호출
 					}
-
 				}
 				
 				if (result > 0) {
-
 					cookie.setPath(req.getContextPath());
 					cookie.setMaxAge(60 * 60 * 1); // 1시간
 					resp.addCookie(cookie);
 				}
-
 			}
-
 		}
 		
 		model.addAttribute("b", detail);
@@ -191,10 +181,17 @@ public class BoardController {
 	/* 게시글 삭제 */
 	@ResponseBody
 	@PostMapping("/delete")
-	public int boardDelete(int boardNo) {
+	public int boardDelete(int boardNo, HttpSession session) {
 		
+		String webPath = "/resources/file/board/";
+		String serverFolderPath = session.getServletContext().getRealPath(webPath);
+		
+		boardService.deleteUpfile(boardNo, serverFolderPath);
 		int result = boardService.boardDelete(boardNo);
-		System.out.println("result 값은 :"+result);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");			
+		}
 		return result;
 	}
 	
@@ -207,10 +204,8 @@ public class BoardController {
 							  @RequestParam(value="bno", defaultValue="0", required = false) int bno) {
 		
 		ArrayList<Department> deptList = boardService.selectDeptList();
-		System.out.println("dept : " + deptList);
-		map.put("dlist", deptList);
-		System.out.println(""+map.get("dlist"));
 		
+		map.put("dlist", deptList);
 		map.put("boardNo", bno);
 		
 		if(mode.equals("update")) {
@@ -219,30 +214,28 @@ public class BoardController {
 			model.addAttribute("b",b);
 		}
 		
+		List<BoardFile> file = boardService.selectUpFileList(bno);
+		
+		if(file != null) {
+			model.addAttribute("file", file);			
+		}
 		
 		return "board/boardEnrollForm";
 	}
+	
 	
 	/* 게시글 등록 */
 	@PostMapping("/insert/{boardCode}")
 	public String insertBoard(Board b, Model model, HttpSession session,
 								@PathVariable("boardCode") String boardCode,
-								int boardNo,
+								int boardNo, 
 							  @ModelAttribute ("loginUser") Member loginUser,
 							  @ModelAttribute ("map") Map<String, Object> map,
 							  @RequestParam(value="mode" , required = false, defaultValue = "insert") String mode,
-							  @RequestParam(value="upFile" , required = false) MultipartFile[] upFileList,
-							  @RequestParam(value="deleteList", required=false) String deleteList) {
+							  @RequestParam(value="upFile" ,required = false) List<MultipartFile> upFileList,
+							  @RequestParam(value="hiddenfile", required = false) List<String> hiddenfile) {
 		
-		logger.info("zzzz");
-		
-		String boardContent = b.getBoardContent();
-		
-		List<BoardFile> fileList = new ArrayList<>();
-		
-		// 파일 저장 경로
-		String webPath = "/resources/file/board/";
-		String serverFolderPath = session.getServletContext().getRealPath(webPath);
+		//logger.info("insertBoard 로거!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
 		
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
@@ -250,8 +243,6 @@ public class BoardController {
 		String date = format1.format(time);
 		
 		b.setBoardCd(boardCode);
-		
-		
 		b.setCreateDate(date);
 		
 		int userNo = loginUser.getUserNo();
@@ -268,125 +259,38 @@ public class BoardController {
 			b.setBoardWriter(userNo+"");
 		}
 		
-		System.out.println("등록/수정 전 Board b 에 담긴 값 : "+ b);
+		// 파일 저장 경로
+				String webPath = "/resources/file/board/";
+				String serverFolderPath = session.getServletContext().getRealPath(webPath);
 		
 		int result = 0;
 		
 		if(mode.equals("insert")) {
 			//게시글 등록
-			try {
-				System.out.println("upFileList: " + upFileList);
-				System.out.println("upFileList.toString(): "+upFileList.toString());
+				result = boardService.insertBoard(b, upFileList, serverFolderPath);
 				
-				if(!upFileList.toString().isEmpty()) {
-					System.out.println("if문 안 =-upFileList: " + upFileList);
-					
-					for(int i=0; i< upFileList.length; i++) {
-						String src = "src=\""+i+"\"";
-						String changeFile;
-						String originFile;
-						System.out.println("for문 안 =-upFileList: " + upFileList);
-						try {
-							
-							originFile = upFileList[i].getOriginalFilename();
-							
-							changeFile = FileRenamePolicy.saveFile( upFileList[i] , serverFolderPath);
-							//boardContent= boardContent.replace(src,"src=\""+changeName+"\"");
-							//System.out.println(boardContent);
-							
-							fileList.add(new BoardFile(originFile, changeFile)); // fileList에 첨부파일 담김
-						} catch (IllegalStateException | IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				System.out.println("첨부파일 담긴 리스트 : "+ fileList);
+				if(result > 0) {
+					session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+				}else{
 				
-				System.out.println("====게시글 등록====");
-				result = boardService.insertBoard(b, fileList);
-				System.out.println("컨트롤러 인서트 실행 후 리절틈 담김 보드넘버임??"+result);
-				System.out.println("등록 후 Board b 에 담긴 값 : "+ b);
-				
-			}catch(Exception e) {
 				System.out.println("insert메서드 에러");
 			}
-			
-			if(result > 0) {
-				session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
-				return "redirect:/board/list/{boardCode}";
-				
-			}else {
-				System.out.println("게시글 작성 실패");
-				return "board/boardEnrollForm";
-			}
-			
-			
 		}else {
+			
 			//게시글 수정 (b객체 안에 boardNo 존재)
-			try {
-				System.out.println("====게시글 수정====");
+				result = boardService.updateBoard(b, hiddenfile, upFileList, serverFolderPath);
 				
-
-				System.out.println("첨부파일리스트담김? : "+upFileList);
-				
-				
-				
-				if(upFileList.toString().isEmpty()) {
-					
-					System.out.println("수정할 보드넘버 값 : " + b.getBoardNo());
-					
-					//int dltResult = boardService.deleteUpfile(b.getBoardNo());
-					
-					//System.out.println("해당게시글 첨부파일 지우기 성공? (1/0) :"+dltResult);
-					
-					for(int i=0; i< upFileList.length; i++) {
-						String src = "src=\""+i+"\"";
-						String changeFile;
-						String originFile;
-						
-						try {
-							originFile = upFileList[i].getOriginalFilename();
-							
-							changeFile = FileRenamePolicy.saveFile( upFileList[i] , serverFolderPath);
-							//boardContent= boardContent.replace(src,"src=\""+changeName+"\"");
-							//System.out.println(boardContent);
-							
-							fileList.add(new BoardFile(originFile, changeFile)); // fileList에 첨부파일 담김
-						} catch (IllegalStateException | IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				System.out.println("첨부파일 담긴 리스트 : "+ fileList);
-				
-				
-				result = boardService.updateBoard(b, fileList);
-				System.out.println("업데이트 실행 후 리절틈 담김/??"+result);
-				System.out.println("수정 후 Board b 에 담긴 값 : "+ b);
-				
-			}catch(Exception e) {
-				System.out.println("update메서드 에러");
-			}
-			
-			boardNo = b.getBoardNo();
-			model.addAttribute("boardNo",boardNo);
-			
 			if(result > 0) {
 				session.setAttribute("alertMsg", "게시글이 수정되었습니다.");
-				return "redirect:/board/detail/{boardCode}/{boardNo}";
+				return "board/boardList";
 			}else {
 				System.out.println("게시글 작성 실패");
 				return "board/boardEnrollForm";
 			}
-			
-			
 		}
 		
-		
-		
-		
+		return "redirect:/board/list/{boardCode}";
 	}
-	
 	
 	
 	

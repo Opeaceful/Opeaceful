@@ -5,15 +5,14 @@
 import {path} from '../common/common.js';
 /* dataSet */
 let category = document.getElementById('calendar-wrap').dataset.category;
-//let cno = document.getElementById('modal-submit-btn').dataset.submit;
-  //=======================================  
+
 
   
     // ===== 일정추가 모달 내 카테고리 색 지정박스 =====
     //color box div
     let mycol = $(".my-event-col-box");
     let tmcol = $(".tm-event-col-box");
-    
+
     /* 모달 내 카테고리 버튼에 따른 색 영역 변경 */
     $('.my-event-btn').on('click', function(){
       // console.log("mine check");
@@ -21,7 +20,7 @@ let category = document.getElementById('calendar-wrap').dataset.category;
       mycol.css('display', 'block');
       modalReset();
     })
-
+    
     $('.tm-event-btn').on('click', function(){
       // console.log("team check");
       mycol.css('display', 'none');
@@ -157,6 +156,7 @@ function modalReset(){
  $('input:radio[name="color"]').prop("checked", false);
  $('input:radio[name="t-color"]').prop("checked", false);
  $('input:checkbox[name=event-d-day]').prop("checked", false);
+ $('.apv-hidden').css('display','block');
 }
 
 /* 일정추가 함수 */
@@ -234,25 +234,11 @@ function deleteEvent(){
   })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* ============================== fullCalendar ======================================= */
 
  document.addEventListener('DOMContentLoaded', function() {
 
     var calendarM = document.getElementById('calendarM');
-   // var calendarT = document.getElementById('calendarT');
-   // var calendarF = document.getElementById('calendarF');
-
     var calendarMini = document.getElementById('mini-calendar');
 
   //=======================================  
@@ -275,7 +261,6 @@ function deleteEvent(){
         center: 'prevYear,prev,title,next,nextYear',
         right: 'today'
       },
-      //defaultDate: '2020-02-12', //defaultDate없으면 현재날짜 -> 나중에 지워주기
       editable: false,
       eventLimit: true, // allow "more" link when too many events
       events: data,
@@ -349,9 +334,7 @@ function deleteEvent(){
     alert( "Request failed");
   });
 }
-
 //=======================================
-
 function teamCalendar(){
   /* 팀 캘린더 */
   var request = $.ajax({
@@ -370,7 +353,6 @@ function teamCalendar(){
       center: 'prevYear,prev,title,next,nextYear',
       right: 'today'
     },
-    //defaultDate: '2020-02-12', //defaultDate없으면 현재날짜 -> 나중에 지워주기
     editable: false,
     eventLimit: true, // allow "more" link when too many events
     events: data,
@@ -433,6 +415,7 @@ function teamCalendar(){
             }
             /* 연차일정은 수정 못하게 */
             if(result.category == 'H'){
+
               $('#dlt-event-btn').css('display','none');
               $('#modal-update-btn').css('display','none');
             }
@@ -447,9 +430,7 @@ request.fail(function() {
   alert( "Request failed");
 });
 }
-
 //=======================================
-
 function fullCalendar(){
   /* 전체 캘린더 */
   var request = $.ajax({
@@ -468,7 +449,6 @@ function fullCalendar(){
       center: 'prevYear,prev,title,next,nextYear',
       right: 'today'
     },
-    //defaultDate: '2020-02-12', //defaultDate없으면 현재날짜 -> 나중에 지워주기
     editable: false,
     eventLimit: true, // allow "more" link when too many events
     events: data,
@@ -486,7 +466,6 @@ function fullCalendar(){
         abled.title = true;
         enableU();
 
-        
         console.log("일정 고유번호 : "+info.event.id);
 
         let cno = info.event.id;
@@ -527,10 +506,17 @@ function fullCalendar(){
             if(result.dDay == 'Y'){ // 디데이 표시면 checked
               eveDday.prop('checked',true); 
             }
-            /* 연차일정은 수정 못하게 */
+            /* 연차일정 모달 제한*/
             if(result.category == 'H'){
+
+
+              /* 연차일정은 수정 못하게 */
               $('#dlt-event-btn').css('display','none');
               $('#modal-update-btn').css('display','none');
+
+              /* 연차관련없는 요소 disabled */
+              $('.apv-hidden').css('display','none');
+
             }
           }
         })
@@ -544,6 +530,7 @@ request.fail(function() {
 });
 }
 
+//=======================================
 
 function miniCalendar(){
   /* 미니 캘린더 */
@@ -565,10 +552,9 @@ function miniCalendar(){
         right: 'none'
       },
       editable: false,
-      eventLimit: true, // allow "more" link when too many events
+      eventLimit: false, // allow "more" link when too many events
       events: data
     });
-
    
     calendarMin.render();
   })
@@ -594,25 +580,11 @@ eventList(category);
 miniCalendar();
 
 
-// if($('.input-memo').focus()){
-//     console.log(" 포커스 눌림");
-//     $('.memo-wrap').css('background-color', 'rgba(197, 194, 194, 0.342)');
-// }
-
-
  })
 
 
-
-
-
-
- /* 캘린더 내부 메모 */
+ /* 캘린더 내부 메모 insert/update */
  $('.input-memo').focusout(function(){
-    // if(this.val != ""){
-      
-    // }
-
     $.ajax({
       type: 'POST',
       url: path+"/calendar/addMemo",

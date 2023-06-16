@@ -105,17 +105,7 @@
                         <th>내용</th>
                         <td colspan="2" class="enroll-cnt">
                             <div>
-                            <!-- <textarea class="tinymce" id="form-tiny" name="boardContent" maxlength="3000" required="required">${b.boardContent }</textarea> -->
-                            <textarea  name="boardContent" maxlength="3000" required="required">${b.boardContent }</textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- 첨부파일 영역 -->
-                    <tr>
-                        <th><i class="fa-solid fa-paperclip"></i></th>
-                        <td colspan="2" class="atc-box">
-                            <div class="mb-0">
-                                <input name="upFile" class="box-shadow-none form-control" type="file" id="formFileMultiple" multiple>
+                             <textarea class="tinymce" id="form-tiny" name="boardContent" maxlength="3000">${b.boardContent }</textarea>
                             </div>
                         </td>
                     </tr>
@@ -157,6 +147,28 @@
                         </td>
                     </tr>
                     </c:if>
+                    <!-- 첨부파일 등록 영역 -->
+                    <tr>
+                        <th><i class="fa-solid fa-paperclip"></i></th>
+                        <td colspan="2" class="atc-box">
+                            <div class="mb-0">
+                            <c:if test="${b.boardNo != null }">
+                            <div id="upfile-area" data-upfile="${f.fileNo}">   </div>
+                            
+                            <c:forEach items="${file}" var="f">
+			                <div class="atc-txt" style="margin-left:15px">
+			                	<a download href="#">${f.originFile}</a>&nbsp
+			                	<i style="color:gray" class="dlt-upfile-btn fa-solid fa-xmark" data-bno="${ b.boardNo}"></i>
+                            	<input type="hidden" name="hiddenfile" value="${f.fileNo}"/>
+			                </div>
+			                
+			                </c:forEach>
+			                
+			                </c:if>
+                                <div style="margin:5px"><input name="upFile" class="box-shadow-none form-control" type="file" id="formFileMultiple" multiple></div>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
                 
                 
@@ -184,38 +196,21 @@
     </div>
 
 	<script>
-	/* 취소버튼 클릭이벤트 */
+	/* 상세조회 첨부파일 x 버튼 클릭*/
+	$(document).ready(function() {
+		$('.dlt-upfile-btn').on("click", function(e) {
+			deleteFile($(this));
+		})
+	})
+	function deleteFile(obj) {
+        obj.parent().remove();
+    }
+	
+	
+	/* 상세조회 폼 취소버튼 클릭이벤트 => 목록으로 */
     $("#cancelBtn").click(function(){
     	location.href="${path}/board/list/${boardCode}";
     });
-    
-	/* 첨뷰파일 리스트 뷰어용 */
-    $(document).ready( function() {
-    	 
-        $("input[type=file]").change(function () {
-            
-            var fileInput = document.getElementById("formFileMultiple");
-            
-            var files = fileInput.files;
-            var file;
-            
-            for (var i = 0; i < files.length; i++) {
-                
-                file = files[i];
- 
-                console.log(file.name);
-            }
-            
-        });
- 
-    });
-	
-	
-	
-	
-	
-	
-	
 	
 	</script>
 
