@@ -58,25 +58,29 @@
 						</c:otherwise>
 					</c:choose>
                 </div>
+                
             </div>
             <!-- 수정/삭제 버튼 영역 -->
             <div class="board-wrap2">
             <c:choose>
-				<c:when test="${ boardCode eq 'F'}">
-				<c:if test='${(b.boardWriter == loginUser.userNo+"") or (freeRoll > 0)}'> 
+				<c:when test="${ boardCode eq 'F'}"> <!-- 자유게시판 -->
+				<c:if test='${(b.boardWriter == loginUser.userNo+"")}'> 
 				<div><button type="button" id="udtBtn" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
 				</c:if>
+				<c:if test='${(b.boardWriter != loginUser.userNo+"") && freeRoll eq "B02" }'> 
+				<div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
+				</c:if>
 				</c:when>
 				
-				<c:when test="${ boardCode eq 'N'}">
-				<c:if test="${notiRoll > 0}">
+				<c:when test="${ boardCode eq 'N'}"> <!-- 공지사항 -->
+				<c:if test="${notiRoll eq 'B01'}">
                 <div><button type="button" id="udtBtn" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
             	</c:if>
 				</c:when>
 				
-				<c:otherwise>
+				<c:otherwise>  <!-- 팀게시판 -->
 				<c:if test='${(b.boardWriter == loginUser.userNo+"")}'> 
 				<div><button type="button" id="udtBtn" class="btn btn-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</button></div>
                 <div class="dlt-btn"><button type="button" id="dltBtn" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</button></div>
@@ -133,7 +137,7 @@
                 
                 <!-- 실제 댓글은  스크립트로 추가 -->
                 
-                	<!-- 댓글 예시 -->
+                	<!-- 댓글 예시 
                     <div class="reply-one">
                         <div class="jcode-name"><span>사원 김혜린</span></div>
                         <div class="reply-ctn"><span>확인했습니다.</span></div>
@@ -144,7 +148,7 @@
                         </div>
                     </div>
                     
-                    <!-- 답댓글등록란 -->
+                     답댓글등록란 
                     <div class="reply-input-area re-reply-input-area">
                         <div class="lock-space">
                             <div><button class="sm-unlock-btn"><i class="fa-solid fa-lock-open"></i></button></div>
@@ -155,7 +159,7 @@
                             <div><button type="button" class="reply-button btn btn-primary">등록</button></div>
                         </div>
                     </div>
-                    <!-- 답댓글 예시 -->
+                     답댓글 예시 -
                     <div class="reply-two">
                         <div class="jcode-name">사원 김혜린</div>
                         <div class="reply-ctn">확인했습니다.</div>
@@ -164,7 +168,7 @@
                             <button class="reply-dlt-btn"><span>삭제</span></button>
                         </div>
                     </div>        
-                               
+                               -->
                 </div>
                 
                 
@@ -217,7 +221,6 @@
         </div>
     </div>
     
-    <script type="module" src="${path}/resources/js/board/boardDetail.js"></script>
     
     <script>
     
@@ -255,7 +258,7 @@
     $(function(){
      	selectReplyList();
      
-        // ==== 자물쇠 버튼 ====
+        // ==== 댓글 자물쇠 버튼 ====
         let lock = $(".lock-btn");
         let unlock = $(".unlock-btn");
         let lockSm = $(".sm-lock-btn");
@@ -278,13 +281,11 @@
         })
 
         unlockSm.on('click', function(){
-            // console.log("Locking...");
             unlockSm.css('display', 'none');
             lockSm.css('display', 'block');
         })
 
         lockSm.on('click', function(){
-            // console.log("Unlocking...");
             unlockSm.css('display', 'block');
             lockSm.css('display', 'none');
         })
@@ -295,11 +296,6 @@
 	function moveCp(cp){
     	location.href = '${path}/board/list/${boardCode}?cpage='+cp;
     }
-	
-	/*function moveSp(cd,kw){
-		location.href = '${path}/board/list/${boardCode}?condition='+cd+'&keyword='+kw;
-	}*/
-
     
     function addReReply(){
         if($('#repTxt').text() == "답글달기"){
@@ -357,10 +353,12 @@
 					html += "<span class='reply-date'>"+r.createDate+"</span>";
 					//html += "<button class='re-reply-btn' id='repBtn"+r.replyNo+"' onclick='addReReply()'><span id='repTxt"+r.replyNo+"' class='re-btn-text'>답글달기</span></button>";
 						
-					if(r.userNo == '${loginUser.userNo}'){
+					if((r.userNo == '${loginUser.userNo}') || ('${freeRoll}' == "B02")){
 						html += "<button class='reply-dlt-btn' onclick='deleteReply("+r.replyNo+")'><span>삭제</span></button>";
 					}									   
-					/* html += "</div></div>";
+					/* --답글
+					
+					html += "</div></div>";
 					html += "<div class='reply-input-area re-reply-input-area' id='rep-insert"+r.replyNo+"'>";
 					html += "<div class='lock-space'>";
 					html += "<div><button class='sm-unlock-btn'><i class='fa-solid fa-lock-open'></i></button></div>";
@@ -373,19 +371,9 @@
 				
 					//$('#repTxt'+r.+  ').text("답글달기");
 			         //  $('#rep-insert').css('display', 'none');
-				
-				
-				
 				}
 				
 				$(".reply-space").html(html);
-				
-				
-				
-				
-				
-				
-				
 				
 			},error : function(req,sts,err){
 				console.log(req);
@@ -457,15 +445,6 @@
     $("#udtBtn").click(function(){
     	location.href="${path}/board/enrollForm/${boardCode}?mode=update&bno=${b.boardNo}";
     });
-    
-    /*
-    if(${boardCode} == N){
-    	$(".board-wrap5").css("border-bottom","2px solid var(--color-navy)");
-    }
-    */
-
-    
-    
     
     </script>
     
