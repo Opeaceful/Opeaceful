@@ -240,20 +240,9 @@
 					AND A.STATUS = #{ status }
 				</otherwise>
 			</choose>
-			<choose>
-				<when test='type == 0'><!-- 일반 -->
-					AND TYPE = 0
-				</when>
-				<when test='type == 1'><!-- 연차 -->
-					AND TYPE = 1
-				</when>
-				<when test='type == 2'><!-- 오전반차 -->
-					AND TYPE = 2
-				</when>
-				<when test='type == 3'><!-- 오후반차 -->
-					AND TYPE = 3
-				</when>
-			</choose>
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
 		ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
 		LIMIT #{ page } , 10 	
 	</select>	
@@ -290,20 +279,9 @@
 					AND STATUS = #{ status }
 				</otherwise>
 			</choose>	
-			<choose>
-				<when test='type == 0'><!-- 일반 -->
-					AND TYPE = 0
-				</when>
-				<when test='type == 1'><!-- 연차 -->
-					AND TYPE = 1
-				</when>
-				<when test='type == 2'><!-- 오전반차 -->
-					AND TYPE = 2
-				</when>
-				<when test='type == 3'><!-- 오후반차 -->
-					AND TYPE = 3
-				</when>
-			</choose>
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
 	</select>	
 	
 
@@ -357,20 +335,9 @@
 					AND A.STATUS = #{ status }
 				</otherwise>
 			</choose>
-			<choose>
-				<when test='type == 0'><!-- 일반 -->
-					AND TYPE = 0
-				</when>
-				<when test='type == 1'><!-- 연차 -->
-					AND TYPE = 1
-				</when>
-				<when test='type == 2'><!-- 오전반차 -->
-					AND TYPE = 2
-				</when>
-				<when test='type == 3'><!-- 오후반차 -->
-					AND TYPE = 3
-				</when>
-			</choose>
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
 		ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
 		LIMIT #{ page } , 10 
 	</select>	
@@ -417,20 +384,9 @@
 				AND STATUS = #{ status }
 			</otherwise>
 		</choose>	
-		<choose>
-			<when test='type == 0'><!-- 일반 -->
-				AND TYPE = 0
-			</when>
-			<when test='type == 1'><!-- 연차 -->
-				AND TYPE = 1
-			</when>
-			<when test='type == 2'><!-- 오전반차 -->
-				AND TYPE = 2
-			</when>
-			<when test='type == 3'><!-- 오후반차 -->
-				AND TYPE = 3
-			</when>
-		</choose>
+		<if test="type >= 0">
+			AND TYPE = #{ type }
+		</if>
 	</select>	
 	
 	<!-- 참조인용 결재문서 리스트 조회 -->
@@ -469,20 +425,9 @@
 				AND A.STATUS = #{ status }
 			</otherwise>
 		</choose>	
-		<choose>
-			<when test='type == 0'><!-- 일반 -->
-				AND TYPE = 0
-			</when>
-			<when test='type == 1'><!-- 연차 -->
-				AND TYPE = 1
-			</when>
-			<when test='type == 2'><!-- 오전반차 -->
-				AND TYPE = 2
-			</when>
-			<when test='type == 3'><!-- 오후반차 -->
-				AND TYPE = 3
-			</when>
-		</choose>
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
 		ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
 		LIMIT #{ page } , 10 
 	</select>	
@@ -516,21 +461,106 @@
 				AND STATUS = #{ status }
 			</otherwise>
 		</choose>
-		<choose>
-			<when test='type == 0'><!-- 일반 -->
-				AND TYPE = 0
-			</when>
-			<when test='type == 1'><!-- 연차 -->
-				AND TYPE = 1
-			</when>
-			<when test='type == 2'><!-- 오전반차 -->
-				AND TYPE = 2
-			</when>
-			<when test='type == 3'><!-- 오후반차 -->
-				AND TYPE = 3
-			</when>
-		</choose>
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
 	</select>	
+	
+
+	
+	<!-- 결재문서 서치 리스트 조회용 (관리권한가진 유저용임) -->
+	<select id="searchApprovalList"  resultType="approval" parameterType="map" >
+		SELECT  APPROVAL_NO,
+				USER_NO,
+				ENO,
+				TYPE,
+				TITLE,
+				DRAFT_DATE,
+				DATE_FORMAT(DRAFT_DATE, '%Y-%m-%d %H:%i') AS FORMAT_DRAFT_DATE,
+				A.STATUS AS STATUS,
+				COALESCE(M.USER_NAME, A.USER_NAME) AS USER_NAME
+		FROM APPROVAL A
+		LEFT JOIN MEMBER M USING (USER_NO)
+		WHERE 
+			<if test="userNo > 0">
+				USER_NO = #{ userNo } AND
+			</if>	
+			<if test="year > 0">
+				YEAR(DRAFT_DATE) = #{ year }
+			</if>	
+			<if test="0 >= year">
+				YEAR(DRAFT_DATE) > #{ year }
+			</if>
+			<choose>
+				<when test="status == null">
+				<!-- 임시저장 제외 전체 조회용 -->
+					AND A.STATUS != 2
+				</when>
+				<when test="status == -1">
+				<!-- 반려용 조회 -->
+					AND 0 > A.STATUS 
+				</when>
+				<otherwise>
+					AND A.STATUS = #{ status }
+				</otherwise>
+			</choose>	
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
+		
+		<if test="keyword != null">
+				AND UPPER(A.TITLE) LIKE #{ keyword3 } ESCAPE '^'
+			ORDER BY
+				CASE WHEN UPPER(A.TITLE) LIKE #{ keyword } ESCAPE '^' THEN 0
+				WHEN UPPER(A.TITLE) LIKE #{ keyword1 } ESCAPE '^' THEN 1
+				WHEN UPPER(A.TITLE) LIKE #{ keyword2 } ESCAPE '^' THEN 2
+				WHEN UPPER(A.TITLE) LIKE #{ keyword3 } ESCAPE '^' THEN 3
+				ELSE 4 END
+		</if>
+		<if test="keyword == null">
+			ORDER BY DRAFT_DATE DESC, APPROVAL_NO DESC
+		</if>
+		LIMIT #{ page } , 10 	
+	</select>	
+	
+	<!-- 결재문서 서치 리스트 총개수 조회용 (관리권한가진 유저용임) -->
+	<select id="searchApprovalListCount"  parameterType="map" resultType="_int" >
+		SELECT COUNT(*)
+		FROM APPROVAL
+		WHERE 
+			<if test="userNo > 0">
+				USER_NO = #{ userNo } AND
+			</if>	
+			<if test="year > 0">
+				YEAR(DRAFT_DATE) = #{ year }
+			</if>	
+			<if test="0 >= year">
+				YEAR(DRAFT_DATE) > #{ year }
+			</if>
+			<choose>
+				<when test="status == null">
+				<!-- 임시저장 제외 전체 조회용 -->
+					AND STATUS != 2
+				</when>
+				<when test="status == -1">
+				<!-- 반려용 조회 -->
+					AND 0 > STATUS 
+				</when>
+				<otherwise>
+					AND STATUS = #{ status }
+				</otherwise>
+			</choose>	
+			<if test="type >= 0">
+				AND TYPE = #{ type }
+			</if>
+		<if test="keyword != null">
+				AND UPPER(TITLE) LIKE #{ keyword } ESCAPE '^'
+		</if>
+
+	</select>	
+	
+	
+	
 
 	<!-- 메모리스트  조회용 -->
 	<select id="selectMemoList" resultType="approvalMemo" parameterType="_int" >
@@ -795,9 +825,9 @@
 	
 	<!-- 결재문서 삭제 (실제 결재라인, 메모 모두 같이 삭제) -->
 	<delete id="deleteApproval" parameterType="_int">
+	  DELETE FROM APPROVAL WHERE APPROVAL_NO = #{approvalNo};
 	  DELETE FROM APPROVAL_LINE WHERE APPROVAL_NO = #{approvalNo};
 	  DELETE FROM APPROVAL_MEMO WHERE APPROVAL_NO = #{approvalNo};
-	  DELETE FROM APPROVAL WHERE APPROVAL_NO = #{approvalNo};
 	</delete>
 	
 	<!-- 즐겨찾기 삭제 -->

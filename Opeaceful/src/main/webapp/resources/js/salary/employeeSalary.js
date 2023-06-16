@@ -157,7 +157,7 @@ $("#print-button").click(function() {
             <title></title>
         </head>
     <body>`
-    const pgetContent = document.getElementById("salary-modal-body").innerHTML + "<br>";
+    const pgetContent = "<br><br>"+document.getElementById("salary-modal-body").innerHTML + "<br>";
     //이사이에 안넣고 싶은 div가 있다면 class print-none 추가해주면 됌
 
     const pFooter="</body></html>";

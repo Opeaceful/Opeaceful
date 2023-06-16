@@ -22,25 +22,28 @@
     box-shadow: 0 0 0 0.1rem var(--color-light-gray);
 }
 
-.table-common>tbody>tr:hover {
+/*테이블 호버 수정*/
+
+#all-user-view .table-common>tbody>tr:hover {
     background-color: initial;
 }
 
-table {
+
+#all-user-view table {
     --bs-table-active-bg: none;
     --bs-table-hover-bg: none;
 }
 
-.table-hover>tbody>tr:hover>* {
+#all-user-view .table-hover>tbody>tr:hover>* {
     --bs-table-accent-bg: none; 
     color: none;
 }
 
-.table-common>tbody>tr>td:hover {
+#all-user-view .table-common>tbody>tr>td:hover {
     background-color: var(--color-light-gray);
 }
 
-.table-common>tbody>tr>th:hover {
+#all-user-view .table-common>tbody>tr>th:hover {
     background-color: var(--color-light-gray);
 }
 

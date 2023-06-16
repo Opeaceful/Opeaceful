@@ -93,7 +93,7 @@
                         <div class="fs-14 col-3">내선번호</div>
                         <div class="fs-18 col-9">
                         	<c:if test="${empty loginUser.extension }">
-	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" minlength="9" maxlength="13" value="등록된 내선번호 없음">
+	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" minlength="9" maxlength="13" placeholder="등록된 내선번호 없음">
                         	</c:if>
                         	<c:if test="${!empty loginUser.extension }">
 	                            <input type="tel" id="mypage-call" name="extension" class="mypage-input form-control box-shadow-put" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" minlength="9" maxlength="13" value="${loginUser.extension}">

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -19,9 +20,13 @@ import com.company.opeaceful.dept.model.service.DeptService;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.Position;
 import com.company.opeaceful.dept.model.vo.UserDepartment;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 import com.google.gson.Gson;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/orgChart")
@@ -48,7 +53,8 @@ public class OrgChartController {
 	
 	@GetMapping("/")
 	public String orgChart() {
-		return "orgChartEnroll";
+		System.out.println("들어옴????");
+		return "orgChart/orgChartEnroll";
 	}
 	
 	// 부서조회
@@ -214,16 +220,29 @@ public class OrgChartController {
 		
 		model.addAttribute("map", map);
 			
-		return "orgChartView";
+		return "orgChart/orgChartView";
 			
+	}
+	
+	// 조직도 명함
+	@PostMapping("/businessCard")
+	@ResponseBody
+	public String businessCard(int userNo) {
+		
+		List<Member> list = orgchartService.businessCard(userNo);
+		
+		return new Gson().toJson(list);
 	}
 	
 	// 인사발령용 사원 조회
 	@PostMapping("/personnel")
 	@ResponseBody
-	public String selectPersonnel(int deptCode) {
-		
-		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
+	public String selectPersonnel(int deptCode,int topDeptCode) {
+		System.out.println(topDeptCode);
+		Map<String, Object> map = new HashMap<>();
+		map.put("deptCode", deptCode);
+		map.put("topDeptCode", topDeptCode);
+		List<OrgChart> personnelList = orgchartService.selectPersonnel(map);
 		
 		System.out.println("personnelList에 담긴 값 : "+personnelList);
 		
@@ -233,20 +252,40 @@ public class OrgChartController {
 	}
 	
 	// 인사발령 
-	@PostMapping("insertPersonnel")
+	@PostMapping("updatePersonnel")
 	@ResponseBody
-	public String insertPersonnel(Integer deptCode) {
+	public int updatePersonnel(@RequestParam String jsonData) {
+	 
+	    Map<String, Object> paramMap = new HashMap<String, Object>();
+	    
+	    JSONArray array = JSONArray.fromObject(jsonData);
+        
+	    List<Map<String, Object>> resendList = new ArrayList<Map<String, Object>>();
 		
-		System.out.println("실행 안됨????????");
-		System.out.println(deptCode);
-		List<OrgChart> personnelList = orgchartService.selectPersonnel(deptCode);
+	    for(int i=0; i<array.size(); i++){
+	        
+	        //JSONArray 형태의 값을 가져와 JSONObject 로 풀어준다.    
+	        JSONObject obj = (JSONObject)array.get(i);
+	                
+	        Map<String, Object> resendMap = new HashMap<String, Object>();
+	            
+	        resendMap.put("userNo", obj.get("userNo"));
+	        resendMap.put("deptCode", obj.get("deptCode"));
+	        resendMap.put("pCode", obj.get("pCode"));
+	        
+	            
+	        resendList.add(resendMap);
+	        System.out.println("resendMap"+resendMap);
+	    }
+	    
+	    System.out.println("resendList"+resendList);
+	    System.out.println("paramMap"+paramMap);
+	 
+	    paramMap.put("resendList", resendList);
+	 
+	    int cnt = orgchartService.updatePersonnel(paramMap);
+	        
+	    return cnt;
 		
-		
-		
-		List<OrgChart> insertPersonnel = orgchartService.insertPersonnel(personnelList);
-		
-		System.out.println("insertPersonnel에 담긴 값 : "+insertPersonnel);
-		
-		return new Gson().toJson(insertPersonnel);
 	}
 }

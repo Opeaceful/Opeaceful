@@ -130,7 +130,7 @@ body{
     position: sticky;
     top: 5rem;
     /* background-color: white; */
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--chat-notice);
     display: flex;
     flex-direction: row;
     margin-left: 0.625rem;
@@ -226,7 +226,7 @@ body{
     margin-left: 0.3125rem;
     margin-right: 0.3125rem;
     font-size: 0.75rem;
-    color: rgb(88, 88, 88);
+    color: var(--chat-date);
     text-align: center;
 }
 .friend_chatting > .chatting_time{
@@ -242,7 +242,7 @@ body{
     display: flex;
     flex-basis: 100%;
     align-items: center;
-    color: rgb(88, 88, 88);
+    color: var(--chat-date);
     font-size: 0.875rem;   
 }
 .chatting_date_line::before, .chatting_date_line::after{
@@ -256,7 +256,7 @@ body{
 
 /* 채팅 입력차 스타일 지정 */
 .chatting_insert_content{
-    background-color: white;
+    background-color: var(--color-background);
     padding: 0.4375rem;
     position: sticky;
     bottom: 0;
@@ -278,6 +278,8 @@ body{
 .chatform > .chatting_send_textarea{
     flex-basis: 100%;
     flex-grow: 1;
+    background-color: var(--color-background);
+    color: var(--font-black);
 }
 .chatting_send_button{
     margin-left: 10px;

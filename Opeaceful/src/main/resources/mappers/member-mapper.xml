@@ -22,7 +22,6 @@
 	  	
 	  	<result column="P_NAME" property="pName"/> 
 	  	<result column="DEPT_NAME" property="dName"/> 
-	  	
 	</resultMap>
 	
 	<!--지영: 수정용 ResultSet -->
@@ -65,6 +64,19 @@
 	  	<result column="P_NAME" property="pName"/> 
 	  	<result column="DEPT_NAME" property="dName"/>
 	  	<result column="TOP_DEPT_NAME" property="topDeptName"/>
+	</resultMap>
+	
+	<!-- [가영] 명함 사원 정보 조회용 -->
+	<resultMap type="member" id="businessCardResultSet">
+	  	<id column="USER_NO" property="userNo"/>
+	  	<result column="PROFILE_IMG" property="profileImg"/> 	
+	  	<result column="USER_NAME" property="userName"/> 	
+	  	<result column="P_NAME" property="pName"/> 
+	  	<result column="TOP_DEPT_NAME" property="topDeptName"/>
+	  	<result column="DEPT_NAME" property="dName"/>
+	  	<result column="EMAIL" property="email"/> 	
+	  	<result column="PHONE" property="phone"/> 	
+	  	<result column="EXTENSION" property="extension"/> 	
 	</resultMap>
 
 	<!-- =================== [insert] =================== -->	
@@ -172,7 +184,7 @@
 
 	 <!--[지영] 모달용 전체조회 -->
 	 <select id="modalAllMemberView" resultMap="AllmemberVIewResultSet" >
-	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
+	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME, ENO
 		FROM member
 		left JOIN user_department USING(USER_NO)
 		left JOIN department USING(DEPT_CODE)
@@ -271,6 +283,17 @@
 		JOIN department d ON ud.DEPT_CODE = d.DEPT_CODE
 		JOIN position p ON ud.P_CODE = p.P_CODE
 		WHERE STATUS='Y';
+	 </select>
+	 
+	 <!-- [가영] 명함에 들어갈 사원 정보 -->
+	 <select id="businessCard" resultMap="businessCardResultSet">
+	 	SELECT PROFILE_IMG, USER_NAME, P_NAME, T.DEPT_NAME AS "TOP_DEPT_NAME", D.DEPT_NAME, EMAIL, PHONE, EXTENSION
+		FROM MEMBER M
+		LEFT JOIN USER_DEPARTMENT UD ON M.USER_NO = UD.USER_NO
+		LEFT JOIN DEPARTMENT D ON UD.DEPT_CODE = D.DEPT_CODE
+		LEFT JOIN DEPARTMENT T ON (D.TOP_DEPT_CODE = T.DEPT_CODE)
+		LEFT JOIN POSITION P ON UD.P_CODE = P.P_CODE
+		WHERE M.USER_NO = #{userNo};
 	 </select>
 	 
 	

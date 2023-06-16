@@ -57,6 +57,10 @@ public interface ApprovalService {
 	
 	String selectSignImg(int userNo);
 	
+	List<Approval> searchApprovalList(int userNo, int year, Integer status, int type, String keyword, int page );
+	
+	int searchApprovalListCount(int userNo, int year, Integer status, int type, String keyword );
+	
 	/* [혜린 - 캘린더용 연차 일정 조회] */
 	Approval selectAddEvent(int approvalNo);
 	
