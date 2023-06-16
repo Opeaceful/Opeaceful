@@ -87,10 +87,15 @@ public class ChatDao {
 		}
 	
 
-	
-	
-	
-	
+		// 웹소켓 수정
+		
+		public List<ChatParticipant> chatRoomList(Member loginUser){
+			return sqlSession.selectList("chatMapper.chatRoomList", loginUser);
+		}
+		
+		public List<ChatParticipant> getParticipantsInRoom(int chatRoomNo) {
+		    return sqlSession.selectList("chatMapper.getParticipantsInRoom", chatRoomNo);	
+		}    
 	
 	
 	

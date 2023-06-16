@@ -3,13 +3,18 @@
   --color-blurred-black: rgba(0, 0, 0, 0.2);
   --color-deep-navy: rgb(16, 16, 83);
   --color-board-black: black;
-  --color-light-gray: rgb(243, 243, 243);
+  --color-light-gray-back: rgb(243, 243, 243);
   --box-shadow-px: 1px;
-  --box-shadow: var(--box-shadow-px) 0 0 0 var(--color-deep-navy),
+  --box-border-shadow: var(--box-shadow-px) 0 0 0 var(--color-deep-navy),
     0 var(--box-shadow-px) 0 0 var(--color-deep-navy),
     var(--box-shadow-px) var(--box-shadow-px) 0 0 var(--color-deep-navy),
     var(--box-shadow-px) 0 0 0 var(--color-deep-navy) inset,
     0 var(--box-shadow-px) 0 0 var(--color-deep-navy) inset;
+}
+
+:root[color-theme='dark']{
+  --color-deep-navy: rgb(207, 207, 207);
+  --color-light-gray-back: rgba(243, 243, 243, 0.062);
 }
 
 * {
@@ -87,7 +92,7 @@
 .end-approval-table td:nth-child(1) > div:first-child,
 .end-approval-table td:nth-child(3) > div:first-child,
 .end-approval-table td:nth-child(5) > div:first-child {
-  border-left: 3px solid black;
+  border-left: 3px solid var(--color-navy);
   width: 100px;
   margin: 0.5rem 0px;
 }
@@ -128,8 +133,7 @@
 }
 
 td .final-approval-wrap{
-  background-color: white;
-  border: 1px solid var(--color-board-black);
+  border: 1px solid var(--color-black);
 }
 
 .end-approval-lines {
@@ -148,8 +152,8 @@ td .final-approval-wrap{
 }
 
 .end-approval-lines-title {
-  box-shadow: var(--box-shadow);
-  background-color: var(--color-light-gray);
+  box-shadow: var(--box-border-shadow);
+  background-color: var(--color-light-gray-back);
   width: 30px;
   display: flex;
   justify-content: center;
@@ -165,11 +169,11 @@ td .final-approval-wrap{
 }
 
 .approver-name {
-  background-color: var(--color-light-gray);
+  background-color: var(--color-light-gray-back);
   width: max-content;
   min-width: 100%;
   padding: 0px 4px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
 }
 
 .approver-sign {
@@ -179,7 +183,7 @@ td .final-approval-wrap{
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
 }
 
 .approver-sign img {
@@ -189,7 +193,7 @@ td .final-approval-wrap{
 
 .approver-date {
   min-height: 21px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
 }
 
 .modal-back {

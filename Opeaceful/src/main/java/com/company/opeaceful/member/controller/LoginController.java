@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.company.opeaceful.approval.model.service.ApprovalService;
 import com.company.opeaceful.attendance.model.service.AttendanceService;
 import com.company.opeaceful.attendance.model.vo.Attendance;
 import com.company.opeaceful.board.controller.BoardController;
@@ -44,6 +45,7 @@ public class LoginController {
 	private BoardService boardService;
 	private AttendanceService attendanceService;
 	private RoleService roleService;
+	private ApprovalService aprService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
@@ -51,12 +53,14 @@ public class LoginController {
 							BCryptPasswordEncoder bcryptPasswordEncoder, 
 							BoardService boardService,
 							AttendanceService attendanceService,
-							RoleService roleService) {
+							RoleService roleService,
+							ApprovalService aprService) {
 		this.memberService = memberService;
 		this.bcryptPasswordEncoder = bcryptPasswordEncoder;
 		this.boardService = boardService;
 		this.attendanceService = attendanceService;
 		this.roleService = roleService;
+		this.aprService = aprService;
 		
 	}
 	// spring-quartz.xml 사용시 기본생성자 필요
@@ -160,7 +164,11 @@ public class LoginController {
 				cookie.setPath(req.getContextPath());
 				// 쿠키를 응답시 클라이언트에 전달
 				resp.addCookie(cookie);
-
+				
+				//[진기] 쳇 로그인유저 저장용 쿠키
+				Cookie chatCookie = new Cookie("userNo",String.valueOf(loginUser.getUserNo()));
+				chatCookie.setPath(req.getContextPath());
+				resp.addCookie(chatCookie);
 				
 				return "redirect:/main";
 			}
@@ -201,6 +209,12 @@ public class LoginController {
 			model.addAttribute("attendance",attendance);
 			model.addAttribute("os", os);
 			session.setAttribute("loginUserRole", loginUserRole);
+			
+			// (승은) 전자결재 진행중인건, 승인대기중인건 조회용
+			int progressApr = aprService.selectApprovalListCount(userNo, null, 0, -1, false); 
+			int waitApr = aprService.selectApprovalListforAuthorizeCount(userNo, "wait", null, -1, -1 , false); 
+			model.addAttribute("progressApr", progressApr);
+			model.addAttribute("waitApr", waitApr);
 			
 			return "main";
 		}else {

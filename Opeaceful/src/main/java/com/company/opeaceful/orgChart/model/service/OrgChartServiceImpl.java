@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.opeaceful.dept.model.vo.UserDepartment;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.dao.OrgChartDao;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
@@ -87,15 +88,21 @@ public class OrgChartServiceImpl implements OrgChartService {
 		return orgChartDao.selectTopDeptUser(deptCode);
 	}
 	
+	// 조직도 명함
+	@Override
+	public List<Member> businessCard(int userNo) {
+		return orgChartDao.businessCard(userNo);
+	}
+	
 	// 인사발령 사원 조회
 	@Override
-	public List<OrgChart> selectPersonnel(int deptCode) {
-		return orgChartDao.selectPersonnel(deptCode);
+	public List<OrgChart> selectPersonnel(Map<String, Object> map) {
+		return orgChartDao.selectPersonnel(map);
 	}
 	
 	// 인사발령
 	@Override
-	public List<OrgChart> insertPersonnel(List<OrgChart> personnelList) {
-		return orgChartDao.insertPersonnel(personnelList);
+	public int updatePersonnel(Map<String, Object> paramMap) {
+		return orgChartDao.updatePersonnel(paramMap);
 	}
 }

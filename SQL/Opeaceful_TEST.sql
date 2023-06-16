@@ -26,11 +26,6 @@ INSERT INTO position (P_NAME) VALUES
    ('주임'),
    ('사원');
 
-
-
-INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
-   VALUES ( 230502 , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', 'test', SYSDATE(), 'test@gmail.com');
-
 /* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!! user_no = 5 는  마케팅팀!*/
 
 /*공지사항 고정게시글 데이터*/
@@ -95,6 +90,8 @@ VALUES (5,'여기는','TEST1','5','T',default,'2023-05-12'),
 /*멤버 데이터*/
 INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME,HIRE_DATE, PHONE,EMAIL, ADDRESS,EXTENSION)
 VALUES
+  (200501, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이하나', '2020-05-01', '010-1234-5677', 'example0@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200502, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김둘셋', '2020-05-01', '010-1234-5666', 'example23@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200503, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김철수', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200504, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김지민', '2020-05-01', '010-9876-5432','testuser2@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200505, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이예진', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
@@ -150,7 +147,8 @@ VALUES
    
 /*멤버 데이터 부서등록*/
 INSERT INTO user_department(USER_NO, DEPT_CODE,P_CODE )
-VALUES (2,4,1),
+VALUES (1,4,1),
+	  (2,4,3),
       (3,4,3),
       (4,4,4),
       (5,5,4),
@@ -258,41 +256,67 @@ WHERE USER_NO >= 20 AND USER_NO <= 44;
 UPDATE MEMBER SET ANNUAL_LEAVE_COUNT = 10
 WHERE USER_NO > 44;
 
-
-
--- 휴가 등록 임시
-INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
-VALUES 
-		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
-		(3, 3, "오후반차", 0, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
-        (3, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
-		(3, 1, "휴가", 0, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
-		(3, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
-        (3, 2, "오전반차", -1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
-        (3, 1, "휴가", 2, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
-        (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
-
+-- 유저 1,2,8번에 연차 임시로 넣어둠
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
 
 -- 테스트 데이터 입력용 프로시저 
 
--- approval_form 더미 데이터 생성용
+-- approval 더미 데이터 생성용
 DELIMITER $$
-CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시저
+CREATE PROCEDURE add_approval() -- ⓐ myFunction이라는 이름의 프로시저
 BEGIN
     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-    WHILE (i <= 10) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('일반', i), '<p>일반</p>');
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('연차', i+1), '<p>연차</p>');
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('오전반차', i+2), '<p>오전반차</p>');
-        INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, CONCAT('오후반차', i+3), '<p>오후반차</p>');
-        
-        SET i = i +4; -- ⓔ i값에 4더해주고 WHILE문 처음으로 이동
+    WHILE (i <= 20) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
+        INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+		VALUES 
+			(i, 1, "휴가", -1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
+			(i, 3, "오후반차", -1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
+			(i, 1, "휴가", -1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
+			(i, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
+			(i, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
+			(i, 2, "오전반차", 1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
+			(i, 1, "휴가", 0, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
+			(i, 0, "일반", 0, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
+		
+        INSERT INTO approval_line(APPROVAL_NO, CONFIRM_STATUS, DATE, LEVEL, STATUS, TYPE, USER_NO)
+		VALUES  (i*8-7 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ),  
+				(i*8-6 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ), 
+				(i*8-5 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ), 
+				(i*8-4 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ), 
+				(i*8-3 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ), 
+				(i*8-2 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ), 
+				(i*8-1 , 'Y', null, 1,  1 , 'A' , i ), 
+				(i*8 , 'N', null , 1,  1 , 'A' , i );
+                
+        SET i = i + 1; -- ⓔ i값에 더해주고 WHILE문 처음으로 이동
     END WHILE;
 END$$
 DELIMITER ;
+CALL add_approval(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
+DROP PROCEDURE IF EXISTS add_approval; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남 
 
-CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
-DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남 
+
+
+-- approval_form 더미 데이터 생성용
+-- DELIMITER $$
+-- CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시저
+-- BEGIN
+--     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+--     WHILE (i <= 10) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
+--         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('일반', i), '<p>일반</p>');
+--         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('연차', i+1), '<p>연차</p>');
+--         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('오전반차', i+2), '<p>오전반차</p>');
+--         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, CONCAT('오후반차', i+3), '<p>오후반차</p>');
+--         
+--         SET i = i +4; -- ⓔ i값에 4더해주고 WHILE문 처음으로 이동
+--     END WHILE;
+-- END$$
+-- DELIMITER ;
+
+-- CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
+-- DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남 
 
 -- salary 더미 데이터 생성용
 DELIMITER $$
@@ -326,31 +350,6 @@ CALL addsalary(); -- 프로시저 실행
 DROP PROCEDURE IF EXISTS addsalary; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남 
 
 
-
--- 멤버 더미데이터 생성용 (사번 겹치면 오류발생하니까 테스트 돌릴때마다 잘 확인할것)
-
--- DELIMITER $$ 
--- CREATE PROCEDURE addMember() -- ⓐ  프로시져
--- BEGIN
---     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
---     WHILE (i <= 30) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
-
--- 		INSERT INTO MEMBER(ENO, STATUS_TYPE, USER_PWD, USER_NAME, HIRE_DATE, EMAIL)
--- 	    VALUES ( 230502 + i , 0,'$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', concat('test', i), SYSDATE(),concat('test', i, '@gmail.com'));
-
---         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
---     END WHILE;
--- END$$
--- DELIMITER ; -- ⓕ구분 기호를 다시 ;로 바꿔주기
-
--- CALL addMember(); -- 프로시저 실행
-
-
-
--- 유저 2,8번에 연차 3000개 임시로 넣어둠
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '3000' WHERE (`USER_NO` = '8');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '3000' WHERE (`USER_NO` = '2');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '3000' WHERE (`USER_NO` = '1');
 
 DELIMITER $$ 
 CREATE PROCEDURE addannual() -- ⓐ  프로시져

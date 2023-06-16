@@ -15,10 +15,10 @@
 	<div id="content-wrap">
 		<div class="container">
 			<div class="card-container shadow p-3 mb-5 bg-body rounded">
-				<div class="user-picture">
+				<div class="user-profileImg">
 					<img src="../../resources/image/mypage/basic_profile.png" class="rounded float-start text-xl-start" alt="...">
 				</div>
-				<table class="table">
+				<table class="table card-table">
 					  <tr>
 						<td scope="row">이름</td>
 						<td>박가영 사원</td>

@@ -228,7 +228,7 @@ pageEncoding="UTF-8"%>
                     <div>
                        <!--검색창-->         
 		              <div class="input-group mb-3">
-		                <input type="text" class="form-control box-shadow-none input-search-member" placeholder="사원번호/이름 입력" >
+		                <input type="text" class="form-control box-shadow-none input-search-member" placeholder="이름 입력" >
 		                <button class="btn btn-outline-secondary search-btn2" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 		              </div>
                       <table class="org-table-head table table-common">

@@ -12,12 +12,10 @@ import {path} from '../common/common.js';
 
 
 
-/*부서명을 불러오는 ajax */
+/*하위부서명을 불러오는 ajax */
 function teamRoad() {
 
     let deptCode = document.querySelectorAll("[name=deptCode]");
-    let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
-
 
     $.ajax({
         url:`${path}/dept/selectDept`,
@@ -35,21 +33,8 @@ function teamRoad() {
                     option.text = dept.deptName;
                     deptCode[i].appendChild(option);
                     }
-                    if(document.getElementById("org-tbody")){
-                        if (dept.topDeptCode == 0) { //상위 부서 셀렉트
-                            const option = document.createElement("option");
-                            option.value = dept.deptCode;
-                            option.text = dept.deptName;
-                            topDeptCode[i].appendChild(option);
-                        }
-                    }
-                  
                 };
-
             }
-
-           
-            
         },
         error : function(request){
             console.log("에러발생");
@@ -58,6 +43,36 @@ function teamRoad() {
     })
 }
 
+/*상위부서명을 불러오는 ajax */
+function topDeptRoad() {
+
+    let topDeptCode = document.querySelectorAll("[name=topDeptCode]");
+
+    $.ajax({
+        url:`${path}/dept/selectDept`,
+        dataType : "JSON",
+        success: function(result){
+  
+            for(let i=0; i<topDeptCode.length; i++){
+
+                for(let dept of result){
+                    if(document.getElementById("org-tbody")){
+                        if (dept.topDeptCode == 0) { //상위 부서 셀렉트
+                            const option = document.createElement("option");
+                            option.value = dept.deptCode;
+                            option.text = dept.deptName;
+                            topDeptCode[i].appendChild(option);
+                        }
+                    }
+                };
+            }
+        },
+        error : function(request){
+            console.log("에러발생");
+            console.log(request.status);
+        }
+    })
+}
 
 /*직급을 불러오는 ajax */
 function positionRoad() {
@@ -89,4 +104,4 @@ function positionRoad() {
 teamRoad();
 positionRoad();
 
-export {teamRoad, positionRoad};
+export {topDeptRoad, positionRoad};

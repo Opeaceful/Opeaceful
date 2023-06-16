@@ -18,6 +18,7 @@ public interface ChatService {
 	
 	public abstract ArrayList<Board> noticeList();
 	
+	
 	List<ChatRoom> selectChatRoomList();
 	
 	int openChatRoom(ChatRoom cr);
@@ -30,6 +31,14 @@ public interface ChatService {
 	
 	int exitChatRoom(ChatParticipant crj);
 	
+	// 웹소켓 수정
 	
-
+	List<ChatParticipant> chatRoomList(Member loginUser);
+	
+	
+	// 룸번호 받아서 해당 룸에 참여중인 유저 조회
+	List<ChatParticipant> getParticipantsInRoom(int chatRoomNo);
+	
+	
+	
 }

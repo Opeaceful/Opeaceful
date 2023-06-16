@@ -46,6 +46,12 @@ export function setTinymce() {
     selector: '.tinymce',
     height: 500,
     // menubar: false,
+    skin: (localStorage.getItem('color-theme') == 'dark' ? "oxide-dark" : ""),
+    // 2. The content CSS should be dark as well or your eyes will burn
+    // You can use the default dark, or create your own rules specifying the
+    // path to the css file
+    // content_css : "https://cdn.mywebsites.com/css/custom_tinymce_rules.css",
+    content_css: (localStorage.getItem('color-theme') == 'dark' ? "dark" : ""),
     plugins: plugins,
     toolbar: edit_toolbar,
     maxlength: 3000,

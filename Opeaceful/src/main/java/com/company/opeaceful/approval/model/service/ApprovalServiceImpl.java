@@ -149,6 +149,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return aprDao.selectSignImg(userNo);
 	}
 	
+	
+	@Override
+	public List<Approval> searchApprovalList(int userNo, int year, Integer status, int type, String keyword, int page) {
+		return aprDao.searchApprovalList( userNo,  year,  status,  type,  keyword, page);
+	}
+
+	@Override
+	public int searchApprovalListCount(int userNo, int year, Integer status, int type, String keyword) {
+		return aprDao.searchApprovalListCount( userNo,  year,  status,  type,  keyword);
+	}
+	
+	
+	
 	/* [혜린 - 캘린더용 연차 일정 조회] */
 	@Override
 	public Approval selectAddEvent(int approvalNo) {
@@ -320,6 +333,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteApvEvent(Calendar calendar) {
 		return aprDao.deleteApvEvent(calendar);
 	}
+
+
 
 	
 

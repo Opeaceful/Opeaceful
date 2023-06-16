@@ -36,14 +36,19 @@ public class PdfController {
             // HTML 내용을 가져오는 로직 작성
         	//String htmlContent = requestBody.get("htmlContent");
         
-        	String htmlContent = "<html>"+"안녕하세요"+"</html>";
-            
-            //System.out.println(htmlContent);
+        	String htmlContent = "<html><head>"
+        			+ "<style>\r\n" + 
+        			"body {\r\n" + 
+        			"    font-family: 'Nanum Gothic', sans-serif;\r\n" + 
+        			"}\r\n" + 
+        			"</style>"
+        			+ "</head><body><div>내용 aaaaaaa</div></body></html>";
+        	
             
             
             
             // HTML을 PDF로 변환하여 저장
-            String outputPath = "AA.pdf";
+            String outputPath = "payStub.pdf";
             pdfRender.renderPdf(htmlContent, outputPath);
             
             // PDF 생성 성공 시, 다운로드 링크 또는 메시지 반환
