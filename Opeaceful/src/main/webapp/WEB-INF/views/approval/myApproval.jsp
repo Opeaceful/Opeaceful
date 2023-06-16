@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.company.opeaceful.approval.model.vo.Approval"%>
+pageEncoding="UTF-8" 
+import="java.time.LocalDate , java.util.ArrayList, com.company.opeaceful.approval.model.vo.Approval, com.company.opeaceful.member.model.vo.Member"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	ArrayList<Approval> list = (ArrayList<Approval>) request.getAttribute("list");
 	//총 페이지 수 얼마나 나와야 하는지 확인용 총개수/10(페이지당 표시수)
 	int count = (int) request.getAttribute("count");
 	int pageCount = (int) Math.ceil(count / 10.0);
+	Member loginUser = (Member) request.getAttribute("loginUser");
 	
 %>
 <!DOCTYPE html>
@@ -131,7 +133,17 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
             </thead>
             <tbody>
             	<% for(int i=0; i< list.size(); i++) { %>
-            		<%  String statusStr = "";
+            		<%	boolean isNotRead = false;
+            			if ( loginUser.getUserNo() == list.get(i).getUserNo() ) {
+	            	        isNotRead = list.get(i).getStatus() == -1;
+	            	      }
+            			if(list.get(i).getConfirmStatus() != null) {
+            	        	isNotRead = list.get(i).getConfirmStatus().equals("N");
+	            	    } else {
+	            	       isNotRead = list.get(i).getStatus() == -1;
+	            	    }
+            		
+            			String statusStr = "";
             			String typeStr = "";
             			switch(list.get(i).getStatus()){
 		                	case -1: statusStr = "반려";  break;
@@ -146,7 +158,8 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 		                	case 3: typeStr = "오후반차";  break;
                 		} 
 	                %>
-	              <tr data-approvalno = "<%= list.get(i).getApprovalNo() %>">
+	              <tr data-approvalno = "<%= list.get(i).getApprovalNo() %>"
+	              	class ="<%= isNotRead ? "not-read" : ""%>">
 	                <td><%= count - i %></td>
 	                <td><%= list.get(i).getFormatDraftDate() %></td>
 	                <td><%= list.get(i).getTitle()  %></td>

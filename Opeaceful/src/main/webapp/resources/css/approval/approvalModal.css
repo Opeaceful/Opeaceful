@@ -1,10 +1,27 @@
 :root {
   /* 흐린 검정선 */
   --color-blurred-black: rgba(0, 0, 0, 0.2);
+  --color-border-line-black :  rgba(0, 0, 0, 0.3);
+  --color-linear : linear-gradient(rgba(255, 255, 0, 0), 99%, rgb(241, 241, 241));;
 }
 
+:root[color-theme='dark']{
+  --color-blurred-black: lightgray;
+  --color-border-line-black :  lightgray;
+  --color-linear : linear-gradient(rgb(255 255 255 / 0%), 99%, rgb(0 0 0));
+}
 * {
   box-sizing: border-box;
+}
+
+
+#modal-select-approval-type input,
+#approval input{
+  border-radius: 0.3em;
+  outline: none;
+  border: 1px solid var(--color-black);
+  background-color: var(--color-background);
+  color: var(--font-black);
 }
 
 #modal-select-approval-type .modal-header,
@@ -45,7 +62,7 @@
 .my-favor tbody td > button:hover .div-minus,
 .btn-file-delete:hover .div-minus,
 .btn-selected-delete:hover .div-minus{
-  background-color: white;
+  background-color: var(--color-background);
 }
 
 .div-copy-form-type-wrap {
@@ -119,7 +136,7 @@
 .write-approval-table td:nth-child(1) > div,
 .write-approval-table td:nth-child(3) > div,
 .write-approval-table td:nth-child(5) > div {
-  border-left: 3px solid black;
+  border-left: 3px solid var(--color-navy);
   width: 100px;
   margin: 0.5rem 0px;
 }
@@ -127,6 +144,8 @@
 .approval-line-wrap {
   width: 90%;
   display: flex;
+
+  
 }
 
 .approval-line-wrap > :nth-child(1) {
@@ -156,8 +175,9 @@
   max-height: 100px;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-black );
   background-color: var(--color-background);
+  color: var(--font-black);
 }
 
 #approval .approval-files {
@@ -238,9 +258,9 @@
   min-width: 630px;
   height: 80%;
   min-height: max-content;
-  background-color: var(--bs-modal-bg);
+  background-color: var(--color-background);
   background-clip: padding-box;
-  border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+  border: var(--bs-modal-border-width) solid var(--color-black);
   border-radius: var(--bs-modal-border-radius);
   outline: 0;
   display: flex;
@@ -293,7 +313,7 @@
 }
 
 .favor-table {
-  --bs-table-border-color: white;
+  --bs-table-border-color: var(--color-background);
 }
 
 
