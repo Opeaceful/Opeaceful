@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -50,6 +51,15 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 	
 	private Map< String, Object > map  = new HashMap<>();
 	
+	// 참여중인 유저 목록에 해당 유저가 포함되어 있는지 확인하는 메소드
+	private boolean isParticipant(List<Integer> chatRoomList, List<ChatParticipant> participants) {
+	    for (ChatParticipant participant : participants) {
+	        if (chatRoomList.contains(participant.getChatRoomNo())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 	
 	// synchronizedSet : 동기화된 Set반환
     // -> 멀티 스레드 환경에서 하나의 컬렉션 요소에 여러 스레드가 동시에 접근하면 충돌이 발생할 수 있으므로 동기화를 진행
@@ -64,8 +74,9 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			System.out.println();
 			
 			sessions.add(session); // 전달받은 session을 set에 추가
-			map.put( session.getId() , (ArrayList<ChatParticipant>) session.getAttributes().get("chatRoomList"));
-			map.put( session.getId() + "userNo" , (int)session.getAttributes().get("userNo"));
+			List<Integer> chatRoomList = (List<Integer>) session.getAttributes().get("chatRoomList");
+		    map.put(session.getId(), chatRoomList);
+		    map.put(session.getId() + "userNo", (int) session.getAttributes().get("userNo"));
 		}
 		
 		// 클라이언트와 연결이 종료되면 수행
@@ -110,7 +121,28 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 				 * 신규 룸 생성용이니까 이후 로직은 진행하지 않고 return 시키거나
 				 * 취향대로 이후동작 선택
 				 * */
+				List<ChatParticipant> participants = chatService.chatRoomList(loginUser);
+				
+				 for (WebSocketSession s : sessions) {
+				        String sessionId = s.getId();
+				        List<Integer> chatRoomList = (List<Integer>) map.get(sessionId);
+
+				        // 참여중인 유저 목록과 비교하여 참여중인 유저인 경우
+				        if (isParticipant(chatRoomList, participants)) {
+				            // 기존의 chatRoomList에서 새로운 채팅방 번호를 추가
+				            chatRoomList.add(chatMessage.getChatRoomNo());
+
+				            // 수정된 chatRoomList를 map에 다시 저장
+				            map.put(sessionId, chatRoomList);
+
+				            // 룸 리스트에 신규 룸번호 추가해서 다시 저장해주기
+				            List<Integer> existingChatRoomList = (List<Integer>) s.getAttributes().get("chatRoomList");
+				            existingChatRoomList.add(chatMessage.getChatRoomNo());
+				        }
+				    }
 			}
+			
+			
 			
 			chatMessage.setReceivedDate(new Date(System.currentTimeMillis()));
 			// 전달받은 채팅 메세지를 db에 삽입

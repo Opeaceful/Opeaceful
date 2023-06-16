@@ -164,7 +164,11 @@ public class LoginController {
 				cookie.setPath(req.getContextPath());
 				// 쿠키를 응답시 클라이언트에 전달
 				resp.addCookie(cookie);
-
+				
+				//[진기] 쳇 로그인유저 저장용 쿠키
+				Cookie chatCookie = new Cookie("userNo",String.valueOf(loginUser.getUserNo()));
+				chatCookie.setPath(req.getContextPath());
+				resp.addCookie(chatCookie);
 				
 				return "redirect:/main";
 			}
