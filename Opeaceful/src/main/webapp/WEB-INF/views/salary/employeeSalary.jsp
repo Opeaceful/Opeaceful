@@ -70,7 +70,7 @@
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="salary-modal-body">
+      <div class="modal-body print-a4" id="salary-modal-body">
         <div class="container">
           <div>
           <div class="salary-btn print-none">        
