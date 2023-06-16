@@ -64,7 +64,8 @@
 				DEPT_NAME,
 				P_NAME,
 				DEPT_CODE
-				TOP_DEPT_CODE
+				TOP_DEPT_CODE,
+				USER_NO
 		FROM USER_DEPARTMENT
         LEFT JOIN MEMBER USING (USER_NO)
 		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
@@ -74,23 +75,19 @@
 	
 	<select id="selectPersonnel" parameterType="orgChart" resultMap="personnelResultSet">
 		SELECT  USER_NAME,
-				DEPT_NAME,
+				D.DEPT_NAME,
 				P_NAME,
 				USER_NO,
 				P_CODE,
-				DEPT_CODE,
-				TOP_DEPT_CODE,
-                (SELECT DEPT_NAME
-				FROM DEPARTMENT
-				WHERE DEPT_CODE = (SELECT TOP_DEPT_CODE
-									 FROM DEPARTMENT
-									 JOIN USER_DEPARTMENT USING (DEPT_CODE)
-									WHERE USER_NO = #{userNo})) AS TOP_DEPT_NAME
-		FROM USER_DEPARTMENT
+				D.DEPT_CODE,
+				D.TOP_DEPT_CODE,
+                T.DEPT_NAME AS "TOP_DEPT_NAME"
+		FROM USER_DEPARTMENT UD
         LEFT JOIN MEMBER USING (USER_NO)
-		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
+		LEFT JOIN DEPARTMENT D USING (DEPT_CODE)
+        left JOIN DEPARTMENT T ON (D.TOP_DEPT_CODE = T.DEPT_CODE)
         LEFT JOIN POSITION USING (P_CODE)
-		WHERE DEPT_CODE = #{deptCode} AND STATUS = 'Y';
+		WHERE UD.DEPT_CODE = #{deptCode} AND D.TOP_DEPT_CODE = #{topDeptCode} AND STATUS = 'Y';
 	</select>
 	
 	<!-- =================== [insert] =================== -->
@@ -139,6 +136,15 @@
 		UPDATE POSITION
 		SET P_NAME = #{pName}
 		WHERE P_CODE = #{pCode}
+	</update>
+	
+	<!-- 인사발령 -->
+	<update id="updatePersonnel" parameterType="java.util.List">
+		<foreach collection="resendList" item="userDepartment" separator=";">
+		UPDATE USER_DEPARTMENT
+		SET DEPT_CODE = #{userDepartment.deptCode}, P_CODE = #{userDepartment.pCode}
+		WHERE USER_NO = #{userDepartment.userNo}
+		</foreach>
 	</update>
 	
 	<!-- =================== [delete] =================== -->

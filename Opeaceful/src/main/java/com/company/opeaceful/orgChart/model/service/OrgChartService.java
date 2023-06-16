@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.company.opeaceful.dept.model.vo.UserDepartment;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
 public interface OrgChartService {
@@ -42,9 +43,12 @@ public interface OrgChartService {
 	List<OrgChart> selectTopDeptList(int deptCode); // 상위부서 조회
 	List<OrgChart> selectTopDeptUser(int deptCode); // 하위부서 조회
 	
+	// 조직도 명함
+	List<Member> businessCard(int userNo);
+	
 	// 인사발령 사원 조회
-	List<OrgChart> selectPersonnel(int deptCode);
+	List<OrgChart> selectPersonnel(Map<String, Object> map);
 	
 	// 인사발령
-	List<OrgChart> insertPersonnel(List<OrgChart> personnelList);
+	int updatePersonnel(Map<String, Object> paramMap);
 }

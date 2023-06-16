@@ -1,9 +1,11 @@
 /**
  *  가영 : 부서, 직급, 인사발령 js
  */
-import {path} from './common/common.js';
-import {teamRoad, positionRoad} from './common/dtcodeselect.js';
+import {path} from '../common/common.js';
+import {topDeptRoad, positionRoad} from '../common/dtcodeselect.js';
 
+$(document).ready(function() {
+	
 selectDept();
 
 // 부서+팀명 조회
@@ -40,11 +42,13 @@ function selectDept() {
 						if (team.topDeptCode == dept.deptCode) {
 				
 							html += `<li class="team low-common">
-										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName}">
+										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
 											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
 										</span>
-										<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
-										<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
+										<div class="team-icons">
+											<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
+											<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
+										</div>
 									</li>`
 						}
 										
@@ -71,7 +75,7 @@ function selectDept() {
 }
 
 // 해당 부서에 있는 사원 조회
-function selectDeptList(deptCode, topDeptCode, deptName) {
+function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
 	
 	let str = ""
     let html = "";
@@ -87,8 +91,8 @@ function selectDeptList(deptCode, topDeptCode, deptName) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					str = `<div class="department-name-box">${deptName}</div>
-							<button class="btn btn-primary personnel-btn" data-id="${deptCode}, ${topDeptCode}, ${team.userNo}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
+					str = `<div class="department-name-box">${topDeptName}</div>
+							<button class="btn btn-primary personnel-btn" data-id="${deptCode},${topDeptCode}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
 
 					html += `<tr>
 								<td>${team.eno}</td>
@@ -114,7 +118,6 @@ function selectDeptList(deptCode, topDeptCode, deptName) {
 // 하위부서 input을 감싸고 있는 sapn태그에 사원 조회 이벤트 부여
 function deptListClick() {
 
-
     let deptInput = document.querySelectorAll(".input-click"); 
 
     // 각 버튼에 클릭 이벤트 리스너 추가
@@ -124,13 +127,13 @@ function deptListClick() {
 			let deptCode = code[0];
             let topDeptCode = code[1];
             let deptName = code[2];
-			console.log(deptCode);
-			console.log(topDeptCode);
-            selectDeptList(deptCode, topDeptCode, deptName);
+			let topDeptName = code[3];
+            selectDeptList(deptCode, topDeptCode, deptName, topDeptName);
         });
     });
 }
 
+// 인사발령 모달에 정보 뿌려주는 ajax
 function selectPersonnel(deptCode, topDeptCode) {
 
 	let html = "";
@@ -138,7 +141,8 @@ function selectPersonnel(deptCode, topDeptCode) {
 	$.ajax({
 		url : path+"/orgChart/personnel",   
 		type : 'post', 
-		data : {deptCode : deptCode},
+		data : {deptCode : deptCode,
+				topDeptCode : topDeptCode},
 		dataType : "JSON",
 		success : function(result){
 			console.log('인사발령 result: ' ,result);
@@ -148,24 +152,24 @@ function selectPersonnel(deptCode, topDeptCode) {
 			for (let team of result) {
 				if (topDeptCode == team.topDeptCode) {
 
-					html += `<tr class="change-tr" data-id="${team.userNo}">
+					html += `<tr class="change-tr" data-userno="${team.userNo}" data-deptcode="${deptCode}" data-pcode="${team.pCode}" data-id="${topDeptCode}">
 								<td>${new Date(Date.now() + TIME_ZONE).toISOString().split('T')[0]}</td>
 								<td>${team.userName}</td>
 								<td>${team.topDeptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" id="topDeptName" name="topDeptCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none topDeptName" data-id="${topDeptCode}" id="topDeptName" name="topDeptCode" aria-label="Default select example">
 										<option value="" selected>부서선택</option>
 									</select>
 								</td>
 								<td>${team.deptName}</td>
 								<td>
-									<select class="form-select box-shadow-none" id="deptName" name="deptCode"  aria-label="Default select example">
+									<select class="form-select box-shadow-none deptName" data-id="${deptCode}" id="deptName" name="deptCode"  aria-label="Default select example">
 										<option selected>부서선택</option>
 									</select>
 								</td>
 								<td>${team.pName}</td>
 								<td>
-									<select class="form-select box-shadow-none" id="pName" name="pCode" aria-label="Default select example">
+									<select class="form-select box-shadow-none pName" data-id=${team.pCode} id="pName" name="pCode" aria-label="Default select example">
 										<option value="" selected>직급선택</option>
 									</select>
 								</td>
@@ -177,14 +181,15 @@ function selectPersonnel(deptCode, topDeptCode) {
 			let personnelUserList = document.getElementById("org-modal-tbody");
 			personnelUserList.innerHTML = html;
 			
-			teamRoad();
+			topDeptRoad();
+			deptSelcet();
 			positionRoad();
-			changeValue();
 
 		}
 	})
 }
 
+// 인사발령 버튼 이벤트
 function personnelClick() {
 
 	let personnel = document.querySelectorAll(".personnel-btn"); 
@@ -195,19 +200,109 @@ function personnelClick() {
 		btn.addEventListener("click", function(e) {
 			let id = e.target.dataset.id.split(",");
 			selectPersonnel(id[0], id[1]);
+			$("#pesonnel-modal").modal('show');
 		});
 	});
 }
 
-function changeValue(){
-
-	$("#topDeptName, #deptName, #pName").change(function(e){
-		let userCode = e.target.parentElement.parentElement.dataset.id
+// 상위부서 옵션 변경 시 하위부서 옵션에 상위부서에 해당하는 하위부서 뜨게하기 
+function deptSelcet() {
+	$(".topDeptName").change(function(e){
 
 		e.target.parentElement.parentElement.classList.add("changeValue");
-		selectPersonnel(userCode);
+		
+		let topDeptCode = $("option:selected", this).attr("value");
+
+		// console.log( $(this).val());
+		// console.log( $("option:selected", this).attr("value"));
+		// console.log(this);
+		// console.dir(this);
+		let deptCode = this.parentElement.parentElement.querySelectorAll("[name=deptCode]");
+
+		$.ajax({
+			url:`${path}/dept/selectDept`,
+			dataType : "JSON",
+			success: function(result){
+				
+				for(let i = 0; i < deptCode.length; i++){
+					deptCode[i].innerHTML = "";
+					for(let dept of result){
+						if (dept.topDeptCode !== 0) {
+							if (topDeptCode == dept.topDeptCode) {
+								const option = document.createElement("option");
+								option.value = dept.deptCode;
+								option.text = dept.deptName;
+								deptCode[i].appendChild(option);
+							} // 하위 부서 셀렉트
+						}
+					};
+				}
+			},
+			error : function(request){
+				console.log("에러발생");
+				console.log(request.status);
+			}
+		})
 	})
 }
+
+// 저장 버튼 클릭 시 인사발령 ajax
+$('#ok-personnel').click(function(e) {
+	
+	let changeValue = document.querySelectorAll(".changeValue");
+
+	let Arr = [];
+
+	let jsonData;
+
+	changeValue.forEach(tr => {
+
+		let originUserNo = tr.dataset.userno;
+
+		let originDeptCode = tr.dataset.deptcode;
+		let changeDeptCode = tr.querySelector(".deptName").value;
+
+		let originPcode = tr.dataset.pcode;
+		let changePcode =  tr.querySelector(".pName").value;
+
+		console.log(originDeptCode, changeDeptCode, originPcode, changePcode);
+
+		let data = {
+				userNo : originUserNo,
+				deptCode : (originDeptCode != changeDeptCode) ? changeDeptCode : originDeptCode,
+				pCode: (changePcode !== "" && changePcode !== originPcode) ? changePcode : originPcode
+
+		}; 
+
+		if (changeDeptCode != "" ) {
+			Arr.push(data);
+		}
+
+		jsonData = JSON.stringify(Arr);
+    	jQuery.ajaxSettings.traditional = true;
+
+	});
+
+	if (Arr.length > 0) {
+
+		$.ajax({
+			url : path+"/orgChart/updatePersonnel",
+			type: 'POST',
+			data: {"jsonData" : jsonData},
+			dataType:'json',
+			success: function(result) {
+				$("#pesonnel-modal").modal('hide');
+			},
+			error: function(x, e) {
+				//err msg 출력
+				$.failMsg('error');
+			}
+		});
+		
+	} else {
+		$("#pesonnel-modal").modal('hide');
+	}
+})
 
 	///////////////////////////////////////////////////////////////////////////// 상위부서 추가
 
@@ -634,12 +729,13 @@ function changeValue(){
 			}
 		})
 	});
+})
 
 	///////////////////////////////////////////////////////////////////////// 인사발령
 
 
 
-let selectButton = false;
+// let selectButton = false;
 
 //확인 버튼 눌렀을때 salaryAll에서 처리할 이벤트
 // $("#ok-personnel").click(function(){
@@ -668,10 +764,10 @@ let selectButton = false;
 // });
 
 //모달 종료시
-$("#cancel-personnel").click(function(){
-    selectButton = false;
+// $("#cancel-personnel").click(function(){
+//     selectButton = false;
 
-});
+// });
 
 	// let deptInput = document.querySelector('.input-click');
 
