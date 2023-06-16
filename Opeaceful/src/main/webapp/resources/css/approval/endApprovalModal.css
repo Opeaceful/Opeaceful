@@ -5,7 +5,7 @@
   --color-board-black: black;
   --color-light-gray-back: rgb(243, 243, 243);
   --box-shadow-px: 1px;
-  --box-shadow: var(--box-shadow-px) 0 0 0 var(--color-deep-navy),
+  --box-border-shadow: var(--box-shadow-px) 0 0 0 var(--color-deep-navy),
     0 var(--box-shadow-px) 0 0 var(--color-deep-navy),
     var(--box-shadow-px) var(--box-shadow-px) 0 0 var(--color-deep-navy),
     var(--box-shadow-px) 0 0 0 var(--color-deep-navy) inset,
@@ -13,7 +13,7 @@
 }
 
 :root[color-theme='dark']{
-  --color-deep-navy: rgb(255, 255, 255);
+  --color-deep-navy: rgb(207, 207, 207);
   --color-light-gray-back: rgba(243, 243, 243, 0.062);
 }
 
@@ -152,7 +152,7 @@ td .final-approval-wrap{
 }
 
 .end-approval-lines-title {
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
   background-color: var(--color-light-gray-back);
   width: 30px;
   display: flex;
@@ -173,7 +173,7 @@ td .final-approval-wrap{
   width: max-content;
   min-width: 100%;
   padding: 0px 4px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
 }
 
 .approver-sign {
@@ -183,7 +183,7 @@ td .final-approval-wrap{
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
 }
 
 .approver-sign img {
@@ -193,7 +193,7 @@ td .final-approval-wrap{
 
 .approver-date {
   min-height: 21px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-border-shadow);
 }
 
 .modal-back {

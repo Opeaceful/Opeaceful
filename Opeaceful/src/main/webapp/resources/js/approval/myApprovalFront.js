@@ -55,7 +55,7 @@ export function setSelectMemberTable(result) {
 
   if (table.clientHeight > tableBox.clientHeight) {
     document.querySelector('.org-chart').style.background =
-      'linear-gradient( #ffff0000, 99%, #f1f1f1 )';
+      'var(--color-linear)';
   } else {
     document.querySelector('.org-chart').style.background = 'unset';
   }

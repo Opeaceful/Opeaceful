@@ -54,7 +54,7 @@ export function setSelectMemberTable(result, ismodalOpen) {
 
   if (table.clientHeight > tableBox.clientHeight) {
     document.querySelector('.org-chart').style.background =
-      'linear-gradient( #ffff0000, 99%, #f1f1f1 )';
+      'var(--color-linear)';
   } else {
     document.querySelector('.org-chart').style.background = 'unset';
   }
@@ -63,7 +63,7 @@ export function setSelectMemberTable(result, ismodalOpen) {
     // 한 8명 넘어가면 아래 스크롤표시용 그라데이션 넣어줌
     if (result.length > 8) {
       document.querySelector('.org-chart').style.background =
-        'linear-gradient( #ffff0000, 99%, #f1f1f1 )';
+        'var(--color-linear)';
     }
     $('#modal-select-search-user').modal('show');
   }
