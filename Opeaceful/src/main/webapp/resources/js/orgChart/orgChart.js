@@ -24,45 +24,31 @@ $(".orgChartView-table button").click(function(e) {
             console.log(result);
             let member = result[0];
            
-            html = `
-                            <div class="user-profileImg">
-                                <img src="${path}/resources/file/mypage/${member.profileImg ? member.profileImg : "basic_profile.png"}">
-                            </div>
+            html = `<div class="user-profileImg">
+                        <img src="${path}/resources/file/mypage/${member.profileImg ? member.profileImg : "basic_profile.png"}">
+                    </div>
+                    <div>
+                        <div>
                             <div>이름</div>
                             <div>${member.userName} ${member.pName}</div>
-                            <div>조직</div>
-                            <div></div>
-                            <div>이메일</div>
-                            <div></div>
-                            <div>연락처</div>
-                            <div></div>
-                            <div>내선번호</div>
-                            <div></div>
-                            <table class="table card-table">
-                                <tr>
-                                    <td scope="row">이름</td>
-                                    <td>${member.userName} ${member.pName}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">조직</td>
-                                    <td>${member.topDeptName} ${member.deptName}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">이메일</td>
-                                    <td>${member.email}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">연락처</td>
-                                    <td>${member.phone}</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">내선번호</td>
-                                    <td>${member.extension}</td>
-                                </tr>
-                            </table>
-                            
                         </div>
-                    `;
+                        <div>
+                            <div>조직</div>
+                            <div>${member.topDeptName} ${member.deptName}</div>
+                        </div>
+                        <div>
+                            <div>이메일</div>
+                            <div>${member.email}</div>
+                        </div>
+                        <div>
+                            <div>연락처</div>
+                            <div>${member.phone}</div>
+                        </div>
+                        <div>
+                            <div>내선번호</div>
+                            <div>${member.extension}</div>
+                        </div>
+                    </div>`;
             $(e.target).popover({
                 html :true,
                 content :  html

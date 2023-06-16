@@ -186,4 +186,7 @@ thead td:first-child{width: 199px;}
 	max-width: 500px;
     width: 100%;
 }
+.popover-body{
+	display: flex;
+}
 
