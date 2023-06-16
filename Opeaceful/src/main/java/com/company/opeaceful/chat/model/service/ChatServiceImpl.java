@@ -92,10 +92,17 @@ public class ChatServiceImpl implements ChatService{
 		return result;
 	}
 	
+	// 웹소켓 수정
 	@Override
-	public ArrayList<ChatParticipant> chatRoomList(Member loginUser){
+	public List<ChatParticipant> chatRoomList(Member loginUser){
 		return chatDao.chatRoomList(loginUser);
 	}
+	
+	@Override
+	public List<ChatParticipant> getParticipantsInRoom(int chatRoomNo) {
+        return chatDao.getParticipantsInRoom(chatRoomNo);
+	}
+	
 	
 	
 	

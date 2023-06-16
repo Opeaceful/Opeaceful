@@ -20,12 +20,22 @@ body{
     border:0.1rem solid var(--color-navy);   
 }
 
+:root{
+	--chatting-background:url(../../image/chat/talk_background.jpg);
+}
+:root[color-theme='dark']{
+	--chatting-background:url(../../image/chat/chat-background.jpg);
+}
+
+
 /* 배경화면 설정 */
-#chatting_body, .chatting_setting_bar, .chatting_main_menu, #chatting_header{
-    background-image: url(../../image/chat/talk_background.jpg);
-    background-repeat: repeat;
-    background-position: top left;
-    background-attachment: fixed;
+#chatting_body
+/* , .chatting_setting_bar, .chatting_main_menu, #chatting_header */
+{
+    background-image: var(--chatting-background);
+     background-repeat: repeat; 
+/*     background-position: top left; */
+/*     background-attachment: fixed; */
 }
 
 /* 설정바 스타일 지정 */
