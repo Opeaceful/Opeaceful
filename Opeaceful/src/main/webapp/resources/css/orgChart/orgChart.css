@@ -182,4 +182,8 @@ thead td:first-child{width: 199px;}
 .scroll-bar::-webkit-scrollbar {
     height: 5px;
 }
+.popover{
+	max-width: 500px;
+    width: 100%;
+}
 
