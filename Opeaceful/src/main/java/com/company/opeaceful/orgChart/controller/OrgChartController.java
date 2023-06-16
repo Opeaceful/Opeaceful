@@ -20,6 +20,7 @@ import com.company.opeaceful.dept.model.service.DeptService;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.Position;
 import com.company.opeaceful.dept.model.vo.UserDepartment;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.service.OrgChartService;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 import com.google.gson.Gson;
@@ -221,6 +222,16 @@ public class OrgChartController {
 			
 		return "orgChart/orgChartView";
 			
+	}
+	
+	// 조직도 명함
+	@PostMapping("/businessCard")
+	@ResponseBody
+	public String businessCard(int userNo) {
+		
+		List<Member> list = orgchartService.businessCard(userNo);
+		
+		return new Gson().toJson(list);
 	}
 	
 	// 인사발령용 사원 조회

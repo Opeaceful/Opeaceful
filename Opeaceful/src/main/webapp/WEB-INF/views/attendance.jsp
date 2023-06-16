@@ -32,24 +32,24 @@
 				<h2 class="title-common">근태 조회</h2>
 			</div>
             <div class="col-12 p-3">
-                <div class="row">
-                    <div class="col-1 text">
+                <div class="row row-cols-5">
+                    <div class="col text">
                         기간
                     </div>
-                    <div class="col-5 select-box1">
+                    <div class="col select-box1 select-box">
                         <select name="year1" id="year1" title="년도" class="custom-select"></select>
                         <select name="month1" id="month1" title="월" class="custom-select"></select>
                         <select name="day1" id="day1" title="일" class="custom-select"></select>
                     </div>
-                    <div class="col-1 wave">
+                    <div class="col wave">
                         ~
                     </div>
-                    <div class="col-5">
+                    <div class="col select-box2 select-box">
                         <select name="year2" id="year2" title="년도" class="custom-select"></select>
                         <select name="month2" id="month2" title="월" class="custom-select"></select>
                         <select name="day2" id="day2" title="일" class="custom-select"></select>
                     </div>
-                    <button class="btn btn-outline-secondary search-btn2" id="ad-btn" type="button">조회</button>
+                    <button class="btn btn-primary me-md-2" id="ad-btn" type="button">조회</button>
                 </div>
              </div>
              <c:forEach items="${loginUserRole}" var="role">
@@ -65,8 +65,8 @@
 					</div>
 				</c:if>
 			</c:forEach>
-			<div class="attendance-table-div .scroll-bar">
-	             <table class="table table-hover table-common">
+			<div class="attendance-table-div scroll-bar">
+	             <table class="table table-hover table-common attendance-table">
 	                <thead class="attendance-thead">
 	                    <tr>
 	                        <th>일자</th>
@@ -84,7 +84,7 @@
 								<td>${ad.date}</td>
 						    	<c:choose>
 						    		<c:when test="${ ad.userNo != 0 }">
-							            <td>${ad.userName}</td>
+							            <td data-no="${ad.userNo}">${ad.userName}</td>
 							            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
 							            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
 							            <td>

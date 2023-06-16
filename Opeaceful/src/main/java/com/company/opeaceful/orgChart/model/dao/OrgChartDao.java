@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.company.opeaceful.dept.model.vo.UserDepartment;
+import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
 @Repository
@@ -112,6 +113,11 @@ public class OrgChartDao {
 	
 	public List<OrgChart> selectTopDeptUser(int deptCode){
 		return sqlSession.selectList("orgChartMapper.selectTopDeptUser", deptCode);
+	}
+	
+	// 조직도 명함
+	public List<Member> businessCard(int userNo) {
+		return sqlSession.selectList("memberMapper.businessCard", userNo);
 	}
 	
 	// 인사발령 사원 조회

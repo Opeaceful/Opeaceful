@@ -1,4 +1,13 @@
 @charset "UTF-8";
+:root{
+	--background-color : white;
+	--border-color : white;
+	--color : rgb(30, 30, 30);
+	--padding: 0.1rem;
+	--font-weight: 400;
+	--width : 100%;
+}
+
 .tree ul {
     padding-top: 20px; position: relative;
 	
@@ -130,6 +139,32 @@ tbody{font-size: var(--font14);}
 tbody>tr{border-bottom: 1px solid #ccc;}
 tbody>tr>td:first-child{border-right: 1px solid #ccc;}
 thead td:first-child{width: 199px;}
+
+.card-btn{
+	background-color: var(--background-color);
+	border-color: var(--border-color);
+	color: var(--color);
+	padding: var(--padding);
+	font-size: var(--font14);
+	font-weight: var(--font-weight);
+	width: var(--width);
+}
+.card-btn:hover {
+	color: var(--color);
+	background-color: var(--background-color);
+	border-color: var(--border-color);
+}
+.card-btn-check:checked+.card-btn:focus-visible, .card-btn.active:focus-visible, 
+.card-btn.show:focus-visible, .card-btn:first-child:active:focus-visible, 
+:not(.card-btn-check)+.card-btn:active:focus-visible {
+	box-shadow: none;
+}
+.card-btn-check:checked+.card-btn, .card-btn.active, .card-btn.show, 
+.card-btn:first-child:active, :not(.card-btn-check)+.card-btn:active {
+	color: var(--color);
+	background-color: var(--background-color);
+	border-color: var(--border-color);
+}
 /* .team-row{
     height: 60px;
     line-height: 26px;

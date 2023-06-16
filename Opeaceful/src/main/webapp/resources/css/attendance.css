@@ -2,17 +2,13 @@
 .table{
     white-space: nowrap;
 }
+.select-box{width: 20; padding-top: 5px;}
 #year1, #year2, #month1, #month2{margin-right: 9px;}
-#year1{width: 34%;}
-#year2{width: 15.5%;}
-#day1{width: 26%;}
-#day2{width: 12%;}
-.select-box1{
-    width: 20%;
-}
-.wave{width: 3.3%;}
+#year1, #year2{width: 34%;}
+#day1, #day2{width: 26%;}
+.wave{width: 3.3%; padding-top: 5px;}
 .search-wrap2{width: 549px;}
-.text{width: 6%;}
+.text{width: 6%; padding-top: 5px;}
 .icon{
     border: none;
     border-top: hidden;

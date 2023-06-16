@@ -1,8 +1,8 @@
 /**
  *  가영 : 부서, 직급, 인사발령 js
  */
-import {path} from './common/common.js';
-import {topDeptRoad, positionRoad} from './common/dtcodeselect.js';
+import {path} from '../common/common.js';
+import {topDeptRoad, positionRoad} from '../common/dtcodeselect.js';
 
 $(document).ready(function() {
 	

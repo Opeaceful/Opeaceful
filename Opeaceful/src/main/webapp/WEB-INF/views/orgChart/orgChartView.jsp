@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="${path}/resources/css/common/common.css">
-<link rel="stylesheet" href="${path}/resources/css/orgChart.css">
+<link rel="stylesheet" href="${path}/resources/css/orgChart/orgChart.css">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/sidebar.jsp" />
@@ -26,36 +26,42 @@
 					<c:set var="deptList" value="${map[deptKey]}"/>
 						<li>
 							<div class="dp-name" id="dp-name">${td.deptName}</div>
-								<c:forEach items="${deptList}" var="team">
+								<c:if test="${deptList.size() > 0}">
 									<ul>
-										<li>
-											<table>
-												<thead>
-													<tr>
-														<td scope="col" colspan="2">${team.deptName}</td>
-														<td scope="col"></td>
-													</tr>
-												</thead>
-												<c:set var="memberKey" value="${team.deptCode}topDept"/>
-												<c:set var="memberList" value="${map[memberKey]}"/>
-												<c:forEach items="${memberList}" var="member">
-													<tbody>
+										<c:forEach items="${deptList}" var="team">
+											<li>
+												<table class="orgChartView-table">
+													<thead>
 														<tr>
-															<td scope="row">${member.userName}</td>
-														  	<td>${member.PName}</td>
+															<td scope="col" colspan="2">${team.deptName}</td>
+															<td scope="col"></td>
 														</tr>
-													 </tbody>
-												</c:forEach>
-											</table>
-										</li>
+													</thead>
+													<c:set var="memberKey" value="${team.deptCode}topDept"/>
+													<c:set var="memberList" value="${map[memberKey]}"/>
+													<c:forEach items="${memberList}" var="member">
+														<tbody>
+															<tr>
+																<td scope="row">
+																	<button scope="row" type="button" class="btn btn-secondary card-btn" data-no="${member.userNo}" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="">
+																		${member.userName}
+																	</button>
+																</td>
+															  	<td>${member.PName}</td>
+															</tr>
+														 </tbody>
+													</c:forEach>
+												</table>
+											</li>
+										</c:forEach>
 									</ul>
-								</c:forEach>
+								</c:if>
 							</li>
 					</c:forEach>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<script type="module" src="${path}/resources/js/orgChart.js"></script>
+	<script type="module" src="${path}/resources/js/orgChart/orgChart.js"></script>
 </body>
 </html>
