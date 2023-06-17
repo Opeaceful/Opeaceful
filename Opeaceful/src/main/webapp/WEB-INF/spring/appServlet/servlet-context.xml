@@ -45,10 +45,18 @@
 	
 		<!-- webSocket 요청시 핸들러 클래스와 연결하기 -->
  	<beans:bean id="chatHandler" class="com.company.opeaceful.chat.model.websocket.ChatWebsocketHandler"/> 
+ 	
+ 		<!-- (승은) 전자결재 알림용 웹소켓 -->
+	<beans:bean id="aprHandler"
+		class="com.company.opeaceful.approval.model.websocket.AprWebsocketHandler" />
 	 
 	 <websocket:handlers>
 	 	<!-- 웹 소켓에 대한 요청이 들어왔을때 요청주소를 처리할 bean객체 지정 -->
 	 	<websocket:mapping handler="chatHandler" path="/chat/webSocket"/>
+	 	
+	 			<!-- 웹 소켓에 대한 요청이 들어왔을때 요청주소를 처리할 bean객체 지정 -->
+		<websocket:mapping handler="aprHandler" path="/approval/webSocket" />
+			
 	 	
 	 	<websocket:handshake-interceptors>
 	 		<!-- 
@@ -73,25 +81,21 @@
 	</mvc:interceptors>
 
 
-	<!-- (승은) 전자결재 알림용 웹소켓 -->
-	<beans:bean id="AprHandler"
-		class="com.company.opeaceful.approval.model.websocket.AprWebsocketHandler" />
 
+<!-- 
 	<websocket:handlers>
-		<!-- 웹 소켓에 대한 요청이 들어왔을때 요청주소를 처리할 bean객체 지정 -->
-		<websocket:mapping handler="aprHandler"
-			path="/approval/webSocket" />
+
 
 		<websocket:handshake-interceptors>
-			<!-- interceptor : http통신에서 request와 response를 가로채는 역할 handshake-interceptores 
-				: 요청관련 데이터중 httpSession 정보를 가로채서 webSocketSession에게 넣어줌 -->
+			interceptor : http통신에서 request와 response를 가로채는 역할 handshake-interceptores 
+				: 요청관련 데이터중 httpSession 정보를 가로채서 webSocketSession에게 넣어줌
 			<beans:bean
 				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 
-		<!-- SocketJS라이브러리를 이용해서 만들어진 웹소켓 객체임을 의미한다 -->
+		SocketJS라이브러리를 이용해서 만들어진 웹소켓 객체임을 의미한다
 		<websocket:sockjs />
-	</websocket:handlers>
+	</websocket:handlers> -->
 	
 	
 	

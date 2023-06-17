@@ -234,11 +234,13 @@
 	 
 
     <!-- (승은) 전자결재 알림용 div -->
-     <div class="div-apr-info-wrap">
-        <div id="div-apr-info-text">
-          <div>승인 대기중인 <b>결재</b>요청건이 있습니다.</div>
+     <div id="div-apr-info-wrap">
+        <div class="div-apr-info-line">
+            <div></div>
+            <button id="btn-apr-info-close" class="close"></button>
         </div>
-        <button id="btn-apr-info-close">X</button>
+        <div id="div-apr-info-text">
+        </div>
       </div>
 
 
@@ -291,5 +293,9 @@
    		);
 
     </script>
+
+    <!-- (승은) 전자결재 알림용 웹소켓 -->
+    <script type="module" src="${path}/resources/js/approval/aprWebsocket.js"></script>
+
 </body>
 </html>

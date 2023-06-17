@@ -1,9 +1,18 @@
-let aprSock = new SockJS(path + '/approval/webSocket');
+// (승은) 전자결재 알림용
+import { path } from '../common/common.js';
 
-//chattingSock.send(JSON.stringify(chatMessage));
+const aprSock = new SockJS(path + '/approval/webSocket');
+const aprAlam = document.getElementById('div-apr-info-wrap');
+const aprAlamText = document.getElementById('div-apr-info-text');
+
+export default function sendAprMessage(status, userNo) {
+  let msg = { status: Number(status), userNo: Number(userNo) };
+  aprSock.send(JSON.stringify(msg));
+}
 
 // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
 aprSock.onmessage = function (e) {
+  aprAlam.style.display = 'none';
   const message = JSON.parse(e.data); // json -> js Object
 
   let status = message.status;
@@ -20,8 +29,36 @@ aprSock.onmessage = function (e) {
       break;
   }
 
-  
+ 
+  aprAlamText.innerHTML = html;
 
+
+  setTimeout(() => {
+    aprAlam.style.display = 'flex';
+  }, 100);
+  
+  sessionStorage.setItem('aprAlam', JSON.stringify(html));
 };
 
-function formatStatusToMessage(status) {}
+document.getElementById('btn-apr-info-close').addEventListener('click', () => {
+  aprAlam.style.display = 'none';
+  sessionStorage.removeItem('aprAlam');
+});
+
+aprAlamText.addEventListener("click", ()=>{
+  aprAlam.style.display = 'none';
+  location.href = path + '/approval/myApproval';
+  sessionStorage.removeItem('aprAlam');
+
+})
+
+
+function checkAlam(){
+  const html = JSON.parse(sessionStorage.getItem('aprAlam'));
+  if(html && html.length > 0){
+    aprAlamText.innerHTML = html;
+    aprAlam.style.display = 'flex';
+  }
+}
+
+checkAlam();

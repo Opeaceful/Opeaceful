@@ -1,5 +1,6 @@
 import { path } from '../common/common.js';
 import * as MyAprFront from './myApprovalFront.js';
+import sendAprMessage  from './aprWebsocket.js';
 
 let defaultPath = path + '/approval';
 
@@ -215,6 +216,11 @@ export function registerApproval(formData, urlPath) {
 
         MyAprFront.closeApprovalModal();
         MyAprFront.clickCurrentPageBtn();
+
+        if(result.nextAuthorizeUserNo){
+          // 다음 결재자에게 알림 메세지 전송
+          sendAprMessage( 0 ,result.nextAuthorizeUserNo);
+        }
       } else {
         swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
           buttons: { cancel: '확인' },
@@ -239,12 +245,15 @@ export function updateApprovalStateAuthorized(
   $.ajax({
     url: defaultPath + '/updateApprovalStateAuthorized',
     type: 'POST',
+    dataType: 'JSON',
     data: {
       approvalNo,
       myLevel,
     },
-    success: function (result) {
-      console.log('결재 처리 결과', result);
+    success: function (map) {
+      console.log('결재 처리 결과', map);
+      let result = map.result;
+      let userNo = map.nextAuthorizeUserNo;
       if (result > 0) {
         // 완결처리까지 해야하는지 상태 확인
         if (content != null) {
@@ -257,6 +266,11 @@ export function updateApprovalStateAuthorized(
 
           MyAprFront.closeApprovalModal();
           MyAprFront.clickCurrentPageBtn();
+
+          if (userNo > 0) {
+            // 다음결재자한테 알림 날림
+            sendAprMessage(0, userNo);
+          }
         }
       } else {
         swal('예기치 않은 오류가 발생했습니다.', {
@@ -290,6 +304,9 @@ export function updateApprovalReturn(approvalNo) {
 
         MyAprFront.closeApprovalModal();
         MyAprFront.clickCurrentPageBtn();
+
+        // 기안자에게 반려처리 알림 발송
+        sendAprMessage(-1, result);
       } else {
         swal('예기치 않은 오류가 발생했습니다.', {
           buttons: { cancel: '확인' },
@@ -326,6 +343,9 @@ export function updateApprovalStateEnd(approvalNo, content) {
 
         MyAprFront.closeApprovalModal();
         MyAprFront.clickCurrentPageBtn();
+
+        // 기안자에게 완결처리 알림 발송
+        sendAprMessage(1, result);
       } else {
         swal('예기치 않은 오류가 발생했습니다.', {
           buttons: { cancel: '확인' },
