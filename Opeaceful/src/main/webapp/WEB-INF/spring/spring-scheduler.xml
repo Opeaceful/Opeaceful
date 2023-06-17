@@ -28,7 +28,10 @@
 	<task:annotation-driven scheduler="opeacefulScheduler"/>
 	<task:scheduler id="opeacefulScheduler" pool-size="100"/>
 	<task:scheduled-tasks scheduler="opeacefulScheduler">
-		<task:scheduled ref="loginController" method="resetAnnualMembers" cron="0 0 0 1 1 ?"/>
+		<!-- 매년 1월 1일 연차 리셋(진짜) -->
+		<!-- <task:scheduled ref="loginController" method="resetAnnualMembers" cron="0 0 0 1 1 ?"/> -->
+		<!-- 연차 임시시간으로 넣어줌 - 매년 6월 15일 21시 25분으로 -->
+		<task:scheduled ref="loginController" method="resetAnnualMembers" cron="0 25 21 15 6 ?"/>
 		<task:scheduled ref="scheduling" method="deleteMembers" cron="0 0 0 1 * *"/>
 		<task:scheduled ref="salaryController" method="deleteSalay" cron="0 0 0 4 1 ?"/>
 		

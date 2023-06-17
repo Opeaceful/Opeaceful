@@ -10,7 +10,7 @@
 
 window.onload = function(){
 
-    console.log("들어옴!")
+    // console.log("들어옴!")
     document.getElementById("seach-address").addEventListener("click", function(){ //아이콘 클릭시
         //카카오 지도 발생
         DaumAddressAPI();
