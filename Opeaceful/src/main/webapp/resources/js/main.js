@@ -195,7 +195,7 @@ $("#main-off").click(function(){
     })
 });
 
-// 캘린더
+/* --------------------------- 캘린더 --------------------------- */
 document.addEventListener('DOMContentLoaded', function() {
     var calendarM = document.getElementById('calendarM');
     function fullCalendar(){
