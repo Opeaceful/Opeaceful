@@ -8,7 +8,7 @@ $(document).ready(function() {
 	
 selectDept();
 
-// 부서+팀명 조회
+/* 부서+팀명 조회 */
 function selectDept() {
 
 	let html = "";
@@ -432,7 +432,7 @@ $('#ok-personnel').click(function(e) {
 			data : {deptCode : deptCode,
 					topDeptCode : 0},
 			success : function(result) {
-				console.log(result)
+				console.log("상위부서 : ",result)
 				if (result > 0) {
 					alert('사용중인 부서입니다. 다시 확인해주세요.');
 				} else {
@@ -731,43 +731,18 @@ $('#ok-personnel').click(function(e) {
 	});
 })
 
-	///////////////////////////////////////////////////////////////////////// 인사발령
 
 
+// const accordionButton = document.querySelector(".org-accordion-header");
+// accordionButton.addEventListener("click", toggleIcons);
 
-// let selectButton = false;
+// function toggleIcons() {
+// 	const icons = document.querySelector(".icons");
+// 	icons.style.display = icons.style.display === "none" ? "block" : "none";
+// }
 
-//확인 버튼 눌렀을때 salaryAll에서 처리할 이벤트
-// $("#ok-personnel").click(function(){
+  
 
-//     let topDeptName = $("#topDeptName").val(); 
-//     let deptName = $("#deptName").val();
-//     let pName = $("#pName").val();
-
-// 	let html = "";
-
-// 	$.ajax({
-// 			url : path+"/orgChart/insertPersonnel",   
-// 			type : 'post', 
-// 			data : {topDeptName : topDeptName,
-// 					deptName : deptName,
-// 					pName, pName},
-// 			dataType : "JSON",
-// 			success : function(result){
-// 				console.log('인사발령 인서트 result: ' ,result);
-	
-				
-// 			}
-// 		})
-
-	
-// });
-
-//모달 종료시
-// $("#cancel-personnel").click(function(){
-//     selectButton = false;
-
-// });
 
 	// let deptInput = document.querySelector('.input-click');
 

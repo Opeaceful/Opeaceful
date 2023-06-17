@@ -96,7 +96,7 @@ public class OrgChartController {
 	@ResponseBody
 	public int deleteDeptCode(OrgChart orgChart, int deptCode, int topDeptCode) {
 		
-		System.out.println("========================"+deptCode + "" + topDeptCode);
+		System.out.println("==============================================="+deptCode + "" + topDeptCode);
 		
 		Map<String, Object> map = new HashMap<>();	
 		
@@ -116,7 +116,7 @@ public class OrgChartController {
 			orgchartService.deleteDeptCode(map);
 		}
 		
-		System.out.println(result);
+		System.out.println("=================================================result : "+result);
 		
 		return result;
 	}
