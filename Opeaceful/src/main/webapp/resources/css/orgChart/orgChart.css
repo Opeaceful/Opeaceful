@@ -1,8 +1,6 @@
 @charset "UTF-8";
 :root{
-	--background-color : white;
 	--border-color : white;
-	--color : rgb(30, 30, 30);
 	--padding: 0.1rem;
 	--font-weight: 400;
 	--width : 100%;
@@ -141,16 +139,16 @@ tbody>tr>td:first-child{border-right: 1px solid #ccc;}
 thead td:first-child{width: 199px;}
 
 .card-btn{
-	background-color: var(--background-color);
+	background-color: var(--color-background);
 	border-color: var(--border-color);
-	color: var(--color);
+	color: var(--font-black);
 	padding: var(--padding);
 	font-size: var(--font14);
 	font-weight: var(--font-weight);
 	width: var(--width);
 }
 .card-btn:hover {
-	color: var(--color);
+	color: var(--font-black);
 	background-color: var(--background-color);
 	border-color: var(--border-color);
 }
@@ -161,7 +159,7 @@ thead td:first-child{width: 199px;}
 }
 .card-btn-check:checked+.card-btn, .card-btn.active, .card-btn.show, 
 .card-btn:first-child:active, :not(.card-btn-check)+.card-btn:active {
-	color: var(--color);
+	color: var(--font-black);
 	background-color: var(--background-color);
 	border-color: var(--border-color);
 }
@@ -185,8 +183,11 @@ thead td:first-child{width: 199px;}
 .popover{
 	max-width: 500px;
     width: 100%;
+	background-color: var(--color-background);
+	border-color: var(--color-background);
 }
 .popover-body{
 	display: flex;
+	color: var(--font-black);
 }
 
