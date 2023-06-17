@@ -2,9 +2,17 @@
 #memo-modal-back input {
   border-radius: 0.3em;
   outline: none;
-  border: 1px solid var(--color-black);
+  border: 1px solid var(--font-black);
   background-color: var(--color-background);
   color: var(--font-black);
+  box-shadow: none;
+}
+
+#memo-modal-back select:focus-visible,
+#memo-modal-back input:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 /* 메모 모달 감추기 */
@@ -82,7 +90,7 @@
 }
 #btn-memo-add-file:hover,
 .btn-file-delete:hover {
-  background-color: var(--color-background);
+  background-color: var(--color-navy);
 }
 
 .memo-files {

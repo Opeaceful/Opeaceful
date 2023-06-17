@@ -557,9 +557,9 @@ export function setTableList(approvalList, count, page, loginUserNo) {
                       <td>${count - (page - 1) * 10 - i}</td>
                       <td>${approval.formatDraftDate}</td>
                       <td>${approval.title}</td>
-                      <td>${approval.userName}${
-        approval.eno != 0 ? '(' + approval.eno + ')' : ''
-      }</td>
+                      <td>${approval.userName} ${
+        approval.pName ? approval.pName : ''
+      }${approval.eno != 0 ? '(' + approval.eno + ')' : ''}</td>
                       <td>${approval.status}</td>
                       <td>${approval.type}</td>
                     </tr>`;

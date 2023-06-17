@@ -163,7 +163,7 @@ import="java.time.LocalDate , java.util.ArrayList, com.company.opeaceful.approva
 	                <td><%= count - i %></td>
 	                <td><%= list.get(i).getFormatDraftDate() %></td>
 	                <td><%= list.get(i).getTitle()  %></td>
-	                <td><%= list.get(i).getUserName()%><%= list.get(i).getEno() != 0 ? "("+list.get(i).getEno()+")" : "" %></td>
+	                <td><%= list.get(i).getUserName()%> <%= list.get(i).getPName()%><%= list.get(i).getEno() != 0 ? "("+list.get(i).getEno()+")" : "" %></td>
 	                <td><%= statusStr  %></td>
 	                <td><%= typeStr %></td>
 	              </tr>
