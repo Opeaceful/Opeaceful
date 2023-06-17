@@ -346,7 +346,7 @@ $('#ok-personnel').click(function(e) {
 
 		let input = $(e.target).val();
 		let id= $(e.target).attr("id");
-		// console.log(id);
+		console.log(id);
 		
 		// 부서이름 입력 안했을 시 input 삭제
 		if (input == "") {
@@ -499,8 +499,10 @@ $('#ok-personnel').click(function(e) {
 				<span class="input-click">
 					<input type="text" name="team${num}" id="team-code" class="team-name">
 				</span>
-				<i class="fa-solid fa-minus li-team-minus"></i> 
-				<i class="fa-solid fa-pen li-team-change"></i>
+				<div class="team-icons">
+					<i class="fa-solid fa-minus li-team-minus"></i> 
+					<i class="fa-solid fa-pen li-team-change"></i>
+				</div>
 			</li>`
 		);
 
@@ -515,7 +517,7 @@ $('#ok-personnel').click(function(e) {
 
 		let input = $(e.target).val();
 		let id = $(e.target).attr("id");
-		let code= $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
+		let code = $(e.target).parents(".accordion-item").find('.topD-name').attr("id").split(",")[0];
 		// .parents(".accordion-item").find('.topD-name')
 		console.log(code);
 
@@ -542,8 +544,8 @@ $('#ok-personnel').click(function(e) {
 
 							$(parent).find('.oc-all').append(
 								`<li class="team low-common">
-									<span class="input-click${result}" onclick="selectDeptList(${code})">
-										<input type="text" value="${input}" name="team${result}" id="${result}" class="team-name">
+									<span class="input-click${result}">
+										<input type="text" value="${input}" name="team${result}" id="${result},${code}" class="team-name">
 									</span>
 									<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${result}"></i> 
 									<i class="fa-solid fa-pen li-team-change" id="li-team-change${result}"></i>

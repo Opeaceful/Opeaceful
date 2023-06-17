@@ -145,9 +145,6 @@ public class OrgChartController {
 		return new Gson().toJson(udList);		
 	}
 	
-	// 하위부서 삭제
-//	@PostMapping("")
-	
 	// 직급 조회
 	@ResponseBody
 	@PostMapping("/selectPosition")
