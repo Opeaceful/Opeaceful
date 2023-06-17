@@ -92,6 +92,9 @@
 								            	<fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간
 								            </c:if>
 							            </td>
+							            <c:if test="${ad.type eq 0}">
+							                <td></td>
+							            </c:if>
 							            <c:if test="${ad.type eq 1}">
 							                <td>연차</td>
 							            </c:if>
