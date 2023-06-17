@@ -232,6 +232,16 @@
     
      <jsp:include page="/WEB-INF/views/chat.jsp"></jsp:include>
 	 
+
+    <!-- (승은) 전자결재 알림용 div -->
+     <div class="div-apr-info-wrap">
+        <div id="div-apr-info-text">
+          <div>승인 대기중인 <b>결재</b>요청건이 있습니다.</div>
+        </div>
+        <button id="btn-apr-info-close">X</button>
+      </div>
+
+
     <script>
     	/* 하위카테고리 숨겨두기 */
         $(".sidebar-more").css("display", "none");

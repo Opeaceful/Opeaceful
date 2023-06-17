@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .div-apr-info-wrap {
+        width: 250px;
+        height: max-content;
+        border: 1px solid black;
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 9999;
+        padding: 1rem;
+        display: flex;
+        border-radius: 6px;
+        box-shadow: 1px 1px 6px #00000030;
+        animation-name: slidein;
+      }
+
+      @keyframes slidein {
+        from {
+          margin-left: 100%;
+          width: 300%;
+        }
+      
+        to {
+          margin-left: 0%;
+          width: 100%;
+        }
+      }
+
+      #btn-apr-info-close {
+        background-color: unset;
+        border: none;
+        border-radius: 4px;
+        margin-left: 1rem;
+        cursor: pointer;
+        padding: 4px 8px;
+        height: max-content;
+      }
+      #div-apr-info-text b {
+      }
+
+      #div-apr-info-text > div {
+        border-left: 3px solid black;
+        padding-left: 10px;
+      }
+
+      body {
+        height: 200vh;
+      }
+    </style>
+  </head>
+  <body>
+    fdsfdsfd
+
+    <div class="div-apr-info-wrap">
+      <div id="div-apr-info-text">
+        <div>승인 대기중인 <b>결재</b>요청건이 있습니다.</div>
+      </div>
+      <button id="btn-apr-info-close">X</button>
+    </div>
+
+
+
+  </body>
+</html>
