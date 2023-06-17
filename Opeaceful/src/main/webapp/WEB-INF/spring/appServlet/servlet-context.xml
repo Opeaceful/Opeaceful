@@ -80,23 +80,4 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-
-
-<!-- 
-	<websocket:handlers>
-
-
-		<websocket:handshake-interceptors>
-			interceptor : http통신에서 request와 response를 가로채는 역할 handshake-interceptores 
-				: 요청관련 데이터중 httpSession 정보를 가로채서 webSocketSession에게 넣어줌
-			<beans:bean
-				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
-		</websocket:handshake-interceptors>
-
-		SocketJS라이브러리를 이용해서 만들어진 웹소켓 객체임을 의미한다
-		<websocket:sockjs />
-	</websocket:handlers> -->
-	
-	
-	
 </beans:beans>
