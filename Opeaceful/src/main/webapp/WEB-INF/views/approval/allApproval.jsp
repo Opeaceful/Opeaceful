@@ -23,9 +23,14 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
     />
     
     <link rel="stylesheet" href="${path}/resources/css/common/common.css" />
+    
     <link
       rel="stylesheet"
       href="${path}/resources/css/approval/myApproval.css"
+    />
+        <link
+      rel="stylesheet"
+      href="${path}/resources/css/approval/allApproval.css"
     />
 
   </head>
@@ -35,26 +40,24 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 	<jsp:include page="/WEB-INF/views/approval/memoModal.jsp" />
   
     <!-- [승은] -->
-    <div class="my-approval-wrap content-wrap">
+    <div class="content-wrap" id="all-approval-wrap">
       <div class="container">
         <div class="title-box">
-          <h2 class="title-common">MY 전자결재</h2>
+          <h2 class="title-common">전자결재 관리</h2>
         </div>
 
 		<c:set var="now" value="${LocalDate.now().getYear()}" />
         <div class="inner-wrap">
         	<select id="select-year" >
-        		<c:if test="${ menu eq 'wait' }">
-        			<option value="-1" selected>전체</option>
-        		</c:if>
-        		<option value="${ now }"  ${ menu eq 'all' ? 'selected ' : '' }>${ now }</option>
+        		<option value="-1" >전체</option>
+        		<option value="${ now }" selected>${ now }</option>
         		<option value="${ now - 1 }" >${ now - 1 }</option>
         		<option value="${ now - 2 }">${ now - 2 }</option>
         		<option value="${ now - 3 }">${ now - 3 }</option>
         		<option value="${ now - 4 }">${ now - 4 }</option>
         	</select>
         
-          <table class="my-approval-table table table-common">
+          <table class="all-approval-table table table-common">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -103,7 +106,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 	                <td><%= count - i %></td>
 	                <td><%= list.get(i).getFormatDraftDate() %></td>
 	                <td><%= list.get(i).getTitle()  %></td>
-	                <td><%= list.get(i).getUserName()%><%= list.get(i).getEno() != 0 ? "("+list.get(i).getEno()+")" : "" %></td>
+	                <td><%= list.get(i).getUserName()%> <%= list.get(i).getPName()%><%= list.get(i).getEno() != 0 ? "("+list.get(i).getEno()+")" : "" %></td>
 	                <td><%= statusStr  %></td>
 	                <td><%= typeStr %></td>
 	              </tr>
@@ -139,28 +142,105 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 			<% } %>
 		 </div>
 
-        </div>
-      </div>
-    </div>
 
-	<div
-		style="display: flex; justify-content: center; margin-top: 2rem;">
 
-		<select id="select-year"
-			style="border: none; border-bottom: 2px solid; margin: 0px 1rem;">
-			<option value="2023">2023</option>
-			<option value="2022">2022</option>
-			<option value="2021">2021</option>
-			<option value="2020">2020</option>
-			<option value="2019">2019</option>
-		</select>
 
-		<div class="input-group"
-			style="width: 30%; border: none; border-bottom: 2px solid; font-size: small; ">
-			<input type="text"
-				class="form-control box-shadow-none input-search-member"
-				placeholder="사원번호/이름 검색"
-				style="width: 30%; border: none; text-align: center; font-size: 14px;">
+
+
+		<div class="modal fade" id="modal-select-search-user"
+			data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div
+				class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content position-modal">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="staticBackdropLabel">결재양식
+							선택</h1>
+
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							data-bs-target="#modal-select-approval-type" aria-label="Close"></button>
+					</div>
+					<div class="modal-body scroll-bar-none">
+
+						<div class="org-chart">
+							<div>
+								<!--검색창-->
+								<div class="input-group mb-3">
+									<input type="text"
+										class="form-control box-shadow-none input-search-member"
+										placeholder="이름 입력">
+									<button class="btn btn-outline-secondary search-btn2"
+										type="button">
+										<i class="fa-solid fa-magnifying-glass"></i>
+									</button>
+								</div>
+								<table class="org-table-head table table-common">
+									<thead>
+										<th width="40%">부서</th>
+										<th width="60%">사원</th>
+									</thead>
+								</table>
+							</div>
+							<div class="org-table-content scroll-bar-none">
+								<table class="table table-common" id="select-member-table">
+									<tbody>
+										<tr>
+											<td rowspan="2">경영전략</td>
+											<td>김뫄뫄 사원</td>
+										</tr>
+										<tr>
+											<td>김뫄뫄 사원</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="modal-footer">
+						<button id="btn-reset-search-member" type="button"
+							class="btn btn-outline-primary" data-bs-dismiss="modal"
+							data-bs-target="#modal-select-search-user">선택해제</button>
+						<button id="btn-select-search-member" type="button"
+							class="btn btn-primary" >선택</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="div-approval-search-wrap"
+		>
+		
+		<div id="div-select-member-search">
+			<img src="${path }/resources/image/approval/person-search-icon.svg">
+			
+			<div class = "div-searched-member-name">
+				사원 검색
+			</div>
+				
+		</div>
+
+		<div class="div-search-input-wrap input-group">
+			
+			<input type="text" id="input-search-title"
+				class="form-control box-shadow-none"
+				placeholder="제목 검색"
+				>
 			<button class="btn btn-outline-secondary search-btn2" type="button"
 				style="border: none;">
 				<i class="fa-solid fa-magnifying-glass"></i>
@@ -168,6 +248,33 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 		</div>
 
 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+      </div>
+      
+      
+      
+
+      
+      
+      
+    </div>
+
 
 	<script type="module" src="${path}/resources/js/approval/allApprovalFront.js"></script>
 

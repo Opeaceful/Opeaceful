@@ -1,16 +1,12 @@
-
-/* :root{
-    
-} */
+/*
+[혜린]
+*/
 body *{
     box-sizing: border-box;
 
 }
 
 
-div *{
-    border: px solid red;
-}
 /* 게시판 전체 넓이 고정크기지정 */
 .board-wrap{
     width: 1000px;

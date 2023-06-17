@@ -68,8 +68,10 @@ public class ApprovalController {
 		}
 		if(roleCheck == true) {
 			int currentYear = Year.now().getValue();
-			model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
-			model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
+			List<Approval> list = aprService.searchApprovalList(-1,currentYear, null, -1, null, 1 );
+			int count  = aprService.searchApprovalListCount(-1, currentYear, null, -1, null);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
 
 			return "approval/allApproval";
 		}else {
@@ -105,6 +107,40 @@ public class ApprovalController {
 		}
 		return "approval/myApproval";
 	}
+	
+	
+	
+	
+	// ajax용 관리자 결재 리스트 서치용
+	@ResponseBody
+	@PostMapping("/searchApprovalList")
+	public String searchApprovalList(	Integer userNo,
+										Integer year,
+										Integer type,
+										Integer page,
+										String status,
+										String keyword
+										) {
+		Integer aprStatus = null;
+		if (status != null && !status.equals("all")) {
+			aprStatus = Integer.parseInt(status);
+	    }
+		
+		if(userNo == null || userNo <= 0) {
+			userNo = -1;
+		}
+		
+		List<Approval> list = aprService.searchApprovalList(userNo,year, aprStatus, type, keyword, page );
+		int count  = aprService.searchApprovalListCount(userNo, year, aprStatus, type, keyword);
+		
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("count", count);
+
+		return new Gson().toJson(result);
+	}
+	
 	
 	// ajax용 즐겨찾기 리스트 조회
 	@ResponseBody
@@ -673,12 +709,12 @@ public class ApprovalController {
 		return result;
 	}
 	
-	private static final Logger logger = LoggerFactory.getLogger(calendarController.class);
+	
 	// ajax용 결재문서 완결처리
 	@ResponseBody
 	@PostMapping("/updateApprovalStateEnd")
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
-		logger.info("결재 추가 로거");
+		
 		int result = 0;
 		System.out.println("============================="+approval);
 		
@@ -693,22 +729,16 @@ public class ApprovalController {
 			/* [혜린] - 연차 insert 시 캘린더 내 연차일정 추가 */
 			Approval apv = aprService.selectAddEvent(approval.getApprovalNo());
 			
-			System.out.println("조회해온 apv: "+apv);
-			
 			if(existApproval.getType() != 0) { // 0:일반 제외 1,2,3 연차만
 				
 				Calendar calendar = new Calendar();
 				String name = "";
 				
-				System.out.println("타입 : " + apv.getType());
 				switch(apv.getType()) {
 				case 1 :name = "휴가"; break;
 				case 2 :name = "오전반차"; break;
 				case 3 :name = "오후반차"; break;
 				}
-				System.out.println("name 값 : " + name);
-				System.out.println("시작일 : " + apv.getStartDate());
-				System.out.println("막날 : " + apv.getEndDate());
 				calendar.setTitle(apv.getUserName()+" "+name); // ex)ㅇㅇㅇ 휴가
 				calendar.setContent(apv.getApprovalNo()+"");
 				calendar.setCategory("H");
@@ -750,6 +780,7 @@ public class ApprovalController {
 	@PostMapping("/deleteApproval")
 	public int deleteApproval(	Integer approvalNo, 
 								HttpSession session) {
+		
 		// 파일 저장경로 얻어오기
 		String webPath = "/resources/file/approval/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
@@ -762,6 +793,7 @@ public class ApprovalController {
 		calendar.setContent(approvalNo+"");
 		
 		aprService.deleteApvEvent(calendar);
+		
 		
 		return result;
 	}

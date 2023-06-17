@@ -28,4 +28,8 @@ public class ReplyServiceImpl implements ReplyService{
 	public int deleteReply(int replyNo) {
 		return replyDao.deleteReply(replyNo);
 	}
+	
+	public int replyCount(int bno) {
+		return replyDao.replyCount(bno);
+	}
 }

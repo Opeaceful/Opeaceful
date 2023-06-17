@@ -149,7 +149,7 @@ function openMemberDialog(member) {
 if (document.getElementById("memberDialog" + member.userNo)) {
     return;
     }
-console.log(member);
+// console.log(member);
     // 다이얼로그 내용을 구성
     var memberDialogContent = `
         <div id="content-wrap">      
@@ -176,8 +176,8 @@ console.log(member);
                             <td>${member.phone}</td>
                         </tr>
                         <tr class="adminInfo">
-                            <td scope="row">입사일</td>
-                            <td>${member.hireDate}</td>
+                            <td scope="row">내선번호</td>
+                            <td>${member.extension}</td>
                         </tr>
                     </table>
                     <i class="fa-solid fa-xmark member-chat-profile-close" data-id="${"memberDialog" + member.userNo}"></i>
@@ -241,12 +241,14 @@ statusList.addEventListener('change', function() {
 	}
 });
 
-let chattingSock = {};
+
+
+let chattingSock = new SockJS(path + "/chat/webSocket");
 //var roomId;
 /* 채팅방 목록 조회 */
 function chatAll() {
     $.ajax({
-        url: path + "/chat/chatRoom",
+        url: path + "/chat",
         method: "GET",
         dataType: "json",
         success: function(response) {
@@ -254,7 +256,7 @@ function chatAll() {
             const loginUser = response.loginUser;
             const chatRoomList = response.crList;
 
-            //  console.log(chatRoomList);
+          //  console.log(chatRoomList);
 
             var chatRoomHtml = '';
             var hasChatRoom = false;
@@ -293,7 +295,7 @@ function chatAll() {
 
 
             /* 채팅방 클릭 이벤트 및 변수 넘겨주기 */
-            $("ul.chat__room_ul a").on("click", function(e) {
+           $("ul.chat__room_ul a").on("click", function(e) {
                 e.preventDefault();
 
                 const roomId = $(this).data("chat-room-id");
@@ -301,12 +303,12 @@ function chatAll() {
                     return chatRoom.chatRoomNo === roomId;
                 });
 
-                console.log("왔니?");
+         //       console.log("왔니?");
                 
                 
                 if (!document.getElementById("chatting_dialog_" + roomId)) {
            //     if (!chattingSock[roomId]) {
-                    console.log("채팅로그1 : "+roomId);	
+           //         console.log("채팅로그1 : "+roomId);	
                 // roomId를 사용하여 다이얼로그 열기                              
                 openDialog(roomId, clickedChatRoom);
 					 					
@@ -317,38 +319,9 @@ function chatAll() {
                 
                              
 
-            });
+            }); 
             
-            
-   /*         function sendMessage(roomId) {
-                    const inputChatting = document.getElementById("chatting_textarea_" + this);
-
-            		console.log("이게뭐야????? ",this, inputChatting.value);
-                    if (inputChatting.value.trim().length == 0) {
-                        alert("입력이 되지 않았습니다");
-
-                        inputChatting.value = "";
-                        inputChatting.focus();
-
-                    } else {
-
-                        const chatMessage = {
-                            "userNo": loginUser.userNo,
-                            "chatRoomNo": this,
-                            "userName": loginUser.userName,
-                            "message": inputChatting.value
-                        };
-                    //    console.log("버튼이 눌렸다");
-                    //    console.log(loginUser);
-                    //   console.log(chatRoomList);
-                       console.log(this);
-                        chattingSock[this].send(JSON.stringify(chatMessage));
-                        inputChatting.value = "";
-                  }
-          }   */ 
-            
-            
-            
+                                  
             // roomId를 사용하여 채팅방 데이터를 서버로부터 가져오는 Ajax 요청
 
             function openDialog(roomId, chatRoom) {
@@ -361,10 +334,9 @@ function chatAll() {
                     dataType: "json",
                     success: function(response) {
 
-
+						const loginUser = response.loginUser;
                         const join = response.join;
                         const list = response.list;
-
 
                      //   console.log(chatRoom)
                      //  console.log(response);
@@ -403,7 +375,7 @@ function chatAll() {
                             '</div>' +
                             '<div id="main_chatting_' + roomId + '" class="main_chatting">';
 
-                        /*	for (var i = 0; i < list.length; i++) {
+                        	for (var i = 0; i < list.length; i++) {
                                var message = list[i]
 
                                if (message.userNo !== loginUser.userNo) {
@@ -425,7 +397,7 @@ function chatAll() {
                                    '<time datetime="' + message.receivedDate + '" class="chatting_time">' + message.receivedDate + '</time>' +
                                    '</div>';
                                }
-                             } */
+                             } 
 
                         dialogContent +=
                             '</div>' +
@@ -468,104 +440,24 @@ function chatAll() {
                         console.log()
 							$("#"+e.target.dataset.id).dialog("destroy").remove();				
 						}); 									
-						
+						var chatContainer = document.getElementById("main_chatting_" + roomId);     
+						chatContainer.scrollTop = chatContainer.scrollHeight;
                     },
                     error: function(xhr, status, error) {
                         console.error("Failed to fetch chat room data:", error);
                         // 에러 처리
-                    },
-                    complete : function(){
-                        chattingSock[roomId] = new SockJS(path + "/chat/webSocket");
-                        console.log("채팅로그2 : "+roomId);	
-                        
-                        // 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
-                        chattingSock[roomId].onmessage = function(e) {
-                            // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
-                            // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
-                            console.log("채팅로그3 : "+roomId);	
-                            // 전달받은 메세지를 js객체로 변환
-
-                            const chatMessage = JSON.parse(e.data); // json -> js Object
-                            //	console.log(chatMessage);
-
-                            var message = chatMessage.message;
-                            var receivedDate = chatMessage.receivedDate;
-                            var isCurrentUser = chatMessage.userNo === loginUser.userNo;
-                            
-                            console.log(chatMessage.userNo, loginUser.userNo,isCurrentUser);	
-
-                            var chatContainer = document.getElementById("main_chatting_" + roomId);
-                            console.log(chatContainer);
-            
-                            
-                            if (!isCurrentUser) {
-                                var friendChat = document.createElement("div");
-                                friendChat.classList.add("friend_chatting");
-
-                                var profileImg = document.createElement("img");
-                                profileImg.classList.add("chatting_profile_img");
-                                profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
-                                profileImg.alt = "프로필사진";
-
-                                var friendChatCol = document.createElement("div");
-                                friendChatCol.classList.add("friend_chatting_col");
-
-                                var profileName = document.createElement("span");
-                                profileName.classList.add("chatting_profile_name");
-                                profileName.textContent = chatMessage.userName;
-
-                                var chattingBalloon = document.createElement("span");
-                                chattingBalloon.classList.add("chatting_balloon");
-                                chattingBalloon.textContent = message;
-
-                                var chattingTime = document.createElement("time");
-                                chattingTime.classList.add("chatting_time");
-                                chattingTime.datetime = receivedDate;
-                                chattingTime.textContent = receivedDate;
-
-                                friendChatCol.appendChild(profileName);
-                                friendChatCol.appendChild(chattingBalloon);
-
-                                friendChat.appendChild(profileImg);
-                                friendChat.appendChild(friendChatCol);
-                                friendChat.appendChild(chattingTime);
-
-                                chatContainer.appendChild(friendChat);
-                            } else {
-                                var meChat = document.createElement("div");
-                                meChat.classList.add("me_chatting");
-
-                                var meChatCol = document.createElement("div");
-                                meChatCol.classList.add("me_chatting_col");
-
-                                var chattingBalloon = document.createElement("span");
-                                chattingBalloon.classList.add("chatting_balloon");
-                                chattingBalloon.textContent = message;
-
-                                var chattingTime = document.createElement("time");
-                                chattingTime.classList.add("chatting_time");
-                                chattingTime.datetime = receivedDate;
-                                chattingTime.textContent = receivedDate;
-
-                                meChatCol.appendChild(chattingBalloon);
-
-                                meChat.appendChild(meChatCol);
-                                meChat.appendChild(chattingTime);
-
-                                chatContainer.appendChild(meChat);
-                            }
-                            
-
-                            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                        };
                     }
+
                     
                 });
             }
         }
     });
-
+	
+	
+	
+	
+	
 };
 chatAll();
 
@@ -575,8 +467,10 @@ $(document).on("click", ".chatting_send_button", function(e){
 	roomId = roomId.replace("chatting_send_", "");
 
     const inputChatting = document.getElementById("chatting_textarea_" + roomId);
+	
+	
 
-	console.log("이게뭐야????? ",this, inputChatting.value);
+//	console.log("이게뭐야????? ",this, inputChatting.value);
     if (inputChatting.value.trim().length == 0) {
         alert("입력이 되지 않았습니다");
 
@@ -594,14 +488,111 @@ $(document).on("click", ".chatting_send_button", function(e){
     //    console.log("버튼이 눌렸다");
     //    console.log(loginUser);
     //   console.log(chatRoomList);
-       console.log(roomId);
-        chattingSock[roomId].send(JSON.stringify(chatMessage));
+    //   console.log(roomId);
+        chattingSock.send(JSON.stringify(chatMessage));
         inputChatting.value = "";
   }
    
-
-
 })
+
+
+
+// 웹소켓 핸들러에서 sendMesage라는 함수가 호출되었을 때를 캐치하는 이벤트 핸들러
+ chattingSock.onmessage = function(e) {
+    // 매개변수 e : 발생한 이벤트에 대한 정보를 담고 있는객체
+    // e.data : 전달된 메세지가 담겨있음(json객체) ==> message.getPayload()
+ //   console.log("채팅로그3 : "+roomId);	
+    // 전달받은 메세지를 js객체로 변환
+
+    const chatMessage = JSON.parse(e.data); // json -> js Object
+    //	console.log(chatMessage);
+  //  console.log(e);
+  //  console.log(chatMessage);
+  //  console.log("나야3? :" +getCookie("userNo"));
+
+    var message = chatMessage.message;
+    var receivedDate = chatMessage.receivedDate;
+    const userNo = Number(getCookie("userNo"));
+    var isCurrentUser = chatMessage.userNo === userNo;
+    
+   var chatContainer = document.getElementById("main_chatting_"+chatMessage.chatRoomNo);            
+    
+    if (!isCurrentUser) {
+        var friendChat = document.createElement("div");
+        friendChat.classList.add("friend_chatting");
+
+        var profileImg = document.createElement("img");
+        profileImg.classList.add("chatting_profile_img");
+        profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
+        profileImg.alt = "프로필사진";
+
+        var friendChatCol = document.createElement("div");
+        friendChatCol.classList.add("friend_chatting_col");
+
+        var profileName = document.createElement("span");
+        profileName.classList.add("chatting_profile_name");
+        profileName.textContent = chatMessage.userName;
+
+        var chattingBalloon = document.createElement("span");
+        chattingBalloon.classList.add("chatting_balloon");
+        chattingBalloon.textContent = message;
+
+        var chattingTime = document.createElement("time");
+        chattingTime.classList.add("chatting_time");
+        chattingTime.datetime = receivedDate;
+        chattingTime.textContent = receivedDate;
+
+        friendChatCol.appendChild(profileName);
+        friendChatCol.appendChild(chattingBalloon);
+
+        friendChat.appendChild(profileImg);
+        friendChat.appendChild(friendChatCol);
+        friendChat.appendChild(chattingTime);
+
+        chatContainer.appendChild(friendChat);
+    } else {
+        var meChat = document.createElement("div");
+        meChat.classList.add("me_chatting");
+
+        var meChatCol = document.createElement("div");
+        meChatCol.classList.add("me_chatting_col");
+
+        var chattingBalloon = document.createElement("span");
+        chattingBalloon.classList.add("chatting_balloon");
+        chattingBalloon.textContent = message;
+
+        var chattingTime = document.createElement("time");
+        chattingTime.classList.add("chatting_time");
+        chattingTime.datetime = receivedDate;
+        chattingTime.textContent = receivedDate;
+
+        meChatCol.appendChild(chattingBalloon);
+
+        meChat.appendChild(meChatCol);
+        meChat.appendChild(chattingTime);
+
+        chatContainer.appendChild(meChat);
+    }
+    
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+};
+
+
+
+/* 쿠키에서 가져오기 */
+function getCookie(name) {
+  let cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.startsWith(name + "=")) {
+      //decodeURIComponent는 encodeURIComponent로 이스케이핑 된 문자열을
+      //정상적인 문자열로 되돌려주는 역할
+      return decodeURIComponent(cookie.substring(name.length + 1));
+    }
+  }
+  return null;
+}
 
 
 /* 채팅방 생성 다이얼로그 */
@@ -644,7 +635,7 @@ $(document).ready(function() {
                     alert("채팅방 생성 성공");
                     // 추가로 수행할 작업이 있다면 여기에 작성
                     newDialog.dialog("close");
-                    chatAll();
+                  //  chatAll();
                 },
                 error: function(xhr, status, error) {
                     // 채팅방 생성 실패 시 동작
@@ -690,6 +681,7 @@ function toggleChat() {
     chatContent.style.display = "grid";
     chatRoomContent.style.display = "none";
 }
+
 
 /* 다이얼로그들 위치 및 포지션 설정 */
 function dialogElementStyle(Id, top, left, zIndex){

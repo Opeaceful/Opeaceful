@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardFile;
 import com.company.opeaceful.board.model.vo.BoardType;
@@ -19,9 +21,9 @@ public interface BoardService {
 	
 	public void selectSearchBoardList(Map<String, Object> map);
 
-	public int selectNoticeRoll(String userNo);
+	public String selectNoticeRoll(String userNo);
 	
-	public int selectFreeRoll(String userNo);
+	public String selectFreeRoll(String userNo);
 
 	public Board selectBoardDetail(Map<String, Object> map);
 
@@ -31,13 +33,13 @@ public interface BoardService {
 	
 	public ArrayList<Department> selectDeptList();
 	
-	public int insertBoard(Board b, List<BoardFile> fileList) throws Exception;
+	public int insertBoard(Board b, List<MultipartFile> upFileList, String serverFolderPath);
 	
-	public int updateBoard(Board b, List<BoardFile> fileList) throws Exception;
+	public int updateBoard(Board b, List<String> hiddenfile, List<MultipartFile> upFileList, String serverFolderPath);
 	
 	public List<BoardFile> selectUpFileList(int boardNo);
 	
-	public int deleteUpfile(int boardNo);
+	public int deleteUpfile(int boardNo, String serverFolderPath);
 	
 	public int selectDeptCode(int userNo);
 	

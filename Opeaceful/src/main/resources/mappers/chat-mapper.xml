@@ -88,6 +88,11 @@
 	    WHERE CP.USER_NO = #{userNo}
 	</select>
 	
+	<select id="getParticipantsInRoom" parameterType="int" resultType="ChatParticipant">
+        SELECT *
+        FROM CHAT_PARTICIPANT
+        WHERE CHATROOM_NO = #{chatRoomNo}
+    </select>
 	
 	
 	

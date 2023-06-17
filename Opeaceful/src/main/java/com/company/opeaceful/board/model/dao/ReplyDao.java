@@ -25,4 +25,8 @@ public class ReplyDao {
 	public int deleteReply(int replyNo) {
 		return sqlSession.delete("replyMapper.deleteReply",replyNo);
 	}
+
+	public int replyCount(int bno) {
+		return sqlSession.selectOne("replyMapper.replyCount",bno);
+	}
 }
