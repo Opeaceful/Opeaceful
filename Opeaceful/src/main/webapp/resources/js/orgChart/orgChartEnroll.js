@@ -8,6 +8,9 @@ $(document).ready(function() {
 	
 selectDept();
 
+let topDeptCode = "";
+let deptCode = "";
+
 /* 부서+팀명 조회 */
 function selectDept() {
 
@@ -27,9 +30,9 @@ function selectDept() {
 					html += `<div class="accordion-item accordion-item-common org-accordion${dept.deptCode}" id="org-accordion">
 								<h2 class="accordion-header org-accordion-header" id="heading${dept.deptCode}">
 									<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="flush-collapse${dept.deptCode}" aria-label="펼치기">
-										<input type="text" data-id="${dept.deptCode},${dept.topDeptCode},${dept.deptName}" class="topD-name" name="department" value="${dept.deptName}" aria-label="부서이름인풋">
+										<input type="text" id="${dept.deptCode},${dept.topDeptCode}" data-id="${dept.deptCode},${dept.topDeptCode},${dept.deptName}" class="topD-name" name="department" value="${dept.deptName}" aria-label="부서이름인풋">
 									</button>
-									<div class="icons">
+									<div class="icons hidden">
 										<i class="fa-solid fa-plus team-plus" id="team-plus${dept.deptCode}"></i> 
 										<i class="fa-solid fa-minus team-minus" id="team-minus${dept.deptCode}"></i> 
 										<i class="fa-solid fa-pen team-change" id="team-change${dept.deptCode}"></i>
@@ -57,7 +60,8 @@ function selectDept() {
 									</div>
 									</div>`
 				}
-				
+				topDeptCode = `${dept.topDeptCode}`;
+				deptCode = `${dept.deptCode}`;
 			}
 
 			let orcAccordion = document.getElementById("accordionFlushExample");
@@ -419,53 +423,70 @@ $('#ok-personnel').click(function(e) {
 	/////////////////////////////////////////////////////////////////////// 상위부서 삭제
 	$(".inputs").on("click", ".team-minus", function(e) { 
 			
-		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
+		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id").split(",")[0];
+		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id").split(",")[1];
 		//let topDeptCode = $(e.target).parents(".accordion-item").find('.input-click').attr("id");
 
 		console.log("애는 상위");
 		console.log(deptCode);
+		console.log(topDeptCode);
 		//console.log(topDeptCode);
 
-		$.ajax({
-			url : path+"/orgChart/deleteDeptCode",
-			type : "POST",
-			data : {deptCode : deptCode,
-					topDeptCode : 0},
-			success : function(result) {
-				console.log("상위부서 : ",result)
-				if (result > 0) {
-					alert('사용중인 부서입니다. 다시 확인해주세요.');
-				} else {
-					$(e.target).parents(".accordion-item").remove();
-				}
+		swal('부서를 삭제 하시겠습니까?', {
+			buttons: { confirm: '확인', cancel: '취소' },
+		  }).then(function (isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					url : path+"/orgChart/deleteTopDeptCode",
+					type : "POST",
+					data : {deptCode : deptCode,
+							topDeptCode : topDeptCode},
+					success : function(result) {
+						console.log(result)
+						if (result > 0) {
+							swal('사용중인 부서입니다. 다시 확인해주세요.', {
+								buttons: { cancel: '확인' },
+							  });
+						} else {
+							$(e.target).parents(".accordion-item").remove();
+						}
+					}
+				})
 			}
-		})
+		  });
     });
-
+	
 	/////////////////////////////////////////////////////////////////////// 하위부서 삭제
 	$(".inputs").on("click", ".li-team-minus", function(e) { 
-			
-		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
+		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id").split(",")[0];
 		let deptCode =  e.target.id.replace("li-team-minus", '');
 	
 		console.log("애는 하위");
 		console.log(deptCode);
 		console.log(topDeptCode);
-	
-		$.ajax({
-			url : path+"/orgChart/deleteDeptCode",
-			type : "POST",
-			data : {deptCode : deptCode,
-					topDeptCode : topDeptCode ? topDeptCode : 0},
-			success : function(result) {
-				console.log(result)
-				if (result > 0) {
-					alert('사용중인 부서입니다. 다시 확인해주세요.');
-				} else {
-					$(e.target).closest(".team").remove();
-				}
+
+		swal('부서를 삭제 하시겠습니까?', {
+			buttons: { confirm: '확인', cancel: '취소' },
+		  }).then(function (isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					url : path+"/orgChart/deleteTopDeptCode",
+					type : "POST",
+					data : {deptCode : deptCode,
+							topDeptCode : topDeptCode},
+					success : function(result) {
+						console.log(result)
+						if (result > 0) {
+							swal('사용중인 부서입니다. 다시 확인해주세요.', {
+								buttons: { cancel: '확인' },
+							  });
+						} else {
+							$(e.target).closest(".team").remove();
+						}
+					}
+				})
 			}
-		})
+		  });
 	});
 
 	/////////////////////////////////////////////////////////////////////// 하위부서 추가 
@@ -731,15 +752,6 @@ $('#ok-personnel').click(function(e) {
 	});
 })
 
-
-
-// const accordionButton = document.querySelector(".org-accordion-header");
-// accordionButton.addEventListener("click", toggleIcons);
-
-// function toggleIcons() {
-// 	const icons = document.querySelector(".icons");
-// 	icons.style.display = icons.style.display === "none" ? "block" : "none";
-// }
 
   
 

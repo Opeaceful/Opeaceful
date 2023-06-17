@@ -92,7 +92,7 @@ public class OrgChartController {
 	}
 	
 	// 상위부서 삭제
-	@PostMapping("/deleteDeptCode")
+	@PostMapping("/deleteTopDeptCode")
 	@ResponseBody
 	public int deleteDeptCode(OrgChart orgChart, int deptCode, int topDeptCode) {
 		
@@ -142,9 +142,11 @@ public class OrgChartController {
 		List<UserDepartment> udList = orgchartService.selectMember(deptCode);
 		
 		System.out.println("udList에 담긴 값 : "+udList);
-		return new Gson().toJson(udList);
-		
+		return new Gson().toJson(udList);		
 	}
+	
+	// 하위부서 삭제
+//	@PostMapping("")
 	
 	// 직급 조회
 	@ResponseBody
