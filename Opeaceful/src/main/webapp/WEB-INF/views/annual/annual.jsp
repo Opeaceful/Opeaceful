@@ -20,7 +20,10 @@
 
 </head>
 <body>
-
+	<c:if test="${ not empty alertMsg }">
+		<script>swal('${alertMsg}');</script>
+		<c:remove var="alertMsg"/>
+	</c:if>
     <jsp:include page="/WEB-INF/views/sidebar.jsp" />
     <div class="content-wrap">
         <div class="container">
@@ -102,8 +105,8 @@
                         <div class="row mb-3">
                             <label for="annual-year-select" class="col-sm-4 col-form-label">근로기간</label>
                             <div class="col-sm-8">
-                                <select class="form-select box-shadow-put" aria-label="Default select example" name="year">
-                                    <option selected>근로기간 선택</option>
+                                <select class="form-select box-shadow-put" aria-label="Default select example" name="year"  required="required">
+                                    <option value="">근로기간 선택</option>
 	                        		<c:forEach items="${annual}" var="a">
 		                        		<c:if test="${a.year eq 0}">
 			                                <option value="${a.year}">${a.year + 1}년 미만</option>
@@ -119,7 +122,7 @@
                         <div class="row mb-3">
                             <label for="annual-count-modify" class="col-sm-4 col-form-label">연차 유급휴가</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control box-shadow-put" id="annual-count-modify" name="annualUnit">
+                                <input type="number" class="form-control box-shadow-put" id="annual-count-modify" name="annualUnit" required>
                             </div>
                         </div>
 	                </div>
