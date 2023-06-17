@@ -108,3 +108,70 @@
     color: var(--color-navy);
 }
 
+/* ================= 전자결재 알림 디자인 ============================= */
+#div-apr-info-wrap {
+    width: 280px;
+    height: max-content;
+    border: 1px solid var(--font-black);
+    position: fixed;
+    top: 20px;
+    right:20px;
+    padding: 0.5rem ;
+    padding-top: 0px;
+    /* display: flex; */
+    flex-direction: column;
+    border-radius: 6px;
+    box-shadow: 1px 1px 4px #00000020;
+    background-color: var(--color-background);
+    z-index: 9999;
+    animation-duration: 1.5s;
+    animation-name: slidein;
+    display: none;
+  }
+
+  .div-apr-info-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 0.5rem;
+  }
+
+  .div-apr-info-line > div{
+    border-bottom: 3px solid  var(--color-navy);
+    width: 11%;
+    border-radius: 1px
+}
+
+  #btn-apr-info-close {
+    background-color: var(--color-background);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height:  fit-content;
+    color: var(--color-navy);
+    padding: 0px;
+}
+
+#btn-apr-info-close {display:inline-block;}
+#btn-apr-info-close:after {display: inline-block;content: "\00d7"; font-size: 1.3rem;}
+
+#div-apr-info-text b {color: var(--color-navy);}
+
+  #div-apr-info-text > div {
+    padding-left: 0.5rem;
+    margin: auto;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+
+  @keyframes slidein {
+    from {
+      top: -100px; 
+    right: 20px;
+    }
+  
+    to {
+      top: 20px;
+    right:20px;
+    }
+  }

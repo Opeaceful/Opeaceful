@@ -355,27 +355,27 @@ DROP PROCEDURE IF EXISTS addsalary; -- 사용 다한 프로시저는 삭제해�
 
 
 
-DELIMITER $$
-CREATE PROCEDURE addannual() -- ⓐ  프로시져
-BEGIN
-    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-    WHILE (i <= 9) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+-- DELIMITER $$
+-- CREATE PROCEDURE addannual() -- ⓐ  프로시져
+-- BEGIN
+--     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+--     WHILE (i <= 9) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
 
-		INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
-		VALUES
-			(8, 1, "휴가", 0, CONCAT('2023-11-0', i, ' 15:28') ,CONCAT('2023-11-0', i, ' 15:28'),CONCAT('2023-11-0', i, ' 15:28')),
-			(8, 0, "일반", 0, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
-			(8, 1, "휴가", -1,  CONCAT('2023-10-0', i, ' 15:28') ,CONCAT('2023-10-0', i, ' 15:28'),CONCAT('2023-10-0', i, ' 15:28')),
-			(8, 1, "휴가", 0,  CONCAT('2022-10-1', i, ' 15:28') ,CONCAT('2022-10-1', i, ' 15:28'),CONCAT('2022-10-1', i, ' 15:28')),
-			(8, 3, "오후반차", 0,  CONCAT('2023-09-0', i, ' 15:28') ,CONCAT('2023-09-0', i, ' 15:28'),CONCAT('2023-09-0', i, ' 15:28')),
-			(8, 2, "오전반차", 2,  CONCAT('2022-09-1', i, ' 15:28') ,CONCAT('2022-09-1', i, ' 15:28'),CONCAT('2022-09-1', i, ' 15:28')),
-			(8, 1, "휴가", 0,  CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28')),
-			(8, 1, "휴가", -1, CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28'));
+-- 		INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+-- 		VALUES
+-- 			(8, 1, "휴가", 0, CONCAT('2023-11-0', i, ' 15:28') ,CONCAT('2023-11-0', i, ' 15:28'),CONCAT('2023-11-0', i, ' 15:28')),
+-- 			(8, 0, "일반", 0, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
+-- 			(8, 1, "휴가", -1,  CONCAT('2023-10-0', i, ' 15:28') ,CONCAT('2023-10-0', i, ' 15:28'),CONCAT('2023-10-0', i, ' 15:28')),
+-- 			(8, 1, "휴가", 0,  CONCAT('2022-10-1', i, ' 15:28') ,CONCAT('2022-10-1', i, ' 15:28'),CONCAT('2022-10-1', i, ' 15:28')),
+-- 			(8, 3, "오후반차", 0,  CONCAT('2023-09-0', i, ' 15:28') ,CONCAT('2023-09-0', i, ' 15:28'),CONCAT('2023-09-0', i, ' 15:28')),
+-- 			(8, 2, "오전반차", 2,  CONCAT('2022-09-1', i, ' 15:28') ,CONCAT('2022-09-1', i, ' 15:28'),CONCAT('2022-09-1', i, ' 15:28')),
+-- 			(8, 1, "휴가", 0,  CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28')),
+-- 			(8, 1, "휴가", -1, CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28'));
 
-        SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
-    END WHILE;
-END$$
-DELIMITER ;
+--         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+--     END WHILE;
+-- END$$
+-- DELIMITER ;
 
-CALL addannual(); -- 프로시저 실행
-DROP PROCEDURE IF EXISTS addannual; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
+-- CALL addannual(); -- 프로시저 실행
+-- DROP PROCEDURE IF EXISTS addannual; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
