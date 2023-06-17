@@ -16,7 +16,7 @@ function getContextPath() {
 }
 
 function darkMode(){
-//다크모드 설정 
+//다크모드 설정 : 윤지영에게 문의
 const isUserColorTheme = localStorage.getItem('color-theme');
 const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
