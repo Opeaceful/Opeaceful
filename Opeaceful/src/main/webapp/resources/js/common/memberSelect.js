@@ -14,7 +14,9 @@ $("#all-user-view-int").keyup(function (key) {
   modalAllMemberView();
 });
 
+
 modalAllMemberView();
+
 
 function modalAllMemberView() {
   let keyword = document.getElementById("all-user-view-int").value;
@@ -44,13 +46,14 @@ function modalAllMemberView() {
         }
       }
 
+      // [지의] 사원한명만 검색시 체크박스 하나만 선택되야하므로 data-group="checkFail" 추가
       //만들어둔 object 반복문 돌리면서 table생성
       for (let deptm in deptMember) {
         html += `
                 <tr>
                     <th rowspan="${deptMember[deptm].length}" class="t-v-middle"><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" ></th>
                     <th rowspan="${deptMember[deptm].length}" class="t-v-middle">${deptMember[deptm][0].dName}</th>
-                    <td><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" value="${deptMember[deptm][0].userNo}"></td>
+                    <td data-group="checkFail"><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" value="${deptMember[deptm][0].userNo}"></td>
                     <td>${deptMember[deptm][0].userName} ${deptMember[deptm][0].pName}</td>
                 </tr>
                 `;
@@ -58,7 +61,7 @@ function modalAllMemberView() {
         for (let i = 1; i < deptMember[deptm].length; i++) {
           html += `
                     <tr>
-                        <td><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][i].deptCode}" value="${deptMember[deptm][i].userNo}"></td>
+                        <td data-group="checkFail"><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][i].deptCode}" value="${deptMember[deptm][i].userNo}"></td>
                         <td>${deptMember[deptm][i].userName} ${deptMember[deptm][i].pName}</td>
                     </tr>
                     `;
@@ -222,3 +225,4 @@ if (document.getElementById("member-search-keyword")) {
       }
     });
 }
+
