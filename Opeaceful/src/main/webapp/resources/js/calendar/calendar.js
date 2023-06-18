@@ -19,6 +19,14 @@ let category = document.getElementById('calendar-wrap').dataset.category;
       tmcol.css('display', 'none');
       mycol.css('display', 'block');
       modalReset();
+      abled.start = false;
+      abled.end = false;
+      abled.title = false;
+      enable();
+      abledU.start = false;
+      abledU.end = false;
+      abledU.title = false;
+      enableU();
     })
     
     $('.tm-event-btn').on('click', function(){
@@ -26,6 +34,14 @@ let category = document.getElementById('calendar-wrap').dataset.category;
       mycol.css('display', 'none');
       tmcol.css('display', 'block');
       modalReset();
+      abled.start = false;
+      abled.end = false;
+      abled.title = false;
+      enable();
+      abledU.start = false;
+      abledU.end = false;
+      abledU.title = false;
+      enableU();
     })
     /* 디데이 호버 시 x 버튼 -> 개별로 수정하기!!!!!!!!!!!!11 */
     $(".d-event").hover(function(){
@@ -40,6 +56,11 @@ let category = document.getElementById('calendar-wrap').dataset.category;
       start: false,
       end: false
     }
+    let abledU = {
+      title: false,
+      start: false,
+      end: false
+    }
 
      /* 모달 일정등록버튼 비활성 함수 */
     function enable(){
@@ -48,7 +69,7 @@ let category = document.getElementById('calendar-wrap').dataset.category;
       for(let a in abled){
         if(!abled[a]){
           eveSubmitBtn.disabled = true;
-          console.log(abled);
+         // console.log(abled);
           return;
         }
       }
@@ -59,10 +80,10 @@ let category = document.getElementById('calendar-wrap').dataset.category;
     function enableU(){
       let eveSubmitBtn = document.getElementById('modal-update-btn');
       
-      for(let a in abled){
-        if(!abled[a]){
+      for(let a in abledU){
+        if(!abledU[a]){
           eveSubmitBtn.disabled = true;
-          console.log(abled);
+          //console.log(abledU);
           return;
         }
       }
@@ -78,7 +99,10 @@ let category = document.getElementById('calendar-wrap').dataset.category;
       $('#event-modal').modal('show');
       modalReset();
       enable();
-      
+      abled.start = false;
+      abled.end = false;
+      abled.title = false;
+      enable();
     })
     /* 일정 모달 닫기 버든 클릭 함수 */
     function hiddenModal(){
@@ -115,10 +139,14 @@ let category = document.getElementById('calendar-wrap').dataset.category;
   $('input[name=dateStart]').focusout(function(){
     if($('input[name=dateStart]').val() == ""){
       abled.start = false;
-      console.log(abled);
+      abledU.start = false;
+      //console.log(abled);
+      //console.log(abledU);
     }else{
       abled.start = true;
-      console.log(abled);
+      abledU.start = true;
+      //console.log(abled);
+      //console.log(abledU);
     }
     enable();
     enableU();
@@ -126,10 +154,14 @@ let category = document.getElementById('calendar-wrap').dataset.category;
   $('input[name=dateEnd]').focusout(function(){
     if($('input[name=dateEnd]').val() == ""){
       abled.end = false;
-      console.log(abled);
+      abledU.end = false;
+      //console.log(abled);
+      //console.log(abledU);
     }else{
       abled.end = true;
-      console.log(abled);
+      abledU.end = true;
+      //console.log(abled);
+      //console.log(abledU);
     }
     enable();
     enableU();
@@ -137,11 +169,15 @@ let category = document.getElementById('calendar-wrap').dataset.category;
   $('#event-title').keyup(function(){
     if($('#event-title').val() == ""){
      abled.title = false;
-     console.log(abled);
+     abledU.title = false;
+    // console.log(abled);
+     //console.log(abledU);
     }
     if($('#event-title').val() != ""){
       abled.title = true;
-      console.log(abled);
+      abledU.title = true;
+     // console.log(abled);
+      //console.log(abledU);
     }
     enable();
     enableU();
@@ -234,6 +270,7 @@ function deleteEvent(){
   })
 }
 
+
 /* ============================== fullCalendar ======================================= */
 
  document.addEventListener('DOMContentLoaded', function() {
@@ -252,7 +289,7 @@ function deleteEvent(){
     })
 
     request.done(function(data){
-      console.log(data);
+     // console.log(data);
 
     var calendar = new FullCalendar.Calendar(calendarM, {
       plugins: [ 'interaction', 'dayGrid' ],
@@ -268,25 +305,20 @@ function deleteEvent(){
       eventClick: function(info){
 
         /* 선택된 일정 정보 표시 + 일정 수정 모달창 열림 */
-        console.log("클릭됨");
+        //console.log("클릭됨");
         modalReset();
         $('#event-modal').modal('show');
         $('#dlt-event-btn').css('display','block');
         $('#modal-update-btn').css('display','block');
         $('#modal-submit-btn').css('display','none');
-        enableU();
-        abled.start = true;
-        abled.end = true;
-        abled.title = true;
-        enableU();
 
-        console.log("일정 고유번호 : "+info.event.id);
+        //console.log("일정 고유번호 : "+info.event.id);
 
         let cno = info.event.id;
 
         let udtBtn = document.getElementById('modal-update-btn');
         udtBtn.dataset.update = cno;
-        console.log("dataset수정버튼cno:",udtBtn.getAttribute('data-update'));
+        //console.log("dataset수정버튼cno:",udtBtn.getAttribute('data-update'));
 
         let startDate = $('input[name=dateStart]');
         let endDate = $('input[name=dateEnd]');
@@ -301,13 +333,13 @@ function deleteEvent(){
           dataType: "json",
           success: function(result){
             /* 조회된 일정의 정보 모달에 띄우기 */
-            console.log(result);
-            console.log("캘린더 일정 제목: ",result.title);
-            console.log("색깔",result.backgroundColor);
+           // console.log(result);
+           // console.log("캘린더 일정 제목: ",result.title);
+            //console.log("색깔",result.backgroundColor);
             let col = result.backgroundColor;
-            console.log("문자열 시작",col.indexOf("c")); //c시작위치
-            console.log("문자열 끝 다음숫자",col.indexOf(")")); //) 마지막괄호 위치 -1
-            console.log("잘라낸 문자열 : " , col.substring(col.indexOf("c") ,col.indexOf(")")));
+            //console.log("문자열 시작",col.indexOf("c")); //c시작위치
+           //console.log("문자열 끝 다음숫자",col.indexOf(")")); //) 마지막괄호 위치 -1
+            //console.log("잘라낸 문자열 : " , col.substring(col.indexOf("c") ,col.indexOf(")")));
             let cName = col.substring(col.indexOf("c") ,col.indexOf(")"));
 
             $("label[name='"+result.category+"']").click(); //카테고리 라디오버튼
@@ -320,6 +352,11 @@ function deleteEvent(){
             if(result.dDay == 'Y'){ // 디데이 표시면 checked
               eveDday.prop('checked',true); 
             }
+            abledU.start = true;
+            abledU.end = true;
+            abledU.title = true;
+            enableU();
+
 
           }
         })
@@ -344,7 +381,7 @@ function teamCalendar(){
   })
 
   request.done(function(data){
-    console.log(data);
+    //console.log(data);
 
   var calendar = new FullCalendar.Calendar(calendarM, {
     plugins: [ 'interaction', 'dayGrid' ],
@@ -358,26 +395,22 @@ function teamCalendar(){
     events: data,
       eventClick: function(info){
         /* 선택된 일정 정보 표시 + 일정 수정 모달창 열림 */
-        console.log("클릭됨");
+        //console.log("클릭됨");
         modalReset();
         $('#event-modal').modal('show');
         $('#dlt-event-btn').css('display','block');
         $('#modal-update-btn').css('display','block');
         $('#modal-submit-btn').css('display','none');
-        enableU();
-        abled.start = true;
-        abled.end = true;
-        abled.title = true;
-        enableU();
-        console.log("카테고리담긴값",info.event.category);
         
-        console.log("일정 고유번호 : "+info.event.id);
+       // console.log("카테고리담긴값",info.event.category);
+        
+       // console.log("일정 고유번호 : "+info.event.id);
 
         let cno = info.event.id;
 
         let udtBtn = document.getElementById('modal-update-btn');
         udtBtn.dataset.update = cno;
-        console.log("dataset수정버튼cno:",udtBtn.getAttribute('data-update'));
+        //console.log("dataset수정버튼cno:",udtBtn.getAttribute('data-update'));
 
         let startDate = $('input[name=dateStart]');
         let endDate = $('input[name=dateEnd]');
@@ -391,16 +424,16 @@ function teamCalendar(){
           data: {id : cno},
           dataType: "json",
           success: function(result){
-            console.log("result.category",result.category)
+           // console.log("result.category",result.category)
             
             /* 조회된 일정의 정보 모달에 띄우기 */
-            console.log(result);
-            console.log("캘린더 일정 제목: ",result.title);
-            console.log("색깔",result.backgroundColor);
+           // console.log(result);
+           // console.log("캘린더 일정 제목: ",result.title);
+            //console.log("색깔",result.backgroundColor);
             let col = result.backgroundColor;
-            console.log("문자열 시작",col.indexOf("c")); //c시작위치
-            console.log("문자열 끝 다음숫자",col.indexOf(")")); //) 마지막괄호 위치 -1
-            console.log("잘라낸 문자열 : " , col.substring(col.indexOf("c") ,col.indexOf(")")));
+            // console.log("문자열 시작",col.indexOf("c")); //c시작위치
+            // console.log("문자열 끝 다음숫자",col.indexOf(")")); //) 마지막괄호 위치 -1
+            // console.log("잘라낸 문자열 : " , col.substring(col.indexOf("c") ,col.indexOf(")")));
             let cName = col.substring(col.indexOf("c") ,col.indexOf(")"));
 
             $("label[name='"+result.category+"']").click(); //카테고리 라디오버튼
@@ -413,12 +446,28 @@ function teamCalendar(){
             if(result.dDay == 'Y'){ // 디데이 표시면 checked
               eveDday.prop('checked',true); 
             }
-            /* 연차일정은 수정 못하게 */
+
+            abledU.start = true;
+            abledU.end = true;
+            abledU.title = true;
+            enableU();
+
+            /* 연차일정 모달 제한*/
             if(result.category == 'H'){
 
+
+              /* 연차일정은 수정 못하게 */
               $('#dlt-event-btn').css('display','none');
               $('#modal-update-btn').css('display','none');
+
+              /* 연차관련없는 요소 disabled */
+              $('.apv-hidden').css('display','none');
+
             }
+
+
+
+
           }
         })
       }
@@ -440,7 +489,7 @@ function fullCalendar(){
   })
 
   request.done(function(data){
-    console.log(data);
+    //console.log(data);
 
   var calendar = new FullCalendar.Calendar(calendarM, {
     plugins: [ 'interaction', 'dayGrid' ],
@@ -460,19 +509,14 @@ function fullCalendar(){
         $('#dlt-event-btn').css('display','block');
         $('#modal-update-btn').css('display','block');
         $('#modal-submit-btn').css('display','none');
-        enableU();
-        abled.start = true;
-        abled.end = true;
-        abled.title = true;
-        enableU();
 
-        console.log("일정 고유번호 : "+info.event.id);
+       // console.log("일정 고유번호 : "+info.event.id);
 
         let cno = info.event.id;
 
         let udtBtn = document.getElementById('modal-update-btn');
         udtBtn.dataset.update = cno;
-        console.log("dataset수정버튼cno:",udtBtn.getAttribute('data-update'));
+        //console.log("dataset수정버튼cno:",udtBtn.getAttribute('data-update'));
 
         let startDate = $('input[name=dateStart]');
         let endDate = $('input[name=dateEnd]');
@@ -487,13 +531,13 @@ function fullCalendar(){
           dataType: "json",
           success: function(result){
             /* 조회된 일정의 정보 모달에 띄우기 */
-            console.log(result);
-            console.log("캘린더 일정 제목: ",result.title);
-            console.log("색깔",result.backgroundColor);
+            // console.log(result);
+            // console.log("캘린더 일정 제목: ",result.title);
+            // console.log("색깔",result.backgroundColor);
             let col = result.backgroundColor;
-            console.log("문자열 시작",col.indexOf("c")); //c시작위치
-            console.log("문자열 끝 다음숫자",col.indexOf(")")); //) 마지막괄호 위치 -1
-            console.log("잘라낸 문자열 : " , col.substring(col.indexOf("c") ,col.indexOf(")")));
+            // console.log("문자열 시작",col.indexOf("c")); //c시작위치
+            // console.log("문자열 끝 다음숫자",col.indexOf(")")); //) 마지막괄호 위치 -1
+            // console.log("잘라낸 문자열 : " , col.substring(col.indexOf("c") ,col.indexOf(")")));
             let cName = col.substring(col.indexOf("c") ,col.indexOf(")"));
 
             $("label[name='"+result.category+"']").click(); //카테고리 라디오버튼
@@ -506,6 +550,12 @@ function fullCalendar(){
             if(result.dDay == 'Y'){ // 디데이 표시면 checked
               eveDday.prop('checked',true); 
             }
+
+            abledU.start = true;
+            abledU.end = true;
+            abledU.title = true;
+            enableU();
+
             /* 연차일정 모달 제한*/
             if(result.category == 'H'){
 
@@ -541,7 +591,7 @@ function miniCalendar(){
   })
 
   request.done(function(data){
-    console.log(data);
+    //console.log(data);
 
     var calendarMin = new FullCalendar.Calendar(calendarMini, {
       aspectRatio: 1.2,

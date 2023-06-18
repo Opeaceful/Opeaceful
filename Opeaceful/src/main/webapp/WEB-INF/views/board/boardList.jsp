@@ -122,7 +122,7 @@
 							<c:choose>
 	                    <c:when test='${ b.fixed == "Y"}'>
 		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
-		                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}</td>
+		                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}<c:if test="${b.replyCount > 0}"><span style='color:orange'> [${b.replyCount }]</span></c:if></td>
 		                        
 		                        <c:choose>
 		                        <c:when test="${b.secret eq 'Y'}">
@@ -139,7 +139,7 @@
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
-	                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}</td>
+	                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}<c:if test="${b.replyCount > 0}"><span style='color:orange'> [${b.replyCount }]</span></c:if></td>
 	                        
 	                        <c:choose>
 	                        <c:when test="${b.secret eq 'Y'}">
@@ -248,25 +248,6 @@
     </div>
 
 
-	<script>
-	
-
-	replyCount();
-
-	 function replyCount(){
-		$.ajax({
-			url:path+"/replyCount",
-			type:'POST',
-			data:{bno: },
-			dataType:'json',
-			success: function(result){
-				console.log("댓글 수 : ",result);
-			}
-		})
-	}
-
-	
-	</script>
 
 </body>
 </html>

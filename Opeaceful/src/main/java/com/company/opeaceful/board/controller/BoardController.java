@@ -43,7 +43,7 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@GetMapping("/list")
 	public String settingAnnaul(){
@@ -275,6 +275,8 @@ public class BoardController {
 				
 				System.out.println("insert메서드 에러");
 			}
+				
+				return "redirect:/board/list/{boardCode}";	
 		}else {
 			
 			//게시글 수정 (b객체 안에 boardNo 존재)
@@ -282,14 +284,18 @@ public class BoardController {
 				
 			if(result > 0) {
 				session.setAttribute("alertMsg", "게시글이 수정되었습니다.");
-				return "board/boardList";
+				int bnum = b.getBoardNo();
+				
+				model.addAttribute("bnum", bnum);
+				//return "board/boardList";
+				return "redirect:/board/detail/{boardCode}/{bnum}";
+				
 			}else {
 				System.out.println("게시글 작성 실패");
 				return "board/boardEnrollForm";
 			}
 		}
-		
-		return "redirect:/board/list/{boardCode}";
+		//detail/{boardCode}/{b.boardNo}
 	}
 	
 	
