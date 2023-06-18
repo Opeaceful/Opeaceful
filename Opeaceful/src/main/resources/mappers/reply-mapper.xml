@@ -54,6 +54,12 @@
 		DELETE FROM BOARD_REPLY
 		WHERE REPLY_NO = #{replyNo}
 	</delete>
-
+	
+	<!-- 해당게시글 댓글 카운트 -->
+	<select id="replyCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD_REPLY
+		WHERE BOARD_NO = #{bno}
+	</select>
 
 </mapper>

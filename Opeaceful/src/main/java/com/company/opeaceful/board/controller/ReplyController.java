@@ -39,4 +39,11 @@ public class ReplyController {
 	public int deleteReply(int replyNo) {
 		return replyService.deleteReply(replyNo);
 	}
+	
+	//댓글 수 조회
+	@PostMapping("/replyCount")
+	public String replyCount(int bno) {
+		 int result = replyService.replyCount(bno);
+		return new Gson().toJson(result);
+	}
 }

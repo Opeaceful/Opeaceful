@@ -6,6 +6,7 @@
 
 /*변수설정*/
 :root{
+    /* 기본 색상 css 다크모드 윤지영에게 문의 */
     --side-bar : 60px;
     --color-navy : rgb(3, 3, 62);
     --color-gold : #ffc107;
@@ -18,43 +19,43 @@
     /* 메인 박스 */
     --square-box:rgb(235, 235, 235);
     --box-shadow: rgba(221, 221, 221);
+    --seach-btn: #6c757d;
 
+    /* 기본 배경색상 */
     --color-background : white;
-    --color-background-bk : rgb(30, 30, 30);
-
-    --chat-hover:rgb(207, 226, 250);
-    
-    --font-white : white;
     --font-black : rgb(30, 30, 30);
-
     --color-white:white;
-    --color-black:black;
-    
     --color-serch-box:#ced4da;
 
-    --accordion-color:white;
-    
     /*캘린더 */
     --fc-mini-tobay:#fcf8e3;
     --memo-day-color: rgb(74, 71, 71);
     --memo-col8: #495057;
+    --memo-focus: rgb(3, 3, 62);
+    --memo-back-col: rgba(3, 3, 62, 0.05);
+    --t-color-checked: var(--color-gold);
+    --m-color-checked: var(--navy-hover);
+    /* 게시판 */
+    --fix-back-color:rgba(235, 235, 235, 0.575);
 
     /*테이블 부트스트랩 고유색상*/
     --bootstrap-color:#212529;
     --btn-close-color:none;  
     --bs-btn-color: #212529;
-
     --action-hover-color:#495057;
     --action-hover-bg:#f8f9fa;
-
     --list-group-color: #212529;
-    --list-group-bg: #fff;
 
-  
     /*swal 고유색상*/
     --swal-text-color:rgba(0,0,0,.64);
+    --cancel-button:#555;
 
+    /*채팅창*/
+    --chat-hover:rgb(207, 226, 250);
+    --chat-notice: rgba(255, 255, 255, 0.95);
+    --chat-date:rgb(88, 88, 88);
 
+    /*폰트크기*/
     --font10 : 0.31rem;
     --font11 : 0.69rem;
     --font12 : 0.75rem;
@@ -67,75 +68,78 @@
     --font22 : 1.75rem;
 
 
+    /*스크롤*/
     --color-scroll-start : rgb(42, 42, 90);
     --color-scroll-end :  rgb(66, 66, 156);
+    --chattingScrollbar: #a0afd8;
 
     /* main status아이콘 */
     --filter : invert(0%);
+
+    
 }
+
 
 /* 다크모드 */
 
 :root[color-theme='dark']{
+    /* 기본 색상 */
     --side-bar : 60px;
     --color-navy : #ffc107;
     --color-gold : rgb(3, 3, 62);
     --navy-hover:#ffc107c4;
     --gold-hover : :rgba(3, 3, 62, 0.77);
-
     --white-hover: rgba(0, 0, 0, 0.9);
     --color-light-gray : rgb(235, 235, 235);
     --color-light-navy:rgb(30, 30, 30);
 
+    /* 메인 박스 */
     --square-box:rgb(79,79,79);
     --box-shadow: rgb(87, 87, 87);
+    --seach-btn: white;
 
     /* 기본 배경색상 */
     --color-background : rgb(30, 30, 30);
-    --color-background-bk : white;
-
-    --chat-hover:rgba(83, 69, 0, 0.815);
-    
-    
-    --font-white : rgb(30, 30, 30);
     --font-black : white;
-    
     --color-white:black;
-    --color-black:white;
-    
-    --fix-black:black;
+    --color-serch-box:#ced4da;
+
+    /*다크모드용*/
     --fix-white:white;
+    --bs-body-color:none;
     
     /*캘린더 */
-    --fc-mini-tobay: black;
+    --fc-mini-tobay: rgb(73, 73, 73);
     --memo-day-color: rgb(180,180, 180);
     --memo-col8: white;
+    --memo-focus: rgb(180,180, 180);
+    --memo-back-col: rgb(86, 85, 85);
+    --t-color-checked: var(--color-navy);
+    --m-color-checked: var(--color-navy);
 
-
-    --color-serch-box:#ced4da;
-   
-
-    --accordion-color:white;
-
-   
-
-    --bs-body-color:none;
+    /* 게시판 */
+    --fix-back-color: rgb(46, 46, 46);
 
     /*테이블 부트스트랩 고유색상 다크모드 반전*/ 
     --bootstrap-color:#ced4da;
     --btn-close-color:white;
     --bs-btn-color: white;
-
     --action-hover-color:#495057;
     --action-hover-bg:#ffc107c4;
-
     --list-group-color: #fff;
-    --list-group-bg: rgb(30, 30, 30);
 
     /*swal 고유색상*/
     --swal-text-color:white;
+    --cancel-button:white;
+
+    /*채팅창*/
+    --chat-hover:rgba(83, 69, 0, 0.815);
+    --chat-notice: none;
+    --chat-date:white;
+
     
-    /*폰트사이즈 뺴놓음*/
+    
+    /*폰트크기*/
     --font10 : 0.31rem;
     --font11 : 0.69rem;
     --font12 : 0.75rem;
@@ -147,19 +151,22 @@
     --font21 : 1.375rem;
     --font22 : 1.75rem;
 
+  
     /* 스크롤바 컬러 그라데이션용 */
     --color-scroll-start : #ffc107;
     --color-scroll-end :  #fef0c4;
+    --chattingScrollbar: #fef0c4;
 
     /* main status아이콘 */
     --filter : invert(100%);
 }
 
 
-/*다크모드 추가용 css*/
+/*다크모드 추가용 */
 
 .modal-content {
     background-color: var(--color-background);
+    border: 1px solid var(--font-black);
 }
 
 .table {
@@ -173,6 +180,7 @@
 
 .swal-modal {
     background-color: var(--color-background);
+    border: 1px solid var(--fix-white);
 }
 
 .swal-text {
@@ -185,6 +193,34 @@
 .form-control-plaintext {
     color: var(--bs-btn-color);
 }
+
+/* 조직도 현황 */
+.card-btn{
+	background-color: var(--color-white);
+	border-color: var(--color-white);
+	color: var(--font-black);
+	padding: var(--padding);
+	font-size: var(--font14);
+	font-weight: var(--font-weight);
+	width: var(--width);
+}
+.card-btn:hover {
+	color: var(---font-black);
+	background-color: var(--color-white);
+	border-color: var(--color-white);
+}
+.card-btn-check:checked+.card-btn:focus-visible, .card-btn.active:focus-visible, 
+.card-btn.show:focus-visible, .card-btn:first-child:active:focus-visible, 
+:not(.card-btn-check)+.card-btn:active:focus-visible {
+	box-shadow: none;
+}
+.card-btn-check:checked+.card-btn, .card-btn.active, .card-btn.show, 
+.card-btn:first-child:active, :not(.card-btn-check)+.card-btn:active {
+	color: var(--font-black);
+	background-color: var(--color-white);
+	border-color: var(--color-white);
+}
+
 
 
 /*캘린더*/
@@ -327,7 +363,7 @@ body{
 
 .list-group {
     --bs-list-group-color: var(--list-group-color);
-    --bs-list-group-bg: var(--list-group-bg);
+    --bs-list-group-bg: var(--color-background);
 }
 
 .accordion-button {
@@ -442,11 +478,25 @@ body{
 }
 .search-btn>i{
     font-size: 0.937rem; /*15px;*/
-    color: grey;
+    color: var(--seach-btn);
 }
 input::-webkit-search-cancel-button{
     display: none;
 }
+
+
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color:var(--cancel-button);
+    opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:var(--cancel-button);
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+    color:var(--cancel-button);
+ }
 
 /* 공통검색창2 <html> */
 /* <div class="search-wrap2 input-group mb-3">
@@ -457,7 +507,9 @@ input::-webkit-search-cancel-button{
 .search-wrap2{width: 220px;}
 .btn-outline-secondary {
     border: 1px solid var(--color-serch-box);
-    --bs-btn-hover-color: none;
+    --bs-btn-color: var(--seach-btn);
+    --bs-btn-hover-color: var(--navy-hover);
+    
     --bs-btn-hover-bg: none;
     --bs-btn-hover-border-color: var(--color-serch-box);
 
@@ -529,6 +581,9 @@ input::-webkit-search-cancel-button{
 
 .swal-button--cancel{
     background-color: var(--color-light-navy);
+    color: var(--cancel-button);
+    border: 1px solid var(--fix-white);
+    
 }
 .swal-button--cancel:not([disabled]):hover {
     background-color: var(--white-hover);

@@ -1,75 +1,79 @@
-
 /*fome select 호버이벤트 설정*/
-.form-select:focus{
-    border-color: var(--navy-hover); 
-    box-shadow: 0 0 0 0.1rem var(--navy-hover);
+.form-select:focus {
+  border-color: var(--navy-hover);
+  box-shadow: 0 0 0 0.1rem var(--navy-hover);
 }
 .form-select-sm {
-    min-width: 100px;
-    width: 10%;
+  min-width: 100px;
+  width: 10%;
 }
 
 /*세로 방지*/
-.table{
-    white-space: nowrap;
+.table {
+  white-space: nowrap;
 }
-
 
 /*모달*/
 /*table 빈칸 적용 */
-.t-height{
-    height: 41px;
-
+.t-height {
+  height: 41px;
 }
 
 /*세로 방지*/
-.f-nowrap{
-    white-space: nowrap;
+.f-nowrap {
+  white-space: nowrap;
 }
 
 /*모달 타이틀*/
-.salary-title{
-    font-weight: 700;
-    font-size: 20px;
+.salary-title {
+  font-weight: 700;
+  font-size: 20px;
 }
 
-
 /*모달 footer 정리*/
-.t-margin{
-    margin: 10px;
+.t-margin {
+  margin: 10px;
 }
 
 .modal-footer {
-    display: block;
-    font-size: 18px;
+  display: block;
+  font-size: 18px;
 }
 
-.t-flex{
-    display: flex;
-    justify-content: end;
+.t-flex {
+  display: flex;
+  justify-content: end;
 }
-
 
 /*인쇄 저장 아이콘 정렬 : 효과*/
-.salary-btn{
-    display: flex;
-    justify-content: flex-end;
+.salary-btn {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.salary-btn> button{
-    font-size: 25px;
-    color: var(--bootstrap-color);
+.salary-btn > button {
+  font-size: 25px;
+  color: var(--bootstrap-color);
 }
 
-.salary-btn> button:hover{
-    background-color: var(--white-hover);
+.salary-btn > button:hover {
+  background-color: var(--white-hover);
 }
 
 /*인쇄시*/
 @media print {
-    .print-none {
-      display: none;
-    }
+  .print-none {
+    display: none;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .col-md-6 {
+    /*반응형 해제*/
+    display: block;
+    width: auto;
+  }
 }
-
-

@@ -3,6 +3,8 @@
  */
  import { path } from '../common/common.js';
 
+////////////////////////////////////////////////
+
  let InputFileList = [];
 
  export function resetInputFileList() {
@@ -19,7 +21,7 @@
      // "autolink",
      // "lists",
      // "link",
-     'image',
+     //'image',
      'charmap',
      // "print",
      'preview',
@@ -43,14 +45,20 @@
      ' bold italic underline strikethrough |' +
      ' alignjustify alignleft aligncenter alignright |' +
      ' bullist numlist |' +
-     ' table tabledelete |' +
-     ' image';
+     ' table tabledelete |';// +
+     //' image';
  
    tinymce.init({
      language: 'ko_KR', //한글판으로 변경
      selector: '.tinymce',
      height: 500,
      // menubar: false,
+     skin: (localStorage.getItem('color-theme') == 'dark' ? "oxide-dark" : ""),
+    // 2. The content CSS should be dark as well or your eyes will burn
+    // You can use the default dark, or create your own rules specifying the
+    // path to the css file
+    // content_css : "https://cdn.mywebsites.com/css/custom_tinymce_rules.css",
+    content_css: (localStorage.getItem('color-theme') == 'dark' ? "dark" : ""),
      plugins: plugins,
      toolbar: edit_toolbar,
      maxlength: 3000,
@@ -253,8 +261,8 @@ let changeImgPath = function () {
 
   //-------------------- 윈도우 시작시 이벤트 부여 --------------------
 window.onload = function () {
-    //setTinymce();
+    setTinymce();
 
-    //changeImgPath();
+   // changeImgPath();
   };
   

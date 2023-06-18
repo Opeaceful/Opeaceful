@@ -9,14 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Opeaceful</title>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.0/"></script>
 	<link href='${path}/resources/fullcalendar-4.4.0/packages/core/main.css' rel='stylesheet' />
 	<link href='${path}/resources/fullcalendar-4.4.0/packages/daygrid/main.css' rel='stylesheet' />
 	<script src='${path}/resources/fullcalendar-4.4.0/packages/core/main.js'></script>
 	<script src='${path}/resources/fullcalendar-4.4.0/packages/interaction/main.js'></script>
 	<script src='${path}/resources/fullcalendar-4.4.0/packages/daygrid/main.js'></script>
-	<!-- 캘린더 내 부트스트랩적용 스크립트 -->
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.7/index.global.min.js"></script>
+	
 	<!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- 부트스트랩 아이콘 -->
@@ -122,12 +120,12 @@
   <!-- 일정추가 모달 -->
   <div class="modal fade" id="event-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+        <div class="modal-content cal-modal-content">
             <div class="table-box annual-modify-modal modal-body">
                 <form>
                   <table class="add-event-table">
                       <tr>
-                        <th colspan="3">
+                        <th class="apv-hidden" colspan="3">
                           <div class="event-ctg-btn">
                               <input type="radio" class="btn-check" name="event" id="myEvent" value="M" autocomplete="off" checked>
                               <label class="my-event-btn btn btn-outline-warning" for="myEvent" name="M">내 일정</label>
@@ -155,20 +153,20 @@
                           <div class="event-td"><input id="event-title" class="modal-event-title box-shadow-put form-control" type="text" aria-label="default input example" maxlength="20" required></div>
                         </td>
                       </tr>
-                      <tr>
+                      <tr class="apv-hidden">
                         <th class="modal-th">일정 내용</th>
                       </tr>
-                      <tr>
+                      <tr class="apv-hidden">
                         <td colspan="3">
                           <div class="event-td mb-3">
-                            <textarea class="event-content modal-event-cnt box-shadow-put form-control" id="exampleFormControlTextarea1" rows="3" maxlength="500"></textarea>
+                            <textarea class="event-content modal-event-cnt box-shadow-put form-control" id="exampleFormControlTextarea1" rows="3" maxlength="500" style="width:300px"></textarea>
                           </div>
                         </td>
                       </tr>
-                      <tr>
+                      <tr class="apv-hidden">
                         <th class="modal-th">색 지정</th>
                       </tr>
-                      <tr>
+                      <tr class="apv-hidden">
                         <td colspan="3">
                           <div class="event-td my-event-col-box">
                             <input type="radio" class="btn-check" name="color" id="col1" value="var(--col1)" autocomplete="off">
@@ -210,10 +208,10 @@
                           </div>
                         </td>
                       </tr>
-                      <tr>
+                      <tr class="apv-hidden">
                         <th class="modal-th">D-day 표시</th>
                       </tr>
-                      <tr>
+                      <tr class="apv-hidden">
                         <td>
                           <div class="form-check form-switch">
                             <input name="event-d-day" value="Y" class="box-shadow-none form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
@@ -245,65 +243,6 @@
 
 
 <script type="module" src="${path}/resources/js/calendar/calendar.js"></script>
-
-<script>
-/*
- $(function(){
-	 dDayList(); 
- }
- 
- function dDayList(){
-	 $.ajax({
-		url : '${path}/calendar/dDayList',
-		type: 'post',
-		dataType : 'json',
-		success: function(result){
-			console.log("디데이 리스트 조회 : ",result);
-			
-			let html ="";
-				html += "<table>";
-			for(let d of result){
-				html += "<tr class='d-event'>";
-				html += "<td>";
-				html += "<span style='font-weight:600'>D"+d.name+"</span>&nbsp";
-				html += "<span style='font-weight:500'>"+d.title+"</span>";
-				html += "<td>";
-				html += "<td><div class='d-xbtn' data-dayNone='"+d.calendarNo+"'><i class='fa-solid fa-xmark'></i></div></td>";
-				html += "</tr>";
-			}
-				html += "</table>";
-			$(".d-day-box").html(html);
-			
-		}
-	 })
- }
- 
-
- */
- 
- /*
-function updateDdayN(){
-	$.ajax({
-		url : '${path}/calendar/updateDdayN',
-		type: 'post',
-		dataType : 'json',
-		success: function(result){
-			if(result > 0){
-				
-				
-			}
-			
-		}
-	 })
-	
-	
-}*/
-
-  
-</script>
-
-
-
 
 
 

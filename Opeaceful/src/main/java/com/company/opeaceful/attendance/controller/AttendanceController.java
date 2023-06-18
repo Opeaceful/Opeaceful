@@ -123,14 +123,11 @@ public class AttendanceController {
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("adList", adList);
 		model.addAttribute("map", selectUser);
-		
-		System.out.println("selectUser에 담긴 값 : "+selectUser);
-		System.out.println("adList에 담긴 값 : "+adList);
 				
 		return "attendance";
 	}
 	
-	// [가영] - 로그인한 유저의 출퇴근 조회
+	// [가영] -모든 유저의 출퇴근 조회
 	@GetMapping("/allCheck")
 	public String selectAllUserAttendance(@RequestParam(value= "userNo",required = false) Integer userNo,
 											Model model,
@@ -164,9 +161,6 @@ public class AttendanceController {
 		
 		model.addAttribute("adList", adList);
 		model.addAttribute("map", selectAllUser);
-			
-		System.out.println("selectAllUser에 담긴 값 : "+selectAllUser);
-		System.out.println("adList에 담긴 값 : "+adList);
 					
 		return "attendance";
 	}

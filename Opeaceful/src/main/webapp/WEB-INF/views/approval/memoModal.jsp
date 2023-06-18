@@ -82,7 +82,7 @@
 								<button id="btn-add-memo-back" class="btn btn-outline-primary">
 									뒤로가기</button>
 								<div>
-									<button id="btn-add-memo-delete" class="btn btn-outline-danger">
+									<button id="btn-add-memo-delete" class="btn btn-danger">
 										삭제</button>
 									<button id="btn-add-memo-save" class="btn btn-primary">
 										저장</button>

@@ -141,13 +141,11 @@ function approvalModalEvent() {
     for (let i = 0; i < files.length; i++) {
       fileList.items.add(files[i]);
     }
-    console.log(fileList.files);
     document.querySelector('#input-add-file').click();
   });
 
   // 첨부파일 저장된 인풋태그의 값이 변경되었을 경우 이벤트
   document.querySelector('#input-add-file').addEventListener('change', (e) => {
-    console.log('파일');
     const files = Array.from(e.target.files);
 
     for (let i = 0; i < files.length; i++) {

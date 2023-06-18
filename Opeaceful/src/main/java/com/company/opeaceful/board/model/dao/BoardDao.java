@@ -7,9 +7,12 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardFile;
 import com.company.opeaceful.board.model.vo.BoardType;
@@ -21,7 +24,8 @@ public class BoardDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
 	public List<Board> mainSelectNoticeList() {
 		return sqlSession.selectList("boardMapper.mainSelectNoticeList");
 	}
@@ -53,12 +57,12 @@ public class BoardDao {
 		
 		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList", map, rowBounds);
 	}
-	
-	public int selectNoticeRoll(String userNo) {
+	// 공지사항 권한 조회
+	public String selectNoticeRoll(String userNo) {
 		return sqlSession.selectOne("boardMapper.selectNoticeRoll", userNo);
 	}
 	
-	public int selectFreeRoll(String userNo) {
+	public String selectFreeRoll(String userNo) {
 		return sqlSession.selectOne("boardMapper.selectFreeRoll", userNo);
 	}
 
@@ -84,26 +88,29 @@ public class BoardDao {
 		if(result > 0) { // 게시글 등록 성공 시 게시글 번호 반환
 			result = b.getBoardNo();
 		}
-		
-		System.out.println("보드 디에이오 인서트 result값에 보드넘버 담김? "+ result);
-		
 		return result;
 	}
 	
-	public int insertUpFile(List<BoardFile> fileList, int boardNo) {
-		 Map<String, Object> map = new HashMap<>();
-		    map.put("fileList", fileList);
-		    map.put("boardNo", boardNo);
-		    
-		    System.out.println("dao-인서트파일 맵 담긴값 : " + map);
-		    
-		return sqlSession.insert("boardMapper.insertUpFile", map);
+	public int lastPk() {
+		//logger.info("dao lastPk 로거");
+		try {
+			Integer result = sqlSession.selectOne("boardMapper.lastPk");
+			//System.out.println("디에이오 인티저 타입 : "+result.getClass().getName());
+			//System.out.println("dao result : "+ result);
+				return result;
+			
+		}catch(NullPointerException e){
+			Integer result = Integer.valueOf(0);
+			return result;
+		}
+		
+	}
+	
+	public int insertUpFile(List<BoardFile> fileList) {
+		return sqlSession.insert("boardMapper.insertUpFile", fileList);
 	}
 	
 	public int updateBoard(Board b) {
-		
-		//수정
-		
 		return sqlSession.update("boardMapper.updateBoard", b);
 	}
 	
@@ -111,9 +118,12 @@ public class BoardDao {
 		return sqlSession.selectList("boardMapper.selectUpfileList", boardNo);
 	}
 	
-	
 	public int deleteUpfile(int boardNo) {
 		return sqlSession.delete("boardMapper.deleteUpfile", boardNo);
+	}
+	
+	public int deleteFileList(List<BoardFile> dbList){
+		return sqlSession.delete("boardMapper.deleteFileList", dbList);
 	}
 	
 	public int selectDeptCode(int userNo) {

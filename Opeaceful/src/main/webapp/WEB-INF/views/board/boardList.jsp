@@ -72,10 +72,10 @@
 		                <button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
 	                 </c:when>
 						<c:otherwise>
-							<c:if test="${notiRoll > 0}">
+							<c:if test="${notiRoll eq 'B01'}">
             					<button type="button" class="btn btn-primary" onClick="location.href='${path}/board/enrollForm/${boardCode}'" "style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">글쓰기</button>
             				</c:if>
-            				<c:if test="${notiRoll == 0}">
+            				<c:if test="${notiRoll eq null}">
             					<div><pre> </pre></div>
             				</c:if>	
 						</c:otherwise>
@@ -101,7 +101,7 @@
 							<c:choose>
 	                    <c:when test='${ b.fixed == "Y"}'>
 		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
-		                        <td class="list-ctn-title">${b.boardTitle}</td>
+		                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}</td>
 		                        <td>${b.boardWriter}</td>
 		                        <td>${b.createDate}</td>
 		                        <td>${b.count}</td>
@@ -109,7 +109,7 @@
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
-	                        <td class="list-ctn-title">${b.boardTitle}</td>
+	                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}</td>
 	                        <td>${b.boardWriter}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.count}</td>
@@ -122,7 +122,7 @@
 							<c:choose>
 	                    <c:when test='${ b.fixed == "Y"}'>
 		                    <tr class="notice-fixed" onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
-		                        <td class="list-ctn-title">${b.boardTitle}</td>
+		                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}<c:if test="${b.replyCount > 0}"><span style='color:orange'> [${b.replyCount }]</span></c:if></td>
 		                        
 		                        <c:choose>
 		                        <c:when test="${b.secret eq 'Y'}">
@@ -139,7 +139,7 @@
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<tr onClick='location.href = "${path}/board/detail/${boardCode}/${b.boardNo }"'>
-	                        <td class="list-ctn-title">${b.boardTitle}</td>
+	                        <td class="list-ctn-title" data-count="${b.boardNo }">${b.boardTitle}<c:if test="${b.replyCount > 0}"><span style='color:orange'> [${b.replyCount }]</span></c:if></td>
 	                        
 	                        <c:choose>
 	                        <c:when test="${b.secret eq 'Y'}">
@@ -248,21 +248,6 @@
     </div>
 
 
-	<script>
-	
-	
-	// function movePage(){
-		 
-		// 	console.log("클릭됨");
-		 
-		 //	location.href = path+"/board/detail/${boardCode}";
-		 	
-		// }
-		 
-	
-	</script>
-
-	<script src="${path}/resources/js/board/boardList.js"></script>  
 
 </body>
 </html>

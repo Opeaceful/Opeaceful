@@ -68,8 +68,10 @@ public class ApprovalController {
 		}
 		if(roleCheck == true) {
 			int currentYear = Year.now().getValue();
-			model.addAttribute("list", aprService.selectApprovalList(0, null, -1, currentYear, 1, true));
-			model.addAttribute("count", aprService.selectApprovalListCount(0, null, -1, currentYear, true));
+			List<Approval> list = aprService.searchApprovalList(-1,currentYear, null, -1, null, 1 );
+			int count  = aprService.searchApprovalListCount(-1, currentYear, null, -1, null);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
 
 			return "approval/allApproval";
 		}else {
@@ -97,7 +99,6 @@ public class ApprovalController {
 			model.addAttribute("list", aprService.selectApprovalListforAuthorize(userNo, "wait", 0, -1, currentYear, 1));
 			model.addAttribute("count", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, false));
 		}else {
-			System.out.println("메뉴 null로 해서 들어옴");
 			// 전체메뉴로 선택
 			model.addAttribute("menu" , "all");
 			model.addAttribute("list", aprService.selectApprovalList(userNo, null, -1, currentYear, 1, false));
@@ -105,6 +106,40 @@ public class ApprovalController {
 		}
 		return "approval/myApproval";
 	}
+	
+	
+	
+	
+	// ajax용 관리자 결재 리스트 서치용
+	@ResponseBody
+	@PostMapping("/searchApprovalList")
+	public String searchApprovalList(	Integer userNo,
+										Integer year,
+										Integer type,
+										Integer page,
+										String status,
+										String keyword
+										) {
+		Integer aprStatus = null;
+		if (status != null && !status.equals("all")) {
+			aprStatus = Integer.parseInt(status);
+	    }
+		
+		if(userNo == null || userNo <= 0) {
+			userNo = -1;
+		}
+		
+		List<Approval> list = aprService.searchApprovalList(userNo,year, aprStatus, type, keyword, page );
+		int count  = aprService.searchApprovalListCount(userNo, year, aprStatus, type, keyword);
+		
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("count", count);
+
+		return new Gson().toJson(result);
+	}
+	
 	
 	// ajax용 즐겨찾기 리스트 조회
 	@ResponseBody
@@ -208,7 +243,6 @@ public class ApprovalController {
 										String menu,
 										String status
 										) {
-		System.out.println(year+"==========들어온 페이지=========================="+status);
 		Integer aprStatus = null;
 		if (status != null && !status.equals("all")) {
 			aprStatus = Integer.parseInt(status);
@@ -276,6 +310,7 @@ public class ApprovalController {
 		// 첫번째 결재자 찾는 용도
 		int firstA = 999;
 		int reali = 0;
+		int nextAuthorizeUserNo = 0;
 		
 		for(int i= 0; i< userNoList.length; i++) {
 			ApprovalLine line = new ApprovalLine();
@@ -289,6 +324,7 @@ public class ApprovalController {
 				if( levelList[i] < firstA ) {
 					firstA = levelList[i];
 					reali = i;
+					nextAuthorizeUserNo = userNoList[i];
 				}
 			}
 			line.setStatus(status);
@@ -415,6 +451,7 @@ public class ApprovalController {
 			map.put("signImg", signImg);
 		}else if(approvalNo > 0) {
 			map.put("result", 1);
+			map.put("nextAuthorizeUserNo", nextAuthorizeUserNo);
 		}else {
 			map.put("result", 0);
 		}
@@ -441,7 +478,6 @@ public class ApprovalController {
 			// 기안자 유저번호 저장
 			approval.setUserNo(loginUser.getUserNo());
 			int approvalNo = approval.getApprovalNo();
-			System.out.println("문서 업데이트=============== "+ approvalNo);
 			
 			//------------------------ 결재라인 저장 구역 --------------------------------
 			// 결재라인 저장용
@@ -642,12 +678,14 @@ public class ApprovalController {
 	// ajax용 결재문서 결재처리 ( + 결재자가 결재 후 다음 결재라인들 상태 변경) 
 	@ResponseBody
 	@PostMapping("/updateApprovalStateAuthorized")
-	public int updateApprovalStateAuthorized( 	Integer approvalNo,
+	public String updateApprovalStateAuthorized( 	Integer approvalNo,
 												Integer myLevel
 												) {
 		int result = 0;
 		// 다음 결재자 변수용
 		int nextAuthorizeLevel = 999;
+		// 다음결재자 유저번호 저장용(다음결재자한테 알림 날리기용도)
+		int nextAuthorizeUserNo = 0;
 		if(approvalNo != null && approvalNo != 0 && myLevel != null && myLevel != 0 ) {
 			List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo) ;
 
@@ -657,6 +695,7 @@ public class ApprovalController {
 				if(line.getType().equals("A")) {
 					if(line.getLevel() > myLevel && line.getLevel() < nextAuthorizeLevel) {
 						nextAuthorizeLevel = line.getLevel();
+						nextAuthorizeUserNo = line.getUserNo();
 					}
 				}
 			}
@@ -670,17 +709,20 @@ public class ApprovalController {
 			result = aprService.updateNextLinesStatus(approvalNo, nextAuthorizeLevel, myLevel);
 		}
 		
-		return result;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		map.put("nextAuthorizeUserNo", nextAuthorizeUserNo);
+		
+		return new Gson().toJson(map);
 	}
 	
-	private static final Logger logger = LoggerFactory.getLogger(calendarController.class);
+	
 	// ajax용 결재문서 완결처리
 	@ResponseBody
 	@PostMapping("/updateApprovalStateEnd")
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
-		logger.info("결재 추가 로거");
+		
 		int result = 0;
-		System.out.println("============================="+approval);
 		
 		Approval existApproval = aprService.selectApproval(approval.getApprovalNo());
 		
@@ -693,22 +735,16 @@ public class ApprovalController {
 			/* [혜린] - 연차 insert 시 캘린더 내 연차일정 추가 */
 			Approval apv = aprService.selectAddEvent(approval.getApprovalNo());
 			
-			System.out.println("조회해온 apv: "+apv);
-			
 			if(existApproval.getType() != 0) { // 0:일반 제외 1,2,3 연차만
 				
 				Calendar calendar = new Calendar();
 				String name = "";
 				
-				System.out.println("타입 : " + apv.getType());
 				switch(apv.getType()) {
 				case 1 :name = "휴가"; break;
 				case 2 :name = "오전반차"; break;
 				case 3 :name = "오후반차"; break;
 				}
-				System.out.println("name 값 : " + name);
-				System.out.println("시작일 : " + apv.getStartDate());
-				System.out.println("막날 : " + apv.getEndDate());
 				calendar.setTitle(apv.getUserName()+" "+name); // ex)ㅇㅇㅇ 휴가
 				calendar.setContent(apv.getApprovalNo()+"");
 				calendar.setCategory("H");
@@ -722,6 +758,11 @@ public class ApprovalController {
 			}
 		}
 		
+		if(result > 0) {
+			// 결재완료 알림처리 위해 기안자 번호 돌려줌
+			result = existApproval.getUserNo();
+		}
+		
 		return result;
 	}
 	
@@ -732,13 +773,17 @@ public class ApprovalController {
 	public int updateApprovalReturn( 	@ModelAttribute("loginUser") Member loginUser,
 										Integer approvalNo) {
 		int result = 0;
-		System.out.println("=============================반려처리=========="+approvalNo);
 		
 		if(approvalNo != 0 ) {
 			result =aprService.updateApprovalStatus(approvalNo, -1);
 			if(result > 0) {				
 				result = aprService.updateLineStatusReturn(approvalNo, loginUser.getUserNo());
 			}
+		}
+		
+		if(result > 0) {
+			// 알림 발송을 위해 기안자 유저번호를 되돌려주기
+			result =  aprService.selectApproval(approvalNo).getUserNo();
 		}
 		
 		return result;
@@ -750,6 +795,7 @@ public class ApprovalController {
 	@PostMapping("/deleteApproval")
 	public int deleteApproval(	Integer approvalNo, 
 								HttpSession session) {
+		
 		// 파일 저장경로 얻어오기
 		String webPath = "/resources/file/approval/";
 		String serverFolderPath = session.getServletContext().getRealPath(webPath);
@@ -762,6 +808,7 @@ public class ApprovalController {
 		calendar.setContent(approvalNo+"");
 		
 		aprService.deleteApvEvent(calendar);
+		
 		
 		return result;
 	}

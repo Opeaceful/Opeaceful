@@ -33,6 +33,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COUNT" property="count"/>
 		<result column="FIXED" property="fixed"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
 	</resultMap>
 	
 	<!-- [혜린] - 게시글 상세조회 resultMap -->
@@ -46,6 +47,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COUNT" property="count"/>
 	</resultMap>
+	
 
 	<!-- [지의] - 메인 공지사항 조회 -->
 	<select id="mainSelectNoticeList" resultMap="mainNoticeResultSet">
@@ -67,7 +69,10 @@
 	<select id="selectBoardList" resultMap="boardListResultSet">
 	<choose>
 	<when test='boardCode == "T"'>
-		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED,
+				(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 		  FROM BOARD B
 	      LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	      LEFT JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
@@ -83,7 +88,10 @@
  	 WHERE B.BOARD_CD = 'N'
 	 </when>
 	 <otherwise>
-	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED
+	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED,
+	 		(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 	 FROM BOARD B
         	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
         	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -102,7 +110,10 @@
 	<select id="searchBoardList" resultMap="boardListResultSet">
 		  <choose>
 			  <when test='boardCode == "T"'>
-			  SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+			  SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED,
+			  		(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 			  FROM BOARD B
 	          JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	          JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
@@ -150,7 +161,10 @@
 			 </when>
 			 
 			 <otherwise>
-			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED
+			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED,
+			 		(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 			 FROM BOARD B
           	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
           	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -233,23 +247,36 @@
 		</when>
 	</choose>
 	</if>
-	;
 	</select>
 	
 	<!-- [혜린] - 공지사항관리 권한 조회 -->
-	<select id="selectNoticeRoll" resultType="_int">
-		SELECT COUNT(*)
+	<select id="selectNoticeRoll" resultType="string">
+		SELECT ROLE_CODE
 		FROM USER_ROLE
 		WHERE USER_NO = #{userNo}
-		 AND ROLE_CODE = 'B01';
+		 AND ROLE_CODE = 'B01'
+		UNION
+		SELECT ROLE_CODE
+		FROM USER_DEPARTMENT D
+		LEFT JOIN department_role R ON D.P_CODE = R.P_CODE
+		WHERE D.USER_NO = #{userNo}
+		AND D.DEPT_CODE = R.DEPT_CODE AND D.P_CODE = R.P_CODE
+		AND ROLE_CODE = 'B01'
 	</select>
 	
 	<!-- [혜린] - 자유게시판관리 권한 조회 -->
-	<select id="selectFreeRoll" resultType="_int">
-		SELECT COUNT(*)
+	<select id="selectFreeRoll" resultType="string">
+		SELECT ROLE_CODE
 		FROM USER_ROLE
 		WHERE USER_NO = #{userNo}
-		 AND ROLE_CODE = 'B02';
+		 AND ROLE_CODE = 'B02'
+		UNION
+		SELECT ROLE_CODE
+		FROM USER_DEPARTMENT D
+		LEFT JOIN department_role R ON D.P_CODE = R.P_CODE
+		WHERE D.USER_NO = #{userNo}
+		AND D.DEPT_CODE = R.DEPT_CODE AND D.P_CODE = R.P_CODE
+		AND ROLE_CODE = 'B02'		 
 	</select>
 	
 	<!-- [혜린] - 게시글 상세 조회 -->
@@ -306,22 +333,30 @@
 			    #{fixed},
 			    #{secret})
 	</insert>
+	<!-- [혜린] 보드파일 테이블 마지막행 pk 조회 -->
+	<select id="lastPk" resultType="_int">
+		SELECT file_no 
+		FROM board_file 
+		ORDER BY file_no desc
+		LIMIT 1
+	</select>
+	
 	
 	<!-- [혜린] 첨부파일 insert -->
-	<insert id="insertUpFile" parameterType="map" >
+	<insert id="insertUpFile" parameterType="list" >
         INSERT INTO BOARD_FILE
-            (FILE_NO, BOARD_NO, ORIGIN_FILE, CHANGE_FILE)
-           SELECT FILE.*
-           FROM (
-	<foreach collection="fileList" item="file" separator="UNION ALL">
+           SELECT F.*
+           FROM 
+           (
+	<foreach collection="list" item="file" separator="UNION ALL">
         SELECT
         #{file.fileNo} AS FILE_NO,
-        #{boardNo} AS BOARD_NO,
+        #{file.boardNo} AS BOARD_NO,
         #{file.originFile} AS ORIGIN_FILE, 
         #{file.changeFile} AS CHANGE_FILE
         FROM DUAL
     </foreach>
-    ) FILE
+    ) F
 	</insert>
 	
 	<!-- [혜린] - 게시글 수정 -->
@@ -342,10 +377,20 @@
 		WHERE BOARD_NO = ${boardNo}
 	</select>
 
-	<!-- [혜린] - 첨부파일 삭제 -->
+	<!-- [혜린] - 해당 게시글 첨부파일 삭제 -->
 	<delete id="deleteUpfile">
 		DELETE FROM BOARD_FILE
-		WHERE BOARD_NO = #{boardNo}
+		WHERE BOARD_NO = ${boardNo}
 	</delete>
+	
+	<!-- [혜린] - 지울파일 리스트 삭제 -->
+	<delete id="deleteFileList">
+		DELETE FROM BOARD_FILE
+		WHERE FILE_NO IN ( <foreach collection="list" item="file" separator=",">
+								#{file.fileNo}
+							</foreach> )
+	</delete>
+	
+	
 
 </mapper>

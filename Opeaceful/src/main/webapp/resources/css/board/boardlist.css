@@ -1,16 +1,12 @@
-
-/* :root{
-    
-} */
+/*
+[혜린]
+*/
 body *{
     box-sizing: border-box;
 
 }
 
 
-div *{
-    border: px solid red;
-}
 /* 게시판 전체 넓이 고정크기지정 */
 .board-wrap{
     width: 1000px;
@@ -77,7 +73,7 @@ div *{
 }
 /* 공지사항 고정게시글 */
 .notice-fixed{
-    background-color: rgba(235, 235, 235, 0.575);
+    background-color: var(--fix-back-color);
 }
 
 /* 페이징바 */

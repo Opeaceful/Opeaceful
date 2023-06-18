@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,7 @@ import com.company.opeaceful.role.model.vo.UserRole;
 import com.google.gson.Gson;
 
 @Controller
-@SessionAttributes({"loginUser", "loginUserRole"})
-//@SessionAttributes({"loginUser", "loginUserRole"})
+@SessionAttributes({"loginUser"})
 @RequestMapping("/annual")
 public class AnnualController {
 
@@ -62,7 +63,8 @@ public class AnnualController {
 		if(roleCheck == true) {
 			model.addAttribute("annual", list);
 			return "annual/annual";
-		}else {
+		}
+		else {
 			model.addAttribute("errorMsg", "권한이 없는 사용자입니다.");
 			return "errorPage";
 		}
@@ -70,9 +72,8 @@ public class AnnualController {
 	
 	// [지의] 총 연차 수정
 	@PostMapping("/setting")
-	public String updateAnnual(Annual a,Model model) {
+	public String updateAnnual(Annual a,Model model, HttpSession session) {
 		
-		//logger.info("post : "+a);
 		int result = annualService.updateAnnual(a);
 		
 		if(result > 0) {
@@ -81,6 +82,7 @@ public class AnnualController {
 		}
 		
 		return "annual/annual";
+		
 	}
 	
 	// [지의] 유저 연차 조회 페이지 포워딩

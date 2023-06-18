@@ -6,8 +6,7 @@ let memoEvent = () => {
     .addEventListener('click', () => {
       // 메모 모달 감추기
 
-      $("#memo-modal-back").modal("hide");
-
+      $('#memo-modal-back').modal('hide');
     });
 
   // 작성버튼 클릭시 메모 추가 화면 리셋 후 열기
@@ -19,10 +18,7 @@ let memoEvent = () => {
     // 메모 내용부분 리셋
     document.getElementById('memo-add-content').value = '';
     document.getElementById('memo-add-content').readOnly = false;
-    console.log(
-      document.getElementById('memo-add-content').readOnly,
-      '메모 작성창 들어옴'
-    );
+
 
     // 삭제버튼 감추기
     document.getElementById('btn-add-memo-delete').style.display = 'none';
@@ -51,4 +47,3 @@ let memoEvent = () => {
 };
 
 memoEvent();
-s;

@@ -1,6 +1,6 @@
-/* :root{
-    
-} */
+/*
+[혜린]
+*/
 
 body *{
     box-sizing: border-box;
@@ -161,7 +161,11 @@ td{
     font-size: var(--font13);
     text-decoration: underline;
 }
+.atc-box:hover{
+    cursor: pointer;
+}
 .atc-txt{
+    margin-left: 15px;
     padding-top: 4px;
 }
 

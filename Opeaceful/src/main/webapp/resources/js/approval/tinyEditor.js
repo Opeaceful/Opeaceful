@@ -46,9 +46,15 @@ export function setTinymce() {
     selector: '.tinymce',
     height: 500,
     // menubar: false,
+    skin: (localStorage.getItem('color-theme') == 'dark' ? "oxide-dark" : ""),
+    // 2. The content CSS should be dark as well or your eyes will burn
+    // You can use the default dark, or create your own rules specifying the
+    // path to the css file
+    // content_css : "https://cdn.mywebsites.com/css/custom_tinymce_rules.css",
+    content_css: (localStorage.getItem('color-theme') == 'dark' ? "dark" : ""),
     plugins: plugins,
     toolbar: edit_toolbar,
-    maxlength: 3000,
+    maxlength: 20000,
     setup: function (editor) {
       // 최대 입력글자수 이상 넘어가면 더이상 글자 입력 안되게 막음
       editor.on('keydown', function (e) {
@@ -57,8 +63,7 @@ export function setTinymce() {
 
         // approval테이블의 경우 최대 4000글자지만 img src등을 갈아끼우는 등의처리를 하게되므로
         // 여유분을 남기기위해 3000으로 글자 제한함
-        var maxLength = 3000;
-        console.log(content.length);
+        var maxLength = 20000;
         if (content.length >= maxLength - 1) {
           // delete 키가 백스페이스키가 아니면 키 입력 막음
           if (e.key != 'Delete' && e.key != 'Backspace') {
