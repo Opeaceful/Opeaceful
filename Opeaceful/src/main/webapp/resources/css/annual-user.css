@@ -47,6 +47,9 @@
 
 #annual-count::-webkit-outer-spin-button,
 #annual-count::-webkit-inner-spin-button {
-	  -webkit-appearance: none;
-	  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
+
+/* 사원검색 모달 팀 체크박스 none */
+.annual-modal .table tr th:first-child{display: none;}

@@ -22,6 +22,25 @@ $("#all-member-modal-button").click(function(){
     }
 
 });
+// 사원검색 input클릭시 모달 오픈
+$(".annual-content #member-search-keyword").click(function () {
+    $("#all-user-view").modal("show");
+});
+
+$(".annual-content").on("click", ".search-input2","search-btn2", function(){
+    // [지의] 체크박스 하나만 클릭되도록 설정
+    function onlyOneCheck(groupName){
+        var chk = $('[data-group="'+groupName+'"]').find('input[type="checkbox"]');
+        chk.click(function(){
+            if($(this).is(':checked')){
+              chk.not(this).prop('checked',false); // .not() : 선택한 요소 제외한 나머지 요소
+            }
+        })
+    }
+    onlyOneCheck("checkFail");
+})
+
+
 
 // 연차 총개수 원래 값 조회
 let originAnnual = $("#annual-count").val();
