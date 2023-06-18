@@ -23,7 +23,7 @@
 		<result column="MESSAGE_TYPE" property="messageType" />		
 	</resultMap>
 
-	<select id="selectChatRoomList" resultMap="chatRoomResultSet">
+	<select id="selectChatRoomList" parameterType="member" resultMap="chatRoomResultSet">
 		SELECT
 		CHATROOM_NO,
 		USER_NO,
@@ -34,6 +34,9 @@
 		ENO
 		FROM CHAT_ROOM
 		JOIN MEMBER USING(USER_NO)
+		WHERE CHATROOM_NO IN( SELECT CHATROOM_NO 
+					          FROM CHAT_PARTICIPANT
+					          WHERE USER_NO = #{userNo})	
 		ORDER BY CHATROOM_NO DESC
 	</select>	
 	
@@ -46,6 +49,16 @@
 		    VALUES
 		    (#{userNo}, #{roomTitle}, 0, NOW())
 	</insert>
+	
+	<insert id="addRoomParticipant">
+	    INSERT INTO chat_participant
+	    (CHATROOM_NO, USER_NO, ROOM_TITLE, NOT_READ_CHAT, LAST_READ_CHAT_NO, CREATE_DATE, BELL_SETTING)
+	    VALUES
+	    (#{chatRoomNo}, #{userNo}, #{roomTitle}, 0, 0, NOW(), 'Y')
+	</insert>
+	
+	
+	
 	
 	<!-- 채팅방 참여여부 확인 -->
 	<select id="joinCheck" resultType="_int" parameterType="ChatParticipant">
@@ -89,10 +102,29 @@
 	</select>
 	
 	<select id="getParticipantsInRoom" parameterType="int" resultType="ChatParticipant">
-        SELECT *
+        SELECT USER_NO
         FROM CHAT_PARTICIPANT
         WHERE CHATROOM_NO = #{chatRoomNo}
     </select>
+    
+    <select id="chatRoomNoList" parameterType="member" resultType="int">
+        SELECT CHATROOM_NO 
+        FROM CHAT_PARTICIPANT
+        WHERE USER_NO = #{userNo}
+    </select>
+    
+    <select id="chatRoomListMemberList" resultType="ChatParticipant">
+       SELECT cp.CHATROOM_NO, cp.USER_NO, m.USER_NAME, m.PROFILE_IMG
+		FROM chat_participant cp
+		INNER JOIN member m ON cp.USER_NO = m.USER_NO
+		WHERE cp.CHATROOM_NO IN (
+		  SELECT CHATROOM_NO
+		  FROM chat_participant
+		  WHERE USER_NO = #{userNo}
+		)
+    </select>
+    
+    
 	
 	
 	

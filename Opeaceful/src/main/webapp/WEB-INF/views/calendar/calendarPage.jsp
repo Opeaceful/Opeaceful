@@ -120,7 +120,7 @@
   <!-- 일정추가 모달 -->
   <div class="modal fade" id="event-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+        <div class="modal-content cal-modal-content">
             <div class="table-box annual-modify-modal modal-body">
                 <form>
                   <table class="add-event-table">

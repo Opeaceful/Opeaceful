@@ -229,7 +229,7 @@
 				OR (CATEGORY = 'M' AND USER_NO =  #{userNo}))
 		        AND DATEDIFF(date(START_DATE), now()) > 0
 		 ORDER BY START_DATE ASC
-		 LIMIT 7
+		 LIMIT 8
 	</select>
 	
 	<update id="dDayNone" parameterType="calendar">

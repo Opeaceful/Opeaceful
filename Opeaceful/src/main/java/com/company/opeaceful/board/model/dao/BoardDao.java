@@ -7,9 +7,12 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.board.model.vo.Board;
 import com.company.opeaceful.board.model.vo.BoardFile;
 import com.company.opeaceful.board.model.vo.BoardType;
@@ -21,7 +24,8 @@ public class BoardDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
 	public List<Board> mainSelectNoticeList() {
 		return sqlSession.selectList("boardMapper.mainSelectNoticeList");
 	}
@@ -84,14 +88,22 @@ public class BoardDao {
 		if(result > 0) { // 게시글 등록 성공 시 게시글 번호 반환
 			result = b.getBoardNo();
 		}
-		
-		System.out.println("보드 디에이오 인서트 result값에 보드넘버 담김? "+ result);
-		
 		return result;
 	}
 	
 	public int lastPk() {
-		return sqlSession.selectOne("boardMapper.lastPk");
+		//logger.info("dao lastPk 로거");
+		try {
+			Integer result = sqlSession.selectOne("boardMapper.lastPk");
+			//System.out.println("디에이오 인티저 타입 : "+result.getClass().getName());
+			//System.out.println("dao result : "+ result);
+				return result;
+			
+		}catch(NullPointerException e){
+			Integer result = Integer.valueOf(0);
+			return result;
+		}
+		
 	}
 	
 	public int insertUpFile(List<BoardFile> fileList) {
