@@ -11,10 +11,9 @@ import com.company.opeaceful.role.model.vo.DepartmentRole;
 import com.company.opeaceful.role.model.vo.RoleList;
 import com.company.opeaceful.role.model.vo.UserRole;
 
-
 @Service
-public class RoleServiceImpl implements RoleService{
-	
+public class RoleServiceImpl implements RoleService {
+
 	@Autowired
 	private RoleDao roleDao;
 
@@ -22,47 +21,45 @@ public class RoleServiceImpl implements RoleService{
 	public List<DepartmentRole> roleSelect(DepartmentRole departmentRole) {
 		return roleDao.roleSelect(departmentRole);
 	}
-	
+
 	@Override
-	public List<RoleList> roleListSelct(){
+	public List<RoleList> roleListSelct() {
 		return roleDao.roleListSelct();
 	}
-	
+
 	@Override
 	public int roleGrantinginesrt(DepartmentRole departmentRole) {
 		return roleDao.roleGrantinginesrt(departmentRole);
 	}
-	
+
 	@Override
 	public int roleGrantingdelete(DepartmentRole departmentRole) {
 		return roleDao.roleGrantingdelete(departmentRole);
 	}
-	
+
 	@Override
 	public Member userMemberSelect(int userNo) {
 		return roleDao.userMemberSelect(userNo);
 	}
-	
+
 	@Override
-	public List<UserRole> userRoleSelect(int userNo){
+	public List<UserRole> userRoleSelect(int userNo) {
 		return roleDao.userRoleSelect(userNo);
 	}
-	
+
 	@Override
 	public int userRoleGrantinginesrt(UserRole userRole) {
 		return roleDao.userRoleGrantinginesrt(userRole);
 	}
-	
-	@Override	
+
+	@Override
 	public int userRoleGrantingdelete(UserRole userRole) {
 		return roleDao.userRoleGrantingdelete(userRole);
 	}
-	
+
 	@Override
-	public List<UserRole> loginUserRoleSelect(int userNo){
+	public List<UserRole> loginUserRoleSelect(int userNo) {
 		return roleDao.loginUserRoleSelect(userNo);
 	}
-	
-	
-	
+
 }

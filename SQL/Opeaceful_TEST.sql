@@ -478,10 +478,10 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 �
 
 -- salary 더미 데이터 생성용
 DELIMITER $$
-CREATE PROCEDURE addsalary() -- ⓐ  프로시져
+CREATE PROCEDURE addsalary()
 BEGIN
-    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-     WHILE (i <= 12) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+    DECLARE i INT DEFAULT 1;
+     WHILE (i <= 12) DO
  		INSERT INTO salary (USER_NO,USER_NAME,YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
 	    VALUES
         (8,'정승민',2023, i,'2023-06-05','3,750,000', '515,500', '3,234,500', '기본급,3000000,식대,100000,주휴수당,500000,기타수당,150000', '국민연금,120000,건강보험,143500,고용보험,87000,소득세,150000,지방소득세,15000', '부장', '인사팀'),
@@ -504,9 +504,8 @@ BEGIN
 END$$
 DELIMITER ;
 
-CALL addsalary(); -- 프로시저 실행
-DROP PROCEDURE IF EXISTS addsalary; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
-
+CALL addsalary();
+DROP PROCEDURE IF EXISTS addsalary;
 
 
 -- DELIMITER $$

@@ -2,7 +2,6 @@ package com.company.opeaceful.member.model.vo;
 
 import java.sql.Date;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Member {
-	
+
 	private int userNo;
 	private int eno;
 	private String status;
@@ -27,17 +26,17 @@ public class Member {
 	private String address;
 	private int annualLeaveCount;
 	private Date hireDate;
-	
+
 	private String pName;
 	private String dName;
 	private String topDeptName;
-	
+
 	private int pCode;
 	private int deptCode;
-	
+
 	private String ShireDate;
 	private String ResignedDate;
-	
+
 	private int annualUnit;
-	
+
 }
