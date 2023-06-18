@@ -43,7 +43,7 @@
 														<tbody>
 															<tr>
 																<td scope="row">
-																	<button scope="row" type="button" class="btn btn-secondary card-btn" data-no="${member.userNo}" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="">
+																	<button scope="row" type="button" class="btn btn-primary card-btn" data-no="${member.userNo}" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="">
 																		${member.userName}
 																	</button>
 																</td>

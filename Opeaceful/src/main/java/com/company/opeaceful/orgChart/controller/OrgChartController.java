@@ -92,11 +92,11 @@ public class OrgChartController {
 	}
 	
 	// 상위부서 삭제
-	@PostMapping("/deleteDeptCode")
+	@PostMapping("/deleteTopDeptCode")
 	@ResponseBody
 	public int deleteDeptCode(OrgChart orgChart, int deptCode, int topDeptCode) {
 		
-		System.out.println("========================"+deptCode + "" + topDeptCode);
+		System.out.println("==============================================="+deptCode + "" + topDeptCode);
 		
 		Map<String, Object> map = new HashMap<>();	
 		
@@ -116,7 +116,7 @@ public class OrgChartController {
 			orgchartService.deleteDeptCode(map);
 		}
 		
-		System.out.println(result);
+		System.out.println("=================================================result : "+result);
 		
 		return result;
 	}
@@ -142,8 +142,7 @@ public class OrgChartController {
 		List<UserDepartment> udList = orgchartService.selectMember(deptCode);
 		
 		System.out.println("udList에 담긴 값 : "+udList);
-		return new Gson().toJson(udList);
-		
+		return new Gson().toJson(udList);		
 	}
 	
 	// 직급 조회

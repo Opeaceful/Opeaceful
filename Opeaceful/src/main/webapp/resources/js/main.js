@@ -213,39 +213,39 @@ $('#main-off').click(function () {
   });
 });
 
-// 캘린더
-document.addEventListener('DOMContentLoaded', function () {
-  var calendarM = document.getElementById('calendarM');
-  function fullCalendar() {
-    /* 전체 캘린더 */
-    var request = $.ajax({
-      type: 'POST',
-      url: path + '/calendar/calendarForm/F',
-      dataType: 'json',
-    });
-
-    request.done(function (data) {
-      // console.log(data);
-
-      var calendar = new FullCalendar.Calendar(calendarM, {
-        plugins: ['interaction', 'dayGrid'],
-        header: {
-          left: 'none',
-          center: 'prevYear,prev,title,next,nextYear',
-          right: 'none',
-        },
-        editable: false, // 일정 움직이는거 막기
-        eventLimit: false, // allow "more" link when too many events
-        events: data,
-      });
-      calendar.render();
-    });
-
-    request.fail(function () {
-      alert('Request failed');
-    });
-  }
-  fullCalendar();
+/* --------------------------- 캘린더 --------------------------- */
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarM = document.getElementById('calendarM');
+    function fullCalendar(){
+        /* 전체 캘린더 */
+        var request = $.ajax({
+            type:"POST",
+            url: path+"/calendar/calendarForm/F",
+            dataType: "json"
+        });
+      
+        request.done(function(data){
+            // console.log(data);
+      
+            var calendar = new FullCalendar.Calendar(calendarM, {
+                plugins: [ 'interaction', 'dayGrid' ],
+                header: {
+                    left: 'none',
+                    center: 'prevYear,prev,title,next,nextYear',
+                    right: 'none'
+                },
+                editable: false, // 일정 움직이는거 막기
+                eventLimit: false, // allow "more" link when too many events
+                events: data
+            });
+            calendar.render();
+        })
+      
+        request.fail(function() {
+            alert("Request failed");
+        });
+    }
+    fullCalendar();
 });
 // 시간표시 함수 실행
 getTime();
