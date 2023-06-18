@@ -179,7 +179,7 @@
                         <div><button class="lock-btn"><i class="fa-solid fa-lock"></i></button></div>
                     </div>
                     <div class="reply-input-box">
-                        <div class="reply-text"><textarea class="reply-content box-shadow-none reply-input form-control container" id="exampleFormControlTextarea1" rows="3"></textarea></div>
+                        <div class="reply-text"><textarea class="reply-content box-shadow-none reply-input form-control container" id="exampleFormControlTextarea1" rows="3" required></textarea></div>
                         <div><button type="button" id="reply-insert-btn" class="reply-button btn btn-primary" onclick="insertReply();">등록</button></div>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
 				<div><button type="button" onclick="moveSp(${map.condition },${map.keyword })" class="go-list-btn"><i class="bi bi-list"></i><span> 목록</span></button></div>				
             	</c:when>
             	<c:otherwise> -->
-                <div><button type="button" onclick="moveCp(${cp})" class="go-list-btn"><i class="bi bi-list"></i><span> 목록</span></button></div>
+                <div class="list-icon-btn"><button type="button" onclick="moveCp(${cp})" class="go-list-btn"><i class="bi bi-list" style="font-weight: 600 !important"></i><span> 목록</span></button></div>
             	<!--</c:otherwise>
             </c:choose>-->
             

@@ -33,6 +33,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="COUNT" property="count"/>
 		<result column="FIXED" property="fixed"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
 	</resultMap>
 	
 	<!-- [혜린] - 게시글 상세조회 resultMap -->
@@ -68,7 +69,10 @@
 	<select id="selectBoardList" resultMap="boardListResultSet">
 	<choose>
 	<when test='boardCode == "T"'>
-		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+		SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED,
+				(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 		  FROM BOARD B
 	      LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	      LEFT JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
@@ -84,7 +88,10 @@
  	 WHERE B.BOARD_CD = 'N'
 	 </when>
 	 <otherwise>
-	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED
+	 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED,
+	 		(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 	 FROM BOARD B
         	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
         	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -103,7 +110,10 @@
 	<select id="searchBoardList" resultMap="boardListResultSet">
 		  <choose>
 			  <when test='boardCode == "T"'>
-			  SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED
+			  SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, FIXED,
+			  		(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 			  FROM BOARD B
 	          JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
 	          JOIN USER_DEPARTMENT D ON M.USER_NO = D.USER_NO
@@ -151,7 +161,10 @@
 			 </when>
 			 
 			 <otherwise>
-			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED
+			 SELECT B.BOARD_NO, B.BOARD_TITLE, M.USER_NAME, B.CREATE_DATE, B.COUNT, P.P_NAME, SECRET, FIXED,
+			 		(SELECT COUNT(*)
+				FROM BOARD_REPLY
+				WHERE BOARD_NO = B.BOARD_NO) AS REPLY_COUNT
 			 FROM BOARD B
           	 LEFT JOIN MEMBER M ON B.BOARD_WRITER = M.USER_NO
           	 LEFT JOIN USER_DEPARTMENT D ON D.USER_NO = M.USER_NO
@@ -324,7 +337,7 @@
 	<select id="lastPk" resultType="_int">
 		SELECT file_no 
 		FROM board_file 
-		ORDER BY file_no DESC 
+		ORDER BY file_no desc
 		LIMIT 1
 	</select>
 	
