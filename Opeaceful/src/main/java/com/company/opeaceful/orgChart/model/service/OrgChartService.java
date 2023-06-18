@@ -3,12 +3,16 @@ package com.company.opeaceful.orgChart.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
 
 public interface OrgChartService {
 
+	// 전체부서 조회
+	List<Department> selectAllDeptList();
+	
 	// 상위부서 추가
 	int insertTopDp(OrgChart orgChart);
 	

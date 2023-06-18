@@ -14,5 +14,7 @@ public class Department {
 	private int deptCode;
 	private String deptName;
 	private int topDeptCode;
+	
+	private int deptCount;
 
 }

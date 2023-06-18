@@ -12,13 +12,19 @@
 		<result column="TOP_DEPT_CODE" property="topDeptCode"/>
 	</resultMap>
 	
+	<resultMap type="department" id="departmentResultSet">
+	  	<result column="DEPT_CODE" property="deptCode"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="TOP_DEPT_CODE" property="topDeptCode"/>
+	  	<result column="DEPT_NAME" property="deptName"/>
+	</resultMap>
+	
 	<!-- 인사발령 사원 조회 -->
  	<resultMap type="orgChart" id="personnelResultSet">
 	  	<result column="USER_NO" property="userNo"/>
 	  	<result column="USER_NAME" property="userName"/>
 	  	<result column="P_NAME" property="pName"/> 
-	  	<result column="DEPT_NAME" property="deptName"/>
-	  	<result column="TOP_DEPT_NAME" property="topDeptName"/>
+	  	<result column="DEPT_COUNT" property="deptCount"/>
 	</resultMap>
 
 	<!-- =================== [select] =================== -->
@@ -41,11 +47,12 @@
 	</select>
 	
 	<!-- 하위 부서 인원 조회 -->
-	<select id="countDept" resultType="_int">
-		SELECT COUNT(*)
-		FROM USER_DEPARTMENT 
-		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
-		WHERE DEPT_CODE = #{deptCode} AND TOP_DEPT_CODE = #{topDeptCode};
+	<select id="selectAllDeptList" resultMap="departmentResultSet">
+		SELECT D.*,
+		       (SELECT COUNT(*)
+		        FROM USER_DEPARTMENT U
+		        WHERE U.DEPT_CODE = D.DEPT_CODE) AS DEPT_COUNT
+		FROM DEPARTMENT D;
 	</select>
 	
 	<!-- 직급 조회 -->
