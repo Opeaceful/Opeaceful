@@ -134,6 +134,13 @@ thead td:first-child{width: 199px;}
 .popover-body{
 	display: flex;
 }
+.user-card-close{
+	position: absolute;
+    left: 95%;
+    top: 4%;
+    font-size: 1.2rem;
+	cursor: pointer;
+}
 .user-profileImg{
     border: 1px solid;
     width: 35%;

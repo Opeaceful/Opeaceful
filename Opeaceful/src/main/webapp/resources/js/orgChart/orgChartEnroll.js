@@ -284,6 +284,7 @@ $('#ok-personnel').click(function(e) {
 			dataType:'json',
 			success: function(result) {
 				$("#pesonnel-modal").modal('hide');
+				// location.reload();
 			},
 			error: function(x, e) {
 				//err msg 출력

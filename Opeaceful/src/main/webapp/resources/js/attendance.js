@@ -68,6 +68,10 @@ $("#all-member-modal-button").click(function(){
         if(checkMemberNo.length > 0){
           location.href = `${path}/attendance/allCheck?no=${checkMemberNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
         }
+        // let total =  document.querySelector(".total");
+        // console.log(total);
+        // $(".total").css("display", "none");
+
       } 
   } else {
    swal('최대 일년까지 조회 가능합니다.',{buttons: {cancel :'확인'}});

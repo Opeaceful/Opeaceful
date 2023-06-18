@@ -25,7 +25,8 @@ $(".orgChartView-table button").click(function(e) {
 
             let member = result[0];
            
-            html = `<div class="user-profileImg">
+            html = `<i class="fa-solid fa-xmark user-card-close"></i>
+                    <div class="user-profileImg">
                         <img src="${path}/resources/file/mypage/${member.profileImg ? member.profileImg : "basic_profile.png"}">
                     </div>
                     <div>
@@ -64,5 +65,12 @@ $(".orgChartView-table button").click(function(e) {
             console.log("에러발생");
             console.log(request.status);
         }
-    });
+    })
+    
 })
+
+/* 명함 닫기 */
+$(document).on('click', '.user-card-close', function(e) {
+    $(e.target).parent().parent().hide();
+});
+
