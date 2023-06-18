@@ -37,14 +37,19 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public List<ChatRoom> selectChatRoomList(){
-		return chatDao.selectChatRoomList();
+	public List<ChatRoom> selectChatRoomList(Member loginUser){
+		return chatDao.selectChatRoomList(loginUser);
 	}
 	
 	@Override
 	public int openChatRoom(ChatRoom chatRoom) {
 		return chatDao.openChatRoom(chatRoom);
 	}
+	
+	 @Override
+	 public void addChatParticipant(int chatRoomNo, int userNo, String roomTitle) {
+		 chatDao.addChatParticipant(chatRoomNo, userNo, roomTitle);
+	 }
 	
 	@Override
 	public List<Chat> joinChatRoom(ChatParticipant join){
@@ -102,8 +107,22 @@ public class ChatServiceImpl implements ChatService{
 	public List<ChatParticipant> getParticipantsInRoom(int chatRoomNo) {
         return chatDao.getParticipantsInRoom(chatRoomNo);
 	}
-	
-	
+
+	@Override
+	public List<Integer> chatRoomNoList(Member loginUser) {
+		return chatDao.chatRoomNoList(loginUser);
+	}
+
+	@Override
+	public List<Member> getChatRoomParticipants(int chatRoomNo) {
+		return chatDao.getChatRoomParticipants(chatRoomNo);
+	}
+
+	@Override
+	public List<ChatParticipant> chatRoomListMemberList(int userNo) {
+		return chatDao.chatRoomListMemberList(userNo);
+	}
+
 	
 	
 	

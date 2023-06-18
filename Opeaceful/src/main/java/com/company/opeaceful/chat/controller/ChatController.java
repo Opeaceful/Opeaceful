@@ -1,6 +1,8 @@
 package com.company.opeaceful.chat.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -47,32 +50,19 @@ public class ChatController {
 	    ArrayList<Member> list = chatService.adminAll();
 	    ArrayList<OnlineStatus> onlineStatus = chatService.onlineStatusList();
 	    ArrayList<Board> notice = chatService.noticeList();
-	    List<ChatRoom> crList = chatService.selectChatRoomList();
+	    List<ChatRoom> crList = chatService.selectChatRoomList(loginUser);
+	    List<ChatParticipant> cpList = chatService.chatRoomListMemberList(loginUser.getUserNo());	        
 	    
 	    response.put("loginUser", loginUser);
 	    response.put("memberList", list);
 	    response.put("onlineStatus", onlineStatus);
 	    response.put("notice", notice);
 	    response.put("crList", crList);
+	    response.put("cpList", cpList);
 
 	    return new Gson().toJson(response);
 
 	}
-	
-//	// 채팅방 목록 조회
-//	@GetMapping("/chat/chatRoom")
-//	@ResponseBody
-//	public String selectChatRoomList(@ModelAttribute("loginUser") Member loginUser) {
-//		
-//		Map<String, Object> response = new HashMap<>();
-//		
-//		
-//		
-//		
-//		response.put("loginUser", loginUser);
-//			
-//		return new Gson().toJson(response);
-//	}
 	
 	
 	// 채팅방 만들기
@@ -81,8 +71,9 @@ public class ChatController {
 	public String openChatRoom(@ModelAttribute("loginUser") Member loginUser,
 								Model model,
 								ChatRoom room,
-								RedirectAttributes ra){
-			
+								RedirectAttributes ra,
+								@RequestParam(value = "checkMemberNo", required = false) String[] checkMemberNo){
+
 		room.setUserNo(loginUser.getUserNo());
 			
 		int chatRoomNo = chatService.openChatRoom(room); // 생성된 채팅방 번호
@@ -91,7 +82,15 @@ public class ChatController {
 		if(chatRoomNo > 0) { //제대로 생성됨
 				
 			ra.addFlashAttribute("alertMsg","채팅방 생성 성공");
-		//	path += "chat";				
+			
+			 chatService.addChatParticipant(chatRoomNo, loginUser.getUserNo(), room.getRoomTitle());
+			
+			 if (checkMemberNo != null && checkMemberNo.length > 0) {
+		            for (String userNo : checkMemberNo) {
+		                chatService.addChatParticipant(chatRoomNo, Integer.parseInt(userNo), room.getRoomTitle());
+		            }
+		        }
+			 
 		}else {
 			ra.addFlashAttribute("alertMsg", "채팅방 생성 실패");
 		}
@@ -104,14 +103,15 @@ public class ChatController {
 	@ResponseBody
 	public String joinChatRoom(@ModelAttribute("loginUser") Member loginUser,								
 								Model model,																
-								ChatParticipant join,
-								
-								RedirectAttributes ra
+								ChatParticipant join,								
+								RedirectAttributes ra,
+								@RequestParam int chatRoomNo
 								) {
 		join.setUserNo(loginUser.getUserNo());
 		
 		List<ChatParticipant> chatRoomList = chatService.chatRoomList(loginUser);
 		
+		List<Member> getChatRoomParticipants = chatService.getChatRoomParticipants(chatRoomNo);
 		
 		Map<String, Object> response = new HashMap<>();
 		
@@ -123,12 +123,11 @@ public class ChatController {
 			model.addAttribute("list", list);
 			model.addAttribute("chatRoomList", chatRoomList);
 			model.addAttribute("userNo", loginUser.getUserNo());
-			System.out.println(chatRoomList);
 			
 			response.put("loginUser", loginUser);
 		    response.put("list", list);
 		    response.put("join", join);
-			
+		    response.put("getChatRoomParticipants", getChatRoomParticipants);
 			return new Gson().toJson(response);
 			
 		}else {

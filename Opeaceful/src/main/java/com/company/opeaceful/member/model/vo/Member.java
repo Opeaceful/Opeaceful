@@ -39,4 +39,6 @@ public class Member {
 
 	private int annualUnit;
 
+	private String roomTitle;
+	
 }

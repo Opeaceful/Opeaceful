@@ -22,6 +22,8 @@
 	  	
 	  	<result column="P_NAME" property="pName"/> 
 	  	<result column="DEPT_NAME" property="dName"/> 
+	  	<result column="ROOM_TITLE" property="roomTitle"/>
+	  	
 	</resultMap>
 	
 	<!--지영: 수정용 ResultSet -->
@@ -285,6 +287,20 @@
 		WHERE STATUS='Y';
 	 </select>
 	 
+	 <!-- [진기] 채팅방 참여유저 정보용-->
+	 <select id="getChatRoomParticipants" resultMap="AllmemberResultSet">
+    	SELECT M.USER_NO, M.ENO, M.PROFILE_IMG, M.STATUS_TYPE,
+		       M.USER_NAME, M.PHONE, M.EXTENSION, M.EMAIL, M.ADDRESS,
+			   M.ANNUAL_LEAVE_COUNT, M.HIRE_DATE, P.P_NAME, D.DEPT_NAME, CP.ROOM_TITLE
+	    FROM CHAT_PARTICIPANT CP
+	    JOIN MEMBER M ON CP.USER_NO = M.USER_NO
+	    JOIN USER_DEPARTMENT UD ON M.USER_NO = UD.USER_NO
+	    JOIN POSITION P ON UD.P_CODE = P.P_CODE
+	    JOIN DEPARTMENT D ON UD.DEPT_CODE = D.DEPT_CODE
+	    WHERE CP.CHATROOM_NO = #{chatRoomNo}
+	  </select>
+	  
+
 	 <!-- [가영] 명함에 들어갈 사원 정보 -->
 	 <select id="businessCard" resultMap="businessCardResultSet">
 	 	SELECT PROFILE_IMG, USER_NAME, P_NAME, T.DEPT_NAME AS "TOP_DEPT_NAME", D.DEPT_NAME, EMAIL, PHONE, EXTENSION
