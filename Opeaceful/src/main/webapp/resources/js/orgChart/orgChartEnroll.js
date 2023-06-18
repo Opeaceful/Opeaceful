@@ -43,6 +43,7 @@ function selectDept() {
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
 											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
 										</span>
+										<div>(${team.deptCount})</div>
 										<div class="team-icons hidden">
 											<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
 											<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
@@ -90,7 +91,7 @@ function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
 					str = `<div class="department-name-box">${topDeptName}</div>
 							<button class="btn btn-primary personnel-btn" data-id="${deptCode},${topDeptCode}" data-bs-toggle="modal" data-bs-target="#change" type="button">인사발령</button>`
 
-					html += `<tr>
+					html += `<tr id="user-info">
 								<td>${team.eno}</td>
 								<td>${team.userName}</td>
 								<td>${team.deptName}</td>
@@ -127,6 +128,7 @@ function deptListClick() {
             selectDeptList(deptCode, topDeptCode, deptName, topDeptName);
         });
     });
+	
 }
 
 // 인사발령 모달에 정보 뿌려주는 ajax
@@ -283,8 +285,11 @@ $('#ok-personnel').click(function(e) {
 			data: {"jsonData" : jsonData},
 			dataType:'json',
 			success: function(result) {
+				swal('해당 사원들의 인사가 변경되었습니다.', {
+					buttons: { cancel: '확인' },
+				  });
 				$("#pesonnel-modal").modal('hide');
-				// location.reload();
+				$("#user-info").load(window.location.href + " #user-info");
 			},
 			error: function(x, e) {
 				//err msg 출력
@@ -350,6 +355,7 @@ $('#ok-personnel').click(function(e) {
 		
 		let input = $(e.target).val();
 		let id= $(e.target).attr("id");
+		// let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
 		
 		// 부서이름 입력 안했을 시 input 삭제
 		if (input == "") {
@@ -381,6 +387,10 @@ $('#ok-personnel').click(function(e) {
 									</div>
 								</div>`
 							);
+							$(e.target).attr("id", result);
+							swal('해당 부서가 추가되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 						}
 						$(".topD-name").css('pointer-events','none');
 						$(".oc-accordion-btn").css('cursor','default');
@@ -395,6 +405,9 @@ $('#ok-personnel').click(function(e) {
 					success : function(result){
 						if (result > 0) {
 							$(e.target).attr("id", result);
+							swal('해당 부서명이 변경되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 						}
 						$(".topD-name").css('pointer-events','none');
 						$(".oc-accordion-btn").css('cursor','default');
@@ -439,7 +452,7 @@ $('#ok-personnel').click(function(e) {
 	/////////////////////////////////////////////////////////////////////// 상위부서 삭제
 	$(".inputs").on("click", ".team-minus", function(e) { 
 			
-		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
+		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
 		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[1];
 
 		swal('부서를 삭제 하시겠습니까?', {
@@ -520,7 +533,7 @@ $('#ok-personnel').click(function(e) {
 
 		let input = $(e.target).val();
 		let id = $(e.target).attr("id");
-		let code = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
+		let code = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
 		// .parents(".accordion-item").find('.topD-name')
 
 		// 부서이름 입력 안했을 시 input 삭제
@@ -552,6 +565,9 @@ $('#ok-personnel').click(function(e) {
 									</div>
 								</li>`
 							);
+							swal('해당 부서가 추가되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 						}
 						$(".team-name").css('pointer-events','none');
 						$(".team").css('cursor','default');
@@ -567,6 +583,9 @@ $('#ok-personnel').click(function(e) {
 					success : function(result){
 						if (result > 0) {
 							$(e.target).attr("id", result);
+							swal('해당 부서명이 변경되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 						}
 						$(".team-name").css('pointer-events','none');
 						$(".team").css('cursor','default');
@@ -664,6 +683,9 @@ $('#ok-personnel').click(function(e) {
 									</li>
 								</ul>`
 							);
+							swal('해당 직급이 추가되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 						}
 						$(".pName").css('pointer-events','none');
 						$(".position-list").css('cursor','default');
@@ -681,6 +703,9 @@ $('#ok-personnel').click(function(e) {
 					success : function(result){
 						if (result > 0) {
 							$(e.target).attr("id", result);
+							swal('해당 직급명이 변경되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 						}
 						$(".pName").css('pointer-events','none');
 						$(".position-list").css('cursor','default');

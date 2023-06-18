@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.dao.OrgChartDao;
@@ -16,6 +17,12 @@ public class OrgChartServiceImpl implements OrgChartService {
 
 	@Autowired
 	private OrgChartDao orgChartDao;
+	
+	// 전체부서 조회
+	@Override
+	public List<Department> selectAllDeptList(){
+		return orgChartDao.selectAllDeptList();
+	}
 	
 	// 상위부서 추가
 	@Override

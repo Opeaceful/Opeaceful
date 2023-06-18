@@ -60,7 +60,7 @@ public class OrgChartController {
 	@PostMapping("/selectDept")
 	@ResponseBody
 	public String selectDept() {
-		List<Department> dList = deptService.selectDeptList();
+		List<Department> dList = orgchartService.selectAllDeptList();
 		return new Gson().toJson(dList);
 	}
 	

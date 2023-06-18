@@ -206,6 +206,63 @@ $(".attendance-table tr").click(function() {
 
 })
 
+$(".attendance-table-div tr").click(function() {
+
+  let tr = $(this);
+
+  tr.find(".icons").remove();
+
+  // 아이콘을 포함한 <div> 요소 생성
+  let iconsDiv = $("<div>").addClass("icons");
+  let minusIcon = $("<i>").addClass("fa-solid fa-minus ad-minus").attr("id", "ad-minus");
+  let changeIcon = $("<i>").addClass("fa-solid fa-pen ad-change").attr("id", "ad-change");
+
+  // <div>에 아이콘 추가
+  iconsDiv.append(minusIcon, changeIcon);
+
+  // 선택한 <tr>에 <div> 추가
+  tr.find(".ad-icons").append(iconsDiv);
+  console.log("tr에 있는 no : ",tr.data('no'));
+
+})
+
+$(".attendance-table-div").on("click", "td.ad-icons i", function() {
+  // 선택한 아이콘 요소
+  let icon = $(this);
+
+  // 부모 <td> 요소
+  let td = icon.closest("td");
+
+  // 기존의 <input> 요소 제거
+  td.find("input").remove();
+
+  // <input> 태그 생성
+  let input = $("<input>").attr("type", "text");
+
+  // <td>의 내용을 임시로 저장
+  let tdContent = td.text().trim();
+
+  // <input>에 이전 내용을 설정
+  input.val(tdContent);
+
+  // 이전 내용이 없을 경우, 빈 문자열로 설정
+  if (tdContent === "") {
+    input.val("");
+  }
+
+  // 이벤트 전파 방지
+  input.on("click", function(e) {
+    e.stopPropagation();
+  });
+
+  // <td>의 내용을 <input>으로 대체
+  td.empty().append(input);
+
+  // <input>에 포커스 설정
+  input.focus();
+});
+
+
         // function lastday(){ //년과 월에 따라 마지막 일 구하기 
         //   var year = $("#year option:selected").val();
         //   var month = $("#month option:selected").val();
