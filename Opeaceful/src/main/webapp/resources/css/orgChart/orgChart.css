@@ -124,7 +124,7 @@ thead td:first-child{width: 199px;}
 }
 /*스크롤바 설정*/
 .scroll-bar::-webkit-scrollbar {
-    height: 5px;
+    height: 10px;
 }
 /* 명함 css */
 .popover{

@@ -57,9 +57,9 @@
 					<div class="p-3">
 						<div class="row">
 					    	<div class="col-1 text">사원명</div>
-					        <div class="col-11 search-wrap2 input-group mb-3">
-					        	<input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
-					            	<button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
+					        <div class="col-11 search-wrap2 ad-search input-group mb-3">
+					        	<input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="">
+					            <button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
 					        </div>
 					    </div>
 					</div>
