@@ -1,7 +1,9 @@
 package com.company.opeaceful.chat.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,8 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.mainSelectNoticeList");
 	}
 	
-	public List<ChatRoom> selectChatRoomList(){
-		return sqlSession.selectList("chatMapper.selectChatRoomList");
+	public List<ChatRoom> selectChatRoomList(Member loginUser){
+		return sqlSession.selectList("chatMapper.selectChatRoomList", loginUser);
 	}
 	
 	public int openChatRoom(ChatRoom chatRoom) {
@@ -45,6 +47,14 @@ public class ChatDao {
 		}else {
 			return result;
 		}
+	}
+	
+	public void addChatParticipant(int chatRoomNo, int userNo, String roomTitle) {
+		 Map<String, Object> params = new HashMap<>();
+	        params.put("chatRoomNo", chatRoomNo);
+	        params.put("userNo", userNo);
+	        params.put("roomTitle", roomTitle);
+	        sqlSession.insert("addRoomParticipant", params);
 	}
 	
 	
@@ -97,8 +107,17 @@ public class ChatDao {
 		    return sqlSession.selectList("chatMapper.getParticipantsInRoom", chatRoomNo);	
 		}    
 	
-	
-	
+		public List<Integer> chatRoomNoList(Member loginUser) {
+			return sqlSession.selectList("chatMapper.chatRoomNoList", loginUser);
+		}
+		
+		public List<Member> getChatRoomParticipants(int chatRoomNo){
+			return sqlSession.selectList("memberMapper.getChatRoomParticipants", chatRoomNo);
+		}
+		
+		public List<ChatParticipant> chatRoomListMemberList(int userNo){
+			return sqlSession.selectList("chatMapper.chatRoomListMemberList", userNo);
+		}
 	
 	
 	

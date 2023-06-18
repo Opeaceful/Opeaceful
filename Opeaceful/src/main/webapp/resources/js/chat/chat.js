@@ -2,6 +2,9 @@
  * 
  */
 import {path} from '../common/common.js';
+import {checkMemberNo} from '../chat/chatModal.js';
+
+let chattingSock = new SockJS(path + "/chat/webSocket");
 
 // 메인 다이얼로그 생성 
 $(document).ready(function() { 
@@ -243,8 +246,6 @@ statusList.addEventListener('change', function() {
 
 
 
-let chattingSock = new SockJS(path + "/chat/webSocket");
-//var roomId;
 /* 채팅방 목록 조회 */
 function chatAll() {
     $.ajax({
@@ -254,15 +255,16 @@ function chatAll() {
         success: function(response) {
 
             const loginUser = response.loginUser;
-            const chatRoomList = response.crList;
+            const chatRoomList = response.crList;        
 
-          //  console.log(chatRoomList);
+       //     console.log(chatRoomList);
+       //     console.log(response);
 
             var chatRoomHtml = '';
             var hasChatRoom = false;
-
+			
             chatRoomList.forEach(function(chatRoom) {
-                if (chatRoom.eno === loginUser.eno) {
+                
                     hasChatRoom = true;
                     chatRoomHtml += '<li class="chat_room_li"><a href="#" data-chat-room-id="' + chatRoom.chatRoomNo + '">';
 
@@ -279,11 +281,11 @@ function chatAll() {
 
                     chatRoomHtml += '<div class="chat_room_status">';
                     chatRoomHtml += '<time class="chat_time" datetime="15:40:00+09:00">' + chatRoom.createdChat + '</time>';
-                    chatRoomHtml += '<span class="chat_balloon">' + chatRoom.eno + '</span>';
+                    chatRoomHtml += '<span class="chat_balloon">' + chatRoom.lastChat + '</span>';
                     chatRoomHtml += '</div>';
 
                     chatRoomHtml += '</a></li>';
-                }
+                
             });
             if (!hasChatRoom) {
                 chatRoomHtml = '<li class="chat_room_li">';
@@ -337,11 +339,29 @@ function chatAll() {
 						const loginUser = response.loginUser;
                         const join = response.join;
                         const list = response.list;
-
-                     //   console.log(chatRoom)
-                     //  console.log(response);
-                     //   console.log(join);
-                     //   console.log(list);
+                        const getChatRoomParticipants = response.getChatRoomParticipants;
+                        
+	                     //   console.log(chatRoom)
+	                     //   console.log(response);
+	                     //   console.log(join);
+	                     //   console.log(list);
+	                     //   console.log(getChatRoomParticipants[0].roomTitle);
+                        
+                        
+                        // 현재 날짜 객체 생성
+						const currentDate = new Date();						
+						// 날짜 정보 추출
+						const year = currentDate.getFullYear();
+						const month = currentDate.getMonth() + 1;
+						const day = currentDate.getDate();
+						const dayOfWeek = currentDate.getDay();						
+						// 요일 문자열 생성
+						const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+						const dayOfWeekString = weekdays[dayOfWeek];						
+						// 날짜 문자열 생성
+						const dateString = `${year}년 ${month}월 ${day}일 ${dayOfWeekString}요일`;
+												
+								                  
 
                         // 가져온 채팅방 데이터를 기반으로 다이얼로그 내용을 구성
                         var dialogContent = '<div id="chatting_body">' +
@@ -353,11 +373,69 @@ function chatAll() {
                             '<i class="icon-bell" title="알림"></i>' +
                             '<i class="icon-ellipsis" title="메뉴"></i>' +
                             '</div>' +
-                            '<header id="chatting_header">' +
-                            '<img class="chatting_profile_img" src="'+ path + '/resources/image/chat/default.png" alt="프로필사진">' +
-                            '<div class="chatting_profile_col">' +
-                            '<span class="chatting_profile_name">' + list.userName + '</span>' +
-                            '<div class="chatting_sub_menu">' +
+                            '<header id="chatting_header">' ;
+                            
+                            
+                             // 채팅방 인원에 따른 채팅창 안에 상단 사진 변경
+                            if (getChatRoomParticipants.length === 1) {
+						    // 한 명인 경우
+						    const participant = getChatRoomParticipants[0];
+						    if (participant.profileImg) {
+						        dialogContent += '<img class="chatting_profile_img" src="' + path + '/resources/file/mypage/' + participant.profileImg + '" alt="프로필사진">';
+						    } else {
+						        dialogContent += '<img class="chatting_profile_img" src="' + path + '/resources/image/chat/default.png" alt="프로필사진">';
+						    }
+						} else if (getChatRoomParticipants.length === 2) {
+						    // 두 명인 경우
+						    let participantImg = '';
+						    for (let i = 0; i < getChatRoomParticipants.length; i++) {
+						        const participant = getChatRoomParticipants[i];
+						        if (participant.userNo !== loginUser.userNo && participant.profileImg) {
+						            participantImg = participant.profileImg;
+						            break;
+						        }
+						    }
+						    if (participantImg) {
+						        dialogContent += '<img class="chatting_profile_img" src="' + path + '/resources/file/mypage/' + participantImg + '" alt="프로필사진">';
+						    } else {
+						        dialogContent += '<img class="chatting_profile_img" src="' + path + '/resources/image/chat/default.png" alt="프로필사진">';
+						    }
+						} else if (getChatRoomParticipants.length === 3) {
+						    // 세 명인 경우
+						    let hasProfileImg = false;
+						    for (let i = 0; i < getChatRoomParticipants.length; i++) {
+						        const participant = getChatRoomParticipants[i];
+						        if (participant.profileImg) {
+						            hasProfileImg = true;
+						            break;
+						        }
+						    }
+						    if (hasProfileImg) {
+						        dialogContent += '<img class="chatting_profile_img" src="' + path + '/resources/image/chat/default.png" alt="프로필사진">';
+						    } else {
+						        dialogContent += '<img class="chatting_profile_img" src="' + path + '/resources/image/chat/default.png" alt="프로필사진">';
+						    }
+						}
+                            
+                            
+                            
+                       //     '<img class="chatting_profile_img" src="'+ path + '/resources/image/chat/default.png" alt="프로필사진">' +
+                             dialogContent += '<div class="chatting_profile_col">';
+                            
+                            // 채팅방 인원에 따른 채팅창 안에 메인이름 변경
+                            if (getChatRoomParticipants.length === 1) {
+							    dialogContent += '<span class="chatting_profile_name">' + getChatRoomParticipants[0].userName + '</span>';
+							} else if (getChatRoomParticipants.length === 2) {
+							    // Remove loginUser from participants
+							    var participant = getChatRoomParticipants.find(function (participant) {
+							        return participant.userNo !== loginUser.userNo;
+							    });
+							    dialogContent += '<span class="chatting_profile_name">' + participant.userName + '</span>';
+							} else if (getChatRoomParticipants.length >= 3) {
+							    dialogContent += '<span class="chatting_profile_name">' + getChatRoomParticipants[0].roomTitle + '</span>';
+							}
+													
+                            dialogContent += '<div class="chatting_sub_menu">' +
                             '<i class="icon-box" title="채팅방 서랍"></i>' +
                             '<i class="icon-search" title="검색"></i>' +
                             '</div>' +
@@ -371,30 +449,50 @@ function chatAll() {
                             '</div>' +
                             '<div class="chatting_content">' +
                             '<div class="chatting_date_line">' +
-                            '<time datetime="2021-03-29">2021년 3월 29일 월요일</time>' +
+                            '<time datetime="' + year + '-' + month + '-' + day + '">' + dateString + '</time>' +
                             '</div>' +
                             '<div id="main_chatting_' + roomId + '" class="main_chatting">';
 
                         	for (var i = 0; i < list.length; i++) {
                                var message = list[i]
+                               var profileImg = '';
+                               
+                               for (var j = 0; j < getChatRoomParticipants.length; j++) {
+								    if (getChatRoomParticipants[j].userNo === message.userNo) {
+								      profileImg = getChatRoomParticipants[j].profileImg;
+								      break;
+								    }
+								  }
 
                                if (message.userNo !== loginUser.userNo) {
-                                 dialogContent +=
+                                  if (profileImg) {
+      								dialogContent +=
                                    '<div class="friend_chatting">' +
-                                   '<img class="chatting_profile_img" src="'+ path + '/resources/image/chat/default.png" alt="프로필사진">' +
-                                   '<div class="friend_chatting_col">' +
-                                   '<span class="chatting_profile_name">' + message.userName + '</span>' +
-                                   '<span class="chatting_balloon">' + message.message + '</span>' +
-                                   '</div>' +
-                                   '<time datetime="' + message.receivedDate + '" class="chatting_time">' + message.receivedDate + '</time>' +
-                                   '</div>';
+							        '<img class="chatting_profile_img" src="' + path + '/resources/file/mypage/' + profileImg + '" alt="프로필사진">' +
+							        '<div class="friend_chatting_col">' +
+							        '<span class="chatting_profile_name">' + message.userName + '</span>' +
+							        '<span class="chatting_balloon">' + message.message + '</span>' +
+							        '</div>' +
+							        '<time datetime="' + message.receivedDate + '" class="chatting_time">' + formatTime(new Date(message.receivedDate)) + '</time>' +
+							        '</div>';
+							        } else {
+								      dialogContent +=
+								        '<div class="friend_chatting">' +
+								        '<img class="chatting_profile_img" src="' + path + '/resources/image/chat/default.png" alt="프로필사진">' +
+								        '<div class="friend_chatting_col">' +
+								        '<span class="chatting_profile_name">' + message.userName + '</span>' +
+								        '<span class="chatting_balloon">' + message.message + '</span>' +
+								        '</div>' +
+								        '<time datetime="' + message.receivedDate + '" class="chatting_time">' + formatTime(new Date(message.receivedDate)) + '</time>' +
+								        '</div>';
+								    }
                                } else {
                                  dialogContent +=
                                    '<div class="me_chatting">' +
                                    '<div class="me_chatting_col">' +
                                    '<span class="chatting_balloon">' + message.message + '</span>' +
                                    '</div>' +
-                                   '<time datetime="' + message.receivedDate + '" class="chatting_time">' + message.receivedDate + '</time>' +
+                                   '<time datetime="' + message.receivedDate + '" class="chatting_time">' + formatTime(new Date(message.receivedDate)) + '</time>' +
                                    '</div>';
                                }
                              } 
@@ -437,7 +535,7 @@ function chatAll() {
                         dialogElementStyle("chatting_dialog_" + roomId, '83px', '630px', '120');
                         
                         $(document).on("click", "#chatting_dialog_" + roomId + " " + ".member-chat-room-close", function(e) {
-                        console.log()
+              //          console.log()
 							$("#"+e.target.dataset.id).dialog("destroy").remove();				
 						}); 									
 						var chatContainer = document.getElementById("main_chatting_" + roomId);     
@@ -483,7 +581,8 @@ $(document).on("click", ".chatting_send_button", function(e){
             // "userNo": loginUser.userNo,
             "chatRoomNo": roomId,
             // "userName": loginUser.userName,
-            "message": inputChatting.value
+            "message": inputChatting.value,
+            
         };
     //    console.log("버튼이 눌렸다");
     //    console.log(loginUser);
@@ -505,8 +604,8 @@ $(document).on("click", ".chatting_send_button", function(e){
     // 전달받은 메세지를 js객체로 변환
 
     const chatMessage = JSON.parse(e.data); // json -> js Object
-    //	console.log(chatMessage);
-  //  console.log(e);
+  //  	console.log(chatMessage);
+   // console.log(e);
   //  console.log(chatMessage);
   //  console.log("나야3? :" +getCookie("userNo"));
 
@@ -523,7 +622,11 @@ $(document).on("click", ".chatting_send_button", function(e){
 
         var profileImg = document.createElement("img");
         profileImg.classList.add("chatting_profile_img");
-        profileImg.src = chatMessage.profileImg ? chatMessage.profileImg : path + "/resources/image/chat/default.png";
+        if(chatMessage.profileImg){
+        profileImg.src = path + "/resources/file/mypage/" +chatMessage.profileImg;
+        }else{
+        profileImg.src = path + "/resources/image/chat/default.png";
+        }
         profileImg.alt = "프로필사진";
 
         var friendChatCol = document.createElement("div");
@@ -540,7 +643,7 @@ $(document).on("click", ".chatting_send_button", function(e){
         var chattingTime = document.createElement("time");
         chattingTime.classList.add("chatting_time");
         chattingTime.datetime = receivedDate;
-        chattingTime.textContent = receivedDate;
+        chattingTime.textContent = formatTime(new Date(receivedDate));
 
         friendChatCol.appendChild(profileName);
         friendChatCol.appendChild(chattingBalloon);
@@ -564,7 +667,7 @@ $(document).on("click", ".chatting_send_button", function(e){
         var chattingTime = document.createElement("time");
         chattingTime.classList.add("chatting_time");
         chattingTime.datetime = receivedDate;
-        chattingTime.textContent = receivedDate;
+        chattingTime.textContent = formatTime(new Date(receivedDate));
 
         meChatCol.appendChild(chattingBalloon);
 
@@ -613,9 +716,13 @@ $(document).ready(function() {
             '<div id="chatting_made_title">' +
             '<input type="text" placeholder="채팅방 제목" id="roomTitle" name="roomTitle">' +
             '</div>' +
+            '<div id="chatMemberSelectButtonBox">' +
+            '<button type="button" class="search-btn" id="chat-all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#chat-all-user-view"></i></button>' +
+            '<div>'+
+            '</div>'+
+            '</div>'+
             '<div id="chatting_made_button">' +
             '<button type="button" id="open-form" class="btn btn-primary">만들기</button>' +
-            '<button type="button" class="btn btn-outline-primary">취소</button>' +
             '</div>'
         );
 
@@ -627,15 +734,26 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: path + "/chat/openChatRoom",
+                traditional: true,
                 data: {
-                    roomTitle: roomTitle
+                    roomTitle: roomTitle,
+                    checkMemberNo: checkMemberNo
                 },
                 success: function(response) {
                     // 채팅방 생성 성공 시 동작
                     alert("채팅방 생성 성공");
                     // 추가로 수행할 작업이 있다면 여기에 작성
                     newDialog.dialog("close");
-                  //  chatAll();
+                    
+                     const chatMessage = {
+			            "chatRoomNo": Number(response),
+			            "roomNew" : true,
+			            };
+            
+				        chattingSock.send(JSON.stringify(chatMessage));
+     			//		console.log("나야 체크멤버 나야22" + checkMemberNo);
+                    
+                    chatAll();
                 },
                 error: function(xhr, status, error) {
                     // 채팅방 생성 실패 시 동작
@@ -661,6 +779,26 @@ $(document).ready(function() {
         dialogElementStyle(dialogId,'83px','630px','130');
     });
 });
+
+
+
+/* 시간 포맷 */
+function formatTime(date) {
+	let hours = date.getHours();
+	let minutes = date.getMinutes();
+	let period = '오전';
+							
+	if (hours >= 12) {
+		period = '오후';
+		hours -= 12;
+	}
+							
+ // 시간과 분을 두 자리로 표시
+	hours = hours.toString().padStart(2, '0');
+	minutes = minutes.toString().padStart(2, '0');
+							
+	return `${period} ${hours}:${minutes}`;
+}
 
 
 /* nav 메뉴 이동 */
