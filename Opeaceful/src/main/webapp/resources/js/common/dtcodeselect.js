@@ -21,8 +21,6 @@ function teamRoad() {
         url:`${path}/dept/selectDept`,
         dataType : "JSON",
         success: function(result){
-
-            console.log('부서불러오는 세ㄹ렉트:',result);
   
             for(let i=0; i<deptCode.length; i++){
 
