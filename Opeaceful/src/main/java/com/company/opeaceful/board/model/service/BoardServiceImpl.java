@@ -26,10 +26,9 @@ import com.company.opeaceful.dept.model.vo.Department;
 @Service
 public class BoardServiceImpl implements BoardService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	@Autowired
 	private BoardDao boardDao;
-	
 	@Autowired
 	private Pagination pagination;
 	
@@ -53,6 +52,9 @@ public class BoardServiceImpl implements BoardService {
 		
 		ArrayList<Board> list = (ArrayList) boardDao.selectBoardList(pi, map);
 		
+		list.get(0).getBoardNo();
+		System.out.println("list담긴 값 : " + list);
+		System.out.println("리스트에서 꺼낸 0번째 글 보드넘버 : "+ list.get(0).getBoardNo());
 		map.put("pi", pi);
 		map.put("list", list);
 		
@@ -100,22 +102,31 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Department> selectDeptList(){
 		return boardDao.selectDeptList();
 	}
+	
+
+	private int parseInt(int lastPk) {
+		return 0;
+	}
+	
 	@Override
 	public int insertBoard(Board b, List<MultipartFile> upFileList, String serverFolderPath) {
 
-		// logger.info("insert보드 서비스임플리먼츠로거");
+		//logger.info("insert보드 서비스임플리먼츠로거");
 		int boardNo = boardDao.insertBoard(b);
-
-		int fileNo = boardDao.lastPk() + 1;
-
+		
+		 int fileNo = boardDao.lastPk();
+		 //System.out.println("서비스 파일넘버  : "+fileNo);
+		 fileNo = fileNo+1;
+		 //System.out.println("서비스 파일넘버 +1 한 값  : "+fileNo);
 		if (upFileList != null) {
+			
 			if (boardNo > 0 && upFileList.size() > 0) {
-
+				
 				List<BoardFile> addList = new ArrayList();
 				List<String> renamefileList = new ArrayList();
 
 				for (int i = 0; i < upFileList.size(); i++) {
-
+					
 					if (upFileList.get(i).getSize() > 0) {
 
 						String changeFile = "";
@@ -156,9 +167,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardNo; // 인서트 결과 반환 (1/0)
 
 	}
-			
-	
-	
+
 	@Override
 	@Transactional(rollbackFor = {Exception.class})
 	public int updateBoard(Board b, List<String> hiddenfile, List<MultipartFile> upFileList, String serverFolderPath) {
@@ -169,9 +178,11 @@ public class BoardServiceImpl implements BoardService {
 		List<BoardFile> dbList = boardDao.selectUpfileList(b.getBoardNo()); // db에서 꺼내온 기존 파일 리스트
 		List<String> dbNoList = new ArrayList(); // db에서 꺼낸 파일넘버 리스트 담을 리스트
 
+	
+		
 		if (dbList != null) { // 기존리스트가 널이 아닐 때 => 변경된 파일리스트와 비교해야함
-
-			if (hiddenfile != null) { // 1)기존에 있던 파일에서 남겨둔 파일넘버리스트(히든리스트 담긴 파일번호들은 살려둬야함 , 없는 번호는 지워줘야함)
+			try {
+			if (hiddenfile != null && hiddenfile.size()>0) { // 1)기존에 있던 파일에서 남겨둔 파일넘버리스트(히든리스트 담긴 파일번호들은 살려둬야함 , 없는 번호는 지워줘야함)
 
 				for (int i = 0; i < dbList.size(); i++) {
 					String dbFileNo = dbList.get(i).getFileNo() + "";
@@ -184,26 +195,41 @@ public class BoardServiceImpl implements BoardService {
 						}
 					}
 				}
-				boardDao.deleteFileList(dbList);
-
-			} else { // 2)null이라는 건 기존에 있던 파일들 다 지운 것 => 해당하는 보드 넘버의 파일리스트 다 지워주기
+					if(dbList.size()>0) {
+					boardDao.deleteFileList(dbList);					
+					}
+			} else { // 2)히든리스트가 null이라는 건 기존에 있던 파일들 다 지운 것 => 해당하는 보드 넘버의 파일리스트 다 지워주기
 				boardDao.deleteUpfile(b.getBoardNo());
 			}
-
-			/* 실제 폴더에 있는 파일 삭제 */
-			for (BoardFile file : dbList) {
-				File deleteFile = new File(serverFolderPath + file.getChangeFile());
-				if (deleteFile.exists()) { // 파일이 존재하면
-					deleteFile.delete();// 파일 삭제
+			
+			if(dbList.size()>0) {
+				
+				/* 실제 폴더에 있는 파일 삭제 */
+				for (BoardFile file : dbList) {
+					File deleteFile = new File(serverFolderPath + file.getChangeFile());
+					if (deleteFile.exists()) { // 파일이 존재하면
+						deleteFile.delete();// 파일 삭제
+					}
 				}
+				}
+			
+			
+			
+			}catch(NullPointerException e) {
+				boardDao.deleteUpfile(b.getBoardNo());
 			}
+			
+			
 
 		} // 기존리스트가 널이면 애초에 히든리스트가 없음 그러면 처리할 필요 없음 새로 추가만 하면 됨
 
 		int resultU = boardDao.updateBoard(b);
 
-		int fileNo = boardDao.lastPk() + 1;
-
+		int fileNo = boardDao.lastPk();
+		// System.out.println("서비스 파일넘버  : "+fileNo);
+		 fileNo = fileNo+1;
+		// System.out.println("서비스 파일넘버 +1 한 값  : "+fileNo);
+		
 		if (upFileList != null) {
 			if (upFileList.size() > 0) {
 

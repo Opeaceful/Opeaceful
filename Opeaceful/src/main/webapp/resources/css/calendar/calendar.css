@@ -163,7 +163,7 @@ div *{
 }
 .input-memo{
   font-size: var(--font14);
-  color: var(--memo-col8);
+  color: var(--memo-day-color);
 }
 .d-event{
   font-size: var(--font13);
@@ -187,8 +187,8 @@ div *{
 }
 .input-memo:focus{
   outline: none;
-  background-color: rgba(3, 3, 62, 0.05);
-  color: var(--color-navy);
+  background-color: var(--memo-back-col);
+  color: var(--memo-focus);
 }
 .input-memo::-webkit-scrollbar {
   display: none;
@@ -207,6 +207,7 @@ div *{
 }
 .d-day-txt{
   margin-bottom: 5px;
+  color: var(--memo-day-color);
 }
 /* 왼쪽 캘린더 설정 */
 #calendar{
@@ -244,7 +245,11 @@ div *{
 
 
 /* ==== 일정추가 모달 ==== */
-.modal-content{
+.btn:disabled{
+  background-color: var(--navy-hover);
+  border-color: var(--navy-hover);
+}
+.cal-modal-content{
   width: 470px;
   border-radius: 6em;
 }
@@ -327,12 +332,12 @@ input[name="dateEnd"]{
   scale: calc(1.1);
 }
 input[name="color"]:checked + label{
-  border-color: var(--navy-hover); 
-    box-shadow: 0 0 0 0.15rem var(--navy-hover);
+  border-color: var(--m-color-checked); 
+    box-shadow: 0 0 0 0.15rem var(--m-color-checked);
 }
 input[name="t-color"]:checked + label{
-  border-color: var(--color-gold); 
-    box-shadow: 0 0 0 0.15rem var(--color-gold);
+  border-color: var(--t-color-checked); 
+    box-shadow: 0 0 0 0.15rem var(--t-color-checked);
 }
 .color1{
   background-color:var(--col1);

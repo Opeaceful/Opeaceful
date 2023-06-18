@@ -307,59 +307,56 @@ UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '
 -- approval_form 더미 데이터 생성용
 INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, '지출결의서', '<table style="border-collapse: collapse; width: 88.9823%; height: 556px;" border="1">
  <tbody>
- <tr style="height: 66.7344px;">
- <td style="height: 66.7344px; text-align: center; width: 99.9101%;" colspan="5"><span style="font-size: 24pt;"><strong>지 출 결 의 서&nbsp;</strong></span><strong><br /></strong></td>
- </tr>
  <tr style="height: 20px;">
  <td style="height: 60px; text-align: center; width: 11.1345%;" rowspan="3">인적사항</td>
  <td style="width: 13.7605%; height: 20px; text-align: center;">소&nbsp; &nbsp; 속</td>
- <td style="height: 20px; width: 75.0151%;" colspan="3">&nbsp;</td>
+ <td style="height: 20px; width: 75.0118%;" colspan="3">&nbsp;</td>
  </tr>
  <tr style="height: 20px;">
  <td style="width: 13.7605%; height: 20px; text-align: center;">직&nbsp; &nbsp; 위</td>
- <td style="height: 20px; width: 75.0151%;" colspan="3">&nbsp;</td>
+ <td style="height: 20px; width: 75.0118%;" colspan="3">&nbsp;</td>
  </tr>
  <tr style="height: 20px;">
  <td style="width: 13.7605%; height: 20px; text-align: center;">성&nbsp; &nbsp; 명</td>
- <td style="height: 20px; width: 75.0151%;" colspan="3">&nbsp;</td>
+ <td style="height: 20px; width: 75.0118%;" colspan="3">&nbsp;</td>
  </tr>
  <tr style="height: 42.1719px;">
  <td style="text-align: center; height: 42.1719px; width: 11.1345%;">지출 금액</td>
- <td style="text-align: center; height: 42.1719px; width: 88.7756%;" colspan="4">000,000 원</td>
+ <td style="text-align: center; height: 42.1719px; width: 88.7724%;" colspan="4">000,000 원</td>
  </tr>
  <tr style="height: 34.8594px;">
  <td style="text-align: center; height: 219.094px; width: 11.1345%;" rowspan="6">내역</td>
- <td style="text-align: center; height: 34.8594px; width: 33.7336%;" colspan="2">사용처</td>
+ <td style="text-align: center; height: 34.8594px; width: 33.7303%;" colspan="2">사용처</td>
  <td style="width: 19.8529%; text-align: center; height: 34.8594px;">금액</td>
  <td style="width: 35.1891%; height: 34.8594px; text-align: center;">비고</td>
  </tr>
  <tr style="height: 36.5938px;">
- <td style="text-align: center; width: 33.7336%; height: 36.5938px;" colspan="2">&nbsp;</td>
+ <td style="text-align: center; width: 33.7303%; height: 36.5938px;" colspan="2">&nbsp;</td>
  <td style="width: 19.8529%; height: 36.5938px;">&nbsp;</td>
  <td style="width: 35.1891%; height: 36.5938px;">&nbsp;</td>
  </tr>
  <tr style="height: 37.5938px;">
- <td style="text-align: center; width: 33.7336%; height: 37.5938px;" colspan="2">&nbsp;</td>
+ <td style="text-align: center; width: 33.7303%; height: 37.5938px;" colspan="2">&nbsp;</td>
  <td style="width: 19.8529%; height: 37.5938px;">&nbsp;</td>
  <td style="width: 35.1891%; height: 37.5938px;">&nbsp;</td>
  </tr>
  <tr style="height: 35px;">
- <td style="text-align: center; height: 35px;" colspan="2">&nbsp;</td>
+ <td style="text-align: center; height: 35px; width: 33.7303%;" colspan="2">&nbsp;</td>
  <td style="width: 19.8529%; height: 35px;">&nbsp;</td>
  <td style="width: 35.1891%; height: 35px;">&nbsp;</td>
  </tr>
  <tr style="height: 39.6094px;">
- <td style="text-align: center; width: 33.7336%; height: 39.6094px;" colspan="2">&nbsp;</td>
+ <td style="text-align: center; width: 33.7303%; height: 39.6094px;" colspan="2">&nbsp;</td>
  <td style="width: 19.8529%; height: 39.6094px;">&nbsp;</td>
  <td style="width: 35.1891%; height: 39.6094px;">&nbsp;</td>
  </tr>
  <tr style="height: 35.4375px;">
- <td style="text-align: center; height: 35.4375px; width: 33.7336%;" colspan="2">&nbsp;</td>
+ <td style="text-align: center; height: 35.4375px; width: 33.7303%;" colspan="2">&nbsp;</td>
  <td style="width: 19.8529%; height: 35.4375px;">&nbsp;</td>
  <td style="width: 35.1891%; height: 35.4375px;">&nbsp;</td>
  </tr>
  <tr style="height: 168px;">
- <td style="text-align: center; width: 99.9101%; height: 168px;" colspan="5">
+ <td style="text-align: center; width: 99.9068%; height: 168px;" colspan="5">
  <p style="text-align: left;">&nbsp; &nbsp; 위 금액을 청구하오니 결재 바랍니다</p>
  <p style="text-align: left;">&nbsp;</p>
  <p>0000&nbsp; 년&nbsp; &nbsp; &nbsp; 00&nbsp; 월&nbsp; &nbsp; &nbsp; 00&nbsp; 일</p>
@@ -369,11 +366,8 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, '지출결의서', 
  </tr>
  </tbody>
  </table>');
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청서입니다', '<table style="border-collapse: collapse; width: 88.9823%; height: 762.891px;" border="1">
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 762.891px;" border="1">
  <tbody>
- <tr style="height: 93.25px;">
- <td style="height: 93.25px; text-align: center; width: 100%;" colspan="4"><span style="font-size: 24pt;"><strong>휴 가 신 청 서</strong></span></td>
- </tr>
  <tr style="height: 47.4375px;">
  <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
  <td style="width: 17.2269%; height: 47.4375px; text-align: center;">소&nbsp; &nbsp; 속</td>
@@ -406,11 +400,8 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청�
  </tr>
  </tbody>
  </table>');
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 신청서입니다', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
  <tbody>
- <tr style="height: 93.25px;">
- <td style="height: 93.25px; text-align: center; width: 100%;" colspan="4"><span style="font-size: 24pt;"><strong>휴 가 신 청 서</strong></span></td>
- </tr>
  <tr style="height: 47.4375px;">
  <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
  <td style="width: 17.2269%; height: 47.4375px; text-align: center;">소&nbsp; &nbsp; 속</td>
@@ -440,11 +431,8 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 �
  </tr>
  </tbody>
  </table>');
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 신청서입니다', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
  <tbody>
- <tr style="height: 93.25px;">
- <td style="height: 93.25px; text-align: center; width: 100%;" colspan="4"><span style="font-size: 24pt;"><strong>휴 가 신 청 서</strong></span></td>
- </tr>
  <tr style="height: 47.4375px;">
  <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
  <td style="width: 17.2269%; height: 47.4375px; text-align: center;">소&nbsp; &nbsp; 속</td>

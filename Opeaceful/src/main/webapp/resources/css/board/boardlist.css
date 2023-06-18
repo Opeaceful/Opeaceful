@@ -73,7 +73,7 @@ body *{
 }
 /* 공지사항 고정게시글 */
 .notice-fixed{
-    background-color: rgba(235, 235, 235, 0.575);
+    background-color: var(--fix-back-color);
 }
 
 /* 페이징바 */
