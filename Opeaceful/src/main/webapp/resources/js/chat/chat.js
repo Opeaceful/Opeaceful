@@ -3,6 +3,7 @@
  */
 import {path} from '../common/common.js';
 import {checkMemberNo} from '../chat/chatModal.js';
+import {checkedNames} from '../chat/chatModal.js';
 
 let chattingSock = new SockJS(path + "/chat/webSocket");
 
@@ -305,7 +306,6 @@ function chatAll() {
                     return chatRoom.chatRoomNo === roomId;
                 });
 
-         //       console.log("왔니?");
                 
                 
                 if (!document.getElementById("chatting_dialog_" + roomId)) {
@@ -366,7 +366,7 @@ function chatAll() {
                         // 가져온 채팅방 데이터를 기반으로 다이얼로그 내용을 구성
                         var dialogContent = '<div id="chatting_body">' +
                             '<div class="chatting_setting_bar">' +
-                            '<i class="fa-regular fa-window-restore" alt="최대화버튼" title="최대화"></i>' +
+                         //  '<i class="fa-regular fa-window-restore" alt="최대화버튼" title="최대화"></i>' +
                             `<i class="fa-solid fa-xmark member-chat-room-close" data-id="${"chatting_dialog_" + roomId}" alt="닫기버튼" title="닫기"></i>` +
                             '</div>' +
                             '<div class="chatting_main_menu">' +
@@ -698,33 +698,41 @@ function getCookie(name) {
 }
 
 
+
 /* 채팅방 생성 다이얼로그 */
 $(document).ready(function() {
     // 다이얼로그(Dialog) 생성하기
+    
+     let dialogIdCounter = 1;
 
     // 버튼 클릭 시 새로운 다이얼로그 열기
     $("#open-dialog-button").on("click", function() {
+ 
         // 동적으로 id 생성
-        var dialogId = "new-dialog" + Date.now();       
+    //     var dialogId = "new-dialog_" + dialogIdCounter;
+         dialogIdCounter++;
 	
         // 새로운 다이얼로그 요소 생성
-        var newDialog = $("<div>").attr("id", dialogId).attr("title", "채팅방 만들기").addClass("chatting_made_dialog");
+        var newDialog = $("<div>").attr("id", "new-dialog_" + dialogIdCounter).attr("title", "채팅방 만들기").addClass("chatting_made_dialog");
         newDialog.append(
+      //  	`<i class="fa-solid fa-xmark member-chat-room-close" data-id="${"chatting_dialog_" + roomId}" alt="닫기버튼" title="닫기"></i>` +
+        	`<i class="fa-solid fa-xmark room-chat-made-close" data-id="${"new-dialog_" + dialogIdCounter}"></i>` +
             '<div>' +
             '<h5>채팅방 만들기</h5>' +
             '</div>' +
             '<div id="chatting_made_title">' +
             '<input type="text" placeholder="채팅방 제목" id="roomTitle" name="roomTitle">' +
             '</div>' +
+            '<div id="chatMemberSelectButtonBoxUp">' +
             '<div id="chatMemberSelectButtonBox">' +
-            '<button type="button" class="search-btn" id="chat-all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#chat-all-user-view"></i></button>' +
-            '<div>'+
+      	    '<button type="button" class="search-btn" id="chat-all-member-view-button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#chat-all-user-view"></i></button>' +
+            '<div id="checkedNamesDiv"></div>'+
             '</div>'+
-            '</div>'+
+            '</div>' +
             '<div id="chatting_made_button">' +
             '<button type="button" id="open-form" class="btn btn-primary">만들기</button>' +
             '</div>'
-        );
+        );      
 
         // 만들기 버튼 클릭 이벤트 핸들러
         newDialog.on("click", "#open-form", function() {
@@ -751,7 +759,6 @@ $(document).ready(function() {
 			            };
             
 				        chattingSock.send(JSON.stringify(chatMessage));
-     			//		console.log("나야 체크멤버 나야22" + checkMemberNo);
                     
                     chatAll();
                 },
@@ -776,10 +783,13 @@ $(document).ready(function() {
 
         // 다이얼로그(Dialog)를 드래그 가능하도록 설정
         newDialog.dialog("option", "draggable", true);
-        dialogElementStyle(dialogId,'83px','630px','130');
-    });
+        dialogElementStyle("new-dialog_" + dialogIdCounter,'83px','630px','130');
+        
+		$(document).on("click", "#new-dialog_" + dialogIdCounter + " " + ".room-chat-made-close", function(e) {
+		$("#"+e.target.dataset.id).dialog("destroy").remove();				
+	});
+	});
 });
-
 
 
 /* 시간 포맷 */
@@ -828,6 +838,110 @@ function dialogElementStyle(Id, top, left, zIndex){
 	document.getElementById(Id).parentNode.style.left=left;
 	document.getElementById(Id).parentNode.style.zIndex=zIndex;
 }
+
+
+
+
+
+
+// 친구 목록에서 즐겨찾기 아이콘을 추가하는 함수
+function addFavoriteIcon() {
+  const friendItems = document.querySelectorAll(".chat_main_li:not(.adminList .chat_main_li)");
+  friendItems.forEach(item => {
+    const favoriteIcon = document.createElement("i");
+    favoriteIcon.classList.add("fa", "fa-star", "favorite-icon");
+    favoriteIcon.addEventListener("click", toggleFavorite);
+    item.appendChild(favoriteIcon);
+  });
+
+  const adminList = document.querySelector(".adminList");
+
+  // adminList 밑에 있는 li 요소들이 추가되는지 관찰
+  const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.addedNodes.length > 0) {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const adminFriendItems = addedNodes.filter(node => node.matches && node.matches(".adminList .chat_main_li"));
+        adminFriendItems.forEach(item => {
+          const favoriteIcon = document.createElement("i");
+          favoriteIcon.classList.add("fa", "fa-star", "favorite-icon");
+          favoriteIcon.addEventListener("click", toggleFavorite);
+          item.appendChild(favoriteIcon);
+        });
+      }
+    }
+  });
+
+  // adminList 밑에 있는 li 요소들이 추가되는지 관찰 시작
+  observer.observe(adminList, { childList: true });
+}
+
+// 즐겨찾기 아이콘을 토글하는 함수
+function toggleFavorite(event) {
+  const favoriteIcon = event.target;
+  favoriteIcon.classList.toggle("fa-star");
+  favoriteIcon.classList.toggle("fa-star-o");
+  const friendItem = favoriteIcon.closest(".chat_main_li");
+
+  // 즐겨찾기 목록과 원래 목록에서 요소 이동
+  const favoriteList = document.getElementById("favorite_list");
+  const adminList = document.querySelector(".adminList");
+
+  if (favoriteList.contains(friendItem)) {
+    adminList.appendChild(friendItem);
+  } else {
+    favoriteList.appendChild(friendItem);
+  }
+  
+  
+}
+
+
+
+
+
+// 초기화 함수
+function init() {
+  addFavoriteIcon();
+}
+
+// 페이지 로드 시 초기화 함수 실행
+window.addEventListener("load", init);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기

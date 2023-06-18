@@ -11,6 +11,7 @@ import {path} from '../common/common.js';
 //저같은 경우에는 ajax로 데이터 넘겨줄 꺼라 해당 페이지 js로 변수 가져가서 이벤트 처리했습니다. 
 //이페이지에서 이벤트 처리할 경우 if() 자기페이지 걸어서 충돌나지 않게 조심 ***
 export let checkMemberNo;
+export let checkedNames;
 
 $("#all-user-view-int").keyup(function(key){
         modalAllMemberView();
@@ -125,7 +126,7 @@ function checkboxEventListeners() {
 //팀 체크박스 클릭시 해당 팀원들 자동체크해주는 기능
 function checkedEvent(checkbox){
     const teamName = checkbox.dataset.key  
-    console.log(teamName);  
+  //  console.log(teamName);  
     const rowCheckboxes = document.querySelectorAll(`input[type="checkbox"][data-key="${teamName}"]`)
     
     rowCheckboxes.forEach(function(uNameCheckbox) {
@@ -165,14 +166,19 @@ function checkMember(){
     //체크된 체크박스 확인 
     const checkboxes = document.querySelectorAll('#chat-all-member-table td input[type="checkbox"]:checked');
     checkMemberNo = [];
+    checkedNames = [];
     //해당 값 
     checkboxes.forEach(function(checkbox) {
         checkMemberNo.push(checkbox.value); 
+        checkedNames.push(checkbox.parentNode.nextElementSibling.textContent);
     });
+    
+     const checkedNamesDiv = document.getElementById('checkedNamesDiv');
+    checkedNamesDiv.innerHTML = '<div>' + checkedNames.join(', ') + '</div>'; //
 
     //모달 닫기
     $('#chat-all-user-view').modal('hide');
- //   console.log(checkMemberNo);
+
 }
 
 //input창이 있을 경우 input창을 통한 검색
