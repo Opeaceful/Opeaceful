@@ -127,7 +127,6 @@ public class OrgChartDao {
 	
 	// 인사발령
 	public int updatePersonnel(Map<String, Object> paramMap) {
-		System.out.println("===========================================================dao : "+paramMap);
 		return sqlSession.update("orgChartMapper.updatePersonnel", paramMap);
 	}
 }

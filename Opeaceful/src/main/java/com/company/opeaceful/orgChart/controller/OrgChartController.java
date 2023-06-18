@@ -62,8 +62,6 @@ public class OrgChartController {
 	@ResponseBody
 	public String selectDept() {
 		List<Department> dList = deptService.selectDeptList();
-			
-		System.out.println("dList에 담긴 값 : "+dList);
 		return new Gson().toJson(dList);
 	}
 	
@@ -73,8 +71,6 @@ public class OrgChartController {
 	public int insertTopDp(OrgChart orgChart) {
 		
 		int result = orgchartService.insertTopDp(orgChart);
-		
-//		System.out.println("생성 : "+result);
 
 		return result;
 	}
@@ -85,8 +81,6 @@ public class OrgChartController {
 	public int updateTopDp(OrgChart orgChart) {
 		
 		int result = orgchartService.updateTopDp(orgChart);
-		
-//		System.out.println("변경후 : "+result);
 
 		return result;
 	}
@@ -116,8 +110,6 @@ public class OrgChartController {
 			orgchartService.deleteDeptCode(map);
 		}
 		
-		System.out.println("=================================================result : "+result);
-		
 		return result;
 	}
 	
@@ -125,11 +117,8 @@ public class OrgChartController {
 	@PostMapping("/insertTopDeptCode")
 	@ResponseBody
 	public int insertDp(OrgChart orgChart) {
-//		System.out.println("첫생성 : "+orgChart);
 		
 		int result = orgchartService.insertDp(orgChart);
-		
-//		System.out.println("실행후생성 : "+result);
 
 		return result;
 	}
@@ -138,10 +127,9 @@ public class OrgChartController {
 	@PostMapping("/selectAll")
 	@ResponseBody
 	public String selectMember(int deptCode) {
-//		System.out.println(DeptCode);
+		
 		List<UserDepartment> udList = orgchartService.selectMember(deptCode);
 		
-		System.out.println("udList에 담긴 값 : "+udList);
 		return new Gson().toJson(udList);		
 	}
 	
@@ -161,8 +149,6 @@ public class OrgChartController {
 	public int insertPname(OrgChart orgChart) {
 			
 		int result = orgchartService.insertPname(orgChart);
-			
-//		System.out.println("생성 : "+result+", "+orgChart);
 
 		return result;
 	}
@@ -173,8 +159,6 @@ public class OrgChartController {
 	public String updatePname(OrgChart orgChart) {
 				
 		int result = orgchartService.updatePname(orgChart);
-				
-		System.out.println("생성 : "+result+", "+orgChart);
 
 		return new Gson().toJson(result);
 	}
@@ -215,8 +199,6 @@ public class OrgChartController {
 			}
 		}
 		
-//		System.out.println("map에 담긴 값 : " + map);
-		
 		model.addAttribute("map", map);
 			
 		return "orgChart/orgChartView";
@@ -237,15 +219,14 @@ public class OrgChartController {
 	@PostMapping("/personnel")
 	@ResponseBody
 	public String selectPersonnel(int deptCode,int topDeptCode) {
-		System.out.println(topDeptCode);
+		
 		Map<String, Object> map = new HashMap<>();
+		
 		map.put("deptCode", deptCode);
 		map.put("topDeptCode", topDeptCode);
+		
 		List<OrgChart> personnelList = orgchartService.selectPersonnel(map);
 		
-		System.out.println("personnelList에 담긴 값 : "+personnelList);
-		
-		System.out.println(deptCode);
 		return new Gson().toJson(personnelList);
 				
 	}
@@ -271,14 +252,9 @@ public class OrgChartController {
 	        resendMap.put("userNo", obj.get("userNo"));
 	        resendMap.put("deptCode", obj.get("deptCode"));
 	        resendMap.put("pCode", obj.get("pCode"));
-	        
 	            
 	        resendList.add(resendMap);
-	        System.out.println("resendMap"+resendMap);
 	    }
-	    
-	    System.out.println("resendList"+resendList);
-	    System.out.println("paramMap"+paramMap);
 	 
 	    paramMap.put("resendList", resendList);
 	 

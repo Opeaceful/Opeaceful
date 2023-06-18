@@ -4,7 +4,6 @@ import * as AprFront from './approvalFormFront.js';
 let defaultPath = path + '/approval/approvalForm';
 
 export function insertForm(formData) {
-  console.log('저장 시작');
   $.ajax({
     url: defaultPath + '/insertForm',
     data: formData,
@@ -16,11 +15,8 @@ export function insertForm(formData) {
       if (result > 0) {
         swal('저장이 완료되었습니다.', {
           buttons: { confirm: '확인' },
-        }).then(function (isConfirm) {
-          if (isConfirm) {
-            window.location.reload();
-          }
-        });
+        })
+        AprFront.clickSelectedBtn();
       } else {
         swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
           buttons: { cancel: '확인' },
@@ -64,7 +60,6 @@ export function selectForm(formNo) {
     },
     type: 'POST',
     success: function (form) {
-      console.log(form);
       AprFront.resetAddForm(form.type, form.title, form.content);
     },
     error: function (request) {
@@ -112,6 +107,8 @@ export function updateForm(formData) {
         }).then(function () {
           selectForm(formData.get('formNo'));
         });
+
+        AprFront.clickSelectedBtn();
       } else {
         swal('예기치 않은 오류가 발생했습니다. 다시 시도해주세요.', {
           buttons: { cancel: '확인' },

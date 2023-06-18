@@ -247,25 +247,7 @@ VALUES
 INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'S01');
 INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T01');
 INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T02');
-INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'D01');
 
--- 휴가 등록 임시
-INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
-VALUES
-		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
-		(3, 3, "오후반차", 0, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
-        (3, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
-		(3, 1, "휴가", 0, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
-		(3, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
-        (3, 2, "오전반차", -1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
-        (3, 1, "휴가", 2, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
-        (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
-
--- 유저 1,2,8에 연차 임시로 넣어둠
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
--- 테스트 데이터 입력용 프로시저
 
 -- approval 더미 데이터 생성용
 DELIMITER $$
@@ -275,22 +257,22 @@ BEGIN
     WHILE (i <= 20) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
         INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 		VALUES
-			(i, 1, "휴가", -1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
-			(i, 3, "오후반차", -1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
-			(i, 1, "휴가", -1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
+			(i, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
+			(i, 3, "오후반차", 1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
+			(i, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
 			(i, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
-			(i, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
-			(i, 2, "오전반차", 1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
+			(i, 3, "오후반차", -1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
+			(i, 2, "오전반차", -1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
 			(i, 1, "휴가", 0, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
 			(i, 0, "일반", 0, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
         INSERT INTO approval_line(APPROVAL_NO, CONFIRM_STATUS, DATE, LEVEL, STATUS, TYPE, USER_NO)
-		VALUES  (i*8-7 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ),
-				(i*8-6 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ),
-				(i*8-5 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ),
+		VALUES  (i*8-7 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
+				(i*8-6 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
+				(i*8-5 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
 				(i*8-4 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
-				(i*8-3 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
-				(i*8-2 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
+				(i*8-3 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ),
+				(i*8-2 , 'Y', '2023-05-20 10:45', 1,  -1 , 'A' , i ),
 				(i*8-1 , 'Y', null, 1,  1 , 'A' , i ),
 				(i*8 , 'N', null , 1,  1 , 'A' , i );
 
@@ -301,33 +283,204 @@ DELIMITER ;
 CALL add_approval(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
 DROP PROCEDURE IF EXISTS add_approval; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
 
+-- 휴가 등록 임시
+-- INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+-- VALUES
+-- 		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
+-- 		(3, 3, "오후반차", 0, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
+--         (3, 1, "휴가", 1, '2022-12-24 11:24' ,'2022-12-29','2023-01-02'),
+-- 		(3, 1, "휴가", 0, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
+-- 		(3, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-02-08','2023-02-08'),
+--         (3, 2, "오전반차", -1, '2023-02-25 13:05' ,'2023-03-02','2023-03-02'),
+--         (3, 1, "휴가", 2, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
+--         (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
+
+-- 유저 1,2,8에 연차 임시로 넣어둠
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
+UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
+-- 테스트 데이터 입력용 프로시저
+
+
 
 
 -- approval_form 더미 데이터 생성용
--- DELIMITER $$
--- CREATE PROCEDURE add_approval_form() -- ⓐ myFunction이라는 이름의 프로시저
--- BEGIN
---     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
---     WHILE (i <= 10) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
---         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, CONCAT('일반', i), '<p>일반</p>');
---         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, CONCAT('연차', i+1), '<p>연차</p>');
---         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, CONCAT('오전반차', i+2), '<p>오전반차</p>');
---         INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, CONCAT('오후반차', i+3), '<p>오후반차</p>');
---
---         SET i = i +4; -- ⓔ i값에 4더해주고 WHILE문 처음으로 이동
---     END WHILE;
--- END$$
--- DELIMITER ;
-
--- CALL add_approval_form(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
--- DROP PROCEDURE IF EXISTS add_approval_form; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, '지출결의서', '<table style="border-collapse: collapse; width: 88.9823%; height: 556px;" border="1">
+ <tbody>
+ <tr style="height: 66.7344px;">
+ <td style="height: 66.7344px; text-align: center; width: 99.9101%;" colspan="5"><span style="font-size: 24pt;"><strong>지 출 결 의 서&nbsp;</strong></span><strong><br /></strong></td>
+ </tr>
+ <tr style="height: 20px;">
+ <td style="height: 60px; text-align: center; width: 11.1345%;" rowspan="3">인적사항</td>
+ <td style="width: 13.7605%; height: 20px; text-align: center;">소&nbsp; &nbsp; 속</td>
+ <td style="height: 20px; width: 75.0151%;" colspan="3">&nbsp;</td>
+ </tr>
+ <tr style="height: 20px;">
+ <td style="width: 13.7605%; height: 20px; text-align: center;">직&nbsp; &nbsp; 위</td>
+ <td style="height: 20px; width: 75.0151%;" colspan="3">&nbsp;</td>
+ </tr>
+ <tr style="height: 20px;">
+ <td style="width: 13.7605%; height: 20px; text-align: center;">성&nbsp; &nbsp; 명</td>
+ <td style="height: 20px; width: 75.0151%;" colspan="3">&nbsp;</td>
+ </tr>
+ <tr style="height: 42.1719px;">
+ <td style="text-align: center; height: 42.1719px; width: 11.1345%;">지출 금액</td>
+ <td style="text-align: center; height: 42.1719px; width: 88.7756%;" colspan="4">000,000 원</td>
+ </tr>
+ <tr style="height: 34.8594px;">
+ <td style="text-align: center; height: 219.094px; width: 11.1345%;" rowspan="6">내역</td>
+ <td style="text-align: center; height: 34.8594px; width: 33.7336%;" colspan="2">사용처</td>
+ <td style="width: 19.8529%; text-align: center; height: 34.8594px;">금액</td>
+ <td style="width: 35.1891%; height: 34.8594px; text-align: center;">비고</td>
+ </tr>
+ <tr style="height: 36.5938px;">
+ <td style="text-align: center; width: 33.7336%; height: 36.5938px;" colspan="2">&nbsp;</td>
+ <td style="width: 19.8529%; height: 36.5938px;">&nbsp;</td>
+ <td style="width: 35.1891%; height: 36.5938px;">&nbsp;</td>
+ </tr>
+ <tr style="height: 37.5938px;">
+ <td style="text-align: center; width: 33.7336%; height: 37.5938px;" colspan="2">&nbsp;</td>
+ <td style="width: 19.8529%; height: 37.5938px;">&nbsp;</td>
+ <td style="width: 35.1891%; height: 37.5938px;">&nbsp;</td>
+ </tr>
+ <tr style="height: 35px;">
+ <td style="text-align: center; height: 35px;" colspan="2">&nbsp;</td>
+ <td style="width: 19.8529%; height: 35px;">&nbsp;</td>
+ <td style="width: 35.1891%; height: 35px;">&nbsp;</td>
+ </tr>
+ <tr style="height: 39.6094px;">
+ <td style="text-align: center; width: 33.7336%; height: 39.6094px;" colspan="2">&nbsp;</td>
+ <td style="width: 19.8529%; height: 39.6094px;">&nbsp;</td>
+ <td style="width: 35.1891%; height: 39.6094px;">&nbsp;</td>
+ </tr>
+ <tr style="height: 35.4375px;">
+ <td style="text-align: center; height: 35.4375px; width: 33.7336%;" colspan="2">&nbsp;</td>
+ <td style="width: 19.8529%; height: 35.4375px;">&nbsp;</td>
+ <td style="width: 35.1891%; height: 35.4375px;">&nbsp;</td>
+ </tr>
+ <tr style="height: 168px;">
+ <td style="text-align: center; width: 99.9101%; height: 168px;" colspan="5">
+ <p style="text-align: left;">&nbsp; &nbsp; 위 금액을 청구하오니 결재 바랍니다</p>
+ <p style="text-align: left;">&nbsp;</p>
+ <p>0000&nbsp; 년&nbsp; &nbsp; &nbsp; 00&nbsp; 월&nbsp; &nbsp; &nbsp; 00&nbsp; 일</p>
+ <p>&nbsp;</p>
+ <p>&nbsp;</p>
+ </td>
+ </tr>
+ </tbody>
+ </table>');
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청서입니다', '<table style="border-collapse: collapse; width: 88.9823%; height: 762.891px;" border="1">
+ <tbody>
+ <tr style="height: 93.25px;">
+ <td style="height: 93.25px; text-align: center; width: 100%;" colspan="4"><span style="font-size: 24pt;"><strong>휴 가 신 청 서</strong></span></td>
+ </tr>
+ <tr style="height: 47.4375px;">
+ <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
+ <td style="width: 17.2269%; height: 47.4375px; text-align: center;">소&nbsp; &nbsp; 속</td>
+ <td style="height: 47.4375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 47.4375px;">
+ <td style="width: 17.2269%; height: 47.4375px; text-align: center;">직&nbsp; &nbsp; 위</td>
+ <td style="height: 47.4375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 43.9375px;">
+ <td style="width: 17.2269%; height: 43.9375px; text-align: center;">성&nbsp; &nbsp; 명</td>
+ <td style="height: 43.9375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 53.125px;">
+ <td style="text-align: center; height: 530.829px; width: 13.8655%;" rowspan="4">신청내용</td>
+ <td style="text-align: center; height: 101.188px; width: 17.2269%;" rowspan="2">휴가신청</td>
+ <td style="text-align: center; width: 54.937%; height: 53.125px;">0000&nbsp; 년&nbsp; &nbsp; &nbsp; 00&nbsp; 월&nbsp; &nbsp; &nbsp; 00&nbsp; 일 부터</td>
+ <td style="text-align: center; height: 101.188px; width: 13.9706%;" rowspan="2">( 0 일간 )</td>
+ </tr>
+ <tr style="height: 48.0625px;">
+ <td style="text-align: center; width: 54.937%; height: 48.0625px;">0000&nbsp; 년&nbsp; &nbsp; &nbsp; 00&nbsp; 월&nbsp; &nbsp; &nbsp; 00&nbsp; 일 까지</td>
+ </tr>
+ <tr style="height: 384.641px;">
+ <td style="text-align: center; width: 17.2269%; height: 384.641px;">신청 사유</td>
+ <td style="height: 384.641px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 45px;">
+ <td style="text-align: center; height: 45px; width: 17.2269%;">긴급연락처</td>
+ <td style="height: 45px; width: 68.9076%; text-align: left;" colspan="2">&nbsp;</td>
+ </tr>
+ </tbody>
+ </table>');
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 신청서입니다', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
+ <tbody>
+ <tr style="height: 93.25px;">
+ <td style="height: 93.25px; text-align: center; width: 100%;" colspan="4"><span style="font-size: 24pt;"><strong>휴 가 신 청 서</strong></span></td>
+ </tr>
+ <tr style="height: 47.4375px;">
+ <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
+ <td style="width: 17.2269%; height: 47.4375px; text-align: center;">소&nbsp; &nbsp; 속</td>
+ <td style="height: 47.4375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 47.4375px;">
+ <td style="width: 17.2269%; height: 47.4375px; text-align: center;">직&nbsp; &nbsp; 위</td>
+ <td style="height: 47.4375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 43.9375px;">
+ <td style="width: 17.2269%; height: 43.9375px; text-align: center;">성&nbsp; &nbsp; 명</td>
+ <td style="height: 43.9375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 59.188px;">
+ <td style="text-align: center; height: 488.829px; width: 13.8655%;" rowspan="3">신청내용</td>
+ <td style="text-align: center; height: 59.188px; width: 17.2269%;">휴가신청</td>
+ <td style="text-align: center; width: 54.937%; height: 59.188px;">0000&nbsp; 년&nbsp; &nbsp; &nbsp; 00&nbsp; 월&nbsp; &nbsp; &nbsp; 00&nbsp; 일&nbsp; 오전</td>
+ <td style="text-align: center; height: 59.188px; width: 13.9706%;">( 0.5 일간 )</td>
+ </tr>
+ <tr style="height: 384.641px;">
+ <td style="text-align: center; width: 17.2269%; height: 384.641px;">신청 사유</td>
+ <td style="height: 384.641px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 45px;">
+ <td style="text-align: center; height: 45px; width: 17.2269%;">긴급연락처</td>
+ <td style="height: 45px; width: 68.9076%; text-align: left;" colspan="2">&nbsp;</td>
+ </tr>
+ </tbody>
+ </table>');
+INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 신청서입니다', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
+ <tbody>
+ <tr style="height: 93.25px;">
+ <td style="height: 93.25px; text-align: center; width: 100%;" colspan="4"><span style="font-size: 24pt;"><strong>휴 가 신 청 서</strong></span></td>
+ </tr>
+ <tr style="height: 47.4375px;">
+ <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
+ <td style="width: 17.2269%; height: 47.4375px; text-align: center;">소&nbsp; &nbsp; 속</td>
+ <td style="height: 47.4375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 47.4375px;">
+ <td style="width: 17.2269%; height: 47.4375px; text-align: center;">직&nbsp; &nbsp; 위</td>
+ <td style="height: 47.4375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 43.9375px;">
+ <td style="width: 17.2269%; height: 43.9375px; text-align: center;">성&nbsp; &nbsp; 명</td>
+ <td style="height: 43.9375px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 59.188px;">
+ <td style="text-align: center; height: 488.829px; width: 13.8655%;" rowspan="3">신청내용</td>
+ <td style="text-align: center; height: 59.188px; width: 17.2269%;">휴가신청</td>
+ <td style="text-align: center; width: 54.937%; height: 59.188px;">0000&nbsp; 년&nbsp; &nbsp; &nbsp; 00&nbsp; 월&nbsp; &nbsp; &nbsp; 00&nbsp; 일&nbsp; 오후</td>
+ <td style="text-align: center; height: 59.188px; width: 13.9706%;">( 0.5 일간 )</td>
+ </tr>
+ <tr style="height: 384.641px;">
+ <td style="text-align: center; width: 17.2269%; height: 384.641px;">신청 사유</td>
+ <td style="height: 384.641px; width: 68.9076%;" colspan="2">&nbsp;</td>
+ </tr>
+ <tr style="height: 45px;">
+ <td style="text-align: center; height: 45px; width: 17.2269%;">긴급연락처</td>
+ <td style="height: 45px; width: 68.9076%; text-align: left;" colspan="2">&nbsp;</td>
+ </tr>
+ </tbody>
+ </table>');
 
 -- salary 더미 데이터 생성용
 DELIMITER $$
-CREATE PROCEDURE addsalary() -- ⓐ  프로시져
+CREATE PROCEDURE addsalary()
 BEGIN
-    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-     WHILE (i <= 12) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+    DECLARE i INT DEFAULT 1;
+     WHILE (i <= 12) DO
  		INSERT INTO salary (USER_NO,USER_NAME,YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
 	    VALUES
         (8,'정승민',2023, i,'2023-06-05','3,750,000', '515,500', '3,234,500', '기본급,3000000,식대,100000,주휴수당,500000,기타수당,150000', '국민연금,120000,건강보험,143500,고용보험,87000,소득세,150000,지방소득세,15000', '부장', '인사팀'),
@@ -350,9 +503,8 @@ BEGIN
 END$$
 DELIMITER ;
 
-CALL addsalary(); -- 프로시저 실행
-DROP PROCEDURE IF EXISTS addsalary; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
-
+CALL addsalary();
+DROP PROCEDURE IF EXISTS addsalary;
 
 
 -- DELIMITER $$

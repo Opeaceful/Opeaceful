@@ -14,30 +14,30 @@ import com.company.opeaceful.salary.model.vo.Salary;
 
 @Repository
 public class SalaryDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
 	public List<Salary> employeeSalary(Map<String, Object> selectYM) {
-		return sqlSession.selectList("salaryMapper.employeeSalary",selectYM);
+		return sqlSession.selectList("salaryMapper.employeeSalary", selectYM);
 	}
 
 	public Salary salaryOne(int id) {
-		return sqlSession.selectOne("salaryMapper.salaryOne",id);
+		return sqlSession.selectOne("salaryMapper.salaryOne", id);
 	}
 
-	public List<Salary> employeeAllSalary(PageInfo pi,Map<String, Object> selectYMT) {
-		
+	public List<Salary> employeeAllSalary(PageInfo pi, Map<String, Object> selectYMT) {
+
 		int offset = (pi.getCurrentPage() - 1) * pi.getSettingLimit();
 		int limit = pi.getSettingLimit();
-		
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return sqlSession.selectList("salaryMapper.employeeAllSalary",selectYMT,rowBounds);
+
+		return sqlSession.selectList("salaryMapper.employeeAllSalary", selectYMT, rowBounds);
 	}
-	
+
 	public int employeeAllSalaryCount(Map<String, Object> selectYMT) {
-		return sqlSession.selectOne("salaryMapper.employeeAllSalaryCount",selectYMT);
+		return sqlSession.selectOne("salaryMapper.employeeAllSalaryCount", selectYMT);
 	}
 
 	public List<String> salaryList() {
@@ -45,23 +45,23 @@ public class SalaryDao {
 	}
 
 	public int salaryDelete(int num) {
-		return sqlSession.delete("salaryMapper.salaryDelete",num);
+		return sqlSession.delete("salaryMapper.salaryDelete", num);
 	}
 
 	public int salaryUpdate(Salary salary) {
-		return sqlSession.update("salaryMapper.salaryUpdate",salary);
+		return sqlSession.update("salaryMapper.salaryUpdate", salary);
 	}
-	
+
 	public List<Member> selectSalayMember(int[] intArray) {
-		return sqlSession.selectList("memberMapper.checkMemberNoSelectSalary",intArray);
+		return sqlSession.selectList("memberMapper.checkMemberNoSelectSalary", intArray);
 	}
 
 	public int insertSalary(List<Salary> userList) {
-		return sqlSession.insert("salaryMapper.insertSalary",userList);
+		return sqlSession.insert("salaryMapper.insertSalary", userList);
 	}
 
 	public Salary selectUserCope(Map<String, Object> selectYMT) {
-		return sqlSession.selectOne("salaryMapper.selectUserCope",selectYMT);
+		return sqlSession.selectOne("salaryMapper.selectUserCope", selectYMT);
 	}
 
 	public List<Integer> deleteSalayselect() {
@@ -69,12 +69,7 @@ public class SalaryDao {
 	}
 
 	public int deleteSalay(List<Integer> dslist) {
-		return sqlSession.delete("salaryMapper.deleteSalay",dslist);
+		return sqlSession.delete("salaryMapper.deleteSalay", dslist);
 	}
-
-
-
-	
-
 
 }
