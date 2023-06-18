@@ -38,7 +38,7 @@
 					<div class="search-wrap2 input-group mb-3 ms-1">
 						<input type="text"
 							class="search-input2 form-control box-shadow-none"
-							placeholder="사원번호 또는 이름 입력" id="all-user-view-int">
+							placeholder="이름 입력" id="all-user-view-int">
 						<button class="btn btn-outline-secondary search-btn2"
 							type="button">
 							<i class="fa-solid fa-magnifying-glass"></i>
