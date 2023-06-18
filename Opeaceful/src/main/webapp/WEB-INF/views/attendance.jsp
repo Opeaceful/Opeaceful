@@ -180,7 +180,6 @@
     <script type="module" src="${path}/resources/js/attendance.js"></script>
     <script>
     	let userNo = ${loginUser.userNo};
-    	console.log(userNo);
     </script>
 </body>
 </html>
