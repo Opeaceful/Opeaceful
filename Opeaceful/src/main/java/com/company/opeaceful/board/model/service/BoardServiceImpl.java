@@ -55,8 +55,25 @@ public class BoardServiceImpl implements BoardService {
 		list.get(0).getBoardNo();
 		System.out.println("list담긴 값 : " + list);
 		System.out.println("리스트에서 꺼낸 0번째 글 보드넘버 : "+ list.get(0).getBoardNo());
+		System.out.println("리스트 3번째 글 다음글 번호 : "+ list.get(3).getNext());
 		map.put("pi", pi);
 		map.put("list", list);
+		
+		//ArrayList<Board> next = new ArrayList();
+		//ArrayList<Board> before = new ArrayList();
+		
+		// 반복문 돌려서 현재 글번호랑 , 다음글 혹은 이전글만 담아서 맵으로 넘기기
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 	// 검색된 게시글 목록 조회

@@ -173,8 +173,15 @@
 			START_DATE = #{startDate},
 			END_DATE = #{endDate},
 			COLOR = #{color},
-			D_DAY = #{dDay}
-		
+			D_DAY = #{dDay},
+			<choose>
+			<when test='deptCode == -10'>
+			DEPT_CODE = NULL
+			</when>
+			<otherwise>
+			DEPT_CODE = #{deptCode}
+			</otherwise>
+			</choose>
 		WHERE CALENDAR_NO = #{calendarNo}
 	</update>
 	
