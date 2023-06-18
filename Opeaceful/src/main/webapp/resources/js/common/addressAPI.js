@@ -7,13 +7,13 @@
 //주소가 들어갈 input에 : id="user-address"
 //상세 주소 input에 : id="user-address-dtail"
 
-
-window.onload = function(){
-
-   
-    document.getElementById("seach-address").addEventListener("click", function(){ //아이콘 클릭시
-        //카카오 지도 발생
-        DaumAddressAPI();
+window.onload = function () {
+  document
+    .getElementById("seach-address")
+    .addEventListener("click", function () {
+      //아이콘 클릭시
+      //카카오 지도 발생
+      DaumAddressAPI();
     });
 
   document

@@ -133,7 +133,6 @@ thead td:first-child{width: 199px;}
 }
 .popover-body{
 	display: flex;
-	color: var(--font-black);
 }
 .user-profileImg{
     border: 1px solid;
