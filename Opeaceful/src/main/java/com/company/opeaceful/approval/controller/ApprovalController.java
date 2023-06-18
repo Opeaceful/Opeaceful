@@ -99,7 +99,6 @@ public class ApprovalController {
 			model.addAttribute("list", aprService.selectApprovalListforAuthorize(userNo, "wait", 0, -1, currentYear, 1));
 			model.addAttribute("count", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, false));
 		}else {
-			System.out.println("메뉴 null로 해서 들어옴");
 			// 전체메뉴로 선택
 			model.addAttribute("menu" , "all");
 			model.addAttribute("list", aprService.selectApprovalList(userNo, null, -1, currentYear, 1, false));
@@ -244,7 +243,6 @@ public class ApprovalController {
 										String menu,
 										String status
 										) {
-		System.out.println(year+"==========들어온 페이지=========================="+status);
 		Integer aprStatus = null;
 		if (status != null && !status.equals("all")) {
 			aprStatus = Integer.parseInt(status);
@@ -480,7 +478,6 @@ public class ApprovalController {
 			// 기안자 유저번호 저장
 			approval.setUserNo(loginUser.getUserNo());
 			int approvalNo = approval.getApprovalNo();
-			System.out.println("문서 업데이트=============== "+ approvalNo);
 			
 			//------------------------ 결재라인 저장 구역 --------------------------------
 			// 결재라인 저장용
@@ -726,7 +723,6 @@ public class ApprovalController {
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
 		
 		int result = 0;
-		System.out.println("============================="+approval);
 		
 		Approval existApproval = aprService.selectApproval(approval.getApprovalNo());
 		
@@ -767,8 +763,6 @@ public class ApprovalController {
 			result = existApproval.getUserNo();
 		}
 		
-		System.out.println("===================결재 완료처리=================="+ result +"     "+ existApproval.getUserNo());
-		
 		return result;
 	}
 	
@@ -779,7 +773,6 @@ public class ApprovalController {
 	public int updateApprovalReturn( 	@ModelAttribute("loginUser") Member loginUser,
 										Integer approvalNo) {
 		int result = 0;
-		System.out.println("=============================반려처리=========="+approvalNo);
 		
 		if(approvalNo != 0 ) {
 			result =aprService.updateApprovalStatus(approvalNo, -1);

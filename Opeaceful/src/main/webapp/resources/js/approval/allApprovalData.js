@@ -37,7 +37,6 @@ export function searchApprovalList(userNo, year, type, page, status, keyword) {
       keyword,
     },
     success: function (result) {
-      console.log(result);
       AllAprFront.setTableList(result.list, result.count, page);
     },
     error: function (request) {
