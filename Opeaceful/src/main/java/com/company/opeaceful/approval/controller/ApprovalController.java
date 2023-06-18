@@ -720,10 +720,10 @@ public class ApprovalController {
 	// ajax용 결재문서 완결처리
 	@ResponseBody
 	@PostMapping("/updateApprovalStateEnd")
-	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
+	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval, @ModelAttribute ("loginUser") Member loginUser) {
 		
 		int result = 0;
-		
+		//loginUser.getUserNo()
 		Approval existApproval = aprService.selectApproval(approval.getApprovalNo());
 		
 		// 작성자 userNo 세팅
@@ -739,13 +739,17 @@ public class ApprovalController {
 				
 				Calendar calendar = new Calendar();
 				String name = "";
+				//approval.userName(정승민 부장) => (정승민) 이름만 자르기
+				String str = apv.getUserName();
+				int idx = str.indexOf(" ");
+				String rename = str.substring(0, idx);
 				
 				switch(apv.getType()) {
 				case 1 :name = "휴가"; break;
 				case 2 :name = "오전반차"; break;
 				case 3 :name = "오후반차"; break;
 				}
-				calendar.setTitle(apv.getUserName()+" "+name); // ex)ㅇㅇㅇ 휴가
+				calendar.setTitle(rename+" "+name); // ex)ㅇㅇㅇ 휴가
 				calendar.setContent(apv.getApprovalNo()+"");
 				calendar.setCategory("H");
 				calendar.setUserNo(apv.getUserNo());
