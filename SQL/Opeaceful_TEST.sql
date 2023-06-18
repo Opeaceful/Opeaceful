@@ -247,7 +247,6 @@ VALUES
 INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'S01');
 INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T01');
 INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T02');
-INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'D01');
 
 
 -- approval 더미 데이터 생성용
