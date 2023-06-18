@@ -23,7 +23,7 @@
 
 	<!-- =================== [select] =================== -->
 	
-	<!-- 부서 조회 -->
+	<!-- 전체 부서 조회 -->
 	<select id="selectDept" parameterType="orgChart" resultType="_int">
 		SELECT COUNT(*) 
 		FROM USER_DEPARTMENT 
@@ -38,6 +38,14 @@
 								 DEPT_CODE = #{deptCode} AND TOP_DEPT_CODE = #{topDeptCode})
 							  </if>
 			
+	</select>
+	
+	<!-- 하위 부서 인원 조회 -->
+	<select id="countDept" resultType="_int">
+		SELECT COUNT(*)
+		FROM USER_DEPARTMENT 
+		LEFT JOIN DEPARTMENT USING (DEPT_CODE)
+		WHERE DEPT_CODE = #{deptCode} AND TOP_DEPT_CODE = #{topDeptCode};
 	</select>
 	
 	<!-- 직급 조회 -->

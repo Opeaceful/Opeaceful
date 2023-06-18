@@ -29,7 +29,6 @@ function redirectToAttendanceCheck() {
   diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
   if (diff < 365) {
-  
           location.href = `${path}/attendance/check?userNo=${userNo}&year1=${year1}&month1=${month1}&day1=${day1}&year2=${year2}&month2=${month2}&day2=${day2}`;
   } else {
    swal('최대 일년까지 조회 가능합니다.',{buttons: {cancel :'확인'}});
