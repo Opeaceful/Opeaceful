@@ -28,6 +28,9 @@ import com.company.opeaceful.attendance.model.vo.Attendance;
 import com.company.opeaceful.board.controller.BoardController;
 import com.company.opeaceful.board.model.service.BoardService;
 import com.company.opeaceful.board.model.vo.Board;
+import com.company.opeaceful.chat.model.service.ChatService;
+import com.company.opeaceful.chat.model.vo.Chat;
+import com.company.opeaceful.chat.model.vo.ChatParticipant;
 import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.member.MailUtil;
 import com.company.opeaceful.member.model.service.MemberService;
@@ -36,7 +39,7 @@ import com.company.opeaceful.role.model.service.RoleService;
 import com.company.opeaceful.role.model.vo.UserRole;
 
 @Controller
-@SessionAttributes({"loginUser"})
+@SessionAttributes({"loginUser", "chatRoomList"})
 public class LoginController {
 	
 	private MemberService memberService;
@@ -59,6 +62,10 @@ public class LoginController {
 		this.roleService = roleService;
 		
 	}
+	
+	@Autowired
+	private ChatService chatService;
+	
 	// spring-quartz.xml 사용시 기본생성자 필요
 	public LoginController() {}
 	
@@ -177,7 +184,7 @@ public class LoginController {
 	
 	// 로그인유저 조회 + 메인에 필요한 자료 얻어옴
 	@GetMapping("/main")
-	public String MainMember(Model model, @ModelAttribute("loginUser") Member loginUser,
+	public String MainMember(Model model, @ModelAttribute("loginUser") Member loginUser,ChatParticipant join,
 							 HttpSession session) {
 
 		if(loginUser != null) {
@@ -194,6 +201,12 @@ public class LoginController {
 			// 사이드바 권한 조회
 			List<UserRole> loginUserRole = roleService.loginUserRoleSelect(userNo);
 			// 공지사항 상세
+			
+			// [진기] 채팅방리스트 
+			List<Integer> chatRoomList = chatService.chatRoomNoList(loginUser);
+			List<Chat> list = chatService.joinChatRoom(join);
+			
+			
 			Map<String, Object> map = new HashMap<>();
 			map.put("mainNoticeList", mainNoticeList);
 			map.put("currentPage", 1);
@@ -204,7 +217,15 @@ public class LoginController {
 			model.addAttribute("mainNoticeList", mainNoticeList);
 			model.addAttribute("attendance",attendance);
 			model.addAttribute("os", os);
+			
+			// [진기] 채팅방리스트
+			model.addAttribute("chatRoomList", chatRoomList);
+			model.addAttribute("list", list);
+			
 			session.setAttribute("loginUserRole", loginUserRole);
+			
+			// [진기] 채팅방리스트
+			session.setAttribute("userNo", userNo);
 			
 			return "main";
 		}else {

@@ -19,9 +19,13 @@ public interface ChatService {
 	public abstract ArrayList<Board> noticeList();
 	
 	
-	List<ChatRoom> selectChatRoomList();
+	List<ChatRoom> selectChatRoomList(Member loginUser);
 	
 	int openChatRoom(ChatRoom cr);
+	
+	void addChatParticipant(int chatRoomNo, int userNo, String roomTitle);
+	
+	
 	
 	List<Chat> joinChatRoom(ChatParticipant cp);
 	
@@ -39,6 +43,11 @@ public interface ChatService {
 	// 룸번호 받아서 해당 룸에 참여중인 유저 조회
 	List<ChatParticipant> getParticipantsInRoom(int chatRoomNo);
 	
+	List<Integer> chatRoomNoList(Member loginUser);
+	
+	List<Member> getChatRoomParticipants(int chatRoomNo);
+	
+	 List<ChatParticipant> chatRoomListMemberList(int userNo);
 	
 	
 }
