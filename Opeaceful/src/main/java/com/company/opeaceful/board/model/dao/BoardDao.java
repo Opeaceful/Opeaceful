@@ -130,4 +130,9 @@ public class BoardDao {
 		return sqlSession.selectOne("deptMapper.calendarDeptCode", userNo);
 	}
 	
+	public Board beforeNextTitle(int boardNum) {
+		//logger.info("dao  로거");
+		return sqlSession.selectOne("boardMapper.beforeNextTitle", boardNum);
+	}
+	
 }

@@ -43,7 +43,7 @@ public interface BoardService {
 	
 	public int selectDeptCode(int userNo);
 	
-	
+	public Board beforeNextTitle(int boardNo);
 	
 	
 	
