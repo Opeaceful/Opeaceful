@@ -52,3 +52,13 @@ function userRoleGranting(id, checked) {
     },
   });
 }
+
+$("#member-search-keyword").on("keyup", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    if(checkMemberNo.length == 1){
+      location.href = `${path}/role/selectMRole/${checkMemberNo[0]}`;
+    }else if(checkMemberNo.length > 1){
+      $("#all-user-view").modal("show");
+    }
+}});
