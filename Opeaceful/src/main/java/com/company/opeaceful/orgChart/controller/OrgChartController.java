@@ -53,7 +53,6 @@ public class OrgChartController {
 	
 	@GetMapping("/")
 	public String orgChart() {
-		System.out.println("들어옴????");
 		return "orgChart/orgChartEnroll";
 	}
 	

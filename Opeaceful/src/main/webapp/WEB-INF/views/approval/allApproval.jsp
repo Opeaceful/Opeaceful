@@ -154,8 +154,7 @@ pageEncoding="UTF-8" import="java.time.LocalDate , java.util.ArrayList, com.comp
 				class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 				<div class="modal-content position-modal">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="staticBackdropLabel">결재양식
-							선택</h1>
+						<h1 class="modal-title fs-5" id="staticBackdropLabel">사원 검색</h1>
 
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							data-bs-target="#modal-select-approval-type" aria-label="Close"></button>
