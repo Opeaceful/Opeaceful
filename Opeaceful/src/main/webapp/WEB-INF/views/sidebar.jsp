@@ -232,6 +232,18 @@
     
      <jsp:include page="/WEB-INF/views/chat.jsp"></jsp:include>
 	 
+
+    <!-- (승은) 전자결재 알림용 div -->
+     <div id="div-apr-info-wrap">
+        <div class="div-apr-info-line">
+            <div></div>
+            <button id="btn-apr-info-close" class="close"></button>
+        </div>
+        <div id="div-apr-info-text">
+        </div>
+      </div>
+
+
     <script>
     	/* 하위카테고리 숨겨두기 */
         $(".sidebar-more").css("display", "none");
@@ -281,5 +293,9 @@
    		);
 
     </script>
+
+    <!-- (승은) 전자결재 알림용 웹소켓 -->
+    <script type="module" src="${path}/resources/js/approval/aprWebsocket.js"></script>
+
 </body>
 </html>

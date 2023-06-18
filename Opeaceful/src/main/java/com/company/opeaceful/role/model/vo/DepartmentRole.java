@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class DepartmentRole {
-	
+
 	private int deptCode;
 	private int pCode;
 	private String roleCode;

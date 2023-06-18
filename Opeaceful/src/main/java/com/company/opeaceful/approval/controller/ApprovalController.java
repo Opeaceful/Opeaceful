@@ -99,7 +99,6 @@ public class ApprovalController {
 			model.addAttribute("list", aprService.selectApprovalListforAuthorize(userNo, "wait", 0, -1, currentYear, 1));
 			model.addAttribute("count", aprService.selectApprovalListforAuthorizeCount(userNo, "wait", 0 , -1, currentYear, false));
 		}else {
-			System.out.println("메뉴 null로 해서 들어옴");
 			// 전체메뉴로 선택
 			model.addAttribute("menu" , "all");
 			model.addAttribute("list", aprService.selectApprovalList(userNo, null, -1, currentYear, 1, false));
@@ -244,7 +243,6 @@ public class ApprovalController {
 										String menu,
 										String status
 										) {
-		System.out.println(year+"==========들어온 페이지=========================="+status);
 		Integer aprStatus = null;
 		if (status != null && !status.equals("all")) {
 			aprStatus = Integer.parseInt(status);
@@ -312,6 +310,7 @@ public class ApprovalController {
 		// 첫번째 결재자 찾는 용도
 		int firstA = 999;
 		int reali = 0;
+		int nextAuthorizeUserNo = 0;
 		
 		for(int i= 0; i< userNoList.length; i++) {
 			ApprovalLine line = new ApprovalLine();
@@ -325,6 +324,7 @@ public class ApprovalController {
 				if( levelList[i] < firstA ) {
 					firstA = levelList[i];
 					reali = i;
+					nextAuthorizeUserNo = userNoList[i];
 				}
 			}
 			line.setStatus(status);
@@ -451,6 +451,7 @@ public class ApprovalController {
 			map.put("signImg", signImg);
 		}else if(approvalNo > 0) {
 			map.put("result", 1);
+			map.put("nextAuthorizeUserNo", nextAuthorizeUserNo);
 		}else {
 			map.put("result", 0);
 		}
@@ -477,7 +478,6 @@ public class ApprovalController {
 			// 기안자 유저번호 저장
 			approval.setUserNo(loginUser.getUserNo());
 			int approvalNo = approval.getApprovalNo();
-			System.out.println("문서 업데이트=============== "+ approvalNo);
 			
 			//------------------------ 결재라인 저장 구역 --------------------------------
 			// 결재라인 저장용
@@ -678,12 +678,14 @@ public class ApprovalController {
 	// ajax용 결재문서 결재처리 ( + 결재자가 결재 후 다음 결재라인들 상태 변경) 
 	@ResponseBody
 	@PostMapping("/updateApprovalStateAuthorized")
-	public int updateApprovalStateAuthorized( 	Integer approvalNo,
+	public String updateApprovalStateAuthorized( 	Integer approvalNo,
 												Integer myLevel
 												) {
 		int result = 0;
 		// 다음 결재자 변수용
 		int nextAuthorizeLevel = 999;
+		// 다음결재자 유저번호 저장용(다음결재자한테 알림 날리기용도)
+		int nextAuthorizeUserNo = 0;
 		if(approvalNo != null && approvalNo != 0 && myLevel != null && myLevel != 0 ) {
 			List<ApprovalLine> lines = aprService.selectLineList("approval", approvalNo) ;
 
@@ -693,6 +695,7 @@ public class ApprovalController {
 				if(line.getType().equals("A")) {
 					if(line.getLevel() > myLevel && line.getLevel() < nextAuthorizeLevel) {
 						nextAuthorizeLevel = line.getLevel();
+						nextAuthorizeUserNo = line.getUserNo();
 					}
 				}
 			}
@@ -706,7 +709,11 @@ public class ApprovalController {
 			result = aprService.updateNextLinesStatus(approvalNo, nextAuthorizeLevel, myLevel);
 		}
 		
-		return result;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("result", result);
+		map.put("nextAuthorizeUserNo", nextAuthorizeUserNo);
+		
+		return new Gson().toJson(map);
 	}
 	
 	
@@ -716,7 +723,6 @@ public class ApprovalController {
 	public int updateApprovalStateEnd( 	@ModelAttribute Approval approval) {
 		
 		int result = 0;
-		System.out.println("============================="+approval);
 		
 		Approval existApproval = aprService.selectApproval(approval.getApprovalNo());
 		
@@ -752,6 +758,11 @@ public class ApprovalController {
 			}
 		}
 		
+		if(result > 0) {
+			// 결재완료 알림처리 위해 기안자 번호 돌려줌
+			result = existApproval.getUserNo();
+		}
+		
 		return result;
 	}
 	
@@ -762,13 +773,17 @@ public class ApprovalController {
 	public int updateApprovalReturn( 	@ModelAttribute("loginUser") Member loginUser,
 										Integer approvalNo) {
 		int result = 0;
-		System.out.println("=============================반려처리=========="+approvalNo);
 		
 		if(approvalNo != 0 ) {
 			result =aprService.updateApprovalStatus(approvalNo, -1);
 			if(result > 0) {				
 				result = aprService.updateLineStatusReturn(approvalNo, loginUser.getUserNo());
 			}
+		}
+		
+		if(result > 0) {
+			// 알림 발송을 위해 기안자 유저번호를 되돌려주기
+			result =  aprService.selectApproval(approvalNo).getUserNo();
 		}
 		
 		return result;

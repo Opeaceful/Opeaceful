@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Salary {
-		
+
 	private int salaryNo;
 	private int userNo;
 	private int yearReported;
@@ -20,11 +20,9 @@ public class Salary {
 	private String pName;
 	private String deptName;
 	private String userName;
-	
-	
-	//관리용
+
+	// 관리용
 	private int eno;
 	private String sPaymentDate;
 
 }
-
