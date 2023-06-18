@@ -101,7 +101,6 @@ let formatApprovalStatus = (status) => {
 // 날짜 형식 yyyy-MM-dd로포맷팅해서 반환
 let formatDate = (date) => {
   let tempDate = new Date(Date.parse(date));
-  console.log('날짜변환중 ', tempDate);
 
   // Date 객체에서 연도, 월, 일 추출
   const year = tempDate.getFullYear();
@@ -138,7 +137,6 @@ export function setTableList(approvalList, count, page) {
     // 버튼 리셋되면서 페이지 이동이 일어나게 된다면 함수 종료
     return;
   }
-  console.log('버튼 리셋 완료되고 테이블 리셋 시작됨');
   let tableHtml = '';
 
   if (approvalList != null && approvalList.length > 0) {
@@ -153,9 +151,9 @@ export function setTableList(approvalList, count, page) {
                       <td>${count - i - (page - 1) * 10}</td>
                       <td>${approval.formatDraftDate}</td>
                       <td>${approval.title}</td>
-                      <td>${approval.userName}${
-        approval.eno != 0 ? '(' + approval.eno + ')' : ''
-      }</td>
+                      <td>${approval.userName} ${
+        approval.pName ? approval.pName : ''
+      }${approval.eno != 0 ? '(' + approval.eno + ')' : ''}</td>
                       <td>${approval.status}</td>
                       <td>${approval.type}</td>
                     </tr>`;
@@ -238,7 +236,6 @@ export function resetPageBtn(currentBtnNum, count) {
     // 먼저 실행되고있었던 함수 종료 위해 true 리턴
     return true;
   } else {
-    console.log(clickBtn);
     clickBtn.className = 'selected-btn page-btn';
   }
 
@@ -697,7 +694,6 @@ let filterEvent = () => {
           // 결재 문서 삭제 진행
           let approvalNo =
             document.getElementById('end-approval').dataset.approvalno;
-          console.log('삭제할 문서 번호 ', approvalNo);
           AllAprData.deleteApproval(Number(approvalNo));
         }
       });
@@ -866,8 +862,6 @@ let setMemoEvent = () => {
   document
     .querySelector('#memo-modal-back .memo-list-table')
     .addEventListener('click', function (e) {
-      console.log(e.target, ' td눌림', e.target.tagName);
-
       // 부모 tr 찾기
       let memoNo = e.target.closest('tr').dataset.memono;
       AllAprData.selectMemo(Number(memoNo));

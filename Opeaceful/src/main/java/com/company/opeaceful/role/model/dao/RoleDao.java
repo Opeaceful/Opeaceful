@@ -16,9 +16,9 @@ public class RoleDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	public List<DepartmentRole> roleSelect(DepartmentRole departmentRole) {
-		return sqlSession.selectList("roleMapper.roleSelect",departmentRole);
+		return sqlSession.selectList("roleMapper.roleSelect", departmentRole);
 	}
 
 	public List<RoleList> roleListSelct() {
@@ -26,31 +26,31 @@ public class RoleDao {
 	}
 
 	public int roleGrantinginesrt(DepartmentRole departmentRole) {
-		return sqlSession.insert("roleMapper.roleGrantinginesrt",departmentRole);
+		return sqlSession.insert("roleMapper.roleGrantinginesrt", departmentRole);
 	}
 
 	public int roleGrantingdelete(DepartmentRole departmentRole) {
-		return sqlSession.delete("roleMapper.roleGrantingdelete",departmentRole);
+		return sqlSession.delete("roleMapper.roleGrantingdelete", departmentRole);
 	}
 
 	public Member userMemberSelect(int userNo) {
-		return sqlSession.selectOne("memberMapper.selectMemberOne",userNo);
+		return sqlSession.selectOne("memberMapper.selectMemberOne", userNo);
 	}
 
 	public List<UserRole> userRoleSelect(int userNo) {
-		return sqlSession.selectList("roleMapper.userRoleSelect",userNo);
+		return sqlSession.selectList("roleMapper.userRoleSelect", userNo);
 	}
 
 	public int userRoleGrantinginesrt(UserRole userRole) {
-		return sqlSession.insert("roleMapper.userRoleGrantinginesrt",userRole);
+		return sqlSession.insert("roleMapper.userRoleGrantinginesrt", userRole);
 	}
 
 	public int userRoleGrantingdelete(UserRole userRole) {
-		return sqlSession.delete("roleMapper.userRoleGrantingdelete",userRole);
+		return sqlSession.delete("roleMapper.userRoleGrantingdelete", userRole);
 	}
 
 	public List<UserRole> loginUserRoleSelect(int userNo) {
-		return sqlSession.selectList("roleMapper.loginUserRoleSelect",userNo);
+		return sqlSession.selectList("roleMapper.loginUserRoleSelect", userNo);
 	}
 
 }

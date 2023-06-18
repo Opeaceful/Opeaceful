@@ -4,53 +4,51 @@
 
 /*테이블 css*/
 /* 테이블 : 중간정렬*/
-.t-v-middle{
-    vertical-align: middle;
-    border-right: 1px solid var(--color-light-gray);
+.t-v-middle {
+  vertical-align: middle;
+  border-right: 1px solid var(--color-light-gray);
 }
-
 
 /*check박스 css*/
 .form-check-input:checked {
-    background-color: var(--navy-hover);
-    border-color: var(--color-navy);
+  background-color: var(--navy-hover);
+  border-color: var(--color-navy);
 }
 
 .form-check-input:focus {
-    border-color: var( --white-hover);
-    outline: 0;
-    box-shadow: 0 0 0 0.1rem var(--color-light-gray);
+  border-color: var(--white-hover);
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem var(--color-light-gray);
 }
 
 /*테이블 호버 수정*/
 
-#all-user-view .table-common>tbody>tr:hover {
-    background-color: initial;
+#all-user-view .table-common > tbody > tr:hover {
+  background-color: initial;
 }
-
 
 #all-user-view table {
-    --bs-table-active-bg: none;
-    --bs-table-hover-bg: none;
+  --bs-table-active-bg: none;
+  --bs-table-hover-bg: none;
 }
 
-#all-user-view .table-hover>tbody>tr:hover>* {
-    --bs-table-accent-bg: none; 
-    color: none;
+#all-user-view .table-hover > tbody > tr:hover > * {
+  --bs-table-accent-bg: none;
+  color: none;
 }
 
-#all-user-view .table-common>tbody>tr>td:hover {
-    background-color: var(--color-light-gray);
+#all-user-view .table-common > tbody > tr > td:hover {
+  background-color: var(--color-light-gray);
 }
 
-#all-user-view .table-common>tbody>tr>th:hover {
-    background-color: var(--color-light-gray);
+#all-user-view .table-common > tbody > tr > th:hover {
+  background-color: var(--color-light-gray);
 }
 
-.W-10{
-    width: 10%;
+.W-10 {
+  width: 10%;
 }
 
-#all-user-view-content{
-   height: 40rem
+#all-user-view-content {
+  height: 40rem;
 }

@@ -239,7 +239,6 @@ public class ApprovalFormController {
 				try {
 					changeName = FileRenamePolicy.saveFile( imgList[i] , serverFolderPath);
 					content = content.replace(src,"src=\""+changeName+"\"");
-					System.out.println(content);
 					
 					fileList.add(new ApprovalFile(changeName));
 				} catch (IllegalStateException | IOException e) {

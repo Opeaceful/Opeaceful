@@ -18,10 +18,7 @@ let memoEvent = () => {
     // 메모 내용부분 리셋
     document.getElementById('memo-add-content').value = '';
     document.getElementById('memo-add-content').readOnly = false;
-    console.log(
-      document.getElementById('memo-add-content').readOnly,
-      '메모 작성창 들어옴'
-    );
+
 
     // 삭제버튼 감추기
     document.getElementById('btn-add-memo-delete').style.display = 'none';

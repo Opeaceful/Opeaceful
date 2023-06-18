@@ -1,79 +1,68 @@
-
-
 /*fome select 호버이벤트 설정*/
-.form-select:focus{
-    border-color: var(--navy-hover); 
-    box-shadow: 0 0 0 0.1rem var(--navy-hover);
+.form-select:focus {
+  border-color: var(--navy-hover);
+  box-shadow: 0 0 0 0.1rem var(--navy-hover);
 }
 .form-select-sm {
-    min-width: 100px;
-    width: 10%;
+  min-width: 100px;
+  width: 10%;
 }
 
-
 /*세로 방지*/
-.table{
-    white-space: nowrap;
+.table {
+  white-space: nowrap;
 }
 
 /*버튼위치 조정*/
-.text-right{
-    text-align: right;
+.text-right {
+  text-align: right;
 }
-
-
 
 /*모달 */
 /*table 빈칸 적용 */
-.t-height{
-    height: 41px;
+.t-height {
+  height: 41px;
 }
 
 /*세로 방지*/
-.f-nowrap{
-    white-space: nowrap;
+.f-nowrap {
+  white-space: nowrap;
 }
-
 
 /*모달 타이틀*/
-.salary-title{
-    font-weight: 700;
-    font-size: 20px;
+.salary-title {
+  font-weight: 700;
+  font-size: 20px;
 }
 
-
-
 /*모달 footer 정리*/
-.t-margin{
-    margin: 10px;
+.t-margin {
+  margin: 10px;
 }
 
 .modal-footer {
-    display: block;
-    font-size: 18px;
+  display: block;
+  font-size: 18px;
 }
 
-.t-flex{
-    display: flex;
-    justify-content: end;
+.t-flex {
+  display: flex;
+  justify-content: end;
 }
-
 
 /*버튼 정렬 */
-.salary-btn{
-    display: flex;
-    justify-content: flex-end;
+.salary-btn {
+  display: flex;
+  justify-content: flex-end;
 }
-
 
 .form-control:focus {
-    border-color: var(--navy-hover); 
-    box-shadow: 0 0 0 0.1rem var(--navy-hover);
+  border-color: var(--navy-hover);
+  box-shadow: 0 0 0 0.1rem var(--navy-hover);
 }
 
-
-#swalPaymentDate{
-    background-color: var(--color-background);
-    color: var(--font-black);
-    border: 1px solid #ced4da;
+#swalPaymentDate {
+  background-color: var(--color-background);
+  color: var(--font-black);
+  border: 1px solid #ced4da;
 }

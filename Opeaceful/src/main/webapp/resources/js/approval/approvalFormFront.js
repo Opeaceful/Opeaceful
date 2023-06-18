@@ -118,7 +118,6 @@ export function resetPageBtn(currentBtnNum, count) {
 
   //최대 페이지 수
   let maxPage = Math.ceil(count / 10);
-  console.log('resetPageBtn 시작', currentBtnNum, maxPage);
 
   // 페이지버튼들 시작 숫자 저장용
   let startPage;
@@ -129,10 +128,10 @@ export function resetPageBtn(currentBtnNum, count) {
   if (currentBtnNum > maxPage) {
     // 만약 현재 버튼수가 최대페이지수보다 크면
     // 시작 페이지 숫자 = 최대페이지의 10의자리 수 + 1
-    startPage = Math.floor((maxPage - 1) / 10) * 10 + 1;
+    startPage = maxPage != 0 ? Math.floor((maxPage - 1) / 10) * 10 + 1 : 1;
 
     // 선택되어야 하는 버튼 번호 최대페이지수와 같게 다시 세팅
-    currentBtnNum = maxPage;
+    currentBtnNum = maxPage != 0 ? maxPage : 1;
   } else {
     // 그외는 현재 버튼번호 기준으로 세팅
     startPage = Math.floor((currentBtnNum - 1) / 10) * 10 + 1;
@@ -178,6 +177,12 @@ export function resetPageBtn(currentBtnNum, count) {
 // 모달 닫기 처리
 export function closeModal() {
   document.querySelector('.modal-header .btn-close').click();
+}
+
+// 현재 선택되어있는 페이지 버튼에 다시 클릭주기(페이지 아이템들 리셋용)
+export function clickSelectedBtn(){
+  document.querySelector(".selected-btn").click();
+
 }
 
 // --------------------------------------- 이벤트 할당구역 ------------------------------
@@ -235,9 +240,7 @@ let setFormModalInnerEvent = function () {
       finalData.append('title', title);
       finalData.append('type', document.getElementById('form-type').value);
 
-      console.log('버튼 value ', this.value);
-
-      // todo! 텍스트에디터 내용 포함해서 db에 저장시키기
+      // 텍스트에디터 내용 포함해서 db에 저장시키기
       if (this.value == '0') {
         // 폼 저장 전송
         AprData.insertForm(finalData);
@@ -345,20 +348,14 @@ let setDefaultEvent = function () {
   document
     .querySelector('.approval-form-table tbody')
     .addEventListener('click', function (e) {
-      console.log(e.target.tagName);
-
       // 눌린게 td태그이면서 안에 텍스트 값이 있을때만 동작하도록 막음
       // -> checkbox 있는 곳 td는 눌려도 반응하지 않도록 한 것임
       if (
         (e.target.tagName == 'TD' || e.target.tagName == 'DIV') &&
         e.target.innerText != ''
       ) {
-        // todo! 눌린거 체크박스 value값에 대응되는 양식 찾아서 그 내용대로 창 열어주기
-        console.log(
-          e.target,
-          ' td눌림',
-          e.target.closest('tr').querySelector("input[type='checkbox']")
-        );
+        // 눌린거 체크박스 value값에 대응되는 양식 찾아서 그 내용대로 창 열어주기
+
         let formNo = e.target
           .closest('tr')
           .querySelector("input[type='checkbox']").value;
@@ -369,7 +366,7 @@ let setDefaultEvent = function () {
 
         Tiny.resetInputFileList();
 
-        // todo! 내용 세팅 끝난 후  모달 오픈
+        // 내용 세팅 끝난 후  모달 오픈
         $('#add-form-modal').modal('show');
       }
     });

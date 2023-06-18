@@ -13,11 +13,11 @@ public interface MemberService {
 	int insertMember(Member m);
 
 	Member loginMember(Member m);
-	
+
 	int insertUserDept(UserDepartment ud);
 
 	int selectENO();
-	
+
 	List<Member> selectMember(int currentPage, Map<String, Object> map, Map<String, Object> selectPD);
 
 	int updatePwd(Member loginUser);
@@ -29,13 +29,14 @@ public interface MemberService {
 	int updateAllmember(Member m);
 
 	int UpdateUserDept(Member m);
+
 	// [지의] - 상위부서 조회
 	Department selecTopDept(Member loginUser);
 
 	int updateMember(Member m);
 
 	List<Object> onlineStatusList();
-	
+
 	int resignedmember(ResignedMember resignedMember);
 
 	int resignedmemberUpdate(ResignedMember resignedMember);

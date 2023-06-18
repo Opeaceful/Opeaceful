@@ -6,47 +6,40 @@
 
 /*check박스 css*/
 .form-check-input:checked {
-    background-color: var(--navy-hover);
-    border-color: var(--color-navy);
+  background-color: var(--navy-hover);
+  border-color: var(--color-navy);
 }
 
 .form-check-input:focus {
-    border-color: var( --white-hover);
-    outline: 0;
-    box-shadow: 0 0 0 0.1rem var(--color-light-gray);
+  border-color: var(--white-hover);
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem var(--color-light-gray);
 }
 
-
 /*그림자 박스 */
-.user-wrap{
-    border: 1px solid var(--square-box);
-    border-radius: 20px;
-    box-shadow: 5px 5px 15px -5px var(--box-shadow);
-    margin: 10px 0px;
+.user-wrap {
+  border: 1px solid var(--square-box);
+  border-radius: 20px;
+  box-shadow: 5px 5px 15px -5px var(--box-shadow);
+  margin: 10px 0px;
 }
 
 /*내용 margin*/
-.user-table{
-    margin: 30px 20px;
+.user-table {
+  margin: 30px 20px;
 }
-
 
 /*li태그 사이즈*/
 .list-group-item {
-    width: 40%;
+  width: 40%;
 }
 
 /* 토글버튼과 labal과 거리*/
 .form-check-input {
-    float: left;
-    margin-right: 2rem;
+  float: left;
+  margin-right: 2rem;
 }
 
-/* .form-check {
-    font-size: 1.1rem;
-
-}  */
-
 .form-check-input:hover {
-    background-color: var(--color-light-gray);
+  background-color: var(--color-light-gray);
 }

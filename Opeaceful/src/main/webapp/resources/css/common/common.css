@@ -6,7 +6,7 @@
 
 /*변수설정*/
 :root{
-    /* 기본 색상 */
+    /* 기본 색상 css 다크모드 윤지영에게 문의 */
     --side-bar : 60px;
     --color-navy : rgb(3, 3, 62);
     --color-gold : #ffc107;
@@ -162,10 +162,11 @@
 }
 
 
-/*다크모드 추가용 css*/
+/*다크모드 추가용 */
 
 .modal-content {
     background-color: var(--color-background);
+    border: 1px solid var(--font-black);
 }
 
 .table {
@@ -191,6 +192,33 @@
 
 .form-control-plaintext {
     color: var(--bs-btn-color);
+}
+
+/* 조직도 현황 */
+.card-btn{
+	background-color: var(--color-white);
+	border-color: var(--color-white);
+	color: var(--font-black);
+	padding: var(--padding);
+	font-size: var(--font14);
+	font-weight: var(--font-weight);
+	width: var(--width);
+}
+.card-btn:hover {
+	color: var(---font-black);
+	background-color: var(--color-white);
+	border-color: var(--color-white);
+}
+.card-btn-check:checked+.card-btn:focus-visible, .card-btn.active:focus-visible, 
+.card-btn.show:focus-visible, .card-btn:first-child:active:focus-visible, 
+:not(.card-btn-check)+.card-btn:active:focus-visible {
+	box-shadow: none;
+}
+.card-btn-check:checked+.card-btn, .card-btn.active, .card-btn.show, 
+.card-btn:first-child:active, :not(.card-btn-check)+.card-btn:active {
+	color: var(--font-black);
+	background-color: var(--color-white);
+	border-color: var(--color-white);
 }
 
 

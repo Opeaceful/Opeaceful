@@ -14,7 +14,7 @@ public class DeptDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	public List<Department> selectDeptList() {
 		return sqlSession.selectList("deptMapper.selectDeptList");
 	}

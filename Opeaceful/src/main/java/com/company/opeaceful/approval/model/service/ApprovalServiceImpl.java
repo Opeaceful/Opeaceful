@@ -171,13 +171,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 //	-------------------------------- insert 구간 ----------------------------------------
 	@Override
 	public int insertForm(ApprovalForm form, List<ApprovalFile> fileList ) {
-		int result = 0;
 		int formNo = aprDao.insertForm(form);
 		if(formNo > 0 && fileList.size() > 0) {
-			result = insertFile(fileList, "form", formNo);
+			formNo = insertFile(fileList, "form", formNo);
 		}
 		
-		return result;
+		return formNo;
 	}
 	
 	@Override

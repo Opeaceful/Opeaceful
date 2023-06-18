@@ -302,7 +302,6 @@ export function clickCurrentPageBtn() {
 
 // 결재 모달창에 연차정보 세팅시키는 함수
 export function setAnnual(totalAnnual, leftAnnual) {
-  console.log('연차정보~~~~', totalAnnual, leftAnnual);
   const typeTd = document.getElementById('td-approval-table-type');
   // 연차정보 있으면 종류태그에 남은 연차정보도 저장
   typeTd.dataset.totalAnnual = totalAnnual;
@@ -528,7 +527,6 @@ export function setTableList(approvalList, count, page, loginUserNo) {
     // 버튼 리셋되면서 페이지 이동이 일어나게 된다면 함수 종료
     return;
   }
-  console.log('버튼 리셋 완료되고 테이블 리셋 시작됨');
   let tableHtml = '';
 
   if (approvalList != null && approvalList.length > 0) {
@@ -557,9 +555,9 @@ export function setTableList(approvalList, count, page, loginUserNo) {
                       <td>${count - (page - 1) * 10 - i}</td>
                       <td>${approval.formatDraftDate}</td>
                       <td>${approval.title}</td>
-                      <td>${approval.userName}${
-        approval.eno != 0 ? '(' + approval.eno + ')' : ''
-      }</td>
+                      <td>${approval.userName} ${
+        approval.pName ? approval.pName : ''
+      }${approval.eno != 0 ? '(' + approval.eno + ')' : ''}</td>
                       <td>${approval.status}</td>
                       <td>${approval.type}</td>
                     </tr>`;
@@ -642,7 +640,6 @@ export function resetPageBtn(currentBtnNum, count) {
     // 먼저 실행되고있었던 함수 종료 위해 true 리턴
     return true;
   } else {
-    console.log(clickBtn);
     clickBtn.className = 'selected-btn page-btn';
   }
 
@@ -681,7 +678,6 @@ export function setAlamNum(returnCount, waitCount, referCount) {
 // 날짜 형식 yyyy-MM-dd로포맷팅해서 반환
 let formatDate = (date) => {
   let tempDate = new Date(Date.parse(date));
-  console.log('날짜변환중 ', tempDate);
 
   // Date 객체에서 연도, 월, 일 추출
   const year = tempDate.getFullYear();
@@ -1175,7 +1171,6 @@ let extraAprModalEvent = () => {
           // 결재 문서 삭제 진행
           let approvalNo =
             document.getElementById('btn-save-approval').dataset.approvalno;
-          console.log('삭제할 문서 번호 ', approvalNo);
           MyAprData.deleteApproval(Number(approvalNo));
         }
       });
@@ -1274,7 +1269,6 @@ let selectAprLineModalEvent = () => {
         return;
       }
 
-      console.log(favor);
       // 즐겨찾기 저장 보내기
       MyAprData.insertFavor(favor);
 
@@ -1376,8 +1370,6 @@ let setEndModalEvent = () => {
           let myLevel = Number(e.target.dataset.mylevel);
           let contentHtml = null;
 
-          console.log('결재버튼 눌림', approvalNo, lastLineUserNo, myLevel);
-
           // 본인이 마지막 결재자일 경우 완결처리위한 세팅 모두 하고 보내기
           if (lastLineUserNo == loginUserNo) {
             // Date 객체에서 연도, 월, 일 추출
@@ -1391,8 +1383,6 @@ let setEndModalEvent = () => {
               .toString()
               .padStart(2, '0')}`;
 
-            console.log('결재 후 결재완료찍을때 현재날짜', nowDate);
-
             // 마지막 라인에 이미지 넣기
             lastLine.querySelector(
               '.approver-sign'
@@ -1400,7 +1390,6 @@ let setEndModalEvent = () => {
             // 마지막 라인에 현재날짜로 날짜 입력하기
             lastLine.querySelector('.approver-date').innerText = nowDate;
 
-            console.log('결재 후 결재완료찍을때 현재날짜', lastLine);
             // 완결처리를 위한 본문내용 세팅해서 보내기
             const content = document
               .querySelector('.final-approval-wrap')
@@ -1408,7 +1397,6 @@ let setEndModalEvent = () => {
             let h2 = content.querySelector('.final-approval-wrap > h2');
             h2.remove();
             contentHtml = content.innerHTML;
-            console.log(content, contentHtml);
           }
 
           // 내 라인상태 결재로 변경하기
@@ -1489,8 +1477,6 @@ let setDefaultPageEvent = () => {
         }
         count++;
       }
-
-      console.log('메뉴 클릭됨', menubar);
 
       document.querySelector('.top-menubar-item.selected').className =
         'top-menubar-item';
@@ -1702,8 +1688,6 @@ let setMemoEvent = () => {
   document
     .querySelector('#memo-modal-back .memo-list-table')
     .addEventListener('click', function (e) {
-      console.log(e.target, ' td눌림', e.target.tagName);
-
       // 부모 tr 찾기
       let memoNo = e.target.closest('tr').dataset.memono;
       MyAprData.selectMemo(Number(memoNo));

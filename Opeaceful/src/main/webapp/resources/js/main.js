@@ -129,16 +129,14 @@ for (var i = 0; i < ModeList.length; i++) {
   mode.addEventListener('click', onClickModeOption);
 }
 
-/*다크모드, 화이트모드 변경 */
+/*다크모드, 화이트모드 변경 : 윤지영에게 문의*/
 $('#white-icon').on('click', function () {
   localStorage.setItem('color-theme', 'light');
   // 페이지 새로고침 : 아이콘 색바꿔야해서 새로고침
-  // console.log("화이트 들어와?");
   location.reload();
 });
 $('#black-icon').on('click', function () {
   localStorage.setItem('color-theme', 'dark');
-  // console.log("들어와?");
   // 페이지 새로고침 : 아이콘 색바꿔야해서 새로고침
   location.reload();
 });
@@ -215,39 +213,39 @@ $('#main-off').click(function () {
   });
 });
 
-// 캘린더
-document.addEventListener('DOMContentLoaded', function () {
-  var calendarM = document.getElementById('calendarM');
-  function fullCalendar() {
-    /* 전체 캘린더 */
-    var request = $.ajax({
-      type: 'POST',
-      url: path + '/calendar/calendarForm/F',
-      dataType: 'json',
-    });
-
-    request.done(function (data) {
-      // console.log(data);
-
-      var calendar = new FullCalendar.Calendar(calendarM, {
-        plugins: ['interaction', 'dayGrid'],
-        header: {
-          left: 'none',
-          center: 'prevYear,prev,title,next,nextYear',
-          right: 'none',
-        },
-        editable: false, // 일정 움직이는거 막기
-        eventLimit: false, // allow "more" link when too many events
-        events: data,
-      });
-      calendar.render();
-    });
-
-    request.fail(function () {
-      alert('Request failed');
-    });
-  }
-  fullCalendar();
+/* --------------------------- 캘린더 --------------------------- */
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarM = document.getElementById('calendarM');
+    function fullCalendar(){
+        /* 전체 캘린더 */
+        var request = $.ajax({
+            type:"POST",
+            url: path+"/calendar/calendarForm/F",
+            dataType: "json"
+        });
+      
+        request.done(function(data){
+            // console.log(data);
+      
+            var calendar = new FullCalendar.Calendar(calendarM, {
+                plugins: [ 'interaction', 'dayGrid' ],
+                header: {
+                    left: 'none',
+                    center: 'prevYear,prev,title,next,nextYear',
+                    right: 'none'
+                },
+                editable: false, // 일정 움직이는거 막기
+                eventLimit: false, // allow "more" link when too many events
+                events: data
+            });
+            calendar.render();
+        })
+      
+        request.fail(function() {
+            alert("Request failed");
+        });
+    }
+    fullCalendar();
 });
 // 시간표시 함수 실행
 getTime();
