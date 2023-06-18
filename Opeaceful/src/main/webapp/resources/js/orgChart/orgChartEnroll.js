@@ -43,7 +43,7 @@ function selectDept() {
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
 											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
 										</span>
-										<div>(${team.deptCount})</div>
+										<div id="count">(${team.deptCount})</div>
 										<div class="team-icons hidden">
 											<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
 											<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
@@ -290,6 +290,7 @@ $('#ok-personnel').click(function(e) {
 				  });
 				$("#pesonnel-modal").modal('hide');
 				$("#user-info").load(window.location.href + " #user-info");
+				// $("#count").load(window.location.href + " #count"); 카운트 리로드는 ,, 내일,,
 			},
 			error: function(x, e) {
 				//err msg 출력
