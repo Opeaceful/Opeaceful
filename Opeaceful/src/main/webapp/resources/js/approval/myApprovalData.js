@@ -33,7 +33,6 @@ export function selectForm(formNo) {
     },
     type: 'POST',
     success: function (form) {
-      console.log(form);
       MyAprFront.setApprovalModalContent(form);
     },
     error: function (request) {
@@ -187,8 +186,6 @@ export function registerApproval(formData, urlPath) {
           .toString()
           .padStart(2, '0')}`;
 
-        console.log('저장하자마자 결재완료찍을때 현재날짜', nowDate);
-
         let content = `<div class="end-approval-lines">
                       <div class="end-approval-lines-wrap">
                         <div class="end-approval-lines-title">결<br />재</div>
@@ -251,7 +248,6 @@ export function updateApprovalStateAuthorized(
       myLevel,
     },
     success: function (map) {
-      console.log('결재 처리 결과', map);
       let result = map.result;
       let userNo = map.nextAuthorizeUserNo;
       if (result > 0) {
@@ -335,7 +331,6 @@ export function updateApprovalStateEnd(approvalNo, content) {
       content,
     },
     success: function (result) {
-      console.log('결재 완료 처리 결과 반환', result);
       if (result > 0) {
         swal('문서가 완결처리되었습니다.', {
           buttons: { confirm: '확인' },
@@ -392,7 +387,6 @@ export function selectApprovalList(year, type, page, menu, status) {
       status,
     },
     success: function (result) {
-      console.log(result);
       MyAprFront.setTableList(
         result.list,
         result.count,
@@ -465,8 +459,6 @@ export function selectApproval(approvalNo, selectedMenu) {
     type: 'POST',
     data: { approvalNo },
     success: function (result) {
-      console.log(result);
-
       if (selectedMenu == 'return' || selectedMenu == 'temp') {
         MyAprFront.setApprovalModalContent(
           result.approval,
