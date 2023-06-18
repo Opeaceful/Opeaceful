@@ -3,54 +3,47 @@
  * uesr권한부여 css
 */
 
-
 /*검색창 넓이*/
-.search-wrap2{width: 400px;}
-
+.search-wrap2 {
+  width: 400px;
+}
 
 /*check박스 css*/
 .form-check-input:checked {
-    background-color: var(--navy-hover);
-    border-color: var(--color-navy);
+  background-color: var(--navy-hover);
+  border-color: var(--color-navy);
 }
 
 .form-check-input:focus {
-    border-color: var( --white-hover);
-    outline: 0;
-    box-shadow: 0 0 0 0.1rem var(--color-light-gray);
+  border-color: var(--white-hover);
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem var(--color-light-gray);
 }
 
-
 /*그림자 박스 */
-.user-wrap{
-    border: 1px solid var(--square-box);
-    border-radius: 20px;
-    box-shadow: 5px 5px 15px -5px var(--box-shadow);
-    display: flex;
-    justify-content: center;
+.user-wrap {
+  border: 1px solid var(--square-box);
+  border-radius: 20px;
+  box-shadow: 5px 5px 15px -5px var(--box-shadow);
+  display: flex;
+  justify-content: center;
 }
 
 /*내용 margin*/
-.user-table{
-    margin: 30px 20px;
-    
+.user-table {
+  margin: 30px 20px;
 }
-
 
 /*토글버튼과 labal과 거리*/
 .form-check-input {
-    float: left;
-    margin-right: 2rem;
+  float: left;
+  margin-right: 2rem;
 }
 
 .form-check {
-    font-size: 1.1rem;
-
+  font-size: 1.1rem;
 }
 
 .form-check-input:hover {
-    background-color: var(--color-light-gray);
+  background-color: var(--color-light-gray);
 }
-
-
-

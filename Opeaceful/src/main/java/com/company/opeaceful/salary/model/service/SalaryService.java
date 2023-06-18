@@ -21,7 +21,7 @@ public interface SalaryService {
 	int salaryUpdate(Salary salary);
 
 	List<Member> selectSalayMember(int[] intArray);
-	
+
 	int insertSalary(List<Salary> userList);
 
 	Salary selectUserCope(Map<String, Object> selectYMT);
@@ -29,7 +29,5 @@ public interface SalaryService {
 	List<Integer> deleteSalayselect();
 
 	int deleteSalay(List<Integer> dslist);
-
-	
 
 }

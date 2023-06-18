@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Position {
-	
+
 	private int pCode;
 	private String pName;
 
