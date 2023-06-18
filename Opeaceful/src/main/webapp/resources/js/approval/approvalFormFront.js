@@ -179,6 +179,12 @@ export function closeModal() {
   document.querySelector('.modal-header .btn-close').click();
 }
 
+// 현재 선택되어있는 페이지 버튼에 다시 클릭주기(페이지 아이템들 리셋용)
+export function clickSelectedBtn(){
+  document.querySelector(".selected-btn").click();
+
+}
+
 // --------------------------------------- 이벤트 할당구역 ------------------------------
 
 // 모달 안의 이벤트들 모음

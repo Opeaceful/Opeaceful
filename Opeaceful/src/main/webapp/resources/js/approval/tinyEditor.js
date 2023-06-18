@@ -64,7 +64,6 @@ export function setTinymce() {
         // approval테이블의 경우 최대 4000글자지만 img src등을 갈아끼우는 등의처리를 하게되므로
         // 여유분을 남기기위해 3000으로 글자 제한함
         var maxLength = 20000;
-        console.log(content.length);
         if (content.length >= maxLength - 1) {
           // delete 키가 백스페이스키가 아니면 키 입력 막음
           if (e.key != 'Delete' && e.key != 'Backspace') {
