@@ -1,6 +1,7 @@
 package com.company.opeaceful.chat.model.websocket;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,16 +50,10 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 	
 	private Set<WebSocketSession> sessions = Collections.synchronizedSet( new HashSet<WebSocketSession>());
 	
-	private Map< String, Object > map  = new HashMap<>();
+	private Map< String, Object > map  = new HashMap<>();	
 	
-	// 참여중인 유저 목록에 해당 유저가 포함되어 있는지 확인하는 메소드
-	private boolean isParticipant(List<Integer> chatRoomList, List<ChatParticipant> participants) {
-	    for (ChatParticipant participant : participants) {
-	        if (chatRoomList.contains(participant.getChatRoomNo())) {
-	            return true;
-	        }
-	    }
-	    return false;
+	private void saveChatRoomListToSession(WebSocketSession session, List<Integer> chatRoomList) {
+	    session.getAttributes().put("chatRoomList", chatRoomList);
 	}
 	
 	// synchronizedSet : 동기화된 Set반환
@@ -77,6 +72,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			List<Integer> chatRoomList = (List<Integer>) session.getAttributes().get("chatRoomList");
 		    map.put(session.getId(), chatRoomList);
 		    map.put(session.getId() + "userNo", (int) session.getAttributes().get("userNo"));
+		    
 		}
 		
 		// 클라이언트와 연결이 종료되면 수행
@@ -103,8 +99,10 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			
 			Chat chatMessage = objectMapper.readValue(message.getPayload(), Chat.class); 
 			
+			System.out.println("이거다1" +(chatMessage));
 			//룸생성되었을때 올라온 요청건임
-			if(chatMessage.isNew()) {
+			if(chatMessage.roomNew()) {
+				 System.out.println("이거다2" +(chatMessage.roomNew()));
 				/*
 				 * 여기서 db를 한번 조회해오긴 해야함
 				 * 신규 룸번호에 딸린 유저들 조회해와서 chatService.chatRoomList(룸번호를 넘겨서 여기 참여중인 유저 목록 받아오기)
@@ -121,32 +119,42 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 				 * 신규 룸 생성용이니까 이후 로직은 진행하지 않고 return 시키거나
 				 * 취향대로 이후동작 선택
 				 * */
-				List<ChatParticipant> participants = chatService.chatRoomList(loginUser);
+				List<ChatParticipant> participants = chatService.getParticipantsInRoom(chatMessage.getChatRoomNo());
 				
 				 for (WebSocketSession s : sessions) {
 				        String sessionId = s.getId();
-				        List<Integer> chatRoomList = (List<Integer>) map.get(sessionId);
-
-				        // 참여중인 유저 목록과 비교하여 참여중인 유저인 경우
-				        if (isParticipant(chatRoomList, participants)) {
-				            // 기존의 chatRoomList에서 새로운 채팅방 번호를 추가
+				        System.out.println("이거다3" +(sessionId));
+				        int userNo = (int) map.get(sessionId + "userNo");
+				        System.out.println("이거다4" +map.get(sessionId));	
+				        boolean isParticipant = false;
+				        System.out.println("이거다6" + (isParticipant));	
+				        for (ChatParticipant participant : participants) {
+				            if (participant.getUserNo() == userNo) {
+				                isParticipant = true;
+				                break;
+				            }
+				        }
+				        if (isParticipant) {
+				            // 해당 세션의 chatRoomList 가져오기
+				        	ArrayList<Integer> chatRoomList = (ArrayList<Integer>) map.get(sessionId);
+				            if (chatRoomList == null) {
+				                chatRoomList = new ArrayList<>();
+				            }
 				            chatRoomList.add(chatMessage.getChatRoomNo());
-
-				            // 수정된 chatRoomList를 map에 다시 저장
 				            map.put(sessionId, chatRoomList);
-
-				            // 룸 리스트에 신규 룸번호 추가해서 다시 저장해주기
-				            List<Integer> existingChatRoomList = (List<Integer>) s.getAttributes().get("chatRoomList");
-				            existingChatRoomList.add(chatMessage.getChatRoomNo());
+				            System.out.println("이거다5" +map.get(sessionId));
+				            			            				            	
 				        }
 				    }
+				 return;
 			}
 			
 			
 			
-			chatMessage.setReceivedDate(new Date(System.currentTimeMillis()));
+			chatMessage.setReceivedDate(new Timestamp(System.currentTimeMillis()));
 			// 전달받은 채팅 메세지를 db에 삽입
-			
+
+			chatMessage.setProfileImg(loginUser.getProfileImg());	
 			chatMessage.setUserName(loginUser.getUserName());
 			chatMessage.setUserNo(loginUser.getUserNo());
 			
@@ -159,13 +167,13 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 					// 반복을 진행중인 WebSocketSession 안에 담겨있는 방번호 == 메세지 안에 담겨있는 방번호가 일치하는 경우 메세지 뿌리기
 				//	System.out.println(s.getAttributes());
 					
-					ArrayList<ChatParticipant> chatRoomList = (ArrayList<ChatParticipant>) s.getAttributes().get("chatRoomList");
+					ArrayList<Integer> chatRoomList = (ArrayList<Integer>) map.get(s.getId());
 					
 					
 					System.out.println("채팅룸 리스트 불러와졌남"+chatRoomList);
-					for(ChatParticipant room : chatRoomList) {
+					for(int room : chatRoomList) {
 						
-							if(room.getChatRoomNo() == chatMessage.getChatRoomNo()) {
+							if(room == chatMessage.getChatRoomNo()) {
 								s.sendMessage(new TextMessage( new Gson().toJson(chatMessage) ));
 								break;
 							}

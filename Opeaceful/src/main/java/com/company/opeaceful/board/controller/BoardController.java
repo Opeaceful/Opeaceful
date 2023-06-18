@@ -77,6 +77,9 @@ public class BoardController {
 		model.addAttribute("map", map);
 		model.addAttribute("notiRoll", rollCount);
 		
+		
+		
+		
 		//System.out.println(" 공지사항 권한관리 유무값(1/0) : " + rollCount);
 		return "board/boardList";
 	}
