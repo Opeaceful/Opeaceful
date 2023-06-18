@@ -19,7 +19,7 @@
 			<div class="title-box">
 				<h2 class="title-common">조직도</h2>
 			</div>
-			<div class="tree scroll-bar" id="tree">
+			<div class="tree scroll-bar tree-scroll-bar" id="tree">
 				<ul>	
 					<c:forEach items="${topDept}" var="td">
 					<c:set var="deptKey" value="${td.deptCode}Dept"/>

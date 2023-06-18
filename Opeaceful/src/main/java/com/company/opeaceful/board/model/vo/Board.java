@@ -26,6 +26,10 @@ public class Board {
 	private String pName;
 	private String userName;
 	private int userNo;
+	
 	private int replyCount;
+	
+	private int befo;
+	private int next;
 	
 }

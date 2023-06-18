@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.company.opeaceful.dept.model.vo.Department;
 import com.company.opeaceful.dept.model.vo.UserDepartment;
 import com.company.opeaceful.member.model.vo.Member;
 import com.company.opeaceful.orgChart.model.vo.OrgChart;
@@ -16,6 +17,11 @@ public class OrgChartDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	// 전체부서 조회
+	public List<Department> selectAllDeptList() {
+		return sqlSession.selectList("orgChartMapper.selectAllDeptList");
+	}
 	
 	// 상위부서 추가
 	public int insertTopDp(OrgChart orgChart) {

@@ -42,7 +42,21 @@
 			   COLOR AS BACKGROUND_COLOR,
 			   D_DAY
 		FROM CALENDAR
-		WHERE CATEGORY = 'M' AND USER_NO = #{userNo};
+		WHERE CATEGORY = 'M' AND USER_NO = #{userNo}
+		UNION
+		SELECT CALENDAR_NO AS ID,
+			   CATEGORY,
+			   USER_NO,
+			   DEPT_CODE,
+			   TITLE,
+			   CONTENT,
+			   START_DATE AS START,
+			   DATE_ADD(END_DATE, INTERVAL 1 DAY) AS END,
+			   COLOR AS BACKGROUND_COLOR,
+			   COLOR AS BORDER_COLOR,
+			   D_DAY 
+		FROM CALENDAR 
+		WHERE CATEGORY = 'H' AND USER_NO = #{userNo}; 
 	</select>
 	
 	<!-- 팀캘린더 일정 조회 -->
@@ -173,8 +187,15 @@
 			START_DATE = #{startDate},
 			END_DATE = #{endDate},
 			COLOR = #{color},
-			D_DAY = #{dDay}
-		
+			D_DAY = #{dDay},
+			<choose>
+			<when test='deptCode == -10'>
+			DEPT_CODE = NULL
+			</when>
+			<otherwise>
+			DEPT_CODE = #{deptCode}
+			</otherwise>
+			</choose>
 		WHERE CALENDAR_NO = #{calendarNo}
 	</update>
 	
