@@ -59,6 +59,7 @@ $("#annual-count").on("keyup", function(){
         $("#annual-user-btn").attr("disabled", false);
     }
 });
+
 $("#annual-user-btn").click(function(){
     let no = document.getElementById('no');
     let changeAnnual = $("#annual-count").val();
@@ -74,7 +75,9 @@ $("#annual-user-btn").click(function(){
             dataType : 'json',
         success : function(result){
             if(result > 0){
-                location.reload();
+                swal($("#annual-user-name").html()+" 사원의 연차가 수정되었습니다.").then(function(){
+                    location.reload();
+                })
             }
         },
         error : function(e){

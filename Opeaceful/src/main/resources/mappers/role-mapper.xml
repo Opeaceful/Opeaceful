@@ -5,14 +5,14 @@
 	<!-- =================== [insert] =================== -->
 	<!-- [지영]부서-직급별 권한 생성 -->
 	<insert id="roleGrantinginesrt" parameterType="departmentRole">
-		INSERT INTO department_role(DEPT_CODE,P_CODE,ROLE_CODE)
+		INSERT INTO DEPARTMENT_ROLE(DEPT_CODE,P_CODE,ROLE_CODE)
 		VALUE (#{deptCode},#{pCode},#{roleCode})
 	</insert>
 	
 	
 	<!-- [지영]user별 권한 생성 -->
 	<insert id="userRoleGrantinginesrt" parameterType="userRole">
-		INSERT INTO user_role(USER_NO,ROLE_CODE)
+		INSERT INTO USER_ROLE(USER_NO,ROLE_CODE)
 		 VALUE (#{userNo},#{roleCode})
 	</insert>
 
@@ -21,27 +21,27 @@
 	<!-- [지영] 부서-직급별 권한 -->
 	<select id="roleSelect"  resultType="departmentRole" parameterType="departmentRole">
 		SELECT * 
-		FROM department_role
+		FROM DEPARTMENT_ROLE
 		WHERE DEPT_CODE = #{deptCode} AND P_CODE = #{pCode}
 	</select>
 	
 	<!-- [지영] 권한 리스트-->
 	<select id="roleListSelct"  resultType="roleList" >
 		SELECT * 
-		FROM role_list
+		FROM ROLE_LIST
 	</select>
 	
 	<!-- [유저] 권한 조회 -->
 	<select id="userRoleSelect" resultType="userRole">
 		SELECT * 
-		FROM user_role
+		FROM USER_ROLE
 		WHERE USER_NO = #{userNo}
 	</select>
 	
 	<!-- [지의] 로그인유저 권한 조회 -->
 	<select id="loginUserRoleSelect" resultType="userRole">
 		SELECT ROLE_CODE
-		  FROM user_role
+		  FROM USER_ROLE
 		 WHERE USER_NO = #{userNo}
 		UNION ALL
 		SELECT ROLE_CODE
@@ -59,7 +59,7 @@
 	
 	<!-- [지영]부서-직급별 권한 삭제 -->
 	<delete id="roleGrantingdelete" parameterType="departmentRole">
-		DELETE FROM department_role 
+		DELETE FROM DEPARTMENT_ROLE 
 		WHERE DEPT_CODE = #{deptCode}
 		AND P_CODE = #{pCode}
 		AND ROLE_CODE = #{roleCode} 
@@ -67,7 +67,7 @@
 	
 	<!-- [지영]유저 권한 삭제 -->
 	<delete id="userRoleGrantingdelete" parameterType="userRole">
-		DELETE FROM user_role 
+		DELETE FROM USER_ROLE 
 		WHERE USER_NO = #{userNo}
 		AND ROLE_CODE = #{roleCode}
 	</delete>
