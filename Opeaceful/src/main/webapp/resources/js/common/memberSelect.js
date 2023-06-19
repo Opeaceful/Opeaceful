@@ -136,10 +136,8 @@ function checkedEvent(checkbox) {
 }
 
 function UsercheckedEvent(checkbox) {
-  console.log("왜안돼~~")
   //팀명이름
   const UserName = checkbox.dataset.key;
-  console.log(UserName);
   //팀명을 가진 모든 checkbox
   const UserNameCheckboxes = document.querySelectorAll(
     `input[type="checkbox"][data-key="${UserName}"]`
@@ -151,16 +149,10 @@ function UsercheckedEvent(checkbox) {
 
   //체크박스가 눌렸을때
   if (!checkbox.checked) {
-    console.log("체크박스가 해제");
-    console.log(UserNameCheckboxes[0].checked);
     UserNameCheckboxes[0].checked = false;
   } else {
     //팀명의 체크박스가 모두 눌린다면 팀명 box도 눌리기
-    console.log("체크박스가 들어옴");
-    console.log(checkedboxs.length)
-    console.log(UserNameCheckboxes.length)
     if (checkedboxs.length == UserNameCheckboxes.length - 1) {
-      console.log("들어옴~~~"+UserNameCheckboxes[0].checked)
       UserNameCheckboxes[0].checked = true;
     }
   }
