@@ -46,7 +46,7 @@ function selectDept() {
 				
 							html += `<li class="team low-common">
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
-											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
+											<input type="text" name="team" id="${team.deptCode}" class="team-name" value="${team.deptName}">
 										</span>
 										<div class="count" id="count">(${team.deptCount})</div>
 										<div class="team-icons hidden">
