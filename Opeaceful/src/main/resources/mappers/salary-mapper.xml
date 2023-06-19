@@ -114,9 +114,14 @@
 		parameterType="hashMap">
 		SELECT * FROM SALARY
 		where USER_NO = #{no}
-		AND YEAR_REPORTED = #{year}
-		AND MON_REPORTED =
-		(#{month}-1)
+		<if test='month == 1'>
+			AND YEAR_REPORTED = (#{year}-1)
+			AND MON_REPORTED =(#{month}+11)
+		</if>
+		<if test='month != 1'>
+			AND YEAR_REPORTED = #{year}
+			AND MON_REPORTED =(#{month}-1)
+		</if>
 		ORDER BY PAYMENT_DATE DESC LIMIT 1;
 	</select>
 

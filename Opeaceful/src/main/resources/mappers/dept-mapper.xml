@@ -23,6 +23,13 @@
 	<result column="TOP_DEPT_CODE" property="topDeptCode"/>
 </resultMap>
 
+<resultMap type="userDepartment" id="userDepartmentUpdate">
+	<result column="DEPT_CODE" property="deptCode"/>
+	<result column="TOP_DEPT_NAME" property="topDeptName"/>
+	<result column="DEPT_NAME" property="deptName"/>
+	<result column="TOP_DEPT_CODE" property="topDeptCode"/>
+</resultMap>
+
 	<!-- =================== [select] =================== -->
 	<!-- [지영] 부서명 select -->
 	<select id="selectDeptList" resultMap="departmentesultSet">
@@ -32,6 +39,16 @@
 	<!-- [지영] 직위명 select -->
 	<select id="selectPosition" resultMap="positionsultSet">
 		SELECT * FROM POSITION;
+	</select>
+	
+	<!-- [지영] 수정용 select -->
+	<select id="selecTopDeptUP" parameterType="member" resultMap="userDepartmentUpdate">
+		SELECT D1.DEPT_NAME AS TOP_DEPT_NAME, D2.DEPT_CODE, D2.DEPT_NAME,P_NAME
+		FROM DEPARTMENT D1
+		JOIN DEPARTMENT D2 ON D1.DEPT_CODE = D2.TOP_DEPT_CODE
+		JOIN POSITION
+		WHERE D2.DEPT_CODE = #{deptCode}
+		AND P_CODE = #{pCode} 
 	</select>
   
  	<!-- [지의] - 부서 조회 -->
@@ -60,7 +77,7 @@
   <select id="boardEnrollDeptList" resultMap="departmentesultSet">  	
   	SELECT * 
 	FROM DEPARTMENT
-	where TOP_DEPT_CODE IS NULL;
+	WHERE TOP_DEPT_CODE IS NULL;
   </select>
   
  <!-- [혜린] 유저 직급코드 조회 -->

@@ -149,4 +149,8 @@ public class MemberDao {
 		return sqlSession.delete("deleteMembers", delist);
 	}
 
+	public UserDepartment selecTopDeptUP(Member m) {
+		return sqlSession.selectOne("deptMapper.selecTopDeptUP", m);
+	}
+
 }
