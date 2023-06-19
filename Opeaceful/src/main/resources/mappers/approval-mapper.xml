@@ -122,7 +122,7 @@
 		WHERE USER_NO = #{userNo}
 		  AND STATUS = 1
 		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
-		ORDER BY START_DATE DESC;
+		ORDER BY START_DATE ASC;
 	</select>
 
 	<!-- 유저 연차 조회(진행중, 완결 모두 다) -->

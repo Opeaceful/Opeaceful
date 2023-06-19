@@ -17,7 +17,7 @@ body *{
     margin-right: 26px;
     pointer-events: none;
 }
-.input-click {width: 77%;}
+.input-click {width: 71%;}
 .input-click>input{
     pointer-events: none;
 }
@@ -143,4 +143,8 @@ input:focus{
 .d-grid>button, .personnel-btn{font-size: var(--font12);}
 .dp-btn{font-size: var(--font12);}
 .title-box{margin: 80px 0;}
-.changeValue{background-color: var(--color-light-gray);}
+.changeValue{background-color: var( --white-hover);}
+.btn:disabled{
+    background-color: var(--navy-hover);
+    border-color: var(--navy-hover);
+}

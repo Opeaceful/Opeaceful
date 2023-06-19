@@ -20,7 +20,7 @@
 
 
 	<!-- 멤버 조회 모달 Modal -->
-	<div class="modal fade" id="all-user-view" data-bs-backdrop="static"
+	<div class="modal fade annual-modal" id="all-user-view" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 		<div
 			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"

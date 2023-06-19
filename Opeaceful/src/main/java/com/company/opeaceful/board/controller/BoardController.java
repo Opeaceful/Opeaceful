@@ -90,6 +90,7 @@ public class BoardController {
 							  @ModelAttribute (value = "map") Map<String, Object> map,
 							  HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
 		//logger.info("보드 상세조회 로거");
+		
 		map.put("boardCode", boardCode);
 		
 		currentPage = (int) map.get("currentPage");
@@ -99,6 +100,30 @@ public class BoardController {
 		map.put("boardNo", boardNo);
 		
 		Board detail = boardService.selectBoardDetail(map);
+		
+		// 이전글 다음글 기능
+		int findNextNo = 0;
+		int findBefoNo = 0;
+		if( boardList!= null) {
+			
+			for(int i=0; i<boardList.size(); i++) {
+				if( detail.getBoardNo() == boardList.get(i).getBoardNo() ) {
+					findNextNo = boardList.get(i).getNext();
+					findBefoNo = boardList.get(i).getBefo();
+					break;
+				}
+				
+			}
+			
+			Board beforeB = boardService.beforeNextTitle(findBefoNo);
+			
+			Board nextB = boardService.beforeNextTitle(findNextNo);
+			
+			model.addAttribute("beforeB", beforeB);
+			model.addAttribute("nextB", nextB);
+			
+		}
+		
 		
 		List<BoardFile> file = boardService.selectUpFileList(boardNo);
 		

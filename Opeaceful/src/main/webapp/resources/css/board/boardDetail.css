@@ -248,7 +248,7 @@ div *{
 }
 
 /* 이전글 다음글 라인 */
-.board-wrap8{
+.board-wrap9{
     border-top: 1px solid var(--white-hover);
 }
 
@@ -260,6 +260,9 @@ div *{
     font-size: var(--font13);
     color: var(--color-navy);
     border-bottom: 1px solid var(--white-hover);
+}
+.pointerM{
+    cursor: pointer;
 }
 .bf-icon, .af-icon{
     margin-right: 10px;

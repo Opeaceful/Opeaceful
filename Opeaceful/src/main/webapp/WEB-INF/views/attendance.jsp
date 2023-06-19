@@ -53,13 +53,13 @@
                 </div>
              </div>
              <c:forEach items="${loginUserRole}" var="role">
-				<c:if test="${role.roleCode eq 'D01'}">
+				<c:if test="${role.roleCode eq 'A01'}">
 					<div class="p-3">
 						<div class="row">
 					    	<div class="col-1 text">사원명</div>
-					        <div class="col-11 search-wrap2 input-group mb-3">
-					        	<input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="사원명">
-					            	<button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
+					        <div class="col-11 search-wrap2 ad-search input-group mb-3">
+					        	<input type="text" class="search-input2 form-control box-shadow-none" id="member-search-keyword" placeholder="">
+					            <button class="btn btn-outline-secondary search-btn2" id="all-member-view-button" type="button"><i class="fa-solid fa-magnifying-glass" data-bs-toggle="modal" data-bs-target="#all-user-view"></i></button>
 					        </div>
 					    </div>
 					</div>
@@ -75,16 +75,17 @@
 	                        <th>퇴근시간</th>
 	                        <th>근무시간</th>
 	                        <th>비고</th>
+	                        <th></th>
 	                    </tr>
 	                </thead>
 	                <tbody id="AttendanceTbody">
 	                	<c:set var="total" value="0"/>
 						<c:forEach items="${adList}" var="ad">
-							<tr>
+							<tr data-no="${ad.userNo}" class="attendance-tr">
 								<td>${ad.date}</td>
 						    	<c:choose>
 						    		<c:when test="${ ad.userNo != 0 }">
-							            <td data-no="${ad.userNo}">${ad.userName}</td>
+							            <td>${ad.userName}</td>
 							            <td><fmt:formatDate value="${ad.workOn}" pattern="HH:mm"/></td>
 							            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
 							            <td>
@@ -104,6 +105,7 @@
 							            <c:if test="${ad.type eq 3}">
 							                <td>오후 반차</td>
 							            </c:if>
+							            <td class="ad-icons"></td>
 						    		</c:when>
 							    	<c:otherwise>
 							            <td></td>
@@ -111,6 +113,7 @@
 							            <td></td>
 							            <td></td>
 							            <td></td>
+							            <td class="ad-icons"></td>
 							    	</c:otherwise>
 						    	</c:choose>
 							</tr>

@@ -41,6 +41,7 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<BoardType> selectBoardTypeList(){
 		return boardDao.selectBoardTypeList();
 	}
+	
 	// 게시글 목록 조회
 	@Override
 	public void selectBoardList( Map<String, Object> map){
@@ -52,13 +53,11 @@ public class BoardServiceImpl implements BoardService {
 		
 		ArrayList<Board> list = (ArrayList) boardDao.selectBoardList(pi, map);
 		
-		list.get(0).getBoardNo();
-		System.out.println("list담긴 값 : " + list);
-		System.out.println("리스트에서 꺼낸 0번째 글 보드넘버 : "+ list.get(0).getBoardNo());
 		map.put("pi", pi);
 		map.put("list", list);
 		
 	}
+	
 	// 검색된 게시글 목록 조회
 	@Override
 	public void selectSearchBoardList(Map<String, Object> map){
@@ -305,4 +304,8 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectDeptCode(userNo);
 	}
 	
+	@Override
+	public Board beforeNextTitle(int boardNo) {
+		return boardDao.beforeNextTitle(boardNo);
+	}
 }

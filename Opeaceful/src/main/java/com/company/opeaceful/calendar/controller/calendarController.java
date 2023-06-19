@@ -106,7 +106,7 @@ public class calendarController {
 		ArrayList<Calendar> list = calendarService.selectFullCalendarList(userNo);
 		model.addAttribute("list", list);
 		
-		System.out.println("list담긴 값 : "+list);
+		//System.out.println("list담긴 값 : "+list);
 		
 		return new Gson().toJson(list);
 	}
@@ -177,12 +177,28 @@ public class calendarController {
 	@ResponseBody
 	@PostMapping("/updateEvent")
 	public String updateEvent(Calendar calendar,
+							@ModelAttribute ("loginUser") Member loginUser,
 						   @RequestParam int cno,
 						   @RequestParam(defaultValue = "") String colorT,
 						   @RequestParam(defaultValue = "") String colorM,
 						   HttpSession session) {
 		
 		//logger.info("일정 update 로거");
+		
+		int userNo = loginUser.getUserNo();
+		
+		//dept_code : 넘겨받은 카테고리가 T일때만 넣어주기
+		if(calendar.getCategory().equals("T")) {
+			int deptCode = calendarService.selectDeptCode(userNo);
+			//System.out.println("부서코드 : "+deptCode);
+			calendar.setDeptCode(deptCode);
+		}
+		if(calendar.getCategory().equals("M")) {
+			calendar.setDeptCode(-10);
+		}
+		
+		
+		
 		
 		//넘겨받은 m컬러 t컬러 null 유무에 따라 color 세팅해주기 
 		if(colorT.equals("") && !colorM.equals("")) {

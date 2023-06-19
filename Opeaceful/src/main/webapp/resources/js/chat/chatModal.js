@@ -14,15 +14,15 @@ export let checkMemberNo;
 export let checkedNames;
 
 $("#all-user-view-int").keyup(function(key){
-        modalAllMemberView();
+        modalAllMemberViewChat();
 });
 
-modalAllMemberView();
+modalAllMemberViewChat();
 
-function modalAllMemberView(){
+function modalAllMemberViewChat(){
 
     let keyword =  document.getElementById("chat-all-user-view-int").value;
-    console.log(keyword);
+  //  console.log(keyword);
 
   
     $.ajax({
@@ -53,9 +53,9 @@ function modalAllMemberView(){
                 html += 
                 `
                 <tr>
-                    <th rowspan="${deptMember[deptm].length}" class="t-v-middle"><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" ></th>
+                    <th rowspan="${deptMember[deptm].length}" class="t-v-middle"><input class="form-check-input" type="checkbox" data-chatkey="${deptMember[deptm][0].deptCode}" ></th>
                     <th rowspan="${deptMember[deptm].length}" class="t-v-middle">${deptMember[deptm][0].dName}</th>
-                    <td><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][0].deptCode}" value="${deptMember[deptm][0].userNo}"></td>
+                    <td><input class="form-check-input" type="checkbox" data-chatkey="${deptMember[deptm][0].deptCode}" value="${deptMember[deptm][0].userNo}"></td>
                     <td>${deptMember[deptm][0].userName} ${deptMember[deptm][0].pName}</td>
                 </tr>
                 `
@@ -64,7 +64,7 @@ function modalAllMemberView(){
                     html += 
                     `
                     <tr>
-                        <td><input class="form-check-input" type="checkbox" data-key="${deptMember[deptm][i].deptCode}" value="${deptMember[deptm][i].userNo}"></td>
+                        <td><input class="form-check-input" type="checkbox" data-chatkey="${deptMember[deptm][i].deptCode}" value="${deptMember[deptm][i].userNo}"></td>
                         <td>${deptMember[deptm][i].userName} ${deptMember[deptm][i].pName}</td>
                     </tr>
                     `
@@ -75,13 +75,13 @@ function modalAllMemberView(){
             allMemberTableBody.innerHTML = html;
 
             //이벤트 설정
-            checkboxEventListeners();
+            checkboxEventListenersChat();
 
 
         },
         error : function(request){
             console.log("에러발생");
-            console.log(request.status);
+         //   console.log(request.status);
         }
     });
 
@@ -94,13 +94,13 @@ $("#chat-all-member-view-button").click(function(){
 });
 
 //체크박스에 cilck이벤트를 부여하는 함수
-function checkboxEventListeners() {
+function checkboxEventListenersChat() {
 
     //팀 체크박스에 이벤트 부여
     const TeamCheckboxes = document.querySelectorAll('#chat-all-member-table tbody th input[type="checkbox"]');
     TeamCheckboxes.forEach(function(checkbox){
         checkbox.addEventListener('click', function(){
-            checkedEvent(this);
+            checkedEventChat(this);
         })
     })
 
@@ -117,32 +117,33 @@ function checkboxEventListeners() {
     const UserCheckboxes = document.querySelectorAll('#chat-all-member-table tbody td input[type="checkbox"]');
     UserCheckboxes.forEach(function(checkbox){
         checkbox.addEventListener('click', function(){
-            UsercheckedEvent(this);
+            UsercheckedEventChat(this);
         })
     })
 
 }
 
 //팀 체크박스 클릭시 해당 팀원들 자동체크해주는 기능
-function checkedEvent(checkbox){
-    const teamName = checkbox.dataset.key  
-  //  console.log(teamName);  
-    const rowCheckboxes = document.querySelectorAll(`input[type="checkbox"][data-key="${teamName}"]`)
+function checkedEventChat(checkbox){
+    const teamName = checkbox.dataset.chatkey  
+ //   console.log(teamName);
+ //   console.log(teamName);  
+    const rowCheckboxes = document.querySelectorAll(`input[type="checkbox"][data-chatkey="${teamName}"]`)
     
     rowCheckboxes.forEach(function(uNameCheckbox) {
         uNameCheckbox.checked = checkbox.checked;
      });
 }   
 
-function UsercheckedEvent(checkbox){
+function UsercheckedEventChat(checkbox){
 
   
     //팀명이름
-    const UserName = checkbox.dataset.key;
+    const UserName = checkbox.dataset.chatkey;
     //팀명을 가진 모든 checkbox
-    const UserNameCheckboxes = document.querySelectorAll(`input[type="checkbox"][data-key="${UserName}"]`)
+    const UserNameCheckboxes = document.querySelectorAll(`input[type="checkbox"][data-chatkey="${UserName}"]`)
     //팀명을 가진 모든 checked 된 checkbox
-    const checkedboxs = document.querySelectorAll(`input[type="checkbox"][data-key="${UserName}"]:checked`); 
+    const checkedboxs = document.querySelectorAll(`input[type="checkbox"][data-chatkey="${UserName}"]:checked`); 
 
     //체크박스가 눌렸을때
     if(!checkbox.checked){
@@ -158,11 +159,11 @@ function UsercheckedEvent(checkbox){
 
 //확인 버튼 클릭시
 $("#chat-all-member-modal-button").click(function(){
-    checkMember();
+    checkMemberChat();
 });
 
 
-function checkMember(){
+function checkMemberChat(){
     //체크된 체크박스 확인 
     const checkboxes = document.querySelectorAll('#chat-all-member-table td input[type="checkbox"]:checked');
     checkMemberNo = [];
@@ -203,14 +204,14 @@ if(document.getElementById("chat-member-search-keyword")) {
 
                     //값이 하나도 없을 경우
                    if(checkMemberNo.length < 1){
-                        modalAllMemberView();
+                        modalAllMemberViewChat();
                         //모달 열기
                         $('#chat-all-user-view').modal('show');
                    }
                 },
                 error : function(request){
                     console.log("에러발생");
-                    console.log(request.status);
+               //     console.log(request.status);
                 }
             })
          }
