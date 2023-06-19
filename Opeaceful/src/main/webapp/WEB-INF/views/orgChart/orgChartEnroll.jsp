@@ -26,7 +26,7 @@
 						<button class="btn btn-primary me-md-2 topD-plus" type="button">부서추가</button>
 						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#position" type="button">직급관리</button>
 					</div>
-					<div class="accordion" id="accordionExample">
+					<div class="accordion inputs" id="accordionExample">
 					</div>
 				</div>
 				<div class="col right-box org-right-box">
