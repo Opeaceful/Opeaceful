@@ -5,13 +5,20 @@ import {path} from '../common/common.js';
 import {topDeptRoad, positionRoad} from '../common/dtcodeselect.js';
 
 $(document).ready(function() {
-let currentInfo ={
-	deptCode : '', 
-	topDeptCode : '',
-	topDeptName : ''	
-};	
 
-selectDept();
+	selectDept();
+
+	let currentInfo = {
+		deptCode : '', 
+		topDeptCode : '',
+		topDeptName : ''	
+	};	
+
+	let topDept = {
+		deptCode : '',
+		topDeptCode : '',
+		topDeptName : '',
+	}
 
 /* 부서+팀명 조회 */
 function selectDept() {
@@ -46,7 +53,7 @@ function selectDept() {
 				
 							html += `<li class="team low-common">
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
-											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
+											<input type="text" name="team" id="${team.deptCode}" class="team-name" value="${team.deptName}">
 										</span>
 										<div class="count" id="count">(${team.deptCount})</div>
 										<div class="team-icons hidden">
@@ -60,6 +67,10 @@ function selectDept() {
 							html += `</ul>
 									</div>
 									</div>`
+
+					topDept.deptCode = `${dept.deptCode}`;
+					topDept.topDeptCode = `${dept.topDeptCode}`;
+					topDept.topDeptName = `${dept.deptName}`;
 				}
 			}
 
@@ -409,7 +420,7 @@ $('#ok-personnel').click(function(e) {
 								`<div class="accordion-item accordion-item-common org-accordion${result}">
 									<h2 class="accordion-header org-accordion-header" id="heading${result}">
 										<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${result}" aria-expanded="true" aria-controls="flush-collapse${result}" aria-label="펼치기">
-											<input type="text" id="${result}" class="topD-name" value="${input}" name="department${result}" aria-label="부서이름인풋">
+											<input type="text" id="${result}" data-id="${topDept.deptCode},${topDept.topDeptCode}" class="topD-name" value="${input}" name="department${result}" aria-label="부서이름인풋">
 										</button>
 										<div class="icons hidden">
 											<i class="fa-solid fa-plus team-plus" id="team-plus${result}"></i> 
