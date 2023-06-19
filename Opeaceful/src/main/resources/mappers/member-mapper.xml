@@ -279,11 +279,11 @@
 	
 	<!-- [진기]-->
 	<select id="adminAll" resultMap="AllmemberResultSet">
-	 	SELECT m.*, d.DEPT_NAME, p.P_NAME
-		FROM member m
-		JOIN user_department ud ON m.USER_NO = ud.USER_NO
-		JOIN department d ON ud.DEPT_CODE = d.DEPT_CODE
-		JOIN position p ON ud.P_CODE = p.P_CODE
+	 	SELECT M.*, d.DEPT_NAME, P.P_NAME
+		FROM MEMBER M
+		JOIN USER_DEPARTMENT UD ON M.USER_NO = UD.USER_NO
+		JOIN DEPARTMENT D ON UD.DEPT_CODE = D.DEPT_CODE
+		JOIN POSITION P ON UD.P_CODE = P.P_CODE
 		WHERE STATUS='Y';
 	 </select>
 	 

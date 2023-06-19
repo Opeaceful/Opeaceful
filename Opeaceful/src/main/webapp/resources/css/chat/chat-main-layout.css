@@ -84,10 +84,10 @@ body{
 .chat_main_menu i, .chat_sub_menu i{
     display: block;
     font-size: var(--font22);
-    color: #dee2e6;
+    color: var(--color-background);
     text-align: center;
     margin-bottom: 2rem; 
-    cursor: pointer;
+    cursor: pointer;   
 }
 .chat_main_menu{
     margin-top: 3.125rem;  
@@ -189,5 +189,8 @@ body{
 .fa.fa-star.favorite-icon, .fa.favorite-icon.fa-star-o{
 	display: flex;
     margin-left: auto;
+}
+.card-container{
+	background-color: var(--color-background) !important; 
 }
 

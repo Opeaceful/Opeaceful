@@ -1,6 +1,17 @@
 /* 채팅방(chat-room.html) 레이아웃만 작성 */
 /* 메인페이지 큰 레이아웃은 grid로 구성함 */
 
+:root{
+	--chatting-background:url(../../image/chat/whiteBackground.jpg);
+	--chatroom-background:url(../../image/chat/whiteBackground4.jpg);
+	--chatroom-backStyle:cover;
+	} 
+:root[color-theme='dark']{ 
+	--chatting-background:url(../../image/chat/blackBackground.jpg);
+	--chatroom-background:url(../../image/chat/blackBackground3.jpg);
+	--chatroom-backStyle:contain;
+} 
+
 body{
     margin: 0; /* 페이지의 여유공간 없애버림 */
 }
@@ -24,9 +35,9 @@ body{
 
 #chatting_body{ 
 /* #chatting_body, .chatting_setting_bar, .chatting_main_menu, #chatting_header{ */
-    background-image: url(../../image/chat/whiteBackground.jpg);
+    background-image: var(--chatroom-background);
     background-position: bottom;
-    background-size: auto;
+    background-size: var(--chatroom-backStyle);
 }
 
 /* 설정바 스타일 지정 */
@@ -84,7 +95,7 @@ body{
 #chatting_header *{
     font-size: 0.8125rem;
     font-weight: bold;
-    color:grey;
+    color:var(--chat-date);
 }
 .chatting_profile_name{
     /* 프로필명 폰트 스타일 지정 */
@@ -122,7 +133,7 @@ body{
     position: sticky;
     top: 5rem;
     /* background-color: white; */
-    background-color: var(--chat-notice);
+  /*  background-color: var(--chat-notice); */
     display: flex;
     flex-direction: row;
     margin-left: 0.625rem;
@@ -306,8 +317,9 @@ body{
 }
 
 .chatting_made_dialog{
-	background-image: url(../../image/chat/talk_background.jpg);
+	background-image: var(--chatting-background);
     border: 1px solid var(--color-navy);
+    background-size: cover;
 }
 
 #chatting_made_title{
@@ -337,22 +349,4 @@ body{
     top: 2rem;
     cursor:pointer;
 }
-
-/* :root{ */
-/* 	--chatting-background:url(../../image/chat/talk_background.jpg); */
-/* } */
-/* :root[color-theme='dark']{ */
-/* 	--chatting-background:url(../../image/chat/chat-background.jpg); */
-/* } */
-
-
-/* /* 배경화면 설정 */ */
-/* #chatting_body */
-/* /* , .chatting_setting_bar, .chatting_main_menu, #chatting_header */ */
-/* { */
-/*     background-image: var(--chatting-background); */
-/*      background-repeat: repeat;  */
-/* /*     background-position: top left; */ */
-/* /*     background-attachment: fixed; */ */
-/* } */
 

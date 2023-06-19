@@ -93,7 +93,7 @@ function adminAll() {
                     parentElement.appendChild(p5);
                 }
             }
-
+						 
 
             // list를 순회하면서 <li> 요소를 생성하여 멤버 정보 추가
             for (let item of list) {
@@ -116,6 +116,11 @@ function adminAll() {
                 const p2 = document.createElement("p");
                 const p3 = document.createElement("p");
                 p3.classList.add("profile_box");
+                
+                const favoriteIcon = document.createElement("i");
+		     	favoriteIcon.classList.add("fa", "fa-star", "favorite-icon");
+		     	favoriteIcon.addEventListener("click", toggleFavorite);             
+			    
                 const matchingStatus = onlineStatus.find(status => status.statusType === item.statusType);
                 if (matchingStatus) {
                     p2.innerText = matchingStatus.statusName;
@@ -132,6 +137,7 @@ function adminAll() {
                 li.appendChild(img);
                 li.appendChild(div);
                 li.appendChild(p3);
+                li.appendChild(favoriteIcon);
                 
                 li.addEventListener("click", function() {
                     openMemberDialog(item); // 클릭한 멤버의 정보를 인자로 전달하여 다이얼로그 생성
@@ -139,6 +145,7 @@ function adminAll() {
 
                 adminList.appendChild(li);             
             }
+            
         },
         error: function(request) {
             console.log("에러발생");
@@ -444,7 +451,7 @@ function chatAll() {
                             '<main id="chatting_main">' +
                             '<div class="chatting_notice_bar">' +
                             '<i class="icon-bullhorn"></i>' +
-                            '<span>공지 등록 하는곳</span>' +
+            /*                '<span>공지 등록 하는곳</span>' +							*/
                             '<i class="icon-down-open-big"></i>' +
                             '</div>' +
                             '<div class="chatting_content">' +
@@ -841,108 +848,46 @@ function dialogElementStyle(Id, top, left, zIndex){
 
 
 
+/* 즐겨찾기 아이콘을 토글하는 함수 */
+const favoriteMembers = [];
 
-
-
-// 친구 목록에서 즐겨찾기 아이콘을 추가하는 함수
-function addFavoriteIcon() {
-  const friendItems = document.querySelectorAll(".chat_main_li:not(.adminList .chat_main_li)");
-  friendItems.forEach(item => {
-    const favoriteIcon = document.createElement("i");
-    favoriteIcon.classList.add("fa", "fa-star", "favorite-icon");
-    favoriteIcon.addEventListener("click", toggleFavorite);
-    item.appendChild(favoriteIcon);
-  });
-
-  const adminList = document.querySelector(".adminList");
-
-  // adminList 밑에 있는 li 요소들이 추가되는지 관찰
-  const observer = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.addedNodes.length > 0) {
-        const addedNodes = Array.from(mutation.addedNodes);
-        const adminFriendItems = addedNodes.filter(node => node.matches && node.matches(".adminList .chat_main_li"));
-        adminFriendItems.forEach(item => {
-          const favoriteIcon = document.createElement("i");
-          favoriteIcon.classList.add("fa", "fa-star", "favorite-icon");
-          favoriteIcon.addEventListener("click", toggleFavorite);
-          item.appendChild(favoriteIcon);
-        });
-      }
-    }
-  });
-
-  // adminList 밑에 있는 li 요소들이 추가되는지 관찰 시작
-  observer.observe(adminList, { childList: true });
-}
-
-// 즐겨찾기 아이콘을 토글하는 함수
 function toggleFavorite(event) {
   const favoriteIcon = event.target;
   favoriteIcon.classList.toggle("fa-star");
   favoriteIcon.classList.toggle("fa-star-o");
   const friendItem = favoriteIcon.closest(".chat_main_li");
 
-  // 즐겨찾기 목록과 원래 목록에서 요소 이동
   const favoriteList = document.getElementById("favorite_list");
-  const adminList = document.querySelector(".adminList");
+  const adminList = document.getElementById("adminList");
 
   if (favoriteList.contains(friendItem)) {
+    // 이동하기 전에 favoriteMembers 배열에서 제거
+    const index = favoriteMembers.indexOf(friendItem);
+    if (index > -1) {
+      favoriteMembers.splice(index, 1);
+    }
     adminList.appendChild(friendItem);
   } else {
+    // 이동한 멤버를 favoriteMembers 배열에 추가
+    favoriteMembers.push(friendItem);
     favoriteList.appendChild(friendItem);
   }
-  
-  
 }
 
+// setInterval을 사용하여 adminList 초기화
+setInterval(function() {
+  const favoriteList = document.getElementById("favorite_list");
+  const adminList = document.getElementById("adminList");
 
-
-
-
-// 초기화 함수
-function init() {
-  addFavoriteIcon();
-}
-
-// 페이지 로드 시 초기화 함수 실행
-window.addEventListener("load", init);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // favoriteList에서 이동된 멤버를 제외하고 나머지 멤버를 adminList로 이동
+  const favoriteMembersCopy = [...favoriteMembers]; // 배열 복사
+  for (let member of favoriteMembersCopy) {
+    if (!favoriteList.contains(member)) {
+      favoriteMembers.splice(favoriteMembers.indexOf(member), 1);
+      adminList.appendChild(member);
+    }
+  }
+}, 60000);
 
 adminAll(); // 페이지 로딩 시 멤버 정보 가져오기
-//window.setInterval(adminAll, 10000); // 주기적으로 멤버 정보 갱신
+window.setInterval(adminAll, 1000); // 주기적으로 멤버 정보 갱신
