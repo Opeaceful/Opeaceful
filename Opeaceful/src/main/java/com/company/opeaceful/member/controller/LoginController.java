@@ -232,7 +232,7 @@ public class LoginController {
 			session.setAttribute("userNo", userNo);
 			
 			// (승은) 전자결재 진행중인건, 승인대기중인건 조회용
-			int progressApr = aprService.selectApprovalListCount(userNo, null, 0, -1, false); 
+			int progressApr = aprService.selectApprovalListCount(userNo, null, -1, -1, false); 
 			int waitApr = aprService.selectApprovalListforAuthorizeCount(userNo, "wait", null, -1, -1 , false); 
 			model.addAttribute("progressApr", progressApr);
 			model.addAttribute("waitApr", waitApr);
