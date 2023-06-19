@@ -83,7 +83,7 @@ function selectDept() {
 }
 
 // 해당 부서에 있는 사원 조회
-function selectDeptList(deptCode, topDeptCode, topDeptName) {
+function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
 	
 	let str = ""
     let html = "";
@@ -495,7 +495,38 @@ $('#ok-personnel').click(function(e) {
 	/////////////////////////////////////////////////////////////////////// 상위부서 삭제
 	$(".inputs").on("click", ".team-minus", function(e) { 
 			
+		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
+		// let deptCode = $(e.target).parents(".accordion-item").find('.team-name').attr("data-id").split(",")[0];
+
+		swal('부서를 삭제 하시겠습니까?', {
+			buttons: { confirm: '확인', cancel: '취소' },
+		  }).then(function (isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					url : path+"/orgChart/deleteTopDeptCode",
+					type : "POST",
+					data : {deptCode : deptCode},
+					success : function(result) {
+						if (result > 0) {
+							swal('사용중인 부서입니다. 다시 확인해주세요.', {
+								buttons: { cancel: '확인' },
+							  });
+						} else {
+							swal('해당 부서가 삭제되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
+							$(e.target).parents(".accordion-item").remove();
+						}
+					}
+				})
+			}
+		  });
+    });
+	
+	/* 하위부서 삭제 */
+	$(".inputs").on("click", ".li-team-minus", function(e) { 
 		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
+		// let deptCode =  e.target.id.replace("li-team-minus", '');
 		let deptCode = $(e.target).parents(".accordion-item").find('.team-name').attr("data-id").split(",")[0];
 
 		swal('부서를 삭제 하시겠습니까?', {
@@ -508,39 +539,15 @@ $('#ok-personnel').click(function(e) {
 					data : {deptCode : deptCode,
 							topDeptCode : topDeptCode},
 					success : function(result) {
+						console.log("하위부서 : ",result);
 						if (result > 0) {
 							swal('사용중인 부서입니다. 다시 확인해주세요.', {
 								buttons: { cancel: '확인' },
 							  });
 						} else {
-							$(e.target).parents(".accordion-item").remove();
-						}
-					}
-				})
-			}
-		  });
-    });
-	
-	/* 하위부서 삭제 */
-	$(".inputs").on("click", ".li-team-minus", function(e) { 
-		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
-		let deptCode =  e.target.id.replace("li-team-minus", '');
-
-		swal('부서를 삭제 하시겠습니까?', {
-			buttons: { confirm: '확인', cancel: '취소' },
-		  }).then(function (isConfirm) {
-			if (isConfirm) {
-				$.ajax({
-					url : path+"/orgChart/deleteTopDeptCode",
-					type : "POST",
-					data : {deptCode : deptCode,
-							topDeptCode : topDeptCode},
-					success : function(result) {
-						if (result > 0) {
-							swal('사용중인 부서입니다. 다시 확인해주세요.', {
+							swal('해당 부서가 삭제되었습니다.', {
 								buttons: { cancel: '확인' },
 							  });
-						} else {
 							$(e.target).closest(".team").remove();
 						}
 					}
@@ -773,7 +780,7 @@ $('#ok-personnel').click(function(e) {
 	});
 
 	// 수정버튼 클릭 시 직급명 수정
-	$(".org-position-modal").on("click", ".position-change", function(e) {
+	$(document).on("click", ".position-change", function(e) {
 
 		let id =  e.target.id.replace("position-change", 'p');
 
@@ -803,6 +810,9 @@ $('#ok-personnel').click(function(e) {
 								buttons: { cancel: '확인' },
 							  });
 						} else {
+							swal('해당 직급이 삭제되었습니다.', {
+								buttons: { cancel: '확인' },
+							  });
 							$(e.target).closest(".position-list").remove();
 						}
 					}

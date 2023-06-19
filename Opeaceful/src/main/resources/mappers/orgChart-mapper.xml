@@ -161,11 +161,9 @@
 	<!-- 상위부서 삭제 -->
 	<delete id="deleteDeptCode" parameterType="map">
 		<!-- set sql_safe_updates=0 -->
-		DELETE FROM DEPARTMENT
-		WHERE 0 >= (SELECT COUNT(*)
-				        FROM USER_DEPARTMENT 
-				        WHERE DEPT_CODE = #{deptCode})
-		  AND (DEPARTMENT.TOP_DEPT_CODE = #{topDeptCode} OR DEPARTMENT.DEPT_CODE = #{deptCode});
+		DELETE 
+		FROM DEPARTMENT
+		WHERE DEPT_CODE = #{deptCode};
 	</delete>
 	
 	<!-- 직급 삭제 -->
