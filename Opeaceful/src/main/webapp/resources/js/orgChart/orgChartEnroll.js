@@ -5,14 +5,19 @@ import {path} from '../common/common.js';
 import {topDeptRoad, positionRoad} from '../common/dtcodeselect.js';
 
 $(document).ready(function() {
-	
+let currentInfo ={
+	deptCode : '', 
+	topDeptCode : '',
+	topDeptName : ''	
+};	
+
 selectDept();
 
 /* 부서+팀명 조회 */
 function selectDept() {
 
 	let html = "";
-
+	
 	$.ajax({
 		url:path+"/orgChart/selectDept",
 		type : "POST",
@@ -63,7 +68,11 @@ function selectDept() {
 			// orcAccordion.insertAdjacentHTML('afterend', html);
 
 			deptListClick();
-			
+
+			if(currentInfo.topDeptCode){
+				console.log($(`#heading${currentInfo.topDeptCode}>button`))
+				$(`#heading${currentInfo.topDeptCode}>button`).click();
+			}
 		},
 		error : function(request){
 			console.log("에러발생");
@@ -73,10 +82,14 @@ function selectDept() {
 }
 
 // 해당 부서에 있는 사원 조회
-function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
+function selectDeptList(deptCode, topDeptCode, topDeptName) {
 	
 	let str = ""
     let html = "";
+	
+	currentInfo.deptCode = deptCode;
+	currentInfo.topDeptCode = topDeptCode;
+	currentInfo.topDeptName = topDeptName;
 
     $.ajax({
 		url : path+"/orgChart/selectAll",   
@@ -111,7 +124,6 @@ function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
 	})
 
 }
-	
 // 하위부서 input을 감싸고 있는 sapn태그에 사원 조회 이벤트 부여
 function deptListClick() {
 
@@ -313,9 +325,12 @@ $('#ok-personnel').click(function(e) {
 				swal('해당 사원들의 인사가 변경되었습니다.', {
 					buttons: { cancel: '확인' },
 				  });
+				
 				$("#pesonnel-modal").modal('hide');
-				$("#user-info").load(window.location.href + " #user-info");
-				$("#count").load(window.location.href + " #count");
+				//$("#user-info").load(window.location.href + " #user-info");
+				selectDept();
+				selectDeptList(currentInfo.deptCode,currentInfo.topDeptCode,currentInfo.topDeptName);
+				//$("#accordionFlushExample").load(window.location.href);
 				
 			},
 			error: function(x, e) {
@@ -554,11 +569,8 @@ $('#ok-personnel').click(function(e) {
 	})
 	
 	// input 포커스 아웃 시 db에 하위부서 추가
-	$(".inputs").on("blur keydown", "[name^=team]", function(e) {
+	$(".inputs").on("blur", "[name^=team]", function(e) {
 		// [name^=team]
-		if (e.type === "keydown" && e.which !== 13) {
-			return; // 엔터 키 이외의 키가 눌렸을 경우 처리하지 않음
-		}
 
 		let input = $(e.target).val();
 		let id = $(e.target).attr("id");
@@ -622,7 +634,12 @@ $('#ok-personnel').click(function(e) {
 				});
 			}
 		}
-	})
+	}).on("keydown", "[name^=team]", function(e) {
+		if (e.which === 13) { // 엔터 키의 keyCode는 13입니다.
+			e.preventDefault();
+			$(this).blur(); // 포커스 아웃 이벤트를 트리거합니다.
+		}
+	});
 
 	/* 직급조회 */
 	function selectPosition() {
@@ -686,10 +703,7 @@ $('#ok-personnel').click(function(e) {
 	});
 
 	// input 포커스 아웃 시 db에 직급추가
-	$(".org-position-modal").on("blur keydown", "[name^=position-name]", function(e) {
-		if (e.type === "keydown" && e.which !== 13) {
-			return; // 엔터 키 이외의 키가 눌렸을 경우 처리하지 않음
-		}
+	$(".org-position-modal").on("blur", "[name^=position-name]", function(e) {
 
 		let input = $(e.target).val();
 		let id = $(e.target).attr("id");
@@ -749,7 +763,12 @@ $('#ok-personnel').click(function(e) {
 				});
 			}
 		}
-	})
+	}).on("keydown", "[name^=position-name]", function(e) {
+		if (e.which === 13) { // 엔터 키의 keyCode는 13입니다.
+			e.preventDefault();
+			$(this).blur(); // 포커스 아웃 이벤트를 트리거합니다.
+		}
+	});
 
 	// 수정버튼 클릭 시 직급명 수정
 	$(".org-position-modal").on("click", ".position-change", function(e) {

@@ -35,7 +35,7 @@
 		FROM USER_DEPARTMENT 
 		LEFT JOIN DEPARTMENT USING (DEPT_CODE) 
 		WHERE DEPT_CODE in (SELECT DEPT_CODE     
-							FROM department      
+							FROM DEPARTMENT     
 							WHERE 
 							 <if test='topDeptCode == 0'> 
 								 TOP_DEPT_CODE = #{deptCode})
@@ -129,12 +129,6 @@
 	<insert id="insertPname" parameterType="orgChart" useGeneratedKeys="true" keyProperty="pCode">
 		INSERT INTO POSITION (P_NAME)
 		VALUES(#{pName})
-	</insert>
-	
-	<!-- 인사발령 -->
-	<insert id="insertPersonnel" parameterType="orgChart" useGeneratedKeys="true" keyProperty="personnelCode">
-		INSERT INTO PERSONNEL (PERSONNEL_DATE, USER_NO, P_BEFORE, P_PERSONNEL, D_BEFORE, D_PERSONNER)
-		VALUES (DATE_FORMAT(now(),'%Y-%m-%d'), #{userNo}, #{topDeptName} #{deptName}, #{topDeptName} #{deptName}, #{pName}, #{pName});
 	</insert>
 	
 	<!-- =================== [update] =================== -->

@@ -52,7 +52,7 @@ public class OrgChartController {
 //	}
 	
 	@GetMapping("/")
-	public String orgChart() {
+	public String orgChart() {	
 		return "orgChart/orgChartEnroll";
 	}
 	
