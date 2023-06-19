@@ -14,12 +14,6 @@ $(document).ready(function() {
 		topDeptName : ''	
 	};	
 
-	let topDept = {
-		deptCode : '',
-		topDeptCode : '',
-		topDeptName : '',
-	}
-
 /* 부서+팀명 조회 */
 function selectDept() {
 
@@ -53,7 +47,7 @@ function selectDept() {
 				
 							html += `<li class="team low-common">
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
-											<input type="text" name="team" id="${team.deptCode}" class="team-name" value="${team.deptName}">
+											<input type="text" name="team" id="${team.deptCode}" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}" class="team-name" value="${team.deptName}">
 										</span>
 										<div class="count" id="count">(${team.deptCount})</div>
 										<div class="team-icons hidden">
@@ -68,9 +62,6 @@ function selectDept() {
 									</div>
 									</div>`
 
-					topDept.deptCode = `${dept.deptCode}`;
-					topDept.topDeptCode = `${dept.topDeptCode}`;
-					topDept.topDeptName = `${dept.deptName}`;
 				}
 			}
 
@@ -396,6 +387,8 @@ $('#ok-personnel').click(function(e) {
 		$(`input[name=department${num}]`).focus();
 	});
 	
+	let topDeptCode = '';
+
 	// input 포커스 아웃 시 상위부서 db에 부서추가
 	$(".inputs").on("blur", ".topD-name", function(e) {
 		
@@ -420,7 +413,7 @@ $('#ok-personnel').click(function(e) {
 								`<div class="accordion-item accordion-item-common org-accordion${result}">
 									<h2 class="accordion-header org-accordion-header" id="heading${result}">
 										<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${result}" aria-expanded="true" aria-controls="flush-collapse${result}" aria-label="펼치기">
-											<input type="text" id="${result}" data-id="${topDept.deptCode},${topDept.topDeptCode}" class="topD-name" value="${input}" name="department${result}" aria-label="부서이름인풋">
+											<input type="text" id="${result}" data-id="${result}" class="topD-name" value="${input}" name="department${result}" aria-label="부서이름인풋">
 										</button>
 										<div class="icons hidden">
 											<i class="fa-solid fa-plus team-plus" id="team-plus${result}"></i> 
@@ -433,6 +426,7 @@ $('#ok-personnel').click(function(e) {
 									</div>
 								</div>`
 							);
+							topDeptCode = `${result}`;
 							$(e.target).attr("id", result);
 							swal('해당 부서가 추가되었습니다.', {
 								buttons: { cancel: '확인' },
@@ -503,8 +497,8 @@ $('#ok-personnel').click(function(e) {
 	/////////////////////////////////////////////////////////////////////// 상위부서 삭제
 	$(".inputs").on("click", ".team-minus", function(e) { 
 			
-		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
-		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[1];
+		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
+		let deptCode = $(e.target).parents(".accordion-item").find('.team-name').attr("data-id").split(",")[0];
 
 		swal('부서를 삭제 하시겠습니까?', {
 			buttons: { confirm: '확인', cancel: '취소' },
@@ -608,7 +602,7 @@ $('#ok-personnel').click(function(e) {
 							$(parent).find('.oc-all').append(
 								`<li class="team low-common">
 									<span class="input-click">
-										<input type="text" value="${input}" name="team${result}" id="${result}" class="team-name">
+										<input type="text" value="${input}" data-id="${result},${topDeptCode}" name="team${result}" id="${result}" class="team-name">
 									</span>
 									<div class="team-icons hidden">
 										<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${result}"></i> 

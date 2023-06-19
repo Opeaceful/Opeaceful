@@ -296,9 +296,9 @@ DROP PROCEDURE IF EXISTS ADD_APPROVAL; -- 사용 다한 프로시저는 삭제�
 --         (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
 -- 유저 1,2,8에 연차 임시로 넣어둠
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
+UPDATE MEMBER SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
+UPDATE MEMBER SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
+UPDATE MEMBER SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
 -- 테스트 데이터 입력용 프로시저
 
 
