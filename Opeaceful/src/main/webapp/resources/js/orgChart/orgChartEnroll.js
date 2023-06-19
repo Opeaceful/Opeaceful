@@ -39,7 +39,7 @@ function selectDept() {
 										<i class="fa-solid fa-pen team-change" id="team-change${dept.deptCode}"></i>
 									</div>
 								</h2>
-								<div id="collapse${dept.deptCode}" class="accordion-collapse collapse show org-accordion-collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
+								<div id="collapse${dept.deptCode}" class="accordion-collapse collapse org-accordion-collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
 									<ul class="accordion-body accordion-body-common oc-all" id="oc-all${dept.deptCode}">`
 									
 					for (let team of result) {
