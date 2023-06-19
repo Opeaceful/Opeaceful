@@ -17,6 +17,7 @@ public class UserDepartment {
 
 	private String pName;
 	private String deptName;
+	private String topDeptName;
 
 	private int eno;
 	private String userName;
