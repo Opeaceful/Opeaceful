@@ -314,10 +314,13 @@ public class MemberController {
 		// 1. 퇴사일이 있을 경우
 		if (resignedMember.getResignedDate() != "") {
 
-			// 상위부서 불러와서 세팅
-			Department topDept = memberService.selecTopDept(m);
-			resignedMember.setDeptName(topDept.getDeptName());
-			resignedMember.setTName(m.getDName());
+			
+			//부서 직급 이름 불러와서 세팅
+			UserDepartment ud = memberService.selecTopDeptUP(m);
+			
+			resignedMember.setDeptName(ud.getTopDeptName());
+			resignedMember.setTName(ud.getDeptName());
+			resignedMember.setPName(ud.getPName());
 
 			int resignedresult = 0;
 
