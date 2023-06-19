@@ -87,7 +87,7 @@
 	<insert id="insertMember" parameterType="member" useGeneratedKeys="true"  >
 	
 		<selectKey keyProperty="eno" resultType="_int" order="BEFORE">
-	 		SELECT CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(right((SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1), 2)+1, 2, '0' ))as SIGNED)
+	 		SELECT CAST(CONCAT(DATE_FORMAT(CURRENT_DATE, '%y'), LPAD(MONTH(CURRENT_DATE), 2, '0'), LPAD(RIGHT((SELECT ENO FROM MEMBER ORDER BY ENO DESC LIMIT 1), 2)+1, 2, '0' ))AS SIGNED)
 	 	</selectKey>
 	
 		INSERT INTO MEMBER(ENO,STATUS_TYPE, USER_PWD, USER_NAME ,PHONE,EXTENSION, EMAIL,ADDRESS, HIRE_DATE)
@@ -107,7 +107,7 @@
 	<!-- [지영] 2.dept insert -->
 	<insert id="insertUserDept" parameterType="userDepartment" useGeneratedKeys="true">
 		<selectKey keyProperty="userNo" resultType="_int" order="BEFORE">
-	 		SELECT USER_NO FROM member ORDER BY USER_NO DESC LIMIT 1
+	 		SELECT USER_NO FROM MEMBER ORDER BY USER_NO DESC LIMIT 1
 	 	</selectKey>
 	 	
 	 	INSERT INTO USER_DEPARTMENT(USER_NO,P_CODE, DEPT_CODE)
@@ -120,7 +120,7 @@
 	
 	<!--[지영] 3.사용자에게 보여줄 eno select : insert에 딸린 select라 이쪽으로 넣어둠 -->	
 	<select id="selectENO" resultType="_int" >
-		SELECT ENO FROM member ORDER BY ENO DESC LIMIT 1
+		SELECT ENO FROM MEMBER ORDER BY ENO DESC LIMIT 1
 	</select>
 	
 
@@ -136,14 +136,14 @@
 	    </if>
 	    <if test='Sselect == "N"'>
 	        SELECT USER_NO, ENO, USER_PWD, USER_NAME, PHONE, EXTENSION, EMAIL, ADDRESS, ANNUAL_LEAVE_COUNT, 
-	        DATE_FORMAT(HIRE_DATE, '%Y-%m-%d') S_HIRE_DATE, r.P_NAME, r.DEPT_NAME, RESIGNED_DATE 
+	        DATE_FORMAT(HIRE_DATE, '%Y-%m-%d') S_HIRE_DATE, R.P_NAME, R.DEPT_NAME, RESIGNED_DATE 
 	    </if>
-		FROM member
-		left JOIN user_department USING(USER_NO)
-	    left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
+		FROM MEMBER
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+	    LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 	    <if test='Sselect == "N"'>
-			left Join resigned_member r USING(USER_NO)
+			LEFT JOIN RESIGNED_MEMBER R USING(USER_NO)
 		</if>
 		WHERE STATUS = #{Sselect}
 		    <if test='Dselect != null'>
@@ -160,10 +160,10 @@
 	 <!-- 페이징용 count 체크 -->
 	 <select id="selectMemberCount"  resultType="_int" parameterType="hashMap">
 		SELECT COUNT(*)
-		FROM member
-		left JOIN user_department USING(USER_NO)
-	    left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
+		FROM MEMBER
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+	    LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 		WHERE STATUS = #{Sselect}
 		    <if test='Dselect != null '>
 		      AND DEPT_CODE = #{Dselect}
@@ -176,10 +176,10 @@
 	 <!-- [지영] 사용자 수정용 조회 -->
 	 <select id="selectMemberOne" parameterType="_int" resultMap="UpdatememberResultSet">
 	 	SELECT USER_NO, ENO,STATUS,USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
-		FROM member
-		left JOIN user_department USING(USER_NO)
-		left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
+		FROM MEMBER
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+		LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 		WHERE USER_NO = #{userNo}
 	 </select>
 	 
@@ -187,24 +187,24 @@
 	 <!--[지영] 모달용 전체조회 -->
 	 <select id="modalAllMemberView" resultMap="AllmemberVIewResultSet" >
 	 	SELECT USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME, ENO
-		FROM member
-		left JOIN user_department USING(USER_NO)
-		left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
+		FROM MEMBER
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+		LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 		WHERE STATUS = 'Y' 
 		 <if test='keyword != null and keyword !=""'>
 		      AND USER_NAME LIKE '%${keyword}%'
 		 </if>
-		order by DEPT_CODE, P_CODE
+		ORDER BY DEPT_CODE, P_CODE
 	 </select>
 	 
 	 <!--[지영] check 박스로 조회된 인원만 select-->
 	 <select id="checkMemberNoSelect"  resultMap="AllmemberResultSet" >
 	 	SELECT USER_NO, ENO, USER_PWD, USER_NAME,PHONE,EXTENSION,EMAIL,ADDRESS,ANNUAL_LEAVE_COUNT,DATE_FORMAT( HIRE_DATE, '%Y-%m-%d' )S_HIRE_DATE,P_NAME,DEPT_NAME
-		FROM member
-		left JOIN user_department USING(USER_NO)
-	    left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
+		FROM MEMBER
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+	    LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 		WHERE USER_NO IN 
 		<foreach item="userNo" collection="array"
 		       separator="," open="(" close=")">
@@ -216,10 +216,10 @@
 	 <!--[지영] check 박스로 조회된 인원만 select : salray용-->
 	 <select id="checkMemberNoSelectSalary"  resultMap="AllmemberVIewResultSet" >
 	 	SELECT  USER_NO,USER_NAME,P_CODE,DEPT_CODE,P_NAME,DEPT_NAME
-		FROM member
-		left JOIN user_department USING(USER_NO)
-	    left JOIN department USING(DEPT_CODE)
-	    left JOIN position USING(P_CODE)
+		FROM MEMBER
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+	    LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 		WHERE USER_NO IN 
 		<foreach item="userNo" collection="array"
 		       separator="," open="(" close=")">
@@ -232,9 +232,9 @@
 	<select id="loginMember" parameterType="member" resultMap="AllmemberResultSet">
 		SELECT *
 		  FROM MEMBER
-		LEFT JOIN user_department USING(USER_NO)
-	    LEFT JOIN department USING(DEPT_CODE)
-	    LEFT JOIN position USING(P_CODE)
+		LEFT JOIN USER_DEPARTMENT USING(USER_NO)
+	    LEFT JOIN DEPARTMENT USING(DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
 		 WHERE ENO = #{eno}
 		   AND STATUS = 'Y';
 	</select>
@@ -262,9 +262,9 @@
 									 JOIN USER_DEPARTMENT USING (DEPT_CODE)
 									WHERE USER_NO = #{userNo})) AS TOP_DEPT_NAME
 		FROM MEMBER
-		LEFT JOIN user_department USING (USER_NO)
-        LEFT JOIN department USING (DEPT_CODE)
-	    LEFT JOIN position USING(P_CODE)
+		LEFT JOIN USER_DEPARTMENT USING (USER_NO)
+        LEFT JOIN DEPARTMENT USING (DEPT_CODE)
+	    LEFT JOIN POSITION USING(P_CODE)
         WHERE USER_NO = #{userNo}
         AND STATUS = 'Y';
 	</select>
@@ -272,18 +272,18 @@
 	<!-- [지의] member 연차갯수 조회 -->
 	<select id="selectAnnualMembers" resultType="member">
 		SELECT USER_NO, ANNUAL_LEAVE_COUNT, ANNUAL_UNIT
-		  FROM MEMBER m
-		  JOIN annual A
+		  FROM MEMBER M
+		  JOIN ANNUAL A
 		 WHERE YEAR(now()) - YEAR(HIRE_DATE) = A.YEAR;
 	</select>
 	
 	<!-- [진기]-->
 	<select id="adminAll" resultMap="AllmemberResultSet">
-	 	SELECT m.*, d.DEPT_NAME, p.P_NAME
-		FROM member m
-		JOIN user_department ud ON m.USER_NO = ud.USER_NO
-		JOIN department d ON ud.DEPT_CODE = d.DEPT_CODE
-		JOIN position p ON ud.P_CODE = p.P_CODE
+	 	SELECT M.*, D.DEPT_NAME, P.P_NAME
+		FROM MEMBER M
+		JOIN USER_DEPARTMENT UD ON M.USER_NO = UD.USER_NO
+		JOIN DEPARTMENT D ON UD.DEPT_CODE = D.DEPT_CODE
+		JOIN POSITION P ON UD.P_CODE = P.P_CODE
 		WHERE STATUS='Y';
 	 </select>
 	 
@@ -315,7 +315,7 @@
 	
 	<!-- =================== [update] =================== -->
 
-	<!-- [지의] 비밀번호 변경 -->
+	<!-- [MEMBER] 비밀번호 변경 -->
 	<update id="updatePwd" parameterType="member">
 		UPDATE MEMBER
 		   SET USER_PWD = #{userPwd}
@@ -338,7 +338,7 @@
 	<!-- [지영] 사용자 Update-->
 	 <!--[지영] 1. 멤버 업데이트 -->
 	 <update id="updateAllmember" parameterType="member" >
-	 	UPDATE member
+	 	UPDATE MEMBER
 	 	SET USER_NAME = #{userName},
 	 		PHONE     = #{phone},
 	 		EXTENSION = #{extension},
@@ -347,14 +347,14 @@
 	 		ANNUAL_LEAVE_COUNT = #{annualLeaveCount},
 	 		HIRE_DATE = #{hireDate}
 	 		<if test="status != null">
-			   ,status = #{status}
+			   ,STATUS = #{status}
 			</if>
 	 	WHERE USER_NO = #{userNo}
 	 </update>
 	 
 	  <!--[지영] 2. 부서 업데이트 -->
 	 <update id="updateUserDept" parameterType="member" >
-	 	UPDATE user_department 
+	 	UPDATE USER_DEPARTMENT 
 	 	SET P_CODE = #{pCode},
 	 		DEPT_CODE  = #{deptCode}
 	 	WHERE USER_NO = #{userNo}
@@ -397,11 +397,11 @@
 		</foreach>
 	</update>
 	
-	<!--  -->
+	<!-- [지의] 연차테이블 수정 시 개인 연차갯수 업데이트 -->
 	<update id="updateMemberAnnualCountByYear" parameterType="annual">
 		UPDATE MEMBER
 		SET ANNUAL_LEAVE_COUNT = #{annualUnit}
-		WHERE (SELECT YEAR(now()) - YEAR(HIRE_DATE)) = #{year};
+		WHERE (SELECT YEAR(NOW()) - YEAR(HIRE_DATE)) = #{year};
 	</update>
 
 
@@ -409,19 +409,19 @@
   	<!-- [지영] 3년이 지난 유저 데이터 삭제 -->
   	<delete id="deleteMembers" parameterType="java.util.List">
   		<foreach collection="list" item="uesrNo" >
-	  		DELETE FROM board_reply 
+	  		DELETE FROM BOARD_REPLY
 			WHERE USER_NO = #{uesrNo};
 		    
-		    DELETE FROM board 
+		    DELETE FROM BOARD 
 			WHERE BOARD_WRITER = #{uesrNo} AND BOARD_CD = 'F';
 		    
-			DELETE FROM user_department 
+			DELETE FROM USER_DEPARTMENT 
 			WHERE USER_NO = #{uesrNo};
 		    
 			DELETE FROM SIGNATURE_IMG 
 		    WHERE USER_NO = #{uesrNo};
 		    
-			DELETE FROM member 
+			DELETE FROM MEMBER 
 			WHERE USER_NO = #{uesrNo};
 		</foreach>	
   	</delete> 
