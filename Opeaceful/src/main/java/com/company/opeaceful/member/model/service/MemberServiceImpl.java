@@ -167,5 +167,9 @@ public class MemberServiceImpl implements MemberService {
 	public List<Integer> resignedmemberApprovalList(Integer uesrNo) {
 		return memberDao.resignedmemberApprovalList(uesrNo);
 	}
+	@Override
+	public UserDepartment selecTopDeptUP(Member m){
+		return memberDao.selecTopDeptUP(m);
+	}
 
 }

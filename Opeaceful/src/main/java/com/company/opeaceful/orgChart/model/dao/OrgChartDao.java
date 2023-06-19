@@ -50,7 +50,6 @@ public class OrgChartDao {
 	// 상위부서 삭제
 	public int deleteDeptCode(Map<String, Object> map) {
 		
-		
 		int result = sqlSession.delete("orgChartMapper.deleteDeptCode", map);
 		
 		return result;

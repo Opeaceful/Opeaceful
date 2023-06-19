@@ -54,8 +54,8 @@
 		SELECT SALARY_NO,YEAR_REPORTED,MON_REPORTED,
 		PAYMENT_DATE,TOTAL_GROSSPAY,
 		TOTAL_DEDUCTIONS,
-		NET_PAY,ENO,s.USER_NAME
-		FROM SALARY s
+		NET_PAY,ENO,S.USER_NAME
+		FROM SALARY S
 		left JOIN MEMBER USING(USER_NO)
 		<where>
 			<if test='year != null'>
@@ -114,9 +114,14 @@
 		parameterType="hashMap">
 		SELECT * FROM SALARY
 		where USER_NO = #{no}
-		AND YEAR_REPORTED = #{year}
-		AND MON_REPORTED =
-		(#{month}-1)
+		<if test='month == 1'>
+			AND YEAR_REPORTED = (#{year}-1)
+			AND MON_REPORTED =(#{month}+11)
+		</if>
+		<if test='month != 1'>
+			AND YEAR_REPORTED = #{year}
+			AND MON_REPORTED =(#{month}-1)
+		</if>
 		ORDER BY PAYMENT_DATE DESC LIMIT 1;
 	</select>
 

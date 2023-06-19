@@ -5,13 +5,14 @@ import {path} from '../common/common.js';
 import {topDeptRoad, positionRoad} from '../common/dtcodeselect.js';
 
 $(document).ready(function() {
-let currentInfo ={
-	deptCode : '', 
-	topDeptCode : '',
-	topDeptName : ''	
-};	
 
-selectDept();
+	selectDept();
+
+	let currentInfo = {
+		deptCode : '', 
+		topDeptCode : '',
+		topDeptName : ''	
+	};	
 
 /* 부서+팀명 조회 */
 function selectDept() {
@@ -26,10 +27,10 @@ function selectDept() {
 
 			for (let dept of result) {
 				if(dept.topDeptCode == 0){
-
+					
 					html += `<div class="accordion-item accordion-item-common org-accordion${dept.deptCode}" id="org-accordion">
 								<h2 class="accordion-header org-accordion-header" id="heading${dept.deptCode}">
-									<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="flush-collapse${dept.deptCode}" aria-label="펼치기">
+									<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="collapse${dept.deptCode}">
 										<input type="text" id="${dept.deptCode}" data-id="${dept.deptCode},${dept.topDeptCode},${dept.deptName}" class="topD-name" name="department" value="${dept.deptName}" aria-label="부서이름인풋">
 									</button>
 									<div class="icons hidden">
@@ -38,7 +39,7 @@ function selectDept() {
 										<i class="fa-solid fa-pen team-change" id="team-change${dept.deptCode}"></i>
 									</div>
 								</h2>
-								<div id="collapse${dept.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
+								<div id="collapse${dept.deptCode}" class="accordion-collapse collapse org-accordion-collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
 									<ul class="accordion-body accordion-body-common oc-all" id="oc-all${dept.deptCode}">`
 									
 					for (let team of result) {
@@ -46,7 +47,7 @@ function selectDept() {
 				
 							html += `<li class="team low-common">
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
-											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
+											<input type="text" name="team" id="${team.deptCode}" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}" class="team-name" value="${team.deptName}">
 										</span>
 										<div class="count" id="count">(${team.deptCount})</div>
 										<div class="team-icons hidden">
@@ -60,10 +61,11 @@ function selectDept() {
 							html += `</ul>
 									</div>
 									</div>`
+
 				}
 			}
 
-			let orcAccordion = document.getElementById("accordionFlushExample");
+			let orcAccordion = document.getElementById("accordionExample");
 			orcAccordion.innerHTML = html;
 			// orcAccordion.insertAdjacentHTML('afterend', html);
 
@@ -326,10 +328,8 @@ $('#ok-personnel').click(function(e) {
 				  });
 				
 				$("#pesonnel-modal").modal('hide');
-				//$("#user-info").load(window.location.href + " #user-info");
 				selectDept();
 				selectDeptList(currentInfo.deptCode,currentInfo.topDeptCode,currentInfo.topDeptName);
-				//$("#accordionFlushExample").load(window.location.href);
 				
 			},
 			error: function(x, e) {
@@ -385,6 +385,8 @@ $('#ok-personnel').click(function(e) {
 		$(`input[name=department${num}]`).focus();
 	});
 	
+	let topDeptCode = '';
+
 	// input 포커스 아웃 시 상위부서 db에 부서추가
 	$(".inputs").on("blur", ".topD-name", function(e) {
 		
@@ -409,7 +411,7 @@ $('#ok-personnel').click(function(e) {
 								`<div class="accordion-item accordion-item-common org-accordion${result}">
 									<h2 class="accordion-header org-accordion-header" id="heading${result}">
 										<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${result}" aria-expanded="true" aria-controls="flush-collapse${result}" aria-label="펼치기">
-											<input type="text" id="${result}" class="topD-name" value="${input}" name="department${result}" aria-label="부서이름인풋">
+											<input type="text" id="${result}" data-id="${result}" class="topD-name" value="${input}" name="department${result}" aria-label="부서이름인풋">
 										</button>
 										<div class="icons hidden">
 											<i class="fa-solid fa-plus team-plus" id="team-plus${result}"></i> 
@@ -422,6 +424,7 @@ $('#ok-personnel').click(function(e) {
 									</div>
 								</div>`
 							);
+							topDeptCode = `${result}`;
 							$(e.target).attr("id", result);
 							swal('해당 부서가 추가되었습니다.', {
 								buttons: { cancel: '확인' },
@@ -492,8 +495,8 @@ $('#ok-personnel').click(function(e) {
 	/////////////////////////////////////////////////////////////////////// 상위부서 삭제
 	$(".inputs").on("click", ".team-minus", function(e) { 
 			
-		let deptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("id");
-		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[1];
+		let topDeptCode = $(e.target).parents(".accordion-item").find('.topD-name').attr("data-id").split(",")[0];
+		let deptCode = $(e.target).parents(".accordion-item").find('.team-name').attr("data-id").split(",")[0];
 
 		swal('부서를 삭제 하시겠습니까?', {
 			buttons: { confirm: '확인', cancel: '취소' },
@@ -597,7 +600,7 @@ $('#ok-personnel').click(function(e) {
 							$(parent).find('.oc-all').append(
 								`<li class="team low-common">
 									<span class="input-click">
-										<input type="text" value="${input}" name="team${result}" id="${result}" class="team-name">
+										<input type="text" value="${input}" data-id="${result},${topDeptCode}" name="team${result}" id="${result}" class="team-name">
 									</span>
 									<div class="team-icons hidden">
 										<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${result}"></i> 
