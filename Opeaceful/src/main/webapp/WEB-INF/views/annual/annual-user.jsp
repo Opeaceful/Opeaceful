@@ -22,7 +22,7 @@
         <div class="annual-wrap container">
             <!-- 제목 -->
    			<div class="title-box">
-				<h2 class="title-common">연차</h2>
+				<h2 class="title-common">연차 조회</h2>
 			</div>
             <!-- member-search-keyword -->
             <!-- 내용부분 -->

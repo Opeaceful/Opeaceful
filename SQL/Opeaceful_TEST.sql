@@ -97,7 +97,7 @@ VALUES
   (200505, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이예진', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200506, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박준호', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200507, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최서연', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
-  (200508, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정승민', '2020-05-01','010-1234-5678', 'example1@gmail.com', '서울특별시 강남구 가로수길 1,',''),
+  (200508, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정승민', '2020-05-01','010-1234-5678', 'shwldml@gmail.com', '서울특별시 강남구 가로수길 1,',''),
   (200509, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '강지우', '2020-05-01', '010-2468-1357', 'random_email3@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200510, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤서준', '2020-05-01', '010-5798-6423', 'email7_address@gmail.com','서울특별시 강남구 가로수길 1, 101',''),
   (200511, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '장민서', '2020-05-01', '010-2468-1357', 'random_email3@gmail.com','서울특별시 강남구 가로수길 1,123',''),
@@ -142,8 +142,7 @@ VALUES
   (230450, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '임하늘', '2023-04-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
   (230451, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박현서', '2023-04-02', '010-9864-7231', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
   (230552, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김유진', '2023-05-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
-  (230553, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이시우', '2023-05-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
-  (230654, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '노지의', '2023-05-12', '010-9239-2208', 'shwldml@gmail.com','대구광역시 중구 동성로 1,','');
+  (230553, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이시우', '2023-05-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,','');
 
 
 /*멤버 데이터 부서등록*/
@@ -200,8 +199,7 @@ VALUES (1,4,1),
       (50,11,9),
       (51,11,9),
       (52,4,8),
-      (53,4,8),
-      (54,9,8);
+      (53,4,8);
 
 
 /*권한 더미데이터, 부장~대리까지 임시로 넣어둠*/
@@ -494,7 +492,20 @@ DELIMITER ;
 CALL addsalary();
 DROP PROCEDURE IF EXISTS addsalary;
 
-
+-- [지의] 연차 조회에서 필요한 연차 등록
+INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+VALUES  (12, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
+		(12, 1, "휴가", 1, '2023-01-20 15:28' ,'2023-01-26','2023-01-27'),
+		(12, 1, "휴가", 1, '2023-02-01 15:28' ,'2023-02-08','2023-02-08'),
+		(12, 3, "오후반차", 1, '2023-01-22 11:40' ,'2023-03-31','2023-03-31'),
+        (12, 2, "오전반차", 1, '2023-02-25 13:05' ,'2023-04-03','2023-04-03'),
+        (12, 1, "휴가", 1, '2023-03-06 16:09' ,'2023-04-17','2023-04-17'),
+        (12, 1, "휴가", 1, '2023-04-06 16:09' ,'2023-05-02','2023-05-04'),
+        (12, 3, "오후반차", 1, '2023-05-06 16:09' ,'2023-05-12','2023-05-12'),
+        (12, 1, "휴가", 1, '2023-05-10 16:09' ,'2023-05-26','2023-05-26'),
+        (12, 1, "휴가", 1, '2023-05-06 16:09' ,'2023-06-05','2023-06-05'),
+        (12, 2, "오전반차", 1, '2023-06-01 10:45' ,'2023-06-20','2023-06-20');
+        
 -- DELIMITER $$
 -- CREATE PROCEDURE addannual() -- ⓐ  프로시져
 -- BEGIN
