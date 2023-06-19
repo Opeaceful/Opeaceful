@@ -45,12 +45,12 @@
 		 WHERE USER_NO = #{userNo}
 		UNION ALL
 		SELECT ROLE_CODE
-		  FROM opeaceful.department_role
+		  FROM DEPARTMENT_ROLE 
 		 WHERE DEPT_CODE = (SELECT DEPT_CODE
-							  FROM user_department
+							  FROM USER_DEPARTMENT
 							 WHERE USER_NO = #{userNo})
 		   AND P_CODE = (SELECT P_CODE
-						   FROM user_department
+						   FROM USER_DEPARTMENT
 						  WHERE USER_NO = #{userNo});
 	</select>
 	

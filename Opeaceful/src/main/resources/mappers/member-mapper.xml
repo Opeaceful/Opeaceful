@@ -279,7 +279,7 @@
 	
 	<!-- [진기]-->
 	<select id="adminAll" resultMap="AllmemberResultSet">
-	 	SELECT M.*, d.DEPT_NAME, P.P_NAME
+	 	SELECT M.*, D.DEPT_NAME, P.P_NAME
 		FROM MEMBER M
 		JOIN USER_DEPARTMENT UD ON M.USER_NO = UD.USER_NO
 		JOIN DEPARTMENT D ON UD.DEPT_CODE = D.DEPT_CODE
