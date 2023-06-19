@@ -118,7 +118,7 @@
 					WHEN TYPE = 2 THEN 0.5
 					WHEN TYPE = 3 THEN 0.5
 			   END AS APPROVAL_COUNT
-		 FROM approval
+		 FROM APPROVAL
 		WHERE USER_NO = #{userNo}
 		  AND STATUS = 1
 		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
@@ -136,7 +136,7 @@
 					WHEN TYPE = 2 THEN 0.5
 					WHEN TYPE = 3 THEN 0.5
 			   END AS APPROVAL_COUNT
-		 FROM approval
+		 FROM APPROVAL
 		WHERE USER_NO = #{userNo}
 		  AND STATUS IN (1, 0)
 		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
@@ -614,8 +614,8 @@
 	<!-- [혜린] 캘린더 일정 추가할 연차 조회 -->
 	<select id="selectAddEvent" resultType="approval" parameterType="_int">
 		SELECT *
-		 FROM approval
-		WHERE approval_no = #{approvalNo}
+		 FROM APPROVAL
+		WHERE APPROVAL_NO = #{approvalNo}
 	</select>
 <!-- =============================== insert 구간  =========================================== -->
 	
