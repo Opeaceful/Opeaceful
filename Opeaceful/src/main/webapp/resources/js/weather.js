@@ -39,7 +39,9 @@ $(document).ready(function() {
       
       // 현재날씨
       $.ajax({
-        url:`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        // url:`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        // aws 배포로 위도경도 하드
+        url:`https://api.openweathermap.org/data/2.5/weather?lat=37.4923615&lon=127.0292881&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
         dataType:'json',
         type:'GET',
         success:function(data){
@@ -68,7 +70,9 @@ $(document).ready(function() {
 
       //주간 날씨
       $.ajax({
-        url:`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        // url:`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        // aws 배포로 위도경도 하드
+        url:`https://api.openweathermap.org/data/2.5/forecast?lat=37.4923615&lon=127.0292881&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
         dataType:'json',
         type:'GET',
         success:function(data){
