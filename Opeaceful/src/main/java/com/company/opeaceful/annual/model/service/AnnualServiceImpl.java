@@ -35,4 +35,11 @@ public class AnnualServiceImpl implements AnnualService {
 	public int updateUserAnnual(Map<String, Object> map) {
 		return annualDao.updateUserAnnual(map);
 	}
+
+	@Override
+	public int updateMemberAnnualCountByYear(Annual a) {
+		return annualDao.updateMemberAnnualCountByYear(a);
+	}
+	
+
 }

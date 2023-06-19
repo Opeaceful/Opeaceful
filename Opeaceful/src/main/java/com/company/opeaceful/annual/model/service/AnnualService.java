@@ -16,4 +16,6 @@ public interface AnnualService {
 
 	int updateUserAnnual(Map<String, Object> map);
 
+	int updateMemberAnnualCountByYear(Annual a);
+
 }
