@@ -1,10 +1,10 @@
 /*부서 데이터*/
-INSERT INTO department (DEPT_NAME) VALUES
+INSERT INTO DEPARTMENT (DEPT_NAME) VALUES
    ('영업본부'),
    ('경영지원본부'),
    ('개발본부');
 
-INSERT INTO department (DEPT_NAME,TOP_DEPT_CODE) VALUES
+INSERT INTO DEPARTMENT (DEPT_NAME,TOP_DEPT_CODE) VALUES
    ('영업팀',1),
    ('마케팅팀',1),
    ('재경팀',2),
@@ -15,7 +15,7 @@ INSERT INTO department (DEPT_NAME,TOP_DEPT_CODE) VALUES
    ('디자인팀',3);
 
 /*직급 데이터*/
-INSERT INTO position (P_NAME) VALUES
+INSERT INTO POSITION (P_NAME) VALUES
    ('사장'),
    ('부사장'),
    ('이사'),
@@ -26,7 +26,7 @@ INSERT INTO position (P_NAME) VALUES
    ('주임'),
    ('사원');
 
-/* 계정 등록(팀게시판 조회 조건) = user_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!! user_no = 5 는  마케팅팀!*/
+/* 계정 등록(팀게시판 조회 조건) = USER_no = 3 , 4 두명 필요하고 and 둘 다 영업팀 이어야함 직급은 상관없음!! USER_no = 5 는  마케팅팀!*/
 
 /*공지사항 고정게시글 데이터*/
 INSERT INTO BOARD(BOARD_TITLE,BOARD_CONTENT,BOARD_WRITER,BOARD_CD,COUNT,CREATE_DATE,FIXED)
@@ -93,60 +93,60 @@ VALUES
   (200501, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이하나', '2020-05-01', '010-1234-5677', 'example0@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200502, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김둘셋', '2020-05-01', '010-1234-5666', 'example23@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200503, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김철수', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
-  (200504, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김지민', '2020-05-01', '010-9876-5432','testuser2@gmail.com','서울특별시 강남구 가로수길 1,',''),
+  (200504, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김지민', '2020-05-01', '010-9876-5432','testUSER2@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200505, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이예진', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200506, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박준호', '2020-05-01', '010-1234-5678', 'example1@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200507, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최서연', '2020-05-01', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강남구 가로수길 1,',''),
   (200508, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정승민', '2020-05-01','010-1234-5678', 'shwldml@gmail.com', '서울특별시 강남구 가로수길 1,',''),
   (200509, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '강지우', '2020-05-01', '010-2468-1357', 'random_email3@gmail.com','서울특별시 강남구 가로수길 1,',''),
-  (200510, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤서준', '2020-05-01', '010-5798-6423', 'email7_address@gmail.com','서울특별시 강남구 가로수길 1, 101',''),
+  (200510, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤서준', '2020-05-01', '010-5798-6423', 'email7_ADDress@gmail.com','서울특별시 강남구 가로수길 1, 101',''),
   (200511, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '장민서', '2020-05-01', '010-2468-1357', 'random_email3@gmail.com','서울특별시 강남구 가로수길 1,123',''),
   (200512, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안하린', '2020-05-11','010-1357-2468', 'myemail5@gmail.com', '부산광역시 해운대구 해운대해변로 1,',''),
-  (200513, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황승현', '2020-05-12',  '010-9876-5432','testuser2@gmail.com','대구광역시 중구 동성로 1,',''),
+  (200513, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황승현', '2020-05-12',  '010-9876-5432','testUSER2@gmail.com','대구광역시 중구 동성로 1,',''),
   (200514, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '장현준', '2020-05-14', '010-2468-1357', 'random_email3@gmail.com','서울특별시 종로구 청와대로 1,',''),
-  (200515, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '한민우', '2020-05-14', '010-5798-6423', 'email7_address@gmail.com','부산광역시 서구 부산타워로 1,',''),
+  (200515, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '한민우', '2020-05-14', '010-5798-6423', 'email7_ADDress@gmail.com','부산광역시 서구 부산타워로 1,',''),
   (200716, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박세은', '2020-07-06', '010-1234-5678', 'example1@gmail.com','대구광역시 동구 동대구로 1,',''),
   (200717, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박지민', '2020-07-30', '010-1357-2468', 'myemail5@gmail.com','서울특별시 강동구 천호대로 1,',''),
-  (200818, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김태희', '2020-08-01',  '010-9876-5432','testuser2@gmail.com','부산광역시 사하구 광장로 1,',''),
-  (200819, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정유미', '2020-08-02', '010-6423-5798', 'randomuser6@gmail.com','대구광역시 남구 대명로 1,',''),
-  (210920, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박지윤', '2021-09-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (200818, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김태희', '2020-08-01',  '010-9876-5432','testUSER2@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (200819, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정유미', '2020-08-02', '010-6423-5798', 'randomUSER6@gmail.com','대구광역시 남구 대명로 1,',''),
+  (210920, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박지윤', '2021-09-11', '010-6423-5798', 'randomUSER6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
   (210921, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '임예준', '2021-09-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
   (210922, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정서은', '2021-09-14', '010-1357-2468', 'myemail5@gmail.com','서울특별시 종로구 청와대로 1,',''),
   (210923, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김영숙', '2021-09-14', '010-1234-5678', 'example1@gmail.com','부산광역시 서구 부산타워로 1,',''),
-  (211024, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정재민', '2021-10-06',  '010-9876-5432','testuser2@gmail.com','대구광역시 동구 동대구로 1,',''),
-  (211025, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김현서', '2021-10-30', '010-6423-5798', 'randomuser6@gmail.com','서울특별시 강동구 천호대로 1,',''),
-  (211126, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최하율', '2021-11-01',  '010-9876-5432','testuser2@gmail.com','부산광역시 사하구 광장로 1,',''),
+  (211024, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정재민', '2021-10-06',  '010-9876-5432','testUSER2@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (211025, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김현서', '2021-10-30', '010-6423-5798', 'randomUSER6@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (211126, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최하율', '2021-11-01',  '010-9876-5432','testUSER2@gmail.com','부산광역시 사하구 광장로 1,',''),
   (211127, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김유나', '2021-11-02','010-1234-5678', 'example1@gmail.com', '대구광역시 남구 대명로 1,',''),
-  (211228, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '강하윤', '2021-12-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
-  (211229, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황승현', '2021-12-12',  '010-9876-5432','testuser2@gmail.com','대구광역시 중구 동성로 1,',''),
+  (211228, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '강하윤', '2021-12-11', '010-6423-5798', 'randomUSER6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (211229, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황승현', '2021-12-12',  '010-9876-5432','testUSER2@gmail.com','대구광역시 중구 동성로 1,',''),
   (211230, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '송예은', '2021-12-14', '010-1234-5678', 'example1@gmail.com','서울특별시 종로구 청와대로 1,',''),
-  (211231, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이현우', '2021-12-14', '010-2468-1357', 'user4_email@gmail.com','부산광역시 서구 부산타워로 1,',''),
+  (211231, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이현우', '2021-12-14', '010-2468-1357', 'USER4_email@gmail.com','부산광역시 서구 부산타워로 1,',''),
   (220132, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이철호', '2022-01-06', '010-8642-9731', 'random_email3@gmail.com','대구광역시 동구 동대구로 1,',''),
   (220133, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이준혁', '2022-01-30','010-2468-1357', 'random_email3@gmail.com', '서울특별시 강동구 천호대로 1,',''),
   (220334, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김태희', '2022-03-01', '010-1234-5678', 'example1@gmail.com','부산광역시 사하구 광장로 1,',''),
-  (220335, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최민석', '2022-03-02','010-6423-5798', 'randomuser6@gmail.com', '대구광역시 남구 대명로 1,',''),
-  (220336, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '송예준', '2022-03-06', '010-5798-6423', 'email7_address@gmail.com','대구광역시 동구 동대구로 1,',''),
-  (220337, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황하은', '2022-03-30', '010-9731-8642', 'user8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (220335, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최민석', '2022-03-02','010-6423-5798', 'randomUSER6@gmail.com', '대구광역시 남구 대명로 1,',''),
+  (220336, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '송예준', '2022-03-06', '010-5798-6423', 'email7_ADDress@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (220337, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '황하은', '2022-03-30', '010-9731-8642', 'USER8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
   (220438, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '서하은', '2022-04-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
-  (220439, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정유미', '2022-04-02', '010-9864-7531', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
-  (220540, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안하린', '2022-05-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (220439, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정유미', '2022-04-02', '010-9864-7531', 'email_ADDress10@gmail.com','대구광역시 남구 대명로 1,',''),
+  (220540, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안하린', '2022-05-11', '010-6423-5798', 'randomUSER6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
   (220541, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '안우진', '2022-05-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
-  (220642, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤예준', '2022-06-06', '010-5798-6423', 'email7_address@gmail.com','대구광역시 동구 동대구로 1,',''),
-  (221143, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정은서', '2022-11-30', '010-9731-8642', 'user8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (220642, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '윤예준', '2022-06-06', '010-5798-6423', 'email7_ADDress@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (221143, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '정은서', '2022-11-30', '010-9731-8642', 'USER8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
   (221244, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최하윤', '2022-12-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
-  (230145, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박예준', '2023-01-02', '010-9864-7531', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
-  (230146, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이지우', '2023-01-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (230145, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박예준', '2023-01-02', '010-9864-7531', 'email_ADDress10@gmail.com','대구광역시 남구 대명로 1,',''),
+  (230146, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이지우', '2023-01-11', '010-6423-5798', 'randomUSER6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
   (230147, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김시윤', '2023-01-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,',''),
-  (230248, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '한민서', '2023-02-06', '010-5798-6423', 'email7_address@gmail.com','대구광역시 동구 동대구로 1,',''),
-  (230349, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최준서', '2023-03-30', '010-9731-8642', 'user8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
+  (230248, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '한민서', '2023-02-06', '010-5798-6423', 'email7_ADDress@gmail.com','대구광역시 동구 동대구로 1,',''),
+  (230349, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '최준서', '2023-03-30', '010-9731-8642', 'USER8_email@gmail.com','서울특별시 강동구 천호대로 1,',''),
   (230450, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '임하늘', '2023-04-01', '010-7531-9864','sample9_email@gmail.com','부산광역시 사하구 광장로 1,',''),
-  (230451, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박현서', '2023-04-02', '010-9864-7231', 'email_address10@gmail.com','대구광역시 남구 대명로 1,',''),
-  (230552, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김유진', '2023-05-11', '010-6423-5798', 'randomuser6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
+  (230451, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '박현서', '2023-04-02', '010-9864-7231', 'email_ADDress10@gmail.com','대구광역시 남구 대명로 1,',''),
+  (230552, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '김유진', '2023-05-11', '010-6423-5798', 'randomUSER6@gmail.com','부산광역시 해운대구 해운대해변로 1,',''),
   (230553, 0, '$2a$10$KkpS/wSMLJ2EhWuFetS9TuJ3tpfME5XxcvXpW0WM2BD.K4qcrHjOq', '이시우', '2023-05-12', '010-1357-2468', 'myemail5@gmail.com','대구광역시 중구 동성로 1,','');
 
 
 /*멤버 데이터 부서등록*/
-INSERT INTO user_department(USER_NO, DEPT_CODE,P_CODE )
+INSERT INTO USER_DEPARTMENT(USER_NO, DEPT_CODE,P_CODE )
 VALUES (1,4,1),
 	  (2,4,3),
       (3,4,3),
@@ -203,7 +203,7 @@ VALUES (1,4,1),
 
 
 /*권한 더미데이터, 부장~대리까지 임시로 넣어둠*/
-INSERT INTO department_role(DEPT_CODE,P_CODE,ROLE_CODE )
+INSERT INTO DEPARTMENT_ROLE(DEPT_CODE,P_CODE,ROLE_CODE )
 VALUES
 (8,4,'A01'),
 (8,5,'A01'),
@@ -244,18 +244,18 @@ VALUES
 (8,4,'Y01');
 
 /* USER_NO : 8 에 모든권한 들어있음 */
-INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'S01');
-INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T01');
-INSERT user_role(USER_NO,ROLE_CODE) VALUE (8,'T02');
+INSERT USER_ROLE(USER_NO,ROLE_CODE) VALUE (8,'S01');
+INSERT USER_ROLE(USER_NO,ROLE_CODE) VALUE (8,'T01');
+INSERT USER_ROLE(USER_NO,ROLE_CODE) VALUE (8,'T02');
 
 
--- approval 더미 데이터 생성용
+-- APPROVAL 더미 데이터 생성용
 DELIMITER $$
-CREATE PROCEDURE add_approval() -- ⓐ myFunction이라는 이름의 프로시저
+CREATE PROCEDURE ADD_APPROVAL() -- ⓐ myFunction이라는 이름의 프로시저
 BEGIN
     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
     WHILE (i <= 20) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
-        INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+        INSERT INTO APPROVAL(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 		VALUES
 			(i, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
 			(i, 3, "오후반차", 1, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
@@ -266,7 +266,7 @@ BEGIN
 			(i, 1, "휴가", 0, '2023-05-06 16:09' ,'2023-05-28','2023-05-28'),
 			(i, 0, "일반", 0, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
-        INSERT INTO approval_line(APPROVAL_NO, CONFIRM_STATUS, DATE, LEVEL, STATUS, TYPE, USER_NO)
+        INSERT INTO APPROVAL_LINE(APPROVAL_NO, CONFIRM_STATUS, DATE, LEVEL, STATUS, TYPE, USER_NO)
 		VALUES  (i*8-7 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
 				(i*8-6 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
 				(i*8-5 , 'Y', '2023-05-20 10:45', 1,  2 , 'A' , i ),
@@ -280,11 +280,11 @@ BEGIN
     END WHILE;
 END$$
 DELIMITER ;
-CALL add_approval(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
-DROP PROCEDURE IF EXISTS add_approval; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
+CALL ADD_APPROVAL(); -- 프로시저 실행, 테이블에 1~1000까지 숫자 채워주기
+DROP PROCEDURE IF EXISTS ADD_APPROVAL; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
 
 -- 휴가 등록 임시
--- INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+-- INSERT INTO APPROVAL(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 -- VALUES
 -- 		(3, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
 -- 		(3, 3, "오후반차", 0, '2022-12-02 10:40' ,'2022-12-08','2022-12-08'),
@@ -296,14 +296,14 @@ DROP PROCEDURE IF EXISTS add_approval; -- 사용 다한 프로시저는 삭제�
 --         (3, 1, "휴가", 1, '2023-05-20 10:45' ,'2023-06-01','2023-06-01');
 
 -- 유저 1,2,8에 연차 임시로 넣어둠
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
-UPDATE `opeaceful`.`member` SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
+UPDATE MEMBER SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '8');
+UPDATE MEMBER SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '2');
+UPDATE MEMBER SET `ANNUAL_LEAVE_COUNT` = '30' WHERE (`USER_NO` = '1');
 -- 테스트 데이터 입력용 프로시저
 
 
--- approval_form 더미 데이터 생성용
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, '지출결의서', '<table style="border-collapse: collapse; width: 88.9823%; height: 556px;" border="1">
+-- APPROVAL_FORM 더미 데이터 생성용
+INSERT INTO `APPROVAL_FORM`(TYPE, TITLE, CONTENT) VALUES (0, '지출결의서', '<table style="border-collapse: collapse; width: 88.9823%; height: 556px;" border="1">
  <tbody>
  <tr style="height: 20px;">
  <td style="height: 60px; text-align: center; width: 11.1345%;" rowspan="3">인적사항</td>
@@ -364,7 +364,7 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (0, '지출결의서', 
  </tr>
  </tbody>
  </table>');
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 762.891px;" border="1">
+INSERT INTO `APPROVAL_FORM`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 762.891px;" border="1">
  <tbody>
  <tr style="height: 47.4375px;">
  <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
@@ -398,7 +398,7 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (1, 'OOO 휴가신청�
  </tr>
  </tbody>
  </table>');
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
+INSERT INTO `APPROVAL_FORM`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
  <tbody>
  <tr style="height: 47.4375px;">
  <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
@@ -429,7 +429,7 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (2, 'OOO 오전반차 �
  </tr>
  </tbody>
  </table>');
-INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
+INSERT INTO `APPROVAL_FORM`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 신청서', '<table style="border-collapse: collapse; width: 88.9823%; height: 720.891px;" border="1">
  <tbody>
  <tr style="height: 47.4375px;">
  <td style="height: 138.812px; text-align: center; width: 13.8655%;" rowspan="3">인적사항</td>
@@ -461,13 +461,13 @@ INSERT INTO `approval_form`(TYPE, TITLE, CONTENT) VALUES (3, 'OOO 오후반차 �
  </tbody>
  </table>');
 
--- salary 더미 데이터 생성용
+-- SALARY 더미 데이터 생성용
 DELIMITER $$
-CREATE PROCEDURE addsalary()
+CREATE PROCEDURE ADDSALARY()
 BEGIN
     DECLARE i INT DEFAULT 1;
      WHILE (i <= 12) DO
- 		INSERT INTO salary (USER_NO,USER_NAME,YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
+ 		INSERT INTO SALARY (USER_NO,USER_NAME,YEAR_REPORTED,MON_REPORTED,PAYMENT_DATE,TOTAL_GROSSPAY,TOTAL_DEDUCTIONS,NET_PAY,PAYMENTS,DEDUCTION,P_NAME,DEPT_NAME)
 	    VALUES
         (8,'정승민',2023, i,'2023-06-05','3,750,000', '515,500', '3,234,500', '기본급,3000000,식대,100000,주휴수당,500000,기타수당,150000', '국민연금,120000,건강보험,143500,고용보험,87000,소득세,150000,지방소득세,15000', '부장', '인사팀'),
         (14,'장현준',2023, i,'2023-06-12', '3,950,000', '398,900', '3,551,100', '기본급 ,3500000,식대,100000,주휴수당,350000', '국민연금,100000,건강보험,110000,고용보험,80000,소득세,99000,지방소득세,9900', '대리', '영업팀'),
@@ -489,11 +489,11 @@ BEGIN
 END$$
 DELIMITER ;
 
-CALL addsalary();
-DROP PROCEDURE IF EXISTS addsalary;
+CALL ADDSALARY();
+DROP PROCEDURE IF EXISTS ADDSALARY;
 
 -- [지의] 연차 조회에서 필요한 연차 등록
-INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+INSERT INTO APPROVAL(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 VALUES  (12, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
 		(12, 1, "휴가", 1, '2023-01-20 15:28' ,'2023-01-26','2023-01-27'),
 		(12, 1, "휴가", 1, '2023-02-01 15:28' ,'2023-02-08','2023-02-08'),
@@ -507,12 +507,12 @@ VALUES  (12, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
         (12, 2, "오전반차", 1, '2023-06-01 10:45' ,'2023-06-20','2023-06-20');
         
 -- DELIMITER $$
--- CREATE PROCEDURE addannual() -- ⓐ  프로시져
+-- CREATE PROCEDURE ADDannual() -- ⓐ  프로시져
 -- BEGIN
 --     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
 --     WHILE (i <= 9) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
 
--- 		INSERT INTO approval(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
+-- 		INSERT INTO APPROVAL(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 -- 		VALUES
 -- 			(8, 1, "휴가", 0, CONCAT('2023-11-0', i, ' 15:28') ,CONCAT('2023-11-0', i, ' 15:28'),CONCAT('2023-11-0', i, ' 15:28')),
 -- 			(8, 0, "일반", 0, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
@@ -528,5 +528,5 @@ VALUES  (12, 1, "휴가", 1, '2022-12-20 15:28' ,'2023-01-02','2023-01-05'),
 -- END$$
 -- DELIMITER ;
 
--- CALL addannual(); -- 프로시저 실행
--- DROP PROCEDURE IF EXISTS addannual; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
+-- CALL ADDannual(); -- 프로시저 실행
+-- DROP PROCEDURE IF EXISTS ADDannual; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
