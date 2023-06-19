@@ -45,7 +45,7 @@
         <!-- 헤더: 제목, 친구 찾기 버튼, 친구 추가 버튼 -->
         <header id="chat_header">
             <h1 id="chat_header_title">Opeaceful</h1>
-            <span><i class="fa-solid fa-user-plus"></i></span>
+<!--             <span><i class="fa-solid fa-user-plus"></i></span> -->
 <!--             <span><i class="fa-solid fa-magnifying-glass"></i></span> -->
         </header>
         
