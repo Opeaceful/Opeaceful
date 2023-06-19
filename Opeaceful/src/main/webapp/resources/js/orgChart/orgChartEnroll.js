@@ -70,7 +70,6 @@ function selectDept() {
 			deptListClick();
 
 			if(currentInfo.topDeptCode){
-				console.log($(`#heading${currentInfo.topDeptCode}>button`))
 				$(`#heading${currentInfo.topDeptCode}>button`).click();
 			}
 		},
