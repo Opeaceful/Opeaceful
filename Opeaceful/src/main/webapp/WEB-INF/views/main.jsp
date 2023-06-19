@@ -67,7 +67,7 @@
 								<div class="col"  id="main-sign-wait">승인 대기중인 결재 문서가 <span class="main-sign-count">${ waitApr }</span> 건 있습니다.</div>
 							</div>
 							<div class="main-content-text text-end" id="main-sign-go">
-								결제확인 &gt;&gt;
+								결재확인 &gt;&gt;
 							</div>
 						</div>
 	        		</div>
