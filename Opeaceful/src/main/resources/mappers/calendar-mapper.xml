@@ -89,12 +89,12 @@
 			   COLOR AS BORDER_COLOR,
 			   D_DAY 
 		FROM CALENDAR 
-		WHERE USER_NO in (
+		WHERE USER_NO IN (
 		SELECT USER_NO 
-		FROM user_department
-		where CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
-		FROM user_department
-		where USER_NO = #{userNo}))										
+		FROM USER_DEPARTMENT
+		WHERE CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
+		FROM USER_DEPARTMENT
+		WHERE USER_NO = #{userNo}))										
 	</select>
 	
 	<!-- 캘린더 전체(개인+팀) 일정 조회 -->
@@ -127,12 +127,12 @@
 			   COLOR AS BORDER_COLOR,
 			   D_DAY 
 		FROM CALENDAR 
-		WHERE USER_NO in (
+		WHERE USER_NO IN (
 		SELECT USER_NO 
-		FROM user_department
-		where CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
-		FROM user_department
-		where USER_NO = #{userNo}))					
+		FROM USER_DEPARTMENT
+		WHERE CATEGORY = 'H' AND DEPT_CODE = (SELECT DEPT_CODE
+		FROM USER_DEPARTMENT
+		WHERE USER_NO = #{userNo}))					
 	</select> 
 	
 	<!-- 일정 추가 -->
@@ -234,21 +234,21 @@
 	
 	<!-- 디데이 조회 -->
 	<select id="dDayList" resultMap="calendarListResultSet">
-		SELECT CONCAT('+',cast(ABS(DATEDIFF(date(START_DATE), now())) as char)) as NAME, TITLE , START_DATE, CALENDAR_NO
+		SELECT CONCAT('+',CAST(ABS(DATEDIFF(DATE(START_DATE), NOW())) AS CHAR)) AS NAME, TITLE , START_DATE, CALENDAR_NO
 				FROM CALENDAR
 				WHERE D_DAY = 'Y' AND ((CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
 														FROM USER_DEPARTMENT
 														WHERE USER_NO =  #{userNo})) 
 				OR (CATEGORY = 'M' AND USER_NO = #{userNo}))
-				AND DATEDIFF(date(START_DATE), now()) <![CDATA[ < ]]> 0
-		union
-		SELECT cast(DATEDIFF(date(START_DATE), now())*-1 as char) as NAME, TITLE, START_DATE, CALENDAR_NO
+				AND DATEDIFF(DATE(START_DATE), NOW()) <![CDATA[ < ]]> 0
+		UNION
+		SELECT CAST(DATEDIFF(DATE(START_DATE), NOW())*-1 AS CHAR) AS NAME, TITLE, START_DATE, CALENDAR_NO
 				FROM CALENDAR
 				WHERE D_DAY = 'Y' AND ((CATEGORY = 'T' AND DEPT_CODE = (SELECT DEPT_CODE
 														FROM USER_DEPARTMENT
 														WHERE USER_NO =  #{userNo})) 
 				OR (CATEGORY = 'M' AND USER_NO =  #{userNo}))
-		        AND DATEDIFF(date(START_DATE), now()) > 0
+		        AND DATEDIFF(DATE(START_DATE), NOW()) > 0
 		 ORDER BY START_DATE ASC
 		 LIMIT 8
 	</select>

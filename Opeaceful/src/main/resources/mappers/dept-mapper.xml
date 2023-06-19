@@ -26,12 +26,12 @@
 	<!-- =================== [select] =================== -->
 	<!-- [지영] 부서명 select -->
 	<select id="selectDeptList" resultMap="departmentesultSet">
-		SELECT * FROM department;
+		SELECT * FROM DEPARTMENT;
 	</select>
 	
 	<!-- [지영] 직위명 select -->
 	<select id="selectPosition" resultMap="positionsultSet">
-		SELECT * FROM position;
+		SELECT * FROM POSITION;
 	</select>
   
  	<!-- [지의] - 부서 조회 -->
@@ -59,8 +59,8 @@
   <!-- [혜린] 부서 조회 -->
   <select id="boardEnrollDeptList" resultMap="departmentesultSet">  	
   	SELECT * 
-	FROM department
-	where top_dept_code is null;
+	FROM DEPARTMENT
+	where TOP_DEPT_CODE IS NULL;
   </select>
   
  <!-- [혜린] 유저 직급코드 조회 -->
