@@ -27,10 +27,10 @@ function selectDept() {
 
 			for (let dept of result) {
 				if(dept.topDeptCode == 0){
-
+					
 					html += `<div class="accordion-item accordion-item-common org-accordion${dept.deptCode}" id="org-accordion">
 								<h2 class="accordion-header org-accordion-header" id="heading${dept.deptCode}">
-									<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="flush-collapse${dept.deptCode}" aria-label="펼치기">
+									<button class="accordion-button oc-accordion-btn accordion-button-common" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${dept.deptCode}" aria-expanded="true" aria-controls="collapse${dept.deptCode}">
 										<input type="text" id="${dept.deptCode}" data-id="${dept.deptCode},${dept.topDeptCode},${dept.deptName}" class="topD-name" name="department" value="${dept.deptName}" aria-label="부서이름인풋">
 									</button>
 									<div class="icons hidden">
@@ -39,7 +39,7 @@ function selectDept() {
 										<i class="fa-solid fa-pen team-change" id="team-change${dept.deptCode}"></i>
 									</div>
 								</h2>
-								<div id="collapse${dept.deptCode}" class="accordion-collapse org-accordion-collapse collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
+								<div id="collapse${dept.deptCode}" class="accordion-collapse collapse show org-accordion-collapse" aria-labelledby="heading${dept.deptCode}" data-bs-parent="#accordionExample">
 									<ul class="accordion-body accordion-body-common oc-all" id="oc-all${dept.deptCode}">`
 									
 					for (let team of result) {
