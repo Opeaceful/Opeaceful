@@ -31,6 +31,10 @@ public class AnnualDao {
 	public int updateUserAnnual(Map<String, Object> map) {
 		return sqlSession.update("memberMapper.updateUserAnnual",map);
 	}
+
+	public int updateMemberAnnualCountByYear(Annual a) {
+		return sqlSession.update("memberMapper.updateMemberAnnualCountByYear",a);
+	}
 	
 }
 
