@@ -1,10 +1,10 @@
 /*부서 데이터*/
-INSERT INTO department (DEPT_NAME) VALUES
+INSERT INTO DEPARTMENT (DEPT_NAME) VALUES
    ('영업본부'),
    ('경영지원본부'),
    ('개발본부');
 
-INSERT INTO department (DEPT_NAME,TOP_DEPT_CODE) VALUES
+INSERT INTO DEPARTMENT (DEPT_NAME,TOP_DEPT_CODE) VALUES
    ('영업팀',1),
    ('마케팅팀',1),
    ('재경팀',2),
@@ -15,7 +15,7 @@ INSERT INTO department (DEPT_NAME,TOP_DEPT_CODE) VALUES
    ('디자인팀',3);
 
 /*직급 데이터*/
-INSERT INTO position (P_NAME) VALUES
+INSERT INTO POSITION (P_NAME) VALUES
    ('사장'),
    ('부사장'),
    ('이사'),
@@ -146,7 +146,7 @@ VALUES
 
 
 /*멤버 데이터 부서등록*/
-INSERT INTO user_department(USER_NO, DEPT_CODE,P_CODE )
+INSERT INTO user_DEPARTMENT(USER_NO, DEPT_CODE,P_CODE )
 VALUES (1,4,1),
 	  (2,4,3),
       (3,4,3),
@@ -203,7 +203,7 @@ VALUES (1,4,1),
 
 
 /*권한 더미데이터, 부장~대리까지 임시로 넣어둠*/
-INSERT INTO department_role(DEPT_CODE,P_CODE,ROLE_CODE )
+INSERT INTO DEPARTMENT_role(DEPT_CODE,P_CODE,ROLE_CODE )
 VALUES
 (8,4,'A01'),
 (8,5,'A01'),
