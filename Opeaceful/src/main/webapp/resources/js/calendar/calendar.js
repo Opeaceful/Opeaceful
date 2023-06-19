@@ -357,6 +357,18 @@ function deleteEvent(){
             abledU.title = true;
             enableU();
 
+            /* 연차일정 모달 제한*/
+            if(result.category == 'H'){
+
+
+              /* 연차일정은 수정 못하게 */
+              $('#dlt-event-btn').css('display','none');
+              $('#modal-update-btn').css('display','none');
+
+              /* 연차관련없는 요소 disabled */
+              $('.apv-hidden').css('display','none');
+
+            }
 
           }
         })
