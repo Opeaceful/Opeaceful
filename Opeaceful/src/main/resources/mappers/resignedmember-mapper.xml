@@ -9,7 +9,7 @@
 		<selectKey keyProperty="DresignedDate" resultType="java.sql.Date" order="BEFORE">
 	 		SELECT STR_TO_DATE(#{resignedDate}, '%Y-%m-%d')
 	 	</selectKey>
-	 	INSERT INTO resigned_member(USER_NO,RESIGNED_DATE, DEPT_NAME,T_NAME,P_NAME)
+	 	INSERT INTO RESIGNED_MEMBER(USER_NO,RESIGNED_DATE, DEPT_NAME,T_NAME,P_NAME)
 	   	VALUES(
 	   	#{userNo},
 	   	#{DresignedDate},
@@ -29,14 +29,14 @@
 	<!-- [지영] 스케쥴시 3년 넘은 퇴사자 조회-->
 	<select id="deleteMembersList" resultType='_int'>
 		SELECT USER_NO
-		FROM resigned_member
+		FROM RESIGNED_MEMBER
 		WHERE SYSDATE() > DATE_ADD(RESIGNED_SET_DATE, INTERVAL 3 YEAR);
 	</select>
 	 
 	<!-- =================== [update] =================== -->			 
 	<!-- [지영] 퇴사자료 업데이트 -->
 	<update id="resignedmemberUpdate" parameterType="resignedMember" >
-		UPDATE resigned_member 
+		UPDATE RESIGNED_MEMBER 
 		SET RESIGNED_DATE = #{resignedDate},
 			DEPT_NAME = #{deptName},
 			T_NAME  = #{tName},
@@ -48,7 +48,7 @@
 	<!-- =================== [delete] =================== -->	
 	<!-- [지영] 퇴사자 자료 삭제 -->
 	<delete id="resignedmemberDelete">
-		DELETE FROM resigned_member 
+		DELETE FROM RESIGNED_MEMBER 
 		WHERE USER_NO = #{userNo}
 	</delete>
  
