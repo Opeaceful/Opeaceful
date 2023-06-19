@@ -405,6 +405,11 @@
 							</foreach> )
 	</delete>
 	
-	
+	<!-- [혜린] - 이전다음글 조회용 -->
+	<select id="beforeNextTitle" resultMap="boardDetailResultSet">
+	SELECT BOARD_NO, BOARD_TITLE
+	FROM BOARD
+	WHERE BOARD_NO = #{boardNum}
+	</select>
 
 </mapper>

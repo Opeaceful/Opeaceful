@@ -190,33 +190,44 @@
             <div class="board-wrap7">
                 <div></div>
             </div>
-              <!-- 
-            <div class="board-wrap8">
-                <div><i class="bf-icon fa-solid fa-angle-up"></i></div>
-                <div class="bf-title">이전글</div>
-                <div class="bf-txt"><Span>1차 훈련장려금 신청 공지입니다.</Span></div>
-            </div>
-           
-            <div class="board-wrap9">
-                <div><i class="af-icon fa-solid fa-angle-down"></i></div>
-                <div class="af-title">다음글</div>
-                <div class="af-txt"><Span>3차 훈련장려금 신청 공지입니다.</Span></div>
-            </div>
-              -->
-            <div class="board-wrap10">
-           
-           <!-- 
             <c:choose>
-            	<c:when test="${!empty map.condition }">
-				<div><button type="button" onclick="moveSp(${map.condition },${map.keyword })" class="go-list-btn"><i class="bi bi-list"></i><span> 목록</span></button></div>				
-            	</c:when>
-            	<c:otherwise> -->
-                <div class="list-icon-btn"><button type="button" onclick="moveCp(${cp})" class="go-list-btn"><i class="bi bi-list" style="font-weight: 600 !important"></i><span> 목록</span></button></div>
-            	<!--</c:otherwise>
-            </c:choose>-->
+            <c:when test="${nextB.boardNo > 0}">
+            	<div class="board-wrap9 pointerM" onClick='location.href = "${path}/board/detail/${boardCode}/${nextB.boardNo }"'>
+	                <div><i class="bf-icon fa-solid fa-angle-up"></i></div>
+	                <div class="af-title">다음글</div>
+	                <div class="af-txt"><Span>${nextB.boardTitle}</Span></div>
+	            </div>
+            </c:when>
+            <c:otherwise>
+            	<div class="board-wrap9">
+	                <div><i class="bf-icon fa-solid fa-angle-up"></i></div>
+	                <div class="af-title">다음글</div>
+	                <div class="af-txt"><Span>다음 게시글이 없습니다.</Span></div>
+	            </div>
+            </c:otherwise>
+            </c:choose>
             
-                
-                
+            <c:choose>
+            <c:when test="${beforeB.boardNo > 0}">
+            	<div class="board-wrap8 pointerM" onClick='location.href = "${path}/board/detail/${boardCode}/${beforeB.boardNo }"'>
+                <div><i class="af-icon fa-solid fa-angle-down"></i></div>
+                <div class="bf-title">이전글</div>
+                <div class="bf-txt"><Span>${beforeB.boardTitle}</Span></div>
+            </div>
+            </c:when>
+            <c:otherwise>
+            	<div class="board-wrap8">
+                <div><i class="af-icon fa-solid fa-angle-down"></i></div>
+                <div class="bf-title">이전글</div>
+                <div class="bf-txt"><Span>이전 게시글이 없습니다.</Span></div>
+            </div>
+            </c:otherwise>
+            </c:choose>
+            
+            
+              
+            <div class="board-wrap10">
+                <div class="list-icon-btn"><button type="button" onclick="moveCp(${cp})" class="go-list-btn"><i class="bi bi-list" style="font-weight: 600 !important"></i><span> 목록</span></button></div>
             </div>
         </div>
     </div>
