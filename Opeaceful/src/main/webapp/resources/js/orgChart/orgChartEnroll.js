@@ -65,7 +65,7 @@ function selectDept() {
 				}
 			}
 
-			let orcAccordion = document.getElementById("accordionFlushExample");
+			let orcAccordion = document.getElementById("accordionExample");
 			orcAccordion.innerHTML = html;
 			// orcAccordion.insertAdjacentHTML('afterend', html);
 
@@ -328,10 +328,8 @@ $('#ok-personnel').click(function(e) {
 				  });
 				
 				$("#pesonnel-modal").modal('hide');
-				//$("#user-info").load(window.location.href + " #user-info");
 				selectDept();
 				selectDeptList(currentInfo.deptCode,currentInfo.topDeptCode,currentInfo.topDeptName);
-				//$("#accordionFlushExample").load(window.location.href);
 				
 			},
 			error: function(x, e) {
