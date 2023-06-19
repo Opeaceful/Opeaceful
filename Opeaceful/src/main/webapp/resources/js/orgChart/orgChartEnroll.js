@@ -43,7 +43,7 @@ function selectDept() {
 										<span class="input-click" data-id="${team.deptCode},${team.topDeptCode},${team.deptName},${dept.deptName}">
 											<input type="text" name="team"  id="${team.deptCode}" class="team-name" value="${team.deptName}">
 										</span>
-										<div id="count">(${team.deptCount})</div>
+										<div class="count" id="count">(${team.deptCount})</div>
 										<div class="team-icons hidden">
 											<i class="fa-solid fa-minus li-team-minus" id="li-team-minus${team.deptCode}"></i> 
 											<i class="fa-solid fa-pen li-team-change" id="li-team-change${team.deptCode}"></i>
@@ -233,24 +233,43 @@ function deptSelcet() {
 						}
 					};
 				}
+
+				// 하위부서가 없는 상위부서 선택 시 저장버튼 비활성화
+				let changeDept = false;
+
+				for (let dept of deptCode) {
+					if(!$(dept).val() || $(dept).val() == null) {
+						changeDept = true;
+						swal('하위부서가 존재하지 않습니다. 다시 선택해 주세요.', {
+							buttons: { cancel: '확인' },
+						  });
+					}
+				}
+				if (changeDept) {
+					$("#ok-personnel").attr("disabled", true);
+				} else {
+					$("#ok-personnel").attr("disabled", false);
+				}
 			},
 			error : function(request){
 				console.log("에러발생");
 				console.log(request.status);
 			}
 		})
+		
+		
 	})
 }
 
 /* 저장 버튼 클릭 시 인사발령 ajax */
 $('#ok-personnel').click(function(e) {
-	
 	let changeValue = document.querySelectorAll(".changeValue");
 
 	let Arr = [];
 
 	let jsonData;
 	let changeDeptCode = ""; 
+
 
 	changeValue.forEach(tr => {
 
@@ -278,6 +297,12 @@ $('#ok-personnel').click(function(e) {
 
 	});
 
+	if(changeDeptCode == "") {
+		swal('하위부서가 존재하지 않습니다. 다시 선택해 주세요.', {
+			buttons: { cancel: '확인' },
+		  });
+        return;
+    }
 	if (Arr.length > 0) {
 		$.ajax({
 			url : path+"/orgChart/updatePersonnel",
@@ -290,7 +315,8 @@ $('#ok-personnel').click(function(e) {
 				  });
 				$("#pesonnel-modal").modal('hide');
 				$("#user-info").load(window.location.href + " #user-info");
-				// $("#count").load(window.location.href + " #count"); 카운트 리로드는 ,, 내일,,
+				$("#count").load(window.location.href + " #count");
+				
 			},
 			error: function(x, e) {
 				//err msg 출력
@@ -301,18 +327,12 @@ $('#ok-personnel').click(function(e) {
 	} else{
 		$("#pesonnel-modal").modal('hide');
 	}
-
-	// if(changeDeptCode == "") {
-    //     $("#ok-personnel").attr("disabled", true);
-    //     return;
-    // }else{
-    //     $("#ok-personnel").attr("disabled", false);
-    // }
+	
 })
 
 	/* 클릭 시에만 추가, 수정, 삭제 아이콘 뜨게 */
 	$(document).on("click",".org-accordion-header",function(e){
-		$(this).find(".hidden").toggle();
+		$(this).find(".hidden").show();
 	})
 
 	$(document).on("click",".team",function(e){
@@ -350,7 +370,7 @@ $('#ok-personnel').click(function(e) {
 		// 생성된 input에 포커스
 		$(`input[name=department${num}]`).focus();
 	});
-
+	
 	// input 포커스 아웃 시 상위부서 db에 부서추가
 	$(".inputs").on("blur", ".topD-name", function(e) {
 		
@@ -416,7 +436,12 @@ $('#ok-personnel').click(function(e) {
 				});
 			}
 		}
-	})
+	}).on("keydown", ".topD-name", function(e) {
+		if (e.which === 13) { // 엔터 키의 keyCode는 13입니다.
+			e.preventDefault();
+			$(this).blur(); // 포커스 아웃 이벤트를 트리거합니다.
+		}
+	});
 
 	//////////////////////////////////////////////////////////////////// 수정버튼 클릭 시 부서명 수정
 	$(".inputs").on("click", ".team-change", function(e) {
@@ -527,10 +552,13 @@ $('#ok-personnel').click(function(e) {
 		// 생성된 input에 포커스
 		$(`input[name=team${num}]`).focus();
 	})
-
+	
 	// input 포커스 아웃 시 db에 하위부서 추가
-	$(".inputs").on("blur", "[name^=team]", function(e) {
+	$(".inputs").on("blur keydown", "[name^=team]", function(e) {
 		// [name^=team]
+		if (e.type === "keydown" && e.which !== 13) {
+			return; // 엔터 키 이외의 키가 눌렸을 경우 처리하지 않음
+		}
 
 		let input = $(e.target).val();
 		let id = $(e.target).attr("id");
@@ -610,7 +638,7 @@ $('#ok-personnel').click(function(e) {
 							`<ul class="list-group list-group-flush org-list-group">
 								<li class="list-group-item position-list">
 									<input type="text" name="position-name${p.pCode}" class="pName" id="p${p.pCode}" value="${p.pName}">
-									<div class="postion-icons"> 
+									<div class="postion-icons hidden"> 
 										<i class="fa-solid fa-minus position-minus" id="position-minus${p.pCode}"></i> 
 										<i class="fa-solid fa-pen position-change" id="position-change${p.pCode}"></i>
 									</div>
@@ -631,6 +659,10 @@ $('#ok-personnel').click(function(e) {
 
 	/* 직급추가 */
 
+	$(document).on("click",".position-list",function(e){
+		$(this).find(".hidden").toggle();
+	})
+
 	// 직급추가 버튼 클릭 시 직급 이름 입력할 수 있는 input 생성
 	$('.position-plus-btn').click (function () {
 		
@@ -641,7 +673,7 @@ $('#ok-personnel').click(function(e) {
 			`<ul class="list-group list-group-flush org-list-group">
 				<li class="list-group-item position-list">
 					<input type="text" name="position-name${num}" class="pName" id="pCode">
-					<div class="postion-icons"> 
+					<div class="postion-icons hidden"> 
 						<i class="fa-solid fa-minus position-minus"></i> 
 						<i class="fa-solid fa-pen position-change"></i>
 					</div>
@@ -654,7 +686,10 @@ $('#ok-personnel').click(function(e) {
 	});
 
 	// input 포커스 아웃 시 db에 직급추가
-	$(".org-position-modal").on("blur", "[name^=position-name]", function(e) {
+	$(".org-position-modal").on("blur keydown", "[name^=position-name]", function(e) {
+		if (e.type === "keydown" && e.which !== 13) {
+			return; // 엔터 키 이외의 키가 눌렸을 경우 처리하지 않음
+		}
 
 		let input = $(e.target).val();
 		let id = $(e.target).attr("id");
@@ -677,7 +712,7 @@ $('#ok-personnel').click(function(e) {
 								`<ul class="list-group list-group-flush org-list-group">
 									<li class="list-group-item position-list">
 										<input type="text" name="position-name${result}" class="pName" id="p${result}" value="${input}">
-										<div class="postion-icons"> 
+										<div class="postion-icons hidden"> 
 											<i class="fa-solid fa-minus position-minus" id="position-minus${result}"></i> 
 											<i class="fa-solid fa-pen position-change" id="position-change${result}"></i>
 										</div>
