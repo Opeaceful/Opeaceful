@@ -38,7 +38,7 @@
     <div id="chat_content">
         <!-- 설정바(최소화, 최대화, 닫기 버튼) -->
         <div class="chat_setting_bar">
-            <i class="fa-regular fa-window-restore" id="maximizeButton"></i>
+<!--             <i class="fa-regular fa-window-restore" id="maximizeButton"></i> -->
             <i class="fa-solid fa-xmark" id="dialog_close"></i>
         </div>
 
@@ -46,7 +46,7 @@
         <header id="chat_header">
             <h1 id="chat_header_title">Opeaceful</h1>
             <span><i class="fa-solid fa-user-plus"></i></span>
-            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+<!--             <span><i class="fa-solid fa-magnifying-glass"></i></span> -->
         </header>
         
         <!-- 친구창, 대화창, 설정창 등 이동 가능한 네비게이터 -->
@@ -57,12 +57,12 @@
                 </a>
                 <a>
                     <i class="fa-regular fa-comment"  id="chatRoom_dialog" onclick="toggleChatRoom()"></i>
-                    <span class="alert-balloon" alt="알림수">3</span>
+<!--                     <span class="alert-balloon" alt="알림수">3</span> -->
                 </a>
-                <a href="more_menu.html">
-                    <i class="fa-solid fa-ellipsis"></i>
-                    <span class="alert-balloon" alt="알림수">N</span>
-                </a>
+<!--                 <a href="more_menu.html"> -->
+<!--                     <i class="fa-solid fa-ellipsis"></i> -->
+<!--                     <span class="alert-balloon" alt="알림수">N</span> -->
+<!--                 </a> -->
             </div>
             <div class="chat_sub_menu">
                 <i class="fa-regular fa-bell"></i>
@@ -131,21 +131,21 @@
                 <div class="chat_profile_title">
                     <h2>즐겨찾기</h2>
                 </div>
-                <ul class="chat_ul">
-                    <li class="chat_main_li">
-                        <img src="${path}/resources/image/chat/friend1.png" alt="친구1프로필사진">
-                        <div class="chat_profile">
-                            <p>한승은</p>
-                            <p></p>
-                        </div>
-                    </li>
-                    <li class="chat_main_li">
-                        <img src="${path}/resources/image/chat/friend2.png" alt="친구2프로필사진">
-                        <div class="chat_profile">
-                            <p>윤지영</p>
-                            <p>지금 몇시니</p>
-                        </div>
-                    </li>
+                <ul class="chat_ul" id="favorite_list">
+<!--                     <li class="chat_main_li"> -->
+<%--                         <img src="${path}/resources/image/chat/friend1.png" alt="친구1프로필사진"> --%>
+<!--                         <div class="chat_profile"> -->
+<!--                             <p>한승은</p> -->
+<!--                             <p></p> -->
+<!--                         </div> -->
+<!--                     </li> -->
+<!--                     <li class="chat_main_li"> -->
+<%--                         <img src="${path}/resources/image/chat/friend2.png" alt="친구2프로필사진"> --%>
+<!--                         <div class="chat_profile"> -->
+<!--                             <p>윤지영</p> -->
+<!--                             <p>지금 몇시니</p> -->
+<!--                         </div> -->
+<!--                     </li> -->
                 </ul>
             </div>
             
@@ -202,7 +202,7 @@
         <div id="chat_room_content">
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <div class="chat_setting_bar">
-                <i class="fa-regular fa-window-restore" id="maximizeButton"></i>
+<!--                 <i class="fa-regular fa-window-restore" id="maximizeButton"></i> -->
                 <i class="fa-solid fa-xmark" id="dialog_close"></i>
             </div>
             
@@ -211,7 +211,7 @@
                 <h1 id="chat_header_title">채팅</h1>
                 <i class="icon-down-dir"></i>
                 <span id="open-dialog-button"><i class="fa-solid fa-comment-medical"></i></span> 
-   			    <span><i class="fa-solid fa-magnifying-glass" ></i></span>
+<!--    			    <span><i class="fa-solid fa-magnifying-glass" ></i></span> -->
             </header>
             
             <!-- 친구창, 대화창, 설정창 등 이동 가능한 네비게이터 -->
@@ -222,12 +222,12 @@
 	                </a>
 	                <a>
 	                    <i class="fa-regular fa-comment"  id="chatRoom_dialog_return" onclick="toggleChatRoom()"></i>
-	                    <span class="alert-balloon" alt="알림수">3</span>
+<!-- 	                    <span class="alert-balloon" alt="알림수">3</span> -->
 	                </a>
-	                <a href="more_menu.html">
-	                    <i class="fa-solid fa-ellipsis"></i>
-	                    <span class="alert-balloon" alt="알림수">N</span>
-	                </a>
+<!-- 	                <a href="more_menu.html"> -->
+<!-- 	                    <i class="fa-solid fa-ellipsis"></i> -->
+<!-- 	                    <span class="alert-balloon" alt="알림수">N</span> -->
+<!-- 	                </a> -->
 	            </div>
 	            <div class="chat_sub_menu">
 	                <i class="fa-regular fa-bell"></i>
