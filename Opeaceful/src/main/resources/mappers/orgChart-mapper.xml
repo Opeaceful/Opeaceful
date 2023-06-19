@@ -131,12 +131,6 @@
 		VALUES(#{pName})
 	</insert>
 	
-	<!-- 인사발령 -->
-	<insert id="insertPersonnel" parameterType="orgChart" useGeneratedKeys="true" keyProperty="personnelCode">
-		INSERT INTO PERSONNEL (PERSONNEL_DATE, USER_NO, P_BEFORE, P_PERSONNEL, D_BEFORE, D_PERSONNER)
-		VALUES (DATE_FORMAT(now(),'%Y-%m-%d'), #{userNo}, #{topDeptName} #{deptName}, #{topDeptName} #{deptName}, #{pName}, #{pName});
-	</insert>
-	
 	<!-- =================== [update] =================== -->
 	
 	<!-- 부서명 변경 -->
