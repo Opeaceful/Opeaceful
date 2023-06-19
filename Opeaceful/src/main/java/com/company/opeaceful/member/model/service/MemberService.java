@@ -61,4 +61,6 @@ public interface MemberService {
 
 	List<Integer> resignedmemberApprovalList(Integer uesrNo);
 
+	UserDepartment selecTopDeptUP(Member m);
+
 }
