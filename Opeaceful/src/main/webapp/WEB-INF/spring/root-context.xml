@@ -15,16 +15,16 @@
 			 
 			 useSSL=false&amp;useUnicode=true&amp;serverTimezone=Asia/Seoul
 		-->
-		<!-- aws용 mysql 연결설정 정보
+		<!-- aws용 mysql 연결설정 정보 -->
 			<property name="url" value="jdbc:mysql://3.39.186.162:3306/Opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
 			<property name="username" value="root"/>
 			<property name="password" value="opeaceful123"/> 
-		-->
+
 		
 		<!-- 기존 로컬용 mysql 연결 설정 정보임 본인 환경에서는 아래 코드 쓸것! -->
-			<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
+<!-- 			<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
 			<property name="username" value="opeaceful"/> 
-			<property name="password" value="opeaceful123"/>
+			<property name="password" value="opeaceful123"/> -->
 		
 		
 		<!-- SQL이 수행된 후 자동으로 COMMIT 될지 지정 -->
