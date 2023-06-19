@@ -17,7 +17,7 @@ body *{
     margin-right: 26px;
     pointer-events: none;
 }
-.input-click {width: 71%;}
+.input-click {width: 65%;}
 .input-click>input{
     pointer-events: none;
 }
@@ -32,7 +32,7 @@ input:focus{
 .team{
     margin-bottom: 7px; 
     font-size: var(--font17);
-    width: 108%;
+    width: 100%;
     display: flex;
 }
 .hidden{display: none;}
@@ -46,7 +46,7 @@ input:focus{
     font-size: var(--font13);
     cursor: pointer;
 }
-.team-icons{margin-left: 5px;}
+.team-icons{margin-left: 15px;}
 .li-team-minus{
     padding-left: 8px;
     font-size: var(--font17);
@@ -57,8 +57,10 @@ input:focus{
     font-size: var(--font12);
     cursor: pointer;
 }
+.accordion-body {padding: 0;}
 .oc-all{
     padding-left: 15px;
+    padding-top: 6px;
 }
 .oc-all>li{
     cursor: pointer;
