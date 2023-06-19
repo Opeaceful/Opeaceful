@@ -118,10 +118,10 @@
 					WHEN TYPE = 2 THEN 0.5
 					WHEN TYPE = 3 THEN 0.5
 			   END AS APPROVAL_COUNT
-		 FROM approval
+		 FROM APPROVAL
 		WHERE USER_NO = #{userNo}
 		  AND STATUS = 1
-		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
+		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(NOW(),'%Y'))
 		ORDER BY START_DATE DESC;
 	</select>
 
@@ -136,10 +136,10 @@
 					WHEN TYPE = 2 THEN 0.5
 					WHEN TYPE = 3 THEN 0.5
 			   END AS APPROVAL_COUNT
-		 FROM approval
+		 FROM APPROVAL
 		WHERE USER_NO = #{userNo}
 		  AND STATUS IN (1, 0)
-		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(now(),'%Y'))
+		  AND DATE_FORMAT(START_DATE,'%Y') = (DATE_FORMAT(NOW(),'%Y'))
 		ORDER BY START_DATE DESC;
 	</select>
 
@@ -743,7 +743,7 @@
 			USER_NAME = (	SELECT CONCAT(USER_NAME, ' ', P_NAME) AS USER_NAME
 							FROM MEMBER
 							LEFT JOIN USER_DEPARTMENT USING(USER_NO)
-							LEFT JOIN position USING(P_CODE)
+							LEFT JOIN POSITION USING(P_CODE)
 							WHERE USER_NO = #{ userNo }
 						)
 		WHERE APPROVAL_NO = #{approvalNo}
@@ -853,14 +853,5 @@
 		DELETE FROM  APPROVAL_MEMO
 		WHERE MEMO_NO = #{ memoNo }
 	</delete>
-	<!-- [혜린] 같은 팀 유저들 연차 조회 
-	<select id="selectTeamApv"  resultType="approval" parameterType="_int">
-		SELECT * FROM APPROVAL WHERE USER_NO in (
-		SELECT USER_NO 
-		FROM user_department
-		where DEPT_CODE = (SELECT DEPT_CODE
-		FROM user_department
-		where USER_NO = #{userNo}))
-	</select>-->
-	
+
 </mapper>

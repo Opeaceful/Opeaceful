@@ -15,8 +15,8 @@
 			 
 			 useSSL=false&amp;useUnicode=true&amp;serverTimezone=Asia/Seoul
 		-->
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
-		<property name="username" value="opeaceful"/>
+		<property name="url" value="jdbc:mysql://3.39.186.162:3306/Opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
+		<property name="username" value="root"/>
 		<property name="password" value="opeaceful123"/>
 		
 		<!-- SQL이 수행된 후 자동으로 COMMIT 될지 지정 -->
