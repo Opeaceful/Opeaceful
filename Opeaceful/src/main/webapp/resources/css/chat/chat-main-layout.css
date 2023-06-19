@@ -59,6 +59,7 @@ body{
     margin-left: 1rem; 
     font-size: var(--font21);
     color: var(--color-navy);
+    cursor: pointer;
 }
 /* 제목 사이즈 재정의 */
 #chat_header_title{
@@ -83,9 +84,10 @@ body{
 .chat_main_menu i, .chat_sub_menu i{
     display: block;
     font-size: var(--font22);
-    color: #dee2e6;
+    color: var(--color-background);
     text-align: center;
     margin-bottom: 2rem; 
+    cursor: pointer;   
 }
 .chat_main_menu{
     margin-top: 3.125rem;  
@@ -116,16 +118,16 @@ body{
     margin-left: 0.2rem; 
     padding: 0.2rem;
 }
-.chat_main_li{
+.chat_main_li, .chat_room_li{
     transition-property: all;
     transition-duration: 1ms;
     transition-timing-function: linear;
     /* transition-delay: 0; */
 }
-.chat_main_li:hover{
+.chat_main_li:hover, .chat_room_li:hover{
     background-color: var(--white-hover);
 }
-.chat_main_li:active{
+.chat_main_li:active, .chat_room_li:active{
     /* transition-delay: 0; */
     background-color: var(--chat-hover);
 }
@@ -157,6 +159,7 @@ body{
     font-weight: 400;
     font-size: 14px;
     line-height: 16px;
+   	cursor: pointer;
 }
 
 #statusList:focus{
@@ -183,3 +186,11 @@ body{
 #dialog{
 	display: none;
 }
+.fa.fa-star.favorite-icon, .fa.favorite-icon.fa-star-o{
+	display: flex;
+    margin-left: auto;
+}
+.card-container{
+	background-color: var(--color-background) !important; 
+}
+

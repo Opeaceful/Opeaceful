@@ -614,8 +614,8 @@
 	<!-- [혜린] 캘린더 일정 추가할 연차 조회 -->
 	<select id="selectAddEvent" resultType="approval" parameterType="_int">
 		SELECT *
-		 FROM approval
-		WHERE approval_no = #{approvalNo}
+		 FROM APPROVAL
+		WHERE APPROVAL_NO = #{approvalNo}
 	</select>
 <!-- =============================== insert 구간  =========================================== -->
 	

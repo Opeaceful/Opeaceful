@@ -52,7 +52,7 @@ public class OrgChartController {
 //	}
 	
 	@GetMapping("/")
-	public String orgChart() {
+	public String orgChart() {	
 		return "orgChart/orgChartEnroll";
 	}
 	
@@ -88,8 +88,6 @@ public class OrgChartController {
 	@PostMapping("/deleteTopDeptCode")
 	@ResponseBody
 	public int deleteDeptCode(OrgChart orgChart, int deptCode, int topDeptCode) {
-		
-		System.out.println("==============================================="+deptCode + "" + topDeptCode);
 		
 		Map<String, Object> map = new HashMap<>();	
 		
