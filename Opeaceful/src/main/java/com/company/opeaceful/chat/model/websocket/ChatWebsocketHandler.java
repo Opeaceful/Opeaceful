@@ -99,10 +99,8 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			
 			Chat chatMessage = objectMapper.readValue(message.getPayload(), Chat.class); 
 			
-			System.out.println("이거다1" +(chatMessage));
 			//룸생성되었을때 올라온 요청건임
 			if(chatMessage.roomNew()) {
-				 System.out.println("이거다2" +(chatMessage.roomNew()));
 				/*
 				 * 여기서 db를 한번 조회해오긴 해야함
 				 * 신규 룸번호에 딸린 유저들 조회해와서 chatService.chatRoomList(룸번호를 넘겨서 여기 참여중인 유저 목록 받아오기)
@@ -123,11 +121,8 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 				
 				 for (WebSocketSession s : sessions) {
 				        String sessionId = s.getId();
-				        System.out.println("이거다3" +(sessionId));
 				        int userNo = (int) map.get(sessionId + "userNo");
-				        System.out.println("이거다4" +map.get(sessionId));	
-				        boolean isParticipant = false;
-				        System.out.println("이거다6" + (isParticipant));	
+				        boolean isParticipant = false;	
 				        for (ChatParticipant participant : participants) {
 				            if (participant.getUserNo() == userNo) {
 				                isParticipant = true;
@@ -141,9 +136,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 				                chatRoomList = new ArrayList<>();
 				            }
 				            chatRoomList.add(chatMessage.getChatRoomNo());
-				            map.put(sessionId, chatRoomList);
-				            System.out.println("이거다5" +map.get(sessionId));
-				            			            				            	
+				            map.put(sessionId, chatRoomList);				            			            				            	
 				        }
 				    }
 				 return;
@@ -158,7 +151,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 			chatMessage.setUserName(loginUser.getUserName());
 			chatMessage.setUserNo(loginUser.getUserNo());
 			
-			System.out.println(chatMessage);
+	//		System.out.println(chatMessage);
 			int result = chatService.insertMessage(chatMessage);
 			
 			if(result > 0) {
@@ -168,9 +161,7 @@ public class ChatWebsocketHandler extends TextWebSocketHandler{
 				//	System.out.println(s.getAttributes());
 					
 					ArrayList<Integer> chatRoomList = (ArrayList<Integer>) map.get(s.getId());
-					
-					
-					System.out.println("채팅룸 리스트 불러와졌남"+chatRoomList);
+										
 					for(int room : chatRoomList) {
 						
 							if(room == chatMessage.getChatRoomNo()) {

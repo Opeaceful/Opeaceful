@@ -51,7 +51,7 @@
 	</insert>
 	
 	<insert id="addRoomParticipant">
-	    INSERT INTO chat_participant
+	    INSERT INTO CHAT_PARTICIPANT
 	    (CHATROOM_NO, USER_NO, ROOM_TITLE, NOT_READ_CHAT, LAST_READ_CHAT_NO, CREATE_DATE, BELL_SETTING)
 	    VALUES
 	    (#{chatRoomNo}, #{userNo}, #{roomTitle}, 0, 0, NOW(), 'Y')
@@ -114,12 +114,12 @@
     </select>
     
     <select id="chatRoomListMemberList" resultType="ChatParticipant">
-       SELECT cp.CHATROOM_NO, cp.USER_NO, m.USER_NAME, m.PROFILE_IMG
-		FROM chat_participant cp
-		INNER JOIN member m ON cp.USER_NO = m.USER_NO
-		WHERE cp.CHATROOM_NO IN (
+       SELECT CP.CHATROOM_NO, CP.USER_NO, M.USER_NAME, M.PROFILE_IMG
+		FROM CHAT_PARTICIPANT CP
+		INNER JOIN MEMBER M ON CP.USER_NO = M.USER_NO
+		WHERE CP.CHATROOM_NO IN (
 		  SELECT CHATROOM_NO
-		  FROM chat_participant
+		  FROM CHAT_PARTICIPANT
 		  WHERE USER_NO = #{userNo}
 		)
     </select>

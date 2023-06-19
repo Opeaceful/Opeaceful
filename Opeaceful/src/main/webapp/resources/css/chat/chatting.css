@@ -1,6 +1,17 @@
 /* 채팅방(chat-room.html) 레이아웃만 작성 */
 /* 메인페이지 큰 레이아웃은 grid로 구성함 */
 
+:root{
+	--chatting-background:url(../../image/chat/whiteBackground.jpg);
+	--chatroom-background:url(../../image/chat/whiteBackground4.jpg);
+	--chatroom-backStyle:cover;
+	} 
+:root[color-theme='dark']{ 
+	--chatting-background:url(../../image/chat/blackBackground.jpg);
+	--chatroom-background:url(../../image/chat/blackBackground3.jpg);
+	--chatroom-backStyle:contain;
+} 
+
 body{
     margin: 0; /* 페이지의 여유공간 없애버림 */
 }
@@ -21,30 +32,13 @@ body{
 }
 
 /* 배경화면 설정 */
-#chatting_body, .chatting_setting_bar, .chatting_main_menu, #chatting_header{
-    background-image: url(../../image/chat/talk_background.jpg);
-    background-repeat: repeat;
-    background-position: top left;
-    background-attachment: fixed;
+
+#chatting_body{ 
+/* #chatting_body, .chatting_setting_bar, .chatting_main_menu, #chatting_header{ */
+    background-image: var(--chatroom-background);
+    background-position: bottom;
+    background-size: var(--chatroom-backStyle);
 }
-
-/* :root{ */
-/* 	--chatting-background:url(../../image/chat/talk_background.jpg); */
-/* } */
-/* :root[color-theme='dark']{ */
-/* 	--chatting-background:url(../../image/chat/chat-background.jpg); */
-/* } */
-
-
-/* /* 배경화면 설정 */ */
-/* #chatting_body */
-/* /* , .chatting_setting_bar, .chatting_main_menu, #chatting_header */ */
-/* { */
-/*     background-image: var(--chatting-background); */
-/*      background-repeat: repeat;  */
-/* /*     background-position: top left; */ */
-/* /*     background-attachment: fixed; */ */
-/* } */
 
 /* 설정바 스타일 지정 */
 .chatting_setting_bar{
@@ -56,6 +50,7 @@ body{
     top: 0;
     text-align: right;
 }
+
 .chatting_setting_bar > i{
 	margin:0.5rem;
 }
@@ -80,7 +75,6 @@ body{
     padding-top: 0.9375rem;
     padding-bottom: 0.9375rem;
     position: sticky;
-    top: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,7 +95,7 @@ body{
 #chatting_header *{
     font-size: 0.8125rem;
     font-weight: bold;
-    color:grey;
+    color:var(--chat-date);
 }
 .chatting_profile_name{
     /* 프로필명 폰트 스타일 지정 */
@@ -139,7 +133,7 @@ body{
     position: sticky;
     top: 5rem;
     /* background-color: white; */
-    background-color: var(--chat-notice);
+  /*  background-color: var(--chat-notice); */
     display: flex;
     flex-direction: row;
     margin-left: 0.625rem;
@@ -323,8 +317,9 @@ body{
 }
 
 .chatting_made_dialog{
-	background-image: url(../../image/chat/talk_background.jpg);
+	background-image: var(--chatting-background);
     border: 1px solid var(--color-navy);
+    background-size: cover;
 }
 
 #chatting_made_title{
@@ -335,10 +330,23 @@ body{
 #chatting_made_button{
 	display: flex;
     justify-content: space-evenly;
-    margin: 1.3rem;
+    margin: 1rem;
 }
 #chatMemberSelectButtonBox{
 	margin: 1rem;
+	display:flex;
+	border-bottom: solid 0.1rem;
+    width: 14rem;
+}
+#chatMemberSelectButtonBoxUp{
+	display: flex;
+    justify-content: center;
 }
 
+.room-chat-made-close{
+    position: absolute;
+    left: 17rem;
+    top: 2rem;
+    cursor:pointer;
+}
 
