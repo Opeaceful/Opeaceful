@@ -53,7 +53,7 @@
                 </div>
              </div>
              <c:forEach items="${loginUserRole}" var="role">
-				<c:if test="${role.roleCode eq 'D01'}">
+				<c:if test="${role.roleCode eq 'A01'}">
 					<div class="p-3">
 						<div class="row">
 					    	<div class="col-1 text">사원명</div>
