@@ -61,4 +61,10 @@ function checkAlam(){
   }
 }
 
+
+document.getElementById("sidebar-logout").addEventListener("click", ()=>{
+  aprAlam.style.display = 'none';
+  sessionStorage.removeItem('aprAlam');
+})
+
 checkAlam();
