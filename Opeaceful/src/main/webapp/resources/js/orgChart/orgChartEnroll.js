@@ -11,7 +11,8 @@ $(document).ready(function() {
 	let currentInfo = {
 		deptCode : '', 
 		topDeptCode : '',
-		topDeptName : ''	
+		topDeptName : '',
+		deptName: ''	
 	};	
 
 /* 부서+팀명 조회 */
@@ -91,6 +92,7 @@ function selectDeptList(deptCode, topDeptCode, deptName, topDeptName) {
 	currentInfo.deptCode = deptCode;
 	currentInfo.topDeptCode = topDeptCode;
 	currentInfo.topDeptName = topDeptName;
+	currentInfo.deptName = deptName;
 
     $.ajax({
 		url : path+"/orgChart/selectAll",   
@@ -329,7 +331,7 @@ $('#ok-personnel').click(function(e) {
 				
 				$("#pesonnel-modal").modal('hide');
 				selectDept();
-				selectDeptList(currentInfo.deptCode,currentInfo.topDeptCode,currentInfo.topDeptName);
+				selectDeptList(currentInfo.deptCode,currentInfo.topDeptCode,currentInfo.deptName,currentInfo.topDeptName);
 				
 			},
 			error: function(x, e) {

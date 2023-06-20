@@ -114,16 +114,16 @@
 							    	</c:otherwise>
 						    	</c:choose>
 							</tr>
-							<c:set var="total" value="${total + ad.totalWorkTime.hours}"/>
+							<%-- <c:set var="total" value="${total + ad.totalWorkTime.hours}"/> --%>
 						</c:forEach>
 	                </tbody>
 	            </table>
 			</div>
-			<c:forEach items="${loginUserRole}" var="role">
-				<c:if test="${not role.roleCode eq 'A01'}">
+			<%-- <c:forEach items="${loginUserRole}" var="role">
+				<c:if test="${role.roleCode ne 'A01'}">
 					<div class="total"><c:out value="${total}"/>시간</div>
 				</c:if>
-			</c:forEach>
+			</c:forEach> --%>
             <!-- 페이징 영역 -->
             <%-- <c:set var="url" value="${path}/attendance/check?cpage=" /> --%>
             
