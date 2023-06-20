@@ -17,10 +17,10 @@ public interface OrgChartService {
 	int insertTopDp(OrgChart orgChart);
 	
 	// 부서명 변경
-	int updateTopDp(OrgChart orgChart);
+	int updateTopDp(Map<String, Object> map);
 	
-	// 상위부서 삭제
-	int deleteDeptCode(Map<String, Object> map);
+	// 부서 삭제
+	int deleteTopDeptCode(int deptCode);
 	
 	// 하위부서 추가
 	int insertDp(OrgChart orgChart);
