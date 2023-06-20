@@ -33,6 +33,7 @@ let Schecked = document.getElementById("S-select");
 $("#d-select,#p-select,#S-select").change(function () {
   //다른 조건은 지워주기
   JsoncheckMemberNo = null;
+  pagination = undefined;
   memberSelectAjax();
 });
 
@@ -42,6 +43,7 @@ function memberSelectAjax() {
   let memberPagination = document.getElementById("member-pagination");
   //페이지네이션 변수 셋팅
   const cpage = pagination !== undefined ? pagination.currentPage : null;
+  
 
   //퇴사자 여부 체크
   if (Schecked.checked) {
@@ -239,6 +241,7 @@ function memberUpdaetajax(id) {
       if (result.rm != null) {
         LeaveDate.value = result.rm.resignedDate;
         LeaveDateDay = result.rm.resignedDate;
+        inputReadonly();
       }
     },
     error: function (request) {
@@ -373,7 +376,6 @@ function inputChangeable() {
 
 //읽기전용으로 만들어주기
 function inputReadonly() {
-  //주소지가 바뀌는건 어떻게하징... 고민
   let inputs = document.querySelectorAll("#member-update-form input");
 
   inputs.forEach(function (input) {

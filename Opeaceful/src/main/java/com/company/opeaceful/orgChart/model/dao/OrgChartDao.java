@@ -36,21 +36,17 @@ public class OrgChartDao {
 	}
 	
 	// 부서명 변경
-	public int updateTopDp(OrgChart orgChart) {
+	public int updateTopDp(Map<String, Object> map) {
 		
-		int result =  sqlSession.update("orgChartMapper.updateTopDp", orgChart);
-		
-		if (result > 0) {
-			result = orgChart.getDeptCode();
-		}
+		int result =  sqlSession.update("orgChartMapper.updateTopDp", map);
 		
 		return result;
 	}
 	
-	// 상위부서 삭제
-	public int deleteDeptCode(Map<String, Object> map) {
+	// 부서 삭제
+	public int deleteTopDeptCode(int deptCode) {
 		
-		int result = sqlSession.delete("orgChartMapper.deleteDeptCode", map);
+		int result = sqlSession.delete("orgChartMapper.deleteDeptCode", deptCode);
 		
 		return result;
 	}
