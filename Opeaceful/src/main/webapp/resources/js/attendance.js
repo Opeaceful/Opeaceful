@@ -189,10 +189,11 @@ function setDateBox2() {
   }
 }
 
-  var adButton = document.getElementById('ad-btn');
+  let adButton = document.getElementById('ad-btn');
+
   adButton.addEventListener('click', function() {
-    var totalValue = '<%= total %>'; // JSP에서 JSTL 모델의 total 값을 가져옴
-    var totalElement = document.querySelector('.total');
+    let totalValue = '<%= total %>'; // JSP에서 JSTL 모델의 total 값을 가져옴
+    let totalElement = document.querySelector('.total');
     totalElement.innerHTML = totalValue + '시간';
   });
 
