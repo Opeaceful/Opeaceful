@@ -9,7 +9,7 @@
 :root[color-theme='dark']{ 
 	--chatting-background:url(../../image/chat/blackBackground.jpg);
 	--chatroom-background:url(../../image/chat/blackBackground3.jpg);
-	--chatroom-backStyle:contain;
+	--chatroom-backStyle:cover;
 } 
 
 body{
