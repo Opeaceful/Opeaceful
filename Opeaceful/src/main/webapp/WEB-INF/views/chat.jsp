@@ -152,8 +152,8 @@
             <!-- 친구 프로필 모음 -->
             <div>
                 <div class="chat_profile_title">
-                    <h2>프로젝트 팀원</h2>
-                    <p>버스</p>
+                    <h2>Opeaceful</h2>
+                    <p>Member</p>
                 </div>
                 <ul id="adminList">
                  
