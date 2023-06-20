@@ -32,14 +32,14 @@ public class OrgChartServiceImpl implements OrgChartService {
 	
 	// 부서명 변경
 	@Override
-	public int updateTopDp(OrgChart orgChart) {
-		return orgChartDao.updateTopDp(orgChart);
+	public int updateTopDp(Map<String, Object> map) {
+		return orgChartDao.updateTopDp(map);
 	}
 	
-	// 상위부서 삭제
+	// 부서 삭제
 	@Override
-	public int deleteDeptCode(Map<String, Object> map) {
-		return orgChartDao.deleteDeptCode(map);
+	public int deleteTopDeptCode(int deptCode) {
+		return orgChartDao.deleteTopDeptCode(deptCode);
 	}
 	
 	// 하위부서 추가
