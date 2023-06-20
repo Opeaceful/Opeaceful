@@ -77,34 +77,27 @@ public class OrgChartController {
 	// 부서명 변경
 	@PostMapping("/updateDeptName")
 	@ResponseBody
-	public int updateTopDp(OrgChart orgChart) {
+	public String updateTopDp(String deptName, int deptCode) {
 		
-		int result = orgchartService.updateTopDp(orgChart);
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("deptName", deptName);
+		map.put("deptCode", deptCode);
+		
+		int result = orgchartService.updateTopDp(map);
 
-		return result;
+		return new Gson().toJson(result);
 	}
 	
-	// 상위부서 삭제
+	// 부서 삭제
 	@PostMapping("/deleteTopDeptCode")
 	@ResponseBody
-	public int deleteDeptCode(OrgChart orgChart, int deptCode, int topDeptCode) {
-		
-		Map<String, Object> map = new HashMap<>();	
-		
-		map.put("deptCode", deptCode);
-		map.put("topDeptCode", topDeptCode);
-		
+	public int deleteTopDeptCode(OrgChart orgChart, int deptCode) {
 		
 		int result = orgchartService.selectDept(orgChart);
 		
-//		List<UserDepatment> udList = orgchartService.selectMember(deptCode);
-//		
-//		if (udList == null && udList.size() > 0) {
-//			result = orgchartService.deleteDeptCode(map);			
-//		}
-		
 		if (result <= 0) {
-			orgchartService.deleteDeptCode(map);
+			orgchartService.deleteTopDeptCode(deptCode);
 		}
 		
 		return result;
