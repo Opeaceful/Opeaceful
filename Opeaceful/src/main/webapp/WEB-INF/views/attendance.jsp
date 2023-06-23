@@ -90,7 +90,7 @@
 							            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
 							            <td>
 								            <c:if test="${ad.type eq 0}">
-								            	<c:out value="${ad.totalWorkTime}"/>시간
+								            	<c:out value="${ad.totalWorkTime.hours}"/>시간
 								            </c:if>
 							            </td>
 							            <c:if test="${ad.type eq 1}">
