@@ -20,7 +20,7 @@
 보안과 접근제어  
 업무문서 및 파일공유  
 
-- <a href="./SEMI_MZ/WebContent/resource/etc/MZONE_PPT.pdf" download="Mzone.pdf">[PPT] 다운로드</a>
+- <a href="./Opeaceful/src/main/webapp/resources/etc/Opeaceful_PPT.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
 
 <br>
 
@@ -37,7 +37,7 @@
 ## 공통
 
 예시로 일단 아래 넣어둠 변경해야됨
-- [common.js](./SEMI_MZ/WebContent/resource/js/common.js)
+- [common.js](./Opeaceful/src/main/webapp/resources/js/common.js)
   - 위 파일 상 setip의 ip주소를 본인 환경에 맞게 변경하여 사용
 - [common java(하위 파일 전체)](./SEMI_MZ/src/mz/common) : 공용 java 파일들
 
@@ -89,7 +89,9 @@
 
 - BE(Back-End)
 
-  - Language: Java, Ajax
+  - Language
+    - Java
+    - Ajax
   - WAS(Web-Application-Server): Apache Tomcat 9.0
   - Database
     - RDBMS: MySQL Workbench 8.0 CE
