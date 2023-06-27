@@ -15,10 +15,10 @@
 
 ### 사내 그룹웨어 프로그램
 
-사원 친화적인 사내 시스템
-실시간 협업
-보안과 접근제어
-업무문서 및 파일공유
+사원 친화적인 사내 시스템  
+실시간 협업  
+보안과 접근제어  
+업무문서 및 파일공유  
 
 - <a href="./SEMI_MZ/WebContent/resource/etc/MZONE_PPT.pdf" download="Mzone.pdf">[PPT] 다운로드</a>
 
@@ -78,10 +78,6 @@
 
 > ## 사용 기술 스택
 
-### 협업 툴
-
-- 미리캔버스
-
 ### 사용 언어
 
 - FE(Front End)
@@ -96,11 +92,12 @@
   - Language: Java, Ajax
   - WAS(Web-Application-Server): Apache Tomcat 9.0
   - Database
-    - RDBMS: MySQL
+    - RDBMS: MySQL Workbench 8.0 CE
   - Developer tool
     - Java: STS
     - MySQL: SQL-Developer ...???????????????????????????????
-    - Spring Framework
+  - Framework
+    - Spring
 
 - 사용 디자인 패턴: **MVC 패턴**
 
