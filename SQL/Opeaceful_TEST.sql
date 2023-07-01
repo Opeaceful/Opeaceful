@@ -193,7 +193,7 @@ DELIMITER $$
 CREATE PROCEDURE ADD_APPROVAL() -- ⓐ myFunction이라는 이름의 프로시저
 BEGIN
     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
-    WHILE (i <= 20) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
+    WHILE (i <= 10) DO -- ⓒ for문 작성(i가 기준수가 될 때까지 반복)
         INSERT INTO APPROVAL(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
 		VALUES
 			(i, 1, "휴가", 1, '2022-11-20 15:28' ,'2022-11-27','2022-11-30'),
@@ -629,27 +629,30 @@ VALUES('M', 8, '휴가 계획 중', '연차 신청하기', '2023-06-29','2023-06
 ('M', 8, '점심 약속', '미팅 : 강남역 12시', '2023-06-19','2023-06-19', 'var(--col2)', 'N');        
         
         
--- DELIMITER $$
--- CREATE PROCEDURE ADDannual() -- ⓐ  프로시져
--- BEGIN
---     DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
---     WHILE (i <= 9) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
+        
 
--- 		INSERT INTO APPROVAL(USER_NO, TYPE, TITLE, STATUS, DRAFT_DATE, START_DATE, END_DATE)
--- 		VALUES
--- 			(8, 1, "휴가", 0, CONCAT('2023-11-0', i, ' 15:28') ,CONCAT('2023-11-0', i, ' 15:28'),CONCAT('2023-11-0', i, ' 15:28')),
--- 			(8, 0, "일반", 0, CONCAT('2023-11-1', i, ' 15:28') ,CONCAT('2023-11-1', i, ' 15:28'),CONCAT('2023-11-1', i, ' 15:28')),
--- 			(8, 1, "휴가", -1,  CONCAT('2023-10-0', i, ' 15:28') ,CONCAT('2023-10-0', i, ' 15:28'),CONCAT('2023-10-0', i, ' 15:28')),
--- 			(8, 1, "휴가", 0,  CONCAT('2022-10-1', i, ' 15:28') ,CONCAT('2022-10-1', i, ' 15:28'),CONCAT('2022-10-1', i, ' 15:28')),
--- 			(8, 3, "오후반차", 0,  CONCAT('2023-09-0', i, ' 15:28') ,CONCAT('2023-09-0', i, ' 15:28'),CONCAT('2023-09-0', i, ' 15:28')),
--- 			(8, 2, "오전반차", 2,  CONCAT('2022-09-1', i, ' 15:28') ,CONCAT('2022-09-1', i, ' 15:28'),CONCAT('2022-09-1', i, ' 15:28')),
--- 			(8, 1, "휴가", 0,  CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28')),
--- 			(8, 1, "휴가", -1, CONCAT('2022-11-0', i, ' 15:28') ,CONCAT('2022-11-0', i, ' 15:28'),CONCAT('2022-11-0', i, ' 15:28'));
+        
+DELIMITER $$
+CREATE PROCEDURE test() -- ⓐ  프로시져
+BEGIN
+    DECLARE i INT DEFAULT 1; -- ⓑ i변수 선언, defalt값으로 1설정
+    WHILE (i <= 20) DO -- ⓒ for문 작성(i가 1000이 될 때까지 반복)
 
---         SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
---     END WHILE;
--- END$$
--- DELIMITER ;
+		INSERT INTO ATTENDANCE(WORK_DATE, USER_NO, WORK_ON, WORK_OFF)
+		VALUES (DATE_FORMAT('2023-2-09','%Y-%m-%d'), i, '09:01:00', '18:01:00');
+        INSERT INTO ATTENDANCE(WORK_DATE, USER_NO, WORK_ON, WORK_OFF)
+		VALUES (DATE_FORMAT('2023-2-10','%Y-%m-%d'), i, '09:01:00', '18:01:00');
+        INSERT INTO ATTENDANCE(WORK_DATE, USER_NO, WORK_ON, WORK_OFF)
+		VALUES (DATE_FORMAT('2023-2-11','%Y-%m-%d'), i, '09:01:00', '18:01:00');
+        INSERT INTO ATTENDANCE(WORK_DATE, USER_NO, WORK_ON, WORK_OFF)
+		VALUES (DATE_FORMAT('2023-2-12','%Y-%m-%d'), i, '09:01:00', '18:01:00');
+        INSERT INTO ATTENDANCE(WORK_DATE, USER_NO, WORK_ON, WORK_OFF)
+		VALUES (DATE_FORMAT('2023-2-13','%Y-%m-%d'), i, '09:01:00', '18:01:00');
 
--- CALL ADDannual(); -- 프로시저 실행
--- DROP PROCEDURE IF EXISTS ADDannual; -- 사용 다한 프로시저는 삭제해주기! 테스트데이터 다시돌릴 때 이미 있는프로시저라고 오류남
+        SET i = i + 1; -- ⓔ i값에 1더해주고 WHILE문 처음으로 이동
+    END WHILE;
+END$$
+DELIMITER ;
+
+CALL test(); -- 프로시저 실행
+DROP PROCEDURE IF EXISTS test; 
