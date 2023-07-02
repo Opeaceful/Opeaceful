@@ -35,8 +35,8 @@ select {
 } 
 .total{
     float: right;
-    font-size: 24px;
-    margin-right: 16.5%;
+    font-size: 20px;
+    margin-right: 26%;
     margin-top: 12px;
 }
 .ad-minus {

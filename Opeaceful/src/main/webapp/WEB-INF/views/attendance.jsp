@@ -90,12 +90,9 @@
 							            <td><fmt:formatDate value="${ad.workOff}" pattern="HH:mm"/></td>
 							            <td>
 								            <c:if test="${ad.type eq 0}">
-								            	<fmt:formatDate value="${ad.totalWorkTime}" pattern="H"/>시간
+								            	<c:out value="${ad.totalWorkTime.hours}"/>시간
 								            </c:if>
 							            </td>
-							            <c:if test="${ad.type eq 0}">
-							                <td></td>
-							            </c:if>
 							            <c:if test="${ad.type eq 1}">
 							                <td>연차</td>
 							            </c:if>
@@ -117,12 +114,16 @@
 							    	</c:otherwise>
 						    	</c:choose>
 							</tr>
-							<c:set var="total" value="${total + ad.totalWorkTime}"/>
+							<c:set var="total" value="${total + ad.totalWorkTime.hours}"/>
 						</c:forEach>
 	                </tbody>
 	            </table>
 			</div>
-			<div class="total"><c:out value="${total}"/>시간</div>
+			<c:forEach items="${loginUserRole}" var="role">
+				<c:if test="${not role.roleCode eq 'A01'}">
+					<div class="total"><c:out value="${total}"/>시간</div>
+				</c:if>
+			</c:forEach>
             <!-- 페이징 영역 -->
             <%-- <c:set var="url" value="${path}/attendance/check?cpage=" /> --%>
             

@@ -21,8 +21,8 @@
 			<property name="password" value="opeaceful123"/> 
 
 		
-		<!-- 기존 로컬용 mysql 연결 설정 정보임 본인 환경에서는 아래 코드 쓸것! -->
-<!-- 			<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
+		<!-- 기존 로컬용 mysql 연결 설정 정보임 본인 환경에서는 아래 코드 쓸것!
+ 			<property name="url" value="jdbc:mysql://127.0.0.1:3306/opeaceful?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul"/>
 			<property name="username" value="opeaceful"/> 
 			<property name="password" value="opeaceful123"/> -->
 		
