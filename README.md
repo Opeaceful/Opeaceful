@@ -118,6 +118,8 @@
 
 ## 윤지영 - [PPT] 84p 참조
 
+ 어떻게 설정될지 몰라서 비워뒀어요 
+ 나중에 채워두겠습니다!
 
 
 ---
@@ -145,19 +147,21 @@
   - Language: Java, Ajax
   - WAS(Web-Application-Server): Apache Tomcat 9.0
   - Database
-    - RDBMS: MySQL 
+    - RDBMS: MySQL Workbench 8.0 CE 
   - Developer tool
-    - Java: Spring
-
+    - Java: STS
     - Server: aws
+    - MySQL:SQL-Developer ...??????????????????????????????? 
+  - Framework
+    - Spring
+    - BootStrap
 
 - 사용 디자인 패턴: **MVC 패턴**
 
 ### 사용한 오픈 API
 
-- BootStrap
 - OpenWeather API
 - geolocation API
-- 카카오 지도 API
+- kakaoMaps API
 
 ---
