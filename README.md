@@ -9,22 +9,61 @@
 - [박가영](#박가영---ppt-p-참조)
 - [윤지영](#윤지영---ppt-p-참조)
 
+
 ---
 
 > ## 프로젝트 소개
 
 ### 사내 그룹웨어 프로그램
 
-사원 친화적인 사내 시스템  
-실시간 협업  
-보안과 접근제어  
-업무문서 및 파일공유  
+실시간 협업, 보안과 접근제어, 업무 문서 및 파일공유 
+사원 친화적인 그룹웨어를 기획
+
+반응형 웹페이지와 AWS를 통한 배포까지를 목표로 함. 
 
 - <a href="./Opeaceful/src/main/webapp/resources/etc/Opeaceful_PPT.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
+
+
+
+- 로그인
+
+- 메인
+
+- 내정보
+
+- 연차관리
+
+- 조직도
+
+- 게시판
+
+- 캘린더
+
+- 근태관리
+
+- 계정관리
+ [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
+
+- 권한관리
+ [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)](#프로젝트-소개)
+
+- 급여관리
+  [![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)](#프로젝트-소개)
+
+- 전자결제
+
+- 채팅
+
+- 다크모드
+  [![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+
 
 <br>
 
 ---
+
+
 
 > ## 주요 기능
 
@@ -46,37 +85,53 @@
 
 ---
 
-## 노지의 - [PPT] p 참조
+## 노지의 - [PPT] 7p 참조
 
-
----
-
-## 김진기 - [PPT] p 참조
 
 
 ---
 
-## 박가영 - [PPT] p 참조
 
+## 김진기 - [PPT] 27p 참조
 
----
-
-## 한승은 - [PPT] p 참조
 
 
 ---
 
-## 김혜린 - [PPT] p 참조
+## 박가영 - [PPT] 45p 참조
+
+
+
+---
+
+## 한승은 - [PPT] 51p 참조
+
 
 
 ---
 
-## 윤지영 - [PPT] p 참조
+## 김혜린 - [PPT] 66p 참조
+
 
 
 ---
+
+## 윤지영 - [PPT] 84p 참조
+
+ 어떻게 설정될지 몰라서 비워뒀어요 
+ 나중에 채워두겠습니다!
+
+
+---
+
+
 
 > ## 사용 기술 스택
+
+### 협업 툴
+
+- 미리캔버스
+- 구글 시트
 
 ### 사용 언어
 
@@ -89,22 +144,24 @@
 
 - BE(Back-End)
 
-  - Language
-    - Java
-    - Ajax
+  - Language: Java, Ajax
   - WAS(Web-Application-Server): Apache Tomcat 9.0
   - Database
-    - RDBMS: MySQL Workbench 8.0 CE
+    - RDBMS: MySQL Workbench 8.0 CE 
   - Developer tool
     - Java: STS
-    - MySQL: SQL-Developer ...???????????????????????????????
+    - Server: aws
+    - MySQL:SQL-Developer ...??????????????????????????????? 
   - Framework
     - Spring
+    - BootStrap
 
 - 사용 디자인 패턴: **MVC 패턴**
 
 ### 사용한 오픈 API
 
-- BootStrap
 - OpenWeather API
 - geolocation API
+- kakaoMaps API
+
+---
