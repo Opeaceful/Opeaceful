@@ -2,12 +2,12 @@
 
 > ## 팀원
 
-- [한승은(조장)](#한승은---ppt-p-참조)
-- [김진기](#김진기---ppt-p-참조)
-- [김혜린](#김혜린---ppt-p-참조)
-- [노지의](#노지의---ppt-p-참조)
-- [박가영](#박가영---ppt-p-참조)
-- [윤지영](#윤지영---ppt-p-참조)
+- [한승은(조장)](#한승은)
+- [김진기](#김진기)
+- [김혜린](#김혜린)
+- [노지의](#노지의)
+- [박가영](#박가영)
+- [윤지영](#윤지영)
 
 ---
 
@@ -20,8 +20,9 @@
 
 반응형 웹페이지와 AWS를 통한 배포까지를 목표로 함.
 
-- <a href="./Opeaceful/src/main/webapp/resources/etc/Opeaceful_PPT.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
-
+<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
+<br>
+![프로젝트 소개](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)
 <br>
 
 ---
@@ -34,37 +35,27 @@
 </blockquote>
 
 <details>
-<summary> 로그인 </summary>
+<summary> 로그인 / 메인 </summary><br>
 <div markdown="1">
 
-[![로그인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+![로그인 / 메인](./Opeaceful/src/main/webapp/resources/etc/video/login.gif)
 
 </div>
 </details>
 
 <details>
-<summary> 메인 </summary>
+<summary> 내정보 </summary><br>
 <div markdown="1">
 
-[![메인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
-
+![내정보](./Opeaceful/src/main/webapp/resources/etc/video/mypage.gif)
 </div>
 </details>
 
 <details>
-<summary> 내정보 </summary>
+<summary> 연차관리 </summary><br>
 <div markdown="1">
 
-[![내정보](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
-
-</div>
-</details>
-
-<details>
-<summary> 연차관리 </summary>
-<div markdown="1">
-
-[![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/annual.gif)
 
 </div>
 </details>
@@ -73,8 +64,7 @@
 <summary> 조직도 </summary>
 <div markdown="1">
 
-[![조직도](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
-
+[![조직도](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
 </div>
 </details>
 
@@ -82,7 +72,7 @@
 <summary> 게시판 </summary>
 <div markdown="1">
 
-[![게시판](./Opeaceful/src/main/webapp/resources/etc/video/board.gif)](#프로젝트-소개)
+[![게시판](./Opeaceful/src/main/webapp/resources/etc/video/board.gif)]
 
 </div>
 </details>
@@ -91,7 +81,7 @@
 <summary> 캘린더 </summary>
 <div markdown="1">
 
-[![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/calendar.gif)](#프로젝트-소개)
+[![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/calendar.gif)]
 
 </div>
 </details>
@@ -100,7 +90,7 @@
 <summary> 근태관리 </summary>
 <div markdown="1">
 
-[![근태관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![근태관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
 
 </div>
 </details>
@@ -109,7 +99,7 @@
 <summary> 계정관리 </summary>
 <div markdown="1">
 
-[![계정관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
+[![계정관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)]
 
 </div>
 </details>
@@ -118,8 +108,7 @@
 <summary> 권한관리 </summary>
 <div markdown="1">
 
-[![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)](#프로젝트-소개)
-
+[![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)]
 </div>
 </details>
 
@@ -127,7 +116,7 @@
 <summary> 급여관리 </summary>
 <div markdown="1">
 
-[![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)](#프로젝트-소개)
+[![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)]
 
 </div>
 </details>
@@ -137,13 +126,12 @@
 <div markdown="1">
   
   - 전자결재 양식
-[![전자결제양식](./Opeaceful/src/main/webapp/resources/etc/video/approvalForm.gif)](#프로젝트-소개)
-
+[![전자결제양식](./Opeaceful/src/main/webapp/resources/etc/video/approvalForm.gif)]
 - MY 전자결재
-  [![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/approval.gif)](#프로젝트-소개)
+  [![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/approval.gif)]
 
 - 전자결재 관리
-  [![전자결제관리](./Opeaceful/src/main/webapp/resources/etc/video/approvalManage.gif)](#프로젝트-소개)
+  [![전자결제관리](./Opeaceful/src/main/webapp/resources/etc/video/approvalManage.gif)]
 
 </div>
 </details>
@@ -152,7 +140,7 @@
 <summary> 채팅 </summary>
 <div markdown="1">
 
-[![채팅](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![채팅](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
 
 </div>
 </details>
@@ -161,7 +149,7 @@
 <summary> 다크모드 </summary>
 <div markdown="1">
 
-[![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
 
 </div>
 </details>
@@ -174,27 +162,29 @@
 
 
 
-## 노지의 - [PPT] 7p 참조
+## 노지의  
+<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
+
 
 ---
 
-## 김진기 - [PPT] 27p 참조
+## 김진기
 
 ---
 
-## 박가영 - [PPT] 45p 참조
+## 박가영
 
 ---
 
-## 한승은 - [PPT] 51p 참조
+## 한승은
 
 ---
 
-## 김혜린 - [PPT] 66p 참조
+## 김혜린
 
 ---
 
-## 윤지영 - [PPT] 84p 참조
+## 윤지영
 
 어떻게 설정될지 몰라서 비워뒀어요
 나중에 채워두겠습니다!
