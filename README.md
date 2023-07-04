@@ -82,7 +82,7 @@
 <summary> 게시판 </summary>
 <div markdown="1">
 
-[![게시판](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![게시판](./Opeaceful/src/main/webapp/resources/etc/video/board.gif)](#프로젝트-소개)
 
 </div>
 </details>
@@ -91,7 +91,7 @@
 <summary> 캘린더 </summary>
 <div markdown="1">
 
-[![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/calendar.gif)](#프로젝트-소개)
 
 </div>
 </details>
