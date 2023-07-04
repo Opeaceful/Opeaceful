@@ -68,7 +68,7 @@
 > ## 주요 기능
 
 - 메인
-- <details>
+<details>
 <summary>더보기..</summary>
 <div markdown="1">
   - 프로필 조회
