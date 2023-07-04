@@ -62,7 +62,7 @@
 
 <blockquote>
 <h2>주요기능</h2>
-<span><small>※메뉴 클릭시 상세 내용 확인가능</small></span>
+<p><small>※메뉴 클릭시 상세 내용 확인가능</small></p>
 </blockquote>
 
 <details>
@@ -73,12 +73,10 @@
      <li>현재 시간 및 출 퇴근 기록</li>
      <li>접속상태</li>
      <li>현재 날씨</li>
-     <li>
-      <div markdown="1">
-        [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
-      </div>
-     </li>
     </ul>
+    <div markdown="1">
+        [![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)](#프로젝트-소개)
+    </div>
 </details>
 
 - 사원
