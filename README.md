@@ -33,7 +33,6 @@
 <p><small>※각 메뉴 클릭시 상세 내용 확인가능</small></p>
 </blockquote>
 
-  <li>
   <details>
   <summary> 로그인 </summary>
   <div markdown="1">
@@ -168,9 +167,6 @@
 
 </div>
 </details>
-
-  </li>
-
 
 <br>
 
