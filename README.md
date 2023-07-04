@@ -218,16 +218,16 @@
   - <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
   - <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>
 
-- BE(Back-End) 007396
+- BE(Back-End)
 
-  - Language: <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=JAVA&logoColor=white"/>, Ajax
+  - Language: <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=JAVA&logoColor=white"/>, <img src="https://img.shields.io/badge/Ajax-2AA5DC?style=flat&logo=Ajax&logoColor=white"/>
   - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=ApacheTomcat&logoColor=white"/> 9.0
   - Database
     - <img src="https://img.shields.io/badge/MySQL-232F3E?style=flat&logo=MySQL&logoColor=white"/>
     - MySQL Workbench 8.0 CE
-    - <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat&logo=AmazonRDS&logoColor=white"/>(MYSQL)
+    - <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat&logo=AmazonRDS&logoColor=white"/>
   - Developer tool
-    - Java: STS 
+    - Java: <img src="https://img.shields.io/badge/STS-6DB33F?style=flat&logo=STS&logoColor=white"/>
     - Server: <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat&logo=AmazonAWS&logoColor=white"/>
   - Framework
 
@@ -242,6 +242,5 @@
 - OpenWeather API
 - geolocation API
 - fulcalendar API
-- kakaoMaps API ??? ??????????????????????????
 
 ---
