@@ -135,8 +135,15 @@
 <details>
 <summary> 전자결제 </summary>
 <div markdown="1">
+  
+  - 전자결재 양식
+[![전자결제양식](./Opeaceful/src/main/webapp/resources/etc/video/approvalForm.gif)](#프로젝트-소개)
 
-[![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+- MY 전자결재
+  [![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/approval.gif)](#프로젝트-소개)
+
+- 전자결재 관리
+  [![전자결제관리](./Opeaceful/src/main/webapp/resources/etc/video/approvalManage.gif)](#프로젝트-소개)
 
 </div>
 </details>
@@ -216,29 +223,27 @@
 - FE(Front End)
 
   - JSP
-  - CSS
-  - Javascript
-  - jQuery
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
-    <img src="https://img.shields.io/badge/CSS5-1572B6?style=flat&logo=CSS5&logoColor=white"/>
-    <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
-    <img src="https://img.shields.io/badge/jquery-0769AD?style=flat&logo=jquery&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/CSS5-1572B6?style=flat&logo=CSS5&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/jquery-0769AD?style=flat&logo=jquery&logoColor=white"/>
 
 - BE(Back-End)
 
   - Language: Java, Ajax
   - WAS(Web-Application-Server): Apache Tomcat 9.0
   - Database
-    - RDBMS: MySQL Workbench 8.0 CE
+    - <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/>
+    - MySQL Workbench 8.0 CE
+    - Amazon RDS(MYSQL)
   - Developer tool
     - Java: STS
     - Server: aws
-    - MySQL:SQL-Developer ...???????????????????????????????
   - Framework
-    - Spring
+
+    - <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/>
+
     - BootStrap
-      <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/>
-      <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/>
 
 - 사용 디자인 패턴: **MVC 패턴**
 
