@@ -212,28 +212,28 @@
 
 - FE(Front End)
 
-  - JSP
+  - <img src="https://img.shields.io/badge/JSP-F46D01?style=flat&logo=JSP&logoColor=white"/>
   - <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
   - <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/>
-  - <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
-  - <img src="https://img.shields.io/badge/jquery-0769AD?style=flat&logo=jquery&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>
 
 - BE(Back-End)
 
-  - Language: Java, Ajax
-  - WAS(Web-Application-Server): Apache Tomcat 9.0
+  - Language: <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=JAVA&logoColor=white"/>, <img src="https://img.shields.io/badge/Ajax-2AA5DC?style=flat&logo=Ajax&logoColor=white"/>
+  - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=ApacheTomcat&logoColor=white"/> 9.0
   - Database
-    - <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/>
+    - <img src="https://img.shields.io/badge/MySQL-232F3E?style=flat&logo=MySQL&logoColor=white"/>
     - MySQL Workbench 8.0 CE
-    - Amazon RDS(MYSQL)
+    - <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat&logo=AmazonRDS&logoColor=white"/>
   - Developer tool
-    - Java: STS
-    - Server: aws
+    - Java: <img src="https://img.shields.io/badge/STS-6DB33F?style=flat&logo=STS&logoColor=white"/>
+    - Server: <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat&logo=AmazonAWS&logoColor=white"/>
   - Framework
 
     - <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/>
 
-    - BootStrap
+    - <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white"/>
 
 - 사용 디자인 패턴: **MVC 패턴**
 
@@ -242,6 +242,5 @@
 - OpenWeather API
 - geolocation API
 - fulcalendar API
-- kakaoMaps API ??? ??????????????????????????
 
 ---
