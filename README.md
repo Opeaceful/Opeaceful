@@ -66,6 +66,14 @@
 
 
 > ## 주요 기능
+<details>
+<summary>아이디/비밀번호찾기</summary>
+<div markdown="1">
+
+![아이디비밀번호찾기]()
+
+</div>
+</details>
 - 메인
   - 프로필 조회
   - 테마 변경
