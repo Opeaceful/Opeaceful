@@ -30,143 +30,143 @@ $(document).ready(function() {
     '50' : 'smog', // smog
   };
   /* ==================================== aws 배포 이전 버전 ==================================== */
-//     /* 현재 위치 확인 함수 */
-//   if (navigator.geolocation) { // GPS를 지원하면
+    /* 현재 위치 확인 함수 */
+  if (navigator.geolocation) { // GPS를 지원하면
 
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//       lat = position.coords.latitude;
-//       lon = position.coords.longitude;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
       
-//       // 현재날씨
-//       $.ajax({
-//         url:`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
-//         dataType:'json',
-//         type:'GET',
-//         success:function(data){
-//           var $city = data.name;
-//           // var $a = data.local_names.ko;
-//           var $icon = (data.weather[0].icon).substr(0,2);
-//           var $temp = Math.floor(data.main.temp);
-//           var $currWind = data.wind.speed + '㎧';
-//           var $currHumidity = data.main.humidity + '%';
-//           var $lowtTemp = Math.floor(data.main.temp_min) + 'º / ';
-//           var $hightTemp = Math.floor(data.main.temp_max) + 'º';
-//           // console.log($a);
-//           $('.city').append($city);
-//           if(colorMode == 'dark'){
-//             $('.currIcon').append('<img src="'+path+'/resources/image/weather/dark/'+weatherIcon[$icon]+'.png">');
-//           }else{
-//             $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
-//           }
-//           $('.currTemp').prepend($temp);
-//           $('.currWind').append($currWind);
-//           $('.currHumidity').append($currHumidity);
-//           $(".currLowTemp").append($lowtTemp);
-//           $(".currHighTemp").append($hightTemp);
-//         }
-//       });
+      // 현재날씨
+      $.ajax({
+        url:`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        dataType:'json',
+        type:'GET',
+        success:function(data){
+          var $city = data.name;
+          // var $a = data.local_names.ko;
+          var $icon = (data.weather[0].icon).substr(0,2);
+          var $temp = Math.floor(data.main.temp);
+          var $currWind = data.wind.speed + '㎧';
+          var $currHumidity = data.main.humidity + '%';
+          var $lowtTemp = Math.floor(data.main.temp_min) + 'º / ';
+          var $hightTemp = Math.floor(data.main.temp_max) + 'º';
+          // console.log($a);
+          $('.city').append($city);
+          if(colorMode == 'dark'){
+            $('.currIcon').append('<img src="'+path+'/resources/image/weather/dark/'+weatherIcon[$icon]+'.png">');
+          }else{
+            $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
+          }
+          $('.currTemp').prepend($temp);
+          $('.currWind').append($currWind);
+          $('.currHumidity').append($currHumidity);
+          $(".currLowTemp").append($lowtTemp);
+          $(".currHighTemp").append($hightTemp);
+        }
+      });
 
-//       //주간 날씨
-//       $.ajax({
-//         url:`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
-//         dataType:'json',
-//         type:'GET',
-//         success:function(data){
+      //주간 날씨
+      $.ajax({
+        url:`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+        dataType:'json',
+        type:'GET',
+        success:function(data){
   
-//           for (let i = 1; i < 6; i++) {
-//             var $day =  getDayOfWeek(data.list[(i * 8) -1].dt_txt);
-//             var $icon = (data.list[(i * 8)-1].weather[0].icon).substr(0, 2);
-//             var $weekTemp = Math.floor(data.list[(i * 8)-1].main.temp) + 'º';
+          for (let i = 1; i < 6; i++) {
+            var $day =  getDayOfWeek(data.list[(i * 8) -1].dt_txt);
+            var $icon = (data.list[(i * 8)-1].weather[0].icon).substr(0, 2);
+            var $weekTemp = Math.floor(data.list[(i * 8)-1].main.temp) + 'º';
 
-//             var $weekDiv = $('<div>').addClass('week col');
-//             var $weekDayDiv = $('<div>').addClass('weekDay').text($day);
+            var $weekDiv = $('<div>').addClass('week col');
+            var $weekDayDiv = $('<div>').addClass('weekDay').text($day);
 
-//             if(colorMode == 'dark'){
-//               var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/dark/' + weatherIcon[$icon] + '.png">');
-//             }else{
-//               var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
-//             }
+            if(colorMode == 'dark'){
+              var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/dark/' + weatherIcon[$icon] + '.png">');
+            }else{
+              var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
+            }
             
-//             var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
+            var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
 
-//             $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);
+            $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);
 
-//             $('.week-weather .row').append($weekDiv);
-//           }
-//         }
-//       });
-//     }, function(error) {
-//       console.error(error);
-//     }, {
-//       enableHighAccuracy: false,
-//       maximumAge: 0,
-//       timeout: Infinity
-//     });
-//   } else {
-//     alert('GPS를 지원하지 않습니다');
-//   }
+            $('.week-weather .row').append($weekDiv);
+          }
+        }
+      });
+    }, function(error) {
+      console.error(error);
+    }, {
+      enableHighAccuracy: false,
+      maximumAge: 0,
+      timeout: Infinity
+    });
+  } else {
+    alert('GPS를 지원하지 않습니다');
+  }
 
 
 
   /* ==================================== aws 배포버전 ==================================== */
   // 현재날씨
-  $.ajax({
-    url:`https://api.openweathermap.org/data/2.5/weather?lat=37.4923615&lon=127.0292881&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
-    dataType:'json',
-    type:'GET',
-    success:function(data){
-      var $city = data.name;
-      // var $a = data.local_names.ko;
-      var $icon = (data.weather[0].icon).substr(0,2);
-      var $temp = Math.floor(data.main.temp);
-      var $currWind = data.wind.speed + '㎧';
-      var $currHumidity = data.main.humidity + '%';
-      var $lowtTemp = Math.floor(data.main.temp_min) + 'º / ';
-      var $hightTemp = Math.floor(data.main.temp_max) + 'º';
-      // console.log($a);
-      $('.city').append($city);
-      if(colorMode == 'dark'){
-        $('.currIcon').append('<img src="'+path+'/resources/image/weather/dark/'+weatherIcon[$icon]+'.png">');
-      }else{
-        $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
-      }
-      $('.currTemp').prepend($temp);
-      $('.currWind').append($currWind);
-      $('.currHumidity').append($currHumidity);
-      $(".currLowTemp").append($lowtTemp);
-      $(".currHighTemp").append($hightTemp);
-    }
-  });
+  // $.ajax({
+  //   url:`https://api.openweathermap.org/data/2.5/weather?lat=37.4923615&lon=127.0292881&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+  //   dataType:'json',
+  //   type:'GET',
+  //   success:function(data){
+  //     var $city = data.name;
+  //     // var $a = data.local_names.ko;
+  //     var $icon = (data.weather[0].icon).substr(0,2);
+  //     var $temp = Math.floor(data.main.temp);
+  //     var $currWind = data.wind.speed + '㎧';
+  //     var $currHumidity = data.main.humidity + '%';
+  //     var $lowtTemp = Math.floor(data.main.temp_min) + 'º / ';
+  //     var $hightTemp = Math.floor(data.main.temp_max) + 'º';
+  //     // console.log($a);
+  //     $('.city').append($city);
+  //     if(colorMode == 'dark'){
+  //       $('.currIcon').append('<img src="'+path+'/resources/image/weather/dark/'+weatherIcon[$icon]+'.png">');
+  //     }else{
+  //       $('.currIcon').append('<img src="'+path+'/resources/image/weather/white/'+weatherIcon[$icon]+'.png">');
+  //     }
+  //     $('.currTemp').prepend($temp);
+  //     $('.currWind').append($currWind);
+  //     $('.currHumidity').append($currHumidity);
+  //     $(".currLowTemp").append($lowtTemp);
+  //     $(".currHighTemp").append($hightTemp);
+  //   }
+  // });
 
-  //주간 날씨
-  $.ajax({
-    url:`https://api.openweathermap.org/data/2.5/forecast?lat=37.4923615&lon=127.0292881&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
-    dataType:'json',
-    type:'GET',
-    success:function(data){
+  // //주간 날씨
+  // $.ajax({
+  //   url:`https://api.openweathermap.org/data/2.5/forecast?lat=37.4923615&lon=127.0292881&appid=19b55bb6f31f76e1ed9c216a460a592e&units=metric`,
+  //   dataType:'json',
+  //   type:'GET',
+  //   success:function(data){
 
-      for (let i = 1; i < 6; i++) {
-        var $day =  getDayOfWeek(data.list[(i * 8) -1].dt_txt);
-        var $icon = (data.list[(i * 8)-1].weather[0].icon).substr(0, 2);
-        var $weekTemp = Math.floor(data.list[(i * 8)-1].main.temp) + 'º';
+  //     for (let i = 1; i < 6; i++) {
+  //       var $day =  getDayOfWeek(data.list[(i * 8) -1].dt_txt);
+  //       var $icon = (data.list[(i * 8)-1].weather[0].icon).substr(0, 2);
+  //       var $weekTemp = Math.floor(data.list[(i * 8)-1].main.temp) + 'º';
 
-        var $weekDiv = $('<div>').addClass('week col');
-        var $weekDayDiv = $('<div>').addClass('weekDay').text($day);
+  //       var $weekDiv = $('<div>').addClass('week col');
+  //       var $weekDayDiv = $('<div>').addClass('weekDay').text($day);
 
-        if(colorMode == 'dark'){
-          var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/dark/' + weatherIcon[$icon] + '.png">');
-        }else{
-          var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
-        }
+  //       if(colorMode == 'dark'){
+  //         var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/dark/' + weatherIcon[$icon] + '.png">');
+  //       }else{
+  //         var $weekIconDiv = $('<div>').addClass('weekIcon').append('<img src="' + path + '/resources/image/weather/white/' + weatherIcon[$icon] + '.png">');
+  //       }
         
-        var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
+  //       var $weekTempDiv = $('<div>').addClass('weekTemp weather_text_s').text($weekTemp)
 
-        $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);
+  //       $weekDiv.append($weekDayDiv, $weekIconDiv, $weekTempDiv, $weekTempDiv);
 
-        $('.week-weather .row').append($weekDiv);
-      }
-    }
-  });
+  //       $('.week-weather .row').append($weekDiv);
+  //     }
+  //   }
+  // });
 
 });
 
