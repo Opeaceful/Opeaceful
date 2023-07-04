@@ -172,17 +172,7 @@
 
 > ## 담당 기능
 
-## 공통
 
-예시로 일단 아래 넣어둠 변경해야됨
-
-- [common.js](./Opeaceful/src/main/webapp/resources/js/common.js)
-  - 위 파일 상 setip의 ip주소를 본인 환경에 맞게 변경하여 사용
-- [common java(하위 파일 전체)](./SEMI_MZ/src/mz/common) : 공용 java 파일들
-
-- SQL
-
----
 
 ## 노지의 - [PPT] 7p 참조
 
