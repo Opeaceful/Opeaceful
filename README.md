@@ -22,7 +22,7 @@
 
 <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
 <br>
-[(./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)]
+[![프로젝트 소개](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)
 <br>
 
 ---
@@ -47,7 +47,7 @@
 <summary> 내정보 </summary><br>
 <div markdown="1">
 
-[![내정보](./Opeaceful/src/main/webapp/resources/etc/video/mypage.gif)]
+![내정보](./Opeaceful/src/main/webapp/resources/etc/video/mypage.gif)
 </div>
 </details>
 
@@ -55,7 +55,7 @@
 <summary> 연차관리 </summary><br>
 <div markdown="1">
 
-[![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/annual.gif)]
+![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/annual.gif)
 
 </div>
 </details>
