@@ -20,7 +20,7 @@
 
 반응형 웹페이지와 AWS를 통한 배포까지를 목표로 함.
 
-<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
+<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
 <br>
 ![프로젝트 소개](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)
 <br>
