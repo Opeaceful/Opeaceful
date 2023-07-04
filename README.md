@@ -21,7 +21,7 @@
 반응형 웹페이지와 AWS를 통한 배포까지를 목표로 함.
 
 - <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
-
+[![Opeaceful](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)]
 <br>
 
 ---
@@ -34,19 +34,10 @@
 </blockquote>
 
 <details>
-<summary> 로그인 </summary>
+<summary> 로그인 / 메인 </summary>
 <div markdown="1">
 
-[![로그인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
-
-</div>
-</details>
-
-<details>
-<summary> 메인 </summary>
-<div markdown="1">
-
-[![메인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![로그인 / 메인](./Opeaceful/src/main/webapp/resources/etc/video/login.gif)](#프로젝트-소개)
 
 </div>
 </details>
@@ -55,7 +46,7 @@
 <summary> 내정보 </summary>
 <div markdown="1">
 
-[![내정보](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![내정보](./Opeaceful/src/main/webapp/resources/etc/video/mypage.gif)](#프로젝트-소개)
 
 </div>
 </details>
@@ -64,7 +55,7 @@
 <summary> 연차관리 </summary>
 <div markdown="1">
 
-[![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+[![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/annual.gif)](#프로젝트-소개)
 
 </div>
 </details>
@@ -175,7 +166,7 @@
 
 
 ## 노지의  
-> <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
+    <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
 
 ---
 
