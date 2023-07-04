@@ -26,11 +26,9 @@
 
 ---
 
-<!-- > ## 주요 기능 -->
-
 <blockquote>
 <h2>주요기능</h2>
-<p><small>※각 메뉴 클릭시 상세 내용 확인가능</small></p>
+<p><small>※각 메뉴 클릭시 이미지 확인가능</small></p>
 </blockquote>
 
 <details>
