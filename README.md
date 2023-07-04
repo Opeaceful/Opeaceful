@@ -38,7 +38,7 @@
 <summary> 로그인 / 메인 </summary><br>
 <div markdown="1">
 
-[![로그인 / 메인](./Opeaceful/src/main/webapp/resources/etc/video/login.gif)]
+![로그인 / 메인](./Opeaceful/src/main/webapp/resources/etc/video/login.gif)
 
 </div>
 </details>
