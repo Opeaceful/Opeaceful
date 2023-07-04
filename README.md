@@ -221,19 +221,19 @@
 - BE(Back-End)
 
   - Language: Java, Ajax
-  - WAS(Web-Application-Server): Apache Tomcat 9.0
+  - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=white"/> 9.0
   - Database
-    - <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/>
+    - <img src="https://img.shields.io/badge/mysql-232F3E?style=flat&logo=mysql&logoColor=white"/>
     - MySQL Workbench 8.0 CE
-    - Amazon RDS(MYSQL)
+    - <img src="https://img.shields.io/badge/amazonrds-527FFF?style=flat&logo=amazonrds&logoColor=white"/>(MYSQL)
   - Developer tool
-    - Java: STS
-    - Server: aws
+    - Java: STS 
+    - Server: <img src="https://img.shields.io/badge/amazonaws-6DB33F?style=flat&logo=amazonaws&logoColor=white"/>
   - Framework
 
     - <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/>
 
-    - BootStrap
+    - <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white"/>
 
 - 사용 디자인 패턴: **MVC 패턴**
 
