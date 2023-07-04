@@ -163,7 +163,28 @@
 
 
 ## 노지의  
-<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
+<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
+- 로그인 / 로그아웃
+  - [login.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/member/login.jsp) : 로그인 페이지
+  - [LoginController.java](./Opeaceful/src/main/java/com/company/opeaceful/member/controller/LoginController.java) : 로그인 처리 / 비밀번호 제한 처리(임시비밀번호 생성) / 아이디 저장
+- 메인
+  - [main.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/main.jsp) : 메인 페이지
+  - [main.js](./Opeaceful/src/main/webapp/resources/js/main.js) : 프로필 조회 / 현재 시간 및 출 퇴근 기록 / 접속상태
+  - [weather.js](./Opeaceful/src/main/webapp/resources/js/weather.js) : 현재 날씨 및 주간 날씨
+- 사이드바
+  - [sidebar.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/sidebar.jsp) : 사이드바
+  - [LoginController.java](./Opeaceful/src/main/java/com/company/opeaceful/member/controller/LoginController.java) : 사이드바 권한 조회
+- 내정보변경
+  - [mypage.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/member/mypage.jsp) : 정보변경 페이지
+  - [mypage.js](./Opeaceful/src/main/webapp/resources/js/member/mypage.js) : 비밀번호 변경 데이터 처리
+  - [LoginController.java](./Opeaceful/src/main/java/com/company/opeaceful/member/controller/MemberController.java) : 내 정보 변경 / 비밀번호 변경
+- 연차관리
+  - [annual.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/annual/annual.jsp) : 연차 조회 페이지
+  - [annual-user.js](./Opeaceful/src/main/webapp/resources/js/annual-user.js) : 연차 조회 데이터 처리
+  - [annual-user.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/annual/annual-user.jsp) : 사원 연차 등록 및 수정 페이지
+  - [AnnualController.java](./Opeaceful/src/main/java/com/company/opeaceful/annual/controller/AnnualController.java) : 연차 관련 모든 처리
+  - [spring-scheduler.xml](./Opeaceful/src/main/webapp/WEB-INF/spring/spring-scheduler.xml) : 연차 리셋 스케줄러
+  - [LoginController.java](./Opeaceful/src/main/java/com/company/opeaceful/member/controller/LoginController.java) : 연차 리셋 스케줄링 메소드 생성 후 연차 조회 후 리셋
 
 
 ---
@@ -200,7 +221,7 @@
 
 ### 사용 언어
 
-- FE(Front End)
+- FE (Front-End)
 
   - <img src="https://img.shields.io/badge/JSP-F46D01?style=flat&logo=JSP&logoColor=white"/>
   - <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
@@ -208,9 +229,9 @@
   - <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
   - <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>
 
-- BE(Back-End)
+- BE (Back-End)
 
-  - Language: <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=JAVA&logoColor=white"/>, <img src="https://img.shields.io/badge/Ajax-2AA5DC?style=flat&logo=Ajax&logoColor=white"/>
+  - Language: <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=JAVA&logoColor=white"/> <img src="https://img.shields.io/badge/Ajax-2AA5DC?style=flat&logo=Ajax&logoColor=white"/>
   - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=ApacheTomcat&logoColor=white"/> 9.0
   - Database
     - <img src="https://img.shields.io/badge/MySQL-232F3E?style=flat&logo=MySQL&logoColor=white"/>
