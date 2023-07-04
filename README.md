@@ -71,15 +71,20 @@
 <details>
 <summary>더보기..</summary>
 <div markdown="1">
-  - 프로필 조회
+ <ul>
+  <li>프로필 조회</li>
+  <li>프로필 조회</li>
+  <li>프로필 조회</li>
+ </ul>
+ 
+
+</div>
+</details>
+ - 프로필 조회
   - 테마 변경
   - 현재 시간 및 출 퇴근 기록
   - 접속상태
   - 현재 날씨
-
-</div>
-</details>
-
   - 
 - 사원
   - 로그인 / 로그아웃
