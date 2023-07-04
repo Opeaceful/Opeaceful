@@ -221,7 +221,7 @@
 - BE(Back-End)
 
   - Language: Java, Ajax
-  - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=white"/> 9.0
+  - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=flat&logo=Apache Tomcat&logoColor=white"/> 9.0
   - Database
     - <img src="https://img.shields.io/badge/mysql-232F3E?style=flat&logo=mysql&logoColor=white"/>
     - MySQL Workbench 8.0 CE
