@@ -220,7 +220,7 @@
 
 - BE(Back-End)
 
-  - Language: Java, Ajax
+  - Language: <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">, Ajax
   - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=ApacheTomcat&logoColor=white"/> 9.0
   - Database
     - <img src="https://img.shields.io/badge/MySQL-232F3E?style=flat&logo=MySQL&logoColor=white"/>
