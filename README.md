@@ -22,7 +22,7 @@
 
 <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
 <br>
-[![프로젝트 소개](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)
+![프로젝트 소개](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)
 <br>
 
 ---
