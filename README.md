@@ -33,15 +33,6 @@
 <p><small>※각 메뉴 클릭시 상세 내용 확인가능</small></p>
 </blockquote>
 
-  <details>
-  <summary> 로그인 </summary>
-  <div markdown="1">
-
-[![로그인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
-
-  </div>
-  </details>
-
 <details>
 <summary> 로그인 </summary>
 <div markdown="1">
