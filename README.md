@@ -22,38 +22,6 @@
 
 - <a href="./Opeaceful/src/main/webapp/resources/etc/Opeaceful_PPT.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
 
-- 로그인
-
-- 메인
-
-- 내정보
-
-- 연차관리
-
-- 조직도
-
-- 게시판
-
-- 캘린더
-
-- 근태관리
-
-- 계정관리
-  [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
-
-- 권한관리
-  [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)](#프로젝트-소개)
-
-- 급여관리
-  [![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)](#프로젝트-소개)
-
-- 전자결제
-
-- 채팅
-
-- 다크모드
-  [![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
-
 <br>
 
 ---
@@ -62,69 +30,136 @@
 
 <blockquote>
 <h2>주요기능</h2>
-<span><small>※메뉴 클릭시 상세 내용 확인가능</small></span>
+<p><small>※각 메뉴 클릭시 상세 내용 확인가능</small></p>
 </blockquote>
 
 <details>
-   <summary>메인</summary>
-    <ul>
-     <li>프로필 조회</li>
-     <li>테마 변경</li>
-     <li>현재 시간 및 출 퇴근 기록</li>
-     <li>접속상태</li>
-     <li>현재 날씨</li>
-     <li>
-      <div markdown="1">
-        [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
-      </div>
-     </li>
-    </ul>
+<summary> 로그인 </summary>
+<div markdown="1">
+
+[![로그인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
 </details>
 
-- 사원
-  - 로그인 / 로그아웃
-  - 사원 정보 변경
-- 조직도
-  - 조직도 조회
-  - 부서 생성 및 수정
-  - 직급 생성 및 수정
-- 계정관리
-  - 사원 조회
-  - 계정 생성 및 수정
-  - 퇴사자 관리
-    [![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
-- 권한관리
-  - 부서별 권한 관리
-  - 사원별 권한 관리
-- 급여관리
-  - 급여 명세서 생성 및 수정
-  - 사원 급여 관리
-- 연차관리
-  - 연차 조회
-  - 연차 등록 및 수정
-- 근태관리
-  - 출 퇴근 기록 조회
-- 전자결재
-  - 임시저장 / 기안 / 반려 / 참조 / 결재
-  - 결재 공통 양식 생성 및 수정
-  - 전체 결재 문서 조회 및 삭제
-  - 결재라인 즐겨찾기 기능
-  - 결재 문서 상태 실시간 알림
-- 게시판(공지사항 / 자유 게시판 / 팀 게시판)
-  - 게시글 등록(익명) 및 수정
-  - 댓글 등록(익명) 및 삭제
-  - 파일첨부
-- 캘린더(개인 / 팀 / 전체)
-  - 일정 조회
-  - 일정 등록 및 수정
-  - 디데이 / 메모
-- 메신저
-  - 1:1 채팅
-  - 그룹 채팅
-  - 프로필 조회
-  - 즐겨찾기
-  - 접속상태
-  - 최신 공지사항 조회
+<details>
+<summary> 메인 </summary>
+<div markdown="1">
+
+[![메인](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 내정보 </summary>
+<div markdown="1">
+
+[![내정보](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 연차관리 </summary>
+<div markdown="1">
+
+[![연차관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 조직도 </summary>
+<div markdown="1">
+
+[![조직도](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 게시판 </summary>
+<div markdown="1">
+
+[![게시판](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 캘린더 </summary>
+<div markdown="1">
+
+[![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 근태관리 </summary>
+<div markdown="1">
+
+[![근태관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 계정관리 </summary>
+<div markdown="1">
+
+[![계정관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 권한관리 </summary>
+<div markdown="1">
+
+[![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 급여관리 </summary>
+<div markdown="1">
+
+[![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 전자결제 </summary>
+<div markdown="1">
+
+[![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 채팅 </summary>
+<div markdown="1">
+
+[![채팅](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<details>
+<summary> 다크모드 </summary>
+<div markdown="1">
+
+[![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)](#프로젝트-소개)
+
+</div>
+</details>
+
+<br>
 
 ---
 
