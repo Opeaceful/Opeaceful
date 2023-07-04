@@ -33,7 +33,7 @@
 <p><small>※각 메뉴 클릭시 상세 내용 확인가능</small></p>
 </blockquote>
 
-> <details>
+<details>
 <summary> 로그인 </summary>
 <div markdown="1">
 
@@ -175,7 +175,7 @@
 
 
 ## 노지의  
-<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
+> <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
 
 ---
 
