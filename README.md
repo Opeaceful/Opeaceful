@@ -214,26 +214,26 @@
 
   - JSP
   - <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
-  - <img src="https://img.shields.io/badge/CSS5-1572B6?style=flat&logo=CSS5&logoColor=white"/>
-  - <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
-  - <img src="https://img.shields.io/badge/jquery-0769AD?style=flat&logo=jquery&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
+  - <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>
 
 - BE(Back-End)
 
   - Language: Java, Ajax
-  - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=flat&logo=Apache Tomcat&logoColor=white"/> 9.0
+  - WAS(Web-Application-Server): <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat&logo=ApacheTomcat&logoColor=white"/> 9.0
   - Database
-    - <img src="https://img.shields.io/badge/mysql-232F3E?style=flat&logo=mysql&logoColor=white"/>
+    - <img src="https://img.shields.io/badge/MySQL-232F3E?style=flat&logo=MySQL&logoColor=white"/>
     - MySQL Workbench 8.0 CE
-    - <img src="https://img.shields.io/badge/amazonrds-527FFF?style=flat&logo=amazonrds&logoColor=white"/>(MYSQL)
+    - <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat&logo=AmazonRDS&logoColor=white"/>(MYSQL)
   - Developer tool
     - Java: STS 
-    - Server: <img src="https://img.shields.io/badge/amazonaws-6DB33F?style=flat&logo=amazonaws&logoColor=white"/>
+    - Server: <img src="https://img.shields.io/badge/Amazon AWS-6DB33F?style=flat&logo=AmazonAWS&logoColor=white"/>
   - Framework
 
     - <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white"/>
 
-    - <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white"/>
+    - <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white"/>
 
 - 사용 디자인 패턴: **MVC 패턴**
 
