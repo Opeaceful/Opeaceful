@@ -32,7 +32,7 @@
 <h2>주요기능</h2>
 <p><small>※각 메뉴 클릭시 상세 내용 확인가능</small></p>
 </blockquote>
-<ol style="list-style: none">
+
   <li>
   <details>
   <summary> 로그인 </summary>
@@ -170,7 +170,7 @@
 </details>
 
   </li>
-</ol>
+
 
 <br>
 
