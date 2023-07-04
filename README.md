@@ -155,6 +155,7 @@
   - Framework
     - Spring
     - BootStrap
+   <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/>
 
 - 사용 디자인 패턴: **MVC 패턴**
 
