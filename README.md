@@ -67,6 +67,7 @@
 
 <details>
    <summary>메인</summary>
+  <div markdown="1">
     <ul>
      <li>프로필 조회</li>
      <li>테마 변경</li>
@@ -74,7 +75,7 @@
      <li>접속상태</li>
      <li>현재 날씨</li>
     </ul>
-    <div markdown="1">
+    
         [![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)](#프로젝트-소개)
     </div>
 </details>
