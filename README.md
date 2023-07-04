@@ -66,20 +66,20 @@
 
 
 > ## 주요 기능
-<details>
-<summary>아이디/비밀번호찾기</summary>
-<div markdown="1">
 
-![아이디비밀번호찾기]()
-
-</div>
-</details>
 - 메인
+- <details>
+<summary>더보기..</summary>
+<div markdown="1">
   - 프로필 조회
   - 테마 변경
   - 현재 시간 및 출 퇴근 기록
   - 접속상태
   - 현재 날씨
+
+</div>
+</details>
+
   - 
 - 사원
   - 로그인 / 로그아웃
