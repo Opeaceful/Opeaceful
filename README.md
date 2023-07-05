@@ -207,7 +207,7 @@
 [[PPT] 링크](https://www.miricanvas.com/v/127mvz2) &nbsp; / &nbsp; [[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/한승은.pdf)
 
 - SQL
-  - [Opeaceful_TABLE.sql](./Opeaceful/SQL/Opeaceful_TABLE.sql) : MYSQL 테이블 기본 세팅용 sql파일  
+  - [Opeaceful_TABLE.sql](./Opeaceful/SQL/Opeaceful_TABLE.sql) : MYSQL 테이블 기본 세팅용 sql파일
 
 - 전자결재 공통 양식 메뉴
   - [ApprovalFormController.java](./Opeaceful/Opeaceful/src/main/java/com/company/opeaceful/approval/controller/ApprovalFormController.java) : 전자결재 양식용 컨트롤러
