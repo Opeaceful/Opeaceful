@@ -1,0 +1,32 @@
+✔ 공통
+스킨목록들의 적용할 스킨(class="closet-skin") 클릭시
+- 현재스킨(class="user-skin")에 클릭한 이미지 적용
+
+✔옷장
+
+옷장 버튼 클릭시
+- 상점 버튼 투명하게
+- 커서 포인터 없애기
+- 내가 보유중인 스킨만 표시
+   (DB -> "CHARACTER"테이블 SELECT)
+- 가격, 보유중 라벨(class="closet-price") -> display: "none";
+- 구입버튼(class="closet-buy") -> display: "none";
+
+- 현재 내 스킨이 착용중인 스킨이면 착용버튼 비활성화(기본값이 될것임)
+  ( DB -> "MEMBER"테이블 "SKIN_ID"에서 조회)
+   그렇지 않다면 착용버튼 활성화
+
+착용버튼 클릭시
+- DB -> "MEMBER"테이블 "SKIN_ID"값 UPDATE
+
+
+✔상점 
+
+상점 버튼 클릭시
+- 옷장 버튼 투명하게
+- 커서 포인터 없애기
+- 착용 버튼(class="closet-wear") -> display: "none";
+
+
+
+  

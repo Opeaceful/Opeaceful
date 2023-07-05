@@ -75,20 +75,16 @@ public class AnnualController {
 	public String updateAnnual(Annual a,Model model, HttpSession session) {
 		
 		int result = annualService.updateAnnual(a);
-		System.out.println("총연차수정::::::::::::::::::::::::::::::::::::::::::"+a);
 		if(result > 0) {
 			List<Annual> list = annualService.selectAnnualAll();
 			model.addAttribute("annual", list);
 			
 			int result2 = annualService.updateMemberAnnualCountByYear(a);
-			logger.info(result2+"어ㅔ에ㅔㅔㅔ베ㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔ");
 			if(result2 > 0) {
 				model.addAttribute("alertMsg", "총 연차 수정 및 사원 연차 변경 완료되었습니다.");
 			}
 		}
-		
 		return "annual/annual";
-		
 	}
 	
 	// [지의] 유저 연차 조회 페이지 포워딩
