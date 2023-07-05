@@ -1,4 +1,4 @@
-# Opeaceful
+a# Opeaceful
 
 > ## 팀원
 
@@ -20,9 +20,13 @@
 
 반응형 웹페이지와 AWS를 통한 배포까지를 목표로 함.
 
-<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
+- [[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/opeaceful.pdf)
+- [기획서(바로가기)](https://docs.google.com/spreadsheets/d/1BetFMp64okyNTD5TSe3A4GyWWF_pxn_f3TOzRJlA34o/edit?usp=sharing)
+
 <br>
+
 ![프로젝트 소개](./Opeaceful/src/main/webapp/resources/etc/video/opeaceful.gif)
+
 <br>
 
 ---
@@ -48,6 +52,7 @@
 <div markdown="1">
 
 ![내정보](./Opeaceful/src/main/webapp/resources/etc/video/mypage.gif)
+
 </div>
 </details>
 
@@ -64,7 +69,8 @@
 <summary> 조직도 </summary>
 <div markdown="1">
 
-[![조직도](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
+![조직도](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)
+
 </div>
 </details>
 
@@ -72,7 +78,7 @@
 <summary> 게시판 </summary>
 <div markdown="1">
 
-[![게시판](./Opeaceful/src/main/webapp/resources/etc/video/board.gif)]
+![게시판](./Opeaceful/src/main/webapp/resources/etc/video/board.gif)
 
 </div>
 </details>
@@ -81,7 +87,7 @@
 <summary> 캘린더 </summary>
 <div markdown="1">
 
-[![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/calendar.gif)]
+![캘린더](./Opeaceful/src/main/webapp/resources/etc/video/calendar.gif)
 
 </div>
 </details>
@@ -90,7 +96,7 @@
 <summary> 근태관리 </summary>
 <div markdown="1">
 
-[![근태관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
+![근태관리](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)
 
 </div>
 </details>
@@ -99,7 +105,7 @@
 <summary> 계정관리 </summary>
 <div markdown="1">
 
-[![계정관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)]
+![계정관리](./Opeaceful/src/main/webapp/resources/etc/video/member.gif)
 
 </div>
 </details>
@@ -108,7 +114,8 @@
 <summary> 권한관리 </summary>
 <div markdown="1">
 
-[![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)]
+![권한관리](./Opeaceful/src/main/webapp/resources/etc/video/role.gif)
+
 </div>
 </details>
 
@@ -116,7 +123,7 @@
 <summary> 급여관리 </summary>
 <div markdown="1">
 
-[![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)]
+![급여관리](./Opeaceful/src/main/webapp/resources/etc/video/salary.gif)
 
 </div>
 </details>
@@ -126,12 +133,11 @@
 <div markdown="1">
   
   - 전자결재 양식
-[![전자결제양식](./Opeaceful/src/main/webapp/resources/etc/video/approvalForm.gif)]
-- MY 전자결재
-  [![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/approval.gif)]
-
-- 전자결재 관리
-  [![전자결제관리](./Opeaceful/src/main/webapp/resources/etc/video/approvalManage.gif)]
+  ![전자결제양식](./Opeaceful/src/main/webapp/resources/etc/video/approvalForm.gif)
+  - MY 전자결재
+    ![전자결제](./Opeaceful/src/main/webapp/resources/etc/video/approval.gif)
+  - 전자결재 관리
+    ![전자결제관리](./Opeaceful/src/main/webapp/resources/etc/video/approvalManage.gif)
 
 </div>
 </details>
@@ -140,7 +146,7 @@
 <summary> 채팅 </summary>
 <div markdown="1">
 
-[![채팅](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
+![채팅](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)
 
 </div>
 </details>
@@ -149,7 +155,7 @@
 <summary> 다크모드 </summary>
 <div markdown="1">
 
-[![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)]
+![다크모드](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)
 
 </div>
 </details>
@@ -160,10 +166,10 @@
 
 > ## 담당 기능
 
+## 노지의
 
+<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>
 
-## 노지의  
-<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/노지의_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
 - 로그인 / 로그아웃
   - [login.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/member/login.jsp) : 로그인 페이지
   - [LoginController.java](./Opeaceful/src/main/java/com/company/opeaceful/member/controller/LoginController.java) : 로그인 처리 / 비밀번호 제한 처리(임시비밀번호 생성) / 아이디 저장
@@ -186,7 +192,6 @@
   - [spring-scheduler.xml](./Opeaceful/src/main/webapp/WEB-INF/spring/spring-scheduler.xml) : 연차 리셋 스케줄러
   - [LoginController.java](./Opeaceful/src/main/java/com/company/opeaceful/member/controller/LoginController.java) : 연차 리셋 스케줄링 메소드 생성 후 연차 조회 후 리셋
 
-
 ---
 
 ## 김진기
@@ -198,6 +203,49 @@
 ---
 
 ## 한승은
+
+[[PPT] 링크](https://www.miricanvas.com/v/127mvz2) &nbsp; / &nbsp; [[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/한승은.pdf)
+
+- SQL
+  - [Opeaceful_TABLE.sql](./Opeaceful/SQL/Opeaceful_TABLE.sql) : MYSQL 테이블 기본 세팅용 sql파일  
+
+- 전자결재 공통 양식 메뉴
+  - [ApprovalFormController.java](./Opeaceful/Opeaceful/src/main/java/com/company/opeaceful/approval/controller/ApprovalFormController.java) : 전자결재 양식용 컨트롤러
+  - [approvalForm.jsp](./Opeaceful/Opeaceful/src/main/webapp/WEB-INF/views/approval/approvalForm.jsp) : 전자결재 양식 페이지
+  - [approvalFormData.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/approvalFormData.js) : 전자결재 양식 페이지용 Ajax를 모아둔 js 파일
+  - [approvalFormFront.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/approvalFormFront.js) : 전자결재 양식 페이지용 페이지의 기본동작 이벤트를 부여한 js 파일
+
+- 전자결재 관리 메뉴
+  - [ApprovalController.java](./Opeaceful/Opeaceful/src/main/java/com/company/opeaceful/approval/controller/ApprovalController.java) : MY전자결재, 전자결재 관리 메뉴 공통 컨트롤러
+  - [allApproval.jsp](./Opeaceful/Opeaceful/src/main/webapp/WEB-INF/views/approval/allApproval.jsp) : 전자결재 관리 페이지
+  - [allApprovalData.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/allApprovalData.js) : 전자결재 관리 페이지용 Ajax를 모아둔 js파일
+  - [allApprovalFront.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/allApprovalFront.js) : 전자결재 관리 페이지용 기본동작 이벤트를 부여한 js 파일
+
+- MY전자결재 메뉴
+  - [ApprovalController.java](./Opeaceful/Opeaceful/src/main/java/com/company/opeaceful/approval/controller/ApprovalController.java) : MY전자결재, 전자결재 관리 메뉴 공통 컨트롤러
+  - [myApproval.jsp](./Opeaceful/Opeaceful/src/main/webapp/WEB-INF/views/approval/myApproval.jsp) : MY전자결재 페이지
+  - [myApprovalData.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/myApprovalData.js) : MY전자결재 페이지용 Ajax를 모아둔 js파일
+  - [myApprovalFront.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/myApprovalFront.js) : MY전자결재 페이지용 기본동작 이벤트를 부여한 js 파일
+
+- 전자결재 공통 파일들
+  - 메모
+    - [memoModal.jsp](./Opeaceful/Opeaceful/src/main/webapp/WEB-INF/views/approval/memoModal.jsp) : 전자결재 메모 모달 화면
+    - [memo.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/memo.js) : 전자결재 메모 기본동작용 js 파일
+
+  - 전자결재 작성/수정 모달
+    - [approvalModal.jsp](./Opeaceful/Opeaceful/src/main/webapp/WEB-INF/views/approval/approvalModal.jsp) : 전자결재 작성/수정용 모달 화면
+    - [approvalModal.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/approvalModal.js) : 전자결재 작성/수정용 모달 기본 동작용 js 파일
+
+  - 전자결재 조회 모달
+    - [endApprovalModal.jsp](./Opeaceful/Opeaceful/src/main/webapp/WEB-INF/views/approval/endApprovalModal.jsp) : 전자결재 문서 조회용 모달 화면
+
+  - 텍스트에디터
+    - [tinyEditor.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/tinyEditor.js) : Tinymce 에디터 사용및 세팅을 위한 js 파일
+
+  - 전자결재 알림
+    - [AprWebsocketHandler.java](./Opeaceful/Opeaceful/src/main/java/com/company/opeaceful/approval/model/websocket/AprWebsocketHandler.java) : 전자결재 알림을 위한 웹소켓 핸들러
+    - [aprWebsocket.js](./Opeaceful/Opeaceful/src/main/webapp/resources/js/approval/aprWebsocket.js) : 전자결재 알림용 웹소켓 js 파일
+
 
 ---
 
