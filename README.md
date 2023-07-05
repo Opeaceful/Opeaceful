@@ -206,9 +206,7 @@
 ---
 
 ## 윤지영
-
-어떻게 설정될지 몰라서 비워뒀어요
-나중에 채워두겠습니다!
+<a href="./Opeaceful/src/main/webapp/resources/etc/pdf/윤지영_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
 
 ---
 
