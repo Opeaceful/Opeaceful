@@ -1,4 +1,4 @@
-a# Opeaceful
+# Opeaceful
 
 > ## 팀원
 
