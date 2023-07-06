@@ -275,6 +275,7 @@
   - [DeptController.java](Opeaceful/src/main/java/com/company/opeaceful/dept/controller/DeptController.java) : 부서/직급 조회 컨트롤러
   - [spring-scheduler.xml](./Opeaceful/src/main/webapp/WEB-INF/spring/spring-scheduler.xml) : 퇴사자/급여 삭제 관련 스케줄러
   - [dept-mapper.xml](Opeaceful/src/main/resources/mappers/dept-mapper.xml) : 부서 관련 공통 매퍼
+  - [main.js](Opeaceful/src/main/webapp/resources/js/main.js) : 다크모드 설정
 
 - 계정관리
   - 사원 조회
