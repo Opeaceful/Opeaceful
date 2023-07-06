@@ -243,6 +243,8 @@
 
 ## 김혜린
 
+[[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/김혜린.pdf)
+
 ---
 
 ## 윤지영
