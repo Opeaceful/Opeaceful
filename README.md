@@ -267,6 +267,48 @@
 ## 윤지영
 <a href="./Opeaceful/src/main/webapp/resources/etc/pdf/윤지영_opeaceful.pdf" download="Opeaceful.pdf">[PPT] 다운로드</a>  
 
+- 공통사용
+  - [member-select.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/member/member-select.jsp) : 사원 조희 모달
+  - [memberSelect.js](Opeaceful/src/main/webapp/resources/js/common/memberSelect.js) : 사원 조희 모달 JS
+  - [addressAPI](Opeaceful/src/main/webapp/resources/js/common/addressAPI.js) : 주소 API JS
+  - [dtcodeselect.js](Opeaceful/src/main/webapp/resources/js/common/dtcodeselect.js) : 부서/직급 조회 기능 JS
+  - [DeptController.java](Opeaceful/src/main/java/com/company/opeaceful/dept/controller/DeptController.java) : 부서/직급 조회 컨트롤러
+  - [spring-scheduler.xml](./Opeaceful/src/main/webapp/WEB-INF/spring/spring-scheduler.xml) : 퇴사자/급여 삭제 관련 스케줄러
+  - [dept-mapper.xml](Opeaceful/src/main/resources/mappers/dept-mapper.xml) : 부서 관련 공통 매퍼
+
+- 계정관리
+  - 사원 조회
+    - [member-allview.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/member/member-allview.jsp) : 사원 전체 조회 페이지
+    - [memberAllview.js](Opeaceful/src/main/webapp/resources/js/member/memberAllview.js) : 사원 전체 조회/수정 기능 JS
+  - 계정 생성
+    - [member-create.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/member/member-create.jsp) : 사원 생성 페이지
+    - [memberCreate.js](Opeaceful/src/main/webapp/resources/js/member/memberCreate.js) : 유효성 JS
+  - [MemberController.java](Opeaceful/src/main/java/com/company/opeaceful/member/controller/MemberController.java) : 계정 관리 공통 컨트롤러 
+  - [Scheduling.java](Opeaceful/src/main/java/com/company/opeaceful/commom/scheduling/Scheduling.java) : 퇴사자 관리 스케쥴러
+  - [resignedmember-mapper.xml](Opeaceful/src/main/resources/mappers/resignedmember-mapper.xml) : 퇴사자 관련 공통 매퍼
+  - [member-mapper.xml](Opeaceful/src/main/resources/mappers/member-mapper.xml) : 계정 관련 공통 매퍼
+
+- 권한관리
+  - 부서별 권한 관리
+    - [granting-role.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/role/granting-role.jsp) : 부서별 권한 부여 페이지
+    - [granting.js](./Opeaceful/src/main/webapp/resources/js/role/granting.js) : 부서별 권한 부여/삭제 기능 JS
+  - 사원별 권한 관리
+    - [user-role.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/role/user-role.jsp) : 사원별 권한 부여 페이지
+    - [user-role.js](./Opeaceful/src/main/webapp/resources/js/role/user-role.js) : 사원별 권한 부여/삭제 기능 JS
+  - [RoleController.java](Opeaceful/src/main/java/com/company/opeaceful/role/controller/RoleController.java) : 권한관리 공통 컨트롤러
+  - [role-mapper.xml](Opeaceful/src/main/resources/mappers/role-mapper.xml) : 권한 관련 공통 매퍼
+
+- 급여관리
+  - 사원별 급여조회 
+    - [employeeSalary.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/salary/employeeSalary.jsp) : 사원별 급여 조회 페이지
+    - [employeeSalary.js](./Opeaceful/src/main/webapp/resources/js/salary/employeeSalary.js) : 사원별 급여 조회용 JS
+  - 사원 급여 관리
+    - [employeeAllSalary.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/salary/employeeAllSalary.jsp) : 사원 급여 관리 페이지
+    - [salaryAll.js](./Opeaceful/src/main/webapp/resources/js/salary/salaryAll.js) : 사원 급여 수정/삭제/생성 기능 JS 
+  - [dateBox.js](./Opeaceful/src/main/webapp/resources/js/salary/dateBox.js) : salary date 세팅용 JS
+  - [SalaryController.java](Opeaceful/src/main/java/com/company/opeaceful/salary/controller/SalaryController.java) : 급여관리 공통 컨트롤러
+  - [salary-mapper.xml](Opeaceful/src/main/resources/mappers/salary-mapper.xml) : 급여 관련 공통 매퍼
+
 ---
 
 > ## 사용 기술 스택
