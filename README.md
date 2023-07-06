@@ -245,6 +245,23 @@
 
 [[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/김혜린.pdf)
 
+- 캘린더
+  - [calendarPage.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/calendar/calendarPage.jsp) : 캘린더 페이지
+  - [calendarController.java](./Opeaceful/src/main/java/com/company/opeaceful/calendar/controller/calendarController.java) : 캘린더 관련 기능 공통 컨트롤러
+  - [ApprovalController.java](./Opeaceful/src/main/java/com/company/opeaceful/approval/controller/ApprovalController.java) : 개인 / 팀 캘린더 내 연차 일정 표기 컨트롤러
+  - [calendar.js](./Opeaceful/src/main/webapp/resources/js/calendar/calendar.js) : fulcalendar 라이브러리 적용 /  캘린더 관련 기능 공통 스크립트
+  - [calendar-mapper.xml](./Opeaceful/src/main/resources/mappers/calendar-mapper.xml) : 캘린더 관련 공통 매퍼
+ 
+- 게시판
+  - [boardList.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardList.jsp) : 게시글 목록 조회 페이지(공지사항 / 팀게시판 / 자유게시판
+  - [boardDetailView.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardDetailView.jsp) : 게시글 상세조회 페이지 / 댓글 조회, 추가, 삭제 스크립트
+  - [boardEnrollForm.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardEnrollForm.jsp) : 게시글 등록 및 수정 페이지
+  - [BoardController.java](./Opeaceful/src/main/java/com/company/opeaceful/board/controller/BoardController.java) : 게시판 관련 기능 공통 컨트롤러
+  - [ReplyController.java](./Opeaceful/src/main/java/com/company/opeaceful/board/controller/ReplyController.java) : 댓글 관련 기능 공통 컨트롤러
+  - [boardEnrollForm.js](./Opeaceful/src/main/webapp/resources/js/board/boardEnrollForm.js) : 텍스트 에디터 스크립트
+  - [board-mapper.xml](./Opeaceful/src/main/resources/mappers/board-mapper.xml) : 게시판 관련 공통 매퍼
+  - [reply-mapper.xml](./Opeaceful/src/main/resources/mappers/reply-mapper.xml) : 댓글 관련 공통 매퍼
+ 
 ---
 
 ## 윤지영
