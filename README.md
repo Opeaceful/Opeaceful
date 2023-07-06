@@ -253,7 +253,7 @@
   - [calendar-mapper.xml](./Opeaceful/src/main/resources/mappers/calendar-mapper.xml) : 캘린더 관련 공통 매퍼
  
 - 게시판
-  - [boardList.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardList.jsp) : 게시글 목록 조회 페이지(공지사항 / 팀게시판 / 자유게시판
+  - [boardList.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardList.jsp) : 게시글 목록 조회 페이지(공지사항 / 팀게시판 / 자유게시판)
   - [boardDetailView.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardDetailView.jsp) : 게시글 상세조회 페이지 / 댓글 조회, 추가, 삭제 스크립트
   - [boardEnrollForm.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/board/boardEnrollForm.jsp) : 게시글 등록 및 수정 페이지
   - [BoardController.java](./Opeaceful/src/main/java/com/company/opeaceful/board/controller/BoardController.java) : 게시판 관련 기능 공통 컨트롤러
