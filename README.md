@@ -143,7 +143,7 @@
 </details>
 
 <details>
-<summary> 채팅 </summary>
+<summary> 메신저 </summary>
 <div markdown="1">
 
 ![채팅](./Opeaceful/src/main/webapp/resources/etc/video/chat.gif)
