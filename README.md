@@ -201,7 +201,7 @@
 - 메신저
   - [chat.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/chat.jsp) : 메신저 페이지
   - [ChatController.java](./Opeaceful/src/main/java/com/company/opeaceful/chat/controller/ChatController.java) : 메신저 공통 컨트롤러
-  - [ChatWebsocketHandler.java](./Opeaceful/src/main/java/com/company/opeaceful/chat/websocket/ChatWebsocketHandler.java) : 웹소켓 핸들러
+  - [ChatWebsocketHandler.java](./Opeaceful/src/main/java/com/company/opeaceful/chat/model/websocket/ChatWebsocketHandler.java) : 웹소켓 핸들러
   - [chat-mapper.xml](./Opeaceful/src/main/resources/mappers/chat-mapper.xml) : 메신저 공통 매퍼
   - [chat.js](./Opeaceful/src/main/webapp/resources/js/chat/chat.js) : 메신저 js 파일
   - [chatJs.js](./Opeaceful/src/main/webapp/resources/js/chat/chatJs.js) : 메신저 메뉴 이동 js 파일
