@@ -199,6 +199,7 @@
 [[PPT] 링크](https://www.miricanvas.com/v/125yzpx) &nbsp; / &nbsp; [[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/김진기.pdf)
 
 - 메신저
+
   - [chat.jsp](./Opeaceful/src/main/webapp/WEB-INF/views/chat.jsp) : 메신저 페이지
   - [ChatController.java](./Opeaceful/src/main/java/com/company/opeaceful/chat/controller/ChatController.java) : 메신저 공통 컨트롤러
   - [ChatWebsocketHandler.java](./Opeaceful/src/main/java/com/company/opeaceful/chat/model/websocket/ChatWebsocketHandler.java) : 웹소켓 핸들러
@@ -206,6 +207,7 @@
   - [chat.js](./Opeaceful/src/main/webapp/resources/js/chat/chat.js) : 메신저 js 파일
   - [chatJs.js](./Opeaceful/src/main/webapp/resources/js/chat/chatJs.js) : 메신저 메뉴 이동 js 파일
   - [chatModal.js](./Opeaceful/src/main/webapp/resources/js/chat/chatModal.js) : 채팅방 초대 멤버 조회 js 파일
+
 
 ---
 
