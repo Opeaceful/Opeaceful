@@ -196,6 +196,8 @@
 
 ## 김진기
 
+[[PPT] 링크](https://www.miricanvas.com/v/125yzpx) &nbsp; / &nbsp; [[PPT] 다운로드](./Opeaceful/src/main/webapp/resources/etc/pdf/김진기.pdf)
+
 ---
 
 ## 박가영
