@@ -146,7 +146,7 @@
 <summary> 채팅 </summary>
 <div markdown="1">
 
-![채팅](./Opeaceful/src/main/webapp/resources/etc/video/darkmode.gif)
+![채팅](./Opeaceful/src/main/webapp/resources/etc/video/chat.gif)
 
 </div>
 </details>
