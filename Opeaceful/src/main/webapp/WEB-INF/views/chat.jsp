@@ -6,18 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>chatMain</title>
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" /> -->
-<!-- 부트스트랩 아이콘 -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" /> -->
-<!-- fontawesome -->
-<!-- <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script> -->
-
-<%-- <link rel="stylesheet" href="${path}/resources/css/common/common.css"> --%>
-<link rel="stylesheet" href="${path}/resources/css/chat/chat-main-layout.css">
-<link rel="stylesheet" href="${path}/resources/css/chat/chat-friend.css">
-<link rel="stylesheet" href="${path}/resources/css/chat/chat-general.css">
-<link rel="stylesheet" href="${path}/resources/css/chat/chat-room.css">
-<link rel="stylesheet" href="${path}/resources/css/chat/chatting.css">
+<link rel="stylesheet" href="${path}/resources/css/chat/chat-style.css">
 <link rel="stylesheet" href="${path}/resources/css/common/memberSelect.css">
 
 <style>

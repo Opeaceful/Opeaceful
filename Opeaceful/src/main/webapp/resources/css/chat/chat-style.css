@@ -1,0 +1,764 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+/* grid container 적용 */
+#chat_content, #chat_room_content{
+    position: relative;
+    height: 50rem;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 5rem 1.25rem auto 1.25rem; /* 각 grid의 width */
+    grid-template-rows: 1.875rem 3.125rem auto 6.25rem; /* 각 grid의 height */
+    gap: 0;
+    align-items: stretch;
+    /* justify-items: stretch; */
+    grid-template-areas:
+        "nav  .  setting  setting "
+        "nav  .   header     .    "
+        "nav  .    main      .    "
+        "ad  ad     ad      ad    ";
+    background: var(--color-background);
+    border:0.1rem solid var(--color-navy);
+}
+
+/* 상단 설정바 조절 */
+.chat_setting_bar{
+    text-align: right;
+    grid-area: setting;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-background);
+}
+.chat_setting_bar > *{
+    margin: 0.4rem; 
+    font-size: var(--font15);
+    color: var(--color-navy);
+    cursor: pointer;
+    line-height: 1.875rem; /* grid row의 첫번째 크기와 동일 */
+    vertical-align: middle;
+}
+
+
+/* 헤더(header) 영역 레이아웃 지정 */
+#chat_header{
+    grid-area: header;
+    position: sticky;
+    top: 1.875rem; /* grid row의 첫번째 + gap 크기와 동일*/
+    background-color: var(--color-background);
+}
+#chat_header > *{
+    /* 가운데 정렬 */
+    line-height: 3.125rem; /* grid row의 두번째 크기와 동일 */
+    vertical-align: middle;
+}
+/* 헤더 안의 컨텐츠 스타일 지정 */
+/* 친구리스트/채팅리스트의 html 파일에서 동일한 스타일을 갖기 때문에 공통된 스타일로 구분했음 */
+#chat_header span{
+    /* 검색, 친구 추가 기능 스타일 지정 */
+    float: right;
+    margin-left: 1rem; 
+    font-size: var(--font21);
+    color: var(--color-navy);
+    cursor: pointer;
+}
+/* 제목 사이즈 재정의 */
+#chat_header_title{
+    font-size: var(--font21);
+    font-weight: bold;
+    display: inline;
+}
+
+/* 네비게이션(nav) 영역 레이아웃 지정 */
+#chat_nav{
+    grid-area: nav;
+    background-color: var(--color-navy);
+    /* align-self: start; */
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+/* 네비게이션 안의 컨텐츠 스타일 지정 */
+/* 친구리스트/채팅리스트의 html 파일에서 동일한 스타일을 갖기 때문에 공통된 스타일로 구분했음 */
+.chat_main_menu i, .chat_sub_menu i{
+    display: block;
+    font-size: var(--font22);
+    color: var(--color-background);
+    text-align: center;
+    margin-bottom: 2rem; 
+    cursor: pointer;   
+}
+.chat_main_menu{
+    margin-top: 3.125rem;  
+}
+.chat_sub_menu{
+    margin-bottom: 0.5rem; 
+}
+/* 알림 풍선 만들어주기 */
+.chat_main_menu > *:nth-child(2), .chat_main_menu > *:nth-child(3){
+    position: relative;
+}
+.alert-balloon{
+    padding: 0.125rem 0.3125rem 0.125rem 0.3125rem; /* 위.아래 2px, 좌.우 5px */
+    border: 1px solid tomato;
+    background-color: tomato;
+    border-radius: 0.625rem; /* 10px */
+    font-size: var(--font10); /* 5px */
+    color: white;
+    position: absolute;
+    top: -0.3125rem; /* -5px */
+    left: 3.125rem; /* 50px */
+}
+
+/* 메인(main) 영역 레이아웃 지정 */
+#chat_main{
+    /* 친구 리스트를 flex box로 레이아웃 구성 */
+    grid-area: main; 
+    margin-left: 0.2rem; 
+    padding: 0.2rem;
+}
+.chat_main_li, .chat_room_li{
+    transition-property: all;
+    transition-duration: 1ms;
+    transition-timing-function: linear;
+    /* transition-delay: 0; */
+}
+.chat_main_li:hover, .chat_room_li:hover{
+    background-color: var(--white-hover);
+}
+.chat_main_li:active, .chat_room_li:active{
+    /* transition-delay: 0; */
+    background-color: var(--chat-hover);
+}
+
+/* 광고(aside) 영역 레이아웃 지정 */
+#chat_aside{
+    grid-area: ad;
+    position: sticky;
+    bottom: 0;
+    height: 6.25rem; /* grid ad의 row 크기와 동일 */
+    text-align: center;
+    background-color: rgb(235, 231, 187);
+    border-top:0.1rem solid var(--color-navy);
+}
+/* 광고 안의 컨텐츠 스타일 지정 */
+/* 친구리스트/채팅리스트의 html 파일에서 동일한 스타일을 갖기 때문에 공통된 스타일로 구분했음 */
+#chat_aside > img{
+    height: 6.25rem;
+}
+
+#statusList{
+    width: 8rem;
+    border: 1px solid var(--color-navy);
+    box-sizing: border-box;
+    border-radius: 1rem;
+    padding: 12px 13px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+   	cursor: pointer;
+}
+
+#statusList:focus{
+    border: 1px solid var(--color-navy);
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: 3px solid var(--color-light-navy);
+    border-radius: 10px;
+}
+
+/* 다이얼로그 */
+.ui-dialog-title{
+    color: white;
+}
+.ui-dialog-titlebar{
+	background:var(--color-navy)
+}	
+.ui-dialog-titlebar-close{
+	display: none;
+}
+.ui-dialog-content .ui-widget-content{
+    display: none;
+}
+#dialog{
+	display: none;
+}
+.fa.fa-star.favorite-icon, .fa.favorite-icon.fa-star-o{
+	display: flex;
+    margin-left: auto;
+}
+.card-container{
+	background-color: var(--color-background) !important; 
+}
+
+#chat_main{
+    /* 친구 리스트는 flex box로 레이아웃으로 구성 */
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.chat_ul, #adminList{
+    list-style: none;
+    padding-left: 0;
+    cursor: pointer;
+}
+
+/* 제목(h2와 p) 사이즈 재정의 */
+.chat_profile_title > *{
+    font-size: var(--font12);
+    color: gray;
+    display: inline-block;
+    margin: 0;
+}
+.chat_main_li{
+    /* 각각의 프로필을 flex box로 구성 */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-bottom: 0.4375rem; 
+    padding-top: 0.4375rem; 
+}
+.chat_main_li > img{
+    /* 프로필사진 사이즈 조절 */
+    width: 3.125rem;
+    border-radius: 1rem;
+}
+.chat_profile > *{
+    /* 이름과 프로필 사진의 margin 조절 */
+    margin: 0.3125rem; 
+    margin-left: 0.625rem;
+}
+.chat_profile > *:first-of-type{
+    /* 이름 스타일 변경 : 굵게 처리 */
+    font-weight: bold;
+    font-size: var(--font14);  
+} 
+.chat_profile > *:nth-of-type(2){
+    /* 상태메시지 스타일 변경*/
+    color: gray;
+    font-size: var(--font12); 
+}
+.chat_profile_title {
+    border-top: 0.1rem solid var(--color-navy);
+    padding-top: 0.625rem;
+}
+.profile_box .profile_status_img{
+	width:1.2rem;
+    filter: var(--filter);
+}
+ 
+#chat_main::-webkit-scrollbar,
+.main_chatting::-webkit-scrollbar {
+ width: 0.8rem;
+}
+  
+#chat_main::-webkit-scrollbar-track,
+.main_chatting::-webkit-scrollbar-track {
+ background-color: transparent;
+}
+  
+#chat_main::-webkit-scrollbar-thumb,
+.main_chatting::-webkit-scrollbar-thumb {
+ border-radius: 100px;
+ background-image: linear-gradient(180deg, var(--color-navy) 0%, var(--chattingScrollbar) 99%);
+ box-shadow: inset 2px 2px 5px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 사원 명함 */
+.card-container{
+    border: 1px solid var(--color-light-gray);
+    width: 30rem;
+    height: 13rem;
+/*     border-radius: 16px; */
+    display: flex;
+/*     justify-content: center; */
+/*     align-items: flex-start; */
+/*     padding-left: 20px; */
+}
+.adminUserPicture{
+    width: 35%;
+    height: 90%;
+    margin-right: 2rem;
+    margin-left: 1.6rem;
+}
+.adminUserPicture>img{
+	width: 100%; height: 100%;
+	border-radius: 1rem;
+}
+.adminInfoTable{
+/*     margin: 0; */
+    font-size: var(--font13);
+    font-weight: 300;
+    text-align-last: center;
+}
+.adminInfo{
+	border-bottom: white;
+}
+.member-chat-profile-close{
+	position: absolute;
+    left: 95%;
+    top: 15%;
+    font-size: 1.3rem;	
+}
+
+.chat__room_ul{
+    /* flex box 생성 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* unordered list 기본 스타일 제거(점, 들여쓰기) */
+    list-style: none;
+    padding-left: 0;
+}
+.chat_room_li{
+    flex-basis:5rem; /*16 브라우저 기준 80px */
+    flex-shrink: 0;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.chat_room_li > a{
+    /* 안에 또 다른 flex box 생성 */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0px;
+}
+.profile-img{
+    width: 3.125rem;
+    border-radius: 1rem;
+}
+.chat_room_li .chat_talk{
+    /* 프로필 사진과 메시지(채팅) 내용 사이 간격 조절 */
+    margin-left: 0.9375rem; /* 16 브라우저 기준 15px */
+    flex-grow: 1; /* 메시지 내용과 시간 사이에 빈 공간 채우기 위한 flex-grow 설정 */
+}
+.chat_talk > *, .chat_time{
+    margin-top: 0.3125rem ; /* 16 브라우저 기준 5px */
+    margin-bottom: 0.3125rem;
+}
+.chat_admin_name{
+    /* 프로필명(이름) 스타일 조정 */
+    font-weight: bold;
+    font-size: 0.875rem; /* 16 브라우저 기준 14px */
+}
+.chat_msg{
+    /* 메시지(채팅) 내용 스타일 조정 */
+    color: gray;
+    font-size: 0.75rem; /* 16 브라우저 기준 12px */
+
+}
+.chat_member_cnt{
+    /* 그룹 채팅방 경우, 인원 수 표시 */
+    color: rgb(194, 194, 194);
+    font-size: 0.75rem;
+    margin-left: 0.4375rem; /* 7px (!6폰트 브라우저 기준) */
+}
+.chat_me{
+    display: inline-block;
+    background-image: url(../pic/me_balloon.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 0.125rem; /* 16폰트 브라우저 기준 2px */
+    margin-right: 0.125rem;
+
+    vertical-align: middle;
+    font-size: 0.625rem; /* 16 브라우저 기준 10px */
+    color: white;
+}
+
+.chat_room_status{
+    flex-basis: 4.5rem; /* 72p */
+    flex-shrink: 0; /* 유연하게 사이즈 조절 불가토록 설정 */
+    text-align: right;
+}
+.chat_time{
+    display: block;
+    color: rgb(194, 194, 194);
+    font-size: 0.625rem; /* 16 브라우저 기준 10px */
+}
+.chat_balloon{
+    /* 안읽은 메시지 수(count) 표시 스타일 지정 */    
+    display:inline-block;
+    border: 1px solid tomato;
+    background-color: tomato;
+    border-radius: 0.625rem;
+    font-size: 0.3125rem;
+    color: white;
+    font-weight: bold;
+    padding-top: 0.0625rem; /* 16 브라우저 기준 1px */
+    padding-bottom: 0.0625rem;
+    padding-left: 0.25rem; /* 16 브라우저 기준 4px */
+    padding-right:0.25rem;
+}
+
+.member-chat-room-close{
+	cursor:pointer;
+}
+
+
+:root{
+	--chatting-background:url(../../image/chat/whiteBackground.jpg);
+	--chatroom-background:url(../../image/chat/whiteBackground4.jpg);
+	--chatroom-backStyle:cover;
+	} 
+:root[color-theme='dark']{ 
+	--chatting-background:url(../../image/chat/blackBackground.jpg);
+	--chatroom-background:url(../../image/chat/blackBackground3.jpg);
+	--chatroom-backStyle:cover;
+} 
+
+body{
+    margin: 0; /* 페이지의 여유공간 없애버림 */
+}
+
+/* grid container 적용 */
+#chatting_body{
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: minmax(3.125rem, auto) 6.25rem;
+    grid-template-rows: 2.5rem 2.5rem auto;
+    align-items: stretch;
+    grid-template-areas:
+        " header   setting  "
+        " header  main_menu "
+        "  main     main    ";
+    border:0.1rem solid var(--color-navy);   
+}
+
+/* 배경화면 설정 */
+
+#chatting_body{ 
+/* #chatting_body, .chatting_setting_bar, .chatting_main_menu, #chatting_header{ */
+    background-image: var(--chatroom-background);
+    background-position: bottom;
+    background-size: var(--chatroom-backStyle);
+}
+
+/* 설정바 스타일 지정 */
+.chatting_setting_bar{
+    grid-area: setting;
+    line-height: 2.5rem;
+    vertical-align: middle;
+    margin-right: 0.625rem;
+    position: sticky;
+    top: 0;
+    text-align: right;
+}
+
+.chatting_setting_bar > i{
+	margin:0.5rem;
+}
+	
+
+/* 알림, 메뉴 기능 스타일 지정 */
+.chatting_main_menu{
+    grid-area: main_menu;
+    text-align: right;
+    font-size: 1rem;
+    color: grey;
+    line-height: 2.5rem;
+    vertical-align: middle;
+    margin-right: 0.625rem;
+    position: sticky;
+    top: 2.5rem;
+}
+
+/* 프로필 사진, 프로필명 등 헤더 스타일 지정 */
+#chatting_header{
+    grid-area: header;
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 0.625rem;
+}
+.chatting_profile_col{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.chatting_profile_img{
+    /* 프로필 사진 스타일 */
+    width: 3.125rem;
+    margin-right: 0.625rem;
+    border-radius: 1rem;
+}
+#chatting_header *{
+    font-size: 0.8125rem;
+    font-weight: bold;
+    color:var(--chat-date);
+}
+.chatting_profile_name{
+    /* 프로필명 폰트 스타일 지정 */
+    font-size: 0.8125rem;
+}
+.chatting_sub_menu > *{
+    /* 프로필명 아래 메뉴들 정렬 */
+    display: inline-block;
+    margin-top: 0.625rem;
+    padding-right: 0.3125rem;
+}
+.chatting_sub_menu > *:nth-child(n+2){
+    padding-left: 0.3125rem;
+    border-left: 1px solid rgb(165, 165, 165);
+}
+
+/* main(채팅내용) 스타일 지정 */
+#chatting_main{
+    /* 채팅내용 영역 전체 flex box 적용 */
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* main(채팅내용) 여백 지정 */
+.chatting_content{
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
+}
+
+/* main 중 고정 공지사항 스타일 지정 */
+.chatting_notice_bar{
+    padding: 10px;
+    position: sticky;
+    top: 5rem;
+    /* background-color: white; */
+  /*  background-color: var(--chat-notice); */
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
+}
+.chatting_notice_bar > *{
+    font-size: 0.875rem;
+    line-height: 1.875rem ;
+    vertical-align: middle;
+}
+.chatting_notice_bar > i{
+    font-size: 1.5rem;
+    color: gray;
+    font-weight: bold;
+}
+.chatting_notice_bar > span{
+    flex-grow: 1;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+}
+
+/* 말풍선 공통 스타일 지정 */
+.friend_chatting_col, .me_chatting_col{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* 친구의 채팅 말풍선들 flex 레이아웃 구성 */
+.friend_chatting{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-top: 0.3125rem;
+    margin-bottom: 0.3125rem;
+}
+.friend_chatting > .chatting_profile_img{
+    align-self: flex-start;
+}
+.friend_chatting_col > .chatting_balloon{
+    margin-top: 0.3125rem;
+    padding: 0.4375rem;
+    border: 1px solid rgb(228, 233, 230);
+    border-radius: 0.1875rem;
+    background-color: rgb(228, 233, 230);
+    font-size: 0.8125rem;
+    color: black;
+}
+.friend_chatting_col > .chatting_balloon::before{
+    content: "";
+    border-bottom: 0.6875rem solid transparent;
+    border-right: 0.6875rem solid rgb(228, 233, 230);
+    position: absolute;
+    top: 1.563rem;
+    left: -0.5rem;
+}
+
+
+/* 나의 채팅 말풍선들 flex 레이아웃 구성 */
+.me_chatting{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 0.625rem;
+    margin-top: 0.3125rem;
+    margin-bottom: 0.3125rem;
+}
+.me_chatting_col > .chatting_balloon{
+    margin-top: 0.3125rem;
+    padding: 0.4375rem;
+    border: 1px solid rgb(94, 122, 100);
+    border-radius: 0.1875rem;
+    background-color: rgb(94, 122, 100);
+    font-size: 0.8125rem;
+    color: white;
+}
+.me_chatting_col > .chatting_balloon::before{
+    content: "";
+    border-bottom: 0.6875rem solid transparent;
+    border-left: 0.6875rem solid rgb(94, 122, 100);
+    position: absolute;
+    top: 0.625rem;
+    right: -0.5rem;
+}
+
+/* 채팅 말풍선의 시간(time) 아래로 정렬 (flex item들) */
+.main_chatting .chatting_time{
+    align-self: flex-end;
+    flex-basis: 3.75rem;
+    flex-shrink: 0;
+    margin-left: 0.3125rem;
+    margin-right: 0.3125rem;
+    font-size: 0.75rem;
+    color: var(--chat-date);
+    text-align: center;
+}
+.friend_chatting > .chatting_time{
+    margin-right: 2.5rem;
+}
+.me_chatting > .chatting_time{
+    margin-left: 2.5rem;
+}
+
+/* 날짜선(date-line) 스타일 지정 */
+.chatting_date_line{
+    /* flex 사용 */
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    color: var(--chat-date);
+    font-size: 0.875rem;   
+}
+.chatting_date_line::before, .chatting_date_line::after{
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: rgba(88, 88, 88, 0.3);
+    font-size: 0px;
+    line-height: 0px;
+}
+
+/* 채팅 입력차 스타일 지정 */
+.chatting_insert_content{
+    background-color: var(--color-background);
+    padding: 0.4375rem;
+    position: sticky;
+    bottom: 0;
+    border-top:solid 0.1rem var(--color-navy);
+}
+.chatting_send_textarea{
+    resize: none;
+    border: none;
+    height: 4.375rem;
+}
+
+/* 채팅 입력창 flex로 정렬 */
+.chatform{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.chatform > .chatting_send_textarea{
+    flex-basis: 100%;
+    flex-grow: 1;
+    background-color: var(--color-background);
+    color: var(--font-black);
+}
+.chatting_send_button{
+    margin-left: 10px;
+    border: 1px solid rgb(94, 122, 100);
+    background-color:rgb(248, 248, 248);
+    color: rgb(94, 122, 100);
+    padding: 0.1875rem;
+    width: 3.125rem;
+   transition-property: background-color, color;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+.chatting_send_button:hover{
+    background-color: rgb(94, 122, 100);
+    color: rgb(248, 248, 248);
+}
+
+/* 채팅 입력창 서브 메뉴 스타일 조정 */
+.chatting_insert_menu{
+    margin-top: 0.3125rem;
+    margin-bottom: 0.3125rem;
+    font-size: 1.125rem;
+    color: grey;
+}
+.chatting_insert_menu > *:nth-child(n+1){
+    padding-right: 0.375rem;
+}
+
+.main_chatting{
+	overflow:auto;
+	height:26rem;
+}
+
+.chatting_made_dialog{
+	background-image: var(--chatting-background);
+    border: 1px solid var(--color-navy);
+    background-size: cover;
+}
+
+#chatting_made_title{
+	text-align: center;
+	margin-top: 1rem;
+}
+
+#chatting_made_button{
+	display: flex;
+    justify-content: space-evenly;
+    margin: 1rem;
+}
+#chatMemberSelectButtonBox{
+	margin: 1rem;
+	display:flex;
+	border-bottom: solid 0.1rem;
+    width: 14rem;
+}
+#chatMemberSelectButtonBoxUp{
+	display: flex;
+    justify-content: center;
+}
+
+.room-chat-made-close{
+    position: absolute;
+    left: 17rem;
+    top: 2rem;
+    cursor:pointer;
+}
+
